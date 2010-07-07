@@ -73,7 +73,7 @@ void bitarray_free_nomng ( bitarray_t* _bitarray )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int bitarray_get ( bitarray_t* _bitarray, int _idx )
+int bitarray_get ( bitarray_t* _bitarray, size_t _idx )
 {
     char* ptr;
 
@@ -86,7 +86,7 @@ int bitarray_get ( bitarray_t* _bitarray, int _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void bitarray_set ( bitarray_t* _bitarray, int _idx, int _value ) 
+void bitarray_set ( bitarray_t* _bitarray, size_t _idx, int _value ) 
 {
     char* ptr;
 

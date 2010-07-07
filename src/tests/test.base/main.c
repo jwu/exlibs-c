@@ -17,6 +17,7 @@
 
 extern void test_bitarry();
 extern void test_pool();
+extern void test_array();
 extern void test_hashmap();
 extern void test_list();
 extern void test_memmng();
@@ -37,6 +38,7 @@ int main( int argc, char* argv[] )
 
     // test_bitarry ();
     // test_pool ();
+    test_array ();
     // test_hashmap ();
     // test_list ();
     // test_memmng ();

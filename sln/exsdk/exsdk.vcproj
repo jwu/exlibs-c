@@ -339,6 +339,14 @@
 			Name="container"
 			>
 			<File
+				RelativePath="..\..\src\container\array.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\container\array.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\container\bitarray.c"
 				>
 			</File>

@@ -36,14 +36,14 @@ pool_t* pool_alloc ( size_t _element_bytes, size_t _count )
     int size = _element_bytes * _count;
     size_t i = 1;
 
-    // init public members
+    // init members
     pool->_length = 0;
     pool->_capacity = _count;
     pool->_element_bytes = _element_bytes;
 
     // init data
     pool->_data = ex_malloc( size );
-    memzero ( pool->_data,  size );
+    memzero ( pool->_data, size );
 
     // init nodes
     pool->_nodes = ex_malloc( sizeof(pool_node_t) * _count );
@@ -218,7 +218,7 @@ void pool_reserve_nomng ( pool_t* _pool, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-int pool_insert ( pool_t* _pool, void* _value )
+size_t pool_insert ( pool_t* _pool, void* _value )
 {
     pool_node_t* node = NULL;
     void* element = NULL;
@@ -240,7 +240,7 @@ int pool_insert ( pool_t* _pool, void* _value )
 }
 
 // no managed
-int pool_insert_nomng ( pool_t* _pool, void* _value )
+size_t pool_insert_nomng ( pool_t* _pool, void* _value )
 {
     pool_node_t* node = NULL;
     void* element = NULL;
@@ -269,8 +269,8 @@ void* pool_erase ( pool_t* _pool, int _idx )
 {
     pool_node_t* node = NULL;
 
-    ex_assert_return( _idx >= 0 && _idx < (int)_pool->_capacity, _pool->_data, "error: _idx out of range" );
-    ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, _pool->_data, "error: the node is not in used." );
+    ex_assert_return( _idx >= 0 && _idx < (int)_pool->_capacity, NULL, "error: _idx out of range" );
+    ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
     // get current node.
     node = _pool->_nodes + _idx;
@@ -298,10 +298,10 @@ void* pool_erase ( pool_t* _pool, int _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* pool_get ( pool_t* _pool, int _idx )
+void* pool_get ( pool_t* _pool, size_t _idx )
 {
-    ex_assert_return( _idx >= 0 && _idx < (int)_pool->_capacity, _pool->_data, "error: _idx out of range" );
-    ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, _pool->_data, "error: the node is not in used." );
+    ex_assert_return( _idx >= 0 && _idx < _pool->_capacity, NULL, "error: _idx out of range" );
+    ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
     return (char*)(_pool->_data) + _idx * _pool->_element_bytes;
 }

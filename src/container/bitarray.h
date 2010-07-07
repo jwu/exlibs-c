@@ -21,9 +21,9 @@ USAGE:
 // Desc: bitarray_t 
 // ------------------------------------------------------------------ 
 
-typedef struct bitarray_ {
+typedef struct bitarray_t {
     // private
-    int _length;
+    size_t _length;
     char* _data;
 } bitarray_t; // end struct _bitarray
 
@@ -45,13 +45,13 @@ void bitarray_free_nomng ( bitarray_t* _bitarray );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int bitarray_get ( bitarray_t* _bitarray, int _idx );
+int bitarray_get ( bitarray_t* _bitarray, size_t _idx );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void bitarray_set ( bitarray_t* _bitarray, int _idx, int _value );
+void bitarray_set ( bitarray_t* _bitarray, size_t _idx, int _value );
 
 // ------------------------------------------------------------------ 
 // Desc: 

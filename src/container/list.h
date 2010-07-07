@@ -17,14 +17,14 @@
 // when allocate the node, it actually allocate the a memory block which the
 // size is equal to the size of the node plus the size of the value store in the node.
 // then it assign the address of the value to the node->value in the node. 
-typedef struct list_node_ {
+typedef struct list_node_t {
     void* value;
-    struct list_node_* prev;
-    struct list_node_* next;
+    struct list_node_t* prev;
+    struct list_node_t* next;
 } list_node_t;
 
 //
-typedef struct list_ {
+typedef struct list_t {
     // private
     size_t _length;
     size_t _element_bytes;

@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test.base"
-	ProjectGUID="{70C797D6-A09F-48F5-9049-F5AB1A7BBDCC}"
+	Name="test.lua"
+	ProjectGUID="{C0A58EB5-8FC5-4545-A545-C39A36AD0675}"
 	RootNamespace="tests"
 	TargetFrameworkVersion="196613"
 	>
@@ -158,35 +158,11 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\tests\test.base\main.c"
+			RelativePath="..\..\src\tests\test.lua\main.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\tests\test.base\test_array.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\tests\test.base\test_bitarry.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\tests\test.base\test_hashmap.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\tests\test.base\test_list.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\tests\test.base\test_memmng.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\tests\test.base\test_pool.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\tests\test.base\test_rapid.c"
+			RelativePath="..\..\src\tests\test.lua\test_normal.c"
 			>
 		</File>
 	</Files>

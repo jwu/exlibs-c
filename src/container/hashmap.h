@@ -57,13 +57,13 @@ typedef uint32 (*hashkey_t) (void*);
 typedef int (*keycmp_t) (void*,void*);
 
 //
-typedef struct hashmap_node_ {
+typedef struct hashmap_node_t {
     size_t prev; // prev hash index
     size_t next; // next hash index
 } hashmap_node_t;
 
 //
-typedef struct hashmap_ {
+typedef struct hashmap_t {
     // public
     size_t _capacity;
 
