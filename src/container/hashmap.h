@@ -119,8 +119,8 @@ void* hashmap_erase ( hashmap_t* _hashmap, void* _key );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline int hashmap_len ( hashmap_t* _hashmap ) { return pool_len(_hashmap->_nodes); }
-inline int hashmap_capacity ( hashmap_t* _hashmap ) { return _hashmap->_capacity; }
+inline size_t hashmap_len ( hashmap_t* _hashmap ) { return pool_len(_hashmap->_nodes); }
+inline size_t hashmap_capacity ( hashmap_t* _hashmap ) { return _hashmap->_capacity; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // useful callback
@@ -131,6 +131,7 @@ inline int hashmap_capacity ( hashmap_t* _hashmap ) { return _hashmap->_capacity
 // ------------------------------------------------------------------ 
 
 inline uint32 hashkey_string ( void* _val ) { return hashstr( *((char**)_val) ); }
+inline uint32 hashkey_wstring ( void* _val ) { return hashstr_w( *((wchar_t**)_val) ); }
 inline uint32 hashkey_uint32 ( void* _val ) { return *((uint32*)_val); }
 inline uint32 hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)_val) >> 4); }
 
@@ -139,6 +140,7 @@ inline uint32 hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)_va
 // ------------------------------------------------------------------ 
 
 inline int keycmp_string ( void* _lhs, void* _rhs ) { return strcmp ( *((char**)_lhs), *((char**)_rhs) ); }
+inline int keycmp_wstring ( void* _lhs, void* _rhs ) { return wcscmp ( *((wchar_t**)_lhs), *((wchar_t**)_rhs) ); }
 inline int keycmp_uint32 ( void* _lhs, void* _rhs ) { return *((uint32*)_lhs) - *((uint32*)_rhs); }
 inline int keycmp_ptr ( void* _lhs, void* _rhs ) { return (size_t)*((void**)_lhs) - (size_t)*((void**)_rhs); }
 

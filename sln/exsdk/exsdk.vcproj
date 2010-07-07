@@ -270,6 +270,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="string"
+				>
+				<File
+					RelativePath="..\..\src\core\string\string_inc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\stringID.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\stringID.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="engine"

@@ -218,7 +218,7 @@ void pool_reserve_nomng ( pool_t* _pool, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-size_t pool_insert ( pool_t* _pool, void* _value )
+int pool_insert ( pool_t* _pool, void* _value )
 {
     pool_node_t* node = NULL;
     void* element = NULL;
@@ -240,7 +240,7 @@ size_t pool_insert ( pool_t* _pool, void* _value )
 }
 
 // no managed
-size_t pool_insert_nomng ( pool_t* _pool, void* _value )
+int pool_insert_nomng ( pool_t* _pool, void* _value )
 {
     pool_node_t* node = NULL;
     void* element = NULL;
@@ -298,9 +298,9 @@ void* pool_erase ( pool_t* _pool, int _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* pool_get ( pool_t* _pool, size_t _idx )
+void* pool_get ( pool_t* _pool, int _idx )
 {
-    ex_assert_return( _idx >= 0 && _idx < _pool->_capacity, NULL, "error: _idx out of range" );
+    ex_assert_return( _idx >= 0 && (size_t)_idx < _pool->_capacity, NULL, "error: _idx out of range" );
     ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
     return (char*)(_pool->_data) + _idx * _pool->_element_bytes;

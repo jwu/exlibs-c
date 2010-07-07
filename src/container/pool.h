@@ -100,46 +100,46 @@ inline size_t pool_capacity ( pool_t* _pool ) { return _pool->_capacity; }
 // @param _value: if NULL, means insert an empty node.
 // ------------------------------------------------------------------ 
 
-size_t pool_insert ( pool_t* _pool, void* _value );
-size_t pool_insert_nomng ( pool_t* _pool, void* _value );
+int pool_insert ( pool_t* _pool, void* _value );
+int pool_insert_nomng ( pool_t* _pool, void* _value );
 
-inline size_t pool_insert_int8 ( pool_t* _pool, int8 _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_int16 ( pool_t* _pool, int16 _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_int32 ( pool_t* _pool, int32 _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_int64 ( pool_t* _pool, int64 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_int8 ( pool_t* _pool, int8 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_int16 ( pool_t* _pool, int16 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_int32 ( pool_t* _pool, int32 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_int64 ( pool_t* _pool, int64 _value ) { return pool_insert ( _pool, &_value ); }
 
-inline size_t pool_insert_uint8 ( pool_t* _pool, uint8 _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_uint16 ( pool_t* _pool, uint16 _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_uint32 ( pool_t* _pool, uint32 _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_uint64 ( pool_t* _pool, uint64 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_uint8 ( pool_t* _pool, uint8 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_uint16 ( pool_t* _pool, uint16 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_uint32 ( pool_t* _pool, uint32 _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_uint64 ( pool_t* _pool, uint64 _value ) { return pool_insert ( _pool, &_value ); }
 
-inline size_t pool_insert_float ( pool_t* _pool, float _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_double ( pool_t* _pool, double _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_float ( pool_t* _pool, float _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_double ( pool_t* _pool, double _value ) { return pool_insert ( _pool, &_value ); }
 
-inline size_t pool_insert_string ( pool_t* _pool, char* _value ) { return pool_insert ( _pool, &_value ); }
-inline size_t pool_insert_wstring ( pool_t* _pool, wchar_t* _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_string ( pool_t* _pool, char* _value ) { return pool_insert ( _pool, &_value ); }
+inline int pool_insert_wstring ( pool_t* _pool, wchar_t* _value ) { return pool_insert ( _pool, &_value ); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* pool_get ( pool_t* _pool, size_t _idx );
+void* pool_get ( pool_t* _pool, int _idx );
 
-inline int8 pool_get_int8 ( pool_t* _pool, size_t _idx ) { return *((int8*)pool_get ( _pool, _idx )); }
-inline int16 pool_get_int16 ( pool_t* _pool, size_t _idx ) { return *((int16*)pool_get ( _pool, _idx )); }
-inline int32 pool_get_int32 ( pool_t* _pool, size_t _idx ) { return *((int32*)pool_get ( _pool, _idx )); }
-inline int64 pool_get_int64 ( pool_t* _pool, size_t _idx ) { return *((int64*)pool_get ( _pool, _idx )); }
+inline int8 pool_get_int8 ( pool_t* _pool, int _idx ) { return *((int8*)pool_get ( _pool, _idx )); }
+inline int16 pool_get_int16 ( pool_t* _pool, int _idx ) { return *((int16*)pool_get ( _pool, _idx )); }
+inline int32 pool_get_int32 ( pool_t* _pool, int _idx ) { return *((int32*)pool_get ( _pool, _idx )); }
+inline int64 pool_get_int64 ( pool_t* _pool, int _idx ) { return *((int64*)pool_get ( _pool, _idx )); }
 
-inline uint8 pool_get_uint8 ( pool_t* _pool, size_t _idx ) { return *((uint8*)(pool_get ( _pool, _idx ))); }
-inline uint16 pool_get_uint16 ( pool_t* _pool, size_t _idx ) { return *((uint16*)pool_get ( _pool, _idx )); }
-inline uint32 pool_get_uint32 ( pool_t* _pool, size_t _idx ) { return *((uint32*)pool_get ( _pool, _idx )); }
-inline uint64 pool_get_uint64 ( pool_t* _pool, size_t _idx ) { return *((uint64*)pool_get ( _pool, _idx )); }
+inline uint8 pool_get_uint8 ( pool_t* _pool, int _idx ) { return *((uint8*)(pool_get ( _pool, _idx ))); }
+inline uint16 pool_get_uint16 ( pool_t* _pool, int _idx ) { return *((uint16*)pool_get ( _pool, _idx )); }
+inline uint32 pool_get_uint32 ( pool_t* _pool, int _idx ) { return *((uint32*)pool_get ( _pool, _idx )); }
+inline uint64 pool_get_uint64 ( pool_t* _pool, int _idx ) { return *((uint64*)pool_get ( _pool, _idx )); }
 
-inline float pool_get_float ( pool_t* _pool, size_t _idx ) { return *((float*)pool_get ( _pool, _idx )); }
-inline double pool_get_double ( pool_t* _pool, size_t _idx ) { return *((double*)pool_get ( _pool, _idx )); }
+inline float pool_get_float ( pool_t* _pool, int _idx ) { return *((float*)pool_get ( _pool, _idx )); }
+inline double pool_get_double ( pool_t* _pool, int _idx ) { return *((double*)pool_get ( _pool, _idx )); }
 
-inline char* pool_get_string ( pool_t* _pool, size_t _idx ) { return *((char**)pool_get ( _pool, _idx )); }
-inline wchar_t* pool_get_wstring ( pool_t* _pool, size_t _idx ) { return *((wchar_t**)pool_get ( _pool, _idx )); }
+inline char* pool_get_string ( pool_t* _pool, int _idx ) { return *((char**)pool_get ( _pool, _idx )); }
+inline wchar_t* pool_get_wstring ( pool_t* _pool, int _idx ) { return *((wchar_t**)pool_get ( _pool, _idx )); }
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -1,24 +1,19 @@
 // ======================================================================================
-// File         : core_inc.h
+// File         : string_inc.h
 // Author       : Wu Jie 
-// Last Change  : 06/26/2010 | 11:52:26 AM | Saturday,June
+// Last Change  : 07/07/2010 | 14:48:13 PM | Wednesday,July
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef CORE_INC_H_1277524348
-#define CORE_INC_H_1277524348
+#ifndef STRING_INC_H_1278485298
+#define STRING_INC_H_1278485298
 // #################################################################################
 
-#include "global/global_inc.h"
-#include "memory/memory_inc.h"
-#include "debug/debug_inc.h"
-#include "thread/thread_inc.h"
-#include "string/string_inc.h"
-#include "misc/misc_inc.h"
+#include "stringID.h"
 
 // #################################################################################
-#endif // END CORE_INC_H_1277524348
+#endif // END STRING_INC_H_1278485298
 // #################################################################################
 
 
