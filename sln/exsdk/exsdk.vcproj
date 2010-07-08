@@ -278,6 +278,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\core\string\string_op.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\string_op.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\string\stringID.c"
 					>
 				</File>

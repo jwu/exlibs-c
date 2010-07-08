@@ -98,8 +98,8 @@ void hashmap_free_nomng ( hashmap_t* _hashmap );
 //  @return: -1: already exists
 // ------------------------------------------------------------------ 
 
-int hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val );
-int hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val );
+bool hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _index );
+bool hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _index );
 
 // TODO: void hashmap_set ( hashmap_t* _hashmap, void* _key, void* _val );
 
