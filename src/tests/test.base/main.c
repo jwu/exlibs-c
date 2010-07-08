@@ -22,6 +22,7 @@ extern void test_hashmap();
 extern void test_list();
 extern void test_memmng();
 extern void test_rapid();
+extern void test_stringID();
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -38,11 +39,12 @@ int main( int argc, char* argv[] )
 
     // test_bitarry ();
     // test_pool ();
-    test_array ();
+    // test_array ();
     // test_hashmap ();
     // test_list ();
     // test_memmng ();
-    test_rapid ();
+    test_stringID ();
+    // test_rapid ();
 
     // deinit
     core_deinit();

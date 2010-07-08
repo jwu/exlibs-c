@@ -189,6 +189,10 @@
 			RelativePath="..\..\src\tests\test.base\test_rapid.c"
 			>
 		</File>
+		<File
+			RelativePath="..\..\src\tests\test.base\test_stringID.c"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

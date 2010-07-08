@@ -23,6 +23,7 @@
 void core_init ()
 {
     mem_init();
+    strID_init(65536);
 }
 
 // ------------------------------------------------------------------ 
@@ -31,6 +32,7 @@ void core_init ()
 
 void core_deinit ()
 {
+    strID_deinit();
     mem_deinit();
 }
 
