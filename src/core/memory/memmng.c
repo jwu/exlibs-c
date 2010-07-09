@@ -210,7 +210,9 @@ void _reclaim_au ( alloc_unit_t* _au ) {
 
 //
 inline int _push_au ( alloc_unit_t* _au ) { 
-    return hashmap_insert_nomng ( au_map, &_au->org_addr, &_au ); 
+    size_t idx = -1;
+    hashmap_insert_nomng ( au_map, &_au->org_addr, &_au, &idx ); 
+    return idx;
 }
 
 //

@@ -27,7 +27,7 @@ hashmap_t* _string_set = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void strID_init ( size_t _size )
+void sid_init ( size_t _size )
 {
     _string_set = hashmap_alloc ( sizeof(wchar_t**), sizeof(wchar_t**), _size, hashkey_wstring, keycmp_wstring );
 }
@@ -36,7 +36,7 @@ void strID_init ( size_t _size )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void strID_deinit ()
+void sid_deinit ()
 {
     hashmap_free(_string_set);
 }
@@ -45,9 +45,11 @@ void strID_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t wcsID ( wchar_t* _string )
+size_t strID ( wchar_t* _string )
 {
-    return hashmap_insert ( _string_set, &_string, &_string );
+    size_t idx = -1;
+    hashmap_insert ( _string_set, &_string, &_string, &idx );
+    return idx;
 }
 
 // ------------------------------------------------------------------ 
@@ -56,6 +58,7 @@ size_t wcsID ( wchar_t* _string )
 
 wchar_t* sid_toString ( size_t _id )
 {
-    return pool_get_wstring( _string_set->_nodes, _id );
+    char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
+    return *((wchar_t**)addr);
 }
 

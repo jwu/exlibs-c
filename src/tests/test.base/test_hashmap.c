@@ -32,7 +32,7 @@ static void normal ()
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
             val = 1.0f + i;
-            hashmap_insert ( hashmap, &key, &val );
+            hashmap_insert ( hashmap, &key, &val, NULL );
         }
 
         // check
@@ -59,10 +59,10 @@ static void normal ()
 
         hashmap_t* hashmap = hashmap_alloc ( sizeof(char**), sizeof(float), 256, hashkey_string, keycmp_string );
 
-	    key = "foo"; val = 1.0f; hashmap_insert ( hashmap, &key, &val );
-        key = "bar"; val = 2.0f; hashmap_insert ( hashmap, &key, &val );
-        key = "hello"; val = 3.0f; hashmap_insert ( hashmap, &key, &val );
-        key = "world"; val = 4.0f; hashmap_insert ( hashmap, &key, &val );
+	    key = "foo"; val = 1.0f; hashmap_insert ( hashmap, &key, &val, NULL );
+        key = "bar"; val = 2.0f; hashmap_insert ( hashmap, &key, &val, NULL );
+        key = "hello"; val = 3.0f; hashmap_insert ( hashmap, &key, &val, NULL );
+        key = "world"; val = 4.0f; hashmap_insert ( hashmap, &key, &val, NULL );
 
         key = "foo"; ex_check ( *((float*)hashmap_get ( hashmap, &key )) == 1.0f );
         key = "bar"; ex_check ( *((float*)hashmap_get ( hashmap, &key )) == 2.0f );

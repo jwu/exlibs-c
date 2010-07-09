@@ -163,7 +163,7 @@ void hashmap_free_nomng ( hashmap_t* _hashmap )
 // ------------------------------------------------------------------ 
 
 // managed
-int hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val )
+bool hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -173,7 +173,8 @@ int hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val )
     {
         // compare the key
         if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
-            return -1;
+            if ( _index ) *_index = hash_next;
+            return false;
         }
     }
 
@@ -204,12 +205,13 @@ int hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val )
         memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
         memcpy ( (char*)_hashmap->_values + cur_idx * _hashmap->_value_bytes,  _val, _hashmap->_value_bytes );
 
-        return cur_idx;
+        if ( _index ) *_index = cur_idx;
+        return true;
     }
 }
 
 // no managed
-int hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val )
+bool hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -219,7 +221,8 @@ int hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val )
     {
         // compare the key
         if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
-            return -1;
+            if ( _index ) *_index = hash_next;
+            return false;
         }
     }
 
@@ -250,7 +253,8 @@ int hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val )
         memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
         memcpy ( (char*)_hashmap->_values + cur_idx * _hashmap->_value_bytes,  _val, _hashmap->_value_bytes );
 
-        return cur_idx;
+        if ( _index ) *_index = cur_idx;
+        return true;
     }
 }
 
