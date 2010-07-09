@@ -403,6 +403,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="thread"
+			>
+			<File
+				RelativePath="..\..\src\core\thread\mutex.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\core\thread\mutex_win32.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\core\thread\thread.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\core\thread\thread_inc.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\exsdk.c"
 			>

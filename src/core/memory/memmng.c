@@ -69,15 +69,16 @@ static const size_t prefix_size = sizeof(uint32) * PREFIX_COUNT;
 static const size_t suffix_size = sizeof(uint32) * SUFFIX_COUNT;
 static const size_t pattern_size = sizeof(uint32) * PREFIX_COUNT + sizeof(uint32) * SUFFIX_COUNT;
 
-alloc_unit_t* reserved_au_list;
-hashmap_t* au_map;
-list_t* au_bucket;
+static alloc_unit_t* reserved_au_list = NULL;
+static hashmap_t* au_map = NULL;
+static list_t* au_bucket = NULL;
+static mutex_t* access_mutex = NULL;
 
-size_t au_count;
-size_t total_org_memory;
-size_t total_dbg_memory;
-size_t accumulate_org_memory;
-size_t accumulate_dbg_memory;
+static size_t au_count = 0;
+static size_t total_org_memory = 0;
+static size_t total_dbg_memory = 0;
+static size_t accumulate_org_memory = 0;
+static size_t accumulate_dbg_memory = 0;
 
 ///////////////////////////////////////////////////////////////////////////////
 // private
@@ -303,7 +304,7 @@ void _dump () {
 
 void mem_init ()
 {
-    // TODO: mutex
+    access_mutex = mutex_create();
 
     au_map = hashmap_alloc_nomng ( sizeof(void*), sizeof(alloc_unit_t*), 256, hashkey_ptr, keycmp_ptr );
     au_bucket = list_alloc_nomng ( sizeof(alloc_unit_t*) );
@@ -318,7 +319,9 @@ void mem_init ()
 
 void mem_deinit ()
 {
-    // TODO: mutex
+    if ( access_mutex )
+        mutex_destroy(access_mutex);
+
     _dump ();
 
     //
@@ -340,7 +343,7 @@ void* _mng_malloc( size_t _size, const char* _tag, const char* _file_name, const
     uint i_pre, i_post;
     alloc_unit_t* au;
 
-    // TODO: mutex
+    mutex_lock(access_mutex);
 
     // ANSI says: allocation requests of 0 bytes will still return a valid value
     if ( _size == 0) _size = 1;
@@ -352,7 +355,11 @@ void* _mng_malloc( size_t _size, const char* _tag, const char* _file_name, const
 
     // get au, if not, create one
     au = _request_au();
-    ex_assert_return( au, NULL, "AllocInfo not found, check if the _ptr have been free or invalid" );
+    if ( au == NULL ) {
+        ex_error( "AllocInfo not found, check if the _ptr have been free or invalid" );
+        mutex_unlock(access_mutex);
+        return NULL;
+    }
     // write information
     au->org_size         = _size;
     au->dbg_size         = dbg_size;
@@ -392,9 +399,11 @@ void* _mng_malloc( size_t _size, const char* _tag, const char* _file_name, const
     // finally push the alloc info into hash_list 
     if ( _push_au (au) == -1 ) {
         ex_error ( "failed to insert alloc unit" );
+        mutex_unlock(access_mutex);
         return NULL;
     }
 
+    mutex_unlock(access_mutex);
     return org_ptr;
 }
 
@@ -410,22 +419,28 @@ void* _mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _fil
     uint32 *pre, *post;
     uint i_pre, i_post;
 
-    // TODO: mutex
+    mutex_lock(access_mutex);
 
     // alloc NULL memory address
     if ( _ptr == NULL ) {
+        mutex_unlock(access_mutex);
         return _mng_malloc( _size, _tag, _file_name, _func_name, _line_nr );
     }
 
     // realloc zero bytes free 
     if ( _size == 0 ) {
         _mng_free( _ptr, _file_name, _func_name, _line_nr );
+        mutex_unlock(access_mutex);
         return NULL;
     }
 
     // find au* by address
     au =  _get_au(_ptr);
-    ex_assert_return ( au, NULL, "AllocInfo not found, check if the _ptr have been free or invalid" );
+    if ( au == NULL ) {
+        ex_error ( "AllocInfo not found, check if the _ptr have been free or invalid" );
+        mutex_unlock(access_mutex);
+        return NULL;
+    }
 
     // verify memory conflic first if needed
 #if VERIFY_REALLOC
@@ -479,8 +494,11 @@ void* _mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _fil
     // finally push the alloc info into hash_list 
     if ( _rearrange_au ( _ptr, au ) == -1 ) {
         ex_error ( "failed to re-arrange alloc unit" );
+        mutex_unlock(access_mutex);
         return NULL;
     }
+
+    mutex_unlock(access_mutex);
     return org_ptr;
 }
 
@@ -492,11 +510,13 @@ void _mng_free( void* _ptr, const char* _file_name, const char* _func_name, size
 {
     alloc_unit_t* au;
 
-    // TODO: mutex
+    mutex_lock ( access_mutex );
 
     // nothing to do with NULL ptr
-    if ( _ptr == NULL )
+    if ( _ptr == NULL ) {
+        mutex_unlock(access_mutex);
         return;
+    }
 
     // find SAllocInfo* by address
     au = _get_au (_ptr);
@@ -518,5 +538,7 @@ void _mng_free( void* _ptr, const char* _file_name, const char* _func_name, size
 
     // reclaim the alloc info for next alloc
     _reclaim_au ( au );
+
+    mutex_unlock(access_mutex);
 }
 
