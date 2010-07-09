@@ -33,13 +33,13 @@ Usage:
 
 #define pool_each( _type, _el, _pool ) \
     { \
-        pool_node_t* node = (_pool)->_used_nodes; \
+        pool_node_t* node = (_pool)->_used_nodes_begin; \
         _type _el; \
         while ( node ) { \
             _el = *( (_type*) pool_get( _pool, node - (_pool)->_nodes ) );
 
 #define pool_each_end \
-            node = node->prev; \
+            node = node->next; \
         } \
     }
 
@@ -63,7 +63,8 @@ typedef struct pool_t {
     pool_node_t* _nodes;
     bitarray_t* _used_bits;
 
-    pool_node_t* _used_nodes;
+    pool_node_t* _used_nodes_begin;
+    pool_node_t* _used_nodes_end;
     pool_node_t* _free_nodes;
 } pool_t;
 

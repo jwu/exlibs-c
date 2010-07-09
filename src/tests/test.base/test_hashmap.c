@@ -35,6 +35,12 @@ static void normal ()
             hashmap_insert ( hashmap, &key, &val, NULL );
         }
 
+        i = 0;
+        hashmap_each ( float, el, hashmap ) {
+            printf ( "[%d] value is %f\n", i, el );
+            ++i;
+        } hashmap_each_end;
+
         // check
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;

@@ -17,8 +17,8 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-// const char* media_file = "e:/project/dev/exsdk/res/";
-const char* media_file = "e:/dev/exsdk/res/";
+const char* media_file = "e:/project/dev/exsdk/res/";
+// const char* media_file = "e:/dev/exsdk/res/";
 
 // ------------------------------------------------------------------ 
 // Desc: 

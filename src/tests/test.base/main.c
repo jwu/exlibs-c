@@ -40,10 +40,10 @@ int main( int argc, char* argv[] )
     // test_bitarry ();
     // test_pool ();
     // test_array ();
-    // test_hashmap ();
+    test_hashmap ();
     // test_list ();
     // test_memmng ();
-    test_stringID ();
+    // test_stringID ();
     // test_rapid ();
 
     // deinit

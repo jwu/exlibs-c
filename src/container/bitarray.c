@@ -107,25 +107,35 @@ void bitarray_set ( bitarray_t* _bitarray, size_t _idx, int _value )
 // managed
 void bitarray_resize ( bitarray_t* _bitarray, size_t _bitcount ) 
 {
-    size_t bytes;
+    size_t old_bytes, new_bytes;
 
     if ( _bitarray->_length == _bitcount )
         return;
 
-    bytes = (_bitcount + 7)/8;
-    _bitarray->_data = ex_realloc(_bitarray->_data, bytes);
+    old_bytes = (_bitarray->_length + 7)/8;
+    new_bytes = (_bitcount + 7)/8;
+
+    _bitarray->_data = ex_realloc(_bitarray->_data, new_bytes);
+    // if new size is more than the old one, we need to set clear the memory to zero.
+    if ( new_bytes > old_bytes )
+        memzero ( _bitarray->_data + old_bytes, new_bytes - old_bytes );
     _bitarray->_length = _bitcount;
 }
 
 // no managed
 void bitarray_resize_nomng ( bitarray_t* _bitarray, size_t _bitcount ) 
 {
-    size_t bytes;
+    size_t old_bytes, new_bytes;
 
     if ( _bitarray->_length == _bitcount )
         return;
 
-    bytes = (_bitcount + 7)/8;
-    _bitarray->_data = ex_realloc_nomng(_bitarray->_data, bytes);
+    old_bytes = (_bitarray->_length + 7)/8;
+    new_bytes = (_bitcount + 7)/8;
+
+    _bitarray->_data = ex_realloc_nomng(_bitarray->_data, new_bytes);
+    // if new size is more than the old one, we need to set clear the memory to zero.
+    if ( new_bytes > old_bytes )
+        memzero ( _bitarray->_data + old_bytes, new_bytes - old_bytes );
     _bitarray->_length = _bitcount;
 }

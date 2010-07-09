@@ -36,6 +36,14 @@ static void normal ()
         ex_check( pool_get_int32(pool,2) == 30 );
         ex_check( pool_get_int32(pool,3) == 40 );
 
+        {
+            int i = 0;
+            pool_each ( int32, el, pool ) {
+                printf ("[%d] value is %d\n", i, el );
+                ++i;
+            } pool_each_end
+        }
+
         // insert exceed the capacity
         pool_insert_int32 ( pool, 50 );
         pool_insert_int32 ( pool, 60 );
@@ -58,6 +66,14 @@ static void normal ()
         ex_check( pool_get_int32(pool,9 ) == 100 );
         ex_check( pool_get_int32(pool,10) == 110 );
         ex_check( pool_get_int32(pool,11) == 120 );
+
+        {
+            int i = 0;
+            pool_each ( int32, el, pool ) {
+                printf ("[%d] value is %d\n", i, el );
+                ++i;
+            } pool_each_end
+        }
 
         // erase
         pool_erase( pool, 4 );

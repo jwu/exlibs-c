@@ -19,6 +19,7 @@
 static pool_node_t* _request_free_node( pool_t* ); 
 static pool_node_t* _request_free_node_nomng( pool_t* ); 
 static void _push_to_used ( pool_t*, pool_node_t* );
+static void _push_to_used_reverse ( pool_t*, pool_node_t* );
 static void _push_to_free ( pool_t*, pool_node_t* );
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,7 +48,8 @@ pool_t* pool_alloc ( size_t _element_bytes, size_t _count )
 
     // init nodes
     pool->_nodes = ex_malloc( sizeof(pool_node_t) * _count );
-    pool->_used_nodes = NULL;
+    pool->_used_nodes_begin = NULL;
+    pool->_used_nodes_end = NULL;
     pool->_free_nodes = pool->_nodes + (_count-1);
     pool->_used_bits = bitarray_alloc( _count );
 
@@ -91,7 +93,8 @@ pool_t* pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 
     // init nodes
     pool->_nodes = ex_malloc_nomng( sizeof(pool_node_t) * _count );
-    pool->_used_nodes = NULL;
+    pool->_used_nodes_begin = NULL;
+    pool->_used_nodes_end = NULL;
     pool->_free_nodes = pool->_nodes + (_count-1);
     pool->_used_bits = bitarray_alloc_nomng( _count );
 
@@ -155,7 +158,7 @@ void pool_free_nomng ( pool_t* _pool )
 void pool_reserve ( pool_t* _pool, size_t _count ) 
 {
     size_t size = _count * _pool->_element_bytes;
-    size_t i = _count-1;
+    int i = _count - 1;
 
     // we don't process resizing if the new size is small than the _capacity
     if ( _count <= _pool->_capacity )
@@ -167,13 +170,14 @@ void pool_reserve ( pool_t* _pool, size_t _count )
     bitarray_resize ( _pool->_used_bits, _count );
     _pool->_capacity = _count;
 
-    _pool->_used_nodes = NULL;
+    _pool->_used_nodes_begin = NULL;
+    _pool->_used_nodes_end = NULL;
     _pool->_free_nodes = NULL;
 
-    while ( i > 0 ) {
+    while ( i >= 0 ) {
         // if curren index is in used.
         if ( bitarray_get ( _pool->_used_bits, i ) ) {
-            _push_to_used ( _pool, _pool->_nodes + i );
+            _push_to_used_reverse ( _pool, _pool->_nodes + i );
         }
         else {
             _push_to_free ( _pool, _pool->_nodes + i );
@@ -186,7 +190,7 @@ void pool_reserve ( pool_t* _pool, size_t _count )
 void pool_reserve_nomng ( pool_t* _pool, size_t _count ) 
 {
     size_t size = _count * _pool->_element_bytes;
-    size_t i = _count-1;
+    int i = _count - 1;
 
     // we don't process resizing if the new size is small than the _capacity
     if ( _count <= _pool->_capacity )
@@ -198,13 +202,14 @@ void pool_reserve_nomng ( pool_t* _pool, size_t _count )
     bitarray_resize_nomng ( _pool->_used_bits, _count );
     _pool->_capacity = _count;
 
-    _pool->_used_nodes = NULL;
+    _pool->_used_nodes_begin = NULL;
+    _pool->_used_nodes_end = NULL;
     _pool->_free_nodes = NULL;
 
-    while ( i > 0 ) {
+    while ( i >= 0 ) {
         // if curren index is in used.
         if ( bitarray_get ( _pool->_used_bits, i ) ) {
-            _push_to_used ( _pool, _pool->_nodes + i );
+            _push_to_used_reverse ( _pool, _pool->_nodes + i );
         }
         else {
             _push_to_free ( _pool, _pool->_nodes + i );
@@ -275,11 +280,13 @@ void* pool_erase ( pool_t* _pool, int _idx )
     // get current node.
     node = _pool->_nodes + _idx;
 
-    // if this is the end of used_nodes
-    // re-locate the used_nodes head
-    if ( node == _pool->_used_nodes ) {
-        _pool->_used_nodes = node->prev;
-    }
+    // re-locate the used_nodes begin and end
+    if ( node == _pool->_used_nodes_begin ) {
+        _pool->_used_nodes_begin = node->next;
+    } 
+    if ( node == _pool->_used_nodes_end ) {
+        _pool->_used_nodes_end = node->prev;
+    } 
 
     // unlink the node from used node.
     if ( node->prev )
@@ -352,16 +359,36 @@ pool_node_t* _request_free_node_nomng( pool_t* _pool )
 
 void _push_to_used ( pool_t* _pool, pool_node_t* _node )
 {
-    if ( _pool->_used_nodes ) { // if we have used nodes
-        _pool->_used_nodes->next = _node;
-        _node->prev = _pool->_used_nodes;
+    if ( _pool->_used_nodes_end ) { // if we have used nodes
+        _pool->_used_nodes_end->next = _node;
+        _node->prev = _pool->_used_nodes_end;
         _node->next = NULL;
-        _pool->_used_nodes = _node;
+        _pool->_used_nodes_end = _node;
     }
     else { // if it is the first one of the used nodes
-        _pool->_used_nodes = _node;
-        _pool->_used_nodes->next = NULL;
-        _pool->_used_nodes->prev = NULL;
+        _pool->_used_nodes_begin = _pool->_used_nodes_end = _node;
+        _pool->_used_nodes_end->next = NULL;
+        _pool->_used_nodes_end->prev = NULL;
+    }
+    bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 1 );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void _push_to_used_reverse ( pool_t* _pool, pool_node_t* _node )
+{
+    if ( _pool->_used_nodes_begin ) { // if we have used nodes
+        _pool->_used_nodes_begin->prev = _node;
+        _node->next = _pool->_used_nodes_begin;
+        _node->prev = NULL;
+        _pool->_used_nodes_begin = _node;
+    }
+    else { // if it is the first one of the used nodes
+        _pool->_used_nodes_begin = _pool->_used_nodes_end = _node;
+        _pool->_used_nodes_end->next = NULL;
+        _pool->_used_nodes_end->prev = NULL;
     }
     bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 1 );
 }

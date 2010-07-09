@@ -31,14 +31,14 @@ Usage:
 
 #define hashmap_each( _type, _el, _hashmap ) \
     { \
-        pool_node_t* node = (_hashmap)->_nodes->_used_nodes; \
+        pool_node_t* node = (_hashmap)->_nodes->_used_nodes_begin; \
         pool_node_t* node_begin = (_hashmap)->_nodes->_nodes; \
         _type _el; \
         while ( node ) { \
             _el = *( (_type*) ( (char*)(_hashmap)->_values + (node - node_begin) * (_hashmap)->_value_bytes ) );
 
 #define hashmap_each_end \
-            node = node->prev; \
+            node = node->next; \
         } \
     }
 
