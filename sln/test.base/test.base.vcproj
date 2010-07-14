@@ -170,6 +170,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\tests\test.base\test_btree.c"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\tests\test.base\test_hashmap.c"
 			>
 		</File>
