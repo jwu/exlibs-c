@@ -19,34 +19,37 @@
 // ------------------------------------------------------------------ 
 
 typedef struct bt_node_t {
-    int type;
-    bool (*exec) ();
-    array_t* children;
-} bt_node_t;
+    // data
+    const char* type;
+    struct array_t* children;
+    void* user_data;
 
-// int FindMax ( int amount, ...)
-// {
-//   int i,val,greater;
-//   va_list vl;
-//   va_start(vl,amount);
-//   greater=va_arg(vl,int);
-//   for (i=1;i<amount;i++)
-//   {
-//     val=va_arg(vl,int);
-//     greater=(greater>val)?greater:val;
-//   }
-//   va_end(vl);
-//   return greater;
-// }
+    // callback functions
+    bool (*exec) ( struct bt_node_t* _self );
+    void (*free) ( struct bt_node_t* _self );
+} bt_node_t;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bt_node_t* sequence(...);
-bt_node_t* selector(...);
-bt_node_t* parallel(...);
-bt_node_t* queue(...);
+void bt_node_add ( bt_node_t* _self, bt_node_t* _node );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void bt_node_free ( bt_node_t* _node );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bt_node_t* bt_sequence();
+bt_node_t* bt_selector();
+bt_node_t* bt_random_selector();
+bt_node_t* bt_parallel();
+bt_node_t* bt_queue();
 
 // #################################################################################
 #endif // END NODE_H_1279030729

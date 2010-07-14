@@ -54,8 +54,9 @@ bitarray_t* bitarray_alloc_nomng ( size_t _bitcount )
 // managed
 void bitarray_free ( bitarray_t* _bitarray )
 {
-    ex_free(_bitarray->_data);
+    ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
+    ex_free(_bitarray->_data);
     _bitarray->_length = 0;
     ex_free(_bitarray);
 }
@@ -63,8 +64,9 @@ void bitarray_free ( bitarray_t* _bitarray )
 // no managed
 void bitarray_free_nomng ( bitarray_t* _bitarray )
 {
-    ex_free_nomng(_bitarray->_data);
+    ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
+    ex_free_nomng(_bitarray->_data);
     _bitarray->_length = 0;
     ex_free_nomng(_bitarray);
 }

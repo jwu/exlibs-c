@@ -127,6 +127,8 @@ pool_t* pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 // managed
 void pool_free ( pool_t* _pool )
 {
+    ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
+
     ex_free(_pool->_data);
     ex_free(_pool->_nodes);
     bitarray_free( _pool->_used_bits );
@@ -140,6 +142,8 @@ void pool_free ( pool_t* _pool )
 // no managed
 void pool_free_nomng ( pool_t* _pool )
 {
+    ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
+
     ex_free_nomng(_pool->_data);
     ex_free_nomng(_pool->_nodes);
     bitarray_free_nomng( _pool->_used_bits );

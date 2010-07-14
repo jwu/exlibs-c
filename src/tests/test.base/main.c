@@ -16,6 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 extern void test_bitarry();
+extern void test_btree();
 extern void test_pool();
 extern void test_array();
 extern void test_hashmap();
@@ -38,9 +39,10 @@ int main( int argc, char* argv[] )
     core_init();
 
     // test_bitarry ();
+    test_btree ();
     // test_pool ();
     // test_array ();
-    test_hashmap ();
+    // test_hashmap ();
     // test_list ();
     // test_memmng ();
     // test_stringID ();

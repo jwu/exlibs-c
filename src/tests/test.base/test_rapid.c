@@ -18,15 +18,22 @@
 
 void test_rapid ()
 {
-    //
-    {
-        hashmap_t* hashmap = hashmap_alloc ( sizeof(uint32), sizeof(float), 256, hashkey_uint32, keycmp_uint32 );
-        hashmap_free ( hashmap );
+    uint indices[256];
+    uint i = 0;
+
+    for ( i = 0; i < 256; ++i ) {
+        indices[i] = i;
     }
 
-    //
-    {
-        void* ptr = ex_malloc(sizeof(uint32));
-        ex_free(ptr);
+    // shuffle the indices
+    for ( i = 0; i < 256-1; ++i ) {
+        uint r = i + ( rand() % (256-i) ); // random remaining position.
+        uint temp = indices[i]; 
+        indices[i] = indices[r]; 
+        indices[r] = temp;
+    }
+
+    for ( i = 0; i < 256; ++i ) {
+        printf ( "%d is %d\n", i, indices[i] );
     }
 }

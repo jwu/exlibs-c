@@ -83,8 +83,10 @@ list_t* list_alloc_nomng ( size_t _element_bytes )
 // managed
 void list_free ( list_t* _list )
 {
-    list_node_t* node = _list->_head;
+    list_node_t* node;
+    ex_assert_return( _list != NULL, /*void*/, "NULL input" );
 
+    node = _list->_head;
     while ( node != NULL ) {
         ex_free ( node );
         node = node->next;
@@ -100,8 +102,10 @@ void list_free ( list_t* _list )
 // no managed
 void list_free_nomng ( list_t* _list )
 {
-    list_node_t* node = _list->_head;
+    list_node_t* node; 
+    ex_assert_return( _list != NULL, /*void*/, "NULL input" );
 
+    node = _list->_head;
     while ( node != NULL ) {
         ex_free_nomng ( node );
         node = node->next;

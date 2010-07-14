@@ -129,6 +129,8 @@ hashmap_t* hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t 
 // managed
 void hashmap_free ( hashmap_t* _hashmap )
 {
+    ex_assert_return( _hashmap != NULL, /*void*/, "NULL input" );
+
     ex_free (_hashmap->_values);
     ex_free (_hashmap->_keys);
     ex_free (_hashmap->_indices);
@@ -145,6 +147,8 @@ void hashmap_free ( hashmap_t* _hashmap )
 // no managed
 void hashmap_free_nomng ( hashmap_t* _hashmap )
 {
+    ex_assert_return( _hashmap != NULL, /*void*/, "NULL input" );
+
     ex_free_nomng (_hashmap->_values);
     ex_free_nomng (_hashmap->_keys);
     ex_free_nomng (_hashmap->_indices);

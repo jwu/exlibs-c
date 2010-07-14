@@ -67,6 +67,8 @@ array_t* array_alloc_nomng ( size_t _element_bytes, size_t _count )
 // managed
 void array_free ( array_t* _array )
 {
+    ex_assert_return( _array != NULL, /*void*/, "NULL input" );
+
     ex_free(_array->_data);
     ex_free(_array);
 }
@@ -74,6 +76,8 @@ void array_free ( array_t* _array )
 // no managed
 void array_free_nomng ( array_t* _array )
 {
+    ex_assert_return( _array != NULL, /*void*/, "NULL input" );
+
     ex_free_nomng(_array->_data);
     ex_free_nomng(_array);
 }
