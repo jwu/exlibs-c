@@ -1,0 +1,1 @@
+angle = atan2(norm(cross(a,b)),dot(a,b));
