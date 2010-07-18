@@ -1,50 +1,34 @@
 // ======================================================================================
-// File         : core.c
+// File         : queue.inl
 // Author       : Wu Jie 
-// Last Change  : 07/01/2010 | 07:50:05 AM | Thursday,July
+// Last Change  : 07/18/2010 | 16:59:35 PM | Sunday,July
 // Description  : 
 // ======================================================================================
 
 ///////////////////////////////////////////////////////////////////////////////
-// includes
-///////////////////////////////////////////////////////////////////////////////
-
-#include "exsdk.h"
-#include "core.h"
-
-///////////////////////////////////////////////////////////////////////////////
-// defines
+// queue
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void core_init ()
+static bool _queue_exec ( bt_node_t* _node )
 {
-    ex_log ("init memory");
-    mem_init();
-
-    ex_log ("init string ID table");
-    sid_init(65536);
-
-    //
-    ex_log ("exsdk inited");
+    // TODO:
+    ex_assert( false, "pls implement this");
+    return false;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void core_deinit ()
+bt_node_t* bt_queue()
 {
-    ex_log ("deinit string ID table");
-    sid_deinit();
-
-    ex_log ("deinit memory");
-    mem_deinit();
-
-    //
-    ex_log ("exsdk deinitied");
+    bt_node_t* node = _bt_node_alloc ();
+    node->type = "queue";
+    node->exec = _queue_exec;
+    return node;
 }
 

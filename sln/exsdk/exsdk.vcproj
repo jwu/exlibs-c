@@ -40,6 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\ext"
 				PreprocessorDefinitions="WIN32;__EX_WIN32;__EX_DEBUG;DEBUG;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -420,6 +421,38 @@
 			</File>
 			<File
 				RelativePath="..\..\src\core\thread\thread_inc.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="behavior.tree"
+			>
+			<File
+				RelativePath="..\..\src\behavior.tree\btree_inc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\behavior.tree\node.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\behavior.tree\node.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\behavior.tree\parallel.inl"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\behavior.tree\queue.inl"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\behavior.tree\selector.inl"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\behavior.tree\sequence.inl"
 				>
 			</File>
 		</Filter>

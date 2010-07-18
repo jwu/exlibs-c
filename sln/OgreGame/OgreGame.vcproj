@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test.graphics"
-	ProjectGUID="{0DB0B68E-07AE-4CDA-939D-5225B3B81CC3}"
-	RootNamespace="tests"
+	Name="OgreGame"
+	ProjectGUID="{A37961B1-BF36-428C-A98C-8A9253D9AA76}"
+	RootNamespace="game"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -40,10 +40,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext"
+				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\include&quot;;&quot;$(OGRE_HOME)\boost_1_42&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="ogre_game.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -58,8 +60,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDLmain.lib opengl32.lib glu32.lib"
-				AdditionalLibraryDirectories="..\..\ext\SDL\lib\Release"
+				AdditionalDependencies="OgreMain_d.lib libboost_date_time-vc90-mt-gd-1_42.lib libboost_thread-vc90-mt-gd-1_42.lib"
+				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib\debug&quot;;&quot;$(OGRE_HOME)\boost_1_42\lib&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -160,7 +162,23 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\tests\test.graphics\main.c"
+			RelativePath="..\..\src\tests\OgreGame\main.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\OgreGame\ogre_game.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\OgreGame\ogre_game.h"
 			>
 		</File>
 	</Files>

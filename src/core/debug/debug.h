@@ -125,16 +125,16 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
 // ======================================================== 
 
 // TODO { 
-#define ex_log( msg, ... ) printf( msg, ##__VA_ARGS__ )
+#define ex_log( msg, ... ) printf( msg"\n", ##__VA_ARGS__ )
 // } TODO end 
 
 #if ( EX_DEBUG_LEVEL == SERIOUS )
-    #define ex_error(msg,...) __EX_ERROR_BREAK(msg, ##__VA_ARGS__) 
-    #define ex_warning(msg,...) __EX_WARNING_BREAK(msg, ##__VA_ARGS__)
+    #define ex_error(msg,...) __EX_ERROR_BREAK(msg"\n", ##__VA_ARGS__) 
+    #define ex_warning(msg,...) __EX_WARNING_BREAK(msg"\n", ##__VA_ARGS__)
 #else
     // TODO { 
-    #define ex_error(msg,...) EX_GP(::ex::CLog)->LogError( __FILE__, __LINE__, __FUNCTION__, msg, ##__VA_ARGS__ )
-    #define ex_warning(msg,...) EX_GP(::ex::CLog)->LogWarning( __FILE__, __LINE__, __FUNCTION__, msg, ##__VA_ARGS__ )
+    #define ex_error(msg,...) EX_GP(::ex::CLog)->LogError( __FILE__, __LINE__, __FUNCTION__, msg"\n", ##__VA_ARGS__ )
+    #define ex_warning(msg,...) EX_GP(::ex::CLog)->LogWarning( __FILE__, __LINE__, __FUNCTION__, msg"\n", ##__VA_ARGS__ )
     // } TODO end 
 #endif
 

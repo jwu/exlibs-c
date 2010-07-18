@@ -73,7 +73,7 @@ void bt_node_free ( bt_node_t* _node )
 // implements
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "sequence.c"
-#include "selector.c"
-#include "parallel.c"
-#include "queue.c"
+#include "sequence.inl"
+#include "selector.inl"
+#include "parallel.inl"
+#include "queue.inl"

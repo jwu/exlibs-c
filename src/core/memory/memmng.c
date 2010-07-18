@@ -43,22 +43,22 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-typedef struct alloc_unit_
+typedef struct alloc_unit_t
 {
-    size_t              org_size;
-    size_t              dbg_size;
-    void*               org_addr;
-    void*               dbg_addr;
-    const char*         tag_name;
-    const char*         file_name;
-    const char*         func_name;
-    size_t              line_nr;
-    bool                break_onfree;
-    bool                break_onrealloc;
-    size_t              alloc_nr;
-    uint32              thread_id;
-    struct alloc_unit_* next;
-    struct alloc_unit_* prev;
+    size_t               org_size;
+    size_t               dbg_size;
+    void*                org_addr;
+    void*                dbg_addr;
+    const char*          tag_name;
+    const char*          file_name;
+    const char*          func_name;
+    size_t               line_nr;
+    bool                 break_onfree;
+    bool                 break_onrealloc;
+    size_t               alloc_nr;
+    uint32               thread_id;
+    struct alloc_unit_t* next;
+    struct alloc_unit_t* prev;
 } alloc_unit_t; // end struct alloc_unit_t 
 
 ///////////////////////////////////////////////////////////////////////////////

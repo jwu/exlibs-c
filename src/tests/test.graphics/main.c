@@ -6,7 +6,7 @@
 // ======================================================================================
 
 #include <stdio.h>
-#include "../../ext/SDL/include/SDL.h"
+#include "SDL/include/SDL.h"
 #undef main
 
 #include "../../core/core_inc.h"

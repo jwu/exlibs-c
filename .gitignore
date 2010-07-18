@@ -43,8 +43,11 @@ quick_gen_project_*_autogen.bat
 # /////////////////////////////////////////////////////////////////////////////
 
 sln/Debug/
-sln/exsdk/Debug/
-sln/test.base/Debug/
-sln/test.lua/Debug/
-sln/test.graphics/Debug/
-src/ext/
+sln/*/Debug/
+
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# temporary ignore
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+ext/
+tools/

@@ -11,9 +11,9 @@
 
 #include "../../core/core_inc.h"
 
-#include "../../ext/lua-5.1.4/src/lua.h"
-#include "../../ext/lua-5.1.4/src/lauxlib.h"
-#include "../../ext/lua-5.1.4/src/lualib.h"
+#include "lua-5.1.4/src/lua.h"
+#include "lua-5.1.4/src/lauxlib.h"
+#include "lua-5.1.4/src/lualib.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

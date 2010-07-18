@@ -18,6 +18,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test.lua", "test.lua\test.l
 		{6F148E0F-33A6-46C9-8C9A-E1E0AB63B1A9} = {6F148E0F-33A6-46C9-8C9A-E1E0AB63B1A9}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgreGame", "OgreGame\OgreGame.vcproj", "{A37961B1-BF36-428C-A98C-8A9253D9AA76}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F148E0F-33A6-46C9-8C9A-E1E0AB63B1A9} = {6F148E0F-33A6-46C9-8C9A-E1E0AB63B1A9}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -40,6 +45,10 @@ Global
 		{C0A58EB5-8FC5-4545-A545-C39A36AD0675}.Debug|Win32.Build.0 = Debug|Win32
 		{C0A58EB5-8FC5-4545-A545-C39A36AD0675}.Release|Win32.ActiveCfg = Release|Win32
 		{C0A58EB5-8FC5-4545-A545-C39A36AD0675}.Release|Win32.Build.0 = Release|Win32
+		{A37961B1-BF36-428C-A98C-8A9253D9AA76}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A37961B1-BF36-428C-A98C-8A9253D9AA76}.Debug|Win32.Build.0 = Debug|Win32
+		{A37961B1-BF36-428C-A98C-8A9253D9AA76}.Release|Win32.ActiveCfg = Release|Win32
+		{A37961B1-BF36-428C-A98C-8A9253D9AA76}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

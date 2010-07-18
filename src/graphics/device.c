@@ -12,8 +12,8 @@
 #include "exsdk.h"
 
 // SDL
-#include "../ext/SDL/include/SDL.h"
-#include "../ext/SDL/include/SDL_opengl.h"
+#include "SDL/include/SDL.h"
+#include "SDL/include/SDL_opengl.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

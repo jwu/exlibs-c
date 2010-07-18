@@ -1,50 +1,35 @@
 // ======================================================================================
-// File         : core.c
+// File         : sequence.inl
 // Author       : Wu Jie 
-// Last Change  : 07/01/2010 | 07:50:05 AM | Thursday,July
+// Last Change  : 07/18/2010 | 16:59:37 PM | Sunday,July
 // Description  : 
 // ======================================================================================
 
 ///////////////////////////////////////////////////////////////////////////////
-// includes
-///////////////////////////////////////////////////////////////////////////////
-
-#include "exsdk.h"
-#include "core.h"
-
-///////////////////////////////////////////////////////////////////////////////
-// defines
+// sequence
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void core_init ()
+static bool _sequence_exec ( bt_node_t* _node )
 {
-    ex_log ("init memory");
-    mem_init();
-
-    ex_log ("init string ID table");
-    sid_init(65536);
-
-    //
-    ex_log ("exsdk inited");
+    array_each ( bt_node_t*, child, _node->children ) {
+        if ( (*(child->exec))(child) == false )
+            return false;
+    } array_each_end
+    return true;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void core_deinit ()
+bt_node_t* bt_sequence ()
 {
-    ex_log ("deinit string ID table");
-    sid_deinit();
-
-    ex_log ("deinit memory");
-    mem_deinit();
-
-    //
-    ex_log ("exsdk deinitied");
+    bt_node_t* node = _bt_node_alloc ();
+    node->type = "sequence";
+    node->exec = _sequence_exec;
+    return node;
 }
-
