@@ -17,7 +17,8 @@
 // private variables
 ///////////////////////////////////////////////////////////////////////////////
 
-hashmap_t* _string_set = NULL;
+static hashmap_t* _string_set = NULL;
+static bool _initialized = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -27,9 +28,19 @@ hashmap_t* _string_set = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void sid_init ( size_t _size )
+bool sid_init ( size_t _size )
 {
+    // if the core already initialized, don't init it second times.
+    if ( _initialized ) {
+        ex_warning ( "string ID table already initialized" );
+        return true;
+    }
+
     _string_set = hashmap_alloc ( sizeof(wchar_t**), sizeof(wchar_t**), _size, hashkey_wstring, keycmp_wstring );
+    ex_assert_return ( _string_set, false, "string table alloc failed" );
+
+    _initialized = true;
+    return true;
 }
 
 // ------------------------------------------------------------------ 
@@ -38,7 +49,10 @@ void sid_init ( size_t _size )
 
 void sid_deinit ()
 {
-    hashmap_free(_string_set);
+    if ( _initialized ) {
+        hashmap_free(_string_set);
+        _initialized = false;
+    }
 }
 
 // ------------------------------------------------------------------ 
