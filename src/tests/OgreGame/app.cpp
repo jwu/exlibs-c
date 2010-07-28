@@ -131,8 +131,10 @@ bool App::deinit ()
     deinitInput ();
 
     //
-    m_window->removeAllViewports ();
-    m_window = NULL;
+    if ( m_window ) {
+        m_window->removeAllViewports ();
+        m_window = NULL;
+    }
 
     //
     if ( m_root ) {
