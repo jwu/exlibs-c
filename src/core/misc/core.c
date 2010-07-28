@@ -43,6 +43,8 @@ bool core_init ()
         return false;
     }
 
+    // TODO: ex_log ("init lua");
+
     //
     ex_log ("exsdk inited");
     _initialized = true;
