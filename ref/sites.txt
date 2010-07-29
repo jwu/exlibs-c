@@ -1,0 +1,10 @@
+* Geometric Tools:
+
+  * http://www.geometrictools.com
+
+    * http://www.geometrictools.com/Documentation/Documentation.html
+
+* Euler Angles:
+ 
+ * http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToEuler/index.htm
+ * http://www.gamedev.net/community/forums/topic.asp?topic_id=485055
