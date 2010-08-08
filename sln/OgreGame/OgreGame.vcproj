@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)/_bin/$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)/_build/$(ConfigurationName)/$(ProjectName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\include&quot;;&quot;$(OGRE_HOME)\boost_1_42&quot;"
+				AdditionalIncludeDirectories="&quot;$(OGRE_HOME)\include&quot;;&quot;$(OGRE_HOME)\boost_1_42&quot;;..\..\ext"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,8 +60,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OgreMain_d.lib libboost_date_time-vc90-mt-gd-1_42.lib libboost_thread-vc90-mt-gd-1_42.lib"
-				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib\debug&quot;;&quot;$(OGRE_HOME)\boost_1_42\lib&quot;"
+				AdditionalDependencies="OgreMain_d.lib OIS_d.lib libboost_date_time-vc90-mt-gd-1_42.lib libboost_thread-vc90-mt-gd-1_42.lib SDL.lib SDLmain.lib"
+				AdditionalLibraryDirectories="&quot;$(OGRE_HOME)\lib\debug&quot;;&quot;$(OGRE_HOME)\boost_1_42\lib&quot;;..\..\ext\SDL\lib\Release"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -161,6 +161,14 @@
 	<References>
 	</References>
 	<Files>
+		<File
+			RelativePath="..\..\src\tests\OgreGame\app.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\OgreGame\app.h"
+			>
+		</File>
 		<File
 			RelativePath="..\..\src\tests\OgreGame\main.cpp"
 			>

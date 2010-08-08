@@ -16,20 +16,40 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+static bool _initialized = false;
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void core_init ()
+bool core_init ()
 {
+    // if the core already inited, don't init it second times.
+    if ( _initialized ) {
+        ex_warning ( "core already inited" );
+        return true;
+    }
+
+    //
     ex_log ("init memory");
-    mem_init();
+    if ( mem_init() == false ) {
+        ex_log ("failed to init memory");
+        return false;
+    }
 
     ex_log ("init string ID table");
-    sid_init(65536);
+    if ( sid_init(65536) == false ) {
+        ex_log ("failed to init string ID table");
+        return false;
+    }
+
+    // TODO: ex_log ("init lua");
 
     //
     ex_log ("exsdk inited");
+    _initialized = true;
+
+    return true;
 }
 
 // ------------------------------------------------------------------ 
@@ -38,13 +58,16 @@ void core_init ()
 
 void core_deinit ()
 {
-    ex_log ("deinit string ID table");
-    sid_deinit();
+    if ( _initialized ) {
+        ex_log ("deinit string ID table");
+        sid_deinit();
 
-    ex_log ("deinit memory");
-    mem_deinit();
+        ex_log ("deinit memory");
+        mem_deinit();
 
-    //
-    ex_log ("exsdk deinitied");
+        //
+        ex_log ("exsdk deinitied");
+        _initialized = false;
+    }
 }
 

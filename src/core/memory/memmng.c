@@ -80,6 +80,8 @@ static size_t total_dbg_memory = 0;
 static size_t accumulate_org_memory = 0;
 static size_t accumulate_dbg_memory = 0;
 
+static bool _initialized = false;
+
 ///////////////////////////////////////////////////////////////////////////////
 // private
 ///////////////////////////////////////////////////////////////////////////////
@@ -302,8 +304,15 @@ void _dump () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void mem_init ()
+bool mem_init ()
 {
+    // if the core already initialized, don't init it second times.
+    if ( _initialized ) {
+        ex_warning ( "memory manager already initialized" );
+        return true;
+    }
+
+    //
     access_mutex = mutex_create();
 
     au_map = hashmap_alloc_nomng ( sizeof(void*), sizeof(alloc_unit_t*), 256, hashkey_ptr, keycmp_ptr );
@@ -311,6 +320,9 @@ void mem_init ()
 
     // remove log file if it exists
     unlink ( MEM_LOG );
+
+    _initialized = true;
+    return true;
 }
 
 // ------------------------------------------------------------------ 
@@ -319,16 +331,20 @@ void mem_init ()
 
 void mem_deinit ()
 {
-    if ( access_mutex )
-        mutex_destroy(access_mutex);
+    if ( _initialized ) {
+        if ( access_mutex )
+            mutex_destroy(access_mutex);
 
-    _dump ();
+        _dump ();
 
-    //
-    hashmap_free_nomng ( au_map );
+        //
+        hashmap_free_nomng ( au_map );
 
-    // free the reserve alloc info buffer
-    list_free_nomng ( au_bucket );
+        // free the reserve alloc info buffer
+        list_free_nomng ( au_bucket );
+
+        _initialized = false;
+    }
 }
 
 // ------------------------------------------------------------------ 

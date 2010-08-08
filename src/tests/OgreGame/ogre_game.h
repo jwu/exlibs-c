@@ -16,6 +16,13 @@
 #include "Ogre/OgreRenderWindow.h"
 #include "Ogre/OgreWindowEventUtilities.h"
 
+// OIS
+#include "OIS/Ois.h"
+
+//
+#include "SDL/include/SDL.h"
+#undef main
+
 // exsdk
 extern "C" {
     #include "../../exsdk.h"

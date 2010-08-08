@@ -10,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ogre_game.h"
+#include "app.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -23,10 +24,27 @@
 int main( int argc, char* argv[] )
 {
     // init
-    core_init();
+    if ( core_init() ) {
 
-    // deinit
-    core_deinit();
+        // ogre app
+        {
+            // init ogre
+            App app;
+            if ( app.init() ) {
+
+                // main loop
+                while ( app.window()->isClosed() == false ) {
+                    app.tick();
+                }
+
+                // deinit ogre
+                app.deinit();
+            }
+        }
+
+        // deinit
+        core_deinit();
+    }
 
     return 0;
 }
