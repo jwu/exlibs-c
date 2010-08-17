@@ -38,6 +38,7 @@ _log/
 *.vimentry
 .vimfiles.*/
 quick_gen_project_*_autogen.bat
+quick_gen_project_*_autogen.sh
 
 #/////////////////////////////////////////////////////////////////////////////
 # ogre files
