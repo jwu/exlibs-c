@@ -10,6 +10,12 @@
 #define PTR_H_1277863712
 // #################################################################################
 
+// ######################### 
+#ifdef __cplusplus
+extern "C" { 
+#endif
+// ######################### 
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -19,6 +25,13 @@ inline void* ptr_sub ( void* _ptr, size_t _offset ) { return (void*)((size_t)_pt
 inline size_t ptr_diff ( void* _lhs, void* _rhs ) { return (size_t)_lhs - (size_t)_rhs; }
 inline size_t ptr_to_addr ( void* _ptr ) { return (size_t)_ptr; }
 inline void* addr_to_ptr ( size_t _addr ) { return (void*)_addr; }
+
+// ######################### 
+#ifdef __cplusplus
+} // end extern C 
+#endif
+// ######################### 
+
 
 // #################################################################################
 #endif // END PTR_H_1277863712

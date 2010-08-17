@@ -10,6 +10,12 @@
 #define LIST_H_1277805267
 // #################################################################################
 
+// ######################### 
+#ifdef __cplusplus
+extern "C" {
+#endif
+// ######################### 
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -80,6 +86,12 @@ list_node_t* list_erase_nomng ( list_t* _list, list_node_t* _at );
 inline size_t list_len ( list_t* _list ) { return _list->_length; }
 inline list_node_t* list_head ( list_t* _list ) { return _list->_head; }
 inline list_node_t* list_tail ( list_t* _list ) { return _list->_tail; }
+
+// ######################### 
+#ifdef __cplusplus
+} // end extern "C"
+#endif
+// ######################### 
 
 // #################################################################################
 #endif // END LIST_H_1277805267

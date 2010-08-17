@@ -10,6 +10,12 @@
 #define POOL_H_1277532911
 // #################################################################################
 
+// ######################### 
+#ifdef __cplusplus
+extern "C" {
+#endif
+// ######################### 
+
 // Purpose: pool_t is index fixed array 
 //          When erase a item from pool_t, the index of the other item will not changed.
 
@@ -147,6 +153,12 @@ inline wchar_t* pool_get_wstring ( pool_t* _pool, int _idx ) { return *((wchar_t
 // ------------------------------------------------------------------ 
 
 void* pool_erase ( pool_t* _pool, int _idx );
+
+// ######################### 
+#ifdef __cplusplus
+} // end extern "C"
+#endif
+// ######################### 
 
 // #################################################################################
 #endif // END POOL_H_1277532911

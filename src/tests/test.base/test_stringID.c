@@ -47,25 +47,23 @@ static void normal ()
         uint cur = 0,prev = 0;
         size_t sid;
 
-        words = array_alloc ( sizeof(wchar_t*), 256 );
+        words = array_alloc ( sizeof(char*), 256 );
         word_IDs = array_alloc ( sizeof(size_t), 256 );
 
         // dump string and string ID
         while ( cur < fsize ) {
             if ( data[cur] == ' ' ) {
-                char word[128];
-                wchar_t* w_word;
+                char* word = ex_malloc(sizeof(char)*128);
                 uint word_len = cur - prev;
 
                 ex_assert ( word_len < 128, "the word exceed the length of the string (e.g 128) " );
                 strncpy ( word, data + prev, word_len );
                 word[word_len] = '\0';
 
-                w_word = ex_malloc (128 * sizeof(wchar_t));
-                sid = strID( to_wcs( word, w_word ) );
-                ex_assert(sid != -1, "can't get string ID of %ls", w_word);
+                sid = strID( word );
+                ex_assert(sid != -1, "can't get string ID of %s", word);
 
-                array_push_back ( words, &w_word );
+                array_push_back ( words, &word );
                 array_push_back ( word_IDs, &sid );
                 prev = cur;
             }
@@ -75,17 +73,17 @@ static void normal ()
         // check if the string ID consistent with string
         cur = 0;
         while ( cur < array_len(words) ) {
-            wchar_t* word = *((wchar_t**)array_get( words, cur ));
+            char* word = *((char**)array_get( words, cur ));
             size_t sid = *((size_t*)array_get( word_IDs, cur )); 
-            // ex_check ( wcscmp(sid_toString(sid), word) == 0 );
-            ex_assert ( wcscmp(sid_toString(sid), word) == 0, "%s(%d) is not equal to %s", sid_toString(sid), sid, word );
+            // EX_TEST ( wcscmp(sid_toString(sid), word) == 0 );
+            ex_assert ( strcmp(sid_toString(sid), word) == 0, "%s(%d) is not equal to %s", sid_toString(sid), sid, word );
             ++cur;
         }
 
         // release all memory
         cur = 0;
         while ( cur < array_len(words) ) {
-            void* ptr = *((wchar_t**)array_get( words, cur ));
+            void* ptr = *((char**)array_get( words, cur ));
             ex_free(ptr);
             ++cur;
         }
@@ -94,6 +92,45 @@ static void normal ()
     }
 
     ex_free (data);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void widechar()
+{
+    size_t id = -1;
+    id = wcsID( L"中文" );
+    ex_log ( "id = %d", id );
+    id = strID( "中文" );
+    ex_log ( "id = %d", id );
+
+    // TODO { 
+    // {
+    //     size_t id = strID ("c");
+    //     char* str = sid_toString(id);
+    //     EX_TEST ( strcmp(str, "c") == 0 );
+    // }
+
+    // {
+    //     size_t id = strID ( "中c");
+    //     char* str = sid_toString(id);
+    //     EX_TEST ( strcmp(str, "中c") == 0 );
+    // }
+
+    // {
+    //     char s[128];
+    //     wchar_t ws[128];
+
+    //     memset ( s, 0xcc, sizeof(char)*128 );
+    //     strcpy ( s, "中c" );
+    //     memset ( ws, 0xcc, sizeof(wchar_t)*128 );
+    //     wcscpy ( ws, L"中c" );
+
+    //     EX_HW_BREAK();
+    // }
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 
@@ -111,6 +148,7 @@ static void invalid()
 void test_stringID ()
 {
     normal();
+    widechar();
     invalid();
 }
 

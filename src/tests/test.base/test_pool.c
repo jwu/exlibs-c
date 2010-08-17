@@ -31,10 +31,10 @@ static void normal ()
         pool_insert_int32 ( pool, 30 );
         pool_insert_int32 ( pool, 40 );
 
-        ex_check( pool_get_int32(pool,0) == 10 );
-        ex_check( pool_get_int32(pool,1) == 20 );
-        ex_check( pool_get_int32(pool,2) == 30 );
-        ex_check( pool_get_int32(pool,3) == 40 );
+        EX_TEST( pool_get_int32(pool,0) == 10 );
+        EX_TEST( pool_get_int32(pool,1) == 20 );
+        EX_TEST( pool_get_int32(pool,2) == 30 );
+        EX_TEST( pool_get_int32(pool,3) == 40 );
 
         {
             int i = 0;
@@ -54,18 +54,18 @@ static void normal ()
         pool_insert_int32 ( pool, 110 );
         pool_insert_int32 ( pool, 120 );
 
-        ex_check( pool_get_int32(pool,0 ) == 10 );
-        ex_check( pool_get_int32(pool,1 ) == 20 );
-        ex_check( pool_get_int32(pool,2 ) == 30 );
-        ex_check( pool_get_int32(pool,3 ) == 40 );
-        ex_check( pool_get_int32(pool,4 ) == 50 );
-        ex_check( pool_get_int32(pool,5 ) == 60 );
-        ex_check( pool_get_int32(pool,6 ) == 70 );
-        ex_check( pool_get_int32(pool,7 ) == 80 );
-        ex_check( pool_get_int32(pool,8 ) == 90 );
-        ex_check( pool_get_int32(pool,9 ) == 100 );
-        ex_check( pool_get_int32(pool,10) == 110 );
-        ex_check( pool_get_int32(pool,11) == 120 );
+        EX_TEST( pool_get_int32(pool,0 ) == 10 );
+        EX_TEST( pool_get_int32(pool,1 ) == 20 );
+        EX_TEST( pool_get_int32(pool,2 ) == 30 );
+        EX_TEST( pool_get_int32(pool,3 ) == 40 );
+        EX_TEST( pool_get_int32(pool,4 ) == 50 );
+        EX_TEST( pool_get_int32(pool,5 ) == 60 );
+        EX_TEST( pool_get_int32(pool,6 ) == 70 );
+        EX_TEST( pool_get_int32(pool,7 ) == 80 );
+        EX_TEST( pool_get_int32(pool,8 ) == 90 );
+        EX_TEST( pool_get_int32(pool,9 ) == 100 );
+        EX_TEST( pool_get_int32(pool,10) == 110 );
+        EX_TEST( pool_get_int32(pool,11) == 120 );
 
         {
             int i = 0;
@@ -80,8 +80,8 @@ static void normal ()
         pool_erase( pool, 10 );
         pool_insert_int32( pool, 200 );
         pool_insert_int32( pool, 210 );
-        ex_check( pool_get_int32(pool,10) == 200 );
-        ex_check( pool_get_int32(pool,4) == 210 );
+        EX_TEST( pool_get_int32(pool,10) == 200 );
+        EX_TEST( pool_get_int32(pool,4) == 210 );
     }
     pool_free ( pool );
 
@@ -90,7 +90,7 @@ static void normal ()
     {
         // normal insert
         pool_insert_string ( pool, "hello world!" );
-        ex_check ( strcmp ( pool_get_string(pool,0), "hello world!" ) == 0 );
+        EX_TEST ( strcmp ( pool_get_string(pool,0), "hello world!" ) == 0 );
     }
     pool_free ( pool );
 }

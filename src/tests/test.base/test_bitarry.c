@@ -30,17 +30,17 @@ static void normal ()
         bitarray_set ( bitArray, 10, 1 );
 
         result = bitarray_get( bitArray, 0 ); 
-        ex_check ( result == 1 );
+        EX_TEST ( result == 1 );
 
         result = bitarray_get( bitArray, 1 ); 
-        ex_check ( result == 0 );
+        EX_TEST ( result == 0 );
 
         result = bitarray_get( bitArray, 10 ); 
-        ex_check ( result == 1 );
+        EX_TEST ( result == 1 );
 
         bitarray_set ( bitArray, 10, 0 );
         result = bitarray_get( bitArray, 10 ); 
-        ex_check ( result == 0 );
+        EX_TEST ( result == 0 );
     }
     bitarray_free ( bitArray );
 }

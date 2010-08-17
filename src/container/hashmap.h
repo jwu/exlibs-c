@@ -10,6 +10,12 @@
 #define HASHMAP_H_1277683404
 // #################################################################################
 
+// ######################### 
+#ifdef __cplusplus
+extern "C" {
+#endif
+// ######################### 
+
 ///////////////////////////////////////////////////////////////////////////////
 // includes
 ///////////////////////////////////////////////////////////////////////////////
@@ -131,7 +137,7 @@ inline size_t hashmap_capacity ( hashmap_t* _hashmap ) { return _hashmap->_capac
 // ------------------------------------------------------------------ 
 
 inline uint32 hashkey_string ( void* _val ) { return hashstr( *((char**)_val) ); }
-inline uint32 hashkey_wstring ( void* _val ) { return hashstr_w( *((wchar_t**)_val) ); }
+// DISABLE can use hashkey_string instead: inline uint32 hashkey_wstring ( void* _val ) { return hashstr_w( *((wchar_t**)_val) ); }
 inline uint32 hashkey_uint32 ( void* _val ) { return *((uint32*)_val); }
 inline uint32 hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)_val) >> 4); }
 
@@ -140,9 +146,15 @@ inline uint32 hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)_va
 // ------------------------------------------------------------------ 
 
 inline int keycmp_string ( void* _lhs, void* _rhs ) { return strcmp ( *((char**)_lhs), *((char**)_rhs) ); }
-inline int keycmp_wstring ( void* _lhs, void* _rhs ) { return wcscmp ( *((wchar_t**)_lhs), *((wchar_t**)_rhs) ); }
+// DISABLE can use keycmp_string instead: inline int keycmp_wstring ( void* _lhs, void* _rhs ) { return wcscmp ( *((wchar_t**)_lhs), *((wchar_t**)_rhs) ); }
 inline int keycmp_uint32 ( void* _lhs, void* _rhs ) { return *((uint32*)_lhs) - *((uint32*)_rhs); }
 inline int keycmp_ptr ( void* _lhs, void* _rhs ) { return (size_t)*((void**)_lhs) - (size_t)*((void**)_rhs); }
+
+// ######################### 
+#ifdef __cplusplus
+} // end extern "C"
+#endif
+// ######################### 
 
 // #################################################################################
 #endif // END HASHMAP_H_1277683404

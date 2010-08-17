@@ -275,6 +275,14 @@
 				Name="string"
 				>
 				<File
+					RelativePath="..\..\src\core\string\encoding.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\encoding.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\string\string_inc.h"
 					>
 				</File>

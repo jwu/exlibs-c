@@ -25,6 +25,7 @@
     #endif
 
     #include <windows.h>
+    #include <malloc.h> 
     // #include <io.h>
     // #include <direct.h>
     // #include <process.h>

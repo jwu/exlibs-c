@@ -12,6 +12,7 @@
 
 #include "stringID.h"
 #include "string_op.h"
+#include "encoding.h"
 
 // #################################################################################
 #endif // END STRING_INC_H_1278485298

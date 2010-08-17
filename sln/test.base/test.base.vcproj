@@ -175,6 +175,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\tests\test.base\test_encoding.c"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\tests\test.base\test_hashmap.c"
 			>
 		</File>

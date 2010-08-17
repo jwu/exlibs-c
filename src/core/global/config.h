@@ -79,6 +79,15 @@
 
 #define EX_DOUBLE_EPS 1e-08
 
+// ------------------------------------------------------------------
+// Desc: Set the default double precision for math calculation such as compare
+// ------------------------------------------------------------------
+
+#define EX_SINGLE 0
+#define EX_DOUBLE 1
+
+#define EX_REAL_PRECISION EX_SINGLE
+
 ///////////////////////////////////////////////////////////////////////////////
 // ext-lib defines
 ///////////////////////////////////////////////////////////////////////////////

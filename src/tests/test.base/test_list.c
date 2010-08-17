@@ -30,13 +30,13 @@ static void normal () {
         for ( i = 0; i < 512; ++i ) {
             list_push_back ( list, &i );
         }
-        ex_check( list_len(list) == 512 );
+        EX_TEST( list_len(list) == 512 );
 
         // check value
         node = list_head(list);
         i = 0;
         while ( node ) {
-            ex_check( *((uint32*)node->value) == i );
+            EX_TEST( *((uint32*)node->value) == i );
             node = node->next;
             ++i;
         }
@@ -46,7 +46,7 @@ static void normal () {
         while ( node ) {
             node = list_erase ( list, node );
         }
-        ex_check( list_len(list) == 0 );
+        EX_TEST( list_len(list) == 0 );
     }
     list_free (list);
 }

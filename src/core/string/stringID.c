@@ -36,7 +36,7 @@ bool sid_init ( size_t _size )
         return true;
     }
 
-    _string_set = hashmap_alloc ( sizeof(wchar_t**), sizeof(wchar_t**), _size, hashkey_wstring, keycmp_wstring );
+    _string_set = hashmap_alloc ( sizeof(char**), sizeof(char**), _size, hashkey_string, keycmp_string );
     ex_assert_return ( _string_set, false, "string table alloc failed" );
 
     _initialized = true;
@@ -59,9 +59,32 @@ void sid_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t strID ( wchar_t* _string )
+size_t wcsID ( wchar_t* _string )
 {
     size_t idx = -1;
+    size_t len = wcslen(_string);
+    char* str_utf8;
+
+    if ( _string == NULL )
+        return -1;
+
+    str_utf8 = ex_stack_malloc( len * sizeof(wchar_t) );
+    ucs2_to_utf8 ( _string, len * sizeof(wchar_t), str_utf8 );
+    hashmap_insert ( _string_set, &str_utf8, &str_utf8, &idx );
+    ex_stack_free(str_utf8);
+    return idx;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+size_t strID ( char* _string )
+{
+    size_t idx = -1;
+    if ( _string == NULL )
+        return -1;
+
     hashmap_insert ( _string_set, &_string, &_string, &idx );
     return idx;
 }
@@ -70,9 +93,17 @@ size_t strID ( wchar_t* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
+#if 0
 wchar_t* sid_toString ( size_t _id )
 {
     char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
     return *((wchar_t**)addr);
 }
+#else
+char* sid_toString ( size_t _id )
+{
+    char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
+    return *((char**)addr);
+}
+#endif
 

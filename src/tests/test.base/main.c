@@ -15,15 +15,17 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+extern void test_array();
 extern void test_bitarry();
 extern void test_btree();
-extern void test_pool();
-extern void test_array();
+extern void test_encoding();
 extern void test_hashmap();
 extern void test_list();
 extern void test_memmng();
-extern void test_rapid();
+extern void test_pool();
 extern void test_stringID();
+
+extern void test_rapid();
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -31,25 +33,31 @@ extern void test_stringID();
 
 int main( int argc, char* argv[] )
 {
+
     printf ("================\n");
     printf ("start testing...\n");
     printf ("================\n");
 
     // init
-    core_init();
+    if ( core_init() ) {
+        // general
+        // test_array ();
+        // test_bitarry ();
+        // test_btree ();
+        // test_encoding ();
+        // test_hashmap ();
+        // test_list ();
+        // test_memmng ();
+        // test_pool ();
+        test_stringID ();
 
-    // test_bitarry ();
-    test_btree ();
-    // test_pool ();
-    // test_array ();
-    // test_hashmap ();
-    // test_list ();
-    // test_memmng ();
-    // test_stringID ();
-    // test_rapid ();
+        // special
+        test_rapid ();
+    }
 
     // deinit
     core_deinit();
+
 
     return 0;
 }
