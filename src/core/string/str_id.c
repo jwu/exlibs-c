@@ -50,6 +50,10 @@ bool str_id_init ( size_t _size )
 void str_id_deinit ()
 {
     if ( _initialized ) {
+        // free all allocated string
+        hashmap_each ( char*, str, _string_set ) {
+            ex_free(str);
+        } hashmap_each_end;
         hashmap_free(_string_set);
         _initialized = false;
     }
