@@ -177,7 +177,7 @@ inline uint32 _hashstr ( const void* _str, uint32 _bytes )
 #elif (EX_HASH_METHOD == EX_HASH_BOB2)
     return hashbob2( (uint8*)_str, _bytes, EX_HASH_SEED );
 #elif (EX_HASH_METHOD == EX_HASH_BOB3)
-    return hashbob3( (void*)_str, _bytes, EX_HASH_SEED );
+    return hashbob3_ptr( (void*)_str, _bytes, EX_HASH_SEED );
 #elif (EX_HASH_METHOD == EX_HASH_CRC)
     return hashcrc_str( 32, _str );
 #endif
@@ -206,7 +206,7 @@ inline uint32 _hashuse( int _method, const void* _str, uint32 _bytes ) {
         return hashbob2( (uint8*)_str, _bytes, EX_HASH_SEED );
 
     case EX_HASH_BOB3:
-        return hashbob3( (void*)_str, _bytes, EX_HASH_SEED );
+        return hashbob3_ptr( (void*)_str, _bytes, EX_HASH_SEED );
 
     case EX_HASH_CRC:
         return hashcrc ( 32, (uint8*)_str, _bytes );

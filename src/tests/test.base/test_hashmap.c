@@ -45,7 +45,7 @@ static void normal ()
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
             val = 1.0f + i;
-            EX_TEST ( *((float*)hashmap_get ( hashmap, &key )) == val );
+            EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == val );
         }
         EX_TEST ( hashmap_len(hashmap) == 512 );
 
@@ -70,10 +70,10 @@ static void normal ()
         key = "hello"; val = 3.0f; hashmap_insert ( hashmap, &key, &val, NULL );
         key = "world"; val = 4.0f; hashmap_insert ( hashmap, &key, &val, NULL );
 
-        key = "foo"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key )) == 1.0f );
-        key = "bar"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key )) == 2.0f );
-        key = "hello"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key )) == 3.0f );
-        key = "world"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key )) == 4.0f );
+        key = "foo"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 1.0f );
+        key = "bar"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 2.0f );
+        key = "hello"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 3.0f );
+        key = "world"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 4.0f );
 
         EX_TEST ( hashmap_len(hashmap) == 4 );
 

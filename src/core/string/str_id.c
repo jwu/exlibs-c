@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : stringID.c
+// File         : str_id.c
 // Author       : Wu Jie 
-// Last Change  : 07/07/2010 | 15:02:54 PM | Wednesday,July
+// Last Change  : 10/12/2010 | 13:57:04 PM | Tuesday,October
 // Description  : 
 // ======================================================================================
 
@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "../../container/hashmap.h"
-#include "stringID.h"
+#include "str_id.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // private variables
@@ -28,7 +28,7 @@ static bool _initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool sid_init ( size_t _size )
+bool str_id_init ( size_t _size )
 {
     // if the core already initialized, don't init it second times.
     if ( _initialized ) {
@@ -47,7 +47,7 @@ bool sid_init ( size_t _size )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void sid_deinit ()
+void str_id_deinit ()
 {
     if ( _initialized ) {
         hashmap_free(_string_set);
@@ -59,18 +59,25 @@ void sid_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t wcsID ( wchar_t* _string )
+size_t wcs_id ( wchar_t* _string )
 {
     size_t idx = -1;
-    size_t len = wcslen(_string);
-    char* str_utf8;
+    size_t hash_idx = -1;
+    size_t str_size = wcslen(_string)+1;
+    char* str_utf8 = NULL;
+    char* str_new = NULL;
 
     if ( _string == NULL )
         return -1;
 
-    str_utf8 = ex_stack_malloc( len * sizeof(wchar_t) );
-    ucs2_to_utf8 ( _string, len * sizeof(wchar_t), str_utf8 );
-    hashmap_insert ( _string_set, &str_utf8, &str_utf8, &idx );
+    str_utf8 = ex_stack_malloc( str_size );
+    ucs2_to_utf8 ( _string, str_size, str_utf8 );
+    hash_idx = hashmap_get_hashidx ( _string_set, &str_utf8, &idx ); 
+    if ( idx == -1 ) {
+        str_new = ex_malloc(str_size);
+        strncpy( str_new, str_utf8, str_size );
+        hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
+    }
     ex_stack_free(str_utf8);
     return idx;
 }
@@ -79,13 +86,22 @@ size_t wcsID ( wchar_t* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t strID ( char* _string )
+size_t str_id ( char* _string )
 {
     size_t idx = -1;
+    size_t hash_idx = -1;
+    char* str_new = NULL;
+
     if ( _string == NULL )
         return -1;
 
-    hashmap_insert ( _string_set, &_string, &_string, &idx );
+    hash_idx = hashmap_get_hashidx ( _string_set, &_string, &idx ); 
+    if ( idx == -1 ) {
+        size_t len = strlen(_string);
+        str_new = ex_malloc(len+1);
+        strncpy( str_new, _string, len+1 );
+        hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
+    }
     return idx;
 }
 
@@ -94,13 +110,13 @@ size_t strID ( char* _string )
 // ------------------------------------------------------------------ 
 
 #if 0
-wchar_t* sid_toString ( size_t _id )
+wchar_t* str_id_toString ( size_t _id )
 {
     char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
     return *((wchar_t**)addr);
 }
 #else
-char* sid_toString ( size_t _id )
+char* str_id_toString ( size_t _id )
 {
     char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
     return *((char**)addr);

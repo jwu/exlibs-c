@@ -20,7 +20,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ucs2_to_utf8 ( wchar_t* _instr, int _inlen, char* _outstr );
+int ucs2_to_utf8 ( wchar_t* _instr, int _inlen /*including NULL terminate*/, char* _outstr );
 
 // ######################### 
 #ifdef __cplusplus

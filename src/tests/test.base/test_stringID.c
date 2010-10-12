@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
-#include "../../core/string/stringID.h"
+#include "../../core/string/str_id.h"
 #include "../../container/array.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ static void normal ()
                 strncpy ( word, data + prev, word_len );
                 word[word_len] = '\0';
 
-                sid = strID( word );
+                sid = str_id( word );
                 ex_assert(sid != -1, "can't get string ID of %s", word);
 
                 array_push_back ( words, &word );
@@ -75,8 +75,8 @@ static void normal ()
         while ( cur < array_len(words) ) {
             char* word = *((char**)array_get( words, cur ));
             size_t sid = *((size_t*)array_get( word_IDs, cur )); 
-            // EX_TEST ( wcscmp(sid_toString(sid), word) == 0 );
-            ex_assert ( strcmp(sid_toString(sid), word) == 0, "%s(%d) is not equal to %s", sid_toString(sid), sid, word );
+            // EX_TEST ( wcscmp(str_id_toString(sid), word) == 0 );
+            ex_assert ( strcmp(str_id_toString(sid), word) == 0, "%s(%d) is not equal to %s", str_id_toString(sid), sid, word );
             ++cur;
         }
 
@@ -101,21 +101,21 @@ static void normal ()
 static void widechar()
 {
     size_t id = -1;
-    id = wcsID( L"中文" );
+    id = wcs_id( L"Hello World" );
     ex_log ( "id = %d", id );
-    id = strID( "中文" );
+    id = str_id( "Hello World" );
     ex_log ( "id = %d", id );
 
     // TODO { 
     // {
-    //     size_t id = strID ("c");
-    //     char* str = sid_toString(id);
+    //     size_t id = str_id ("c");
+    //     char* str = str_id_toString(id);
     //     EX_TEST ( strcmp(str, "c") == 0 );
     // }
 
     // {
-    //     size_t id = strID ( "中c");
-    //     char* str = sid_toString(id);
+    //     size_t id = str_id ( "中c");
+    //     char* str = str_id_toString(id);
     //     EX_TEST ( strcmp(str, "中c") == 0 );
     // }
 

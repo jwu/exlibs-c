@@ -220,7 +220,7 @@ inline int _push_au ( alloc_unit_t* _au ) {
 
 //
 inline alloc_unit_t* _get_au ( void* _ptr ) { 
-    return *((alloc_unit_t**)hashmap_get ( au_map, &_ptr )); 
+    return *((alloc_unit_t**)hashmap_get ( au_map, &_ptr, NULL )); 
 }
 
 //

@@ -167,6 +167,120 @@ void hashmap_free_nomng ( hashmap_t* _hashmap )
 // ------------------------------------------------------------------ 
 
 // managed
+void hashmap_insert_new ( hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index )
+{
+    size_t cur_idx, next_idx;
+    hashmap_node_t* node;
+
+    cur_idx = pool_insert ( _hashmap->_nodes, NULL );
+    if ( cur_idx > _hashmap->_capacity-1 ) {
+        _hashmap->_capacity *= 2;
+        _hashmap->_values = ex_realloc ( _hashmap->_values, _hashmap->_capacity * _hashmap->_value_bytes  );
+        _hashmap->_keys = ex_realloc ( _hashmap->_keys, _hashmap->_capacity * _hashmap->_key_bytes );
+    }
+
+    next_idx = _hashmap->_indices[_hash_idx];
+
+    node = (hashmap_node_t*)pool_get( _hashmap->_nodes, cur_idx );
+    node->next = next_idx;
+    node->prev = -1;
+    _hashmap->_indices[_hash_idx] = cur_idx;
+
+    //
+    if ( next_idx != -1 )
+        _getnode(_hashmap,next_idx)->prev = cur_idx;
+
+    // set key and value
+    memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
+    memcpy ( (char*)_hashmap->_values + cur_idx * _hashmap->_value_bytes,  _val, _hashmap->_value_bytes );
+
+    if ( _index ) *_index = cur_idx;
+}
+
+// no managed
+void hashmap_insert_new_nomng ( hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index )
+{
+    size_t cur_idx, next_idx;
+    hashmap_node_t* node;
+
+    cur_idx = pool_insert_nomng ( _hashmap->_nodes, NULL );
+    if ( cur_idx > _hashmap->_capacity-1 ) {
+        _hashmap->_capacity *= 2;
+        _hashmap->_values = ex_realloc_nomng ( _hashmap->_values, _hashmap->_capacity * _hashmap->_value_bytes  );
+        _hashmap->_keys = ex_realloc_nomng ( _hashmap->_keys, _hashmap->_capacity * _hashmap->_key_bytes );
+    }
+
+    next_idx = _hashmap->_indices[_hash_idx];
+
+    node = (hashmap_node_t*)pool_get( _hashmap->_nodes, cur_idx );
+    node->next = next_idx;
+    node->prev = -1;
+    _hashmap->_indices[_hash_idx] = cur_idx;
+
+    //
+    if ( next_idx != -1 )
+        _getnode(_hashmap,next_idx)->prev = cur_idx;
+
+    // set key and value
+    memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
+    memcpy ( (char*)_hashmap->_values + cur_idx * _hashmap->_value_bytes,  _val, _hashmap->_value_bytes );
+
+    if ( _index ) *_index = cur_idx;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void* hashmap_get ( hashmap_t* _hashmap, void* _key, size_t* _index )
+{
+    size_t hash_next;
+    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+
+    // check if the key exists. if yes, don't do any thing.
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    {
+        // compare the key
+        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+            if ( _index ) *_index = hash_next;
+            return _getvalue(_hashmap, hash_next);
+        }
+    }
+
+    //
+    if ( _index ) *_index = -1;
+    return NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+size_t hashmap_get_hashidx ( hashmap_t* _hashmap, void* _key, size_t* _index )
+{
+    size_t hash_next;
+    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+
+    // check if the key exists. if yes, don't do any thing.
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    {
+        // compare the key
+        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+            if ( _index ) *_index = hash_next;
+            return hash_idx;
+        }
+    }
+
+    //
+    if ( _index ) *_index = -1;
+    return hash_idx;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// managed
 bool hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _index )
 {
     size_t hash_next;
@@ -182,36 +296,8 @@ bool hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _inde
         }
     }
 
-    // process insert
-    {
-        size_t cur_idx, next_idx;
-        hashmap_node_t* node;
-
-        cur_idx = pool_insert ( _hashmap->_nodes, NULL );
-        if ( cur_idx > _hashmap->_capacity-1 ) {
-            _hashmap->_capacity *= 2;
-            _hashmap->_values = ex_realloc ( _hashmap->_values, _hashmap->_capacity * _hashmap->_value_bytes  );
-            _hashmap->_keys = ex_realloc ( _hashmap->_keys, _hashmap->_capacity * _hashmap->_key_bytes );
-        }
-
-        next_idx = _hashmap->_indices[hash_idx];
-
-        node = (hashmap_node_t*)pool_get( _hashmap->_nodes, cur_idx );
-        node->next = next_idx;
-        node->prev = -1;
-        _hashmap->_indices[hash_idx] = cur_idx;
-
-        //
-        if ( next_idx != -1 )
-            _getnode(_hashmap,next_idx)->prev = cur_idx;
-
-        // set key and value
-        memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
-        memcpy ( (char*)_hashmap->_values + cur_idx * _hashmap->_value_bytes,  _val, _hashmap->_value_bytes );
-
-        if ( _index ) *_index = cur_idx;
-        return true;
-    }
+    hashmap_insert_new( _hashmap, _key, _val, hash_idx, _index );
+    return true;
 }
 
 // no managed
@@ -231,56 +317,8 @@ bool hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val, size_t*
     }
 
     // process insert
-    {
-        size_t cur_idx, next_idx;
-        hashmap_node_t* node;
-
-        cur_idx = pool_insert_nomng ( _hashmap->_nodes, NULL );
-        if ( cur_idx > _hashmap->_capacity-1 ) {
-            _hashmap->_capacity *= 2;
-            _hashmap->_values = ex_realloc_nomng ( _hashmap->_values, _hashmap->_capacity * _hashmap->_value_bytes  );
-            _hashmap->_keys = ex_realloc_nomng ( _hashmap->_keys, _hashmap->_capacity * _hashmap->_key_bytes );
-        }
-
-        next_idx = _hashmap->_indices[hash_idx];
-
-        node = (hashmap_node_t*)pool_get( _hashmap->_nodes, cur_idx );
-        node->next = next_idx;
-        node->prev = -1;
-        _hashmap->_indices[hash_idx] = cur_idx;
-
-        //
-        if ( next_idx != -1 )
-            _getnode(_hashmap,next_idx)->prev = cur_idx;
-
-        // set key and value
-        memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
-        memcpy ( (char*)_hashmap->_values + cur_idx * _hashmap->_value_bytes,  _val, _hashmap->_value_bytes );
-
-        if ( _index ) *_index = cur_idx;
-        return true;
-    }
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void* hashmap_get ( hashmap_t* _hashmap, void* _key )
-{
-    size_t hash_next;
-    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
-
-    // check if the key exists. if yes, don't do any thing.
-    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
-    {
-        // compare the key
-        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
-            return _getvalue(_hashmap, hash_next);
-        }
-    }
-
-    return NULL;
+    hashmap_insert_new_nomng( _hashmap, _key, _val, hash_idx, _index );
+    return true;
 }
 
 // ------------------------------------------------------------------ 

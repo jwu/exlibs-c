@@ -283,23 +283,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\core\string\str_id.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\str_id.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\str_op.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\str_op.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\string\string_inc.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\core\string\string_op.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\core\string\string_op.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\core\string\stringID.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\core\string\stringID.h"
 					>
 				</File>
 			</Filter>

@@ -101,6 +101,22 @@ void hashmap_free_nomng ( hashmap_t* _hashmap );
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// NOTE: this operation is deprecated, you need to check if the value 
+//  exists then go for it.
+// ------------------------------------------------------------------ 
+
+void hashmap_insert_new ( hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index );
+void hashmap_insert_new_nomng ( hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void* hashmap_get ( hashmap_t* _hashmap, void* _key, size_t* _index );
+size_t hashmap_get_hashidx ( hashmap_t* _hashmap, void* _key, size_t* _index );
+
+// ------------------------------------------------------------------ 
+// Desc: 
 //  @return: -1: already exists
 // ------------------------------------------------------------------ 
 
@@ -108,12 +124,6 @@ bool hashmap_insert ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _inde
 bool hashmap_insert_nomng ( hashmap_t* _hashmap, void* _key, void* _val, size_t* _index );
 
 // TODO: void hashmap_set ( hashmap_t* _hashmap, void* _key, void* _val );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void* hashmap_get ( hashmap_t* _hashmap, void* _key );
 
 // ------------------------------------------------------------------ 
 // Desc: 

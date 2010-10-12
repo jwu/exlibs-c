@@ -38,7 +38,7 @@ bool core_init ()
     }
 
     ex_log ("init string ID table");
-    if ( sid_init(65536) == false ) {
+    if ( str_id_init(65536) == false ) {
         ex_log ("failed to init string ID table");
         return false;
     }
@@ -60,7 +60,7 @@ void core_deinit ()
 {
     if ( _initialized ) {
         ex_log ("deinit string ID table");
-        sid_deinit();
+        str_id_deinit();
 
         ex_log ("deinit memory");
         mem_deinit();
