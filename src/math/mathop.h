@@ -110,6 +110,41 @@ inline uint32 floorpow2 ( double _value ) {
     return floorpow2u ( (uint32)floor(_value) );
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// float 
+inline bool is_equal_f32 ( float _lhs, float _rhs, float _eps ) {
+    return fabsf (_lhs-_rhs) < _eps;
+} 
+
+// double
+inline bool is_equal_f64 ( double _lhs, double _rhs, double _eps ) {
+    return fabs (_lhs-_rhs) < _eps;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// float 
+inline bool is_zero_f32 ( float _v, float _eps ) {
+    return fabsf (_v) < _eps;
+} 
+
+// double
+inline bool is_zero_f64 ( double _v, double _eps ) {
+    return fabs (_v) < _eps;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+float inv_sqrtf ( float _val ) { return 1.0f / sqrtf(_val); }
+double inv_sqrt ( double _val ) { return 1.0 / sqrt(_val); }
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

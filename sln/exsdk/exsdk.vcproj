@@ -464,6 +464,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="math"
+			>
+			<File
+				RelativePath="..\..\src\math\math_inc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\mathop.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\vec2.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\vec2.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\exsdk.c"
 			>
