@@ -190,6 +190,8 @@
 #include "mathop.h"
 #include "vec2f.h"
 #include "vec3f.h"
+#include "vec4f.h"
+#include "mat22f.h"
 
 // #################################################################################
 #endif // END MATH_INC_H_1277686586

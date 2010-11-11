@@ -56,6 +56,13 @@ inline void vec4f_neg ( vec4f_t* _v ) {
     _v->z = -_v->z; 
     _v->w = -_v->w; 
 }
+inline void vec4f_get_neg ( vec4f_t* _r, vec4f_t* _v ) { 
+    ex_assert ( _r != _v, "can't use self as return value." );
+    _r->x = -_v->x; 
+    _r->y = -_v->y; 
+    _r->z = -_v->z; 
+    _r->w = -_v->w; 
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -169,9 +176,12 @@ inline float vec4f_lenSQR ( vec4f_t* _v ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+//
 inline bool vec4f_is_normalized ( vec4f_t* _v ) {
     return is_equal_float( vec4f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
+
+//
 inline bool vec4f_normalize ( vec4f_t* _v ) {
     float length_sqr = vec4f_lenSQR(_v);
     float inv_length = 0.0f; 
@@ -184,6 +194,28 @@ inline bool vec4f_normalize ( vec4f_t* _v ) {
 
     inv_length = inv_sqrtf( length_sqr );
     vec4f_mul_scalar ( _v, _v, inv_length );
+}
+
+//
+inline bool vec4f_get_normalize ( vec4f_t* _r, vec4f_t* _v ) {
+    float length_sqr, inv_length;
+
+    ex_assert ( _r != _v, "can't use self as return value." );
+    length_sqr = vec4f_lenSQR(_v);
+    inv_length = 0.0f; 
+
+    if ( is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
+        _r = _v;
+        return true;
+    }
+
+    if( is_zero_float( length_sqr, EX_FLOAT_EPS ) ) {
+        _r = _v;
+        return false;
+    }
+
+    inv_length = inv_sqrtf( length_sqr );
+    vec4f_mul_scalar ( _r, _v, inv_length );
 }
 
 // ######################### 
