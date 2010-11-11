@@ -476,11 +476,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\math\vec2.c"
+				RelativePath="..\..\src\math\vec2f.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\math\vec2.h"
+				RelativePath="..\..\src\math\vec2f.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\vec3f.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\vec3f.h"
 				>
 			</File>
 		</Filter>

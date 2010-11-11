@@ -1,14 +1,20 @@
 // ======================================================================================
-// File         : vec2.h
+// File         : vec2f.h
 // Author       : Wu Jie 
-// Last Change  : 11/10/2010 | 17:07:14 PM | Wednesday,November
+// Last Change  : 11/11/2010 | 11:08:19 AM | Thursday,November
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef VEC2_H_1289380038
-#define VEC2_H_1289380038
+#ifndef VEC2F_H_1289444900
+#define VEC2F_H_1289444900
 // #################################################################################
+
+// ######################### 
+#ifdef __cplusplus
+extern "C" { 
+#endif
+// ######################### 
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -28,6 +34,24 @@ typedef struct vec2f_t {
 inline void vec2f_zero ( vec2f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; }
 inline void vec2f_one ( vec2f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; }
 inline void vec2f_set ( vec2f_t* _r, float _x, float _y ) { _r->x = _x, _r->y = _y; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+inline bool vec2f_is_equal ( vec2f_t* _lhs, vec2f_t* _rhs ) { 
+    return is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
+        && is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+inline void vec2f_neg ( vec2f_t* _v ) { 
+    _v->x = -_v->x; 
+    _v->y = -_v->y; 
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -116,25 +140,28 @@ inline float vec2f_lenSQR ( vec2f_t* _v ) {
 // ------------------------------------------------------------------ 
 
 inline bool vec2f_is_normalized ( vec2f_t* _v ) {
-    return is_equal_f32( vec2f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
+    return is_equal_float( vec2f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 inline bool vec2f_normalize ( vec2f_t* _v ) {
     float length_sqr = vec2f_lenSQR(_v);
     float inv_length = 0.0f; 
 
-    if ( is_equal_f32( length_sqr, 1.0f, EX_FLOAT_EPS ) )
+    if ( is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) )
         return true;
 
-    if( is_zero_f32( length_sqr, EX_FLOAT_EPS ) )
+    if( is_zero_float( length_sqr, EX_FLOAT_EPS ) )
         return false;
 
     inv_length = inv_sqrtf( length_sqr );
     vec2f_mul_scalar ( _v, _v, inv_length );
 }
 
+// ######################### 
+#ifdef __cplusplus
+} // end extern C 
+#endif
+// ######################### 
 
 // #################################################################################
-#endif // END VEC2_H_1289380038
+#endif // END VEC2F_H_1289444900
 // #################################################################################
-
-
