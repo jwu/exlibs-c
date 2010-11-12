@@ -154,6 +154,12 @@ inline void mat22f_mul_scalar ( mat22f_t* _r, mat22f_t* _lhs, float _rhs ) {
     _r->m11 = _lhs->m11 * _rhs;
 }
 
+// mat22f * vec2f
+void mat22f_mul_vec2f ( vec2f_t* _r, mat22f_t* _lhs, vec2f_t* _rhs );
+
+// vec2f * mat22f
+void vec2f_mul_mat22f ( vec2f_t* _r, vec2f_t* _lhs, mat22f_t* _rhs );
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 

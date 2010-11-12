@@ -476,6 +476,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\math\mat33f.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\mat33f.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\math\math_inc.h"
 				>
 			</File>
