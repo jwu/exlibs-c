@@ -173,12 +173,10 @@ inline bool vec2f_get_normalize ( vec2f_t* _r, vec2f_t* _v ) {
     inv_length = 0.0f; 
 
     if ( is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
-        _r = _v;
         return true;
     }
 
     if( is_zero_float( length_sqr, EX_FLOAT_EPS ) ) {
-        _r = _v;
         return false;
     }
 

@@ -484,11 +484,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\math\mat44f.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\mat44f.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\math\math_inc.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\math\mathop.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\quadf.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\quadf.h"
 				>
 			</File>
 			<File
