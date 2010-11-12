@@ -113,7 +113,7 @@ size_t str_id ( char* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-char* str_id_to_cstr ( size_t _id )
+char* strid_to_cstr ( size_t _id )
 {
     char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
     return *((char**)addr);

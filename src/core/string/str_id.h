@@ -38,7 +38,7 @@ size_t str_id ( char* _string );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-char* str_id_to_cstr ( size_t _id );
+char* strid_to_cstr ( size_t _id );
 
 // ######################### 
 #ifdef __cplusplus
