@@ -22,6 +22,9 @@ extern "C" {
 #endif
 // ######################### 
 
+extern struct mat33f_t;
+extern struct mat44f_t;
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines 
 ///////////////////////////////////////////////////////////////////////////////
@@ -181,18 +184,23 @@ inline void quatf_get_conjugate ( quatf_t* _r, quatf_t* _q ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+inline float quatf_dot( quatf_t* _lhs, quatf_t* _rhs ) {
+    return _lhs->x * _rhs->x 
+         + _lhs->y * _rhs->y 
+         + _lhs->z * _rhs->z 
+         + _lhs->w * _rhs->w;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 inline float quatf_len( quatf_t* _r ) {
-    return sqrtf ( _r->x * _r->x 
-                 + _r->y * _r->y  
-                 + _r->z * _r->z  
-                 + _r->w * _r->w );
+    return sqrtf ( quatf_dot(_r,_r) );
 }
 
 inline float quatf_lenSQR( quatf_t* _r ) {
-    return _r->x * _r->x 
-         + _r->y * _r->y  
-         + _r->z * _r->z  
-         + _r->w * _r->w;
+    return quatf_dot(_r,_r);
 }
 
 // ------------------------------------------------------------------ 
@@ -239,12 +247,17 @@ inline bool quatf_normalize( quatf_t* _r ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline float dot( quatf_t* _lhs, quatf_t* _rhs ) {
-    return _lhs->x * _rhs->x 
-         + _lhs->y * _rhs->y 
-         + _lhs->z * _rhs->z 
-         + _lhs->w * _rhs->w;
-}
+void quatf_to_mat33( quatf_t* _q, mat33f_t* _m );
+void quatf_to_mat44( quatf_t* _q, mat44f_t* _m );
+void quatf_to_axis_xyz( quatf_t* _q, vec3f_t* _x, vec3f_t* _y, vec3f_t* _z );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void quatf_get_axis_x( vec3f_t* _r, quatf_t* _q );
+void quatf_get_axis_y( vec3f_t* _r, quatf_t* _q );
+void quatf_get_axis_z( vec3f_t* _r, quatf_t* _q );
 
 // ######################### 
 #ifdef __cplusplus

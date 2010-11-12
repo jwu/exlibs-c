@@ -500,11 +500,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\math\quadf.c"
+				RelativePath="..\..\src\math\quatf.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\math\quadf.h"
+				RelativePath="..\..\src\math\quatf.h"
 				>
 			</File>
 			<File
