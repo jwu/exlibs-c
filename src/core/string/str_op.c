@@ -10,6 +10,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
+#include "str_op.h"
+#include "../../container/array.h"
+#include "../../core/global/types.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -19,14 +22,64 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-wchar_t* to_wcs ( const char* _src, wchar_t* _dest )
+static const char white_space_list[] = {
+    (L' '),
+    (L'\t'),
+    (L'\r'),
+    (L'\n'),
+};
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_str_split_into_array( array_t* _outList, const char* _token, const char* _text )
 {
-    size_t len = strlen(_src) + 1;
-    uint i;
+    const char* string_to_parse = _text;
+    const char* string_to_split = string_to_parse;
+    const char* rest_string = NULL;
 
-    for ( i = 0; i < len; ++i )
-        _dest[i] = _src[i];
+    int token_len = strlen(_token);
+    int sub_str_len = 0;
+    uint parse_str_len = (token_len == 1) ? EX_UINT32_MAX : strlen(string_to_parse);
 
-    return _dest;
+    // stop parsing when we get the end of the str
+    while ( *string_to_parse != 0 && parse_str_len > 0 ) {
+        sub_str_len += 1;
+
+        // check if split
+        if ( ex_str_nicmp( string_to_parse, _token, token_len ) == 0 ) {
+            if ( sub_str_len > 0 ) {
+                char* sub_str = (char*)ex_malloc ( sub_str_len );
+                strncpy(sub_str, string_to_split, sub_str_len );
+                array_push_back ( _outList, sub_str );
+            }
+            else {
+                array_push_back ( _outList, "" );
+            }
+
+            // reset the split value (skip token,too)
+            string_to_split = string_to_parse + token_len;
+            rest_string = string_to_split; 
+            sub_str_len = 0;
+
+            //
+            parse_str_len -= token_len;
+            string_to_parse += token_len;
+        }
+        // go to next check and increase split length
+        else {
+            parse_str_len -= 1;
+            string_to_parse += 1;
+        }
+    }
+
+    if ( rest_string != NULL ) {
+        int size = strlen(rest_string)+1;
+        char* sub_str = (char*)ex_malloc(size);
+        strncpy(sub_str, rest_string, size );
+        array_push_back ( _outList, sub_str );
+    }
+
+    return (int)array_len(_outList);
 }
-

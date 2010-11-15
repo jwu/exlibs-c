@@ -82,26 +82,26 @@ extern "C" {
     #pragma warning( push )
     #pragma warning( disable : 4309 ) 
 
-    #define EX_INT8_MIN    = 0x80; // warning C4309: 'initializing' : truncation of constant value
-    #define EX_INT8_MAX    = 0x7F;
-    #define EX_UINT8_MIN   = 0x00;
-    #define EX_UINT8_MAX   = 0xFF;
-    #define EX_INT16_MIN   = 0x8000; // warning C4309: 'initializing' : truncation of constant value 
-    #define EX_INT16_MAX   = 0x7FFF;
-    #define EX_UINT16_MIN  = 0x0000;
-    #define EX_UINT16_MAX  = 0xFFFF;
-    #define EX_INT32_MIN   = 0x80000000;
-    #define EX_INT32_MAX   = 0x7FFFFFFF;
-    #define EX_UINT32_MIN  = 0x00000000;
-    #define EX_UINT32_MAX  = 0xFFFFFFFF;
-    #define EX_INT64_MIN   = 0x8000000000000000;
-    #define EX_INT64_MAX   = 0x7FFFFFFFFFFFFFFF;
-    #define EX_UINT64_MIN  = 0x0000000000000000;
-    #define EX_UINT64_MAX  = 0xFFFFFFFFFFFFFFFF;
-    #define EX_FLOAT_MIN   = 1.175494351E-38F;
-    #define EX_FLOAT_MAX   = 3.402823466E+38F;
-    #define EX_DOUBLE_MIN  = 2.2250738585072014E-308;
-    #define EX_DOUBLE_MAX  = 1.7976931348623158E+308;
+    #define EX_INT8_MIN    (0x80) // warning C4309: 'initializing' : truncation of constant value
+    #define EX_INT8_MAX    (0x7F)
+    #define EX_UINT8_MIN   (0x00)
+    #define EX_UINT8_MAX   (0xFF)
+    #define EX_INT16_MIN   (0x8000) // warning C4309: 'initializing' : truncation of constant value 
+    #define EX_INT16_MAX   (0x7FFF)
+    #define EX_UINT16_MIN  (0x0000)
+    #define EX_UINT16_MAX  (0xFFFF)
+    #define EX_INT32_MIN   (0x80000000)
+    #define EX_INT32_MAX   (0x7FFFFFFF)
+    #define EX_UINT32_MIN  (0x00000000)
+    #define EX_UINT32_MAX  (0xFFFFFFFF)
+    #define EX_INT64_MIN   (0x8000000000000000)
+    #define EX_INT64_MAX   (0x7FFFFFFFFFFFFFFF)
+    #define EX_UINT64_MIN  (0x0000000000000000)
+    #define EX_UINT64_MAX  (0xFFFFFFFFFFFFFFFF)
+    #define EX_FLOAT_MIN   (1.175494351E-38F)
+    #define EX_FLOAT_MAX   (3.402823466E+38F)
+    #define EX_DOUBLE_MIN  (2.2250738585072014E-308)
+    #define EX_DOUBLE_MAX  (1.7976931348623158E+308)
 
     #pragma warning( pop )
 
@@ -200,26 +200,26 @@ extern "C" {
     #define UINT64_MAX		(__UINT64_C(18446744073709551615))
 
     // define the EX MIN/MAX const value
-    #define EX_INT8_MIN    = INT8_MIN;
-    #define EX_INT8_MAX    = INT8_MAX;
-    #define EX_UINT8_MIN   = 0x00;
-    #define EX_UINT8_MAX   = UINT8_MAX;
-    #define EX_INT16_MIN   = INT16_MIN; 
-    #define EX_INT16_MAX   = INT16_MAX;
-    #define EX_UINT16_MIN  = 0x0000;
-    #define EX_UINT16_MAX  = UINT16_MAX;
-    #define EX_INT32_MIN   = INT32_MIN;
-    #define EX_INT32_MAX   = INT32_MAX;
-    #define EX_UINT32_MIN  = 0x00000000;
-    #define EX_UINT32_MAX  = UINT32_MAX;
-    #define EX_INT64_MIN   = INT64_MIN;
-    #define EX_INT64_MAX   = INT64_MAX;
-    #define EX_UINT64_MIN  = 0x0000000000000000;
-    #define EX_UINT64_MAX  = UINT64_MAX;
-    #define EX_FLOAT_MIN   = 1.175494351E-38F;
-    #define EX_FLOAT_MAX   = 3.402823466E+38F;
-    #define EX_DOUBLE_MIN  = 2.2250738585072014E-308;
-    #define EX_DOUBLE_MAX  = 1.7976931348623158E+308;
+    #define EX_INT8_MIN    INT8_MIN
+    #define EX_INT8_MAX    INT8_MAX
+    #define EX_UINT8_MIN   (0x00)
+    #define EX_UINT8_MAX   UINT8_MAX
+    #define EX_INT16_MIN   INT16_MIN 
+    #define EX_INT16_MAX   INT16_MAX
+    #define EX_UINT16_MIN  (0x0000)
+    #define EX_UINT16_MAX  UINT16_MAX
+    #define EX_INT32_MIN   INT32_MIN
+    #define EX_INT32_MAX   INT32_MAX
+    #define EX_UINT32_MIN  (0x00000000)
+    #define EX_UINT32_MAX  UINT32_MAX
+    #define EX_INT64_MIN   INT64_MIN
+    #define EX_INT64_MAX   INT64_MAX
+    #define EX_UINT64_MIN  (0x0000000000000000)
+    #define EX_UINT64_MAX  UINT64_MAX
+    #define EX_FLOAT_MIN   (1.175494351E-38F)
+    #define EX_FLOAT_MAX   (3.402823466E+38F)
+    #define EX_DOUBLE_MIN  (2.2250738585072014E-308)
+    #define EX_DOUBLE_MAX  (1.7976931348623158E+308)
 
 #endif // END EX_COMPILER
 
