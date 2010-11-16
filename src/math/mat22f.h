@@ -69,7 +69,7 @@ typedef struct mat22f_t {
  make a zero matrix:
 
  \f[
-   Mat_m = \left[\begin{array}{ c c }
+   m = \left[\begin{array}{ c c }
    0.0 & 0.0 \\
    0.0 & 0.0
    \end{array} \right]
@@ -89,7 +89,7 @@ inline void mat22f_zero ( mat22f_t* _m ) {
  make an identity matrix:
 
  \f[
-   Mat_m = \left[\begin{array}{ c c }
+   m = \left[\begin{array}{ c c }
    1.0 & 0.0 \\
    0.0 & 1.0
    \end{array} \right]
@@ -116,7 +116,7 @@ inline void mat22f_identity ( mat22f_t* _m ) {
  set the matrix _m by rest of the parameters: \n
 
  \f[
-   Mat_m = \left[\begin{array}{ c c }
+   m = \left[\begin{array}{ c c }
    \_m_{00} & \_m_{01} \\
    \_m_{10} & \_m_{11}
    \end{array} \right]
@@ -200,10 +200,10 @@ inline void mat22f_col ( vec2f_t* _r, mat22f_t* _m, uint _col ) {
  @param _m in matrix
  @retval _m the result matrix
  @details
- negtive the matrix _m, override and return it as the result:
+ get the negtive value from matrix _m, override and return it as the result:
 
  \f[
-   Mat_m = -Mat_m = \left[\begin{array}{ c c }
+   m = -Mat_m = \left[\begin{array}{ c c }
    -m_{00} & -m_{01} \\
    -m_{10} & -m_{11}
    \end{array} \right]
@@ -225,7 +225,7 @@ inline void mat22f_neg ( mat22f_t* _m ) {
  get the negtive value from matrix _m and set it in matrix _r as the result:
 
  \f[
-   Mat_r = -Mat_m = \left[\begin{array}{ c c }
+   \_r = -Mat_m = \left[\begin{array}{ c c }
    -m_{00} & -m_{01} \\
    -m_{10} & -m_{11}
    \end{array} \right]
@@ -240,13 +240,43 @@ inline void mat22f_get_neg ( mat22f_t* _r, mat22f_t* _m ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_abs ( mat22f_t* _m )
+ @param _m in matrix
+ @retval _m the result matrix
+ @details
+ get the absolute value from matrix _m, override and return it as the result:
+
+ \f[
+   \_m = |Mat_m| = \left|\begin{array}{ c c }
+   m_{00} & m_{01} \\
+   m_{10} & m_{11}
+   \end{array} \right|
+ \f]
+ @sa mat22f_get_abs
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_abs ( mat22f_t* _m ) {
     _m->m00 = fabsf(_m->m00), _m->m01 = fabsf(_m->m01); 
     _m->m10 = fabsf(_m->m10), _m->m11 = fabsf(_m->m11); 
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_get_abs ( mat22f_t* _r, mat22f_t* _m )
+ @retval _r the result matrix
+ @param _m in matrix
+ @details
+ get the absolute value from matrix _m and set it in matrix _r as the result:
+
+ \f[
+   \_r = |Mat_m| = \left|\begin{array}{ c c }
+   m_{00} & m_{01} \\
+   m_{10} & m_{11}
+   \end{array} \right|
+ \f]
+ @sa mat22f_abs
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_get_abs ( mat22f_t* _r, mat22f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
@@ -255,8 +285,19 @@ inline void mat22f_get_abs ( mat22f_t* _r, mat22f_t* _m ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_add ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs )
+ @retval _r the result matrix
+ @param _lhs left hand side matrix 
+ @param _rhs right hand side matrix 
+ @details
+ \f[
+   \_r = Mat_a + Mat_b = \left[\begin{array}{ c c }
+   a_{00} + b_{00} & a_{01} + b_{01} \\
+   a_{10} + b_{10} & a_{11} + b_{11}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_add ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs ) {
     _r->m00 = _lhs->m00 + _rhs->m00; _r->m01 = _lhs->m01 + _rhs->m01;
@@ -264,8 +305,19 @@ inline void mat22f_add ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_sub ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs )
+ @retval _r the result matrix
+ @param _lhs left hand side matrix 
+ @param _rhs right hand side matrix 
+ @details
+ \f[
+   \_r = Mat_a - Mat_b = \left[\begin{array}{ c c }
+   a_{00} - b_{00} & a_{01} - b_{01} \\
+   a_{10} - b_{10} & a_{11} - b_{11}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_sub ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs ) {
     _r->m00 = _lhs->m00 - _rhs->m00; _r->m01 = _lhs->m01 - _rhs->m01;
@@ -273,8 +325,19 @@ inline void mat22f_sub ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_mul ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs )
+ @retval _r the result matrix
+ @param _lhs left hand side matrix 
+ @param _rhs right hand side matrix 
+ @details
+ \f[
+   \_r = Mat_a - Mat_b = \left[\begin{array}{ c c }
+   a_{00} * b_{00} & a_{01} * b_{01} \\
+   a_{10} * b_{10} & a_{11} * b_{11}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_mul ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs ) {
     float m00, m01, m10, m11;
@@ -288,6 +351,22 @@ inline void mat22f_mul ( mat22f_t* _r, mat22f_t* _lhs, mat22f_t* _rhs ) {
                 m00, m01,
                 m10, m11 );
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_mul_scalar ( mat22f_t* _r, mat22f_t* _lhs, float _rhs )
+ @retval _r the result matrix
+ @param _lhs left hand side matrix 
+ @param _rhs right hand side scalar 
+ @details
+ \f[
+   \_r = Mat_a - s = \left[\begin{array}{ c c }
+   a_{00} * s & a_{01} * s \\
+   a_{10} * s & a_{11} * s
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void mat22f_mul_scalar ( mat22f_t* _r, mat22f_t* _lhs, float _rhs ) {
     _r->m00 = _lhs->m00 * _rhs;
     _r->m01 = _lhs->m01 * _rhs;
@@ -295,10 +374,51 @@ inline void mat22f_mul_scalar ( mat22f_t* _r, mat22f_t* _lhs, float _rhs ) {
     _r->m11 = _lhs->m11 * _rhs;
 }
 
-// mat22f * vec2f
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_mul_vec2f ( vec2f_t* _r, mat22f_t* _lhs, vec2f_t* _rhs )
+ @retval _r the result vector
+ @param _lhs left hand side matrix 
+ @param _rhs right hand side vector 
+ @details
+ \f[
+   \_r = Mat_a * Vec_b = \left[\begin{array}{ c c }
+   a_{00} & a_{01} \\
+   a_{10} & a_{11}
+   \end{array} \right] * 
+   \left[\begin{array}{ c }
+   b_{0} \\
+   b_{1}
+   \end{array} \right] = \left[\begin{array}{ c c }
+   a_{00} * b_{0} + a_{01} * b_{1} & a_{10} * b_{0} + a_{11} * b_{1}
+   \end{array} \right]
+ \f]
+ @sa vec2f_mul_mat22f
+*/// ------------------------------------------------------------------ 
+
 void mat22f_mul_vec2f ( vec2f_t* _r, mat22f_t* _lhs, vec2f_t* _rhs );
 
-// vec2f * mat22f
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec2f_mul_mat22f ( vec2f_t* _r, vec2f_t* _lhs, mat22f_t* _rhs )
+ @retval _r the result vector
+ @param _lhs left hand side vector
+ @param _rhs right hand side matrix  
+ @details
+ \f[
+   \_r = Vec_a * Mat_b = \left[\begin{array}{ c c }
+   a_{0} & a_{1}
+   \end{array} \right] * 
+   \left[\begin{array}{ c c }
+   b_{00} & b_{01} \\
+   b_{10} & b_{11}
+   \end{array} \right] = \left[\begin{array}{ c c }
+   a_{0} * b_{00} + a_{1} * b_{10} & a_{0} * b_{01} + a_{1} * b_{11}
+   \end{array} \right]
+ \f]
+ @sa mat22f_mul_vec2f
+*/// ------------------------------------------------------------------ 
+
 void vec2f_mul_mat22f ( vec2f_t* _r, vec2f_t* _lhs, mat22f_t* _rhs );
 
 // ------------------------------------------------------------------ 
