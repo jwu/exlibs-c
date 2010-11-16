@@ -1,8 +1,8 @@
 // ======================================================================================
-// File         : config.h
-// Author       : Wu Jie 
-// Last Change  : 06/26/2010 | 08:32:47 AM | Saturday,June
-// Description  : 
+/// @file config.h
+/// @author Wu Jie 
+/// @date Last Change: 06/26/2010 | 08:32:47 AM | Saturday,June
+/// @details
 // ======================================================================================
 
 // #################################################################################
@@ -67,26 +67,37 @@
 //  math configurations
 ///////////////////////////////////////////////////////////////////////////////
 
+//! \addtogroup Math
+//! \{
+
 // ------------------------------------------------------------------
-// Desc: Set the default float precision for math calculation such as compare
+//! \def EX_FLOAT_EPS
+//! Set the default float precision for math calculation such as compare
 // ------------------------------------------------------------------
 
 #define EX_FLOAT_EPS 1e-06f
 
 // ------------------------------------------------------------------
-// Desc: Set the default double precision for math calculation such as compare
+//! \def EX_DOUBLE_EPS
+//! Set the default double precision for math calculation such as compare
 // ------------------------------------------------------------------
 
 #define EX_DOUBLE_EPS 1e-08
 
 // ------------------------------------------------------------------
-// Desc: Set the default double precision for math calculation such as compare
+//! \def EX_REAL_PRECISION
+//! Set the default double precision for math calculation such as compare
+//! \par options:
+//! - EX_SINGLE
+//! - EX_DOUBLE
 // ------------------------------------------------------------------
 
 #define EX_SINGLE 0
 #define EX_DOUBLE 1
 
 #define EX_REAL_PRECISION EX_SINGLE
+
+//! \}
 
 ///////////////////////////////////////////////////////////////////////////////
 // ext-lib defines

@@ -22,12 +22,23 @@ extern "C" {
 #endif
 // ######################### 
 
-//! ------------------------------------------------------------------ 
-//! \struct mat22f_t
-//! \brief Matrix 2x2
-//! ------------------------------------------------------------------ 
+//! @defgroup mat22f_t matrix 2x2 float
+//! @ingroup Math
+//! @{
+
+// ------------------------------------------------------------------ 
+//! @struct mat22f_t
+//! @brief Matrix 2x2
+//! @details The data structure looks like this:\n
+//!
+//! | m00, m01 | \n
+//! | m10, m11 | \n
+//!
+//! [ m00, m01, m10, m11 ]
+// ------------------------------------------------------------------ 
 
 typedef struct mat22f_t {
+    //! @union member
     union {
         struct { 
             float m00, m01;
@@ -38,23 +49,65 @@ typedef struct mat22f_t {
 } mat22f_t;
 
 // ------------------------------------------------------------------ 
-// Desc: 
+//! @fn inline void mat22f_zero ( mat22f_t* _m )
+//! @param _m the result matrix
+//! @details
+//! make a zero matrix: \n
+//! | 0.0f, 0.0f |\n
+//! | 0.0f, 0.0f |\n
 // ------------------------------------------------------------------ 
 
 inline void mat22f_zero ( mat22f_t* _m ) { 
     _m->m00 = 0.0f, _m->m01 = 0.0f; 
     _m->m10 = 0.0f, _m->m11 = 0.0f; 
 }
+
+// ------------------------------------------------------------------ 
+//! @fn inline void mat22f_identity ( mat22f_t* _m )
+//! @param _m the result matrix
+//! @details
+//! make an identity matrix: \n
+//! | 1.0f, 0.0f |\n
+//! | 0.0f, 1.0f |\n
+// ------------------------------------------------------------------ 
+
 inline void mat22f_identity ( mat22f_t* _m ) { 
     _m->m00 = 1.0f, _m->m01 = 0.0f; 
     _m->m10 = 0.0f, _m->m11 = 1.0f; 
 }
+
+// ------------------------------------------------------------------ 
+//! @fn inline void mat22f_set ( mat22f_t* _m, 
+//!                      float _m00, float _m01,
+//!                      float _m10, float _m11 )
+//! @param _m the result matrix
+//! @param _m00
+//! @param _m01
+//! @param _m10
+//! @param _m11
+//! @details
+//! set the matrix _m by rest of the parameters: \n
+//! | _m00, _m01 |\n
+//! | _m10, _m11 |\n
+// ------------------------------------------------------------------ 
+
 inline void mat22f_set ( mat22f_t* _m, 
                          float _m00, float _m01,
                          float _m10, float _m11 ) { 
     _m->m00 = _m00, _m->m01 = _m01; 
     _m->m10 = _m10, _m->m11 = _m11; 
 }
+
+// ------------------------------------------------------------------ 
+//! @fn inline inline float mat22f_get ( mat22f_t* _m, uint _row, uint _col ) 
+//! @param _m the matrix
+//! @param _row the row index, range in [0,2)
+//! @param _col the col index, range in [0,2)
+//! @return result
+//! @details
+//! get the matrix element in [_row,_col]
+// ------------------------------------------------------------------ 
+
 inline float mat22f_get ( mat22f_t* _m, uint _row, uint _col ) { 
     ex_assert( _row >= 0 && _row < 2, "out of range" );
     ex_assert( _col >= 0 && _col < 2, "out of range" );
@@ -199,6 +252,8 @@ inline void mat22f_get_transpose ( mat22f_t* _r, mat22f_t* _m ) {
 
 bool mat22f_inverse ( mat22f_t* _m );
 bool mat22f_get_inverse ( mat22f_t* _r, mat22f_t* _m );
+
+//! @}
 
 // ######################### 
 #ifdef __cplusplus
