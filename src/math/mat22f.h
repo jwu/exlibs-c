@@ -27,18 +27,31 @@ extern "C" {
 //! @{
 
 // ------------------------------------------------------------------ 
-//! @struct mat22f_t
-//! @brief Matrix 2x2
-//! @details The data structure looks like this:\n
-//!
-//! | m00, m01 | \n
-//! | m10, m11 | \n
-//!
-//! [ m00, m01, m10, m11 ]
-// ------------------------------------------------------------------ 
+/*! 
+ @struct mat22f_t
+ @brief Matrix 2x2
+ @details
+ 
+ The data of matrix 2x2 is construct by an union structure.\n
+ The matrix is express in formular as:
+ 
+ \f$
+   \left[\begin{array}{ c c }
+   m_{00} & m_{01} \\
+   m_{10} & m_{11}
+   \end{array} \right]
+ \f$
+ 
+ and in array as:
+
+ \f$
+   \left[\begin{array}{ c c }
+   m_{00}, m_{01}, m_{10}, m_{11}
+   \end{array} \right]
+ \f$
+*/// ------------------------------------------------------------------ 
 
 typedef struct mat22f_t {
-    //! @union member
     union {
         struct { 
             float m00, m01;
@@ -49,13 +62,19 @@ typedef struct mat22f_t {
 } mat22f_t;
 
 // ------------------------------------------------------------------ 
-//! @fn inline void mat22f_zero ( mat22f_t* _m )
-//! @param _m the result matrix
-//! @details
-//! make a zero matrix: \n
-//! | 0.0f, 0.0f |\n
-//! | 0.0f, 0.0f |\n
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_zero ( mat22f_t* _m )
+ @retval _m the result matrix
+ @details
+ make a zero matrix:
+
+ \f[
+   Mat_m = \left[\begin{array}{ c c }
+   0.0 & 0.0 \\
+   0.0 & 0.0
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_zero ( mat22f_t* _m ) { 
     _m->m00 = 0.0f, _m->m01 = 0.0f; 
@@ -63,13 +82,19 @@ inline void mat22f_zero ( mat22f_t* _m ) {
 }
 
 // ------------------------------------------------------------------ 
-//! @fn inline void mat22f_identity ( mat22f_t* _m )
-//! @param _m the result matrix
-//! @details
-//! make an identity matrix: \n
-//! | 1.0f, 0.0f |\n
-//! | 0.0f, 1.0f |\n
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_identity ( mat22f_t* _m )
+ @retval _m the result matrix
+ @details
+ make an identity matrix:
+
+ \f[
+   Mat_m = \left[\begin{array}{ c c }
+   1.0 & 0.0 \\
+   0.0 & 1.0
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_identity ( mat22f_t* _m ) { 
     _m->m00 = 1.0f, _m->m01 = 0.0f; 
@@ -77,19 +102,26 @@ inline void mat22f_identity ( mat22f_t* _m ) {
 }
 
 // ------------------------------------------------------------------ 
-//! @fn inline void mat22f_set ( mat22f_t* _m, 
-//!                      float _m00, float _m01,
-//!                      float _m10, float _m11 )
-//! @param _m the result matrix
-//! @param _m00
-//! @param _m01
-//! @param _m10
-//! @param _m11
-//! @details
-//! set the matrix _m by rest of the parameters: \n
-//! | _m00, _m01 |\n
-//! | _m10, _m11 |\n
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_set ( mat22f_t* _m, 
+                      float _m00, float _m01,
+                      float _m10, float _m11 )
+ @retval _m the result matrix
+ @param _m00
+ @param _m01
+ @param _m10
+ @param _m11
+ @details
+
+ set the matrix _m by rest of the parameters: \n
+
+ \f[
+   Mat_m = \left[\begin{array}{ c c }
+   \_m_{00} & \_m_{01} \\
+   \_m_{10} & \_m_{11}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_set ( mat22f_t* _m, 
                          float _m00, float _m01,
@@ -99,14 +131,16 @@ inline void mat22f_set ( mat22f_t* _m,
 }
 
 // ------------------------------------------------------------------ 
-//! @fn inline inline float mat22f_get ( mat22f_t* _m, uint _row, uint _col ) 
-//! @param _m the matrix
-//! @param _row the row index, range in [0,2)
-//! @param _col the col index, range in [0,2)
-//! @return result
-//! @details
-//! get the matrix element in [_row,_col]
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline inline float mat22f_get ( mat22f_t* _m, uint _row, uint _col ) 
+ @param _m the matrix
+ @param _row the row index, range in [0,2)
+ @param _col the col index, range in [0,2)
+ @return result
+ @details
+
+ get the matrix element in (_row, _col)
+*/// ------------------------------------------------------------------ 
 
 inline float mat22f_get ( mat22f_t* _m, uint _row, uint _col ) { 
     ex_assert( _row >= 0 && _row < 2, "out of range" );
@@ -115,21 +149,45 @@ inline float mat22f_get ( mat22f_t* _m, uint _row, uint _col ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_row ( vec2f_t* _r, mat22f_t* _m, uint _row )
+ @retval _r the result vector
+ @param _m the matrix
+ @param _row the row index, range in [0,2)
+ @details
+ get the matrix by _row and return it in vector2, for example: 
+ @code
+ vec2f_t r;
+ mat22f_t m;
+ mat22f_zero(&m);
+ mat22f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01)
+ @endcode
+ the r is equal to vector2 (m.m00, m.m01) 
+*/// ------------------------------------------------------------------ 
 
-// row =============
 inline void mat22f_row ( vec2f_t* _r, mat22f_t* _m, uint _row ) {
     ex_assert( _row >= 0 && _row < 2, "out of range" );
     _r->x = _m->m[2*_row+0]; 
     _r->y = _m->m[2*_row+1]; 
 }
 
-// col
-// ||
-// ||
-// ||
-// ||
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_col ( vec2f_t* _r, mat22f_t* _m, uint _col )
+ @retval _r the result vector
+ @param _m the matrix
+ @param _col the column index, range in [0,2)
+ @details
+ get the matrix by _row and return it in vector2, for example: 
+ @code
+ vec2f_t r;
+ mat22f_t m;
+ mat22f_zero(&m);
+ mat22f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10)
+ @endcode
+ the r is equal to vector2 (m.m00, m.m10) 
+*/// ------------------------------------------------------------------ 
+
 inline void mat22f_col ( vec2f_t* _r, mat22f_t* _m, uint _col ) {
     ex_assert( _col >= 0 && _col < 2, "out of range" );
     _r->x = _m->m[2*0+_col]; 
@@ -137,13 +195,43 @@ inline void mat22f_col ( vec2f_t* _r, mat22f_t* _m, uint _col ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_neg ( mat22f_t* _m )
+ @param _m in matrix
+ @retval _m the result matrix
+ @details
+ negtive the matrix _m, override and return it as the result:
+
+ \f[
+   Mat_m = -Mat_m = \left[\begin{array}{ c c }
+   -m_{00} & -m_{01} \\
+   -m_{10} & -m_{11}
+   \end{array} \right]
+ \f]
+ @sa mat22f_get_neg
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_neg ( mat22f_t* _m ) {
     _m->m00 = -_m->m00, _m->m01 = -_m->m01; 
     _m->m10 = -_m->m10, _m->m11 = -_m->m11; 
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void mat22f_get_neg ( mat22f_t* _r, mat22f_t* _m )
+ @retval _r the result matrix
+ @param _m in matrix
+ @details
+ get the negtive value from matrix _m and set it in matrix _r as the result:
+
+ \f[
+   Mat_r = -Mat_m = \left[\begin{array}{ c c }
+   -m_{00} & -m_{01} \\
+   -m_{10} & -m_{11}
+   \end{array} \right]
+ \f]
+ @sa mat22f_neg
+*/// ------------------------------------------------------------------ 
 
 inline void mat22f_get_neg ( mat22f_t* _r, mat22f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
