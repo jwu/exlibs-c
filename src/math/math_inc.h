@@ -14,43 +14,90 @@
 //  config macros
 ///////////////////////////////////////////////////////////////////////////////
 
+//! @addtogroup Math
+//! @{
+
 // ------------------------------------------------------------------
-// Desc: 
-//  EX_MATRIX_ROW_MAJOR (each row of the matrix is stored in a single constant register)
-//  the row major matrix can multiply by row easily, as r1 * vec
-//
-//   layer out for register pack           layer out for geometry meanning
-//
-//                                               I  J  K  T
-//                                               -- -- -- --
-//      r1 | 11 12 13 14 |                       11 12 13 14  
-//      r2 | 21 22 23 24 |                       21 22 23 24  
-//      r3 | 31 32 33 34 |                       31 32 33 34  
-//      r4 | 41 42 43 44 |                       41 42 43 44  
-//                                               -- -- -- --
-//      
-//   multiply vector:
-//      mat2 * mat1 * vec 
-//
-//  EX_MATRIX_COLUMN_MAJOR (each row of the matrix is stored in a single constant register)
-//  the column major matrix can multiply by column easily, as vec * r1
-//
-//   layer out for register pack           layer out for geometry meanning
-//
-//      r1 r2 r3 r4
-//      -- -- -- --                            
-//      11 21 31 41                            I | 11 21 31 41 |
-//      12 22 32 42                            J | 12 22 32 42 |
-//      13 23 33 43                            K | 13 23 33 43 |
-//      14 24 34 44                            T | 14 24 34 44 |
-//      -- -- -- --
-//
-//   multiply vector:
-//      vec * mat1 * mat2
-//
-//  Warning:
-//      Don't modify this macro, currently the engine just support column major calculate
-// ------------------------------------------------------------------
+/*!
+ @def EX_MATRIX_ORDER
+ @details
+
+ Set the matrix order to column major or row major. 
+ @par options:
+ - EX_MATRIX_COLUMN_MAJOR (default)
+ - EX_MATRIX_ROW_MAJOR
+
+ @par EX_MATRIX_COLUMN_MAJOR:
+ Each row of the matrix is stored in a single constant register 
+ the column major matrix can multiply by column easily, as vec * r1
+
+ Layer out for register pack:
+
+     \f$
+       \left|\begin{array}{ c c c c }
+       r0 & r1 & r2 & r3 \\
+       -- & -- & -- & -- \\
+       m_{00} & m_{01} & m_{02} & m_{03} \\
+       m_{10} & m_{11} & m_{12} & m_{13} \\
+       m_{20} & m_{21} & m_{22} & m_{23} \\
+       m_{30} & m_{31} & m_{32} & m_{33}
+       \end{array} \right|
+     \f$
+
+ Layer out for geometry meanning:
+
+     \f$
+       \left|\begin{array}{ c c c c c }
+       I & | & m_{00} & m_{01} & m_{02} & m_{03} \\
+       J & | & m_{10} & m_{11} & m_{12} & m_{13} \\
+       K & | & m_{20} & m_{21} & m_{22} & m_{23} \\
+       T & | & m_{30} & m_{31} & m_{32} & m_{33}
+       \end{array} \right|
+     \f$
+
+ When we doing a transform calculation with column major matrix, 
+ the transform order is from left to right as below:
+ @code
+ vec * mat1 * mat2
+ @endcode
+
+ @par EX_MATRIX_ROW_MAJOR:
+ Each row of the matrix is stored in a single constant register
+ the row major matrix can multiply by row easily, as r1 * vec
+
+ Layer out for register pack:
+
+     \f$
+       \left|\begin{array}{ c c c c c }
+       r0 & | & m_{00} & m_{01} & m_{02} & m_{03} \\
+       r1 & | & m_{10} & m_{11} & m_{12} & m_{13} \\
+       r3 & | & m_{20} & m_{21} & m_{22} & m_{23} \\
+       r3 & | & m_{30} & m_{31} & m_{32} & m_{33}
+       \end{array} \right|
+     \f$
+
+ Layer out for geometry meanning:
+
+     \f$
+       \left|\begin{array}{ c c c c }
+       I & J & K & T \\
+       -- & -- & -- & -- \\
+       m_{00} & m_{01} & m_{02} & m_{03} \\
+       m_{10} & m_{11} & m_{12} & m_{13} \\
+       m_{20} & m_{21} & m_{22} & m_{23} \\
+       m_{30} & m_{31} & m_{32} & m_{33}
+       \end{array} \right|
+     \f$
+      
+ When we doing a transform calculation with column major matrix, 
+ the transform order is from left to right as below:
+ @code
+ mat2 * mat1 * vec 
+ @endcode
+
+ @par Warning:
+ Don't modify this macro, currently the engine just support column major calculate
+*/// ------------------------------------------------------------------
 
 #define EX_MATRIX_COLUMN_MAJOR 1
 #define EX_MATRIX_ROW_MAJOR    2
@@ -182,6 +229,8 @@
 
 #define EX_DEG_TO_RAD       (0.017453292519943296) /* pi/180.0 */
 #define EX_RAD_TO_DEG       (57.29577951308232158) /* 180.0/pi */
+
+//! @}
 
 ///////////////////////////////////////////////////////////////////////////////
 // includes
