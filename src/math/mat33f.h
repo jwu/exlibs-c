@@ -45,7 +45,7 @@ extern "C" {
  and in array as:
 
  \f$
-   \left[\begin{array}{ c c c }
+   \left[\begin{array}{ c c c c c c c c c }
    m_{00}, m_{01}, m_{02}, m_{10}, m_{11}, m_{12}, m_{20}, m_{21}, m_{22}
    \end{array} \right]
  \f$
@@ -123,7 +123,7 @@ inline void mat33f_identity ( mat33f_t* _m ) {
  @details set the matrix _m by rest of the parameters:
 
  \f[
-   m = \left[\begin{array}{ c c }
+   m = \left[\begin{array}{ c c c }
    \_m_{00} & \_m_{01} & \_m_{02} \\
    \_m_{10} & \_m_{11} & \_m_{12} \\
    \_m_{20} & \_m_{21} & \_m_{22}
@@ -238,21 +238,6 @@ inline void mat33f_neg ( mat33f_t* _m ) {
  @retval _r the result matrix
  @param _m in matrix
  @details get the negtive value from matrix _m and set it in matrix _r as the result:
-
- \f[
-   \_r =
-   -\left[\begin{array}{ c c c }
-   m_{00} & m_{01} & m_{02} \\
-   m_{10} & m_{11} & m_{12} \\
-   m_{20} & m_{21} & m_{22}
-   \end{array} \right]
-   = 
-   \left[\begin{array}{ c c c }
-   -m_{00} & -m_{01} & -m_{02} \\
-   -m_{10} & -m_{11} & -m_{12} \\
-   -m_{20} & -m_{21} & -m_{22}
-   \end{array} \right]
- \f]
  @sa mat33f_neg
 */// ------------------------------------------------------------------ 
 
@@ -299,21 +284,6 @@ inline void mat33f_abs ( mat33f_t* _m ) {
  @retval _r the result matrix
  @param _m in matrix
  @details get the absolute value from matrix _m and set it in matrix _r as the result:
-
- \f[
-   \_r = |Mat_m| = 
-   \left|\begin{array}{ c c c }
-   m_{00} & m_{01} & m_{02} \\
-   m_{10} & m_{11} & m_{12} \\
-   m_{20} & m_{21} & m_{22}
-   \end{array} \right|
-   =
-   \left[\begin{array}{ c c c }
-   |m_{00}| & |m_{01}| & |m_{02}| \\
-   |m_{10}| & |m_{11}| & |m_{12}| \\
-   |m_{20}| & |m_{21}| & |m_{22}|
-   \end{array} \right]
- \f]
  @sa mat33f_abs
 */// ------------------------------------------------------------------ 
 
@@ -524,7 +494,7 @@ inline void mat33f_mul_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
    a_{20} * b_{0} + a_{21} * b_{1} + a_{22} * b_{2}
    \end{array} \right]
  \f]
- @sa vec2f_mul_mat33f
+ @sa vec3f_mul_mat33f
 */// ------------------------------------------------------------------ 
 
 void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs );
@@ -537,20 +507,20 @@ void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs );
  @param _rhs right hand side matrix  
  @details
  \f[
-   \_r = Vec_a * Mat_b = \left[\begin{array}{ c c }
+   \_r = Vec_a * Mat_b = \left[\begin{array}{ c c c }
    a_{0} & a_{1} & a_{2}
    \end{array} \right] * 
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    b_{00} & b_{01} & b_{02} \\
    b_{10} & b_{11} & b_{12} \\
    b_{20} & b_{21} & b_{22}
-   \end{array} \right] = \left[\begin{array}{ c c }
+   \end{array} \right] = \left[\begin{array}{ c c c }
    a_{0} * b_{00} + a_{1} * b_{10} + a_{2} * b_{20} & 
    a_{0} * b_{01} + a_{1} * b_{11} + a_{2} * b_{21} &
    a_{0} * b_{02} + a_{1} * b_{12} + a_{2} * b_{22}
    \end{array} \right]
  \f]
- @sa mat33f_mul_vec2f
+ @sa mat33f_mul_vec3f
 */// ------------------------------------------------------------------ 
 
 void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs );
@@ -565,13 +535,13 @@ void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs );
  \f[
    \_r = s / Mat_b = 
    s /
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    b_{00} & b_{01} & b_{02} \\
    b_{10} & b_{11} & b_{12} \\
    b_{20} & b_{21} & b_{22} 
    \end{array} \right]
    =
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    s / b_{00} & s / b_{01} & s / b_{02} \\
    s / b_{10} & s / b_{11} & s / b_{12} \\
    s / b_{20} & s / b_{21} & s / b_{22}
@@ -603,14 +573,14 @@ inline void scalar_div_mat33f ( mat33f_t* _r, float _lhs, mat33f_t* _rhs ) {
  @details
  \f[
    \_r = Mat_a / s = 
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    a_{00} & a_{01} & a_{02} \\
    a_{10} & a_{11} & a_{12} \\
    a_{20} & a_{21} & a_{22}
    \end{array} \right] /
    s
    =
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    a_{00} / s & a_{01} / s & a_{02} / s \\
    a_{10} / s & a_{11} / s & a_{12} / s \\
    a_{20} / s & a_{21} / s & a_{22} / s
@@ -641,13 +611,13 @@ inline void mat33f_div_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
  @details get the transposed matrix from matrix _m, override and return it.
 
  \f[
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    a_{00} & a_{01} & a_{02} \\
    a_{10} & a_{11} & a_{12} \\
    a_{20} & a_{21} & a_{22}
    \end{array} \right] 
    \stackrel{transpose}\Longrightarrow
-   \left[\begin{array}{ c c }
+   \left[\begin{array}{ c c c }
    a_{00} & a_{10} & a_{20} \\
    a_{01} & a_{11} & a_{21} \\
    a_{02} & a_{12} & a_{22}
@@ -679,21 +649,6 @@ inline void mat33f_transpose ( mat33f_t* _m ) {
  @retval _r the result vector
  @param _m the in matrix
  @details get the transposed matrix from matrix _m, return it to matrix _r
-
- \f[
-   \left[\begin{array}{ c c }
-   a_{00} & a_{01} & a_{02} \\
-   a_{10} & a_{11} & a_{12} \\
-   a_{20} & a_{21} & a_{22}
-   \end{array} \right] 
-   \stackrel{transpose}\Longrightarrow
-   \left[\begin{array}{ c c }
-   a_{00} & a_{10} & a_{20} \\
-   a_{01} & a_{11} & a_{21} \\
-   a_{02} & a_{12} & a_{22}
-   \end{array} \right]
- \f]
-
  @sa mat33f_transpose
 */// ------------------------------------------------------------------ 
 

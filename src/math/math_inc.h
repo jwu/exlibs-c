@@ -95,7 +95,7 @@
  mat2 * mat1 * vec 
  @endcode
 
- @par Warning:
+ @warning
  Don't modify this macro, currently the engine just support column major calculate
 */// ------------------------------------------------------------------
 
@@ -105,25 +105,48 @@
 #define EX_MATRIX_ORDER EX_MATRIX_COLUMN_MAJOR
 
 // ------------------------------------------------------------------
-// Desc: 
-// EX_MULTIPLY_LEFT_TO_RIGHT
-//     vRot = vec * mat1 * mat2 * mat3 * ...
-//     vRot = vec * quad1 * quad2 * quad3 * ...
-//
-//     vector express:
-//         vec = [ v1, v2, v3, v4, ... ]
-//
-// EX_MULTIPLY_RIGHT_TO_LEFT
-//     vRot = ... * mat3 * mat2 * mat1 * vec
-//     vRot = ... * quad3 * quad2 * quad1 * vec
-//
-//     vector express:
-//         vec = [ v1, 
-//                 v2, 
-//                 v3, 
-//                 v4,
-//                 ... ]
-// ------------------------------------------------------------------
+/*!
+ @def EX_MULTIPLY_ORDER
+
+ The EX_MULTIPLY_ORDER defines the order to transform a vector by multiplying.
+ You needn't define the macro, it depends on the order of the matrix.
+ if the matrix is column major, the multiply order is left to right.
+ if the matrix is row major, the multiply order is right to left.
+
+ @par EX_MULTIPLY_LEFT_TO_RIGHT
+ @code
+ vec_b = vec_a * mat1 * mat2 * mat3 * ...
+ vec_b = vec_a * quad1 * quad2 * quad3 * ...
+ @endcode
+
+ vector express in math:
+
+ \f$
+   vec = 
+   \left[\begin{array}{ c c c c c }
+   v_{0} & v_{1} & v_{2} & v_{3} & ...
+   \end{array} \right]
+ \f$
+
+ @par EX_MULTIPLY_RIGHT_TO_LEFT
+ @code
+ vRot = ... * mat3 * mat2 * mat1 * vec
+ vRot = ... * quad3 * quad2 * quad1 * vec
+ @endcode
+
+ vector express in math:
+
+ \f$
+   vec = 
+   \left[\begin{array}{ c }
+   v_{0} \\
+   v_{1} \\
+   v_{2} \\
+   v_{3} \\
+   ...
+   \end{array} \right]
+ \f$
+*/// ------------------------------------------------------------------
 
 #define EX_MULTIPLY_LEFT_TO_RIGHT 1
 #define EX_MULTIPLY_RIGHT_TO_LEFT 2
@@ -135,26 +158,35 @@
 #endif
 
 // ------------------------------------------------------------------
-// Desc: 
-// EX_COORDINATE_LEFT_HANDED
-//    
-//          Y 
-//           ^   Z
-//           | / 
-//           |/
-//            -----> X      
-//
-// EX_COORDINATE_RIGHT_HANDED
-//
-//          Y 
-//           ^   
-//           |  
-//           |
-//          / -----> X      
-//         /
-//       Z
-//
-// ------------------------------------------------------------------
+/*!
+ @def EX_COORDINATE_SYSTEM
+ defines which coordinate system we will use.
+ @par options:
+ - EX_COORDINATE_LEFT_HANDED (default)
+ - EX_COORDINATE_RIGHT_HANDED
+
+ @par EX_COORDINATE_LEFT_HANDED
+    
+ @code
+          Y 
+           ^   Z
+           | / 
+           |/
+            -----> X      
+ @endcode
+
+ @par EX_COORDINATE_RIGHT_HANDED
+
+ @code
+          Y 
+           ^   
+           |  
+           |
+          / -----> X      
+         /
+       Z
+ @endcode
+*/// ------------------------------------------------------------------
 
 #define EX_COORDINATE_LEFT_HANDED  1
 #define EX_COORDINATE_RIGHT_HANDED 2
@@ -162,17 +194,22 @@
 #define EX_COORDINATE_SYSTEM EX_COORDINATE_LEFT_HANDED
 
 // ------------------------------------------------------------------
-// Desc: 
-//  EX_ANGLE_RADIANS
-//      [ 0.0 - 2pi ]
-//
-//  EX_ANGLE_DEGREE
-//      [ 0.0 - 360.0 ]
-//
-//  NOTE:
-//      cause most c/cpp math function like sinf,cosf... use radians as input value. 
-//      if we use the degree, then we need one more calculation to transform the input.
-// ------------------------------------------------------------------
+/*!
+ @def EX_ANGLE_UNIT
+ @par options:
+ - EX_ANGLE_RADIANS (default)
+ - EX_ANGLE_DEGREE
+
+ @par EX_ANGLE_RADIANS
+ use radians express angle, range at [ 0.0 - 2pi ]
+
+ @par EX_ANGLE_DEGREE
+ use degree express angle, range at [ 0.0 - 360.0 ]
+
+ @note
+ cause most c/cpp math function like sinf,cosf... use radians as input value. 
+ if we use the degree, then we need one more calculation to transform the input.
+*/// ------------------------------------------------------------------
 
 #define EX_ANGLE_RADIANS 1
 #define EX_ANGLE_DEGREE  2
@@ -180,16 +217,22 @@
 #define EX_ANGLE_UNIT EX_ANGLE_RADIANS
 
 // ------------------------------------------------------------------
-// Desc: 
-//  EX_ROTATE_CW
-//      Angles are measured clockwise when looking along the rotation axis toward the "origin".
-//      As know as Left-Hand Rotate ( use thumb as axis, other finger as rotation )
-//
-//  EX_ROTATE_CCW
-//      Angles are measured counter clockwise when looking along the rotation axis toward the "origin".
-//      As know as Right-Hand Rotate ( use thumb as axis, other finger as rotation )
-//
-// ------------------------------------------------------------------
+/*!
+ @def EX_ROTATE_METHOD
+ @par options:
+ - EX_ROTATE_CW (default)
+ - EX_ROTATE_CCW
+
+ @par EX_ROTATE_CW 
+
+ Angles are measured clockwise when looking along the rotation axis toward the "origin".
+ As know as Left-Hand Rotate ( use thumb as axis, other finger as rotation )
+
+ @par EX_ROTATE_CCW 
+
+ Angles are measured counter clockwise when looking along the rotation axis toward the "origin".
+ As know as Right-Hand Rotate ( use thumb as axis, other finger as rotation )
+*/// ------------------------------------------------------------------
 
 #define EX_ROTATE_CW   1
 #define EX_ROTATE_CCW  2
@@ -197,17 +240,18 @@
 #define EX_ROTATE_METHOD EX_ROTATE_CW
 
 // ------------------------------------------------------------------
-//            Operation       |  Result
-//   -------------------------+------------
-//             n / +-infinity |     0
-//              +-nonzero / 0 | +-infinity
-//    +-infinity * +-infinity | +-infinity
-//        infinity + infinity |   infinity
-//        infinity - infinity |    NaN
-//    +-infinity / +-infinity |    NaN
-//             +-infinity * 0 |    NaN
-//                  +-0 / +-0 |    NaN
-// ------------------------------------------------------------------
+/*
+            Operation       |  Result
+   -------------------------+------------
+             n / +-infinity |     0
+              +-nonzero / 0 | +-infinity
+    +-infinity * +-infinity | +-infinity
+        infinity + infinity |   infinity
+        infinity - infinity |    NaN
+    +-infinity / +-infinity |    NaN
+             +-infinity * 0 |    NaN
+                  +-0 / +-0 |    NaN
+*/// ------------------------------------------------------------------
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -215,8 +259,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------
-// Desc: values about PI 
-// ------------------------------------------------------------------
+/*!
+ @def EX_PI
+ @details pi 
+
+ @def EX_INV_PI
+ @details 1/pi 
+
+ @def EX_TWO_PI
+ @details 2*pi 
+
+ @def EX_HALF_PI
+ @details pi/2 
+*/// ------------------------------------------------------------------
 
 #define EX_PI               (3.1415926535897932)
 #define EX_INV_PI			(0.31830988618)
@@ -224,8 +279,25 @@
 #define EX_HALF_PI			(1.57079632679)
 
 // ------------------------------------------------------------------
-// Desc: degree/radius convertor 
-// ------------------------------------------------------------------
+/*!
+ @def EX_DEG_TO_RAD
+ @details convert degree to radians
+ @par Usage: 
+ @code
+ float rad;
+ float deg = 90.0f;
+ rad = deg * (float)EX_DEG_TO_RAD; 
+ @endcode
+
+ @def EX_RAD_TO_DEG
+ @details convert radians to degree
+ @par Usage: 
+ @code
+ float deg;
+ float rad = 1.57f;
+ deg = rad * (float)EX_DEG_TO_RAD; 
+ @endcode
+*/// ------------------------------------------------------------------
 
 #define EX_DEG_TO_RAD       (0.017453292519943296) /* pi/180.0 */
 #define EX_RAD_TO_DEG       (57.29577951308232158) /* 180.0/pi */

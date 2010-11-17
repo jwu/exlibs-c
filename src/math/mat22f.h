@@ -219,20 +219,6 @@ inline void mat22f_neg ( mat22f_t* _m ) {
  @retval _r the result matrix
  @param _m in matrix
  @details get the negtive value from matrix _m and set it in matrix _r as the result:
-
- \f[
-   \_r 
-   =
-   -\left[\begin{array}{ c c }
-   m_{00} & m_{01} \\
-   m_{10} & m_{11}
-   \end{array} \right]
-   = 
-   \left[\begin{array}{ c c }
-   -m_{00} & -m_{01} \\
-   -m_{10} & -m_{11}
-   \end{array} \right]
- \f]
  @sa mat22f_neg
 */// ------------------------------------------------------------------ 
 
@@ -276,20 +262,6 @@ inline void mat22f_abs ( mat22f_t* _m ) {
  @retval _r the result matrix
  @param _m in matrix
  @details get the absolute value from matrix _m and set it in matrix _r as the result:
-
- \f[
-   \_r
-   =
-   \left|\begin{array}{ c c }
-   m_{00} & m_{01} \\
-   m_{10} & m_{11}
-   \end{array} \right|
-   = 
-   \left[\begin{array}{ c c }
-   |m_{00}| & |m_{01}| \\
-   |m_{10}| & |m_{11}|
-   \end{array} \right]
- \f]
  @sa mat22f_abs
 */// ------------------------------------------------------------------ 
 
@@ -568,19 +540,6 @@ inline void mat22f_transpose ( mat22f_t* _m ) {
  @retval _r the result vector
  @param _m the in matrix
  @details get the transposed matrix from matrix _m, return it to matrix _r
-
- \f[
-   \left[\begin{array}{ c c }
-   a_{00} & a_{01} \\
-   a_{10} & a_{11}
-   \end{array} \right] 
-   \stackrel{transpose}\Longrightarrow
-   \left[\begin{array}{ c c }
-   a_{00} & a_{10} \\
-   a_{01} & a_{11}
-   \end{array} \right]
- \f]
-
  @sa mat22f_transpose
 */// ------------------------------------------------------------------ 
 
