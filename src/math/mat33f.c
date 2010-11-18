@@ -22,15 +22,15 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs ) {
+void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs ) {
     float x, y, z;
     vec3f_t tmp;
 
-    mat33f_row( &tmp, _lhs, 0 );
+    ex_mat33f_row( &tmp, _lhs, 0 );
     x = vec3f_dot( _rhs, &tmp );
-    mat33f_row( &tmp, _lhs, 1 );
+    ex_mat33f_row( &tmp, _lhs, 1 );
     y = vec3f_dot( _rhs, &tmp );
-    mat33f_row( &tmp, _lhs, 2 );
+    ex_mat33f_row( &tmp, _lhs, 2 );
     z = vec3f_dot( _rhs, &tmp );
 
     vec3f_set( _r, x, y, z );
@@ -40,15 +40,15 @@ void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs ) {
+void ex_vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, ex_mat33f_t* _rhs ) {
     float x, y, z;
     vec3f_t tmp;
 
-    mat33f_col( &tmp, _rhs, 0 );
+    ex_mat33f_col( &tmp, _rhs, 0 );
     x = vec3f_dot( _lhs, &tmp );
-    mat33f_col( &tmp, _rhs, 1 );
+    ex_mat33f_col( &tmp, _rhs, 1 );
     y = vec3f_dot( _lhs, &tmp );
-    mat33f_col( &tmp, _rhs, 2 );
+    ex_mat33f_col( &tmp, _rhs, 2 );
     z = vec3f_dot( _lhs, &tmp );
 
     vec3f_set( _r, x, y, z );
@@ -58,7 +58,7 @@ void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool mat33f_inverse ( mat33f_t* _m ) {
+bool ex_mat33f_inverse ( ex_mat33f_t* _m ) {
     float det, inv;
     float m00, m01, m02, m10, m11, m12, m20, m21, m22; 
 
@@ -74,11 +74,11 @@ bool mat33f_inverse ( mat33f_t* _m ) {
 
     det = _m->m00 * m00 + _m->m01 * m10 + _m->m02 * m20;
 
-    if ( is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
         return false;
 
     inv = 1.0f / det;
-    mat33f_set ( _m, 
+    ex_mat33f_set ( _m, 
                  m00 * inv, m01 * inv, m02 * inv,
                  m10 * inv, m11 * inv, m12 * inv,
                  m20 * inv, m21 * inv, m22 * inv );
@@ -89,7 +89,7 @@ bool mat33f_inverse ( mat33f_t* _m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool mat33f_get_inverse ( mat33f_t* _r, mat33f_t* _m ) {
+bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m ) {
     float det, inv;
 
     _r->m00 = _m->m11 * _m->m22 - _m->m12 * _m->m21;
@@ -103,11 +103,11 @@ bool mat33f_get_inverse ( mat33f_t* _r, mat33f_t* _m ) {
     _r->m22 = _m->m00 * _m->m11 - _m->m01 * _m->m10;
 
     det = _m->m00 * _r->m00 + _m->m01 * _r->m10 + _m->m02 * _r->m20;
-    if ( is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
         return false;
 
     inv = 1.0f/det;
-    mat33f_mul_scalar( _r, _m, inv );
+    ex_mat33f_mul_scalar( _r, _m, inv );
 
     return true;
 }

@@ -6,8 +6,8 @@
 // ======================================================================================
 
 // #################################################################################
-#ifndef MAT33F_H_1289531940
-#define MAT33F_H_1289531940
+#ifndef ex_mat33f_H_1289531940
+#define ex_mat33f_H_1289531940
 // #################################################################################
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,13 +22,13 @@ extern "C" {
 #endif
 // ######################### 
 
-//! @defgroup mat33f_t matrix 3x3 float
+//! @defgroup ex_mat33f_t matrix 3x3 float
 //! @ingroup Math
 //! @{
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct mat33f_t
+ @struct ex_mat33f_t
  @details
  
  The data of matrix 3x3 is construct by an union structure with float elements.\n
@@ -51,7 +51,7 @@ extern "C" {
  \f$
 */// ------------------------------------------------------------------ 
 
-typedef struct mat33f_t {
+typedef struct ex_mat33f_t {
     union {
         struct { 
             float m00, m01, m02;
@@ -60,11 +60,11 @@ typedef struct mat33f_t {
         }; // end struct
         float m[9];
     };
-} mat33f_t;
+} ex_mat33f_t;
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_zero ( mat33f_t* _m )
+ @fn inline void ex_mat33f_zero ( ex_mat33f_t* _m )
  @retval _m the result matrix
  @details make a zero matrix:
 
@@ -77,7 +77,7 @@ typedef struct mat33f_t {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_zero ( mat33f_t* _m ) { 
+inline void ex_mat33f_zero ( ex_mat33f_t* _m ) { 
     _m->m00 = 0.0f, _m->m01 = 0.0f, _m->m02 = 0.0f; 
     _m->m10 = 0.0f, _m->m11 = 0.0f, _m->m12 = 0.0f; 
     _m->m20 = 0.0f, _m->m21 = 0.0f, _m->m22 = 0.0f; 
@@ -85,7 +85,7 @@ inline void mat33f_zero ( mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_identity ( mat33f_t* _m )
+ @fn inline void ex_mat33f_identity ( ex_mat33f_t* _m )
  @retval _m the result matrix
  @details make an identity matrix:
 
@@ -98,7 +98,7 @@ inline void mat33f_zero ( mat33f_t* _m ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_identity ( mat33f_t* _m ) { 
+inline void ex_mat33f_identity ( ex_mat33f_t* _m ) { 
     _m->m00 = 1.0f, _m->m01 = 0.0f, _m->m02 = 0.0f; 
     _m->m10 = 0.0f, _m->m11 = 1.0f, _m->m12 = 0.0f; 
     _m->m20 = 0.0f, _m->m21 = 0.0f, _m->m22 = 1.0f; 
@@ -106,7 +106,7 @@ inline void mat33f_identity ( mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_set ( mat33f_t* _m, 
+ @fn inline void ex_mat33f_set ( ex_mat33f_t* _m, 
                          float _m00, float _m01, float _m02,
                          float _m10, float _m11, float _m12,
                          float _m20, float _m21, float _m22 )
@@ -131,7 +131,7 @@ inline void mat33f_identity ( mat33f_t* _m ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_set ( mat33f_t* _m, 
+inline void ex_mat33f_set ( ex_mat33f_t* _m, 
                          float _m00, float _m01, float _m02,
                          float _m10, float _m11, float _m12,
                          float _m20, float _m21, float _m22 ) { 
@@ -142,7 +142,7 @@ inline void mat33f_set ( mat33f_t* _m,
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline inline float mat33f_get ( mat33f_t* _m, uint _row, uint _col ) 
+ @fn inline inline float ex_mat33f_get ( ex_mat33f_t* _m, uint _row, uint _col ) 
  @param _m the matrix
  @param _row the row index, range in [0,3)
  @param _col the col index, range in [0,3)
@@ -150,7 +150,7 @@ inline void mat33f_set ( mat33f_t* _m,
  @details get the matrix element in (_row, _col)
 */// ------------------------------------------------------------------ 
 
-inline float mat33f_get ( mat33f_t* _m, uint _row, uint _col ) { 
+inline float ex_mat33f_get ( ex_mat33f_t* _m, uint _row, uint _col ) { 
     ex_assert( _row >= 0 && _row < 3, "out of range" );
     ex_assert( _col >= 0 && _col < 3, "out of range" );
     return _m->m[3*_row+_col];
@@ -158,21 +158,21 @@ inline float mat33f_get ( mat33f_t* _m, uint _row, uint _col ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_row ( vec3f_t* _r, mat33f_t* _m, uint _row )
+ @fn inline void ex_mat33f_row ( vec3f_t* _r, ex_mat33f_t* _m, uint _row )
  @retval _r the result vector
  @param _m the matrix
  @param _row the row index, range in [0,3)
  @details get the matrix by _row and return it in vector3, for example: 
  @code
  vec3f_t r;
- mat33f_t m;
- mat33f_zero(&m);
- mat33f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01, m.m02)
+ ex_mat33f_t m;
+ ex_mat33f_zero(&m);
+ ex_mat33f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01, m.m02)
  @endcode
  the r is equal to vector3 (m.m00, m.m01, m.m02) 
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_row ( vec3f_t* _r, mat33f_t* _m, uint _row ) {
+inline void ex_mat33f_row ( vec3f_t* _r, ex_mat33f_t* _m, uint _row ) {
     ex_assert( _row >= 0 && _row < 3, "out of range" );
     _r->x = _m->m[3*_row+0]; 
     _r->y = _m->m[3*_row+1]; 
@@ -181,21 +181,21 @@ inline void mat33f_row ( vec3f_t* _r, mat33f_t* _m, uint _row ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_col ( vec3f_t* _r, mat33f_t* _m, uint _col )
+ @fn inline void ex_mat33f_col ( vec3f_t* _r, ex_mat33f_t* _m, uint _col )
  @retval _r the result vector
  @param _m the matrix
  @param _col the column index, range in [0,3)
  @details get the matrix by _row and return it in vector3, for example: 
  @code
  vec3f_t r;
- mat33f_t m;
- mat33f_zero(&m);
- mat33f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10, m.m20)
+ ex_mat33f_t m;
+ ex_mat33f_zero(&m);
+ ex_mat33f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10, m.m20)
  @endcode
  the r is equal to vector3 (m.m00, m.m10, m.m20) 
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_col ( vec3f_t* _r, mat33f_t* _m, uint _col ) {
+inline void ex_mat33f_col ( vec3f_t* _r, ex_mat33f_t* _m, uint _col ) {
     ex_assert( _col >= 0 && _col < 3, "out of range" );
     _r->x = _m->m[3*0+_col]; 
     _r->y = _m->m[3*1+_col]; 
@@ -204,7 +204,7 @@ inline void mat33f_col ( vec3f_t* _r, mat33f_t* _m, uint _col ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_neg ( mat33f_t* _m )
+ @fn inline void ex_mat33f_neg ( ex_mat33f_t* _m )
  @param _m in matrix
  @retval _m the result matrix
  @details get the negtive value from matrix _m, override and return it as the result:
@@ -223,10 +223,10 @@ inline void mat33f_col ( vec3f_t* _r, mat33f_t* _m, uint _col ) {
    -m_{20} & -m_{21} & -m_{22}
    \end{array} \right]
  \f]
- @sa mat33f_get_neg
+ @sa ex_mat33f_get_neg
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_neg ( mat33f_t* _m ) {
+inline void ex_mat33f_neg ( ex_mat33f_t* _m ) {
     _m->m00 = -_m->m00, _m->m01 = -_m->m01, _m->m02 = -_m->m02; 
     _m->m10 = -_m->m10, _m->m11 = -_m->m11, _m->m12 = -_m->m12; 
     _m->m20 = -_m->m20, _m->m21 = -_m->m21, _m->m22 = -_m->m22; 
@@ -234,14 +234,14 @@ inline void mat33f_neg ( mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_get_neg ( mat33f_t* _r, mat33f_t* _m )
+ @fn inline void ex_mat33f_get_neg ( ex_mat33f_t* _r, ex_mat33f_t* _m )
  @retval _r the result matrix
  @param _m in matrix
  @details get the negtive value from matrix _m and set it in matrix _r as the result:
- @sa mat33f_neg
+ @sa ex_mat33f_neg
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_get_neg ( mat33f_t* _r, mat33f_t* _m ) {
+inline void ex_mat33f_get_neg ( ex_mat33f_t* _r, ex_mat33f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = -_m->m00, _r->m01 = -_m->m01, _r->m02 = -_m->m02; 
     _r->m10 = -_m->m10, _r->m11 = -_m->m11, _r->m12 = -_m->m12; 
@@ -250,7 +250,7 @@ inline void mat33f_get_neg ( mat33f_t* _r, mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_abs ( mat33f_t* _m )
+ @fn inline void ex_mat33f_abs ( ex_mat33f_t* _m )
  @param _m in matrix
  @retval _m the result matrix
  @details get the absolute value from matrix _m, override and return it as the result:
@@ -269,10 +269,10 @@ inline void mat33f_get_neg ( mat33f_t* _r, mat33f_t* _m ) {
    |m_{20}| & |m_{21}| & |m_{22}|
    \end{array} \right]
  \f]
- @sa mat33f_get_abs
+ @sa ex_mat33f_get_abs
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_abs ( mat33f_t* _m ) {
+inline void ex_mat33f_abs ( ex_mat33f_t* _m ) {
     _m->m00 = fabsf(_m->m00), _m->m01 = fabsf(_m->m01), _m->m02 = fabsf(_m->m02); 
     _m->m10 = fabsf(_m->m10), _m->m11 = fabsf(_m->m11), _m->m12 = fabsf(_m->m12); 
     _m->m20 = fabsf(_m->m20), _m->m21 = fabsf(_m->m21), _m->m22 = fabsf(_m->m22); 
@@ -280,14 +280,14 @@ inline void mat33f_abs ( mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_get_abs ( mat33f_t* _r, mat33f_t* _m )
+ @fn inline void ex_mat33f_get_abs ( ex_mat33f_t* _r, ex_mat33f_t* _m )
  @retval _r the result matrix
  @param _m in matrix
  @details get the absolute value from matrix _m and set it in matrix _r as the result:
- @sa mat33f_abs
+ @sa ex_mat33f_abs
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_get_abs ( mat33f_t* _r, mat33f_t* _m ) {
+inline void ex_mat33f_get_abs ( ex_mat33f_t* _r, ex_mat33f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = fabsf(_m->m00), _r->m01 = fabsf(_m->m01), _r->m02 = fabsf(_m->m02); 
     _r->m10 = fabsf(_m->m10), _r->m11 = fabsf(_m->m11), _r->m12 = fabsf(_m->m12); 
@@ -296,7 +296,7 @@ inline void mat33f_get_abs ( mat33f_t* _r, mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_add ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs )
+ @fn inline void ex_mat33f_add ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, ex_mat33f_t* _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side matrix 
@@ -322,7 +322,7 @@ inline void mat33f_get_abs ( mat33f_t* _r, mat33f_t* _m ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_add ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
+inline void ex_mat33f_add ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, ex_mat33f_t* _rhs ) {
     _r->m00 = _lhs->m00 + _rhs->m00; 
     _r->m01 = _lhs->m01 + _rhs->m01; 
     _r->m02 = _lhs->m02 + _rhs->m02;
@@ -338,7 +338,7 @@ inline void mat33f_add ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_sub ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs )
+ @fn inline void ex_mat33f_sub ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, ex_mat33f_t* _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side matrix 
@@ -364,7 +364,7 @@ inline void mat33f_add ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_sub ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
+inline void ex_mat33f_sub ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, ex_mat33f_t* _rhs ) {
     _r->m00 = _lhs->m00 - _rhs->m00; 
     _r->m01 = _lhs->m01 - _rhs->m01;
     _r->m02 = _lhs->m02 - _rhs->m02;
@@ -380,7 +380,7 @@ inline void mat33f_sub ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_mul ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs )
+ @fn inline void ex_mat33f_mul ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, ex_mat33f_t* _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side matrix 
@@ -412,7 +412,7 @@ inline void mat33f_sub ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_mul ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
+inline void ex_mat33f_mul ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, ex_mat33f_t* _rhs ) {
     float m00, m01, m02, m10, m11, m12, m20, m21, m22;
 
     m00 = _lhs->m00 * _rhs->m00 + _lhs->m01 * _rhs->m10 + _lhs->m02 * _rhs->m20;
@@ -427,7 +427,7 @@ inline void mat33f_mul ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
     m21 = _lhs->m20 * _rhs->m01 + _lhs->m21 * _rhs->m11 + _lhs->m22 * _rhs->m21;
     m22 = _lhs->m20 * _rhs->m02 + _lhs->m21 * _rhs->m12 + _lhs->m22 * _rhs->m22;
 
-    mat33f_set( _r, 
+    ex_mat33f_set( _r, 
                 m00, m01, m02,
                 m10, m11, m12,
                 m20, m21, m22 );
@@ -435,7 +435,7 @@ inline void mat33f_mul ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_mul_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs )
+ @fn inline void ex_mat33f_mul_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, float _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side scalar 
@@ -457,7 +457,7 @@ inline void mat33f_mul ( mat33f_t* _r, mat33f_t* _lhs, mat33f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_mul_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
+inline void ex_mat33f_mul_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, float _rhs ) {
     _r->m00 = _lhs->m00 * _rhs; 
     _r->m01 = _lhs->m01 * _rhs; 
     _r->m02 = _lhs->m02 * _rhs;
@@ -473,7 +473,7 @@ inline void mat33f_mul_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs )
+ @fn void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix 
  @param _rhs right hand side vector 
@@ -494,14 +494,14 @@ inline void mat33f_mul_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
    a_{20} * b_{0} + a_{21} * b_{1} + a_{22} * b_{2}
    \end{array} \right]
  \f]
- @sa vec3f_mul_mat33f
+ @sa ex_vec3f_mul_mat33f
 */// ------------------------------------------------------------------ 
 
-void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs );
+void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs )
+ @fn void ex_vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, ex_mat33f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side vector
  @param _rhs right hand side matrix  
@@ -520,14 +520,14 @@ void mat33f_mul_vec3f ( vec3f_t* _r, mat33f_t* _lhs, vec3f_t* _rhs );
    a_{0} * b_{02} + a_{1} * b_{12} + a_{2} * b_{22}
    \end{array} \right]
  \f]
- @sa mat33f_mul_vec3f
+ @sa ex_mat33f_mul_vec3f
 */// ------------------------------------------------------------------ 
 
-void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs );
+void ex_vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, ex_mat33f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void scalar_div_mat33f ( mat33f_t* _r, float _lhs, mat33f_t* _rhs )
+ @fn inline void ex_scalar_div_mat33f ( ex_mat33f_t* _r, float _lhs, ex_mat33f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side float
  @param _rhs right hand side matrix  
@@ -547,10 +547,10 @@ void vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, mat33f_t* _rhs );
    s / b_{20} & s / b_{21} & s / b_{22}
    \end{array} \right]
  \f]
- @sa mat33f_div_scalar
+ @sa ex_mat33f_div_scalar
 */// ------------------------------------------------------------------ 
 
-inline void scalar_div_mat33f ( mat33f_t* _r, float _lhs, mat33f_t* _rhs ) {
+inline void ex_scalar_div_mat33f ( ex_mat33f_t* _r, float _lhs, ex_mat33f_t* _rhs ) {
     _r->m00 = _lhs / _rhs->m00; 
     _r->m01 = _lhs / _rhs->m01; 
     _r->m02 = _lhs / _rhs->m02;
@@ -566,7 +566,7 @@ inline void scalar_div_mat33f ( mat33f_t* _r, float _lhs, mat33f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_div_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs )
+ @fn inline void ex_mat33f_div_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, float _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix  
  @param _rhs right hand side float
@@ -586,10 +586,10 @@ inline void scalar_div_mat33f ( mat33f_t* _r, float _lhs, mat33f_t* _rhs ) {
    a_{20} / s & a_{21} / s & a_{22} / s
    \end{array} \right]
  \f]
- @sa scalar_div_mat33f
+ @sa ex_scalar_div_mat33f
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_div_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
+inline void ex_mat33f_div_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, float _rhs ) {
     _r->m00 = _lhs->m00 / _rhs;
     _r->m01 = _lhs->m01 / _rhs;
     _r->m02 = _lhs->m02 / _rhs;
@@ -605,7 +605,7 @@ inline void mat33f_div_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_transpose ( mat33f_t* _m )
+ @fn inline void ex_mat33f_transpose ( ex_mat33f_t* _m )
  @retval _m the result vector
  @param _m the in matrix
  @details get the transposed matrix from matrix _m, override and return it.
@@ -624,10 +624,10 @@ inline void mat33f_div_scalar ( mat33f_t* _r, mat33f_t* _lhs, float _rhs ) {
    \end{array} \right]
  \f]
 
- @sa mat33f_get_transpose
+ @sa ex_mat33f_get_transpose
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_transpose ( mat33f_t* _m ) {
+inline void ex_mat33f_transpose ( ex_mat33f_t* _m ) {
     float swap;
 
     swap = _m->m01;
@@ -645,16 +645,16 @@ inline void mat33f_transpose ( mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void mat33f_get_transpose ( mat33f_t* _r, mat33f_t* _m )
+ @fn inline void ex_mat33f_get_transpose ( ex_mat33f_t* _r, ex_mat33f_t* _m )
  @retval _r the result vector
  @param _m the in matrix
  @details get the transposed matrix from matrix _m, return it to matrix _r
- @sa mat33f_transpose
+ @sa ex_mat33f_transpose
 */// ------------------------------------------------------------------ 
 
-inline void mat33f_get_transpose ( mat33f_t* _r, mat33f_t* _m ) {
+inline void ex_mat33f_get_transpose ( ex_mat33f_t* _r, ex_mat33f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
-    mat33f_set( _r,
+    ex_mat33f_set( _r,
                 _m->m00, _m->m10, _m->m20,
                 _m->m01, _m->m11, _m->m21,
                 _m->m02, _m->m12, _m->m22 );
@@ -662,31 +662,31 @@ inline void mat33f_get_transpose ( mat33f_t* _r, mat33f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool mat33f_inverse ( mat33f_t* _m )
+ @fn bool ex_mat33f_inverse ( ex_mat33f_t* _m )
  @retval _m the result vector
  @param _m the in matrix
  @return if the inverse operation successed 
  - true: successful
  - false: failed
  @details get the inversed matrix from matrix _m, override and return it.
- @sa mat33f_get_inverse
+ @sa ex_mat33f_get_inverse
 */// ------------------------------------------------------------------ 
 
-bool mat33f_inverse ( mat33f_t* _m );
+bool ex_mat33f_inverse ( ex_mat33f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool mat33f_get_inverse ( mat33f_t* _r, mat33f_t* _m )
+ @fn bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m )
  @retval _r the result vector
  @param _m the in matrix
  @return if the inverse operation successed 
  - true: successful
  - false: failed
  @details get the inversed matrix from matrix _m, return it to matrix _r
- @sa mat33f_inverse
+ @sa ex_mat33f_inverse
 */// ------------------------------------------------------------------ 
 
-bool mat33f_get_inverse ( mat33f_t* _r, mat33f_t* _m );
+bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m );
 
 //! @}
 
@@ -697,5 +697,5 @@ bool mat33f_get_inverse ( mat33f_t* _r, mat33f_t* _m );
 // ######################### 
 
 // #################################################################################
-#endif // END MAT33F_H_1289531940
+#endif // END ex_mat33f_H_1289531940
 // #################################################################################

@@ -54,7 +54,7 @@ hashmap_t* hashmap_alloc ( size_t _key_bytes,
 
     // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
     ex_assert_exec( is_pow_of_2(_count), 
-                    _count = ceilpow2u(_count), 
+                    _count = ex_ceilpow2u(_count), 
                     "hash count must be power of 2, for bit operation & instead of %" );
 
     // init length, _capacity, element bytes, hash and keycmp callbacks.
@@ -92,7 +92,7 @@ hashmap_t* hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t 
 
     // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
     ex_assert_exec( is_pow_of_2(_count), 
-                    _count = ceilpow2u(_count), 
+                    _count = ex_ceilpow2u(_count), 
                     "hash count must be power of 2, for bit operation & instead of %" );
 
     // init length, _capacity, element bytes, hash and keycmp callbacks.

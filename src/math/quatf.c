@@ -61,7 +61,7 @@ bool quatf_get_inverse ( quatf_t* _r, quatf_t* _q ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void quatf_to_mat33( quatf_t* _q, mat33f_t* _m ) {
+void quatf_to_mat33( quatf_t* _q, ex_mat33f_t* _m ) {
     float Tx, Ty, Tz; 
     float Twx, Twy, Twz; 
     float Txx, Txy, Txz;
@@ -80,7 +80,7 @@ void quatf_to_mat33( quatf_t* _q, mat33f_t* _m ) {
     Tyz = Tz * _q->y;
     Tzz = Tz * _q->z;
 
-    mat33f_set ( _m,  
+    ex_mat33f_set ( _m,  
                  1.0f - ( Tyy + Tzz ), Txy + Twz,            Txz - Twy, 
                  Txy - Twz,            1.0f - ( Txx + Tzz ), Tyz + Twx,
                  Txz + Twy,            Tyz - Twx,            1.0f - ( Txx + Tyy ) );
@@ -90,7 +90,7 @@ void quatf_to_mat33( quatf_t* _q, mat33f_t* _m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void quatf_to_mat44( quatf_t* _q, mat44f_t* _m ) {
+void quatf_to_mat44( quatf_t* _q, ex_mat44f_t* _m ) {
     float Tx, Ty, Tz; 
     float Twx, Twy, Twz; 
     float Txx, Txy, Txz;
@@ -109,11 +109,11 @@ void quatf_to_mat44( quatf_t* _q, mat44f_t* _m ) {
     Tyz = Tz * _q->y;
     Tzz = Tz * _q->z;
 
-    mat44f_set ( _m,  
-                 1.0f - ( Tyy + Tzz ), Txy + Twz,            Txz - Twy,            0.0f,
-                 Txy - Twz,            1.0f - ( Txx + Tzz ), Tyz + Twx,            0.0f,
-                 Txz + Twy,            Tyz - Twx,            1.0f - ( Txx + Tyy ), 0.0f,  
-                 0.0f,                 0.0f,                 0.0f,                 1.0f );
+    ex_mat44f_set ( _m,  
+                    1.0f - ( Tyy + Tzz ), Txy + Twz,            Txz - Twy,            0.0f,
+                    Txy - Twz,            1.0f - ( Txx + Tzz ), Tyz + Twx,            0.0f,
+                    Txz + Twy,            Tyz - Twx,            1.0f - ( Txx + Tyy ), 0.0f,  
+                    0.0f,                 0.0f,                 0.0f,                 1.0f );
 }
 
 // ------------------------------------------------------------------ 

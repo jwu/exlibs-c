@@ -111,8 +111,8 @@ inline void vec2f_set ( vec2f_t* _r, float _x, float _y ) { _r->x = _x, _r->y = 
 */// ------------------------------------------------------------------ 
 
 inline bool vec2f_is_equal ( vec2f_t* _lhs, vec2f_t* _rhs ) { 
-    return is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
-        && is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS);
+    return ex_is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
+        && ex_is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
@@ -508,7 +508,7 @@ inline float vec2f_lenSQR ( vec2f_t* _v ) {
 */// ------------------------------------------------------------------ 
 
 inline bool vec2f_is_normalized ( vec2f_t* _v ) {
-    return is_equal_float( vec2f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
+    return ex_is_equal_float( vec2f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
@@ -527,13 +527,13 @@ inline bool vec2f_normalize ( vec2f_t* _v ) {
     float length_sqr = vec2f_lenSQR(_v);
     float inv_length = 0.0f; 
 
-    if ( is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) )
+    if ( ex_is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) )
         return true;
 
-    if( is_zero_float( length_sqr, EX_FLOAT_EPS ) )
+    if( ex_is_zero_float( length_sqr, EX_FLOAT_EPS ) )
         return false;
 
-    inv_length = inv_sqrtf( length_sqr );
+    inv_length = ex_inv_sqrtf( length_sqr );
     vec2f_mul_scalar ( _v, _v, inv_length );
 }
 
@@ -557,15 +557,15 @@ inline bool vec2f_get_normalize ( vec2f_t* _r, vec2f_t* _v ) {
     length_sqr = vec2f_lenSQR(_v);
     inv_length = 0.0f; 
 
-    if ( is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
+    if ( ex_is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
         return true;
     }
 
-    if( is_zero_float( length_sqr, EX_FLOAT_EPS ) ) {
+    if( ex_is_zero_float( length_sqr, EX_FLOAT_EPS ) ) {
         return false;
     }
 
-    inv_length = inv_sqrtf( length_sqr );
+    inv_length = ex_inv_sqrtf( length_sqr );
     vec2f_mul_scalar ( _r, _v, inv_length );
 }
 

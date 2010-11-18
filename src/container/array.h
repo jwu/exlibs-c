@@ -16,21 +16,37 @@ extern "C" {
 #endif
 // ######################### 
 
+//! @defgroup array_t dynamic array (like stl::vector)
+//! @ingroup Container
+//! @{
+
 ///////////////////////////////////////////////////////////////////////////////
 // decls
 ///////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-// foreach
-///////////////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------ 
+/*! 
+ @def array_each
+ @param _type the type of the element in the array.
+ @param _el the element variable you want to define.
+ @param _array the in array
+ @details macro for easy iterates the array container.
 
-/**
-Usage: 
+ when use the macro, it will define the local variable below:
+ - count: the count of the element in the array.
+ - idx: the current index.
 
-    array_each ( uint32, i, &array ) {
-        ...
-    } array_each_end;
-*/
+ to finish the code, you must write array_each_end.
+
+ Usage:
+ @code
+ array_t* my_array = array_alloc( sizeof(float), 10 );
+ array_each ( float, item, my_array ) {
+    printf( "item_%d is %f", idx, item );
+ } array_each_end;
+ @endcode
+ @sa array_each_end
+*/// ------------------------------------------------------------------ 
 
 #define array_each( _type, _el, _array ) \
     { \
@@ -40,14 +56,26 @@ Usage:
         while ( idx < count ) { \
             _el = *( (_type*) (_array->_data) + idx );
 
+// ------------------------------------------------------------------ 
+/*! 
+ @def array_each_end
+ @details macro to end the array_each macro
+ @sa array_each
+*/// ------------------------------------------------------------------ 
+
 #define array_each_end \
             ++idx; \
         } \
     }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @struct array_t
+ @details
+
+ The data structure of dynamic array used in array_ functions 
+ 
+*/// ------------------------------------------------------------------ 
 
 typedef struct array_t {
     char* _data;
@@ -104,6 +132,8 @@ inline void* array_push_back_wstring ( array_t* _array, wchar_t* _value ) { retu
 // ------------------------------------------------------------------ 
 
 inline size_t array_len ( array_t* _array ) { return _array->_length; } 
+
+//! @}
 
 // ######################### 
 #ifdef __cplusplus

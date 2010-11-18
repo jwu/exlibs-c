@@ -22,8 +22,8 @@ extern "C" {
 #endif
 // ######################### 
 
-extern struct mat33f_t;
-extern struct mat44f_t;
+extern struct ex_mat33f_t;
+extern struct ex_mat44f_t;
 
 //! @defgroup quatf_t quaternion float
 //! @ingroup Math
@@ -146,18 +146,18 @@ inline void quatf_set_from_axis_radians ( quatf_t* _r, vec3f_t* _axis, float _ra
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool quatf_is_equal ( quatf* _lhs, quatf* _rhs )
+ @fn inline bool quatf_is_equal ( quatf_t* _lhs, quatf_t* _rhs )
  @param _lhs the left hand side quaternion
  @param _rhs the right hand side quaternion
  @return the result of the comparation
  @details compare if the two quaternion is equal to each other
 */// ------------------------------------------------------------------ 
 
-inline bool quatf_is_equal ( quatf* _lhs, quatf* _rhs ) {
-    return is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
-        && is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS)
-        && is_equal_float(_lhs->z,_rhs->z,EX_FLOAT_EPS)
-        && is_equal_float(_lhs->w,_rhs->w,EX_FLOAT_EPS)
+inline bool quatf_is_equal ( quatf_t* _lhs, quatf_t* _rhs ) {
+    return ex_is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
+        && ex_is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS)
+        && ex_is_equal_float(_lhs->z,_rhs->z,EX_FLOAT_EPS)
+        && ex_is_equal_float(_lhs->w,_rhs->w,EX_FLOAT_EPS)
         ;
 }
 
@@ -622,7 +622,7 @@ inline float quatf_lenSQR( quatf_t* _r ) {
 */// ------------------------------------------------------------------ 
 
 inline bool quatf_is_normalized( quatf_t* _r ) {
-    return is_equal_float( quatf_lenSQR(_r), 1.0f, EX_FLOAT_EPS );
+    return ex_is_equal_float( quatf_lenSQR(_r), 1.0f, EX_FLOAT_EPS );
 }
 
 // ------------------------------------------------------------------ 
@@ -642,15 +642,15 @@ inline bool quatf_get_normalize( quatf_t* _r, quatf_t* _q ) {
     float len_sqr, inv_len;
 
     len_sqr = quatf_lenSQR(_q);
-    if ( is_equal_float( len_sqr, 1.0f, EX_FLOAT_EPS ) ) {
+    if ( ex_is_equal_float( len_sqr, 1.0f, EX_FLOAT_EPS ) ) {
         *_r = *_q;
         return true;
     }
 
-    if ( is_zero_float( len_sqr, EX_FLOAT_EPS ) )
+    if ( ex_is_zero_float( len_sqr, EX_FLOAT_EPS ) )
         return false;
 
-    inv_len = inv_sqrtf (len_sqr);
+    inv_len = ex_inv_sqrtf (len_sqr);
     quatf_mul_scalar ( _r, _q, inv_len );
     return true;
 }
@@ -672,20 +672,20 @@ inline bool quatf_normalize( quatf_t* _r ) {
     float len_sqr, inv_len;
 
     len_sqr = quatf_lenSQR(_r);
-    if ( is_equal_float( len_sqr, 1.0f, EX_FLOAT_EPS ) )
+    if ( ex_is_equal_float( len_sqr, 1.0f, EX_FLOAT_EPS ) )
         return true;
 
-    if( is_zero_float( len_sqr, EX_FLOAT_EPS ) )
+    if( ex_is_zero_float( len_sqr, EX_FLOAT_EPS ) )
         return false;
 
-    inv_len = inv_sqrtf (len_sqr);
+    inv_len = ex_inv_sqrtf (len_sqr);
     quatf_mul_scalar ( _r, _r, inv_len );
     return true;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void quatf_to_mat33( quatf_t* _q, mat33f_t* _m )
+ @fn void quatf_to_mat33( quatf_t* _q, ex_mat33f_t* _m )
  @param _q the in quaternion
  @retval _m the converted matrix
  @details convert a quaternion to a matrix 3x3
@@ -693,11 +693,11 @@ inline bool quatf_normalize( quatf_t* _r ) {
  @sa quatf_to_axis_xyz
 */// ------------------------------------------------------------------ 
 
-void quatf_to_mat33( quatf_t* _q, mat33f_t* _m );
+void quatf_to_mat33( quatf_t* _q, ex_mat33f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void quatf_to_mat44( quatf_t* _q, mat44f_t* _m )
+ @fn void quatf_to_mat44( quatf_t* _q, ex_mat44f_t* _m )
  @param _q the in quaternion
  @retval _m the converted matrix
  @details convert a quaternion to a matrix 4x4
@@ -705,7 +705,7 @@ void quatf_to_mat33( quatf_t* _q, mat33f_t* _m );
  @sa quatf_to_axis_xyz
 */// ------------------------------------------------------------------ 
 
-void quatf_to_mat44( quatf_t* _q, mat44f_t* _m );
+void quatf_to_mat44( quatf_t* _q, ex_mat44f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 

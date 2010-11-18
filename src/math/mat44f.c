@@ -22,17 +22,17 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void mat44f_mul_vec4f ( vec4f_t* _r, mat44f_t* _lhs, vec4f_t* _rhs ) {
+void ex_mat44f_mul_vec4f ( vec4f_t* _r, ex_mat44f_t* _lhs, vec4f_t* _rhs ) {
     float x, y, z, w;
     vec4f_t tmp;
 
-    mat44f_row( &tmp, _lhs, 0 );
+    ex_mat44f_row( &tmp, _lhs, 0 );
     x = vec4f_dot( _rhs, &tmp );
-    mat44f_row( &tmp, _lhs, 1 );
+    ex_mat44f_row( &tmp, _lhs, 1 );
     y = vec4f_dot( _rhs, &tmp );
-    mat44f_row( &tmp, _lhs, 2 );
+    ex_mat44f_row( &tmp, _lhs, 2 );
     z = vec4f_dot( _rhs, &tmp );
-    mat44f_row( &tmp, _lhs, 3 );
+    ex_mat44f_row( &tmp, _lhs, 3 );
     w = vec4f_dot( _rhs, &tmp );
 
     vec4f_set( _r, x, y, z, w );
@@ -42,17 +42,17 @@ void mat44f_mul_vec4f ( vec4f_t* _r, mat44f_t* _lhs, vec4f_t* _rhs ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void vec4f_mul_mat44f ( vec4f_t* _r, vec4f_t* _lhs, mat44f_t* _rhs ) {
+void ex_vec4f_mul_mat44f ( vec4f_t* _r, vec4f_t* _lhs, ex_mat44f_t* _rhs ) {
     float x, y, z, w;
     vec4f_t tmp;
 
-    mat44f_col( &tmp, _rhs, 0 );
+    ex_mat44f_col( &tmp, _rhs, 0 );
     x = vec4f_dot( _lhs, &tmp );
-    mat44f_col( &tmp, _rhs, 1 );
+    ex_mat44f_col( &tmp, _rhs, 1 );
     y = vec4f_dot( _lhs, &tmp );
-    mat44f_col( &tmp, _rhs, 2 );
+    ex_mat44f_col( &tmp, _rhs, 2 );
     z = vec4f_dot( _lhs, &tmp );
-    mat44f_col( &tmp, _rhs, 2 );
+    ex_mat44f_col( &tmp, _rhs, 2 );
     w = vec4f_dot( _lhs, &tmp );
 
     vec4f_set( _r, x, y, z, w );
@@ -62,12 +62,12 @@ void vec4f_mul_mat44f ( vec4f_t* _r, vec4f_t* _lhs, mat44f_t* _rhs ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool mat44f_inverse ( mat44f_t* _m ) {
+bool ex_mat44f_inverse ( ex_mat44f_t* _m ) {
     float t0, t1, t2, t3;
     float t4, t5, t6, t7;
     float t8, t9, t10, t11;
     float det, inv;
-    mat44f_t src;
+    ex_mat44f_t src;
 
     src = *_m;
 
@@ -138,7 +138,7 @@ bool mat44f_inverse ( mat44f_t* _m ) {
     // calculate determinant
     det= src.m00*_m->m00 + src.m01*_m->m10 + src.m02*_m->m20 + src.m03*_m->m30 ;
 
-    if ( is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
         return false;
 
     // devide the cofactor-matrix by the determinat
@@ -155,7 +155,7 @@ bool mat44f_inverse ( mat44f_t* _m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool mat44f_get_inverse ( mat44f_t* _r, mat44f_t* _m ) {
+bool ex_mat44f_get_inverse ( ex_mat44f_t* _r, ex_mat44f_t* _m ) {
     float t0, t1, t2, t3;
     float t4, t5, t6, t7;
     float t8, t9, t10, t11;
@@ -228,7 +228,7 @@ bool mat44f_get_inverse ( mat44f_t* _r, mat44f_t* _m ) {
     // calculate determinant
     det = _m->m00*_r->m00 + _m->m01*_r->m10 + _m->m02*_r->m20 + _m->m03*_r->m30 ;
 
-    if ( is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
         return false;
 
     //devide the cofactor-matrix by the determinat
