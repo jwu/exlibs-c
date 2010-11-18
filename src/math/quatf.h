@@ -146,6 +146,23 @@ inline void quatf_set_from_axis_radians ( quatf_t* _r, vec3f_t* _axis, float _ra
 
 // ------------------------------------------------------------------ 
 /*! 
+ @fn inline bool quatf_is_equal ( quatf* _lhs, quatf* _rhs )
+ @param _lhs the left hand side quaternion
+ @param _rhs the right hand side quaternion
+ @return the result of the comparation
+ @details compare if the two quaternion is equal to each other
+*/// ------------------------------------------------------------------ 
+
+inline bool quatf_is_equal ( quatf* _lhs, quatf* _rhs ) {
+    return is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
+        && is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS)
+        && is_equal_float(_lhs->z,_rhs->z,EX_FLOAT_EPS)
+        && is_equal_float(_lhs->w,_rhs->w,EX_FLOAT_EPS)
+        ;
+}
+
+// ------------------------------------------------------------------ 
+/*! 
  @fn inline void quatf_neg ( quatf_t* _r )
  @retval _r the result quaternion
  @param _r the in quaternion
@@ -412,8 +429,27 @@ inline void quatf_mul_scalar ( quatf_t* _r, quatf_t* _lhs, float _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void scalar_div_quatf ( quatf_t* _r, float _lhs, quatf_t* _rhs )
+ @retval _r the result quaternion
+ @param _lhs left hand side float 
+ @param _rhs right hand side quaternion 
+ @details
+ \f[
+   \_r = s / Quat_b = 
+   s /
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   s / b_{x} & 
+   s / b_{y} & 
+   s / b_{z} & 
+   s / b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void scalar_div_quatf ( quatf_t* _r, float _lhs, quatf_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
@@ -421,6 +457,28 @@ inline void scalar_div_quatf ( quatf_t* _r, float _lhs, quatf_t* _rhs ) {
     _r->z = _lhs / _rhs->z;
     _r->w = _lhs / _rhs->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void quatf_div_scalar ( quatf_t* _r, quatf_t* _lhs, float _rhs )
+ @retval _r the result quaternion
+ @param _lhs left hand side quaternion
+ @param _rhs right hand side float  
+ @details
+ \f[
+   \_r = s / Quat_b = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] / s
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} / s & 
+   a_{y} / s & 
+   a_{z} / s & 
+   a_{w} / s 
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void quatf_div_scalar ( quatf_t* _r, quatf_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
@@ -430,15 +488,44 @@ inline void quatf_div_scalar ( quatf_t* _r, quatf_t* _lhs, float _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn bool quatf_inverse( quatf_t* _r )
+ @retval _r the result quaternion
+ @param _r then in quaternion
+ @details get the inversed quaternion from _r, override and return it.
+ @sa quatf_get_inverse
+*/// ------------------------------------------------------------------ 
 
 bool quatf_inverse( quatf_t* _r );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn bool quatf_get_inverse ( quatf_t* _r, quatf_t* _q )
+ @retval _r the result quaternion
+ @param _q then in quaternion
+ @details get the inversed quaternion from _r, set and return it to quaternion _q.
+ @sa quatf_inverse
+*/// ------------------------------------------------------------------ 
+
 bool quatf_get_inverse ( quatf_t* _r, quatf_t* _q );
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void quatf_conjugate( quatf_t* _r )
+ @retval _r the result quaternion
+ @param _r then in quaternion
+ @details get the conjugate quaternion from _r, override and return it.
+ \f[
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right]
+   \stackrel{conjugate}\Longrightarrow
+   \left[\begin{array}{ c c c c }
+   -a_{x} & -a_{y} & -a_{z} & a_{w}
+   \end{array} \right]
+ \f]
+ @sa quatf_get_conjugate
+*/// ------------------------------------------------------------------ 
 
 inline void quatf_conjugate( quatf_t* _r ) {
     _r->x = -_r->x;
@@ -446,6 +533,16 @@ inline void quatf_conjugate( quatf_t* _r ) {
     _r->z = -_r->z;
     _r->w =  _r->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void quatf_get_conjugate ( quatf_t* _r, quatf_t* _q )
+ @retval _r the result quaternion
+ @param _q then in quaternion
+ @details get the conjugate quaternion from _r, set and return it to _q. 
+ @sa quatf_conjugate
+*/// ------------------------------------------------------------------ 
+
 inline void quatf_get_conjugate ( quatf_t* _r, quatf_t* _q ) {
     _r->x = -_q->x;
     _r->y = -_q->y;
@@ -454,8 +551,30 @@ inline void quatf_get_conjugate ( quatf_t* _r, quatf_t* _q ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float quatf_dot( quatf_t* _lhs, quatf_t* _rhs )
+ @param _lhs the left hand quaternion
+ @param _rhs the right hand quaternion
+ @return the dot product result
+ @details get the conjugate quaternion from _r, override and return it.
+ \f[
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right]
+   dot
+   \left[\begin{array}{ c }
+   b_{x} \\ 
+   b_{y} \\
+   b_{z} \\
+   b_{w}
+   \end{array} \right]
+   =
+   a_{x} * b_{x} + 
+   a_{y} * b_{y} +
+   a_{z} * b_{z} + 
+   a_{w} * b_{w}
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline float quatf_dot( quatf_t* _lhs, quatf_t* _rhs ) {
     return _lhs->x * _rhs->x 
@@ -465,24 +584,59 @@ inline float quatf_dot( quatf_t* _lhs, quatf_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float quatf_len( quatf_t* _r )
+ @param _r the in quaternion
+ @return the length of the in quaternion
+ @details return the length of quaternion _r
+ @sa quatf_lenSQR
+*/// ------------------------------------------------------------------ 
 
 inline float quatf_len( quatf_t* _r ) {
     return sqrtf ( quatf_dot(_r,_r) );
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float quatf_lenSQR( quatf_t* _r )
+ @param _r the in quaternion
+ @return the length square of the in quaternion
+ @details return the length squre of quaternion _r
+ @sa quatf_len
+*/// ------------------------------------------------------------------ 
 
 inline float quatf_lenSQR( quatf_t* _r ) {
     return quatf_dot(_r,_r);
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline bool quatf_is_normalized( quatf_t* _r )
+ @param _r the in quaternion
+ @return if the inverse operation successed 
+ - true: successful
+ - false: failed
+ @details check if the in quaternion is normalized 
+ @sa quatf_get_normalize
+ @sa quatf_normalize
+*/// ------------------------------------------------------------------ 
 
 inline bool quatf_is_normalized( quatf_t* _r ) {
     return is_equal_float( quatf_lenSQR(_r), 1.0f, EX_FLOAT_EPS );
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn bool quatf_get_normalize( quatf_t* _r, quatf_t* _q )
+ @retval _r the result quaternion
+ @param _q the in quaternion
+ @return if the inverse operation successed 
+ - true: successful
+ - false: failed
+ @details get the normalized quaternion from _r, set and return it to quaternion _q
+ @sa quatf_is_normalized
+ @sa quatf_normalize
+*/// ------------------------------------------------------------------ 
 
 inline bool quatf_get_normalize( quatf_t* _r, quatf_t* _q ) {
     float len_sqr, inv_len;
@@ -501,6 +655,19 @@ inline bool quatf_get_normalize( quatf_t* _r, quatf_t* _q ) {
     return true;
 }
 
+// ------------------------------------------------------------------ 
+/*! 
+ @fn bool quatf_normalize( quatf_t* _r )
+ @retval _r the result quaternion
+ @param _r the in quaternion
+ @return if the inverse operation successed 
+ - true: successful
+ - false: failed
+ @details get the normalized quaternion from _r, override and return it.
+ @sa quatf_is_normalized
+ @sa quatf_get_normalize
+*/// ------------------------------------------------------------------ 
+
 inline bool quatf_normalize( quatf_t* _r ) {
     float len_sqr, inv_len;
 
@@ -517,19 +684,80 @@ inline bool quatf_normalize( quatf_t* _r ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn void quatf_to_mat33( quatf_t* _q, mat33f_t* _m )
+ @param _q the in quaternion
+ @retval _m the converted matrix
+ @details convert a quaternion to a matrix 3x3
+ @sa quatf_to_mat44
+ @sa quatf_to_axis_xyz
+*/// ------------------------------------------------------------------ 
 
 void quatf_to_mat33( quatf_t* _q, mat33f_t* _m );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn void quatf_to_mat44( quatf_t* _q, mat44f_t* _m )
+ @param _q the in quaternion
+ @retval _m the converted matrix
+ @details convert a quaternion to a matrix 4x4
+ @sa quatf_to_mat33
+ @sa quatf_to_axis_xyz
+*/// ------------------------------------------------------------------ 
+
 void quatf_to_mat44( quatf_t* _q, mat44f_t* _m );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn void quatf_to_axis_xyz( quatf_t* _q, vec3f_t* _x, vec3f_t* _y, vec3f_t* _z )
+ @param _q the in quaternion
+ @retval _x the axis x
+ @retval _y the axis y
+ @retval _z the axis z
+ @details convert a quaternion to axis x,y,z
+ @sa quatf_to_mat33
+ @sa quatf_to_mat44
+*/// ------------------------------------------------------------------ 
+
 void quatf_to_axis_xyz( quatf_t* _q, vec3f_t* _x, vec3f_t* _y, vec3f_t* _z );
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn void quatf_get_axis_x( vec3f_t* _r, quatf_t* _q )
+ @retval _r the axis x
+ @param _q the in quaternion
+ @details get axis x from quaternion _q
+ @sa quatf_to_axis_xyz
+ @sa quatf_get_axis_y
+ @sa quatf_get_axis_z
+*/// ------------------------------------------------------------------ 
 
 void quatf_get_axis_x( vec3f_t* _r, quatf_t* _q );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn void quatf_get_axis_y( vec3f_t* _r, quatf_t* _q )
+ @retval _r the axis y
+ @param _q the in quaternion
+ @details get axis y from quaternion _q
+ @sa quatf_to_axis_xyz
+ @sa quatf_get_axis_x
+ @sa quatf_get_axis_z
+*/// ------------------------------------------------------------------ 
+
 void quatf_get_axis_y( vec3f_t* _r, quatf_t* _q );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn void quatf_get_axis_z( vec3f_t* _r, quatf_t* _q )
+ @retval _r the axis z
+ @param _q the in quaternion
+ @details get axis z from quaternion _q
+ @sa quatf_to_axis_xyz
+ @sa quatf_get_axis_x
+ @sa quatf_get_axis_y
+*/// ------------------------------------------------------------------ 
+
 void quatf_get_axis_z( vec3f_t* _r, quatf_t* _q );
 
 //! @}
