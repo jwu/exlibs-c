@@ -556,7 +556,7 @@ inline void quatf_get_conjugate ( quatf_t* _r, quatf_t* _q ) {
  @param _lhs the left hand quaternion
  @param _rhs the right hand quaternion
  @return the dot product result
- @details get the conjugate quaternion from _r, override and return it.
+ @details get the dot product.
  \f[
    \left[\begin{array}{ c c c c }
    a_{x} & a_{y} & a_{z} & a_{w}
@@ -601,7 +601,7 @@ inline float quatf_len( quatf_t* _r ) {
  @fn inline float quatf_lenSQR( quatf_t* _r )
  @param _r the in quaternion
  @return the length square of the in quaternion
- @details return the length squre of quaternion _r
+ @details return the length square of quaternion _r
  @sa quatf_len
 */// ------------------------------------------------------------------ 
 

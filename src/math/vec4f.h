@@ -16,9 +16,36 @@ extern "C" {
 #endif
 // ######################### 
 
+//! @defgroup vec4f_t vector4 float
+//! @ingroup Math
+//! @{
+
+///////////////////////////////////////////////////////////////////////////////
+// define
+///////////////////////////////////////////////////////////////////////////////
+
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @struct vec4f_t
+ @details
+ 
+ The data of vector4 is construct by an union structure with float elements.\n
+ The vector4 can be expressed in formular as:
+ 
+ \f$
+   \left[\begin{array}{ c c c c }
+   x & y & z & w
+   \end{array} \right]
+ \f$
+ 
+ and in array as:
+
+ \f$
+   \left[\begin{array}{ c c c }
+   v_{0}, v_{1}, v_{2}, v_{3}
+   \end{array} \right]
+ \f$
+*/// ------------------------------------------------------------------ 
 
 typedef struct vec4f_t {
     union {
@@ -28,16 +55,62 @@ typedef struct vec4f_t {
 } vec4f_t;
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_zero ( vec4f_t* _r )
+ @retval _r the result vector4
+ @details make a zero vector4:
+
+ \f[
+   q = \left[\begin{array}{ c c c c }
+   0.0 & 0.0 & 0.0 & 0.0
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void vec4f_zero ( vec4f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; _r->w = 0.0f; }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_one ( vec4f_t* _r )
+ @retval _r the result vector4
+ @details make an one vector4:
+
+ \f[
+   q = \left[\begin{array}{ c c c c }
+   1.0 & 1.0 & 1.0 & 1.0
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_one ( vec4f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; _r->w = 1.0f; }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_set ( vec4f_t* _r, float _x, float _y, float _z, float _w )
+ @retval _r the result vector4
+ @param x
+ @param y
+ @param z
+ @param w
+ @details set the vector4 _r by rest of the parameters:
+
+ \f[
+   q = \left[\begin{array}{ c c c c }
+   \_x & \_y & \_z & \_w
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_set ( vec4f_t* _r, float _x, float _y, float _z, float _w ) { _r->x = _x, _r->y = _y, _r->z = _z; _r->w = _w; }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline bool vec4f_is_equal ( vec4f_t* _lhs, vec4f_t* _rhs )
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side vector4
+ @return the result of the comparation
+ @details compare if the two vector4 is equal to each other
+*/// ------------------------------------------------------------------ 
 
 inline bool vec4f_is_equal ( vec4f_t* _lhs, vec4f_t* _rhs ) { 
     return is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
@@ -47,8 +120,22 @@ inline bool vec4f_is_equal ( vec4f_t* _lhs, vec4f_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_neg ( vec4f_t* _v )
+ @retval _v the result vector4
+ @param _v the in vector4
+ @details get the negtive value from vector4 _v, override and return it as the result:
+
+ \f[
+   q = -\left[\begin{array}{ c c c c }
+   x & y & z & w
+   \end{array} \right]
+   = \left[\begin{array}{ c c c c }
+   -x & -y & -z & -w
+   \end{array} \right]
+ \f]
+ @sa vec4f_get_neg
+*/// ------------------------------------------------------------------ 
 
 inline void vec4f_neg ( vec4f_t* _v ) { 
     _v->x = -_v->x; 
@@ -56,6 +143,16 @@ inline void vec4f_neg ( vec4f_t* _v ) {
     _v->z = -_v->z; 
     _v->w = -_v->w; 
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_get_neg ( vec4f_t* _r, vec4f_t* _v )
+ @retval _r the result vector4
+ @param _v the in vector4
+ @details get the negtive value from vector4 _v, set and return it to vector4 _v
+ @sa vec4f_neg
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_get_neg ( vec4f_t* _r, vec4f_t* _v ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
@@ -65,8 +162,29 @@ inline void vec4f_get_neg ( vec4f_t* _r, vec4f_t* _v ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_add ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side vector4
+ @details
+ \f[
+   \_r = Vec_a + Vec_b = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] +
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} + b_{x} & 
+   a_{y} + b_{y} &
+   a_{z} + b_{z} &
+   a_{w} + b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void vec4f_add ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) { 
     _r->x = _lhs->x + _rhs->x;
@@ -74,6 +192,29 @@ inline void vec4f_add ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) {
     _r->z = _lhs->z + _rhs->z;
     _r->w = _lhs->w + _rhs->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_add_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side float
+ @details
+ \f[
+   \_r = Vec_a + s = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] + s
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} + s & 
+   a_{y} + s &
+   a_{z} + s &
+   a_{w} + s
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_add_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x + _rhs;
     _r->y = _lhs->y + _rhs;
@@ -82,8 +223,29 @@ inline void vec4f_add_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_sub ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side vector4
+ @details
+ \f[
+   \_r = Vec_a - Vec_b = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] -
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} - b_{x} & 
+   a_{y} - b_{y} &
+   a_{z} - b_{z} &
+   a_{w} - b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void vec4f_sub ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) { 
     _r->x = _lhs->x - _rhs->x;
@@ -91,12 +253,59 @@ inline void vec4f_sub ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) {
     _r->z = _lhs->z - _rhs->z;
     _r->w = _lhs->w - _rhs->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_sub_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side float
+ @details
+ \f[
+   \_r = Vec_a - s = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] - s
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} - s & 
+   a_{y} - s &
+   a_{z} - s &
+   a_{w} - s
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_sub_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x - _rhs;
     _r->y = _lhs->y - _rhs;
     _r->z = _lhs->z - _rhs;
     _r->w = _lhs->w - _rhs;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void scalar_sub_vec4f ( vec4f_t* _r, float _lhs, vec4f_t* _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side float
+ @param _rhs the right hand side vector4
+ @details
+ \f[
+   \_r = s - Vec_b = 
+   s - 
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   s - b_{x} & 
+   s - b_{y} &
+   s - b_{z} &
+   s - b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void scalar_sub_vec4f ( vec4f_t* _r, float _lhs, vec4f_t* _rhs ) { 
     _r->x = _lhs - _rhs->x;
     _r->y = _lhs - _rhs->y;
@@ -105,8 +314,29 @@ inline void scalar_sub_vec4f ( vec4f_t* _r, float _lhs, vec4f_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_mul ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side vector4
+ @details
+ \f[
+   \_r = Vec_a * Vec_b = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] *
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} * b_{x} & 
+   a_{y} * b_{y} &
+   a_{z} * b_{z} &
+   a_{w} * b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void vec4f_mul ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) { 
     _r->x = _lhs->x * _rhs->x;
@@ -114,6 +344,29 @@ inline void vec4f_mul ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) {
     _r->z = _lhs->z * _rhs->z;
     _r->w = _lhs->w * _rhs->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_mul_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side float
+ @details
+ \f[
+   \_r = Vec_a * s = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] * s
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} * s & 
+   a_{y} * s &
+   a_{z} * s &
+   a_{w} * s
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_mul_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x * _rhs;
     _r->y = _lhs->y * _rhs;
@@ -122,8 +375,29 @@ inline void vec4f_mul_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_div ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side vector4
+ @details
+ \f[
+   \_r = Vec_a / Vec_b = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] /
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} / b_{x} & 
+   a_{y} / b_{y} &
+   a_{z} / b_{z} &
+   a_{w} / b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline void vec4f_div ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) { 
     _r->x = _lhs->x / _rhs->x;
@@ -131,12 +405,59 @@ inline void vec4f_div ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) {
     _r->z = _lhs->z / _rhs->z;
     _r->w = _lhs->w / _rhs->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void vec4f_div_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side vector4
+ @param _rhs the right hand side float
+ @details
+ \f[
+   \_r = Vec_a / s = 
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right] / s
+   =
+   \left[\begin{array}{ c c c c }
+   a_{x} / s & 
+   a_{y} / s &
+   a_{z} / s &
+   a_{w} / s
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_div_scalar ( vec4f_t* _r, vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
     _r->y = _lhs->y / _rhs;
     _r->z = _lhs->z / _rhs;
     _r->w = _lhs->w / _rhs;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void scalar_div_vec4f ( vec4f_t* _r, float _lhs, vec4f_t* _rhs )
+ @retval _r the result vector4
+ @param _lhs the left hand side float
+ @param _rhs the right hand side vector4
+ @details
+ \f[
+   \_r = s / Vec_b = 
+   s / 
+   \left[\begin{array}{ c c c c }
+   b_{x} & b_{y} & b_{z} & b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   s / b_{x} & 
+   s / b_{y} &
+   s / b_{z} &
+   s / b_{w}
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void scalar_div_vec4f ( vec4f_t* _r, float _lhs, vec4f_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
     _r->y = _lhs / _rhs->y;
@@ -145,8 +466,30 @@ inline void scalar_div_vec4f ( vec4f_t* _r, float _lhs, vec4f_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float vec4f_dot ( vec4f_t* _lhs, vec4f_t* _rhs )
+ @param _lhs the left hand vector4
+ @param _rhs the right hand vector4
+ @return the dot product result
+ @details get the dot product
+ \f[
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right]
+   dot
+   \left[\begin{array}{ c }
+   b_{x} \\ 
+   b_{y} \\
+   b_{z} \\
+   b_{w}
+   \end{array} \right]
+   =
+   a_{x} * b_{x} + 
+   a_{y} * b_{y} +
+   a_{z} * b_{z} +
+   a_{w} * b_{w}
+ \f]
+*/// ------------------------------------------------------------------ 
 
 inline float vec4f_dot ( vec4f_t* _lhs, vec4f_t* _rhs ) {
     return _lhs->x * _rhs->x 
@@ -154,6 +497,35 @@ inline float vec4f_dot ( vec4f_t* _lhs, vec4f_t* _rhs ) {
          + _lhs->z * _rhs->z 
          + _lhs->w * _rhs->w;
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float vec4f_cross ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs )
+ @retval _r the cross product result
+ @param _lhs the left hand vector4
+ @param _rhs the right hand vector4
+ @details get the cross product
+ \f[
+   \left[\begin{array}{ c c c c }
+   a_{x} & a_{y} & a_{z} & a_{w}
+   \end{array} \right]
+   cross
+   \left[\begin{array}{ c }
+   b_{x} \\ 
+   b_{y} \\
+   b_{z} \\
+   b_{w}
+   \end{array} \right]
+   =
+   \left[\begin{array}{ c c c c }
+   a_{y} * b_{z} - a_{z} * b_{y} &
+   a_{z} * b_{x} - a_{x} * b_{z} &
+   a_{x} * b_{y} - a_{y} * b_{x} &
+   0.0
+   \end{array} \right]
+ \f]
+*/// ------------------------------------------------------------------ 
+
 inline void vec4f_cross ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) {
     _r->x = _lhs->y * _rhs->z - _lhs->z * _rhs->y;
     _r->y = _lhs->z * _rhs->x - _lhs->x * _rhs->z;
@@ -162,26 +534,59 @@ inline void vec4f_cross ( vec4f_t* _r, vec4f_t* _lhs, vec4f_t* _rhs ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float vec4f_len( vec4f_t* _v )
+ @param _v the in vector4
+ @return the length of the in vector4
+ @details return the length of vector4 _v
+ @sa vec4f_lenSQR
+*/// ------------------------------------------------------------------ 
 
 inline float vec4f_len ( vec4f_t* _v ) {
     return sqrtf ( vec4f_dot(_v,_v) );
 }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline float vec4f_lenSQR( vec4f_t* _v )
+ @param _v the in vector4
+ @return the length square of the in vector4
+ @details return the length square of vector4 _v
+ @sa vec4f_len
+*/// ------------------------------------------------------------------ 
+
 inline float vec4f_lenSQR ( vec4f_t* _v ) {
     return vec4f_dot(_v,_v);
 }
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn inline bool vec4f_is_normalized ( vec4f_t* _v )
+ @param _v the in vector4
+ @return if the inverse operation successed 
+ - true: successful
+ - false: failed
+ @details check if the in vector4 is normalized 
+ @sa vec4f_get_normalize
+ @sa vec4f_normalize
+*/// ------------------------------------------------------------------ 
 
-//
 inline bool vec4f_is_normalized ( vec4f_t* _v ) {
     return is_equal_float( vec4f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
-//
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline bool vec4f_normalize ( vec4f_t* _v )
+ @param _v the in vector4
+ @return if the inverse operation successed 
+ - true: successful
+ - false: failed
+ @details check if the in vector4 is normalized 
+ @sa vec4f_is_normalized
+ @sa vec4f_get_normalize
+*/// ------------------------------------------------------------------ 
+
 inline bool vec4f_normalize ( vec4f_t* _v ) {
     float length_sqr = vec4f_lenSQR(_v);
     float inv_length = 0.0f; 
@@ -196,7 +601,19 @@ inline bool vec4f_normalize ( vec4f_t* _v ) {
     vec4f_mul_scalar ( _v, _v, inv_length );
 }
 
-//
+// ------------------------------------------------------------------ 
+/*! 
+ @fn bool vec4f_get_normalize ( vec4f_t* _r, vec4f_t* _v )
+ @retval _r the result vector4
+ @param _v the in vector4
+ @return if the inverse operation successed 
+ - true: successful
+ - false: failed
+ @details get the normalized vector4 from _r, set and return it to vector4 _v
+ @sa vec4f_is_normalized
+ @sa vec4f_normalize
+*/// ------------------------------------------------------------------ 
+
 inline bool vec4f_get_normalize ( vec4f_t* _r, vec4f_t* _v ) {
     float length_sqr, inv_length;
 
@@ -215,6 +632,8 @@ inline bool vec4f_get_normalize ( vec4f_t* _r, vec4f_t* _v ) {
     inv_length = inv_sqrtf( length_sqr );
     vec4f_mul_scalar ( _r, _v, inv_length );
 }
+
+//! @}
 
 // ######################### 
 #ifdef __cplusplus
