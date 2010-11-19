@@ -52,10 +52,10 @@ int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const cha
             if ( sub_str_len > 0 ) {
                 char* sub_str = (char*)ex_malloc ( sub_str_len );
                 strncpy(sub_str, string_to_split, sub_str_len );
-                ex_array_push_back ( _outList, sub_str );
+                ex_array_append ( _outList, sub_str );
             }
             else {
-                ex_array_push_back ( _outList, "" );
+                ex_array_append ( _outList, "" );
             }
 
             // reset the split value (skip token,too)
@@ -78,7 +78,7 @@ int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const cha
         int size = strlen(rest_string)+1;
         char* sub_str = (char*)ex_malloc(size);
         strncpy(sub_str, rest_string, size );
-        ex_array_push_back ( _outList, sub_str );
+        ex_array_append ( _outList, sub_str );
     }
 
     return (int)ex_array_len(_outList);

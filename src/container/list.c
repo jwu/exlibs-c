@@ -123,7 +123,7 @@ void ex_list_free_nomng ( ex_list_t* _list )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_list_push_back ( ex_list_t* _list, void* _value )
+void ex_list_append ( ex_list_t* _list, void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -146,7 +146,7 @@ void ex_list_push_back ( ex_list_t* _list, void* _value )
 }
 
 // no managed
-void ex_list_push_back_nomng ( ex_list_t* _list, void* _value )
+void ex_list_append_nomng ( ex_list_t* _list, void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -173,7 +173,7 @@ void ex_list_push_back_nomng ( ex_list_t* _list, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_list_push_front ( ex_list_t* _list, void* _value )
+void ex_list_prepend ( ex_list_t* _list, void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -196,7 +196,7 @@ void ex_list_push_front ( ex_list_t* _list, void* _value )
 }
 
 // no managed
-void ex_list_push_front_nomng ( ex_list_t* _list, void* _value )
+void ex_list_prepend_nomng ( ex_list_t* _list, void* _value )
 {
     ex_list_node_t* node = NULL;
 

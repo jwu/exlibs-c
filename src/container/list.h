@@ -56,11 +56,11 @@ void ex_list_free_nomng ( ex_list_t* _list );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_list_push_back ( ex_list_t* _list, void* _value );
-void ex_list_push_back_nomng ( ex_list_t* _list, void* _value );
+void ex_list_append ( ex_list_t* _list, void* _value );
+void ex_list_append_nomng ( ex_list_t* _list, void* _value );
 
-void ex_list_push_front ( ex_list_t* _list, void* _value );
-void ex_list_push_front_nomng ( ex_list_t* _list, void* _value );
+void ex_list_prepend ( ex_list_t* _list, void* _value );
+void ex_list_prepend_nomng ( ex_list_t* _list, void* _value );
 
 // ------------------------------------------------------------------ 
 // Desc: 

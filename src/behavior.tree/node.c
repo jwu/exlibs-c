@@ -23,7 +23,7 @@
 
 void bt_node_add ( bt_node_t* _self, bt_node_t* _node )
 {
-    ex_array_push_back( _self->children, &_node );
+    ex_array_append( _self->children, &_node );
 }
 
 // ------------------------------------------------------------------ 

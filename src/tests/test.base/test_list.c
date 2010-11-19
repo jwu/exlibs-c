@@ -28,7 +28,7 @@ static void normal () {
 
         // test push
         for ( i = 0; i < 512; ++i ) {
-            ex_list_push_back ( list, &i );
+            ex_list_append ( list, &i );
         }
         EX_TEST( ex_list_len(list) == 512 );
 

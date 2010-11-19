@@ -63,8 +63,8 @@ static void normal ()
                 sid = ex_str_id( word );
                 ex_assert(sid != -1, "can't get string ID of %s", word);
 
-                ex_array_push_back ( words, &word );
-                ex_array_push_back ( word_IDs, &sid );
+                ex_array_append ( words, &word );
+                ex_array_append ( word_IDs, &sid );
                 prev = cur;
             }
             ++cur;

@@ -151,10 +151,10 @@ void ex_array_free_nomng ( ex_array_t* _array );
  float* result = NULL;
  // create an array to store float, the default size is 10.
  ex_array_t* my_array = ex_array_alloc ( sizeof(float), 10 );
- ex_array_push_back_float ( my_array, 10.0f ); // push at index 0
- ex_array_push_back_float ( my_array, 20.0f ); // push at index 1
- ex_array_push_back_float ( my_array, 30.0f ); // push at index 2
- ex_array_push_back_float ( my_array, 40.0f ); // push at index 3
+ ex_array_append_float ( my_array, 10.0f ); // push at index 0
+ ex_array_append_float ( my_array, 20.0f ); // push at index 1
+ ex_array_append_float ( my_array, 30.0f ); // push at index 2
+ ex_array_append_float ( my_array, 40.0f ); // push at index 3
  result = (float*)ex_array_get ( my_array, 1 ); // get from index 1
  printf( "the result is %f", *result ); // the result is 20.0f
  @endcode
@@ -175,11 +175,11 @@ inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_length; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void* ex_array_push_back ( ex_array_t* _array, void* _value )
+ @fn void* ex_array_append ( ex_array_t* _array, void* _value )
  @param _array the in array.
  @param _value the value add to the array
- @return the pointer address of the pushed element in the array
- @details push the value to the array, the array will copy the value through
+ @return the pointer address of the appended element in the array
+ @details append the value to the array, the array will copy the value through
  the parameter _value by allocating it in the passing array use exsdk's
  memory manage method. 
 
@@ -191,92 +191,101 @@ inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_length; }
  ex_array_t* my_array = ex_array_alloc ( sizeof(float), 10 );
  {
      float val = 10.0f;
-     result = (float*)ex_array_push_back ( my_array, &val );
+     result = (float*)ex_array_append ( my_array, &val );
  }
  printf( "the result is %f", *result ); // the result is 10.0f
  @endcode
 
- @sa ex_array_push_back_nomng
+ @sa ex_array_append_nomng
 
- @fn void* ex_array_push_back_nomng ( ex_array_t* _array, void* _value )
+ @fn void* ex_array_append_nomng ( ex_array_t* _array, void* _value )
  @param _array the in array.
  @param _value the value add to the array
- @return the pointer address of the pushed element in the array
- @details push the value to the array, the array will copy the value through
+ @return the pointer address of the appended element in the array
+ @details append the value to the array, the array will copy the value through
  the parameter _value by allocating it in the passing array use system memory 
  operation method. 
- @sa ex_array_push_back
+ @sa ex_array_append
 */// ------------------------------------------------------------------ 
 
-void* ex_array_push_back ( ex_array_t* _array, void* _value );
-void* ex_array_push_back_nomng ( ex_array_t* _array, void* _value );
+void* ex_array_append ( ex_array_t* _array, void* _value );
+void* ex_array_append_nomng ( ex_array_t* _array, void* _value );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline int8* ex_array_push_back_int8 ( ex_array_t* _array, int8 _value )
- @details push int8 to the array
+ @fn inline int8* ex_array_append_int8 ( ex_array_t* _array, int8 _value )
+ @details append int8 to the array
 
- @fn inline int16* ex_array_push_back_int16 ( ex_array_t* _array, int16 _value )
- @details push int16 to the array
+ @fn inline int16* ex_array_append_int16 ( ex_array_t* _array, int16 _value )
+ @details append int16 to the array
 
- @fn inline int32* ex_array_push_back_int32 ( ex_array_t* _array, int32 _value )
- @details push int32 to the array
+ @fn inline int32* ex_array_append_int32 ( ex_array_t* _array, int32 _value )
+ @details append int32 to the array
 
- @fn inline int64* ex_array_push_back_int64 ( ex_array_t* _array, int64 _value )
- @details push int64 to the array
+ @fn inline int64* ex_array_append_int64 ( ex_array_t* _array, int64 _value )
+ @details append int64 to the array
 
- @fn inline uint8* ex_array_push_back_uint8 ( ex_array_t* _array, uint8 _value )
- @details push uint8 to the array
+ @fn inline uint8* ex_array_append_uint8 ( ex_array_t* _array, uint8 _value )
+ @details append uint8 to the array
 
- @fn inline uint16* ex_array_push_back_uint16 ( ex_array_t* _array, uint16 _value )
- @details push uint16 to the array
+ @fn inline uint16* ex_array_append_uint16 ( ex_array_t* _array, uint16 _value )
+ @details append uint16 to the array
 
- @fn inline uint32* ex_array_push_back_uint32 ( ex_array_t* _array, uint32 _value )
- @details push uint32 to the array
+ @fn inline uint32* ex_array_append_uint32 ( ex_array_t* _array, uint32 _value )
+ @details append uint32 to the array
 
- @fn inline uint64* ex_array_push_back_uint64 ( ex_array_t* _array, uint64 _value )
- @details push uint64 to the array
+ @fn inline uint64* ex_array_append_uint64 ( ex_array_t* _array, uint64 _value )
+ @details append uint64 to the array
 
- @fn inline float* ex_array_push_back_float ( ex_array_t* _array, float _value )
- @details push float to the array
+ @fn inline float* ex_array_append_float ( ex_array_t* _array, float _value )
+ @details append float to the array
 
- @fn inline double* ex_array_push_back_double ( ex_array_t* _array, double _value )
- @details push double to the array
+ @fn inline double* ex_array_append_double ( ex_array_t* _array, double _value )
+ @details append double to the array
 
- @fn inline char** ex_array_push_back_string ( ex_array_t* _array, char* _value )
- @details push c-string to the array
+ @fn inline char** ex_array_append_string ( ex_array_t* _array, char* _value )
+ @details append c-string to the array
 
- @fn inline wchar_t** ex_array_push_back_wstring ( ex_array_t* _array, wchar_t* _value )
- @details push w-string to the array
+ @fn inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value )
+ @details append w-string to the array
 
 */// ------------------------------------------------------------------ 
 
-inline int8* ex_array_push_back_int8 ( ex_array_t* _array, int8 _value ) { return (int8*)ex_array_push_back ( _array, &_value ); }
-inline int16* ex_array_push_back_int16 ( ex_array_t* _array, int16 _value ) { return (int16*)ex_array_push_back ( _array, &_value ); }
-inline int32* ex_array_push_back_int32 ( ex_array_t* _array, int32 _value ) { return (int32*)ex_array_push_back ( _array, &_value ); }
-inline int64* ex_array_push_back_int64 ( ex_array_t* _array, int64 _value ) { return (int64*)ex_array_push_back ( _array, &_value ); }
+inline int8* ex_array_append_int8 ( ex_array_t* _array, int8 _value ) { return (int8*)ex_array_append ( _array, &_value ); }
+inline int16* ex_array_append_int16 ( ex_array_t* _array, int16 _value ) { return (int16*)ex_array_append ( _array, &_value ); }
+inline int32* ex_array_append_int32 ( ex_array_t* _array, int32 _value ) { return (int32*)ex_array_append ( _array, &_value ); }
+inline int64* ex_array_append_int64 ( ex_array_t* _array, int64 _value ) { return (int64*)ex_array_append ( _array, &_value ); }
 
-inline uint8* ex_array_push_back_uint8 ( ex_array_t* _array, uint8 _value ) { return (uint8*)ex_array_push_back ( _array, &_value ); }
-inline uint16* ex_array_push_back_uint16 ( ex_array_t* _array, uint16 _value ) { return (uint16*)ex_array_push_back ( _array, &_value ); }
-inline uint32* ex_array_push_back_uint32 ( ex_array_t* _array, uint32 _value ) { return (uint32*)ex_array_push_back ( _array, &_value ); }
-inline uint64* ex_array_push_back_uint64 ( ex_array_t* _array, uint64 _value ) { return (uint64*)ex_array_push_back ( _array, &_value ); }
+inline uint8* ex_array_append_uint8 ( ex_array_t* _array, uint8 _value ) { return (uint8*)ex_array_append ( _array, &_value ); }
+inline uint16* ex_array_append_uint16 ( ex_array_t* _array, uint16 _value ) { return (uint16*)ex_array_append ( _array, &_value ); }
+inline uint32* ex_array_append_uint32 ( ex_array_t* _array, uint32 _value ) { return (uint32*)ex_array_append ( _array, &_value ); }
+inline uint64* ex_array_append_uint64 ( ex_array_t* _array, uint64 _value ) { return (uint64*)ex_array_append ( _array, &_value ); }
 
-inline float* ex_array_push_back_float ( ex_array_t* _array, float _value ) { return (float*)ex_array_push_back ( _array, &_value ); }
-inline double* ex_array_push_back_double ( ex_array_t* _array, double _value ) { return (double*)ex_array_push_back ( _array, &_value ); }
+inline float* ex_array_append_float ( ex_array_t* _array, float _value ) { return (float*)ex_array_append ( _array, &_value ); }
+inline double* ex_array_append_double ( ex_array_t* _array, double _value ) { return (double*)ex_array_append ( _array, &_value ); }
 
-inline char** ex_array_push_back_string ( ex_array_t* _array, char* _value ) { return (char**)ex_array_push_back ( _array, &_value ); }
-inline wchar_t** ex_array_push_back_wstring ( ex_array_t* _array, wchar_t* _value ) { return (wchar_t**)ex_array_push_back ( _array, &_value ); }
+inline char** ex_array_append_string ( ex_array_t* _array, char* _value ) { return (char**)ex_array_append ( _array, &_value ); }
+inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value ) { return (wchar_t**)ex_array_append ( _array, &_value ); }
+
+// TODO { 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_array_remove_index ( ex_array_t* _array, size_t _idx );
+void ex_array_remove_index_nomng ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_erase ( ex_array_t* _array, size_t _idx );
-void ex_array_erase_nomng ( ex_array_t* _array, size_t _idx );
+void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
+void ex_array_remove_range_nomng ( ex_array_t* _array, size_t _idx, size_t _count );
+// } TODO end 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_array_fast_erase ( ex_array_t* _array, size_t _idx )
+ @fn void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx )
  @param _array the in array
  @param _idx the delete element index. 
  @details delete the element by index. the method will move the last
@@ -286,8 +295,8 @@ void ex_array_erase_nomng ( ex_array_t* _array, size_t _idx );
  @sa ex_array_fast_erase_nomng
 */// ------------------------------------------------------------------ 
 
-void ex_array_fast_erase ( ex_array_t* _array, size_t _idx );
-void ex_array_fast_erase_nomng ( ex_array_t* _array, size_t _idx );
+void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx );
+void ex_array_remove_index_fast_nomng ( ex_array_t* _array, size_t _idx );
 
 //! @}
 

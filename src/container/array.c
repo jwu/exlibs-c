@@ -67,7 +67,7 @@ ex_array_t* ex_array_alloc_nomng ( size_t _element_bytes, size_t _count )
 // managed
 void ex_array_free ( ex_array_t* _array )
 {
-    ex_assert_return( _array != NULL, /*void*/, "NULL input" );
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
 
     ex_free(_array->_data);
     ex_free(_array);
@@ -76,7 +76,7 @@ void ex_array_free ( ex_array_t* _array )
 // no managed
 void ex_array_free_nomng ( ex_array_t* _array )
 {
-    ex_assert_return( _array != NULL, /*void*/, "NULL input" );
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
 
     ex_free_nomng(_array->_data);
     ex_free_nomng(_array);
@@ -88,7 +88,8 @@ void ex_array_free_nomng ( ex_array_t* _array )
 
 void* ex_array_get ( ex_array_t* _array, size_t _idx )
 {
-    ex_assert_return( _idx >= 0 && _idx < (int)_array->_length, NULL, "error: _idx out of range" );
+    ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
+    ex_assert_return( _idx < (int)_array->_length, NULL, "error: _idx out of range" );
     return (char*)(_array->_data) + _idx * _array->_element_bytes;
 }
 
@@ -97,9 +98,11 @@ void* ex_array_get ( ex_array_t* _array, size_t _idx )
 // ------------------------------------------------------------------ 
 
 // managed
-void* ex_array_push_back ( ex_array_t* _array, void* _value )
+void* ex_array_append ( ex_array_t* _array, void* _value )
 {
     void* val_addr;
+
+    ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
 
     if ( _array->_length >= _array->_capacity ) {
         _array->_capacity *= 2;
@@ -118,9 +121,11 @@ void* ex_array_push_back ( ex_array_t* _array, void* _value )
 }
 
 // no managed
-void* ex_array_push_back_nomng ( ex_array_t* _array, void* _value )
+void* ex_array_append_nomng ( ex_array_t* _array, void* _value )
 {
     void* val_addr;
+
+    ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
 
     if ( _array->_length >= _array->_capacity ) {
         _array->_capacity *= 2;
@@ -143,11 +148,12 @@ void* ex_array_push_back_nomng ( ex_array_t* _array, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_array_fast_erase ( ex_array_t* _array, size_t _idx )
+void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx )
 {
     void *val_addr, *last_val_addr;
 
-    ex_assert_return( _idx >= 0 && _idx < (int)_array->_length, /*dummy*/, "error: _idx out of range" );
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+    ex_assert_return( _idx < (int)_array->_length, /*dummy*/, "error: _idx out of range" );
 
     // don't do any thing if we only have one element in the array.
     if ( ex_array_len(_array) != 1 ) {
@@ -164,11 +170,12 @@ void ex_array_fast_erase ( ex_array_t* _array, size_t _idx )
 }
 
 // no managed
-void ex_array_fast_erase_nomng ( ex_array_t* _array, size_t _idx )
+void ex_array_remove_index_fast_nomng ( ex_array_t* _array, size_t _idx )
 {
     void *val_addr, *last_val_addr;
 
-    ex_assert_return( _idx >= 0 && _idx < (int)_array->_length, /*dummy*/, "error: _idx out of range" );
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+    ex_assert_return( _idx < (int)_array->_length, /*dummy*/, "error: _idx out of range" );
 
     // don't do any thing if we only have one element in the array.
     if ( ex_array_len(_array) != 1 ) {

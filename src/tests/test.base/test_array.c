@@ -26,7 +26,7 @@ static void normal ()
     {
         size_t i = 0;
         while ( i != 100 ) {
-            ex_array_push_back_uint32( array, i );
+            ex_array_append_uint32( array, i );
             ++i;
         }
     }

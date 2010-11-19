@@ -122,7 +122,7 @@ alloc_unit_t* _request_au ()
         }
 
         // Add this address to our reserved_au_list so we can free it later
-        ex_list_push_back_nomng ( au_bucket, reserved_au_list );
+        ex_list_append_nomng ( au_bucket, reserved_au_list );
     }
 
     // this is the standard use of go next and unlink
