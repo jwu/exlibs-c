@@ -176,13 +176,13 @@ inline float ex_mat44f_get ( ex_mat44f_t* _m, uint _row, uint _col ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_mat44f_row ( vec4f_t* _r, ex_mat44f_t* _m, uint _row )
+ @fn inline void ex_mat44f_row ( ex_vec4f_t* _r, ex_mat44f_t* _m, uint _row )
  @retval _r the result vector
  @param _m the matrix
  @param _row the row index, range in [0,4)
  @details get the matrix by _row and return it in vector4, for example: 
  @code
- vec4f_t r;
+ ex_vec4f_t r;
  ex_mat44f_t m;
  mat44f_zero(&m);
  mat44f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01, m.m02, m.m03)
@@ -190,7 +190,7 @@ inline float ex_mat44f_get ( ex_mat44f_t* _m, uint _row, uint _col ) {
  the r is equal to vector4 (m.m00, m.m01, m.m02, m.m03) 
 */// ------------------------------------------------------------------ 
 
-inline void ex_mat44f_row ( vec4f_t* _r, ex_mat44f_t* _m, uint _row ) {
+inline void ex_mat44f_row ( ex_vec4f_t* _r, ex_mat44f_t* _m, uint _row ) {
     ex_assert( _row >= 0 && _row < 4, "out of range" );
     _r->x = _m->m[4*_row+0]; 
     _r->y = _m->m[4*_row+1]; 
@@ -200,13 +200,13 @@ inline void ex_mat44f_row ( vec4f_t* _r, ex_mat44f_t* _m, uint _row ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_mat44f_col ( vec4f_t* _r, ex_mat44f_t* _m, uint _col )
+ @fn inline void ex_mat44f_col ( ex_vec4f_t* _r, ex_mat44f_t* _m, uint _col )
  @retval _r the result vector
  @param _m the matrix
  @param _col the column index, range in [0,4)
  @details get the matrix by _row and return it in vector3, for example: 
  @code
- vec4f_t r;
+ ex_vec4f_t r;
  ex_mat44f_t m;
  mat44f_zero(&m);
  mat44f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10, m.m20, m.m30)
@@ -214,7 +214,7 @@ inline void ex_mat44f_row ( vec4f_t* _r, ex_mat44f_t* _m, uint _row ) {
  the r is equal to vector4 (m.m00, m.m10, m.m20, m.m30) 
 */// ------------------------------------------------------------------ 
 
-inline void ex_mat44f_col ( vec4f_t* _r, ex_mat44f_t* _m, uint _col ) {
+inline void ex_mat44f_col ( ex_vec4f_t* _r, ex_mat44f_t* _m, uint _col ) {
     ex_assert( _col >= 0 && _col < 4, "out of range" );
     _r->x = _m->m[4*0+_col]; 
     _r->y = _m->m[4*1+_col]; 
@@ -565,7 +565,7 @@ inline void ex_mat44f_mul_scalar ( ex_mat44f_t* _r, ex_mat44f_t* _lhs, float _rh
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_mat44f_mul_vec4f ( vec4f_t* _r, ex_mat44f_t* _lhs, vec4f_t* _rhs )
+ @fn void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix 
  @param _rhs right hand side vector 
@@ -592,11 +592,11 @@ inline void ex_mat44f_mul_scalar ( ex_mat44f_t* _r, ex_mat44f_t* _lhs, float _rh
  @sa ex_vec4f_mul_mat44f
 */// ------------------------------------------------------------------ 
 
-void ex_mat44f_mul_vec4f ( vec4f_t* _r, ex_mat44f_t* _lhs, vec4f_t* _rhs );
+void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_vec4f_mul_mat44f ( vec4f_t* _r, vec4f_t* _lhs, ex_mat44f_t* _rhs )
+ @fn void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_mat44f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side vector
  @param _rhs right hand side matrix  
@@ -620,7 +620,7 @@ void ex_mat44f_mul_vec4f ( vec4f_t* _r, ex_mat44f_t* _lhs, vec4f_t* _rhs );
  @sa mat44f_mul_vec4f
 */// ------------------------------------------------------------------ 
 
-void ex_vec4f_mul_mat44f ( vec4f_t* _r, vec4f_t* _lhs, ex_mat44f_t* _rhs );
+void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_mat44f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 

@@ -17,9 +17,9 @@ extern "C" {
 // ######################### 
 
 // TODO: use EX_RESULT
-void init_sdl_gl ();
-void begin_frame ();
-void end_frame ();
+void ex_init_sdl_gl ();
+void ex_begin_frame ();
+void ex_end_frame ();
 
 // ######################### 
 #ifdef __cplusplus

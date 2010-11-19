@@ -27,7 +27,7 @@ void _short_funcname ( char _short_name[], const char* _function_name, int _len 
 {
     int len; 
 
-    memzero ( _short_name, sizeof(char)*_len ); 
+    ex_memzero ( _short_name, sizeof(char)*_len ); 
     len = strlen(_function_name); 
     if ( len > _len ) { 
         memcpy ( _short_name, _function_name, sizeof(char)*(_len-4) ); 
@@ -69,7 +69,7 @@ bool assert_failed( bool* _pDoAssert, const char* _file_name, const char* _funct
 
     //
     ex_log ( "Assert Failed: %s(%d)::%s, %s", _file_name, _line_nr, short_name, pBuffer );
-    mbResult = message_box( MSG_BOX_FAILED, "Assert Failed", 
+    mbResult = ex_message_box( EX_MSG_BOX_FAILED, "Assert Failed", 
                             "|ASSERT_FAILED|\n"
                             "FileName: %s\n"
                             "Line: %d\n"
@@ -116,7 +116,7 @@ bool error_msg( bool* _pDoAssert, const char* _file_name, const char* _function_
 
     //
     ex_log ( "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
-    mbResult = message_box( MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
+    mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
 
     // release buffer we allocate
     ex_free_nomng ( pBuffer );
@@ -157,7 +157,7 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
 
     //
     ex_log ( "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
-    mbResult = message_box( MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
+    mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
 
     // release buffer we allocate
     ex_free_nomng ( pBuffer );

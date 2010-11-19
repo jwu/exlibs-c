@@ -22,15 +22,15 @@
 
 static void normal ()
 {
-    array_t* array = array_alloc ( sizeof(uint32), 20 ); 
+    ex_array_t* array = ex_array_alloc ( sizeof(uint32), 20 ); 
     {
         size_t i = 0;
         while ( i != 100 ) {
-            array_push_back_uint32( array, i );
+            ex_array_push_back_uint32( array, i );
             ++i;
         }
     }
-    array_free ( array );
+    ex_array_free ( array );
 }
 
 // ------------------------------------------------------------------ 
@@ -39,11 +39,11 @@ static void normal ()
 
 static void invalid()
 {
-    array_t* array = array_alloc ( sizeof(uint32), 20 ); 
+    ex_array_t* array = ex_array_alloc ( sizeof(uint32), 20 ); 
     {
-        void* pval = array_get( array, 40 );
+        void* pval = ex_array_get( array, 40 );
     }
-    array_free ( array );
+    ex_array_free ( array );
 }
 
 // ------------------------------------------------------------------ 

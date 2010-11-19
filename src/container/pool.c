@@ -16,11 +16,11 @@
 // fwd-decls
 ///////////////////////////////////////////////////////////////////////////////
 
-static pool_node_t* _request_free_node( pool_t* ); 
-static pool_node_t* _request_free_node_nomng( pool_t* ); 
-static void _push_to_used ( pool_t*, pool_node_t* );
-static void _push_to_used_reverse ( pool_t*, pool_node_t* );
-static void _push_to_free ( pool_t*, pool_node_t* );
+static ex_pool_node_t* _request_free_node( ex_pool_t* ); 
+static ex_pool_node_t* _request_free_node_nomng( ex_pool_t* ); 
+static void _push_to_used ( ex_pool_t*, ex_pool_node_t* );
+static void _push_to_used_reverse ( ex_pool_t*, ex_pool_node_t* );
+static void _push_to_free ( ex_pool_t*, ex_pool_node_t* );
 
 ///////////////////////////////////////////////////////////////////////////////
 // public
@@ -31,9 +31,9 @@ static void _push_to_free ( pool_t*, pool_node_t* );
 // ------------------------------------------------------------------ 
 
 // managed
-pool_t* pool_alloc ( size_t _element_bytes, size_t _count )
+ex_pool_t* ex_pool_alloc ( size_t _element_bytes, size_t _count )
 {
-    pool_t* pool = ex_malloc ( sizeof(pool_t) );
+    ex_pool_t* pool = ex_malloc ( sizeof(ex_pool_t) );
     int size = _element_bytes * _count;
     size_t i = 1;
 
@@ -44,14 +44,14 @@ pool_t* pool_alloc ( size_t _element_bytes, size_t _count )
 
     // init data
     pool->_data = ex_malloc( size );
-    memzero ( pool->_data, size );
+    ex_memzero ( pool->_data, size );
 
     // init nodes
-    pool->_nodes = ex_malloc( sizeof(pool_node_t) * _count );
+    pool->_nodes = ex_malloc( sizeof(ex_pool_node_t) * _count );
     pool->_used_nodes_begin = NULL;
     pool->_used_nodes_end = NULL;
     pool->_free_nodes = pool->_nodes + (_count-1);
-    pool->_used_bits = bitarray_alloc( _count );
+    pool->_used_bits = ex_bitarray_alloc( _count );
 
     // init head node
     pool->_free_nodes->prev = NULL;
@@ -76,9 +76,9 @@ pool_t* pool_alloc ( size_t _element_bytes, size_t _count )
 }
 
 // no managed
-pool_t* pool_alloc_nomng ( size_t _element_bytes, size_t _count )
+ex_pool_t* ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 {
-    pool_t* pool = ex_malloc_nomng ( sizeof(pool_t) );
+    ex_pool_t* pool = ex_malloc_nomng ( sizeof(ex_pool_t) );
     int size = _element_bytes * _count;
     size_t i = 1;
 
@@ -89,14 +89,14 @@ pool_t* pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 
     // init data
     pool->_data = ex_malloc_nomng( size );
-    memzero ( pool->_data,  size );
+    ex_memzero ( pool->_data,  size );
 
     // init nodes
-    pool->_nodes = ex_malloc_nomng( sizeof(pool_node_t) * _count );
+    pool->_nodes = ex_malloc_nomng( sizeof(ex_pool_node_t) * _count );
     pool->_used_nodes_begin = NULL;
     pool->_used_nodes_end = NULL;
     pool->_free_nodes = pool->_nodes + (_count-1);
-    pool->_used_bits = bitarray_alloc_nomng( _count );
+    pool->_used_bits = ex_bitarray_alloc_nomng( _count );
 
     // init head node
     pool->_free_nodes->prev = NULL;
@@ -125,13 +125,13 @@ pool_t* pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-void pool_free ( pool_t* _pool )
+void ex_pool_free ( ex_pool_t* _pool )
 {
     ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
 
     ex_free(_pool->_data);
     ex_free(_pool->_nodes);
-    bitarray_free( _pool->_used_bits );
+    ex_bitarray_free( _pool->_used_bits );
 
     _pool->_length = 0;
     _pool->_element_bytes = 0;
@@ -140,13 +140,13 @@ void pool_free ( pool_t* _pool )
 }
 
 // no managed
-void pool_free_nomng ( pool_t* _pool )
+void ex_pool_free_nomng ( ex_pool_t* _pool )
 {
     ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
 
     ex_free_nomng(_pool->_data);
     ex_free_nomng(_pool->_nodes);
-    bitarray_free_nomng( _pool->_used_bits );
+    ex_bitarray_free_nomng( _pool->_used_bits );
 
     _pool->_length = 0;
     _pool->_element_bytes = 0;
@@ -159,7 +159,7 @@ void pool_free_nomng ( pool_t* _pool )
 // ------------------------------------------------------------------ 
 
 // managed
-void pool_reserve ( pool_t* _pool, size_t _count ) 
+void ex_pool_reserve ( ex_pool_t* _pool, size_t _count ) 
 {
     size_t size = _count * _pool->_element_bytes;
     int i = _count - 1;
@@ -170,8 +170,8 @@ void pool_reserve ( pool_t* _pool, size_t _count )
 
     //
     _pool->_data = ex_realloc( _pool->_data, size );
-    _pool->_nodes = ex_realloc( _pool->_nodes,  sizeof(pool_node_t) * _count  );
-    bitarray_resize ( _pool->_used_bits, _count );
+    _pool->_nodes = ex_realloc( _pool->_nodes,  sizeof(ex_pool_node_t) * _count  );
+    ex_bitarray_resize ( _pool->_used_bits, _count );
     _pool->_capacity = _count;
 
     _pool->_used_nodes_begin = NULL;
@@ -180,7 +180,7 @@ void pool_reserve ( pool_t* _pool, size_t _count )
 
     while ( i >= 0 ) {
         // if curren index is in used.
-        if ( bitarray_get ( _pool->_used_bits, i ) ) {
+        if ( ex_bitarray_get ( _pool->_used_bits, i ) ) {
             _push_to_used_reverse ( _pool, _pool->_nodes + i );
         }
         else {
@@ -191,7 +191,7 @@ void pool_reserve ( pool_t* _pool, size_t _count )
 }
 
 // no managed
-void pool_reserve_nomng ( pool_t* _pool, size_t _count ) 
+void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count ) 
 {
     size_t size = _count * _pool->_element_bytes;
     int i = _count - 1;
@@ -202,8 +202,8 @@ void pool_reserve_nomng ( pool_t* _pool, size_t _count )
 
     //
     _pool->_data = ex_realloc_nomng( _pool->_data, size );
-    _pool->_nodes = ex_realloc_nomng( _pool->_nodes,  sizeof(pool_node_t) * _count  );
-    bitarray_resize_nomng ( _pool->_used_bits, _count );
+    _pool->_nodes = ex_realloc_nomng( _pool->_nodes,  sizeof(ex_pool_node_t) * _count  );
+    ex_bitarray_resize_nomng ( _pool->_used_bits, _count );
     _pool->_capacity = _count;
 
     _pool->_used_nodes_begin = NULL;
@@ -212,7 +212,7 @@ void pool_reserve_nomng ( pool_t* _pool, size_t _count )
 
     while ( i >= 0 ) {
         // if curren index is in used.
-        if ( bitarray_get ( _pool->_used_bits, i ) ) {
+        if ( ex_bitarray_get ( _pool->_used_bits, i ) ) {
             _push_to_used_reverse ( _pool, _pool->_nodes + i );
         }
         else {
@@ -227,9 +227,9 @@ void pool_reserve_nomng ( pool_t* _pool, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-int pool_insert ( pool_t* _pool, void* _value )
+int ex_pool_insert ( ex_pool_t* _pool, void* _value )
 {
-    pool_node_t* node = NULL;
+    ex_pool_node_t* node = NULL;
     void* element = NULL;
     int idx = -1;
 
@@ -249,9 +249,9 @@ int pool_insert ( pool_t* _pool, void* _value )
 }
 
 // no managed
-int pool_insert_nomng ( pool_t* _pool, void* _value )
+int ex_pool_insert_nomng ( ex_pool_t* _pool, void* _value )
 {
-    pool_node_t* node = NULL;
+    ex_pool_node_t* node = NULL;
     void* element = NULL;
     int idx = -1;
 
@@ -274,12 +274,12 @@ int pool_insert_nomng ( pool_t* _pool, void* _value )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* pool_erase ( pool_t* _pool, int _idx )
+void* ex_pool_erase ( ex_pool_t* _pool, int _idx )
 {
-    pool_node_t* node = NULL;
+    ex_pool_node_t* node = NULL;
 
     ex_assert_return( _idx >= 0 && _idx < (int)_pool->_capacity, NULL, "error: _idx out of range" );
-    ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
+    ex_assert_return( ex_bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
     // get current node.
     node = _pool->_nodes + _idx;
@@ -309,10 +309,10 @@ void* pool_erase ( pool_t* _pool, int _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* pool_get ( pool_t* _pool, int _idx )
+void* ex_pool_get ( ex_pool_t* _pool, int _idx )
 {
     ex_assert_return( _idx >= 0 && (size_t)_idx < _pool->_capacity, NULL, "error: _idx out of range" );
-    ex_assert_return( bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
+    ex_assert_return( ex_bitarray_get(_pool->_used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
     return (char*)(_pool->_data) + _idx * _pool->_element_bytes;
 }
@@ -326,12 +326,12 @@ void* pool_get ( pool_t* _pool, int _idx )
 // ------------------------------------------------------------------ 
 
 // managed
-pool_node_t* _request_free_node( pool_t* _pool ) 
+ex_pool_node_t* _request_free_node( ex_pool_t* _pool ) 
 {
-    pool_node_t* node = NULL;
+    ex_pool_node_t* node = NULL;
 
     if ( _pool->_free_nodes == NULL ) {
-        pool_reserve( _pool, _pool->_capacity * 2 );
+        ex_pool_reserve( _pool, _pool->_capacity * 2 );
     }
 
     node = _pool->_free_nodes;
@@ -342,12 +342,12 @@ pool_node_t* _request_free_node( pool_t* _pool )
 }
 
 // no managed
-pool_node_t* _request_free_node_nomng( pool_t* _pool ) 
+ex_pool_node_t* _request_free_node_nomng( ex_pool_t* _pool ) 
 {
-    pool_node_t* node = NULL;
+    ex_pool_node_t* node = NULL;
 
     if ( _pool->_free_nodes == NULL ) {
-        pool_reserve_nomng( _pool, _pool->_capacity * 2 );
+        ex_pool_reserve_nomng( _pool, _pool->_capacity * 2 );
     }
 
     node = _pool->_free_nodes;
@@ -361,7 +361,7 @@ pool_node_t* _request_free_node_nomng( pool_t* _pool )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _push_to_used ( pool_t* _pool, pool_node_t* _node )
+void _push_to_used ( ex_pool_t* _pool, ex_pool_node_t* _node )
 {
     if ( _pool->_used_nodes_end ) { // if we have used nodes
         _pool->_used_nodes_end->next = _node;
@@ -374,14 +374,14 @@ void _push_to_used ( pool_t* _pool, pool_node_t* _node )
         _pool->_used_nodes_end->next = NULL;
         _pool->_used_nodes_end->prev = NULL;
     }
-    bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 1 );
+    ex_bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 1 );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _push_to_used_reverse ( pool_t* _pool, pool_node_t* _node )
+void _push_to_used_reverse ( ex_pool_t* _pool, ex_pool_node_t* _node )
 {
     if ( _pool->_used_nodes_begin ) { // if we have used nodes
         _pool->_used_nodes_begin->prev = _node;
@@ -394,14 +394,14 @@ void _push_to_used_reverse ( pool_t* _pool, pool_node_t* _node )
         _pool->_used_nodes_end->next = NULL;
         _pool->_used_nodes_end->prev = NULL;
     }
-    bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 1 );
+    ex_bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 1 );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _push_to_free ( pool_t* _pool, pool_node_t* _node )
+void _push_to_free ( ex_pool_t* _pool, ex_pool_node_t* _node )
 {
     if ( _pool->_free_nodes ) { // if we have used nodes
         _pool->_free_nodes->next = _node;
@@ -414,5 +414,5 @@ void _push_to_free ( pool_t* _pool, pool_node_t* _node )
         _pool->_free_nodes->next = NULL;
         _pool->_free_nodes->prev = NULL;
     }
-    bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 0 );
+    ex_bitarray_set( _pool->_used_bits, _node - _pool->_nodes, 0 );
 }

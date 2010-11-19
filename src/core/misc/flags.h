@@ -21,22 +21,22 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 //
-inline uint32 flags_add ( uint32 _src, uint32 _flags ) { 
+inline uint32 ex_flags_add ( uint32 _src, uint32 _flags ) { 
     return _src | _flags;
 } 
 
 //
-inline uint32 flags_remove ( uint32 _src, uint32 _flags ) {
+inline uint32 ex_flags_remove ( uint32 _src, uint32 _flags ) {
     return _src & ~_flags;
 }
 
 //
-inline bool flags_has_all ( uint32 _src, uint32 _flags ) {
+inline bool ex_flags_has_all ( uint32 _src, uint32 _flags ) {
     return (_flags == 0) ? (_src == _flags) : (_src&_flags) == _flags; 
 }
 
 //
-inline bool flags_has ( uint32 _src, uint32 _flags ) {
+inline bool ex_flags_has ( uint32 _src, uint32 _flags ) {
     return ( _src & _flags ) != 0; 
 }
 

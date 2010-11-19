@@ -27,57 +27,57 @@ static void normal ()
         float val;
         int i;
 
-        hashmap_t* hashmap = hashmap_alloc ( sizeof(uint32), sizeof(float), 256, hashkey_uint32, keycmp_uint32 );
+        ex_hashmap_t* hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 256, ex_hashkey_uint32, ex_keycmp_uint32 );
 
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
             val = 1.0f + i;
-            hashmap_insert ( hashmap, &key, &val, NULL );
+            ex_hashmap_insert ( hashmap, &key, &val, NULL );
         }
 
         i = 0;
-        hashmap_each ( float, el, hashmap ) {
+        ex_hashmap_each ( float, el, hashmap ) {
             printf ( "[%d] value is %f\n", i, el );
             ++i;
-        } hashmap_each_end;
+        } ex_hashmap_each_end;
 
         // check
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
             val = 1.0f + i;
-            EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == val );
+            EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == val );
         }
-        EX_TEST ( hashmap_len(hashmap) == 512 );
+        EX_TEST ( ex_hashmap_len(hashmap) == 512 );
 
         // erase
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
-            EX_TEST ( hashmap_erase(hashmap, &key) != NULL );
+            EX_TEST ( ex_hashmap_erase(hashmap, &key) != NULL );
         }
-        EX_TEST ( hashmap_len(hashmap) == 0 );
+        EX_TEST ( ex_hashmap_len(hashmap) == 0 );
 
-        hashmap_free ( hashmap );
+        ex_hashmap_free ( hashmap );
     }
 
     {
         char* key; 
         float val;
 
-        hashmap_t* hashmap = hashmap_alloc ( sizeof(char**), sizeof(float), 256, hashkey_string, keycmp_string );
+        ex_hashmap_t* hashmap = ex_hashmap_alloc ( sizeof(char**), sizeof(float), 256, ex_hashkey_string, ex_keycmp_string );
 
-	    key = "foo"; val = 1.0f; hashmap_insert ( hashmap, &key, &val, NULL );
-        key = "bar"; val = 2.0f; hashmap_insert ( hashmap, &key, &val, NULL );
-        key = "hello"; val = 3.0f; hashmap_insert ( hashmap, &key, &val, NULL );
-        key = "world"; val = 4.0f; hashmap_insert ( hashmap, &key, &val, NULL );
+	    key = "foo"; val = 1.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
+        key = "bar"; val = 2.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
+        key = "hello"; val = 3.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
+        key = "world"; val = 4.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
 
-        key = "foo"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 1.0f );
-        key = "bar"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 2.0f );
-        key = "hello"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 3.0f );
-        key = "world"; EX_TEST ( *((float*)hashmap_get ( hashmap, &key, NULL )) == 4.0f );
+        key = "foo"; EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == 1.0f );
+        key = "bar"; EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == 2.0f );
+        key = "hello"; EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == 3.0f );
+        key = "world"; EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == 4.0f );
 
-        EX_TEST ( hashmap_len(hashmap) == 4 );
+        EX_TEST ( ex_hashmap_len(hashmap) == 4 );
 
-        hashmap_free ( hashmap );
+        ex_hashmap_free ( hashmap );
     }
 }
 
@@ -87,8 +87,8 @@ static void normal ()
 
 static void invalid ()
 {
-    hashmap_t* hashmap = hashmap_alloc ( sizeof(uint32), sizeof(float), 10, hashkey_uint32, keycmp_uint32 );
-    hashmap_free ( hashmap );
+    ex_hashmap_t* hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 10, ex_hashkey_uint32, ex_keycmp_uint32 );
+    ex_hashmap_free ( hashmap );
 }
 
 // ------------------------------------------------------------------ 

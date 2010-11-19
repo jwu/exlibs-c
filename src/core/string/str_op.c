@@ -33,7 +33,7 @@ static const char white_space_list[] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_str_split_into_array( array_t* _outList, const char* _token, const char* _text )
+int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const char* _text )
 {
     const char* string_to_parse = _text;
     const char* string_to_split = string_to_parse;
@@ -52,10 +52,10 @@ int ex_str_split_into_array( array_t* _outList, const char* _token, const char* 
             if ( sub_str_len > 0 ) {
                 char* sub_str = (char*)ex_malloc ( sub_str_len );
                 strncpy(sub_str, string_to_split, sub_str_len );
-                array_push_back ( _outList, sub_str );
+                ex_array_push_back ( _outList, sub_str );
             }
             else {
-                array_push_back ( _outList, "" );
+                ex_array_push_back ( _outList, "" );
             }
 
             // reset the split value (skip token,too)
@@ -78,8 +78,8 @@ int ex_str_split_into_array( array_t* _outList, const char* _token, const char* 
         int size = strlen(rest_string)+1;
         char* sub_str = (char*)ex_malloc(size);
         strncpy(sub_str, rest_string, size );
-        array_push_back ( _outList, sub_str );
+        ex_array_push_back ( _outList, sub_str );
     }
 
-    return (int)array_len(_outList);
+    return (int)ex_array_len(_outList);
 }

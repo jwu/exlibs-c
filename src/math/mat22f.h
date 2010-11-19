@@ -1,13 +1,13 @@
 // ======================================================================================
 // File         : mat22f.h
 // Author       : Wu Jie 
-// Last Change  : 11/18/2010 | 16:48:33 PM | Thursday,November
+// Last Change  : 11/19/2010 | 09:40:13 AM | Friday,November
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef ex_mat22f_H_1289448244
-#define ex_mat22f_H_1289448244
+#ifndef MAT22F_H_1290130815
+#define MAT22F_H_1290130815
 // #################################################################################
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -143,13 +143,13 @@ inline float ex_mat22f_get ( ex_mat22f_t* _m, uint _row, uint _col ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_mat22f_row ( vec2f_t* _r, ex_mat22f_t* _m, uint _row )
+ @fn inline void ex_mat22f_row ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _row )
  @retval _r the result vector
  @param _m the matrix
  @param _row the row index, range in [0,2)
  @details get the matrix by _row and return it in vector2, for example: 
  @code
- vec2f_t r;
+ ex_vec2f_t r;
  ex_mat22f_t m;
  ex_mat22f_zero(&m);
  ex_mat22f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01)
@@ -157,7 +157,7 @@ inline float ex_mat22f_get ( ex_mat22f_t* _m, uint _row, uint _col ) {
  the r is equal to vector2 (m.m00, m.m01) 
 */// ------------------------------------------------------------------ 
 
-inline void ex_mat22f_row ( vec2f_t* _r, ex_mat22f_t* _m, uint _row ) {
+inline void ex_mat22f_row ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _row ) {
     ex_assert( _row >= 0 && _row < 2, "out of range" );
     _r->x = _m->m[2*_row+0]; 
     _r->y = _m->m[2*_row+1]; 
@@ -165,13 +165,13 @@ inline void ex_mat22f_row ( vec2f_t* _r, ex_mat22f_t* _m, uint _row ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_mat22f_col ( vec2f_t* _r, ex_mat22f_t* _m, uint _col )
+ @fn inline void ex_mat22f_col ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _col )
  @retval _r the result vector
  @param _m the matrix
  @param _col the column index, range in [0,2)
  @details get the matrix by _row and return it in vector2, for example: 
  @code
- vec2f_t r;
+ ex_vec2f_t r;
  ex_mat22f_t m;
  ex_mat22f_zero(&m);
  ex_mat22f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10)
@@ -179,7 +179,7 @@ inline void ex_mat22f_row ( vec2f_t* _r, ex_mat22f_t* _m, uint _row ) {
  the r is equal to vector2 (m.m00, m.m10) 
 */// ------------------------------------------------------------------ 
 
-inline void ex_mat22f_col ( vec2f_t* _r, ex_mat22f_t* _m, uint _col ) {
+inline void ex_mat22f_col ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _col ) {
     ex_assert( _col >= 0 && _col < 2, "out of range" );
     _r->x = _m->m[2*0+_col]; 
     _r->y = _m->m[2*1+_col]; 
@@ -400,7 +400,7 @@ inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, float _rh
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_mat22f_mul_vec2f ( vec2f_t* _r, ex_mat22f_t* _lhs, vec2f_t* _rhs )
+ @fn void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix 
  @param _rhs right hand side vector 
@@ -420,11 +420,11 @@ inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, float _rh
  @sa ex_vec2f_mul_mat22f
 */// ------------------------------------------------------------------ 
 
-void ex_mat22f_mul_vec2f ( vec2f_t* _r, ex_mat22f_t* _lhs, vec2f_t* _rhs );
+void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_vec2f_mul_mat22f ( vec2f_t* _r, vec2f_t* _lhs, ex_mat22f_t* _rhs )
+ @fn void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side vector
  @param _rhs right hand side matrix  
@@ -443,7 +443,7 @@ void ex_mat22f_mul_vec2f ( vec2f_t* _r, ex_mat22f_t* _lhs, vec2f_t* _rhs );
  @sa ex_mat22f_mul_vec2f
 */// ------------------------------------------------------------------ 
 
-void ex_vec2f_mul_mat22f ( vec2f_t* _r, vec2f_t* _lhs, ex_mat22f_t* _rhs );
+void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -586,7 +586,5 @@ bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, ex_mat22f_t* _m );
 // ######################### 
 
 // #################################################################################
-#endif // END ex_mat22f_H_1289448244
+#endif // END MAT22F_H_1290130815
 // #################################################################################
-
-

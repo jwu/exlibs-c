@@ -97,7 +97,7 @@
 //      Use for hash table lookup, or anything where one collision in 2^32 is
 //      acceptable.  Do NOT use for cryptographic purposes.
 // ------------------------------------------------------------------
-uint32 hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 {
     register uint32 a,b,c,len;
 
@@ -145,17 +145,17 @@ uint32 hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 //        by Bob Jenkins, May 2006, Public Domain.
 //       
 //       These are functions for producing 32-bit hashes for hash table lookup.
-//       hashword(), hashlittle(), hashlittle2(), hashbig(), __mix(), and __final() 
+//       ex_hashword(), ex_hashlittle(), ex_hashlittle2(), ex_hashbig(), __mix(), and __final() 
 //       are externally useful functions.  Routines to test the hash are included 
 //       if SELF_TEST is defined.  You can use this free for any purpose.  It's in
 //       the public domain.  It has no warranty.
 //       
-//       You probably want to use hashlittle().  hashlittle() and hashbig()
-//       hash byte arrays.  hashlittle() is is faster than hashbig() on
+//       You probably want to use ex_hashlittle().  ex_hashlittle() and ex_hashbig()
+//       hash byte arrays.  ex_hashlittle() is is faster than ex_hashbig() on
 //       little-endian machines.  Intel and AMD are little-endian machines.
-//       On second thought, you probably want hashlittle2(), which is identical to
-//       hashlittle() except it returns two 32-bit hashes for the price of one.  
-//       You could implement hashbig2() if you wanted but I haven't bothered here.
+//       On second thought, you probably want ex_hashlittle2(), which is identical to
+//       ex_hashlittle() except it returns two 32-bit hashes for the price of one.  
+//       You could implement ex_hashbig2() if you wanted but I haven't bothered here.
 //       
 //       If you want to find a hash of, say, exactly 7 integers, do
 //         a = i1;  b = i2;  c = i3;
@@ -165,9 +165,9 @@ uint32 hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 //         a += i7;
 //         __final(a,b,c);
 //       then use c as the hash value.  If you have a variable length array of
-//       4-byte integers to hash, use hashword().  If you have a byte array (like
-//       a character string), use hashlittle().  If you have several byte arrays, or
-//       a __mix of things, see the comments above hashlittle().  
+//       4-byte integers to hash, use ex_hashword().  If you have a byte array (like
+//       a character string), use ex_hashlittle().  If you have several byte arrays, or
+//       a __mix of things, see the comments above ex_hashlittle().  
 //       
 //       Why is this so big?  I read 12 bytes at a time into 3 4-byte integers, 
 //       then __mix those integers.  This is fast (you can do a lot more thorough
@@ -294,16 +294,16 @@ uint32 hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 
 // ------------------------------------------------------------------
 // Desc:
-// hashword
+// ex_hashword
 // This works on all machines.  To be useful, it requires
 // -- that the _data be an array of uint32's, and
 // -- that the length be the number of uint32's in the _data
 //
-// The function hashword() is identical to hashlittle() on little-endian
-// machines, and identical to hashbig() on big-endian machines,
+// The function ex_hashword() is identical to ex_hashlittle() on little-endian
+// machines, and identical to ex_hashbig() on big-endian machines,
 // except that the length has to be measured in UINT32s rather than in
-// bytes.  hashlittle() is more complicated than hashword() only because
-// hashlittle() has to dance around fitting the _data bytes into registers.
+// bytes.  ex_hashlittle() is more complicated than ex_hashword() only because
+// ex_hashlittle() has to dance around fitting the _data bytes into registers.
 //
 // @params:
 //      _data     : the _data, an array of uint32 values
@@ -311,7 +311,7 @@ uint32 hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 //      _seed      : can be any 4-byte value
 // ------------------------------------------------------------------
 
-uint32 hashword( const uint32* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashword( const uint32* _data, uint32 _len, uint32 _seed )
 {
     uint32 a,b,c;
 
@@ -345,11 +345,11 @@ uint32 hashword( const uint32* _data, uint32 _len, uint32 _seed )
 
 // ------------------------------------------------------------------
 // Desc:
-// hashword2 (2 seed)
-//  hashword2() -- same as hashword(), but take two seeds and return two
+// ex_hashword2 (2 seed)
+//  ex_hashword2() -- same as ex_hashword(), but take two seeds and return two
 //  32-bit values.  pSeed1 and pSeed2 must both be nonnull, and *pSeed1 and *pSeed2 must
 //  both be initialized with seeds.  If you pass in (*pSeed2)==0, the output 
-//  (*pSeed1) will be the same as the return value from hashword().
+//  (*pSeed1) will be the same as the return value from ex_hashword().
 //
 //  @params:
 //      _data     : the _data, an array of uint32 values
@@ -358,7 +358,7 @@ uint32 hashword( const uint32* _data, uint32 _len, uint32 _seed )
 //      _seed2    :    IN: more seed OUT: secondary hash value 
 // ------------------------------------------------------------------
 
-void hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
+void ex_hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
 {
     uint32 a,b,c;
 
@@ -393,8 +393,8 @@ void hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed
 
 // ------------------------------------------------------------------
 // Desc:
-// hashlittle (1 seed)
-//  hashlittle() -- hash a variable-length _data into a 32-bit value
+// ex_hashlittle (1 seed)
+//  ex_hashlittle() -- hash a variable-length _data into a 32-bit value
 //      @params:
 //          _data : the _data 
 //          _len   : the length of the _data, counting by bytes
@@ -410,7 +410,7 @@ void hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed
 //  In which case, the hash table should have hashsize(10) elements.
 //  
 //  If you are hashing n strings (uint8 **)k, do it like this:
-//    for (i=0, h=0; i<n; ++i) h = hashlittle( k[i], len[i], h);
+//    for (i=0, h=0; i<n; ++i) h = ex_hashlittle( k[i], len[i], h);
 //  
 //  By Bob Jenkins, 2006.  bob_jenkins@burtleburtle.net.  You may use this
 //  code any way you wish, private, educational, or commercial.  It's free.
@@ -419,7 +419,7 @@ void hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed
 //  acceptable.  Do NOT use for cryptographic purposes.
 // ------------------------------------------------------------------
 
-uint32 hashlittle ( const void* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed )
 {
     uint32 a,b,c;                                          /* internal state */
     union { const void* ptr; size_t i; } u;     /* needed for Mac Powerbook G4 */
@@ -593,10 +593,10 @@ uint32 hashlittle ( const void* _data, uint32 _len, uint32 _seed )
 
 // ------------------------------------------------------------------
 // Desc: 
-// hashlittle2 (2 seed)
-// hashlittle2: return 2 32-bit hash values
+// ex_hashlittle2 (2 seed)
+// ex_hashlittle2: return 2 32-bit hash values
 //
-// This is identical to hashlittle(), except it returns two 32-bit hash
+// This is identical to ex_hashlittle(), except it returns two 32-bit hash
 // values instead of just one.  This is good enough for hash table
 // lookup with 2^^64 buckets, or if you want a second hash if you're not
 // happy with the first, or if you want a probably-unique 64-bit ID for
@@ -610,7 +610,7 @@ uint32 hashlittle ( const void* _data, uint32 _len, uint32 _seed )
 //      _seed2    :    IN: more seed OUT: secondary hash value 
 // ------------------------------------------------------------------
 
-void hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ) 
+void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ) 
 {
     uint32 a,b,c;                                          /* internal state */
     union { const void *ptr; size_t i; } u;     /* needed for Mac Powerbook G4 */
@@ -786,13 +786,13 @@ void hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed
 
 // ------------------------------------------------------------------
 // Desc: 
-// hashbig
-//  This is the same as hashword() on big-endian machines.  It is different
-//  from hashlittle() on all machines.  hashbig() takes advantage of
+// ex_hashbig
+//  This is the same as ex_hashword() on big-endian machines.  It is different
+//  from ex_hashlittle() on all machines.  ex_hashbig() takes advantage of
 //  big-endian byte ordering. 
 // ------------------------------------------------------------------
 
-uint32 hashbig( const void* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashbig( const void* _data, uint32 _len, uint32 _seed )
 {
     uint32 a,b,c;
     union { const void *ptr; size_t i; } u; /* to cast _data to (size_t) happily */
@@ -918,8 +918,8 @@ uint32 hashbig( const void* _data, uint32 _len, uint32 _seed )
 
 // ------------------------------------------------------------------
 // Desc: 
-// hashbig2
-//  This is identical to hashbig(), except it returns two 32-bit hash
+// ex_hashbig2
+//  This is identical to ex_hashbig(), except it returns two 32-bit hash
 //  values instead of just one.  This is good enough for hash table
 //  lookup with 2^^64 buckets, or if you want a second hash if you're not
 //  happy with the first, or if you want a probably-unique 64-bit ID for
@@ -933,7 +933,7 @@ uint32 hashbig( const void* _data, uint32 _len, uint32 _seed )
 //       _seed2    :    IN: more seed OUT: secondary hash value 
 // ------------------------------------------------------------------
 
-void hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
+void ex_hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
 {
     uint32 a,b,c;
     union { const void *ptr; size_t i; } u; /* to cast _data to (size_t) happily */
@@ -1072,7 +1072,7 @@ void hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
 // ------------------------------------------------------------------
 // Desc: 
 // ------------------------------------------------------------------
-uint32 hashpaul( const uint8* _data, uint32 _len )
+uint32 ex_hashpaul( const uint8* _data, uint32 _len )
 {
     uint32 hash = _len, tmp;
     int32 rem;

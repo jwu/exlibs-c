@@ -28,13 +28,13 @@ int main( int argc, char* argv[] )
     printf ("================\n");
 
     // init
-    core_init();
+    ex_core_init();
 
     //
     test_normal ();
 
     // deinit
-    core_deinit();
+    ex_core_deinit();
 
     return 0;
 }

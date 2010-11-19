@@ -82,7 +82,7 @@ void _init_window ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void init_sdl_gl ()
+void ex_init_sdl_gl ()
 {
     uint32 vflags, bbColor, multiSample;
     uint32 width, height;
@@ -167,7 +167,7 @@ void init_sdl_gl ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void begin_frame ()
+void ex_begin_frame ()
 {
     int mask = 0;
 
@@ -184,7 +184,7 @@ void begin_frame ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void end_frame ()
+void ex_end_frame ()
 {
     SDL_GL_SwapBuffers();
 }

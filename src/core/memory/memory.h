@@ -147,7 +147,7 @@ void mem_deinit ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline void* memzero ( void* _ptr, size_t _size ) { 
+inline void* ex_memzero ( void* _ptr, size_t _size ) { 
     return memset ( _ptr, 0x00, _size ); 
 }
 

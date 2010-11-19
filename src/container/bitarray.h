@@ -19,58 +19,58 @@ extern "C" {
 /**********************************
 USAGE:
 
-    bitarray_t* bitArray = bitarray_alloc ( 10 );
-    bitarray_free ( bitArray );
+    ex_bitarray_t* bitArray = ex_bitarray_alloc ( 10 );
+    ex_bitarray_free ( bitArray );
 ***********************************/
 
 // ------------------------------------------------------------------ 
-// Desc: bitarray_t 
+// Desc: ex_bitarray_t 
 // ------------------------------------------------------------------ 
 
-typedef struct bitarray_t {
+typedef struct ex_bitarray_t {
     // private
     size_t _length;
     char* _data;
-} bitarray_t; // end struct _bitarray
+} ex_bitarray_t; // end struct _bitarray
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bitarray_t* bitarray_alloc ( size_t _bitcount );
-bitarray_t* bitarray_alloc_nomng ( size_t _bitcount );
+ex_bitarray_t* ex_bitarray_alloc ( size_t _bitcount );
+ex_bitarray_t* ex_bitarray_alloc_nomng ( size_t _bitcount );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void bitarray_free ( bitarray_t* _bitarray );
-void bitarray_free_nomng ( bitarray_t* _bitarray );
+void ex_bitarray_free ( ex_bitarray_t* _bitarray );
+void ex_bitarray_free_nomng ( ex_bitarray_t* _bitarray );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int bitarray_get ( bitarray_t* _bitarray, size_t _idx );
+int ex_bitarray_get ( ex_bitarray_t* _bitarray, size_t _idx );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void bitarray_set ( bitarray_t* _bitarray, size_t _idx, int _value );
+void ex_bitarray_set ( ex_bitarray_t* _bitarray, size_t _idx, int _value );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void bitarray_resize ( bitarray_t* _bitarray, size_t _bitcount ); 
-void bitarray_resize_nomng ( bitarray_t* _bitarray, size_t _bitcount ); 
+void ex_bitarray_resize ( ex_bitarray_t* _bitarray, size_t _bitcount ); 
+void ex_bitarray_resize_nomng ( ex_bitarray_t* _bitarray, size_t _bitcount ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline size_t bitarray_len ( bitarray_t* _bitarray ) { return _bitarray->_length; } 
+inline size_t ex_bitarray_len ( ex_bitarray_t* _bitarray ) { return _bitarray->_length; } 
 
 // ######################### 
 #ifdef __cplusplus

@@ -27,15 +27,15 @@ static void string ()
         wchar_t wchar_src[128];
         wchar_t wchar_unicode[128];
 
-        memzero ( char_src, sizeof(char)*128 );
+        ex_memzero ( char_src, sizeof(char)*128 );
         strcpy ( char_src, "中文" );
 
-        memzero ( wchar_src, sizeof(wchar_t)*128 );
+        ex_memzero ( wchar_src, sizeof(wchar_t)*128 );
         wcscpy( wchar_src, L"中文" );
 
         MultiByteToWideChar(CP_UTF8, 0, char_src, -1, wchar_unicode, strlen(char_src) * sizeof(wchar_t));
-        // message_box ( MSG_BOX_NONE, "result", "char_src = %s, wchar_src = %ls, wchar_unicode = %ls", char_src, wchar_src, wchar_unicode );
-        // message_box ( MSG_BOX_NONE, "result", "wchar_unicode = %s", wchar_unicode );
+        // ex_message_box ( EX_MSG_BOX_NONE, "result", "char_src = %s, wchar_src = %ls, wchar_unicode = %ls", char_src, wchar_src, wchar_unicode );
+        // ex_message_box ( EX_MSG_BOX_NONE, "result", "wchar_unicode = %s", wchar_unicode );
         ex_assert ( false, "wchar_unicode = %s", char_src );
         EX_HW_BREAK();
     }

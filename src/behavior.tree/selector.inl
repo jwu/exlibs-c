@@ -15,10 +15,10 @@
 
 static bool _selector_exec ( bt_node_t* _node )
 {
-    array_each ( bt_node_t*, child, _node->children ) {
+    ex_array_each ( bt_node_t*, child, _node->children ) {
         if ( (*(child->exec))(child) == true )
             return true;
-    } array_each_end
+    } ex_array_each_end
     return false;
 }
 
@@ -41,7 +41,7 @@ bt_node_t* bt_selector()
 static bool _random_selector_exec ( bt_node_t* _node )
 {
     static uint last_idx_len = 0;
-    uint count = array_len(_node->children);
+    uint count = ex_array_len(_node->children);
     uint* indices = NULL;
     uint i = 0; 
 
@@ -69,7 +69,7 @@ static bool _random_selector_exec ( bt_node_t* _node )
     // execute the children
     for ( i = 0; i < count; ++i ) {
         uint idx = indices[i];
-        bt_node_t* child = *( (bt_node_t**) (array_get(_node->children,idx)) );
+        bt_node_t* child = *( (bt_node_t**) (ex_array_get(_node->children,idx)) );
         if ( (*(child->exec))(child) == true )
             return true;
     }

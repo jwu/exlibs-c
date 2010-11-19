@@ -30,7 +30,7 @@ static void normal ()
     FILE* fp;
     size_t fsize;
     char* data;
-    array_t *words, *word_IDs;
+    ex_array_t *words, *word_IDs;
 
     strncpy ( path, media_file, MAX_PATH );
     fp = fopen ( strcat(  path, "sid.test.txt" ), "r" );
@@ -47,8 +47,8 @@ static void normal ()
         uint cur = 0,prev = 0;
         size_t sid;
 
-        words = array_alloc ( sizeof(char*), 256 );
-        word_IDs = array_alloc ( sizeof(size_t), 256 );
+        words = ex_array_alloc ( sizeof(char*), 256 );
+        word_IDs = ex_array_alloc ( sizeof(size_t), 256 );
 
         // dump string and string ID
         while ( cur < fsize ) {
@@ -60,11 +60,11 @@ static void normal ()
                 strncpy ( word, data + prev, word_len );
                 word[word_len] = '\0';
 
-                sid = str_id( word );
+                sid = ex_str_id( word );
                 ex_assert(sid != -1, "can't get string ID of %s", word);
 
-                array_push_back ( words, &word );
-                array_push_back ( word_IDs, &sid );
+                ex_array_push_back ( words, &word );
+                ex_array_push_back ( word_IDs, &sid );
                 prev = cur;
             }
             ++cur;
@@ -72,9 +72,9 @@ static void normal ()
 
         // check if the string ID consistent with string
         cur = 0;
-        while ( cur < array_len(words) ) {
-            char* word = *((char**)array_get( words, cur ));
-            size_t sid = *((size_t*)array_get( word_IDs, cur )); 
+        while ( cur < ex_array_len(words) ) {
+            char* word = *((char**)ex_array_get( words, cur ));
+            size_t sid = *((size_t*)ex_array_get( word_IDs, cur )); 
             // EX_TEST ( wcscmp(strid_to_cstr(sid), word) == 0 );
             ex_assert ( strcmp(strid_to_cstr(sid), word) == 0, "%s(%d) is not equal to %s", strid_to_cstr(sid), sid, word );
             ++cur;
@@ -82,13 +82,13 @@ static void normal ()
 
         // release all memory
         cur = 0;
-        while ( cur < array_len(words) ) {
-            void* ptr = *((char**)array_get( words, cur ));
+        while ( cur < ex_array_len(words) ) {
+            void* ptr = *((char**)ex_array_get( words, cur ));
             ex_free(ptr);
             ++cur;
         }
-        array_free ( words );
-        array_free ( word_IDs );
+        ex_array_free ( words );
+        ex_array_free ( word_IDs );
     }
 
     ex_free (data);
@@ -101,20 +101,20 @@ static void normal ()
 static void widechar()
 {
     size_t id = -1;
-    id = wcs_id( L"Hello World" );
+    id = ex_wcs_id( L"Hello World" );
     ex_log ( "id = %d", id );
-    id = str_id( "Hello World" );
+    id = ex_str_id( "Hello World" );
     ex_log ( "id = %d", id );
 
     // TODO { 
     // {
-    //     size_t id = str_id ("c");
+    //     size_t id = ex_str_id ("c");
     //     char* str = strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "c") == 0 );
     // }
 
     // {
-    //     size_t id = str_id ( "ÖÐc");
+    //     size_t id = ex_str_id ( "ÖÐc");
     //     char* str = strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "ÖÐc") == 0 );
     // }

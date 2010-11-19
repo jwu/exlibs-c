@@ -23,76 +23,76 @@
 static void normal ()
 {
     //
-    pool_t* pool = pool_alloc ( sizeof(int32), 10 );
+    ex_pool_t* pool = ex_pool_alloc ( sizeof(int32), 10 );
     {
         // normal insert
-        pool_insert_int32 ( pool, 10 );
-        pool_insert_int32 ( pool, 20 );
-        pool_insert_int32 ( pool, 30 );
-        pool_insert_int32 ( pool, 40 );
+        ex_pool_insert_int32 ( pool, 10 );
+        ex_pool_insert_int32 ( pool, 20 );
+        ex_pool_insert_int32 ( pool, 30 );
+        ex_pool_insert_int32 ( pool, 40 );
 
-        EX_TEST( pool_get_int32(pool,0) == 10 );
-        EX_TEST( pool_get_int32(pool,1) == 20 );
-        EX_TEST( pool_get_int32(pool,2) == 30 );
-        EX_TEST( pool_get_int32(pool,3) == 40 );
+        EX_TEST( ex_pool_get_int32(pool,0) == 10 );
+        EX_TEST( ex_pool_get_int32(pool,1) == 20 );
+        EX_TEST( ex_pool_get_int32(pool,2) == 30 );
+        EX_TEST( ex_pool_get_int32(pool,3) == 40 );
 
         {
             int i = 0;
-            pool_each ( int32, el, pool ) {
+            ex_pool_each ( int32, el, pool ) {
                 printf ("[%d] value is %d\n", i, el );
                 ++i;
-            } pool_each_end
+            } ex_pool_each_end
         }
 
         // insert exceed the capacity
-        pool_insert_int32 ( pool, 50 );
-        pool_insert_int32 ( pool, 60 );
-        pool_insert_int32 ( pool, 70 );
-        pool_insert_int32 ( pool, 80 );
-        pool_insert_int32 ( pool, 90 );
-        pool_insert_int32 ( pool, 100 );
-        pool_insert_int32 ( pool, 110 );
-        pool_insert_int32 ( pool, 120 );
+        ex_pool_insert_int32 ( pool, 50 );
+        ex_pool_insert_int32 ( pool, 60 );
+        ex_pool_insert_int32 ( pool, 70 );
+        ex_pool_insert_int32 ( pool, 80 );
+        ex_pool_insert_int32 ( pool, 90 );
+        ex_pool_insert_int32 ( pool, 100 );
+        ex_pool_insert_int32 ( pool, 110 );
+        ex_pool_insert_int32 ( pool, 120 );
 
-        EX_TEST( pool_get_int32(pool,0 ) == 10 );
-        EX_TEST( pool_get_int32(pool,1 ) == 20 );
-        EX_TEST( pool_get_int32(pool,2 ) == 30 );
-        EX_TEST( pool_get_int32(pool,3 ) == 40 );
-        EX_TEST( pool_get_int32(pool,4 ) == 50 );
-        EX_TEST( pool_get_int32(pool,5 ) == 60 );
-        EX_TEST( pool_get_int32(pool,6 ) == 70 );
-        EX_TEST( pool_get_int32(pool,7 ) == 80 );
-        EX_TEST( pool_get_int32(pool,8 ) == 90 );
-        EX_TEST( pool_get_int32(pool,9 ) == 100 );
-        EX_TEST( pool_get_int32(pool,10) == 110 );
-        EX_TEST( pool_get_int32(pool,11) == 120 );
+        EX_TEST( ex_pool_get_int32(pool,0 ) == 10 );
+        EX_TEST( ex_pool_get_int32(pool,1 ) == 20 );
+        EX_TEST( ex_pool_get_int32(pool,2 ) == 30 );
+        EX_TEST( ex_pool_get_int32(pool,3 ) == 40 );
+        EX_TEST( ex_pool_get_int32(pool,4 ) == 50 );
+        EX_TEST( ex_pool_get_int32(pool,5 ) == 60 );
+        EX_TEST( ex_pool_get_int32(pool,6 ) == 70 );
+        EX_TEST( ex_pool_get_int32(pool,7 ) == 80 );
+        EX_TEST( ex_pool_get_int32(pool,8 ) == 90 );
+        EX_TEST( ex_pool_get_int32(pool,9 ) == 100 );
+        EX_TEST( ex_pool_get_int32(pool,10) == 110 );
+        EX_TEST( ex_pool_get_int32(pool,11) == 120 );
 
         {
             int i = 0;
-            pool_each ( int32, el, pool ) {
+            ex_pool_each ( int32, el, pool ) {
                 printf ("[%d] value is %d\n", i, el );
                 ++i;
-            } pool_each_end
+            } ex_pool_each_end
         }
 
         // erase
-        pool_erase( pool, 4 );
-        pool_erase( pool, 10 );
-        pool_insert_int32( pool, 200 );
-        pool_insert_int32( pool, 210 );
-        EX_TEST( pool_get_int32(pool,10) == 200 );
-        EX_TEST( pool_get_int32(pool,4) == 210 );
+        ex_pool_erase( pool, 4 );
+        ex_pool_erase( pool, 10 );
+        ex_pool_insert_int32( pool, 200 );
+        ex_pool_insert_int32( pool, 210 );
+        EX_TEST( ex_pool_get_int32(pool,10) == 200 );
+        EX_TEST( ex_pool_get_int32(pool,4) == 210 );
     }
-    pool_free ( pool );
+    ex_pool_free ( pool );
 
     //
-    pool = pool_alloc ( sizeof(char*), 10 );
+    pool = ex_pool_alloc ( sizeof(char*), 10 );
     {
         // normal insert
-        pool_insert_string ( pool, "hello world!" );
-        EX_TEST ( strcmp ( pool_get_string(pool,0), "hello world!" ) == 0 );
+        ex_pool_insert_string ( pool, "hello world!" );
+        EX_TEST ( strcmp ( ex_pool_get_string(pool,0), "hello world!" ) == 0 );
     }
-    pool_free ( pool );
+    ex_pool_free ( pool );
 }
 
 // ------------------------------------------------------------------ 
@@ -102,44 +102,44 @@ static void normal ()
 static void invalid()
 {
     //
-    pool_t* pool = pool_alloc ( sizeof(int32), 10 );
+    ex_pool_t* pool = ex_pool_alloc ( sizeof(int32), 10 );
     {
         int val = 0;
 
         // 
-        pool_insert_int32 ( pool, 10 );
-        pool_insert_int32 ( pool, 20 );
-        pool_insert_int32 ( pool, 30 );
-        pool_insert_int32 ( pool, 40 );
-        pool_insert_int32 ( pool, 50 );
-        pool_insert_int32 ( pool, 60 );
-        pool_insert_int32 ( pool, 70 );
-        pool_insert_int32 ( pool, 80 );
-        pool_insert_int32 ( pool, 90 );
-        pool_insert_int32 ( pool, 100 );
+        ex_pool_insert_int32 ( pool, 10 );
+        ex_pool_insert_int32 ( pool, 20 );
+        ex_pool_insert_int32 ( pool, 30 );
+        ex_pool_insert_int32 ( pool, 40 );
+        ex_pool_insert_int32 ( pool, 50 );
+        ex_pool_insert_int32 ( pool, 60 );
+        ex_pool_insert_int32 ( pool, 70 );
+        ex_pool_insert_int32 ( pool, 80 );
+        ex_pool_insert_int32 ( pool, 90 );
+        ex_pool_insert_int32 ( pool, 100 );
 
         // get
-        val = pool_get_int32 ( pool, 40 ); // ERROR
+        val = ex_pool_get_int32 ( pool, 40 ); // ERROR
 
         // erase
-        pool_erase( pool, 40  ); // ERROR
-        pool_erase( pool, 0  );
-        pool_erase( pool, 1  );
-        pool_erase( pool, 2  );
-        pool_erase( pool, 3  );
-        pool_erase( pool, 4  );
-        pool_erase( pool, 4  ); // ERROR
-        pool_erase( pool, 5  );
-        pool_erase( pool, 6  );
-        pool_erase( pool, 7  );
-        pool_erase( pool, 8  );
-        pool_erase( pool, 9  );
-        pool_erase( pool, 10 ); // ERROR
-        pool_erase( pool, 11 ); // ERROR
-        pool_erase( pool, 12 ); // ERROR
-        pool_erase( pool, 13 ); // ERROR
+        ex_pool_erase( pool, 40  ); // ERROR
+        ex_pool_erase( pool, 0  );
+        ex_pool_erase( pool, 1  );
+        ex_pool_erase( pool, 2  );
+        ex_pool_erase( pool, 3  );
+        ex_pool_erase( pool, 4  );
+        ex_pool_erase( pool, 4  ); // ERROR
+        ex_pool_erase( pool, 5  );
+        ex_pool_erase( pool, 6  );
+        ex_pool_erase( pool, 7  );
+        ex_pool_erase( pool, 8  );
+        ex_pool_erase( pool, 9  );
+        ex_pool_erase( pool, 10 ); // ERROR
+        ex_pool_erase( pool, 11 ); // ERROR
+        ex_pool_erase( pool, 12 ); // ERROR
+        ex_pool_erase( pool, 13 ); // ERROR
     }
-    pool_free ( pool );
+    ex_pool_free ( pool );
 }
 
 

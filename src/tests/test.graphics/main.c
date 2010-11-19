@@ -65,9 +65,9 @@ void main_loop ()
         quit = process_events();
 
         // render
-        begin_frame();
+        ex_begin_frame();
         render_scene();
-        end_frame();
+        ex_end_frame();
     }
 }
 
@@ -79,7 +79,7 @@ int main ( int argc, char* argv[] )
 {
     printf ( "start test...\n" );
 
-    init_sdl_gl();
+    ex_init_sdl_gl();
     main_loop();
 
     return 0;

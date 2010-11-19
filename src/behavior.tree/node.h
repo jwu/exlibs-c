@@ -27,7 +27,7 @@ extern "C" {
 typedef struct bt_node_t {
     // data
     const char* type;
-    struct array_t* children;
+    struct ex_array_t* children;
     void* user_data;
 
     // callback functions

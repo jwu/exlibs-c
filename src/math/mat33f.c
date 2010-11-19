@@ -22,36 +22,36 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs ) {
+void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs ) {
     float x, y, z;
-    vec3f_t tmp;
+    ex_vec3f_t tmp;
 
     ex_mat33f_row( &tmp, _lhs, 0 );
-    x = vec3f_dot( _rhs, &tmp );
+    x = ex_vec3f_dot( _rhs, &tmp );
     ex_mat33f_row( &tmp, _lhs, 1 );
-    y = vec3f_dot( _rhs, &tmp );
+    y = ex_vec3f_dot( _rhs, &tmp );
     ex_mat33f_row( &tmp, _lhs, 2 );
-    z = vec3f_dot( _rhs, &tmp );
+    z = ex_vec3f_dot( _rhs, &tmp );
 
-    vec3f_set( _r, x, y, z );
+    ex_vec3f_set( _r, x, y, z );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, ex_mat33f_t* _rhs ) {
+void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_mat33f_t* _rhs ) {
     float x, y, z;
-    vec3f_t tmp;
+    ex_vec3f_t tmp;
 
     ex_mat33f_col( &tmp, _rhs, 0 );
-    x = vec3f_dot( _lhs, &tmp );
+    x = ex_vec3f_dot( _lhs, &tmp );
     ex_mat33f_col( &tmp, _rhs, 1 );
-    y = vec3f_dot( _lhs, &tmp );
+    y = ex_vec3f_dot( _lhs, &tmp );
     ex_mat33f_col( &tmp, _rhs, 2 );
-    z = vec3f_dot( _lhs, &tmp );
+    z = ex_vec3f_dot( _lhs, &tmp );
 
-    vec3f_set( _r, x, y, z );
+    ex_vec3f_set( _r, x, y, z );
 }
 
 // ------------------------------------------------------------------ 

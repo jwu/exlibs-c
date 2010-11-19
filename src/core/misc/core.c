@@ -22,7 +22,7 @@ static bool _initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool core_init ()
+bool ex_core_init ()
 {
     // if the core already inited, don't init it second times.
     if ( _initialized ) {
@@ -38,7 +38,7 @@ bool core_init ()
     }
 
     ex_log ("init string ID table");
-    if ( str_id_init(65536) == false ) {
+    if ( ex_str_id_init(65536) == false ) {
         ex_log ("failed to init string ID table");
         return false;
     }
@@ -56,11 +56,11 @@ bool core_init ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void core_deinit ()
+void ex_core_deinit ()
 {
     if ( _initialized ) {
         ex_log ("deinit string ID table");
-        str_id_deinit();
+        ex_str_id_deinit();
 
         ex_log ("deinit memory");
         mem_deinit();

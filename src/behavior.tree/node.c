@@ -23,7 +23,7 @@
 
 void bt_node_add ( bt_node_t* _self, bt_node_t* _node )
 {
-    array_push_back( _self->children, &_node );
+    ex_array_push_back( _self->children, &_node );
 }
 
 // ------------------------------------------------------------------ 
@@ -33,7 +33,7 @@ void bt_node_add ( bt_node_t* _self, bt_node_t* _node )
 static bt_node_t* _bt_node_alloc ()
 {
     bt_node_t* node = ex_malloc( sizeof(bt_node_t) );
-    node->children = array_alloc ( sizeof(bt_node_t*), 8 );
+    node->children = ex_array_alloc ( sizeof(bt_node_t*), 8 );
     node->user_data = NULL;
     node->exec = NULL;
     node->free = NULL;
@@ -53,13 +53,13 @@ void bt_node_free ( bt_node_t* _node )
     // the array could be NULL;
     if ( _node->children ) {
         // free children nodes
-        array_each ( bt_node_t*, child, _node->children ) {
+        ex_array_each ( bt_node_t*, child, _node->children ) {
             bt_node_free ( child );
-        } array_each_end
+        } ex_array_each_end
 
         // free array
         if ( _node->children ) {
-            array_free (_node->children);
+            ex_array_free (_node->children);
         }
     }
 

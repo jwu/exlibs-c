@@ -21,19 +21,19 @@
 // ------------------------------------------------------------------ 
 
 static void normal () {
-    list_t* list = list_alloc ( sizeof(uint32) );
+    ex_list_t* list = ex_list_alloc ( sizeof(uint32) );
     {
         int i; 
-        list_node_t* node = NULL;
+        ex_list_node_t* node = NULL;
 
         // test push
         for ( i = 0; i < 512; ++i ) {
-            list_push_back ( list, &i );
+            ex_list_push_back ( list, &i );
         }
-        EX_TEST( list_len(list) == 512 );
+        EX_TEST( ex_list_len(list) == 512 );
 
         // check value
-        node = list_head(list);
+        node = ex_list_head(list);
         i = 0;
         while ( node ) {
             EX_TEST( *((uint32*)node->value) == i );
@@ -42,13 +42,13 @@ static void normal () {
         }
 
         // test erase
-        node = list_head(list);
+        node = ex_list_head(list);
         while ( node ) {
-            node = list_erase ( list, node );
+            node = ex_list_erase ( list, node );
         }
-        EX_TEST( list_len(list) == 0 );
+        EX_TEST( ex_list_len(list) == 0 );
     }
-    list_free (list);
+    ex_list_free (list);
 }
 
 // ------------------------------------------------------------------ 

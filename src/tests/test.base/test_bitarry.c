@@ -24,25 +24,25 @@ static void normal ()
 {
     int result = -1;
 
-    bitarray_t* bitArray = bitarray_alloc ( 20 );
+    ex_bitarray_t* bitArray = ex_bitarray_alloc ( 20 );
     {
-        bitarray_set ( bitArray, 0, 1 );
-        bitarray_set ( bitArray, 10, 1 );
+        ex_bitarray_set ( bitArray, 0, 1 );
+        ex_bitarray_set ( bitArray, 10, 1 );
 
-        result = bitarray_get( bitArray, 0 ); 
+        result = ex_bitarray_get( bitArray, 0 ); 
         EX_TEST ( result == 1 );
 
-        result = bitarray_get( bitArray, 1 ); 
+        result = ex_bitarray_get( bitArray, 1 ); 
         EX_TEST ( result == 0 );
 
-        result = bitarray_get( bitArray, 10 ); 
+        result = ex_bitarray_get( bitArray, 10 ); 
         EX_TEST ( result == 1 );
 
-        bitarray_set ( bitArray, 10, 0 );
-        result = bitarray_get( bitArray, 10 ); 
+        ex_bitarray_set ( bitArray, 10, 0 );
+        result = ex_bitarray_get( bitArray, 10 ); 
         EX_TEST ( result == 0 );
     }
-    bitarray_free ( bitArray );
+    ex_bitarray_free ( bitArray );
 }
 
 // ------------------------------------------------------------------ 
@@ -51,18 +51,18 @@ static void normal ()
 
 static void invalid ()
 {
-    bitarray_t* bitArray = bitarray_alloc ( 20 );
+    ex_bitarray_t* bitArray = ex_bitarray_alloc ( 20 );
     {
         // set out of range
-        bitarray_set ( bitArray, 30, 1 );
+        ex_bitarray_set ( bitArray, 30, 1 );
 
         // get out of range
-        bitarray_set ( bitArray, 50, 1 );
+        ex_bitarray_set ( bitArray, 50, 1 );
 
         // set not 0 or 1.
-        bitarray_set ( bitArray, 0, 3 );
+        ex_bitarray_set ( bitArray, 0, 3 );
     }
-    bitarray_free ( bitArray );
+    ex_bitarray_free ( bitArray );
 }
 
 // ------------------------------------------------------------------ 

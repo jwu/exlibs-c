@@ -19,7 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-struct mutex_t { 
+struct ex_mutex_t { 
     HANDLE id;
 };
 
@@ -27,12 +27,12 @@ struct mutex_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-mutex_t* mutex_create ()
+ex_mutex_t* ex_mutex_create ()
 {
-	mutex_t* mutex;
+	ex_mutex_t* mutex;
 
 	// allocate mutex memory
-	mutex = (mutex_t*)ex_malloc_nomng(sizeof(mutex_t*));
+	mutex = (ex_mutex_t*)ex_malloc_nomng(sizeof(ex_mutex_t*));
 	if ( mutex ) {
 		// Create the mutex, with initial value signaled
 		mutex->id = CreateMutex(NULL, FALSE, NULL);
@@ -49,7 +49,7 @@ mutex_t* mutex_create ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void mutex_destroy ( mutex_t* _mutex )
+void ex_mutex_destroy ( ex_mutex_t* _mutex )
 {
 	if ( _mutex ) {
 		if ( _mutex->id ) {
@@ -64,7 +64,7 @@ void mutex_destroy ( mutex_t* _mutex )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int mutex_lock ( mutex_t* _mutex )
+int ex_mutex_lock ( ex_mutex_t* _mutex )
 {
 	if ( _mutex == NULL ) {
 		ex_error("Passed a NULL mutex");
@@ -81,7 +81,7 @@ int mutex_lock ( mutex_t* _mutex )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int mutex_unlock ( mutex_t* _mutex )
+int ex_mutex_unlock ( ex_mutex_t* _mutex )
 {
 	if ( _mutex == NULL ) {
 		ex_error("Passed a NULL mutex");

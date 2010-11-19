@@ -17,11 +17,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // managed
-inline list_node_t* _alloc_node ( list_t* _list, void* _value ) {
+inline ex_list_node_t* _alloc_node ( ex_list_t* _list, void* _value ) {
     // allocate the node ( node_size + value_size ), and assign the value ptr to address point 
     // to the extract space allocate in the node. 
-    list_node_t* node = (list_node_t*)ex_malloc ( _list->_element_bytes + sizeof(list_node_t) ); 
-    node->value = (char*)node + sizeof(list_node_t); 
+    ex_list_node_t* node = (ex_list_node_t*)ex_malloc ( _list->_element_bytes + sizeof(ex_list_node_t) ); 
+    node->value = (char*)node + sizeof(ex_list_node_t); 
     memcpy ( node->value, _value, _list->_element_bytes );
     node->next = NULL;
     node->prev = NULL;
@@ -29,11 +29,11 @@ inline list_node_t* _alloc_node ( list_t* _list, void* _value ) {
 }
 
 // no managed
-inline list_node_t* _alloc_node_nomng ( list_t* _list, void* _value ) {
+inline ex_list_node_t* _alloc_node_nomng ( ex_list_t* _list, void* _value ) {
     // allocate the node ( node_size + value_size ), and assign the value ptr to address point 
     // to the extract space allocate in the node. 
-    list_node_t* node = (list_node_t*)ex_malloc_nomng ( _list->_element_bytes + sizeof(list_node_t) ); 
-    node->value = (char*)node + sizeof(list_node_t); 
+    ex_list_node_t* node = (ex_list_node_t*)ex_malloc_nomng ( _list->_element_bytes + sizeof(ex_list_node_t) ); 
+    node->value = (char*)node + sizeof(ex_list_node_t); 
     memcpy ( node->value, _value, _list->_element_bytes );
     node->next = NULL;
     node->prev = NULL;
@@ -49,9 +49,9 @@ inline list_node_t* _alloc_node_nomng ( list_t* _list, void* _value ) {
 // ------------------------------------------------------------------ 
 
 // managed
-list_t* list_alloc ( size_t _element_bytes )
+ex_list_t* ex_list_alloc ( size_t _element_bytes )
 {
-    list_t* list = ex_malloc( sizeof(list_t) ); 
+    ex_list_t* list = ex_malloc( sizeof(ex_list_t) ); 
 
     // init public members
     list->_length = 0;
@@ -63,9 +63,9 @@ list_t* list_alloc ( size_t _element_bytes )
 }
 
 // no managed
-list_t* list_alloc_nomng ( size_t _element_bytes )
+ex_list_t* ex_list_alloc_nomng ( size_t _element_bytes )
 {
-    list_t* list = ex_malloc_nomng( sizeof(list_t) ); 
+    ex_list_t* list = ex_malloc_nomng( sizeof(ex_list_t) ); 
 
     // init public members
     list->_length = 0;
@@ -81,9 +81,9 @@ list_t* list_alloc_nomng ( size_t _element_bytes )
 // ------------------------------------------------------------------ 
 
 // managed
-void list_free ( list_t* _list )
+void ex_list_free ( ex_list_t* _list )
 {
-    list_node_t* node;
+    ex_list_node_t* node;
     ex_assert_return( _list != NULL, /*void*/, "NULL input" );
 
     node = _list->_head;
@@ -100,9 +100,9 @@ void list_free ( list_t* _list )
 }
 
 // no managed
-void list_free_nomng ( list_t* _list )
+void ex_list_free_nomng ( ex_list_t* _list )
 {
-    list_node_t* node; 
+    ex_list_node_t* node; 
     ex_assert_return( _list != NULL, /*void*/, "NULL input" );
 
     node = _list->_head;
@@ -123,9 +123,9 @@ void list_free_nomng ( list_t* _list )
 // ------------------------------------------------------------------ 
 
 // managed
-void list_push_back ( list_t* _list, void* _value )
+void ex_list_push_back ( ex_list_t* _list, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     // allocate the node
     node = _alloc_node ( _list, _value );
@@ -146,9 +146,9 @@ void list_push_back ( list_t* _list, void* _value )
 }
 
 // no managed
-void list_push_back_nomng ( list_t* _list, void* _value )
+void ex_list_push_back_nomng ( ex_list_t* _list, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     // allocate the node
     node = _alloc_node_nomng ( _list, _value );
@@ -173,9 +173,9 @@ void list_push_back_nomng ( list_t* _list, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void list_push_front ( list_t* _list, void* _value )
+void ex_list_push_front ( ex_list_t* _list, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     // allocate the node
     node = _alloc_node ( _list, _value );
@@ -196,9 +196,9 @@ void list_push_front ( list_t* _list, void* _value )
 }
 
 // no managed
-void list_push_front_nomng ( list_t* _list, void* _value )
+void ex_list_push_front_nomng ( ex_list_t* _list, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     // allocate the node
     node = _alloc_node_nomng ( _list, _value );
@@ -223,9 +223,9 @@ void list_push_front_nomng ( list_t* _list, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void list_insert_back ( list_t* _list, list_node_t* _at, void* _value )
+void ex_list_insert_back ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     ex_assert_return ( _at != NULL, /*void*/, "the insert position can't be NULL!" );
     // CHECK: this may not be true, I think { 
@@ -250,9 +250,9 @@ void list_insert_back ( list_t* _list, list_node_t* _at, void* _value )
 }
 
 // no managed
-void list_insert_back_nomng ( list_t* _list, list_node_t* _at, void* _value )
+void ex_list_insert_back_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     ex_assert_return ( _at != NULL, /*void*/, "the insert position can't be NULL!" );
     // CHECK: this may not be true, I think { 
@@ -281,9 +281,9 @@ void list_insert_back_nomng ( list_t* _list, list_node_t* _at, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void list_insert_front ( list_t* _list, list_node_t* _at, void* _value )
+void ex_list_insert_front ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     ex_assert_return ( _at != NULL, /*void*/, "the insert position can't be NULL!" );
     // CHECK: this may not be true, I think { 
@@ -308,9 +308,9 @@ void list_insert_front ( list_t* _list, list_node_t* _at, void* _value )
 }
 
 // no managed
-void list_insert_front_nomng ( list_t* _list, list_node_t* _at, void* _value )
+void ex_list_insert_front_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
 {
-    list_node_t* node = NULL;
+    ex_list_node_t* node = NULL;
 
     ex_assert_return ( _at != NULL, /*void*/, "the insert position can't be NULL!" );
     // CHECK: this may not be true, I think { 
@@ -339,9 +339,9 @@ void list_insert_front_nomng ( list_t* _list, list_node_t* _at, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-list_node_t* list_erase ( list_t* _list, list_node_t* _at )
+ex_list_node_t* ex_list_erase ( ex_list_t* _list, ex_list_node_t* _at )
 {
-    list_node_t* next_node;
+    ex_list_node_t* next_node;
 
     ex_assert_return ( _at != NULL, NULL, "the insert position can't be NULL!" );
     // CHECK: this may not be true, I think { 
@@ -375,9 +375,9 @@ list_node_t* list_erase ( list_t* _list, list_node_t* _at )
 }
 
 // no managed
-list_node_t* list_erase_nomng ( list_t* _list, list_node_t* _at )
+ex_list_node_t* ex_list_erase_nomng ( ex_list_t* _list, ex_list_node_t* _at )
 {
-    list_node_t* next_node;
+    ex_list_node_t* next_node;
 
     ex_assert_return ( _at != NULL, NULL, "the insert position can't be NULL!" );
     // CHECK: this may not be true, I think { 

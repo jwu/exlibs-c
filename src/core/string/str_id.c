@@ -17,7 +17,7 @@
 // private variables
 ///////////////////////////////////////////////////////////////////////////////
 
-static hashmap_t* _string_set = NULL;
+static ex_hashmap_t* _string_set = NULL;
 static bool _initialized = false;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ static bool _initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool str_id_init ( size_t _size )
+bool ex_str_id_init ( size_t _size )
 {
     // if the core already initialized, don't init it second times.
     if ( _initialized ) {
@@ -36,7 +36,7 @@ bool str_id_init ( size_t _size )
         return true;
     }
 
-    _string_set = hashmap_alloc ( sizeof(char**), sizeof(char**), _size, hashkey_string, keycmp_string );
+    _string_set = ex_hashmap_alloc ( sizeof(char**), sizeof(char**), _size, ex_hashkey_string, ex_keycmp_string );
     ex_assert_return ( _string_set, false, "string table alloc failed" );
 
     _initialized = true;
@@ -47,14 +47,14 @@ bool str_id_init ( size_t _size )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void str_id_deinit ()
+void ex_str_id_deinit ()
 {
     if ( _initialized ) {
         // free all allocated string
-        hashmap_each ( char*, str, _string_set ) {
+        ex_hashmap_each ( char*, str, _string_set ) {
             ex_free(str);
-        } hashmap_each_end;
-        hashmap_free(_string_set);
+        } ex_hashmap_each_end;
+        ex_hashmap_free(_string_set);
         _initialized = false;
     }
 }
@@ -63,7 +63,7 @@ void str_id_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t wcs_id ( wchar_t* _string )
+size_t ex_wcs_id ( wchar_t* _string )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
@@ -75,12 +75,12 @@ size_t wcs_id ( wchar_t* _string )
         return -1;
 
     str_utf8 = ex_stack_malloc( str_size );
-    ucs2_to_utf8 ( _string, str_size, str_utf8 );
-    hash_idx = hashmap_get_hashidx ( _string_set, &str_utf8, &idx ); 
+    ex_ucs2_to_utf8 ( _string, str_size, str_utf8 );
+    hash_idx = ex_hashmap_get_hashidx ( _string_set, &str_utf8, &idx ); 
     if ( idx == -1 ) {
         str_new = ex_malloc(str_size);
         strncpy( str_new, str_utf8, str_size );
-        hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
+        ex_hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
     }
     ex_stack_free(str_utf8);
     return idx;
@@ -90,7 +90,7 @@ size_t wcs_id ( wchar_t* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t str_id ( char* _string )
+size_t ex_str_id ( char* _string )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
@@ -99,12 +99,12 @@ size_t str_id ( char* _string )
     if ( _string == NULL )
         return -1;
 
-    hash_idx = hashmap_get_hashidx ( _string_set, &_string, &idx ); 
+    hash_idx = ex_hashmap_get_hashidx ( _string_set, &_string, &idx ); 
     if ( idx == -1 ) {
         size_t len = strlen(_string);
         str_new = ex_malloc(len+1);
         strncpy( str_new, _string, len+1 );
-        hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
+        ex_hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
     }
     return idx;
 }

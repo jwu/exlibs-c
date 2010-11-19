@@ -20,11 +20,11 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline uint32 current_threadID () {
+inline uint32 ex_current_threadID () {
 #if ( EX_PLATFORM == EX_WIN32 )
     return (uint32)GetCurrentThreadId();
 #else
-    ex_assert ( false, "pls implement current_threadID in other platform." );
+    ex_assert ( false, "pls implement ex_current_threadID in other platform." );
     return -1;
 #endif
 }

@@ -20,16 +20,16 @@ extern "C" {
 // 
 ///////////////////////////////////////////////////////////////////////////////
 
-#define MSG_BOX_NONE    00
-#define MSG_BOX_FAILED  01
-#define MSG_BOX_ERROR   02
-#define MSG_BOX_WARNING 03
+#define EX_MSG_BOX_NONE    0
+#define EX_MSG_BOX_FAILED  1
+#define EX_MSG_BOX_ERROR   2
+#define EX_MSG_BOX_WARNING 3
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int message_box ( int _msgType, const char* _caption, const char* _expr,  ... );
+int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ... );
 
 // ######################### 
 #ifdef __cplusplus

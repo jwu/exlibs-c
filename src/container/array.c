@@ -21,11 +21,11 @@
 // ------------------------------------------------------------------ 
 
 // managed
-array_t* array_alloc ( size_t _element_bytes, size_t _count )
+ex_array_t* ex_array_alloc ( size_t _element_bytes, size_t _count )
 {
     size_t bytes = _element_bytes * _count; 
 
-    array_t* array = ex_malloc ( sizeof(array_t) );
+    ex_array_t* array = ex_malloc ( sizeof(ex_array_t) );
 
     // init members
     array->_element_bytes = _element_bytes;
@@ -34,18 +34,18 @@ array_t* array_alloc ( size_t _element_bytes, size_t _count )
 
     // init data
     array->_data = ex_malloc( bytes );
-    memzero ( array->_data, bytes );
+    ex_memzero ( array->_data, bytes );
 
     //
     return array;
 }
 
 // no managed
-array_t* array_alloc_nomng ( size_t _element_bytes, size_t _count )
+ex_array_t* ex_array_alloc_nomng ( size_t _element_bytes, size_t _count )
 {
     size_t bytes = _element_bytes * _count; 
 
-    array_t* array = ex_malloc_nomng ( sizeof(array_t) );
+    ex_array_t* array = ex_malloc_nomng ( sizeof(ex_array_t) );
 
     // init members
     array->_element_bytes = _element_bytes;
@@ -54,7 +54,7 @@ array_t* array_alloc_nomng ( size_t _element_bytes, size_t _count )
 
     // init data
     array->_data = ex_malloc_nomng( bytes );
-    memzero ( array->_data, bytes );
+    ex_memzero ( array->_data, bytes );
 
     //
     return array;
@@ -65,7 +65,7 @@ array_t* array_alloc_nomng ( size_t _element_bytes, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-void array_free ( array_t* _array )
+void ex_array_free ( ex_array_t* _array )
 {
     ex_assert_return( _array != NULL, /*void*/, "NULL input" );
 
@@ -74,7 +74,7 @@ void array_free ( array_t* _array )
 }
 
 // no managed
-void array_free_nomng ( array_t* _array )
+void ex_array_free_nomng ( ex_array_t* _array )
 {
     ex_assert_return( _array != NULL, /*void*/, "NULL input" );
 
@@ -86,7 +86,7 @@ void array_free_nomng ( array_t* _array )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* array_get ( array_t* _array, size_t _idx )
+void* ex_array_get ( ex_array_t* _array, size_t _idx )
 {
     ex_assert_return( _idx >= 0 && _idx < (int)_array->_length, NULL, "error: _idx out of range" );
     return (char*)(_array->_data) + _idx * _array->_element_bytes;
@@ -97,7 +97,7 @@ void* array_get ( array_t* _array, size_t _idx )
 // ------------------------------------------------------------------ 
 
 // managed
-void* array_push_back ( array_t* _array, void* _value )
+void* ex_array_push_back ( ex_array_t* _array, void* _value )
 {
     void* val_addr;
 
@@ -118,7 +118,7 @@ void* array_push_back ( array_t* _array, void* _value )
 }
 
 // no managed
-void* array_push_back_nomng ( array_t* _array, void* _value )
+void* ex_array_push_back_nomng ( ex_array_t* _array, void* _value )
 {
     void* val_addr;
 

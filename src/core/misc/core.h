@@ -20,8 +20,8 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool core_init ();
-void core_deinit ();
+bool ex_core_init ();
+void ex_core_deinit ();
 
 // ######################### 
 #ifdef __cplusplus

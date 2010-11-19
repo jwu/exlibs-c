@@ -6,8 +6,8 @@
 // ======================================================================================
 
 // #################################################################################
-#ifndef ex_mat33f_H_1289531940
-#define ex_mat33f_H_1289531940
+#ifndef MAT33F_H_1289531940
+#define MAT33F_H_1289531940
 // #################################################################################
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -158,13 +158,13 @@ inline float ex_mat33f_get ( ex_mat33f_t* _m, uint _row, uint _col ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_mat33f_row ( vec3f_t* _r, ex_mat33f_t* _m, uint _row )
+ @fn inline void ex_mat33f_row ( ex_vec3f_t* _r, ex_mat33f_t* _m, uint _row )
  @retval _r the result vector
  @param _m the matrix
  @param _row the row index, range in [0,3)
  @details get the matrix by _row and return it in vector3, for example: 
  @code
- vec3f_t r;
+ ex_vec3f_t r;
  ex_mat33f_t m;
  ex_mat33f_zero(&m);
  ex_mat33f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01, m.m02)
@@ -172,7 +172,7 @@ inline float ex_mat33f_get ( ex_mat33f_t* _m, uint _row, uint _col ) {
  the r is equal to vector3 (m.m00, m.m01, m.m02) 
 */// ------------------------------------------------------------------ 
 
-inline void ex_mat33f_row ( vec3f_t* _r, ex_mat33f_t* _m, uint _row ) {
+inline void ex_mat33f_row ( ex_vec3f_t* _r, ex_mat33f_t* _m, uint _row ) {
     ex_assert( _row >= 0 && _row < 3, "out of range" );
     _r->x = _m->m[3*_row+0]; 
     _r->y = _m->m[3*_row+1]; 
@@ -181,13 +181,13 @@ inline void ex_mat33f_row ( vec3f_t* _r, ex_mat33f_t* _m, uint _row ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_mat33f_col ( vec3f_t* _r, ex_mat33f_t* _m, uint _col )
+ @fn inline void ex_mat33f_col ( ex_vec3f_t* _r, ex_mat33f_t* _m, uint _col )
  @retval _r the result vector
  @param _m the matrix
  @param _col the column index, range in [0,3)
  @details get the matrix by _row and return it in vector3, for example: 
  @code
- vec3f_t r;
+ ex_vec3f_t r;
  ex_mat33f_t m;
  ex_mat33f_zero(&m);
  ex_mat33f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10, m.m20)
@@ -195,7 +195,7 @@ inline void ex_mat33f_row ( vec3f_t* _r, ex_mat33f_t* _m, uint _row ) {
  the r is equal to vector3 (m.m00, m.m10, m.m20) 
 */// ------------------------------------------------------------------ 
 
-inline void ex_mat33f_col ( vec3f_t* _r, ex_mat33f_t* _m, uint _col ) {
+inline void ex_mat33f_col ( ex_vec3f_t* _r, ex_mat33f_t* _m, uint _col ) {
     ex_assert( _col >= 0 && _col < 3, "out of range" );
     _r->x = _m->m[3*0+_col]; 
     _r->y = _m->m[3*1+_col]; 
@@ -473,7 +473,7 @@ inline void ex_mat33f_mul_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, float _rh
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs )
+ @fn void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix 
  @param _rhs right hand side vector 
@@ -497,11 +497,11 @@ inline void ex_mat33f_mul_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, float _rh
  @sa ex_vec3f_mul_mat33f
 */// ------------------------------------------------------------------ 
 
-void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs );
+void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, ex_mat33f_t* _rhs )
+ @fn void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_mat33f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side vector
  @param _rhs right hand side matrix  
@@ -523,7 +523,7 @@ void ex_mat33f_mul_vec3f ( vec3f_t* _r, ex_mat33f_t* _lhs, vec3f_t* _rhs );
  @sa ex_mat33f_mul_vec3f
 */// ------------------------------------------------------------------ 
 
-void ex_vec3f_mul_mat33f ( vec3f_t* _r, vec3f_t* _lhs, ex_mat33f_t* _rhs );
+void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_mat33f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -697,5 +697,5 @@ bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m );
 // ######################### 
 
 // #################################################################################
-#endif // END ex_mat33f_H_1289531940
+#endif // END MAT33F_H_1289531940
 // #################################################################################

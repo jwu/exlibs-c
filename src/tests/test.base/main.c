@@ -39,7 +39,7 @@ int main( int argc, char* argv[] )
     printf ("================\n");
 
     // init
-    if ( core_init() ) {
+    if ( ex_core_init() ) {
         // general
         // test_array ();
         // test_bitarry ();
@@ -56,7 +56,7 @@ int main( int argc, char* argv[] )
     }
 
     // deinit
-    core_deinit();
+    ex_core_deinit();
 
 
     return 0;

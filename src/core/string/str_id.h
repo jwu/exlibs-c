@@ -24,15 +24,15 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool str_id_init ( size_t _size );
-void str_id_deinit ();
+bool ex_str_id_init ( size_t _size );
+void ex_str_id_deinit ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t wcs_id ( wchar_t* _string );
-size_t str_id ( char* _string );
+size_t ex_wcs_id ( wchar_t* _string );
+size_t ex_str_id ( char* _string );
 
 // ------------------------------------------------------------------ 
 // Desc: 

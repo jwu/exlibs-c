@@ -22,40 +22,40 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mat44f_mul_vec4f ( vec4f_t* _r, ex_mat44f_t* _lhs, vec4f_t* _rhs ) {
+void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs ) {
     float x, y, z, w;
-    vec4f_t tmp;
+    ex_vec4f_t tmp;
 
     ex_mat44f_row( &tmp, _lhs, 0 );
-    x = vec4f_dot( _rhs, &tmp );
+    x = ex_vec4f_dot( _rhs, &tmp );
     ex_mat44f_row( &tmp, _lhs, 1 );
-    y = vec4f_dot( _rhs, &tmp );
+    y = ex_vec4f_dot( _rhs, &tmp );
     ex_mat44f_row( &tmp, _lhs, 2 );
-    z = vec4f_dot( _rhs, &tmp );
+    z = ex_vec4f_dot( _rhs, &tmp );
     ex_mat44f_row( &tmp, _lhs, 3 );
-    w = vec4f_dot( _rhs, &tmp );
+    w = ex_vec4f_dot( _rhs, &tmp );
 
-    vec4f_set( _r, x, y, z, w );
+    ex_vec4f_set( _r, x, y, z, w );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_vec4f_mul_mat44f ( vec4f_t* _r, vec4f_t* _lhs, ex_mat44f_t* _rhs ) {
+void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_mat44f_t* _rhs ) {
     float x, y, z, w;
-    vec4f_t tmp;
+    ex_vec4f_t tmp;
 
     ex_mat44f_col( &tmp, _rhs, 0 );
-    x = vec4f_dot( _lhs, &tmp );
+    x = ex_vec4f_dot( _lhs, &tmp );
     ex_mat44f_col( &tmp, _rhs, 1 );
-    y = vec4f_dot( _lhs, &tmp );
+    y = ex_vec4f_dot( _lhs, &tmp );
     ex_mat44f_col( &tmp, _rhs, 2 );
-    z = vec4f_dot( _lhs, &tmp );
+    z = ex_vec4f_dot( _lhs, &tmp );
     ex_mat44f_col( &tmp, _rhs, 2 );
-    w = vec4f_dot( _lhs, &tmp );
+    w = ex_vec4f_dot( _lhs, &tmp );
 
-    vec4f_set( _r, x, y, z, w );
+    ex_vec4f_set( _r, x, y, z, w );
 }
 
 // ------------------------------------------------------------------ 

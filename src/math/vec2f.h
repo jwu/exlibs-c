@@ -16,7 +16,7 @@ extern "C" {
 #endif
 // ######################### 
 
-//! @defgroup vec2f_t vector2 float
+//! @defgroup ex_vec2f_t vector2 float
 //! @ingroup Math
 //! @{
 
@@ -26,7 +26,7 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct vec2f_t
+ @struct ex_vec2f_t
  @details
  
  The data of vector2 is construct by an union structure with float elements.\n
@@ -47,16 +47,16 @@ extern "C" {
  \f$
 */// ------------------------------------------------------------------ 
 
-typedef struct vec2f_t {
+typedef struct ex_vec2f_t {
     union {
         struct { float x, y; }; // end struct
         float v[2];
     };
-} vec2f_t;
+} ex_vec2f_t;
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_zero ( vec2f_t* _r )
+ @fn inline void ex_vec2f_zero ( ex_vec2f_t* _r )
  @retval _r the result vector2
  @details make a zero vector2:
 
@@ -67,11 +67,11 @@ typedef struct vec2f_t {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_zero ( vec2f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; }
+inline void ex_vec2f_zero ( ex_vec2f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_one ( vec2f_t* _r )
+ @fn inline void ex_vec2f_one ( ex_vec2f_t* _r )
  @retval _r the result vector2
  @details make an one vector2:
 
@@ -82,11 +82,11 @@ inline void vec2f_zero ( vec2f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; }
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_one ( vec2f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; }
+inline void ex_vec2f_one ( ex_vec2f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_set ( vec2f_t* _r, float _x, float _y )
+ @fn inline void ex_vec2f_set ( ex_vec2f_t* _r, float _x, float _y )
  @retval _r the result vector2
  @param x
  @param y
@@ -99,25 +99,25 @@ inline void vec2f_one ( vec2f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; }
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_set ( vec2f_t* _r, float _x, float _y ) { _r->x = _x, _r->y = _y; }
+inline void ex_vec2f_set ( ex_vec2f_t* _r, float _x, float _y ) { _r->x = _x, _r->y = _y; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool vec2f_is_equal ( vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline bool ex_vec2f_is_equal ( ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @param _lhs the left hand side vector2
  @param _rhs the right hand side vector2
  @return the result of the comparation
  @details compare if the two vector2 is equal to each other
 */// ------------------------------------------------------------------ 
 
-inline bool vec2f_is_equal ( vec2f_t* _lhs, vec2f_t* _rhs ) { 
+inline bool ex_vec2f_is_equal ( ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) { 
     return ex_is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
         && ex_is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_neg ( vec2f_t* _v )
+ @fn inline void ex_vec2f_neg ( ex_vec2f_t* _v )
  @retval _v the result vector2
  @param _v the in vector2
  @details get the negtive value from vector2 _v, override and return it as the result:
@@ -130,24 +130,24 @@ inline bool vec2f_is_equal ( vec2f_t* _lhs, vec2f_t* _rhs ) {
    -x & -y
    \end{array} \right]
  \f]
- @sa vec2f_get_neg
+ @sa ex_vec2f_get_neg
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_neg ( vec2f_t* _v ) { 
+inline void ex_vec2f_neg ( ex_vec2f_t* _v ) { 
     _v->x = -_v->x; 
     _v->y = -_v->y; 
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_get_neg ( vec2f_t* _r, vec2f_t* _v )
+ @fn inline void ex_vec2f_get_neg ( ex_vec2f_t* _r, ex_vec2f_t* _v )
  @retval _r the result vector2
  @param _v the in vector2
  @details get the negtive value from vector2 _v, set and return it to vector2 _v
- @sa vec2f_neg
+ @sa ex_vec2f_neg
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_get_neg ( vec2f_t* _r, vec2f_t* _v ) { 
+inline void ex_vec2f_get_neg ( ex_vec2f_t* _r, ex_vec2f_t* _v ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
     _r->y = -_v->y; 
@@ -155,7 +155,7 @@ inline void vec2f_get_neg ( vec2f_t* _r, vec2f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_add ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline void ex_vec2f_add ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side vector2
@@ -176,14 +176,14 @@ inline void vec2f_get_neg ( vec2f_t* _r, vec2f_t* _v ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_add ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) { 
+inline void ex_vec2f_add ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) { 
     _r->x = _lhs->x + _rhs->x;
     _r->y = _lhs->y + _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_add_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs )
+ @fn inline void ex_vec2f_add_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side float
@@ -201,14 +201,14 @@ inline void vec2f_add ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_add_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) { 
+inline void ex_vec2f_add_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x + _rhs;
     _r->y = _lhs->y + _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_sub ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline void ex_vec2f_sub ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side vector2
@@ -229,14 +229,14 @@ inline void vec2f_add_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_sub ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) { 
+inline void ex_vec2f_sub ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) { 
     _r->x = _lhs->x - _rhs->x;
     _r->y = _lhs->y - _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_sub_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs )
+ @fn inline void ex_vec2f_sub_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side float
@@ -254,14 +254,14 @@ inline void vec2f_sub ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_sub_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) { 
+inline void ex_vec2f_sub_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x - _rhs;
     _r->y = _lhs->y - _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void scalar_sub_vec2f ( vec2f_t* _r, float _lhs, vec2f_t* _rhs )
+ @fn inline void ex_scalar_sub_vec2f ( ex_vec2f_t* _r, float _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side float
  @param _rhs the right hand side vector2
@@ -280,14 +280,14 @@ inline void vec2f_sub_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void scalar_sub_vec2f ( vec2f_t* _r, float _lhs, vec2f_t* _rhs ) { 
+inline void ex_scalar_sub_vec2f ( ex_vec2f_t* _r, float _lhs, ex_vec2f_t* _rhs ) { 
     _r->x = _lhs - _rhs->x;
     _r->y = _lhs - _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_mul ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline void ex_vec2f_mul ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side vector2
@@ -308,14 +308,14 @@ inline void scalar_sub_vec2f ( vec2f_t* _r, float _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_mul ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) { 
+inline void ex_vec2f_mul ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) { 
     _r->x = _lhs->x * _rhs->x;
     _r->y = _lhs->y * _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_mul_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs )
+ @fn inline void ex_vec2f_mul_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side float
@@ -333,14 +333,14 @@ inline void vec2f_mul ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_mul_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) { 
+inline void ex_vec2f_mul_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x * _rhs;
     _r->y = _lhs->y * _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_div ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline void ex_vec2f_div ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side vector2
@@ -361,14 +361,14 @@ inline void vec2f_mul_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_div ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) { 
+inline void ex_vec2f_div ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) { 
     _r->x = _lhs->x / _rhs->x;
     _r->y = _lhs->y / _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void vec2f_div_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs )
+ @fn inline void ex_vec2f_div_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side vector2
  @param _rhs the right hand side float
@@ -386,14 +386,14 @@ inline void vec2f_div ( vec2f_t* _r, vec2f_t* _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void vec2f_div_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) { 
+inline void ex_vec2f_div_scalar ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
     _r->y = _lhs->y / _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void scalar_div_vec2f ( vec2f_t* _r, float _lhs, vec2f_t* _rhs )
+ @fn inline void ex_scalar_div_vec2f ( ex_vec2f_t* _r, float _lhs, ex_vec2f_t* _rhs )
  @retval _r the result vector2
  @param _lhs the left hand side float
  @param _rhs the right hand side vector2
@@ -412,14 +412,14 @@ inline void vec2f_div_scalar ( vec2f_t* _r, vec2f_t* _lhs, float _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void scalar_div_vec2f ( vec2f_t* _r, float _lhs, vec2f_t* _rhs ) { 
+inline void ex_scalar_div_vec2f ( ex_vec2f_t* _r, float _lhs, ex_vec2f_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
     _r->y = _lhs / _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float vec2f_dot ( vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline float ex_vec2f_dot ( ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @param _lhs the left hand vector2
  @param _rhs the right hand vector2
  @return the dot product result
@@ -439,13 +439,13 @@ inline void scalar_div_vec2f ( vec2f_t* _r, float _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline float vec2f_dot ( vec2f_t* _lhs, vec2f_t* _rhs ) {
+inline float ex_vec2f_dot ( ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) {
     return _lhs->x * _rhs->x + _lhs->y * _rhs->y;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float vec2f_cross ( vec2f_t* _lhs, vec2f_t* _rhs )
+ @fn inline float ex_vec2f_cross ( ex_vec2f_t* _lhs, ex_vec2f_t* _rhs )
  @param _lhs the left hand vector2
  @param _rhs the right hand vector2
  @return the cross product result
@@ -465,66 +465,66 @@ inline float vec2f_dot ( vec2f_t* _lhs, vec2f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline float vec2f_cross ( vec2f_t* _lhs, vec2f_t* _rhs ) {
+inline float ex_vec2f_cross ( ex_vec2f_t* _lhs, ex_vec2f_t* _rhs ) {
     return _lhs->x * _rhs->y - _lhs->y * _rhs->x;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float vec2f_len( vec2f_t* _v )
+ @fn inline float ex_vec2f_len( ex_vec2f_t* _v )
  @param _v the in vector2
  @return the length of the in vector2
  @details return the length of vector2 _v
- @sa vec2f_lenSQR
+ @sa ex_vec2f_lenSQR
 */// ------------------------------------------------------------------ 
 
-inline float vec2f_len ( vec2f_t* _v ) {
-    return sqrtf ( vec2f_dot(_v,_v) );
+inline float ex_vec2f_len ( ex_vec2f_t* _v ) {
+    return sqrtf ( ex_vec2f_dot(_v,_v) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float vec2f_lenSQR( vec2f_t* _v )
+ @fn inline float ex_vec2f_lenSQR( ex_vec2f_t* _v )
  @param _v the in vector2
  @return the length square of the in vector2
  @details return the length square of vector2 _v
- @sa vec2f_len
+ @sa ex_vec2f_len
 */// ------------------------------------------------------------------ 
 
-inline float vec2f_lenSQR ( vec2f_t* _v ) {
-    return vec2f_dot(_v,_v);
+inline float ex_vec2f_lenSQR ( ex_vec2f_t* _v ) {
+    return ex_vec2f_dot(_v,_v);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool vec2f_is_normalized ( vec2f_t* _v )
+ @fn inline bool ex_vec2f_is_normalized ( ex_vec2f_t* _v )
  @param _v the in vector2
  @return if the inverse operation successed 
  - true: successful
  - false: failed
  @details check if the in vector2 is normalized 
- @sa vec2f_get_normalize
- @sa vec2f_normalize
+ @sa ex_vec2f_get_normalize
+ @sa ex_vec2f_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool vec2f_is_normalized ( vec2f_t* _v ) {
-    return ex_is_equal_float( vec2f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
+inline bool ex_vec2f_is_normalized ( ex_vec2f_t* _v ) {
+    return ex_is_equal_float( ex_vec2f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool vec2f_normalize ( vec2f_t* _v )
+ @fn inline bool ex_vec2f_normalize ( ex_vec2f_t* _v )
  @param _v the in vector2
  @return if the inverse operation successed 
  - true: successful
  - false: failed
  @details check if the in vector2 is normalized 
- @sa vec2f_is_normalized
- @sa vec2f_get_normalize
+ @sa ex_vec2f_is_normalized
+ @sa ex_vec2f_get_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool vec2f_normalize ( vec2f_t* _v ) {
-    float length_sqr = vec2f_lenSQR(_v);
+inline bool ex_vec2f_normalize ( ex_vec2f_t* _v ) {
+    float length_sqr = ex_vec2f_lenSQR(_v);
     float inv_length = 0.0f; 
 
     if ( ex_is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) )
@@ -534,27 +534,27 @@ inline bool vec2f_normalize ( vec2f_t* _v ) {
         return false;
 
     inv_length = ex_inv_sqrtf( length_sqr );
-    vec2f_mul_scalar ( _v, _v, inv_length );
+    ex_vec2f_mul_scalar ( _v, _v, inv_length );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool vec2f_get_normalize ( vec2f_t* _r, vec2f_t* _v )
+ @fn bool ex_vec2f_get_normalize ( ex_vec2f_t* _r, ex_vec2f_t* _v )
  @retval _r the result vector2
  @param _v the in vector2
  @return if the inverse operation successed 
  - true: successful
  - false: failed
  @details get the normalized vector2 from _r, set and return it to vector2 _v
- @sa vec2f_is_normalized
- @sa vec2f_normalize
+ @sa ex_vec2f_is_normalized
+ @sa ex_vec2f_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool vec2f_get_normalize ( vec2f_t* _r, vec2f_t* _v ) {
+inline bool ex_vec2f_get_normalize ( ex_vec2f_t* _r, ex_vec2f_t* _v ) {
     float length_sqr, inv_length;
 
     ex_assert ( _r != _v, "can't use self as return value." );
-    length_sqr = vec2f_lenSQR(_v);
+    length_sqr = ex_vec2f_lenSQR(_v);
     inv_length = 0.0f; 
 
     if ( ex_is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
@@ -566,7 +566,7 @@ inline bool vec2f_get_normalize ( vec2f_t* _r, vec2f_t* _v ) {
     }
 
     inv_length = ex_inv_sqrtf( length_sqr );
-    vec2f_mul_scalar ( _r, _v, inv_length );
+    ex_vec2f_mul_scalar ( _r, _v, inv_length );
 }
 
 //! @}
