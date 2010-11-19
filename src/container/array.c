@@ -89,7 +89,7 @@ void ex_array_free_nomng ( ex_array_t* _array )
 void* ex_array_get ( ex_array_t* _array, size_t _idx )
 {
     ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
-    ex_assert_return( _idx < (int)_array->_length, NULL, "error: _idx out of range" );
+    ex_assert_return( _idx < _array->_length, NULL, "error: _idx out of range" );
     return (char*)(_array->_data) + _idx * _array->_element_bytes;
 }
 
@@ -147,46 +147,59 @@ void* ex_array_append_nomng ( ex_array_t* _array, void* _value )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// managed
+void ex_array_remove_index ( ex_array_t* _array, size_t _idx )
+{
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+    ex_assert_return( _idx < _array->_length, /*dummy*/, "error: _idx out of range" );
+
+    // don't do any thing if we only have one element in the array.
+    if ( _idx != _array->_length-1 ) {
+        memmove ( ex_array_get( _array, _idx ),
+                  ex_array_get( _array, _idx+1 ), 
+                  _array->_element_bytes * (_array->_length - _idx - 1) );
+    }
+
+    // count the size
+    --_array->_length;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx )
 {
-    void *val_addr, *last_val_addr;
-
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
-    ex_assert_return( _idx < (int)_array->_length, /*dummy*/, "error: _idx out of range" );
+    ex_assert_return( _idx < _array->_length, /*dummy*/, "error: _idx out of range" );
 
     // don't do any thing if we only have one element in the array.
-    if ( ex_array_len(_array) != 1 ) {
+    if ( _idx != _array->_length-1 ) {
         // over write the erased element address by fill it with the last element.
-        val_addr = (char*)(_array->_data) + _idx * _array->_element_bytes;
-        last_val_addr = (char*)(_array->_data) + _array->_length * _array->_element_bytes;
-        memcpy ( val_addr, last_val_addr, _array->_element_bytes );
+        memcpy ( ex_array_get( _array, _idx ),
+                 ex_array_get( _array, _array->_length-1 ), 
+                 _array->_element_bytes );
     }
 
     // count the size
     --_array->_length;
-
-    // TODO: shrink the array by exsdk's memory manager.
 }
 
-// no managed
-void ex_array_remove_index_fast_nomng ( ex_array_t* _array, size_t _idx )
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count )
 {
-    void *val_addr, *last_val_addr;
-
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
-    ex_assert_return( _idx < (int)_array->_length, /*dummy*/, "error: _idx out of range" );
+    ex_assert_return( _idx < _array->_length, /*dummy*/, "error: _idx out of range" );
+    ex_assert_return( _idx + _count <= _array->_length, /*dummy*/, "error: the remove count is exceed from index" );
 
-    // don't do any thing if we only have one element in the array.
-    if ( ex_array_len(_array) != 1 ) {
-        // over write the erased element address by fill it with the last element.
-        val_addr = (char*)(_array->_data) + _idx * _array->_element_bytes;
-        last_val_addr = (char*)(_array->_data) + _array->_length * _array->_element_bytes;
-        memcpy ( val_addr, last_val_addr, _array->_element_bytes );
+    if ( _idx + _count != _array->_length ) {
+        memmove ( ex_array_get ( _array, _idx ), 
+                  ex_array_get ( _array, _idx + _count), 
+                 (_array->_length - (_idx + _count)) * _array->_element_bytes);
     }
 
-    // count the size
-    --_array->_length;
-
-    // TODO: shrink the array by system memory operation.
+    _array->_length -= _count;
 }
+

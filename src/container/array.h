@@ -267,36 +267,50 @@ inline double* ex_array_append_double ( ex_array_t* _array, double _value ) { re
 inline char** ex_array_append_string ( ex_array_t* _array, char* _value ) { return (char**)ex_array_append ( _array, &_value ); }
 inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value ) { return (wchar_t**)ex_array_append ( _array, &_value ); }
 
-// TODO { 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+/*! 
+ @fn void ex_array_remove_index ( ex_array_t* _array, size_t _idx )
+ @param _array the in array
+ @param _idx the remove element index. 
+ @details remove the element by index.
+ @sa ex_array_remove_index_fast
+*/// ------------------------------------------------------------------ 
 
 void ex_array_remove_index ( ex_array_t* _array, size_t _idx );
-void ex_array_remove_index_nomng ( ex_array_t* _array, size_t _idx );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
-void ex_array_remove_range_nomng ( ex_array_t* _array, size_t _idx, size_t _count );
-// } TODO end 
 
 // ------------------------------------------------------------------ 
 /*! 
  @fn void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx )
  @param _array the in array
- @param _idx the delete element index. 
- @details delete the element by index. the method will move the last
- element to the delete element adress, which make it faster than \ref
+ @param _idx the remove element index. 
+ @details remove the element by index. the method will move the last
+ element to the removed element adress, which make it faster than \ref
  ex_array_erase.
  @note using the method will break the indexing order in the array.
- @sa ex_array_fast_erase_nomng
+ @sa ex_array_remove_index
 */// ------------------------------------------------------------------ 
 
 void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx );
-void ex_array_remove_index_fast_nomng ( ex_array_t* _array, size_t _idx );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count )
+ @param _array the in array
+ @param _idx the start index to remove
+ @param _count the count of element to remove
+ @details remove n count of element from index i
+*/// ------------------------------------------------------------------ 
+
+void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
+
+// TODO { 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_array_shrink ( ex_array_t* _array );
+void ex_array_shrink_nomng ( ex_array_t* _array );
+// } TODO end 
 
 //! @}
 
