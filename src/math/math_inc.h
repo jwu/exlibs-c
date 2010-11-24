@@ -308,8 +308,9 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "random.h"
 #include "mathop.h"
+#include "random.h"
+#include "interpolation.h"
 #include "vec2f.h"
 #include "vec3f.h"
 #include "vec4f.h"
