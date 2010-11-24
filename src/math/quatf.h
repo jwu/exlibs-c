@@ -154,10 +154,10 @@ inline void ex_quatf_set_from_axis_radians ( ex_quatf_t* _r, ex_vec3f_t* _axis, 
 */// ------------------------------------------------------------------ 
 
 inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
-    return ex_is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
-        && ex_is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS)
-        && ex_is_equal_float(_lhs->z,_rhs->z,EX_FLOAT_EPS)
-        && ex_is_equal_float(_lhs->w,_rhs->w,EX_FLOAT_EPS)
+    return ex_is_equalf(_lhs->x,_rhs->x,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->y,_rhs->y,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->w,_rhs->w,EX_FLOAT_EPS)
         ;
 }
 
@@ -622,7 +622,7 @@ inline float ex_quatf_lenSQR( ex_quatf_t* _r ) {
 */// ------------------------------------------------------------------ 
 
 inline bool ex_quatf_is_normalized( ex_quatf_t* _r ) {
-    return ex_is_equal_float( ex_quatf_lenSQR(_r), 1.0f, EX_FLOAT_EPS );
+    return ex_is_equalf( ex_quatf_lenSQR(_r), 1.0f, EX_FLOAT_EPS );
 }
 
 // ------------------------------------------------------------------ 
@@ -642,12 +642,12 @@ inline bool ex_quatf_get_normalize( ex_quatf_t* _r, ex_quatf_t* _q ) {
     float len_sqr, inv_len;
 
     len_sqr = ex_quatf_lenSQR(_q);
-    if ( ex_is_equal_float( len_sqr, 1.0f, EX_FLOAT_EPS ) ) {
+    if ( ex_is_equalf( len_sqr, 1.0f, EX_FLOAT_EPS ) ) {
         *_r = *_q;
         return true;
     }
 
-    if ( ex_is_zero_float( len_sqr, EX_FLOAT_EPS ) )
+    if ( ex_is_zerof( len_sqr, EX_FLOAT_EPS ) )
         return false;
 
     inv_len = ex_inv_sqrtf (len_sqr);
@@ -672,10 +672,10 @@ inline bool ex_quatf_normalize( ex_quatf_t* _r ) {
     float len_sqr, inv_len;
 
     len_sqr = ex_quatf_lenSQR(_r);
-    if ( ex_is_equal_float( len_sqr, 1.0f, EX_FLOAT_EPS ) )
+    if ( ex_is_equalf( len_sqr, 1.0f, EX_FLOAT_EPS ) )
         return true;
 
-    if( ex_is_zero_float( len_sqr, EX_FLOAT_EPS ) )
+    if( ex_is_zerof( len_sqr, EX_FLOAT_EPS ) )
         return false;
 
     inv_len = ex_inv_sqrtf (len_sqr);

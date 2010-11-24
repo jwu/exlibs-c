@@ -74,7 +74,7 @@ bool ex_mat33f_inverse ( ex_mat33f_t* _m ) {
 
     det = _m->m00 * m00 + _m->m01 * m10 + _m->m02 * m20;
 
-    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zerof(det, EX_FLOAT_EPS) )
         return false;
 
     inv = 1.0f / det;
@@ -103,7 +103,7 @@ bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m ) {
     _r->m22 = _m->m00 * _m->m11 - _m->m01 * _m->m10;
 
     det = _m->m00 * _r->m00 + _m->m01 * _r->m10 + _m->m02 * _r->m20;
-    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zerof(det, EX_FLOAT_EPS) )
         return false;
 
     inv = 1.0f/det;

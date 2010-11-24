@@ -508,6 +508,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\math\random.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\math\vec2f.c"
 				>
 			</File>

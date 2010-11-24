@@ -263,55 +263,55 @@ inline double ex_inv_sqrt ( double _val ) { return 1.0 / sqrt(_val); }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_is_equal_float ( float _lhs, float _rhs, float _eps )
+ @fn inline bool ex_is_equalf ( float _lhs, float _rhs, float _eps )
  @param _lhs left hand side value
  @param _rhs right hand side value
  @param _eps the epsilon
  @return the result of the comparation
- @sa ex_is_equal_double
+ @sa ex_is_equal
 */// ------------------------------------------------------------------ 
 
-inline bool ex_is_equal_float ( float _lhs, float _rhs, float _eps ) {
+inline bool ex_is_equalf ( float _lhs, float _rhs, float _eps ) {
     return fabsf (_lhs-_rhs) < _eps;
 } 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_is_equal_double ( double _lhs, double _rhs, double _eps )
+ @fn inline bool ex_is_equal ( double _lhs, double _rhs, double _eps )
  @param _lhs left hand side value
  @param _rhs right hand side value
  @param _eps the epsilon
  @return the result of the comparation
- @sa ex_is_equal_float
+ @sa ex_is_equalf
 */// ------------------------------------------------------------------ 
 
-inline bool ex_is_equal_double ( double _lhs, double _rhs, double _eps ) {
+inline bool ex_is_equal ( double _lhs, double _rhs, double _eps ) {
     return fabs (_lhs-_rhs) < _eps;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_is_zero_float ( float _v, float _eps )
+ @fn inline bool ex_is_zerof ( float _v, float _eps )
  @param _v value for comparation
  @param _eps the epsilon
  @return the result of the comparation
- @sa ex_is_zero_double
+ @sa ex_is_zero
 */// ------------------------------------------------------------------ 
 
-inline bool ex_is_zero_float ( float _v, float _eps ) {
+inline bool ex_is_zerof ( float _v, float _eps ) {
     return fabsf (_v) < _eps;
 } 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_is_zero_double ( double _v, double _eps )
+ @fn inline bool ex_is_zero ( double _v, double _eps )
  @param _v value for comparation
  @param _eps the epsilon
  @return the result of the comparation
- @sa ex_is_zero_float
+ @sa ex_is_zerof
 */// ------------------------------------------------------------------ 
 
-inline bool ex_is_zero_double ( double _v, double _eps ) {
+inline bool ex_is_zero ( double _v, double _eps ) {
     return fabs (_v) < _eps;
 }
 

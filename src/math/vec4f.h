@@ -113,10 +113,10 @@ inline void ex_vec4f_set ( ex_vec4f_t* _r, float _x, float _y, float _z, float _
 */// ------------------------------------------------------------------ 
 
 inline bool ex_vec4f_is_equal ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
-    return ex_is_equal_float(_lhs->x,_rhs->x,EX_FLOAT_EPS)
-        && ex_is_equal_float(_lhs->y,_rhs->y,EX_FLOAT_EPS)
-        && ex_is_equal_float(_lhs->z,_rhs->z,EX_FLOAT_EPS)
-        && ex_is_equal_float(_lhs->w,_rhs->w,EX_FLOAT_EPS);
+    return ex_is_equalf(_lhs->x,_rhs->x,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->y,_rhs->y,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->w,_rhs->w,EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
@@ -572,7 +572,7 @@ inline float ex_vec4f_lenSQR ( ex_vec4f_t* _v ) {
 */// ------------------------------------------------------------------ 
 
 inline bool ex_vec4f_is_normalized ( ex_vec4f_t* _v ) {
-    return ex_is_equal_float( ex_vec4f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
+    return ex_is_equalf( ex_vec4f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
@@ -591,10 +591,10 @@ inline bool ex_vec4f_normalize ( ex_vec4f_t* _v ) {
     float length_sqr = ex_vec4f_lenSQR(_v);
     float inv_length = 0.0f; 
 
-    if ( ex_is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) )
+    if ( ex_is_equalf( length_sqr, 1.0f, EX_FLOAT_EPS ) )
         return true;
 
-    if( ex_is_zero_float( length_sqr, EX_FLOAT_EPS ) )
+    if( ex_is_zerof( length_sqr, EX_FLOAT_EPS ) )
         return false;
 
     inv_length = ex_inv_sqrtf( length_sqr );
@@ -621,11 +621,11 @@ inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
     length_sqr = ex_vec4f_lenSQR(_v);
     inv_length = 0.0f; 
 
-    if ( ex_is_equal_float( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
+    if ( ex_is_equalf( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
         return true;
     }
 
-    if( ex_is_zero_float( length_sqr, EX_FLOAT_EPS ) ) {
+    if( ex_is_zerof( length_sqr, EX_FLOAT_EPS ) ) {
         return false;
     }
 

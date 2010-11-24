@@ -138,7 +138,7 @@ bool ex_mat44f_inverse ( ex_mat44f_t* _m ) {
     // calculate determinant
     det= src.m00*_m->m00 + src.m01*_m->m10 + src.m02*_m->m20 + src.m03*_m->m30 ;
 
-    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zerof(det, EX_FLOAT_EPS) )
         return false;
 
     // devide the cofactor-matrix by the determinat
@@ -228,7 +228,7 @@ bool ex_mat44f_get_inverse ( ex_mat44f_t* _r, ex_mat44f_t* _m ) {
     // calculate determinant
     det = _m->m00*_r->m00 + _m->m01*_r->m10 + _m->m02*_r->m20 + _m->m03*_r->m30 ;
 
-    if ( ex_is_zero_float(det, EX_FLOAT_EPS) )
+    if ( ex_is_zerof(det, EX_FLOAT_EPS) )
         return false;
 
     //devide the cofactor-matrix by the determinat
