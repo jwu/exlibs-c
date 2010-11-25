@@ -315,6 +315,42 @@ inline bool ex_is_zero ( double _v, double _eps ) {
     return fabs (_v) < _eps;
 }
 
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline int ex_signf( float _x )
+ @param _x in value
+ @return the sign value
+ get the sign of the value
+
+ @fn inline int ex_sign( double _x )
+ @param _x in value
+ @return the sign value
+ get the sign of the value
+
+ @fn inline int ex_signi( int _x )
+ @param _x in value
+ @return the sign value
+ get the sign of the value
+*/// ------------------------------------------------------------------ 
+
+inline int ex_signf( float _x ) {
+    if ( ex_is_zerof (_x, EX_FLOAT_EPS) ) return 0;
+    if ( _x > 0.0f ) return 1;
+    if ( _x < 0.0f ) return -1;
+}
+
+inline int ex_sign( double _x ) {
+    if ( ex_is_zero (_x, EX_DOUBLE_EPS) ) return 0;
+    if ( _x > 0.0 ) return 1;
+    if ( _x < 0.0 ) return -1;
+}
+
+inline int ex_signi( int _x ) {
+    if ( _x == 0 ) return 0;
+    if ( _x > 0 ) return 1;
+    if ( _x < 0 ) return -1;
+}
+
 //! @}
 
 // ######################### 
