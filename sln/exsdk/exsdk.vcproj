@@ -468,6 +468,18 @@
 			Name="math"
 			>
 			<File
+				RelativePath="..\..\src\math\ease_curve.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\ease_curve.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\math\interpolation.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\math\mat22f.c"
 				>
 			</File>
