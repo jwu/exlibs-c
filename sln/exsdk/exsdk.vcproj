@@ -468,6 +468,10 @@
 			Name="math"
 			>
 			<File
+				RelativePath="..\..\src\math\angf.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\math\ease_curve.c"
 				>
 			</File>

@@ -351,6 +351,58 @@ inline int ex_signi( int _x ) {
     if ( _x < 0 ) return -1;
 }
 
+// ------------------------------------------------------------------
+/*!
+ @fn inline float ex_deg2rad_f ( float _degrees )
+ @param _degrees the in degrees
+ @return the converted radians
+ @details convert degrees to radians
+ @par Usage: 
+ @code
+ float rad;
+ float deg = 90.0f;
+ rad = ex_deg2rad_f(deg);
+ @endcode
+
+ @fn inline double ex_deg2rad ( double _degrees )
+ @sa ex_deg2rad_f
+*/// ------------------------------------------------------------------
+
+#define _DEG_TO_RAD (0.017453292519943296) /* pi/180.0 */
+inline float ex_deg2rad_f ( float _degrees ) {
+    return (float)_DEG_TO_RAD * _degrees; 
+}
+inline double ex_deg2rad ( double _degrees ) {
+    return _DEG_TO_RAD * _degrees; 
+}
+#undef _DEG_TO_RAD
+
+// ------------------------------------------------------------------
+/*!
+ @fn inline float ex_rad2deg_f ( float _radians )
+ @param _radians the in radians
+ @return the converted degrees
+ @details convert degrees to radians
+ @par Usage: 
+ @code
+ float deg;
+ float rad = 1.57f;
+ deg = ex_rad2deg_f(rad);
+ @endcode
+
+ @fn inline double ex_rad2deg ( double _radians )
+ @sa ex_rad2deg_f
+*/// ------------------------------------------------------------------
+
+#define _RAD_TO_DEG (57.29577951308232158) /* 180.0/pi */
+inline float ex_rad2deg_f ( float _radians ) {
+    return (float)_RAD_TO_DEG * _radians; 
+}
+inline double ex_rad2deg ( double _radians ) {
+    return _RAD_TO_DEG * _radians; 
+}
+#undef _RAD_TO_DEG
+
 //! @}
 
 // ######################### 

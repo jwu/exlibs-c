@@ -280,30 +280,6 @@
 
 // ------------------------------------------------------------------
 /*!
- @def EX_DEG_TO_RAD
- @details convert degree to radians
- @par Usage: 
- @code
- float rad;
- float deg = 90.0f;
- rad = deg * (float)EX_DEG_TO_RAD; 
- @endcode
-
- @def EX_RAD_TO_DEG
- @details convert radians to degree
- @par Usage: 
- @code
- float deg;
- float rad = 1.57f;
- deg = rad * (float)EX_DEG_TO_RAD; 
- @endcode
-*/// ------------------------------------------------------------------
-
-#define EX_DEG_TO_RAD       (0.017453292519943296) /* pi/180.0 */
-#define EX_RAD_TO_DEG       (57.29577951308232158) /* 180.0/pi */
-
-// ------------------------------------------------------------------
-/*!
  @def EX_MIN(_a,_b)
  @details get minimux value of a and b.
 

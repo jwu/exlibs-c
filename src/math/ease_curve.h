@@ -35,13 +35,6 @@ inline float ex_ease_linearf ( float _t ) { return _t; }
 inline double ex_ease_linear ( double _t ) { return _t; }
 
 // ------------------------------------------------------------------ 
-// quad
-//  Easing equation function for a quadratic (_t^2)
-//  @param _t: Current time (in frames or seconds).
-//  @return: The correct value.
-// ------------------------------------------------------------------ 
-
-// ------------------------------------------------------------------ 
 /*! 
  @fn float ex_ease_in_quadf ( float _t )
  @param _t ratio range in [0,1]

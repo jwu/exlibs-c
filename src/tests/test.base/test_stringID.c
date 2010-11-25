@@ -75,8 +75,8 @@ static void normal ()
         while ( cur < ex_array_len(words) ) {
             char* word = *((char**)ex_array_get( words, cur ));
             size_t sid = *((size_t*)ex_array_get( word_IDs, cur )); 
-            // EX_TEST ( wcscmp(strid_to_cstr(sid), word) == 0 );
-            ex_assert ( strcmp(strid_to_cstr(sid), word) == 0, "%s(%d) is not equal to %s", strid_to_cstr(sid), sid, word );
+            // EX_TEST ( wcscmp(ex_strid_to_cstr(sid), word) == 0 );
+            ex_assert ( strcmp(ex_strid_to_cstr(sid), word) == 0, "%s(%d) is not equal to %s", ex_strid_to_cstr(sid), sid, word );
             ++cur;
         }
 
@@ -109,13 +109,13 @@ static void widechar()
     // TODO { 
     // {
     //     size_t id = ex_str_id ("c");
-    //     char* str = strid_to_cstr(id);
+    //     char* str = ex_strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "c") == 0 );
     // }
 
     // {
     //     size_t id = ex_str_id ( "ÖÐc");
-    //     char* str = strid_to_cstr(id);
+    //     char* str = ex_strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "ÖÐc") == 0 );
     // }
 
