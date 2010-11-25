@@ -16,6 +16,10 @@ extern "C" {
 #endif
 // ######################### 
 
+//! @defgroup ease_curve easing curve
+//! @ingroup Math
+//! @{
+
 // ------------------------------------------------------------------ 
 /*! 
  @fn inline float ex_ease_linearf ( float _t )
@@ -540,12 +544,13 @@ double ex_ease_curve_sine ( double _t );
 float ex_ease_curve_cosinef ( float _t ); 
 double ex_ease_curve_cosine ( double _t ); 
 
+//! @}
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 
 #endif
 // ######################### 
-
 
 // #################################################################################
 #endif // END EASE_CURVE_H_1290652786

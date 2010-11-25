@@ -39,7 +39,7 @@ inline float ex_saturatef ( float _x ) {
     return _x;
 }
 
-inline double ex_saturatef ( double _x ) {
+inline double ex_saturate ( double _x ) {
     if (_x < 0.0) return 0.0;
     if (_x > 1.0) return 1.0;
     return _x;
@@ -94,11 +94,11 @@ inline double ex_clamp ( double _x, double _min, double _max ) {
 */// ------------------------------------------------------------------ 
 
 inline float ex_lerpf ( float _from, float _to, float _ratio ) {
-    return _from * (1.0f - _ratio) + _to * _ratio 
+    return _from * (1.0f - _ratio) + _to * _ratio;
 }
 
 inline double ex_lerp ( double _from, double _to, double _ratio ) {
-    return _from * (1.0 - _ratio) + _to * _ratio 
+    return _from * (1.0 - _ratio) + _to * _ratio;
 }
 
 // ------------------------------------------------------------------ 
@@ -156,22 +156,26 @@ inline double ex_unit_remap ( double _value, double _min, double _max ) {
 inline float ex_remapf ( float _value, 
                          float _from_min, float _from_max, 
                          float _to_min, float _to_max ) {
+    float ratio;
+
     ex_assert ( _from_min < _from_max, "the _from_min value must less than _from_max" );
     ex_assert ( _to_min < _to_max, "the _to_min value must less than _to_max" );
     ex_assert ( _value <= _from_max && _value >= _from_min, "_value must between [_from_min,_from_max]" );
 
-    float ratio = (_value - _from_min) / (_from_max - _from_min);
+    ratio = (_value - _from_min) / (_from_max - _from_min);
     return ex_lerpf( _to_min, _to_max, ratio );
 }
 
 inline double ex_remap ( double _value, 
                          double _from_min, double _from_max, 
                          double _to_min, double _to_max ) {
+    double ratio;
+
     ex_assert ( _from_min < _from_max, "the _from_min value must less than _from_max" );
     ex_assert ( _to_min < _to_max, "the _to_min value must less than _to_max" );
     ex_assert ( _value <= _from_max && _value >= _from_min, "_value must between [_from_min,_from_max]" );
 
-    double ratio = (_value - _from_min) / (_from_max - _from_min);
+    ratio = (_value - _from_min) / (_from_max - _from_min);
     return ex_lerp( _to_min, _to_max, ratio );
 }
 

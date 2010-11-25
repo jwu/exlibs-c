@@ -23,7 +23,8 @@
 #include "vec4f.h"
 #include "mat22f.h"
 #include "mat33f.h"
-#include "quadf.h"
+#include "mat44f.h"
+#include "quatf.h"
 
 // #################################################################################
 #endif // END MATH_INC_H_1277686586

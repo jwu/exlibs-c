@@ -37,7 +37,7 @@ extern "C" {
  do: srand (time (0))
 */// ------------------------------------------------------------------ 
 
-inline void ex_srand( uint _seed ) { return srand(_seed); }
+inline void ex_srand( uint _seed ) { srand(_seed); }
 
 // ------------------------------------------------------------------ 
 /*! 
