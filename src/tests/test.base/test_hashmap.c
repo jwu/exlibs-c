@@ -63,7 +63,7 @@ static void normal ()
         char* key; 
         float val;
 
-        ex_hashmap_t* hashmap = ex_hashmap_alloc ( sizeof(char**), sizeof(float), 256, ex_hashkey_string, ex_keycmp_string );
+        ex_hashmap_t* hashmap = ex_hashmap_alloc ( sizeof(char*), sizeof(float), 256, ex_hashkey_string, ex_keycmp_string );
 
 	    key = "foo"; val = 1.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
         key = "bar"; val = 2.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );

@@ -45,11 +45,11 @@ int main( int argc, char* argv[] )
         // test_bitarry ();
         // test_btree ();
         // test_encoding ();
-        // test_hashmap ();
+        test_hashmap ();
         // test_list ();
         // test_memmng ();
         // test_pool ();
-        test_stringID ();
+        // test_stringID ();
 
         // special
         test_rapid ();

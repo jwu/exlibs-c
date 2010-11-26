@@ -10,7 +10,7 @@
 #define STRING_INC_H_1278485298
 // #################################################################################
 
-#include "str_id.h"
+#include "strid.h"
 #include "str_op.h"
 #include "encoding.h"
 

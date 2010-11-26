@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
-#include "../../core/string/str_id.h"
+#include "../../core/string/strid.h"
 #include "../../container/array.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ static void normal ()
                 strncpy ( word, data + prev, word_len );
                 word[word_len] = '\0';
 
-                sid = ex_str_id( word );
+                sid = ex_strid( word );
                 ex_assert(sid != -1, "can't get string ID of %s", word);
 
                 ex_array_append ( words, &word );
@@ -101,20 +101,20 @@ static void normal ()
 static void widechar()
 {
     size_t id = -1;
-    id = ex_wcs_id( L"Hello World" );
+    id = ex_strid_from_wcs( L"Hello World" );
     ex_log ( "id = %d", id );
-    id = ex_str_id( "Hello World" );
+    id = ex_strid( "Hello World" );
     ex_log ( "id = %d", id );
 
     // TODO { 
     // {
-    //     size_t id = ex_str_id ("c");
+    //     size_t id = ex_strid ("c");
     //     char* str = ex_strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "c") == 0 );
     // }
 
     // {
-    //     size_t id = ex_str_id ( "ÖÐc");
+    //     size_t id = ex_strid ( "ÖÐc");
     //     char* str = ex_strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "ÖÐc") == 0 );
     // }

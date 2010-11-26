@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : str_id.c
+// File         : strid.c
 // Author       : Wu Jie 
-// Last Change  : 10/12/2010 | 13:57:04 PM | Tuesday,October
+// Last Change  : 11/26/2010 | 14:20:11 PM | Friday,November
 // Description  : 
 // ======================================================================================
 
@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "../../container/hashmap.h"
-#include "str_id.h"
+#include "strid.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // private variables
@@ -28,7 +28,7 @@ static bool _initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_str_id_init ( size_t _size )
+bool ex_strid_init ( size_t _size )
 {
     // if the core already initialized, don't init it second times.
     if ( _initialized ) {
@@ -36,7 +36,7 @@ bool ex_str_id_init ( size_t _size )
         return true;
     }
 
-    _string_set = ex_hashmap_alloc ( sizeof(char**), sizeof(char**), _size, ex_hashkey_string, ex_keycmp_string );
+    _string_set = ex_hashmap_alloc ( sizeof(char*), sizeof(char*), _size, ex_hashkey_string, ex_keycmp_string );
     ex_assert_return ( _string_set, false, "string table alloc failed" );
 
     _initialized = true;
@@ -47,7 +47,7 @@ bool ex_str_id_init ( size_t _size )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_str_id_deinit ()
+void ex_strid_deinit ()
 {
     if ( _initialized ) {
         // free all allocated string
@@ -63,7 +63,36 @@ void ex_str_id_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_wcs_id ( wchar_t* _string )
+bool ex_strid_is_inited () { return _initialized; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_strid_t ex_strid ( char* _string )
+{
+    size_t idx = -1;
+    size_t hash_idx = -1;
+    char* str_new = NULL;
+
+    if ( _string == NULL )
+        return -1;
+
+    hash_idx = ex_hashmap_get_hashidx ( _string_set, &_string, &idx ); 
+    if ( idx == -1 ) {
+        size_t len = strlen(_string);
+        str_new = ex_malloc(len+1);
+        strncpy( str_new, _string, len+1 );
+        ex_hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
+    }
+    return idx;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_strid_t ex_strid_from_wcs ( wchar_t* _string )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
@@ -90,30 +119,7 @@ size_t ex_wcs_id ( wchar_t* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_str_id ( char* _string )
-{
-    size_t idx = -1;
-    size_t hash_idx = -1;
-    char* str_new = NULL;
-
-    if ( _string == NULL )
-        return -1;
-
-    hash_idx = ex_hashmap_get_hashidx ( _string_set, &_string, &idx ); 
-    if ( idx == -1 ) {
-        size_t len = strlen(_string);
-        str_new = ex_malloc(len+1);
-        strncpy( str_new, _string, len+1 );
-        ex_hashmap_insert_new ( _string_set, &str_new, &str_new, hash_idx, &idx );
-    }
-    return idx;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-char* ex_strid_to_cstr ( size_t _id )
+char* ex_strid_to_cstr ( ex_strid_t _id )
 {
     char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
     return *((char**)addr);
