@@ -27,8 +27,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_transform2d_t {
-    struct ex_component_t* _base;
-
+    struct ex_component_t _; // base class.
     ex_vec2f_t  _pos;
     ex_angf_t   _ang;
     ex_vec2f_t  _scale;

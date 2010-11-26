@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : component.h
+// File         : object.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:25:33 PM | Thursday,November
+// Last Change  : 11/26/2010 | 16:35:55 PM | Friday,November
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef COMPONENT_H_1290677135
-#define COMPONENT_H_1290677135
+#ifndef OBJECT_H_1290760556
+#define OBJECT_H_1290760556
 // #################################################################################
 
 // ######################### 
@@ -20,20 +20,33 @@ extern "C" {
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-/*! 
- @struct ex_component_t
- @details
-*/// ------------------------------------------------------------------ 
+typedef struct ex_object_t {
+    ex_rtti_t* _rtti;
+} ex_object_t;
 
-typedef struct ex_component_t {
-    const struct ex_object_t _; // TODO: confirm this
-    struct ex_entity_t* _owner;
-} ex_component_t;
 
-///////////////////////////////////////////////////////////////////////////////
-// functions
-///////////////////////////////////////////////////////////////////////////////
+// DELME { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// // ------------------------------------------------------------------ 
+
+// typedef struct TestClass {
+//     int8 _item1;
+//     float _item2;
+// } TestClass;
+
+// ex_prop_t props[] = {
+//     { "_item1", EX_PROP_ATTR_NONE, NULL, ex_prop_set_raw_int8, NULL, ex_prop_get_raw_int8 }
+//   , { "_item2", EX_PROP_ATTR_READ_ONLY, NULL, ex_prop_set_raw_float, NULL, ex_prop_get_raw_float }
+// }
+
+// void register_TestClass () {
+//     ex_rtti_t* rtti = ex_rtti_register_class ( "TestClass", NULL );
+//     if ( rtti ) {
+//         rtti->props = props;
+//     }
+// }
+// } DELME end 
 
 
 // ######################### 
@@ -44,7 +57,7 @@ typedef struct ex_component_t {
 
 
 // #################################################################################
-#endif // END COMPONENT_H_1290677135
+#endif // END OBJECT_H_1290760556
 // #################################################################################
 
 

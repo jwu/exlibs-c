@@ -23,6 +23,7 @@ extern "C" {
 typedef struct ex_rtti_t {
     ex_strid_t _classid;
     ex_rtti_t* _super;
+    ex_prop_t[] _props;
 } ex_rtti_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,7 @@ bool ex_rtti_is_inited ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_register_class ( const char* _class, const char* _super );
+ex_rtti_t* ex_rtti_register_class ( const char* _class, const char* _super );
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -74,7 +74,7 @@ bool ex_rtti_is_inited () { return _initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_register_class ( const char* _class, const char* _super )
+ex_rtti_t* ex_rtti_register_class ( const char* _class, const char* _super )
 {
     ex_strid_t my_classid = ex_strid(_class);
     ex_rtti_t* my_rtti = ex_rtti_get(my_classid);
@@ -82,13 +82,13 @@ bool ex_rtti_register_class ( const char* _class, const char* _super )
     ex_rtti_t* super_rtti;
 
     // check if my class already exists.
-    ex_assert_return ( my_rtti == NULL, false, "the class %s already registered.", _class );
+    ex_assert_return ( my_rtti == NULL, NULL, "the class %s already registered.", _class );
 
     // if we have super class, get it.
     if ( _super ) {
         super_classid = ex_strid(_super);
         super_rtti = ex_rtti_get(super_classid);
-        ex_assert_return ( super_rtti, false, "the class %s already registered.", _class );
+        ex_assert_return ( super_rtti, NULL, "the class %s already registered.", _class );
     }
 
     // we got everything we want, now we can create rtti info.
@@ -96,7 +96,7 @@ bool ex_rtti_register_class ( const char* _class, const char* _super )
     my_rtti->_classid = my_classid;
     my_rtti->_super = super_rtti;
 
-    return true;
+    return my_rtti;
 }
 
 // ------------------------------------------------------------------ 

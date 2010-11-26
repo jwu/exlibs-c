@@ -43,6 +43,12 @@ bool ex_core_init ()
         return false;
     }
 
+    ex_log ("init rtti classes");
+    if ( ex_rtti_init() == false ) {
+        ex_log ("failed to init rtti table");
+        return false;
+    }
+
     // TODO: ex_log ("init lua");
 
     //
@@ -59,6 +65,9 @@ bool ex_core_init ()
 void ex_core_deinit ()
 {
     if ( _initialized ) {
+        ex_log ("deinit rtti table");
+        ex_rtti_deinit();
+
         ex_log ("deinit string ID table");
         ex_strid_deinit();
 
