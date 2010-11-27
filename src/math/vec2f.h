@@ -569,6 +569,75 @@ inline bool ex_vec2f_get_normalize ( ex_vec2f_t* _r, ex_vec2f_t* _v ) {
     ex_vec2f_mul_scalar ( _r, _v, inv_length );
 }
 
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void ex_vec2f_get_truncate ( ex_vec2f_t* _r, ex_vec2f_t* _v, float _maxLength )
+ @retval _r the result vector2
+ @param _v the in vector2
+ @param _maxLength the truncate length
+ @details check if vector is large than _maxLength, if yes, truncate it to _maxLength
+ @sa ex_vec2f_truncate
+*/// ------------------------------------------------------------------ 
+
+inline void ex_vec2f_get_truncate ( ex_vec2f_t* _r, ex_vec2f_t* _v, float _maxLength ) {
+    const float maxLengthSQR = _maxLength * _maxLength;
+    const float vecLengthSQR = ex_vec2f_lenSQR(_v);
+    if ( vecLengthSQR > maxLengthSQR )
+        ex_vec2f_mul_scalar (_r, _maxLength / sqrtf (vecLengthSQR) );
+}
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void ex_vec2f_truncate ( ex_vec2f_t* _r, float _maxLength )
+ @retval _r the result vector2
+ @param _r the in vector2
+ @param _maxLength the truncate length
+ @details check if vector is large than _maxLength, if yes, truncate it to _maxLength
+ @sa ex_vec2f_truncate
+*/// ------------------------------------------------------------------ 
+
+inline void ex_vec2f_truncate ( ex_vec2f_t* _r, float _maxLength ) {
+    const float maxLengthSQR = _maxLength * _maxLength;
+    const float vecLengthSQR = ex_vec2f_lenSQR(_r);
+    if ( vecLengthSQR > maxLengthSQR )
+        ex_vec2f_mul_scalar (_r, _maxLength / sqrtf (vecLengthSQR) );
+}
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void ex_vec2f_parallel_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to )
+ @retval _r the result vector2
+ @param _from the in vector 
+ @param _to the vector parallel to
+ @details return component of vector parallel to a unit _to vector
+ more details, check http://mathworld.wolfram.com/DotProduct.html
+ @note _to must be normalized.
+*/// ------------------------------------------------------------------ 
+
+inline void ex_vec2f_parallel_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
+    ex_assert ( ex_vec2f_is_normalized(_to), "vector _to must be normalized." );
+    const float projection = ex_vec2f_dot( _from, _to );
+    ex_vec2f_mul_scalar( _r, _to, projection );
+}
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn inline void ex_vec2f_perpendicular_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to )
+ @retval _r the result vector2
+ @param _from the in vector 
+ @param _to the vector perpendicular to
+ @details return component of vector perpendicular to a unit _to vector
+ more details, check http://mathworld.wolfram.com/DotProduct.html
+ @note _to must be normalized.
+*/// ------------------------------------------------------------------ 
+
+inline void ex_vec2f_perpendicular_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
+    ex_assert ( ex_vec2f_is_normalized(_to), "vector _to must be normalized." );
+    vec2f_t v;
+    ex_vec2f_parallel_to ( &v, _from, _to );
+    ex_vec2f_sub ( _r, _from, &v );
+}
+
 //! @}
 
 // ######################### 

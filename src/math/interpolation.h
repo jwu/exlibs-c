@@ -94,11 +94,11 @@ inline double ex_clamp ( double _x, double _min, double _max ) {
 */// ------------------------------------------------------------------ 
 
 inline float ex_lerpf ( float _from, float _to, float _ratio ) {
-    return _from * (1.0f - _ratio) + _to * _ratio;
+    return _from + (_to - _from) * _ratio;
 }
 
 inline double ex_lerp ( double _from, double _to, double _ratio ) {
-    return _from * (1.0 - _ratio) + _to * _ratio;
+    return _from + (_to - _from) * _ratio;
 }
 
 // ------------------------------------------------------------------ 
