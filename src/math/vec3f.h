@@ -639,7 +639,7 @@ inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_parallel_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
+ @fn inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector parallel to
@@ -648,7 +648,7 @@ inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_parallel_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
+inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
     ex_assert ( ex_vec3f_is_normalized(_to), "vector _to must be normalized." );
     const float projection = ex_vec3f_dot( _from, _to );
     ex_vec3f_mul_scalar( _r, _to, projection );
@@ -668,7 +668,7 @@ inline void ex_vec3f_parallel_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t
 inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
     ex_assert ( ex_vec3f_is_normalized(_to), "vector _to must be normalized." );
     vec3f_t v;
-    ex_vec3f_parallel_to ( &v, _from, _to );
+    ex_vec3f_project_to ( &v, _from, _to );
     ex_vec3f_sub ( _r, _from, &v );
 }
 
