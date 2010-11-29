@@ -27,7 +27,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_entity_t {
-    ex_strid_t _name;
+    strid_t _name;
 
     // TODO: typeinfo -> component { 
     // why typeinfo instead of typeid? because we may have get_component( ent, base_type );

@@ -13,10 +13,10 @@
 #include "config.h"
 #include "compiler.h"
 #include "platform.h"
-#include "types.h"
 #include "macro.h"
 
 #include "external.h"
+#include "types.h" // depends external
 
 // #################################################################################
 #endif // END GLOBAL_INC_H_1277512309

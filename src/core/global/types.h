@@ -57,13 +57,13 @@ extern "C" {
     typedef unsigned __int64    uint64;
 
     // ------------------------------------------------------------------ 
-    // Desc: real 
+    // Desc: real_t 
     // ------------------------------------------------------------------ 
 
     #if EX_REAL_PRECISION  == EX_SINGLE
-        typedef float real;
+        typedef float real_t;
     #else
-        typedef double real;
+        typedef double real_t;
     #endif
 
     // ------------------------------------------------------------------
@@ -136,9 +136,9 @@ extern "C" {
     // ------------------------------------------------------------------ 
 
     #if EX_REAL_PRECISION  == EX_SINGLE
-        typedef float real;
+        typedef float real_t;
     #else
-        typedef double real;
+        typedef double real_t;
     #endif
 
     // ------------------------------------------------------------------
@@ -224,7 +224,7 @@ extern "C" {
 #endif // END EX_COMPILER
 
 ///////////////////////////////////////////////////////////////////////////////
-// platform different types 
+// platform dependency types 
 ///////////////////////////////////////////////////////////////////////////////
 
 // TODO { 
@@ -242,6 +242,12 @@ extern "C" {
 //     // typedef uintptr_t addr_t;
 // #endif
 // } TODO end 
+
+///////////////////////////////////////////////////////////////////////////////
+// exsdk types
+///////////////////////////////////////////////////////////////////////////////
+
+typedef size_t strid_t;
 
 // ######################### 
 #ifdef __cplusplus

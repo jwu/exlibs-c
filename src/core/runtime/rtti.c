@@ -38,7 +38,7 @@ bool ex_rtti_init ()
         return false;
     }
 
-    _classid_to_rtti = ex_hashmap_alloc ( sizeof(ex_strid_t), 
+    _classid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
                                           sizeof(ex_rtti_t*), 
                                           256,
                                           ex_hashkey_strid, 
@@ -74,11 +74,11 @@ bool ex_rtti_is_inited () { return _initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_register_class ( const char* _class, const char* _super )
+ex_rtti_t* ex_rtti_register_class ( char* _class, char* _super )
 {
-    ex_strid_t my_classid = ex_strid(_class);
+    strid_t my_classid = ex_strid(_class);
     ex_rtti_t* my_rtti = ex_rtti_get(my_classid);
-    ex_strid_t super_classid;
+    strid_t super_classid;
     ex_rtti_t* super_rtti;
 
     // check if my class already exists.
@@ -103,16 +103,16 @@ ex_rtti_t* ex_rtti_register_class ( const char* _class, const char* _super )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( ex_strid_t _classid )
+ex_rtti_t* ex_rtti_get ( strid_t _classid )
 {
-    return (ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &_classid, NULL );
+    return *(ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &_classid, NULL );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, ex_strid_t _super_classid ) 
+bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, strid_t _super_classid ) 
 { 
     ex_rtti_t* tmp = ex_rtti_super(_myclass);
     while ( tmp ) {

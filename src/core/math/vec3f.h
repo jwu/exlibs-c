@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : vec4f.h
+// File         : vec3f.h
 // Author       : Wu Jie 
-// Last Change  : 11/11/2010 | 11:19:25 AM | Thursday,November
+// Last Change  : 11/11/2010 | 11:08:34 AM | Thursday,November
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef VEC4F_H_1289445568
-#define VEC4F_H_1289445568
+#ifndef VEC3F_H_1289444915
+#define VEC3F_H_1289444915
 // #################################################################################
 
 // ######################### 
@@ -16,7 +16,7 @@ extern "C" {
 #endif
 // ######################### 
 
-//! @defgroup ex_vec4f_t vector4 float
+//! @defgroup ex_vec3f_t vector3 float
 //! @ingroup Math
 //! @{
 
@@ -26,15 +26,15 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct ex_vec4f_t
+ @struct ex_vec3f_t
  @details
  
- The data of vector4 is construct by an union structure with float elements.\n
- The vector4 can be expressed in formular as:
+ The data of vector3 is construct by an union structure with float elements.\n
+ The vector3 can be expressed in formular as:
  
  \f$
-   \left[\begin{array}{ c c c c }
-   x & y & z & w
+   \left[\begin{array}{ c c c }
+   x & y & z
    \end{array} \right]
  \f$
  
@@ -42,553 +42,523 @@ extern "C" {
 
  \f$
    \left[\begin{array}{ c c c }
-   v_{0}, v_{1}, v_{2}, v_{3}
+   v_{0}, v_{1}, v_{2}
    \end{array} \right]
  \f$
 */// ------------------------------------------------------------------ 
 
-typedef struct ex_vec4f_t {
+typedef struct ex_vec3f_t {
     union {
-        struct { float x, y, z, w; }; // end struct
-        float v[4];
+        struct { float x, y, z; }; // end struct
+        float v[3];
     };
-} ex_vec4f_t;
+} ex_vec3f_t;
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_zero ( ex_vec4f_t* _r )
- @retval _r the result vector4
- @details make a zero vector4:
+ @fn inline void ex_vec3f_zero ( ex_vec3f_t* _r )
+ @retval _r the result vector3
+ @details make a zero vector3:
 
  \f[
-   q = \left[\begin{array}{ c c c c }
-   0.0 & 0.0 & 0.0 & 0.0
+   q = \left[\begin{array}{ c c c }
+   0.0 & 0.0 & 0.0
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_zero ( ex_vec4f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; _r->w = 0.0f; }
+inline void ex_vec3f_zero ( ex_vec3f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_one ( ex_vec4f_t* _r )
- @retval _r the result vector4
- @details make an one vector4:
+ @fn inline void ex_vec3f_one ( ex_vec3f_t* _r )
+ @retval _r the result vector3
+ @details make an one vector3:
 
  \f[
-   q = \left[\begin{array}{ c c c c }
-   1.0 & 1.0 & 1.0 & 1.0
+   q = \left[\begin{array}{ c c c }
+   1.0 & 1.0 & 1.0
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_one ( ex_vec4f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; _r->w = 1.0f; }
+inline void ex_vec3f_one ( ex_vec3f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_set ( ex_vec4f_t* _r, float _x, float _y, float _z, float _w )
- @retval _r the result vector4
+ @fn inline void ex_vec3f_set ( ex_vec3f_t* _r, float _x, float _y, float _z )
+ @retval _r the result vector3
  @param x
  @param y
  @param z
- @param w
- @details set the vector4 _r by rest of the parameters:
+ @details set the vector3 _r by rest of the parameters:
 
  \f[
-   q = \left[\begin{array}{ c c c c }
-   \_x & \_y & \_z & \_w
+   q = \left[\begin{array}{ c c c }
+   \_x & \_y & \_z
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_set ( ex_vec4f_t* _r, float _x, float _y, float _z, float _w ) { _r->x = _x, _r->y = _y, _r->z = _z; _r->w = _w; }
+inline void ex_vec3f_set ( ex_vec3f_t* _r, float _x, float _y, float _z ) { _r->x = _x, _r->y = _y, _r->z = _z; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_vec4f_is_equal ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
- @param _lhs the left hand side vector4
- @param _rhs the right hand side vector4
+ @fn inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @param _lhs the left hand side vector3
+ @param _rhs the right hand side vector3
  @return the result of the comparation
- @details compare if the two vector4 is equal to each other
+ @details compare if the two vector3 is equal to each other
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec4f_is_equal ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     return ex_is_equalf(_lhs->x,_rhs->x,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->y,_rhs->y,EX_FLOAT_EPS)
-        && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS)
-        && ex_is_equalf(_lhs->w,_rhs->w,EX_FLOAT_EPS);
+        && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_neg ( ex_vec4f_t* _v )
- @retval _v the result vector4
- @param _v the in vector4
- @details get the negtive value from vector4 _v, override and return it as the result:
+ @fn inline void ex_vec3f_neg ( ex_vec3f_t* _v )
+ @retval _v the result vector3
+ @param _v the in vector3
+ @details get the negtive value from vector3 _v, override and return it as the result:
 
  \f[
-   q = -\left[\begin{array}{ c c c c }
-   x & y & z & w
+   q = -\left[\begin{array}{ c c c }
+   x & y & z
    \end{array} \right]
-   = \left[\begin{array}{ c c c c }
-   -x & -y & -z & -w
+   = \left[\begin{array}{ c c c }
+   -x & -y & -z
    \end{array} \right]
  \f]
- @sa ex_vec4f_get_neg
+ @sa ex_vec3f_get_neg
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_neg ( ex_vec4f_t* _v ) { 
+inline void ex_vec3f_neg ( ex_vec3f_t* _v ) { 
     _v->x = -_v->x; 
     _v->y = -_v->y; 
     _v->z = -_v->z; 
-    _v->w = -_v->w; 
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, ex_vec4f_t* _v )
- @retval _r the result vector4
- @param _v the in vector4
- @details get the negtive value from vector4 _v, set and return it to vector4 _v
- @sa ex_vec4f_neg
+ @fn inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v )
+ @retval _r the result vector3
+ @param _v the in vector3
+ @details get the negtive value from vector3 _v, set and return it to vector3 _v
+ @sa ex_vec3f_neg
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, ex_vec4f_t* _v ) { 
+inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
     _r->y = -_v->y; 
     _r->z = -_v->z; 
-    _r->w = -_v->w; 
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_add ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
- @param _rhs the right hand side vector4
+ @fn inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
+ @param _rhs the right hand side vector3
  @details
  \f[
    \_r = Vec_a + Vec_b = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] +
-   \left[\begin{array}{ c c c c }
-   b_{x} & b_{y} & b_{z} & b_{w}
+   \left[\begin{array}{ c c c }
+   b_{x} & b_{y} & b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} + b_{x} & 
    a_{y} + b_{y} &
-   a_{z} + b_{z} &
-   a_{w} + b_{w}
+   a_{z} + b_{z}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_add ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x + _rhs->x;
     _r->y = _lhs->y + _rhs->y;
     _r->z = _lhs->z + _rhs->z;
-    _r->w = _lhs->w + _rhs->w;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
+ @fn inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
  @param _rhs the right hand side float
  @details
  \f[
    \_r = Vec_a + s = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] + s
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c }
    a_{x} + s & 
    a_{y} + s &
-   a_{z} + s &
-   a_{w} + s
+   a_{z} + s
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x + _rhs;
     _r->y = _lhs->y + _rhs;
     _r->z = _lhs->z + _rhs;
-    _r->w = _lhs->w + _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_sub ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
- @param _rhs the right hand side vector4
+ @fn inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
+ @param _rhs the right hand side vector3
  @details
  \f[
    \_r = Vec_a - Vec_b = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] -
-   \left[\begin{array}{ c c c c }
-   b_{x} & b_{y} & b_{z} & b_{w}
+   \left[\begin{array}{ c c c }
+   b_{x} & b_{y} & b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} - b_{x} & 
    a_{y} - b_{y} &
-   a_{z} - b_{z} &
-   a_{w} - b_{w}
+   a_{z} - b_{z}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_sub ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x - _rhs->x;
     _r->y = _lhs->y - _rhs->y;
     _r->z = _lhs->z - _rhs->z;
-    _r->w = _lhs->w - _rhs->w;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
+ @fn inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
  @param _rhs the right hand side float
  @details
  \f[
    \_r = Vec_a - s = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] - s
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} - s & 
    a_{y} - s &
-   a_{z} - s &
-   a_{w} - s
+   a_{z} - s
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x - _rhs;
     _r->y = _lhs->y - _rhs;
     _r->z = _lhs->z - _rhs;
-    _r->w = _lhs->w - _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs )
- @retval _r the result vector4
+ @fn inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
+ @retval _r the result vector3
  @param _lhs the left hand side float
- @param _rhs the right hand side vector4
+ @param _rhs the right hand side vector3
  @details
  \f[
    \_r = s - Vec_b = 
    s - 
-   \left[\begin{array}{ c c c c }
-   b_{x} & b_{y} & b_{z} & b_{w}
+   \left[\begin{array}{ c c c }
+   b_{x} & b_{y} & b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    s - b_{x} & 
    s - b_{y} &
-   s - b_{z} &
-   s - b_{w}
+   s - b_{z}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs ) { 
+inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs - _rhs->x;
     _r->y = _lhs - _rhs->y;
     _r->z = _lhs - _rhs->z;
-    _r->w = _lhs - _rhs->w;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_mul ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
- @param _rhs the right hand side vector4
+ @fn inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
+ @param _rhs the right hand side vector3
  @details
  \f[
    \_r = Vec_a * Vec_b = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] *
-   \left[\begin{array}{ c c c c }
-   b_{x} & b_{y} & b_{z} & b_{w}
+   \left[\begin{array}{ c c c }
+   b_{x} & b_{y} & b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} * b_{x} & 
    a_{y} * b_{y} &
-   a_{z} * b_{z} &
-   a_{w} * b_{w}
+   a_{z} * b_{z}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_mul ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x * _rhs->x;
     _r->y = _lhs->y * _rhs->y;
     _r->z = _lhs->z * _rhs->z;
-    _r->w = _lhs->w * _rhs->w;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
+ @fn inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
  @param _rhs the right hand side float
  @details
  \f[
    \_r = Vec_a * s = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] * s
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} * s & 
    a_{y} * s &
-   a_{z} * s &
-   a_{w} * s
+   a_{z} * s
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x * _rhs;
     _r->y = _lhs->y * _rhs;
     _r->z = _lhs->z * _rhs;
-    _r->w = _lhs->w * _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_div ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
- @param _rhs the right hand side vector4
+ @fn inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
+ @param _rhs the right hand side vector3
  @details
  \f[
    \_r = Vec_a / Vec_b = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] /
-   \left[\begin{array}{ c c c c }
-   b_{x} & b_{y} & b_{z} & b_{w}
+   \left[\begin{array}{ c c c }
+   b_{x} & b_{y} & b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} / b_{x} & 
    a_{y} / b_{y} &
-   a_{z} / b_{z} &
-   a_{w} / b_{w}
+   a_{z} / b_{z}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_div ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x / _rhs->x;
     _r->y = _lhs->y / _rhs->y;
     _r->z = _lhs->z / _rhs->z;
-    _r->w = _lhs->w / _rhs->w;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
- @retval _r the result vector4
- @param _lhs the left hand side vector4
+ @fn inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @retval _r the result vector3
+ @param _lhs the left hand side vector3
  @param _rhs the right hand side float
  @details
  \f[
    \_r = Vec_a / s = 
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right] / s
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{x} / s & 
    a_{y} / s &
-   a_{z} / s &
-   a_{w} / s
+   a_{z} / s
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
     _r->y = _lhs->y / _rhs;
     _r->z = _lhs->z / _rhs;
-    _r->w = _lhs->w / _rhs;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs )
- @retval _r the result vector4
+ @fn inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
+ @retval _r the result vector3
  @param _lhs the left hand side float
- @param _rhs the right hand side vector4
+ @param _rhs the right hand side vector3
  @details
  \f[
    \_r = s / Vec_b = 
    s / 
-   \left[\begin{array}{ c c c c }
-   b_{x} & b_{y} & b_{z} & b_{w}
+   \left[\begin{array}{ c c c }
+   b_{x} & b_{y} & b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    s / b_{x} & 
    s / b_{y} &
-   s / b_{z} &
-   s / b_{w}
+   s / b_{z}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs ) { 
+inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
     _r->y = _lhs / _rhs->y;
     _r->z = _lhs / _rhs->z;
-    _r->w = _lhs / _rhs->w;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec4f_dot ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
- @param _lhs the left hand vector4
- @param _rhs the right hand vector4
+ @fn inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @param _lhs the left hand vector3
+ @param _rhs the right hand vector3
  @return the dot product result
  @details get the dot product
  \f[
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right]
    dot
    \left[\begin{array}{ c }
    b_{x} \\ 
    b_{y} \\
-   b_{z} \\
-   b_{w}
+   b_{z}
    \end{array} \right]
    =
    a_{x} * b_{x} + 
    a_{y} * b_{y} +
-   a_{z} * b_{z} +
-   a_{w} * b_{w}
+   a_{z} * b_{z}
  \f]
 */// ------------------------------------------------------------------ 
 
-inline float ex_vec4f_dot ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) {
+inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
     return _lhs->x * _rhs->x 
          + _lhs->y * _rhs->y 
-         + _lhs->z * _rhs->z 
-         + _lhs->w * _rhs->w;
+         + _lhs->z * _rhs->z;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec4f_cross ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn inline float ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the cross product result
- @param _lhs the left hand vector4
- @param _rhs the right hand vector4
+ @param _lhs the left hand vector3
+ @param _rhs the right hand vector3
  @details get the cross product
  \f[
-   \left[\begin{array}{ c c c c }
-   a_{x} & a_{y} & a_{z} & a_{w}
+   \left[\begin{array}{ c c c }
+   a_{x} & a_{y} & a_{z}
    \end{array} \right]
    cross
    \left[\begin{array}{ c }
    b_{x} \\ 
    b_{y} \\
-   b_{z} \\
-   b_{w}
+   b_{z}
    \end{array} \right]
    =
-   \left[\begin{array}{ c c c c }
+   \left[\begin{array}{ c c c }
    a_{y} * b_{z} - a_{z} * b_{y} &
    a_{z} * b_{x} - a_{x} * b_{z} &
-   a_{x} * b_{y} - a_{y} * b_{x} &
-   0.0
+   a_{x} * b_{y} - a_{y} * b_{x}
    \end{array} \right]
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_cross ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) {
+inline void ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
     _r->x = _lhs->y * _rhs->z - _lhs->z * _rhs->y;
     _r->y = _lhs->z * _rhs->x - _lhs->x * _rhs->z;
     _r->z = _lhs->x * _rhs->y - _lhs->y * _rhs->x;
-    _r->w = 0.0f;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec4f_len( ex_vec4f_t* _v )
- @param _v the in vector4
- @return the length of the in vector4
- @details return the length of vector4 _v
- @sa ex_vec4f_lenSQR
+ @fn inline float ex_vec3f_len( ex_vec3f_t* _v )
+ @param _v the in vector3
+ @return the length of the in vector3
+ @details return the length of vector3 _v
+ @sa ex_vec3f_lenSQR
 */// ------------------------------------------------------------------ 
 
-inline float ex_vec4f_len ( ex_vec4f_t* _v ) {
-    return sqrtf ( ex_vec4f_dot(_v,_v) );
+inline float ex_vec3f_len ( ex_vec3f_t* _v ) {
+    return sqrtf ( ex_vec3f_dot(_v,_v) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec4f_lenSQR( ex_vec4f_t* _v )
- @param _v the in vector4
- @return the length square of the in vector4
- @details return the length square of vector4 _v
- @sa ex_vec4f_len
+ @fn inline float ex_vec3f_lenSQR( ex_vec3f_t* _v )
+ @param _v the in vector3
+ @return the length square of the in vector3
+ @details return the length square of vector3 _v
+ @sa ex_vec3f_len
 */// ------------------------------------------------------------------ 
 
-inline float ex_vec4f_lenSQR ( ex_vec4f_t* _v ) {
-    return ex_vec4f_dot(_v,_v);
+inline float ex_vec3f_lenSQR ( ex_vec3f_t* _v ) {
+    return ex_vec3f_dot(_v,_v);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_vec4f_is_normalized ( ex_vec4f_t* _v )
- @param _v the in vector4
+ @fn inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v )
+ @param _v the in vector3
  @return if the inverse operation successed 
  - true: successful
  - false: failed
- @details check if the in vector4 is normalized 
- @sa ex_vec4f_get_normalize
- @sa ex_vec4f_normalize
+ @details check if the in vector3 is normalized 
+ @sa ex_vec3f_get_normalize
+ @sa ex_vec3f_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec4f_is_normalized ( ex_vec4f_t* _v ) {
-    return ex_is_equalf( ex_vec4f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
+inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v ) {
+    return ex_is_equalf( ex_vec3f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_vec4f_normalize ( ex_vec4f_t* _v )
- @param _v the in vector4
+ @fn inline bool ex_vec3f_normalize ( ex_vec3f_t* _v )
+ @param _v the in vector3
  @return if the inverse operation successed 
  - true: successful
  - false: failed
- @details check if the in vector4 is normalized 
- @sa ex_vec4f_is_normalized
- @sa ex_vec4f_get_normalize
+ @details check if the in vector3 is normalized 
+ @sa ex_vec3f_is_normalized
+ @sa ex_vec3f_get_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec4f_normalize ( ex_vec4f_t* _v ) {
-    float length_sqr = ex_vec4f_lenSQR(_v);
+inline bool ex_vec3f_normalize ( ex_vec3f_t* _v ) {
+    float length_sqr = ex_vec3f_lenSQR(_v);
     float inv_length = 0.0f; 
 
     if ( ex_is_equalf( length_sqr, 1.0f, EX_FLOAT_EPS ) )
@@ -598,27 +568,27 @@ inline bool ex_vec4f_normalize ( ex_vec4f_t* _v ) {
         return false;
 
     inv_length = ex_inv_sqrtf( length_sqr );
-    ex_vec4f_mul_scalar ( _v, _v, inv_length );
+    ex_vec3f_mul_scalar ( _v, _v, inv_length );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v )
- @retval _r the result vector4
- @param _v the in vector4
+ @fn bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v )
+ @retval _r the result vector3
+ @param _v the in vector3
  @return if the inverse operation successed 
  - true: successful
  - false: failed
- @details get the normalized vector4 from _r, set and return it to vector4 _v
- @sa ex_vec4f_is_normalized
- @sa ex_vec4f_normalize
+ @details get the normalized vector3 from _r, set and return it to vector3 _v
+ @sa ex_vec3f_is_normalized
+ @sa ex_vec3f_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
+inline bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
     float length_sqr, inv_length;
 
     ex_assert ( _r != _v, "can't use self as return value." );
-    length_sqr = ex_vec4f_lenSQR(_v);
+    length_sqr = ex_vec3f_lenSQR(_v);
     inv_length = 0.0f; 
 
     if ( ex_is_equalf( length_sqr, 1.0f, EX_FLOAT_EPS ) ) {
@@ -630,46 +600,46 @@ inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
     }
 
     inv_length = ex_inv_sqrtf( length_sqr );
-    ex_vec4f_mul_scalar ( _r, _v, inv_length );
+    ex_vec3f_mul_scalar ( _r, _v, inv_length );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_get_truncate ( ex_vec4f_t* _r, ex_vec4f_t* _v, float _maxLength )
+ @fn inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLength )
  @retval _r the result vector2
  @param _v the in vector2
  @param _maxLength the truncate length
  @details check if vector is large than _maxLength, if yes, truncate it to _maxLength
- @sa ex_vec4f_truncate
+ @sa ex_vec3f_truncate
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_get_truncate ( ex_vec4f_t* _r, ex_vec4f_t* _v, float _maxLength ) {
+inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLength ) {
     const float maxLengthSQR = _maxLength * _maxLength;
-    const float vecLengthSQR = ex_vec4f_lenSQR(_v);
+    const float vecLengthSQR = ex_vec3f_lenSQR(_v);
     if ( vecLengthSQR > maxLengthSQR )
-        ex_vec4f_mul_scalar (_r, _maxLength / sqrtf (vecLengthSQR) );
+        ex_vec3f_mul_scalar (_r, _r, _maxLength / sqrtf (vecLengthSQR) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_truncate ( ex_vec4f_t* _r, float _maxLength )
+ @fn inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength )
  @retval _r the result vector2
  @param _r the in vector2
  @param _maxLength the truncate length
  @details check if vector is large than _maxLength, if yes, truncate it to _maxLength
- @sa ex_vec4f_truncate
+ @sa ex_vec3f_truncate
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_truncate ( ex_vec4f_t* _r, float _maxLength ) {
+inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
     const float maxLengthSQR = _maxLength * _maxLength;
-    const float vecLengthSQR = ex_vec4f_lenSQR(_r);
+    const float vecLengthSQR = ex_vec3f_lenSQR(_r);
     if ( vecLengthSQR > maxLengthSQR )
-        ex_vec4f_mul_scalar (_r, _maxLength / sqrtf (vecLengthSQR) );
+        ex_vec3f_mul_scalar (_r, _r, _maxLength / sqrtf (vecLengthSQR) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to )
+ @fn inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector parallel to
@@ -678,15 +648,16 @@ inline void ex_vec4f_truncate ( ex_vec4f_t* _r, float _maxLength ) {
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to ) {
-    ex_assert ( ex_vec4f_is_normalized(_to), "vector _to must be normalized." );
-    const float projection = ex_vec4f_dot( _from, _to );
-    ex_vec4f_mul_scalar( _r, _to, projection );
+inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
+    float projection;
+    ex_assert ( ex_vec3f_is_normalized(_to), "vector _to must be normalized." );
+    projection = ex_vec3f_dot( _from, _to );
+    ex_vec3f_mul_scalar( _r, _to, projection );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to )
+ @fn inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector perpendicular to
@@ -695,11 +666,11 @@ inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t*
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to ) {
-    ex_assert ( ex_vec4f_is_normalized(_to), "vector _to must be normalized." );
-    vec4f_t v;
-    ex_vec4f_project_to ( &v, _from, _to );
-    ex_vec4f_sub ( _r, _from, &v );
+inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
+    ex_vec3f_t v;
+    ex_assert ( ex_vec3f_is_normalized(_to), "vector _to must be normalized." );
+    ex_vec3f_project_to ( &v, _from, _to );
+    ex_vec3f_sub ( _r, _from, &v );
 }
 
 //! @}
@@ -711,5 +682,5 @@ inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_ve
 // ######################### 
 
 // #################################################################################
-#endif // END VEC4F_H_1289445568
+#endif // END VEC3F_H_1289444915
 // #################################################################################

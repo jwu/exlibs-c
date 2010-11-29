@@ -20,7 +20,6 @@ extern "C" {
 // decls
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef size_t ex_strid_t;
 #define EX_STRID_INVALID -1
 
 // ------------------------------------------------------------------ 
@@ -35,14 +34,14 @@ bool ex_strid_is_inited ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_strid_t ex_strid ( char* _string );
-ex_strid_t ex_strid_from_wcs ( wchar_t* _string );
+strid_t ex_strid ( char* _string );
+strid_t ex_strid_from_wcs ( wchar_t* _string );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-char* ex_strid_to_cstr ( ex_strid_t _id );
+char* ex_strid_to_cstr ( strid_t _id );
 
 // ######################### 
 #ifdef __cplusplus

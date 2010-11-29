@@ -17,13 +17,19 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
+// includes
+///////////////////////////////////////////////////////////////////////////////
+
+#include "prop.h"
+
+///////////////////////////////////////////////////////////////////////////////
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
 typedef struct ex_rtti_t {
-    ex_strid_t _classid;
-    ex_rtti_t* _super;
-    ex_prop_t[] _props;
+    struct ex_rtti_t* _super;
+    strid_t _classid;
+    ex_prop_t _props[];
 } ex_rtti_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,13 +48,13 @@ bool ex_rtti_is_inited ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_register_class ( const char* _class, const char* _super );
+ex_rtti_t* ex_rtti_register_class ( char* _class, char* _super );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( ex_strid_t _classid );
+ex_rtti_t* ex_rtti_get ( strid_t _classid );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -62,7 +68,7 @@ inline const char* ex_rtti_classname ( ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline ex_strid_t ex_rtti_classid ( ex_rtti_t* _info ) { 
+inline strid_t ex_rtti_classid ( ex_rtti_t* _info ) { 
     return _info->_classid; 
 }
 
@@ -78,7 +84,7 @@ inline ex_rtti_t* ex_rtti_super ( ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_class_of ( ex_rtti_t* _myclass, ex_strid_t _classid ) { 
+inline bool ex_rtti_class_of ( ex_rtti_t* _myclass, strid_t _classid ) { 
     return _myclass->_classid == _classid;
 }
 
@@ -86,13 +92,13 @@ inline bool ex_rtti_class_of ( ex_rtti_t* _myclass, ex_strid_t _classid ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, ex_strid_t _super_classid );
+bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, strid_t _super_classid );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_superclass_of ( ex_rtti_t* _myclass, ex_strid_t _sub_classid ) { 
+inline bool ex_rtti_superclass_of ( ex_rtti_t* _myclass, strid_t _sub_classid ) { 
     return ex_rtti_subclass_of( ex_rtti_get(_sub_classid), ex_rtti_classid(_myclass) );
 }
 
@@ -101,7 +107,7 @@ inline bool ex_rtti_superclass_of ( ex_rtti_t* _myclass, ex_strid_t _sub_classid
 // NOTE: usually, we use this one.
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_isa ( ex_rtti_t* _myclass, ex_strid_t _classid ) { 
+inline bool ex_rtti_isa ( ex_rtti_t* _myclass, strid_t _classid ) { 
     return ex_rtti_class_of(_myclass,_classid) || ex_rtti_subclass_of(_myclass,_classid);
 }
 

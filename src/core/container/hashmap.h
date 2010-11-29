@@ -148,7 +148,7 @@ inline size_t ex_hashmap_capacity ( ex_hashmap_t* _hashmap ) { return _hashmap->
 
 inline uint32 ex_hashkey_string ( void* _val ) { return ex_hashstr( *((char**)_val) ); }
 // DISABLE can use ex_hashkey_string instead: inline uint32 hashkey_wstring ( void* _val ) { return ex_hashstr_w( *((wchar_t**)_val) ); }
-inline uint32 ex_hashkey_strid ( void* _val ) { return *((ex_strid_t*)_val); }
+inline uint32 ex_hashkey_strid ( void* _val ) { return *((strid_t*)_val); }
 inline uint32 ex_hashkey_uint32 ( void* _val ) { return *((uint32*)_val); }
 inline uint32 ex_hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)_val) >> 4); }
 
@@ -158,7 +158,7 @@ inline uint32 ex_hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)
 
 inline int ex_keycmp_string ( void* _lhs, void* _rhs ) { return strcmp ( *((char**)_lhs), *((char**)_rhs) ); }
 // DISABLE can use ex_keycmp_string instead: inline int keycmp_wstring ( void* _lhs, void* _rhs ) { return wcscmp ( *((wchar_t**)_lhs), *((wchar_t**)_rhs) ); }
-inline int ex_keycmp_strid ( void* _lhs, void* _rhs ) { return *((ex_strid_t*)_lhs) - *((ex_strid_t*)_rhs); }
+inline int ex_keycmp_strid ( void* _lhs, void* _rhs ) { return *((strid_t*)_lhs) - *((strid_t*)_rhs); }
 inline int ex_keycmp_uint32 ( void* _lhs, void* _rhs ) { return *((uint32*)_lhs) - *((uint32*)_rhs); }
 inline int ex_keycmp_ptr ( void* _lhs, void* _rhs ) { return (size_t)*((void**)_lhs) - (size_t)*((void**)_rhs); }
 

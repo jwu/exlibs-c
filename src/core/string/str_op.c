@@ -11,8 +11,6 @@
 
 #include "exsdk.h"
 #include "str_op.h"
-#include "../../container/array.h"
-#include "../../core/global/types.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

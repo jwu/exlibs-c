@@ -583,7 +583,7 @@ inline void ex_vec2f_get_truncate ( ex_vec2f_t* _r, ex_vec2f_t* _v, float _maxLe
     const float maxLengthSQR = _maxLength * _maxLength;
     const float vecLengthSQR = ex_vec2f_lenSQR(_v);
     if ( vecLengthSQR > maxLengthSQR )
-        ex_vec2f_mul_scalar (_r, _maxLength / sqrtf (vecLengthSQR) );
+        ex_vec2f_mul_scalar (_r, _r, _maxLength / sqrtf (vecLengthSQR) );
 }
 
 // ------------------------------------------------------------------ 
@@ -600,7 +600,7 @@ inline void ex_vec2f_truncate ( ex_vec2f_t* _r, float _maxLength ) {
     const float maxLengthSQR = _maxLength * _maxLength;
     const float vecLengthSQR = ex_vec2f_lenSQR(_r);
     if ( vecLengthSQR > maxLengthSQR )
-        ex_vec2f_mul_scalar (_r, _maxLength / sqrtf (vecLengthSQR) );
+        ex_vec2f_mul_scalar (_r, _r, _maxLength / sqrtf (vecLengthSQR) );
 }
 
 // ------------------------------------------------------------------ 
@@ -615,8 +615,9 @@ inline void ex_vec2f_truncate ( ex_vec2f_t* _r, float _maxLength ) {
 */// ------------------------------------------------------------------ 
 
 inline void ex_vec2f_project_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
+    float projection;
     ex_assert ( ex_vec2f_is_normalized(_to), "vector _to must be normalized." );
-    const float projection = ex_vec2f_dot( _from, _to );
+    projection = ex_vec2f_dot( _from, _to );
     ex_vec2f_mul_scalar( _r, _to, projection );
 }
 
@@ -632,8 +633,8 @@ inline void ex_vec2f_project_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t*
 */// ------------------------------------------------------------------ 
 
 inline void ex_vec2f_perpendicular_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
+    ex_vec2f_t v;
     ex_assert ( ex_vec2f_is_normalized(_to), "vector _to must be normalized." );
-    vec2f_t v;
     ex_vec2f_project_to ( &v, _from, _to );
     ex_vec2f_sub ( _r, _from, &v );
 }

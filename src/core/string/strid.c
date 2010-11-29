@@ -10,7 +10,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../container/hashmap.h"
 #include "strid.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +68,7 @@ bool ex_strid_is_inited () { return _initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_strid_t ex_strid ( char* _string )
+strid_t ex_strid ( char* _string )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
@@ -92,7 +91,7 @@ ex_strid_t ex_strid ( char* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_strid_t ex_strid_from_wcs ( wchar_t* _string )
+strid_t ex_strid_from_wcs ( wchar_t* _string )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
@@ -119,7 +118,7 @@ ex_strid_t ex_strid_from_wcs ( wchar_t* _string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-char* ex_strid_to_cstr ( ex_strid_t _id )
+char* ex_strid_to_cstr ( strid_t _id )
 {
     char* addr = (char*)_string_set->_keys + _id * _string_set->_key_bytes;
     return *((char**)addr);
