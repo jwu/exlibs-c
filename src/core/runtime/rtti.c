@@ -57,6 +57,7 @@ void ex_rtti_deinit ()
     if ( _initialized ) {
         // free all allocated string
         ex_hashmap_each ( ex_rtti_t*, _info, _classid_to_rtti ) {
+            ex_free(_info->_props);
             ex_free(_info);
         } ex_hashmap_each_end;
         ex_hashmap_free(_classid_to_rtti);
@@ -93,8 +94,9 @@ ex_rtti_t* ex_rtti_register_class ( char* _class, char* _super )
 
     // we got everything we want, now we can create rtti info.
     my_rtti = (ex_rtti_t*)ex_malloc ( sizeof(ex_rtti_t) );
-    my_rtti->_classid = my_classid;
     my_rtti->_super = super_rtti;
+    my_rtti->_classid = my_classid;
+    my_rtti->_props = NULL;
 
     return my_rtti;
 }
@@ -103,9 +105,25 @@ ex_rtti_t* ex_rtti_register_class ( char* _class, char* _super )
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count )
+{
+    ex_assert_return( _info->_props == NULL, /*dummy*/, "properties already registerd!" );
+    ex_assert_return( _props != NULL && _count > 0, /*dummy*/, "incoming properties can't be NULL, or can't be empty!" );
+
+    _info->_props = (ex_prop_t*)ex_malloc( sizeof(ex_prop_t) * _count );
+    memcpy( _info->_props, _props, sizeof(ex_prop_t) * _count );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 ex_rtti_t* ex_rtti_get ( strid_t _classid )
 {
-    return *(ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &_classid, NULL );
+    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &_classid, NULL );
+    if ( result != NULL )
+        return *result;
+    return NULL;
 }
 
 // ------------------------------------------------------------------ 

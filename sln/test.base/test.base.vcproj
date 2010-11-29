@@ -199,6 +199,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\tests\test.base\test_rtti.c"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\tests\test.base\test_stringID.c"
 			>
 		</File>

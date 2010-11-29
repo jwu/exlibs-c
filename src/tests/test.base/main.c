@@ -23,6 +23,7 @@ extern void test_hashmap();
 extern void test_list();
 extern void test_memmng();
 extern void test_pool();
+extern void test_rtti();
 extern void test_stringID();
 
 extern void test_rapid();
@@ -45,10 +46,11 @@ int main( int argc, char* argv[] )
         // test_bitarry ();
         // test_btree ();
         // test_encoding ();
-        test_hashmap ();
+        // test_hashmap ();
         // test_list ();
         // test_memmng ();
         // test_pool ();
+        test_rtti ();
         // test_stringID ();
 
         // special

@@ -24,34 +24,47 @@ typedef struct ex_object_t {
     ex_rtti_t* _rtti;
 } ex_object_t;
 
+extern strid_t __CLASSID_ex_object_t;
+
+// EXAMPLE: a class inherit from ex_object_t { 
+// typedef struct TestClass {
+//     const struct ex_object_t _;
+//     int8 _item1;
+//     float _item2;
+// } TestClass;
+// } EXAMPLE end 
+
+///////////////////////////////////////////////////////////////////////////////
+// macros
+///////////////////////////////////////////////////////////////////////////////
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 // TODO: #define EX_SUPER(_type,_obj)
+#define EX_CLASSID(_name) __CLASSID_##_name
 
-// DELME { 
-// // ------------------------------------------------------------------ 
-// // Desc: 
-// // ------------------------------------------------------------------ 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-// typedef struct TestClass {
-//     int8 _item1;
-//     float _item2;
-// } TestClass;
+#define EX_DECL_CLASS_BEGIN(_name,_super) \
+    typedef struct _name { \
+        const struct _super _; \
 
-// ex_prop_t props[] = {
-//     { "_item1", EX_PROP_ATTR_NONE, NULL, ex_prop_set_raw_int8, NULL, ex_prop_get_raw_int8 }
-//   , { "_item2", EX_PROP_ATTR_READ_ONLY, NULL, ex_prop_set_raw_float, NULL, ex_prop_get_raw_float }
-// }
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-// void register_TestClass () {
-//     ex_rtti_t* rtti = ex_rtti_register_class ( "TestClass", NULL );
-//     if ( rtti ) {
-//         rtti->props = props;
-//     }
-// }
-// } DELME end 
+#define EX_DECL_CLASS_END(_name) \
+    } _name; \
+    extern strid_t __CLASSID_##_name; \
+    inline _name* _name##_alloc() { \
+        _name* obj = ex_malloc(sizoef(_name)); \
+        (ex_object_t*)obj->_rtti = ex_rtti_get(EX_CLASSID(_name)); \
+        return obj; \
+    }
 
 
 // ######################### 

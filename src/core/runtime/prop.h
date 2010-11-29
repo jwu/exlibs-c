@@ -59,6 +59,49 @@ typedef struct ex_prop_t {
 // } EXAMPLE end 
 
 ///////////////////////////////////////////////////////////////////////////////
+// macros
+///////////////////////////////////////////////////////////////////////////////
+
+// // why not use strid_t ???
+// // because if use strid_t for the property name, we can't define it in
+// // compile-time, but the array below is store in compile time.
+// static const ex_prop_t __PROPS_test_cls_t[] = {
+//     { "id",     EX_PROP_ATTR_READ_ONLY, offsetof(struct test_cls_t, id),    ex_prop_set_raw_int32, ex_prop_get_raw_int32 }
+//   , { "data1",  EX_PROP_ATTR_NONE,      offsetof(struct test_cls_t, data1), ex_prop_set_raw_float, ex_prop_get_raw_float }
+//   , { "data2",  EX_PROP_ATTR_NONE,      offsetof(struct test_cls_t, data2), ex_prop_set_raw_float, ex_prop_get_raw_float }
+// };
+
+// ------------------------------------------------------------------ 
+// Desc: EX_DEF_PROPS_BEGIN(_className)
+// ------------------------------------------------------------------ 
+
+#define EX_DEF_PROPS_BEGIN(_className,_superClassName) \
+    strid_t __CLASSID_##_className; \
+    static void ex_register_class_##_className () { \
+        ex_rtti_t* rtti = ex_rtti_register_class ( #_className, #_superClassName ); \
+        static const ex_prop_t __PROPS_##_className[] = { \
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_PROP( _className, _member, _propName, _attrs, _set_func, _get_func ) \
+    { _propName, _attrs, offsetof(struct _className, _member), _set_func, _get_func },
+
+// ------------------------------------------------------------------ 
+// Desc: EX_DEF_PROPS_END(_className)
+// ------------------------------------------------------------------ 
+
+#define EX_DEF_PROPS_END(_className) \
+            { "", 0, -1, NULL, NULL } \
+        }; /*end of __PROPS_##_className*/ \
+        if ( rtti ) { \
+            __CLASSID_##_className = rtti->_classid; /*for the use of EX_CLASSID(name)*/ \
+            ex_rtti_register_properties ( rtti, __PROPS_##_className, EX_ARRAY_COUNT(__PROPS_##_className)-1 ); \
+        } \
+    }
+
+///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -117,6 +160,20 @@ inline void ex_prop_get_raw_uint32 ( void* _pObj, size_t _offset, void* _value )
 
 inline void ex_prop_set_raw_uint64 ( void* _pObj, size_t _offset, const void* _value ) { *(uint64*)ex_ptr_add(_pObj,_offset) = *(const uint64*)_value; }
 inline void ex_prop_get_raw_uint64 ( void* _pObj, size_t _offset, void* _value ) { *(uint64*)_value = *(uint64*)ex_ptr_add(_pObj,_offset); }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+inline void ex_prop_set_raw_float ( void* _pObj, size_t _offset, const void* _value ) { *(float*)ex_ptr_add(_pObj,_offset) = *(const float*)_value; }
+inline void ex_prop_get_raw_float ( void* _pObj, size_t _offset, void* _value ) { *(float*)_value = *(float*)ex_ptr_add(_pObj,_offset); }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+inline void ex_prop_set_raw_double ( void* _pObj, size_t _offset, const void* _value ) { *(double*)ex_ptr_add(_pObj,_offset) = *(const double*)_value; }
+inline void ex_prop_get_raw_double ( void* _pObj, size_t _offset, void* _value ) { *(double*)_value = *(double*)ex_ptr_add(_pObj,_offset); }
 
 // ######################### 
 #ifdef __cplusplus

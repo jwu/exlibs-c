@@ -307,6 +307,10 @@
 				Name="runtime"
 				>
 				<File
+					RelativePath="..\..\src\core\runtime\object.c"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\runtime\object.h"
 					>
 				</File>

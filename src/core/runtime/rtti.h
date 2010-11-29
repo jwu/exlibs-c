@@ -29,7 +29,8 @@ extern "C" {
 typedef struct ex_rtti_t {
     struct ex_rtti_t* _super;
     strid_t _classid;
-    ex_prop_t _props[];
+    ex_prop_t* _props;
+    uint32 _prop_count;
 } ex_rtti_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -49,6 +50,12 @@ bool ex_rtti_is_inited ();
 // ------------------------------------------------------------------ 
 
 ex_rtti_t* ex_rtti_register_class ( char* _class, char* _super );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count );
 
 // ------------------------------------------------------------------ 
 // Desc: 
