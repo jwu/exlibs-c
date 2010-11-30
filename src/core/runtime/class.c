@@ -29,10 +29,8 @@ void __ex_register_class_ex_class_t () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* __ex_class_dynamic_cast ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+void* __ex_as ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     if ( ex_rtti_isa ( _obj->_rtti, _rtti ) )
-        return _obj;
-    if ( ex_rtti_superclass_of( _obj->_rtti, _rtti ) )
         return _obj;
     return NULL;
 }

@@ -99,23 +99,22 @@ inline bool ex_rtti_class_of ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
+bool ex_rtti_child_of ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_superclass_of ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) { 
-    return ex_rtti_subclass_of( _subclass, _myclass );
+inline bool ex_rtti_super_of ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) { 
+    return ex_rtti_child_of( _subclass, _myclass );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// NOTE: usually, we use this one.
 // ------------------------------------------------------------------ 
 
 inline bool ex_rtti_isa ( ex_rtti_t* _myclass, ex_rtti_t* _class ) { 
-    return ex_rtti_class_of(_myclass,_class) || ex_rtti_subclass_of(_myclass,_class);
+    return ex_rtti_class_of(_myclass,_class) || ex_rtti_child_of(_myclass,_class);
 }
 
 // ######################### 

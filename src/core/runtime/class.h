@@ -126,8 +126,44 @@ inline void free_ex_class_t(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DYNAMIC_CAST(_objPtr,_type) (_type*)__ex_class_dynamic_cast((ex_class_t*)_objPtr,EX_RTTI(_type))
-void* __ex_class_dynamic_cast ( ex_class_t* _obj, ex_rtti_t* _rtti );
+#define ex_class_of(_type,_objPtr) __ex_class_of((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_class_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_class_of( _obj->rtti, _rtti );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define ex_child_of(_type,_objPtr) __ex_child_of((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_child_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_child_of( _obj->rtti, _rtti );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define ex_super_of(_type,_objPtr) __ex_super_of((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_super_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_super_of( _obj->rtti, _rtti );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define ex_isa(_type,_objPtr) __ex_isa((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_isa ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_isa( _obj->rtti, _rtti );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define ex_as(_type,_objPtr) (_type*)__ex_as((ex_class_t*)_objPtr,EX_RTTI(_type))
+void* __ex_as ( ex_class_t* _obj, ex_rtti_t* _rtti );
 
 // ######################### 
 #ifdef __cplusplus

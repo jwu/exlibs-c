@@ -133,7 +133,7 @@ ex_rtti_t* ex_rtti_get ( char* _class )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, ex_rtti_t* _superclass ) 
+bool ex_rtti_child_of ( ex_rtti_t* _myclass, ex_rtti_t* _superclass ) 
 { 
     ex_rtti_t* tmp = ex_rtti_super(_myclass);
     while ( tmp ) {
