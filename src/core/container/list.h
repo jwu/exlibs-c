@@ -56,21 +56,21 @@ void ex_list_free_nomng ( ex_list_t* _list );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_list_append ( ex_list_t* _list, void* _value );
-void ex_list_append_nomng ( ex_list_t* _list, void* _value );
+void ex_list_append ( ex_list_t* _list, const void* _value );
+void ex_list_append_nomng ( ex_list_t* _list, const void* _value );
 
-void ex_list_prepend ( ex_list_t* _list, void* _value );
-void ex_list_prepend_nomng ( ex_list_t* _list, void* _value );
+void ex_list_prepend ( ex_list_t* _list, const void* _value );
+void ex_list_prepend_nomng ( ex_list_t* _list, const void* _value );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_list_insert_back ( ex_list_t* _list, ex_list_node_t* _at, void* _value );
-void ex_list_insert_back_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _value );
+void ex_list_insert_back ( ex_list_t* _list, ex_list_node_t* _at, const void* _value );
+void ex_list_insert_back_nomng ( ex_list_t* _list, ex_list_node_t* _at, const void* _value );
 
-void ex_list_insert_front ( ex_list_t* _list, ex_list_node_t* _at, void* _value );
-void ex_list_insert_front_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _value );
+void ex_list_insert_front ( ex_list_t* _list, ex_list_node_t* _at, const void* _value );
+void ex_list_insert_front_nomng ( ex_list_t* _list, ex_list_node_t* _at, const void* _value );
 
 // ------------------------------------------------------------------ 
 // Desc: 

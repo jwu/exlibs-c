@@ -107,8 +107,8 @@ inline size_t ex_pool_capacity ( ex_pool_t* _pool ) { return _pool->_capacity; }
 // @param _value: if NULL, means insert an empty node.
 // ------------------------------------------------------------------ 
 
-int ex_pool_insert ( ex_pool_t* _pool, void* _value );
-int ex_pool_insert_nomng ( ex_pool_t* _pool, void* _value );
+int ex_pool_insert ( ex_pool_t* _pool, const void* _value );
+int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value );
 
 inline int ex_pool_insert_int8 ( ex_pool_t* _pool, int8 _value ) { return ex_pool_insert ( _pool, &_value ); }
 inline int ex_pool_insert_int16 ( ex_pool_t* _pool, int16 _value ) { return ex_pool_insert ( _pool, &_value ); }

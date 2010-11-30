@@ -59,8 +59,8 @@ Usage:
 // ------------------------------------------------------------------ 
 
 //
-typedef uint32 (*hashkey_t) (void*);
-typedef int (*keycmp_t) (void*,void*);
+typedef uint32 (*hashkey_t) (const void*);
+typedef int (*keycmp_t) (const void*, const void*);
 
 //
 typedef struct ex_hashmap_node_t {
@@ -105,31 +105,31 @@ void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap );
 //  exists then go for it.
 // ------------------------------------------------------------------ 
 
-void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index );
-void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index );
+void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index );
+void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_get ( ex_hashmap_t* _hashmap, void* _key, size_t* _index );
-size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, void* _key, size_t* _index );
+void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
+size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 //  @return: -1: already exists
 // ------------------------------------------------------------------ 
 
-bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t* _index );
-bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t* _index );
+bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index );
+bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index );
 
-// TODO: void ex_hashmap_set ( ex_hashmap_t* _hashmap, void* _key, void* _val );
+// TODO: void ex_hashmap_set ( ex_hashmap_t* _hashmap, const void* _key, const void* _val );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, void* _key );
+void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, const void* _key );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -146,21 +146,21 @@ inline size_t ex_hashmap_capacity ( ex_hashmap_t* _hashmap ) { return _hashmap->
 // Desc: useful hash functions 
 // ------------------------------------------------------------------ 
 
-inline uint32 ex_hashkey_string ( void* _val ) { return ex_hashstr( *((char**)_val) ); }
+inline uint32 ex_hashkey_string ( const void* _val ) { return ex_hashstr( *((const char**)_val) ); }
 // DISABLE can use ex_hashkey_string instead: inline uint32 hashkey_wstring ( void* _val ) { return ex_hashstr_w( *((wchar_t**)_val) ); }
-inline uint32 ex_hashkey_strid ( void* _val ) { return *((strid_t*)_val); }
-inline uint32 ex_hashkey_uint32 ( void* _val ) { return *((uint32*)_val); }
-inline uint32 ex_hashkey_ptr ( void* _val ) { return (uint32)((size_t)(*(void**)_val) >> 4); }
+inline uint32 ex_hashkey_strid ( const void* _val ) { return *((const strid_t*)_val); }
+inline uint32 ex_hashkey_uint32 ( const void* _val ) { return *((const uint32*)_val); }
+inline uint32 ex_hashkey_ptr ( const void* _val ) { return (uint32)((size_t)(*(const void**)_val) >> 4); }
 
 // ------------------------------------------------------------------ 
 // Desc: useful keycmp functions
 // ------------------------------------------------------------------ 
 
-inline int ex_keycmp_string ( void* _lhs, void* _rhs ) { return strcmp ( *((char**)_lhs), *((char**)_rhs) ); }
+inline int ex_keycmp_string ( const void* _lhs, const void* _rhs ) { return strcmp ( *((const char**)_lhs), *((const char**)_rhs) ); }
 // DISABLE can use ex_keycmp_string instead: inline int keycmp_wstring ( void* _lhs, void* _rhs ) { return wcscmp ( *((wchar_t**)_lhs), *((wchar_t**)_rhs) ); }
-inline int ex_keycmp_strid ( void* _lhs, void* _rhs ) { return *((strid_t*)_lhs) - *((strid_t*)_rhs); }
-inline int ex_keycmp_uint32 ( void* _lhs, void* _rhs ) { return *((uint32*)_lhs) - *((uint32*)_rhs); }
-inline int ex_keycmp_ptr ( void* _lhs, void* _rhs ) { return (size_t)*((void**)_lhs) - (size_t)*((void**)_rhs); }
+inline int ex_keycmp_strid ( const void* _lhs, const void* _rhs ) { return *((const strid_t*)_lhs) - *((const strid_t*)_rhs); }
+inline int ex_keycmp_uint32 ( const void* _lhs, const void* _rhs ) { return *((const uint32*)_lhs) - *((const uint32*)_rhs); }
+inline int ex_keycmp_ptr ( const void* _lhs, const void* _rhs ) { return (size_t)*((const void**)_lhs) - (size_t)*((const void**)_rhs); }
 
 // ######################### 
 #ifdef __cplusplus

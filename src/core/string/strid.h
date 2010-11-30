@@ -34,8 +34,8 @@ bool ex_strid_is_inited ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-strid_t ex_strid ( char* _string );
-strid_t ex_strid_from_wcs ( wchar_t* _string );
+strid_t ex_strid ( const char* _string );
+strid_t ex_strid_from_wcs ( const wchar_t* _string );
 
 // ------------------------------------------------------------------ 
 // Desc: 

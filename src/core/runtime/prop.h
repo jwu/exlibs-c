@@ -180,6 +180,13 @@ inline void ex_prop_get_raw_double ( void* _pObj, size_t _offset, void* _value )
 inline void ex_prop_set_raw_strid ( void* _pObj, size_t _offset, const void* _value ) { *(strid_t*)ex_ptr_add(_pObj,_offset) = ex_strid((const char*)_value); }
 inline void ex_prop_get_raw_strid ( void* _pObj, size_t _offset, void* _value ) { (char*)_value = ex_strid_to_cstr(*(strid_t*)ex_ptr_add(_pObj,_offset)); }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// inline void ex_prop_set_raw_vec2f ( void* _pObj, size_t _offset, const void* _value ) { ex_vec2f_set ( (vec2f_t*)_value, (const vec2f_t*)ex_ptr_add(_pObj,_offset) ); }
+// inline void ex_prop_get_raw_vec2f ( void* _pObj, size_t _offset, void* _value ) { *(char**)_value = ex_strid_to_cstr(*(strid_t*)ex_ptr_add(_pObj,_offset)); }
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

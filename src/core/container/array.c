@@ -98,7 +98,7 @@ void* ex_array_get ( ex_array_t* _array, size_t _idx )
 // ------------------------------------------------------------------ 
 
 // managed
-void* ex_array_append ( ex_array_t* _array, void* _value )
+void* ex_array_append ( ex_array_t* _array, const void* _value )
 {
     void* val_addr;
 
@@ -121,7 +121,7 @@ void* ex_array_append ( ex_array_t* _array, void* _value )
 }
 
 // no managed
-void* ex_array_append_nomng ( ex_array_t* _array, void* _value )
+void* ex_array_append_nomng ( ex_array_t* _array, const void* _value )
 {
     void* val_addr;
 

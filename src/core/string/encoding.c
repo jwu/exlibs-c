@@ -90,12 +90,12 @@ static int _utf_char2len ( int c )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_ucs2_to_utf8 ( wchar_t* _instr, int _inlen, char* _outstr )
+int ex_ucs2_to_utf8 ( const wchar_t* _instr, int _inlen, char* _outstr )
 {
-    int		outlen = 0;
-    int		todo = _inlen;
-    uint16	*p = _instr;
-    int		l;
+    int outlen = 0;
+    int todo = _inlen;
+    const uint16 *p = _instr;
+    int l;
 
     while ( todo > 0 ) {
         if (_outstr != NULL) {

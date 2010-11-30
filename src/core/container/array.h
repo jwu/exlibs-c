@@ -208,8 +208,8 @@ inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_length; }
  @sa ex_array_append
 */// ------------------------------------------------------------------ 
 
-void* ex_array_append ( ex_array_t* _array, void* _value );
-void* ex_array_append_nomng ( ex_array_t* _array, void* _value );
+void* ex_array_append ( ex_array_t* _array, const void* _value );
+void* ex_array_append_nomng ( ex_array_t* _array, const void* _value );
 
 // ------------------------------------------------------------------ 
 /*! 

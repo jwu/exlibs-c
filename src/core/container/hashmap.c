@@ -18,7 +18,7 @@
 // fwd-decls
 ///////////////////////////////////////////////////////////////////////////////
 
-static inline uint32 _hash_index ( ex_hashmap_t* _hashmap, void* _key ) {
+static inline uint32 _hash_index ( ex_hashmap_t* _hashmap, const void* _key ) {
     return _hashmap->_hashkey(_key) & ( _hashmap->_hashsize - 1 );
 }
 
@@ -167,7 +167,7 @@ void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index )
+void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index )
 {
     size_t cur_idx, next_idx;
     ex_hashmap_node_t* node;
@@ -198,7 +198,7 @@ void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, void* _key, void* _val, siz
 }
 
 // no managed
-void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t _hash_idx, size_t* _index )
+void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index )
 {
     size_t cur_idx, next_idx;
     ex_hashmap_node_t* node;
@@ -232,7 +232,7 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, void* _key, void* _va
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_get ( ex_hashmap_t* _hashmap, void* _key, size_t* _index )
+void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -256,7 +256,7 @@ void* ex_hashmap_get ( ex_hashmap_t* _hashmap, void* _key, size_t* _index )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, void* _key, size_t* _index )
+size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -281,7 +281,7 @@ size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, void* _key, size_t* _ind
 // ------------------------------------------------------------------ 
 
 // managed
-bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t* _index )
+bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -301,7 +301,7 @@ bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t*
 }
 
 // no managed
-bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, void* _key, void* _val, size_t* _index )
+bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -325,7 +325,7 @@ bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, void* _key, void* _val, s
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, void* _key )
+void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, const void* _key )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 

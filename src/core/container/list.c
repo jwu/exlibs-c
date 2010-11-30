@@ -17,7 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // managed
-inline ex_list_node_t* _alloc_node ( ex_list_t* _list, void* _value ) {
+inline ex_list_node_t* _alloc_node ( ex_list_t* _list, const void* _value ) {
     // allocate the node ( node_size + value_size ), and assign the value ptr to address point 
     // to the extract space allocate in the node. 
     ex_list_node_t* node = (ex_list_node_t*)ex_malloc ( _list->_element_bytes + sizeof(ex_list_node_t) ); 
@@ -29,7 +29,7 @@ inline ex_list_node_t* _alloc_node ( ex_list_t* _list, void* _value ) {
 }
 
 // no managed
-inline ex_list_node_t* _alloc_node_nomng ( ex_list_t* _list, void* _value ) {
+inline ex_list_node_t* _alloc_node_nomng ( ex_list_t* _list, const void* _value ) {
     // allocate the node ( node_size + value_size ), and assign the value ptr to address point 
     // to the extract space allocate in the node. 
     ex_list_node_t* node = (ex_list_node_t*)ex_malloc_nomng ( _list->_element_bytes + sizeof(ex_list_node_t) ); 
@@ -123,7 +123,7 @@ void ex_list_free_nomng ( ex_list_t* _list )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_list_append ( ex_list_t* _list, void* _value )
+void ex_list_append ( ex_list_t* _list, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -146,7 +146,7 @@ void ex_list_append ( ex_list_t* _list, void* _value )
 }
 
 // no managed
-void ex_list_append_nomng ( ex_list_t* _list, void* _value )
+void ex_list_append_nomng ( ex_list_t* _list, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -173,7 +173,7 @@ void ex_list_append_nomng ( ex_list_t* _list, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_list_prepend ( ex_list_t* _list, void* _value )
+void ex_list_prepend ( ex_list_t* _list, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -196,7 +196,7 @@ void ex_list_prepend ( ex_list_t* _list, void* _value )
 }
 
 // no managed
-void ex_list_prepend_nomng ( ex_list_t* _list, void* _value )
+void ex_list_prepend_nomng ( ex_list_t* _list, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -223,7 +223,7 @@ void ex_list_prepend_nomng ( ex_list_t* _list, void* _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_list_insert_back ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
+void ex_list_insert_back ( ex_list_t* _list, ex_list_node_t* _at, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -250,7 +250,7 @@ void ex_list_insert_back ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
 }
 
 // no managed
-void ex_list_insert_back_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
+void ex_list_insert_back_nomng ( ex_list_t* _list, ex_list_node_t* _at, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -281,7 +281,7 @@ void ex_list_insert_back_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _v
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_list_insert_front ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
+void ex_list_insert_front ( ex_list_t* _list, ex_list_node_t* _at, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
@@ -308,7 +308,7 @@ void ex_list_insert_front ( ex_list_t* _list, ex_list_node_t* _at, void* _value 
 }
 
 // no managed
-void ex_list_insert_front_nomng ( ex_list_t* _list, ex_list_node_t* _at, void* _value )
+void ex_list_insert_front_nomng ( ex_list_t* _list, ex_list_node_t* _at, const void* _value )
 {
     ex_list_node_t* node = NULL;
 
