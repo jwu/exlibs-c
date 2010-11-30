@@ -22,3 +22,15 @@
 EX_DEF_PROPS_BEGIN(ex_object_t,)
 EX_DEF_PROPS_END(ex_object_t)
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void* ex_object_as ( ex_object_t* _obj, strid_t _typeID ) {
+    if ( ex_rtti_isa ( _obj->_rtti, _typeID ) )
+        return _obj;
+    if ( ex_rtti_superclass_of( _obj->_rtti, _typeID ) )
+        return _obj;
+    return NULL;
+}
+

@@ -549,6 +549,14 @@
 			>
 		</Filter>
 		<Filter
+			Name="autogen"
+			>
+			<File
+				RelativePath="..\..\src\autogen\classes_registry.c"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="physics"
 			>
 		</Filter>

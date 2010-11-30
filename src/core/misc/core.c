@@ -20,6 +20,7 @@ static bool _initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_register_classes ();
 // ------------------------------------------------------------------ 
 
 bool ex_core_init ()
@@ -48,6 +49,9 @@ bool ex_core_init ()
         ex_log ("failed to init rtti table");
         return false;
     }
+
+    // after we init rtti, we can register all the classes we used in the app
+    ex_register_classes ();
 
     // TODO: ex_log ("init lua");
 

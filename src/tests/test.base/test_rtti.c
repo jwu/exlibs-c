@@ -37,7 +37,7 @@ static strid_t __CLASSID_test_cls_t;
 #define EX_CLASSID(_name) __CLASSID_##_name
 
 //
-static void register_test_cls_t () {
+void register_test_cls_t () {
     ex_rtti_t* rtti = ex_rtti_register_class ( "test_cls_t", "ex_object_t" );
     if ( rtti ) {
         EX_CLASSID(test_cls_t) = rtti->_classid;

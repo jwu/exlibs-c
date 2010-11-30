@@ -77,7 +77,7 @@ typedef struct ex_prop_t {
 
 #define EX_DEF_PROPS_BEGIN(_className,_superClassName) \
     strid_t __CLASSID_##_className; \
-    static void ex_register_class_##_className () { \
+    void ex_register_class_##_className () { \
         ex_rtti_t* rtti = ex_rtti_register_class ( #_className, #_superClassName ); \
         static const ex_prop_t __PROPS_##_className[] = { \
 
