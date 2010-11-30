@@ -173,6 +173,13 @@ inline void ex_prop_get_raw_float ( void* _pObj, size_t _offset, void* _value ) 
 inline void ex_prop_set_raw_double ( void* _pObj, size_t _offset, const void* _value ) { *(double*)ex_ptr_add(_pObj,_offset) = *(const double*)_value; }
 inline void ex_prop_get_raw_double ( void* _pObj, size_t _offset, void* _value ) { *(double*)_value = *(double*)ex_ptr_add(_pObj,_offset); }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+inline void ex_prop_set_raw_strid ( void* _pObj, size_t _offset, const void* _value ) { *(strid_t*)ex_ptr_add(_pObj,_offset) = ex_strid((const char*)_value); }
+inline void ex_prop_get_raw_strid ( void* _pObj, size_t _offset, void* _value ) { (char*)_value = ex_strid_to_cstr(*(strid_t*)ex_ptr_add(_pObj,_offset)); }
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

@@ -26,10 +26,9 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-typedef struct ex_component_t {
-    const struct ex_class_t _; // TODO: confirm this
+EX_DEF_CLASS_BEGIN(ex_component_t)
     struct ex_entity_t* _owner;
-} ex_component_t;
+EX_DEF_CLASS_END(ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

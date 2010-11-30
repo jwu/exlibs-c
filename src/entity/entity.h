@@ -26,16 +26,14 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-typedef struct ex_entity_t {
+EX_DEF_CLASS_BEGIN(ex_entity_t)
     strid_t _name;
-
     // TODO: typeinfo -> component { 
     // why typeinfo instead of typeid? because we may have get_component( ent, base_type );
     // ex_hashmap_t* _type_to_comp 
     // } TODO end 
-
     ex_array_t* _comps;
-} ex_entity_t;
+EX_DEF_CLASS_END(ex_entity_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -45,13 +43,13 @@ typedef struct ex_entity_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_RESULT ex_entity_add_comp ( ex_component_t* _comp );
+EX_RESULT ex_entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_component_t* ex_entity_get_comp ( const char* _typename );
+ex_component_t* ex_entity_get_comp ( ex_entity_t* _ent, const char* _typename );
 
 // ######################### 
 #ifdef __cplusplus

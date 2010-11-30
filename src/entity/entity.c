@@ -13,6 +13,14 @@
 #include "entity.h"
 
 ///////////////////////////////////////////////////////////////////////////////
+// properties
+///////////////////////////////////////////////////////////////////////////////
+
+EX_DEF_PROPS_BEGIN(ex_entity_t)
+    EX_PROP( ex_entity_t, _name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
+EX_DEF_PROPS_END(ex_entity_t)
+
+///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -20,12 +28,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_RESULT ex_entity_add_comp ( ex_component_t* _comp ) {
+EX_RESULT ex_entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_component_t* ex_entity_get_comp ( const char* _typename ) {
+ex_component_t* ex_entity_get_comp ( ex_entity_t* _ent, const char* _typename ) {
 }

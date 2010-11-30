@@ -91,7 +91,7 @@ inline ex_rtti_t* ex_rtti_super ( ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_class_of ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass ) { 
+inline bool ex_rtti_classof ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass ) { 
     return _myclass->_classid == _yourclass->_classid;
 }
 
@@ -99,14 +99,14 @@ inline bool ex_rtti_class_of ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_child_of ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
+bool ex_rtti_childof ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_super_of ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) { 
-    return ex_rtti_child_of( _subclass, _myclass );
+inline bool ex_rtti_superof ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) { 
+    return ex_rtti_childof( _subclass, _myclass );
 }
 
 // ------------------------------------------------------------------ 
@@ -114,7 +114,7 @@ inline bool ex_rtti_super_of ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) {
 // ------------------------------------------------------------------ 
 
 inline bool ex_rtti_isa ( ex_rtti_t* _myclass, ex_rtti_t* _class ) { 
-    return ex_rtti_class_of(_myclass,_class) || ex_rtti_child_of(_myclass,_class);
+    return ex_rtti_classof(_myclass,_class) || ex_rtti_childof(_myclass,_class);
 }
 
 // ######################### 

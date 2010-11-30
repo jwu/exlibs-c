@@ -126,27 +126,27 @@ inline void free_ex_class_t(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define ex_class_of(_type,_objPtr) __ex_class_of((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_class_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
-    return ex_rtti_class_of( _obj->rtti, _rtti );
+#define ex_classof(_type,_objPtr) __ex_classof((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_classof( _obj->_rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define ex_child_of(_type,_objPtr) __ex_child_of((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_child_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
-    return ex_rtti_child_of( _obj->rtti, _rtti );
+#define ex_childof(_type,_objPtr) __ex_childof((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_childof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_childof( _obj->_rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define ex_super_of(_type,_objPtr) __ex_super_of((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_super_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
-    return ex_rtti_super_of( _obj->rtti, _rtti );
+#define ex_superof(_type,_objPtr) __ex_superof((ex_class_t*)_objPtr,EX_RTTI(_type))
+inline bool __ex_superof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    return ex_rtti_superof( _obj->_rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
@@ -155,7 +155,7 @@ inline bool __ex_super_of ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 
 #define ex_isa(_type,_objPtr) __ex_isa((ex_class_t*)_objPtr,EX_RTTI(_type))
 inline bool __ex_isa ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
-    return ex_rtti_isa( _obj->rtti, _rtti );
+    return ex_rtti_isa( _obj->_rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
