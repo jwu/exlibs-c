@@ -16,6 +16,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 void ex_register_classes () {
-    EX_REGISTER_CLASS(ex_object_t);
+    EX_REGISTER_CLASS(ex_class_t);
 }
 

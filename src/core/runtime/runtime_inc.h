@@ -16,7 +16,7 @@
 
 #include "rtti.h"
 #include "prop.h"
-#include "object.h"
+#include "class.h"
 
 // #################################################################################
 #endif // END RUNTIME_INC_H_1291008629

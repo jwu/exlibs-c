@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : object.c
+// File         : class.c
 // Author       : Wu Jie 
-// Last Change  : 11/29/2010 | 18:29:00 PM | Monday,November
+// Last Change  : 11/30/2010 | 14:23:16 PM | Tuesday,November
 // Description  : 
 // ======================================================================================
 
@@ -15,21 +15,24 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-EX_DEF_PROPS_BEGIN(ex_object_t,)
-EX_DEF_PROPS_END(ex_object_t)
+ex_rtti_t* __RTTI_ex_class_t = NULL;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_object_as ( ex_object_t* _obj, strid_t _typeID ) {
-    if ( ex_rtti_isa ( _obj->_rtti, _typeID ) )
+void __ex_register_class_ex_class_t () {
+    __RTTI_ex_class_t = ex_rtti_register_class ( "ex_class_t", NULL );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void* __ex_class_dynamic_cast ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+    if ( ex_rtti_isa ( _obj->_rtti, _rtti ) )
         return _obj;
-    if ( ex_rtti_superclass_of( _obj->_rtti, _typeID ) )
+    if ( ex_rtti_superclass_of( _obj->_rtti, _rtti ) )
         return _obj;
     return NULL;
 }

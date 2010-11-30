@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : object.h
+// File         : class.h
 // Author       : Wu Jie 
-// Last Change  : 11/26/2010 | 16:35:55 PM | Friday,November
+// Last Change  : 11/30/2010 | 14:23:02 PM | Tuesday,November
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef OBJECT_H_1290760556
-#define OBJECT_H_1290760556
+#ifndef CLASS_H_1291098183
+#define CLASS_H_1291098183
 // #################################################################################
 
 // ######################### 
@@ -27,23 +27,23 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 //
-typedef struct ex_object_t {
+typedef struct ex_class_t {
     ex_rtti_t* _rtti;
-} ex_object_t;
+} ex_class_t;
 
 //
-extern strid_t __CLASSID_ex_object_t;
-extern void ex_register_class_ex_object_t ();
+extern ex_rtti_t* __RTTI_ex_class_t;
+extern void __ex_register_class_ex_class_t ();
 
 //
-inline ex_object_t* ex_object_t_alloc() {
-    ex_object_t* obj = (ex_object_t*)ex_malloc(sizeof(ex_object_t));
-    obj->_rtti = ex_rtti_get(__CLASSID_ex_object_t);
+inline ex_class_t* alloc_ex_class_t() {
+    ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(ex_class_t));
+    obj->_rtti = __RTTI_ex_class_t;
     return obj;
 }
 
 //
-inline void ex_object_t_free(void* _ptr) {
+inline void free_ex_class_t(void* _ptr) {
     ex_free (_ptr);
 }
 
@@ -55,29 +55,48 @@ inline void ex_object_t_free(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+#define EX_RTTI(_name) \
+    (__RTTI_##_name)
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 #define EX_CLASSID(_name) \
-    __CLASSID_##_name
+    (EX_RTTI(_name)->_classid)
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 #define EX_REGISTER_CLASS(_name) \
-    ex_register_class_##_name()
+    __ex_register_class_##_name()
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_BEGIN(_name) \
+#define EX_DEF_CLASS_BEGIN(_name) \
+    extern void __ex_register_properties_##_name (); \
+    extern ex_rtti_t* __RTTI_##_name; /*for EX_RTTI, EX_CLASSID*/ \
+    inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __RTTI_##_name = ex_rtti_register_class ( #_name, EX_RTTI(ex_class_t) ); \
+        __ex_register_properties_##_name(); \
+    } \
     typedef struct _name { \
-        const struct ex_object_t _;
+        const struct ex_class_t _;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_SUPER_BEGIN(_name,_super) \
+#define EX_DEF_CLASS_SUPER_BEGIN(_name,_super) \
+    extern void __ex_register_properties_##_name (); \
+    extern ex_rtti_t* __RTTI_##_name; /*for EX_RTTI, EX_CLASSID*/ \
+    inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __RTTI_##_name = ex_rtti_register_class ( #_name, EX_RTTI(_super) ); \
+        __ex_register_properties_##_name(); \
+    } \
     typedef struct _name { \
         const struct _super _;
 
@@ -85,19 +104,17 @@ inline void ex_object_t_free(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_END(_name) \
+#define EX_DEF_CLASS_END(_name) \
     } _name; \
-    extern strid_t __CLASSID_##_name; /*for EX_CLASSID*/ \
-    extern void ex_register_class_##_name (); /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-    inline _name* _name##_alloc() { \
-        ex_object_t* obj = (ex_object_t*)ex_malloc(sizeof(_name)); \
-        obj->_rtti = ex_rtti_get(EX_CLASSID(_name)); \
-        return obj; \
+    inline _name* alloc_##_name() { \
+        ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(_name)); \
+        obj->_rtti = EX_RTTI(_name); \
+        return (_name*)obj; \
     } \
     /*NOTE: the reason to add free function is for function pointer. 
      * remeber ex_free is a macro not a function, so can't be treat as 
      * a function pointer like void (*func) (void*) */ \
-    inline void _name##_free(void* _ptr) { \
+    inline void free_##_name(void* _ptr) { \
         ex_free(_ptr); \
     }
 
@@ -109,8 +126,8 @@ inline void ex_object_t_free(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DYNAMIC_CAST(_type,_obj) (_type*)ex_object_as((ex_object_t*)_obj,EX_CLASSID(_type))
-void* ex_object_as ( ex_object_t* _obj, strid_t _typeID );
+#define EX_DYNAMIC_CAST(_objPtr,_type) (_type*)__ex_class_dynamic_cast((ex_class_t*)_objPtr,EX_RTTI(_type))
+void* __ex_class_dynamic_cast ( ex_class_t* _obj, ex_rtti_t* _rtti );
 
 // ######################### 
 #ifdef __cplusplus
@@ -119,7 +136,5 @@ void* ex_object_as ( ex_object_t* _obj, strid_t _typeID );
 // ######################### 
 
 // #################################################################################
-#endif // END OBJECT_H_1290760556
+#endif // END CLASS_H_1291098183
 // #################################################################################
-
-

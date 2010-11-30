@@ -27,7 +27,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_component_t {
-    const struct ex_object_t _; // TODO: confirm this
+    const struct ex_class_t _; // TODO: confirm this
     struct ex_entity_t* _owner;
 } ex_component_t;
 

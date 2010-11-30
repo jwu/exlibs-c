@@ -72,33 +72,31 @@ typedef struct ex_prop_t {
 // };
 
 // ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_BEGIN(_className)
+// Desc: EX_DEF_PROPS_BEGIN(_name)
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_PROPS_BEGIN(_className,_superClassName) \
-    strid_t __CLASSID_##_className; \
-    void ex_register_class_##_className () { \
-        ex_rtti_t* rtti = ex_rtti_register_class ( #_className, #_superClassName ); \
-        static const ex_prop_t __PROPS_##_className[] = { \
+#define EX_DEF_PROPS_BEGIN(_name) \
+    ex_rtti_t* __RTTI_##_name = NULL; \
+    void __ex_register_properties_##_name () { \
+        static const ex_prop_t __PROPS_##_name[] = { \
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_PROP( _className, _member, _propName, _attrs, _set_func, _get_func ) \
-    { _propName, _attrs, offsetof(struct _className, _member), _set_func, _get_func },
+#define EX_PROP( _name, _member, _propName, _attrs, _set_func, _get_func ) \
+    { _propName, _attrs, offsetof(struct _name, _member), _set_func, _get_func },
 
 // ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_END(_className)
+// Desc: EX_DEF_PROPS_END(_name)
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_PROPS_END(_className) \
+#define EX_DEF_PROPS_END(_name) \
             { "", 0, -1, NULL, NULL } \
-        }; /*end of __PROPS_##_className*/ \
-        if ( rtti ) { \
-            __CLASSID_##_className = rtti->_classid; /*for the use of EX_CLASSID(name)*/ \
-            ex_rtti_register_properties ( rtti, __PROPS_##_className, EX_ARRAY_COUNT(__PROPS_##_className)-1 ); \
-        } \
+        }; /*end of __PROPS_##_name*/ \
+        ex_rtti_t* rtti = EX_RTTI(_name); \
+        ex_assert_return( rtti, /**/, "failed to register class %s", #_name ); \
+        ex_rtti_register_properties ( rtti, __PROPS_##_name, EX_ARRAY_COUNT(__PROPS_##_name)-1 ); \
     }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -75,29 +75,31 @@ bool ex_rtti_is_inited () { return _initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_register_class ( char* _class, char* _super )
+ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super )
 {
     strid_t my_classid = ex_strid(_class);
-    ex_rtti_t* my_rtti = ex_rtti_get(my_classid);
-    strid_t super_classid;
-    ex_rtti_t* super_rtti;
+    ex_rtti_t* my_rtti = ex_rtti_get(_class);
+    ex_rtti_t* super_rtti = NULL;
+    bool result = false;
 
     // check if my class already exists.
     ex_assert_return ( my_rtti == NULL, NULL, "the class %s already registered.", _class );
 
-    // if we have super class, get it.
-    if ( _super ) {
-        super_classid = ex_strid(_super);
-        super_rtti = ex_rtti_get(super_classid);
-        ex_assert_return ( super_rtti, NULL, "the class %s already registered.", _class );
-    }
-
     // we got everything we want, now we can create rtti info.
     my_rtti = (ex_rtti_t*)ex_malloc ( sizeof(ex_rtti_t) );
-    my_rtti->_super = super_rtti;
+    my_rtti->_super = _super;
     my_rtti->_classid = my_classid;
     my_rtti->_props = NULL;
 
+    // insert the new rtti to the hashmap
+    result = ex_hashmap_insert( _classid_to_rtti, &my_classid, &my_rtti, NULL );
+    if ( result == false ) {
+        ex_warning( "failed to insert new rtti info in to hashmap" );
+        ex_free (my_rtti);
+        return NULL;
+    }
+
+    //
     return my_rtti;
 }
 
@@ -118,9 +120,10 @@ void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, ui
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( strid_t _classid )
+ex_rtti_t* ex_rtti_get ( char* _class )
 {
-    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &_classid, NULL );
+    strid_t classID = ex_strid(_class);
+    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &classID, NULL );
     if ( result != NULL )
         return *result;
     return NULL;
@@ -130,11 +133,11 @@ ex_rtti_t* ex_rtti_get ( strid_t _classid )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, strid_t _super_classid ) 
+bool ex_rtti_subclass_of ( ex_rtti_t* _myclass, ex_rtti_t* _superclass ) 
 { 
     ex_rtti_t* tmp = ex_rtti_super(_myclass);
     while ( tmp ) {
-        if ( ex_rtti_class_of(tmp, _super_classid) ) 
+        if ( ex_rtti_class_of(tmp, _superclass) ) 
             return true;
         tmp = ex_rtti_super(tmp);
     }
