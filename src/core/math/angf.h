@@ -37,6 +37,32 @@ typedef struct ex_angf_t {
 
 // ------------------------------------------------------------------ 
 /*!
+ @fn inline void ex_angf_zero ( ex_angf_t* _a ) 
+ @param _a the in angle
+ @details
+ set the angle to zero radians.
+*/// ------------------------------------------------------------------ 
+
+inline void ex_angf_zero ( ex_angf_t* _a ) { 
+    _a->rad = 0.0f;
+}
+
+// ------------------------------------------------------------------ 
+/*!
+ @fn inline void ex_angf_set_by_radians_nosafe ( ex_angf_t* _a, float _radians ) 
+ @param _a the in angle
+ @param _radians the in radians must in range [0,2pi]
+ @details
+ set the angle by radians, the function will not check the if the radians 
+ exceed the range. That make it nosafe but faster.
+*/// ------------------------------------------------------------------ 
+
+inline void ex_angf_set_by_radians_nosafe ( ex_angf_t* _a, float _radians ) { 
+    _a->rad = _radians;
+}
+
+// ------------------------------------------------------------------ 
+/*!
  @fn inline void ex_angf_set_by_radians ( ex_angf_t* _a, float _radians ) 
  @param _a the in angle
  @param _radians the in radians
@@ -45,10 +71,12 @@ typedef struct ex_angf_t {
 */// ------------------------------------------------------------------ 
 
 inline void ex_angf_set_by_radians ( ex_angf_t* _a, float _radians ) { 
-    if ( _a->rad >= 0.0f )
+    if ( _radians > (float)EX_TWO_PI )
         _a->rad = fmodf(_radians,(float)EX_TWO_PI); 
-    else
+    else if ( _radians < 0.0f )
         _a->rad = (float)EX_TWO_PI + fmodf(_radians,(float)EX_TWO_PI); 
+    else
+        _a->rad = _radians;
     ex_assert( !EX_IS_NAN(_a->rad), "error: NaN value" );
 }
 
@@ -102,7 +130,7 @@ inline float ex_angf_to_degrees_360 ( ex_angf_t* _a ) {
 */// ------------------------------------------------------------------ 
 
 inline void ex_angf_neg ( ex_angf_t* _a ) { 
-    ex_angf_set_by_radians( _a, -_a->rad );
+    ex_angf_set_by_radians_nosafe( _a, EX_TWO_PI - _a->rad );
 }
 
 // ------------------------------------------------------------------ 
@@ -115,7 +143,7 @@ inline void ex_angf_neg ( ex_angf_t* _a ) {
 */// ------------------------------------------------------------------ 
 
 inline void ex_angf_get_neg ( ex_angf_t* _r, ex_angf_t* _a ) { 
-    ex_angf_set_by_radians( _r, -_a->rad );
+    ex_angf_set_by_radians_nosafe( _r, EX_TWO_PI - _a->rad );
 }
 
 // ------------------------------------------------------------------ 

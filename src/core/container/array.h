@@ -269,28 +269,28 @@ inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_array_remove_index ( ex_array_t* _array, size_t _idx )
+ @fn void ex_array_remove_at ( ex_array_t* _array, size_t _idx )
  @param _array the in array
  @param _idx the remove element index. 
  @details remove the element by index.
- @sa ex_array_remove_index_fast
+ @sa ex_array_remove_at_fast
 */// ------------------------------------------------------------------ 
 
-void ex_array_remove_index ( ex_array_t* _array, size_t _idx );
+void ex_array_remove_at ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx )
+ @fn void ex_array_remove_at_fast ( ex_array_t* _array, size_t _idx )
  @param _array the in array
  @param _idx the remove element index. 
  @details remove the element by index. the method will move the last
  element to the removed element adress, which make it faster than \ref
- ex_array_erase.
+ ex_array_remove_at.
  @note using the method will break the indexing order in the array.
- @sa ex_array_remove_index
+ @sa ex_array_remove_at
 */// ------------------------------------------------------------------ 
 
-void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx );
+void ex_array_remove_at_fast ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -302,6 +302,16 @@ void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx );
 */// ------------------------------------------------------------------ 
 
 void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn void ex_array_remove_all ( ex_array_t* _array )
+ @param _array the in array
+ @details remove all elements in the array. This is very fast, because 
+ it won't do anything but just set the array count to zero. 
+*/// ------------------------------------------------------------------ 
+
+ void ex_array_remove_all ( ex_array_t* _array );
 
 // TODO { 
 // ------------------------------------------------------------------ 

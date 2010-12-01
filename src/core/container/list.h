@@ -76,8 +76,8 @@ void ex_list_insert_front_nomng ( ex_list_t* _list, ex_list_node_t* _at, const v
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_list_node_t* ex_list_erase ( ex_list_t* _list, ex_list_node_t* _at );
-ex_list_node_t* ex_list_erase_nomng ( ex_list_t* _list, ex_list_node_t* _at );
+ex_list_node_t* ex_list_remove_at ( ex_list_t* _list, ex_list_node_t* _at );
+ex_list_node_t* ex_list_remove_at_nomng ( ex_list_t* _list, ex_list_node_t* _at );
 
 // ------------------------------------------------------------------ 
 // Desc: 

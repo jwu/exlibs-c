@@ -75,8 +75,8 @@ static void normal ()
         }
 
         // erase
-        ex_pool_erase( pool, 4 );
-        ex_pool_erase( pool, 10 );
+        ex_pool_remove_at( pool, 4 );
+        ex_pool_remove_at( pool, 10 );
         ex_pool_insert_int32( pool, 200 );
         ex_pool_insert_int32( pool, 210 );
         EX_TEST( ex_pool_get_int32(pool,10) == 200 );
@@ -121,22 +121,22 @@ static void invalid()
         val = ex_pool_get_int32 ( pool, 40 ); // ERROR
 
         // erase
-        ex_pool_erase( pool, 40  ); // ERROR
-        ex_pool_erase( pool, 0  );
-        ex_pool_erase( pool, 1  );
-        ex_pool_erase( pool, 2  );
-        ex_pool_erase( pool, 3  );
-        ex_pool_erase( pool, 4  );
-        ex_pool_erase( pool, 4  ); // ERROR
-        ex_pool_erase( pool, 5  );
-        ex_pool_erase( pool, 6  );
-        ex_pool_erase( pool, 7  );
-        ex_pool_erase( pool, 8  );
-        ex_pool_erase( pool, 9  );
-        ex_pool_erase( pool, 10 ); // ERROR
-        ex_pool_erase( pool, 11 ); // ERROR
-        ex_pool_erase( pool, 12 ); // ERROR
-        ex_pool_erase( pool, 13 ); // ERROR
+        ex_pool_remove_at( pool, 40  ); // ERROR
+        ex_pool_remove_at( pool, 0  );
+        ex_pool_remove_at( pool, 1  );
+        ex_pool_remove_at( pool, 2  );
+        ex_pool_remove_at( pool, 3  );
+        ex_pool_remove_at( pool, 4  );
+        ex_pool_remove_at( pool, 4  ); // ERROR
+        ex_pool_remove_at( pool, 5  );
+        ex_pool_remove_at( pool, 6  );
+        ex_pool_remove_at( pool, 7  );
+        ex_pool_remove_at( pool, 8  );
+        ex_pool_remove_at( pool, 9  );
+        ex_pool_remove_at( pool, 10 ); // ERROR
+        ex_pool_remove_at( pool, 11 ); // ERROR
+        ex_pool_remove_at( pool, 12 ); // ERROR
+        ex_pool_remove_at( pool, 13 ); // ERROR
     }
     ex_pool_free ( pool );
 }

@@ -24,7 +24,7 @@
 #undef main
 
 // exsdk
-#include "../../exsdk.h"
+#include "exsdk.h"
 
 // #include "todo.h"
 

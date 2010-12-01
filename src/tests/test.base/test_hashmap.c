@@ -51,7 +51,7 @@ static void normal ()
         // erase
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
-            EX_TEST ( ex_hashmap_erase(hashmap, &key) != NULL );
+            EX_TEST ( ex_hashmap_remove_at(hashmap, &key) != NULL );
         }
         EX_TEST ( ex_hashmap_len(hashmap) == 0 );
 

@@ -21,7 +21,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "pool.h"
-#include "../algo/hash.h"
+#include "core/algo/hash.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // foreach
@@ -129,7 +129,7 @@ bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const v
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, const void* _key );
+void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key );
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -147,7 +147,7 @@ void* ex_array_append_nomng ( ex_array_t* _array, const void* _value )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_remove_index ( ex_array_t* _array, size_t _idx )
+void ex_array_remove_at ( ex_array_t* _array, size_t _idx )
 {
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->_length, /*dummy*/, "error: _idx out of range" );
@@ -167,7 +167,7 @@ void ex_array_remove_index ( ex_array_t* _array, size_t _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_remove_index_fast ( ex_array_t* _array, size_t _idx )
+void ex_array_remove_at_fast ( ex_array_t* _array, size_t _idx )
 {
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->_length, /*dummy*/, "error: _idx out of range" );
@@ -203,3 +203,11 @@ void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count )
     _array->_length -= _count;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_array_remove_all ( ex_array_t* _array ) {
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+    _array->_length = 0;
+}

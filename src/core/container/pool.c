@@ -274,7 +274,7 @@ int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_erase ( ex_pool_t* _pool, int _idx )
+void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx )
 {
     ex_pool_node_t* node = NULL;
 

@@ -14,6 +14,7 @@
 #include "compiler.h"
 #include "platform.h"
 #include "macro.h"
+#include "constants.h"
 
 #include "external.h"
 #include "types.h" // depends external

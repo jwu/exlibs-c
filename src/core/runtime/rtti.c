@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "rtti.h"
-#include "../string/strid.h"
+#include "core/string/strid.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

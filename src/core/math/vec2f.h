@@ -535,6 +535,7 @@ inline bool ex_vec2f_normalize ( ex_vec2f_t* _v ) {
 
     inv_length = ex_inv_sqrtf( length_sqr );
     ex_vec2f_mul_scalar ( _v, _v, inv_length );
+    return true;
 }
 
 // ------------------------------------------------------------------ 
@@ -567,6 +568,7 @@ inline bool ex_vec2f_get_normalize ( ex_vec2f_t* _r, ex_vec2f_t* _v ) {
 
     inv_length = ex_inv_sqrtf( length_sqr );
     ex_vec2f_mul_scalar ( _r, _v, inv_length );
+    return true;
 }
 
 // ------------------------------------------------------------------ 

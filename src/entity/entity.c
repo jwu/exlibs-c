@@ -29,6 +29,7 @@ EX_DEF_PROPS_END(ex_entity_t)
 // ------------------------------------------------------------------ 
 
 EX_RESULT ex_entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp ) {
+    return EX_RESULT_OK;
 }
 
 // ------------------------------------------------------------------ 
@@ -47,4 +48,6 @@ ex_component_t* ex_entity_get_comp ( ex_entity_t* _ent, const char* _typename ) 
         if ( ex_rtti_isa( ex_rtti_info(comp), rtti ) )
             return comp;
     } ex_array_each_end
+
+    return NULL;
 }

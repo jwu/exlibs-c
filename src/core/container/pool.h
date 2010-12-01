@@ -152,7 +152,7 @@ inline wchar_t* ex_pool_get_wstring ( ex_pool_t* _pool, int _idx ) { return *((w
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_erase ( ex_pool_t* _pool, int _idx );
+void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx );
 
 // ######################### 
 #ifdef __cplusplus

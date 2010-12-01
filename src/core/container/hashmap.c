@@ -11,8 +11,8 @@
 
 #include "exsdk.h"
 #include "hashmap.h"
-#include "../algo/bit.h"
-#include "../math/mathop.h"
+#include "core/algo/bit.h"
+#include "core/math/mathop.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // fwd-decls
@@ -325,7 +325,7 @@ bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const v
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, const void* _key )
+void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key )
 {
     size_t hash_next;
     uint32 hash_idx = _hash_index ( _hashmap, _key ); 
@@ -363,7 +363,7 @@ void* ex_hashmap_erase ( ex_hashmap_t* _hashmap, const void* _key )
         _getnode(_hashmap,prev_idx)->next = next_idx;
 
     // now erase node
-    node = ex_pool_erase ( _hashmap->_nodes, hash_next );
+    node = ex_pool_remove_at ( _hashmap->_nodes, hash_next );
     node->next = -1;
     node->prev = -1;
     return _getvalue ( _hashmap, hash_next );

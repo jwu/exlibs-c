@@ -43,7 +43,7 @@ static void normal () {
         // test erase
         node = ex_list_head(list);
         while ( node ) {
-            node = ex_list_erase ( list, node );
+            node = ex_list_remove_at ( list, node );
         }
         EX_TEST( ex_list_len(list) == 0 );
     }

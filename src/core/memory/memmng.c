@@ -191,7 +191,7 @@ void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const char* _f
 // ------------------------------------------------------------------ 
 
 void _reclaim_au ( alloc_unit_t* _au ) {
-    if ( ex_hashmap_erase ( au_map, &_au->org_addr ) == NULL )
+    if ( ex_hashmap_remove_at ( au_map, &_au->org_addr ) == NULL )
         ex_error ( "failed to reclaim alloc unit" );
 
     // append to reserve alloc info
@@ -223,7 +223,7 @@ inline alloc_unit_t* _get_au ( void* _ptr ) {
 
 //
 inline int _rearrange_au ( void* _ptr, alloc_unit_t* au ) {
-    if ( ex_hashmap_erase ( au_map, &_ptr ) == NULL )
+    if ( ex_hashmap_remove_at ( au_map, &_ptr ) == NULL )
         return -1;
     return _push_au ( au );
 }

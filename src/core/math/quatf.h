@@ -22,8 +22,8 @@ extern "C" {
 #endif
 // ######################### 
 
-extern struct ex_mat33f_t;
-extern struct ex_mat44f_t;
+struct ex_mat33f_t;
+struct ex_mat44f_t;
 
 //! @defgroup ex_quatf_t quaternion float
 //! @ingroup Math

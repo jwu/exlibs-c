@@ -569,6 +569,7 @@ inline bool ex_vec3f_normalize ( ex_vec3f_t* _v ) {
 
     inv_length = ex_inv_sqrtf( length_sqr );
     ex_vec3f_mul_scalar ( _v, _v, inv_length );
+    return true;
 }
 
 // ------------------------------------------------------------------ 
@@ -601,6 +602,7 @@ inline bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
 
     inv_length = ex_inv_sqrtf( length_sqr );
     ex_vec3f_mul_scalar ( _r, _v, inv_length );
+    return true;
 }
 
 // ------------------------------------------------------------------ 

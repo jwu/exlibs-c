@@ -29,10 +29,10 @@ int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ...
     int     result = -1;
     int     buffer_count = 1024;
     char*   pBuffer = NULL;
+    int ret;
 
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
     uint type = MB_OK;
-    int ret;
 #endif
 
     // keep get va string until success 
