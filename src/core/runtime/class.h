@@ -126,6 +126,14 @@ inline void free_ex_class_t(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
+    return ((ex_class_t*)_obj)->_rtti;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 #define ex_classof(_type,_objPtr) __ex_classof((ex_class_t*)_objPtr,EX_RTTI(_type))
 inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     return ex_rtti_classof( _obj->_rtti, _rtti );
