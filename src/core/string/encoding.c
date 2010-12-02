@@ -94,12 +94,12 @@ int ex_ucs2_to_utf8 ( const wchar_t* _instr, int _inlen, char* _outstr )
 {
     int outlen = 0;
     int todo = _inlen;
-    const uint16 *p = _instr;
+    const uint16* p = (const uint16*)_instr;
     int l;
 
     while ( todo > 0 ) {
         if (_outstr != NULL) {
-            l = _utf_char2bytes(*p, _outstr);
+            l = _utf_char2bytes(*p, (uint8*)_outstr);
             _outstr += l;
         }
         else

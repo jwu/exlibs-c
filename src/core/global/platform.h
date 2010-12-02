@@ -28,8 +28,9 @@
 
 #define EX_WIN32    0x01
 #define EX_LINUX    0x02
-#define EX_XENON    0x03
-#define EX_PS3      0x04
+#define EX_MAC      0x03
+#define EX_XENON    0x04
+#define EX_PS3      0x05
 
 // ------------------------------------------------------------------
 // Desc: Platform choose
@@ -39,6 +40,8 @@
     #define EX_PLATFORM EX_WIN32
 #elif defined ( __EX_LINUX__ )
     #define EX_PLATFORM EX_LINUX 
+#elif defined ( __EX_MAC__ )
+    #define EX_PLATFORM EX_MAC 
 #elif defined ( __EX_XENON__ )
     #define EX_PLATFORM EX_XENON 
 #elif defined ( __EX_PS3__ )

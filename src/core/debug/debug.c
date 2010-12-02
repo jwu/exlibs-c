@@ -68,7 +68,7 @@ bool assert_failed( bool* _pDoAssert, const char* _file_name, const char* _funct
     _short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Assert Failed: %s(%d)::%s, %s", _file_name, _line_nr, short_name, pBuffer );
+    ex_log ( "Assert Failed: %s(%zd)::%s, %s", _file_name, _line_nr, short_name, pBuffer );
     mbResult = ex_message_box( EX_MSG_BOX_FAILED, "Assert Failed", 
                             "|ASSERT_FAILED|\n"
                             "FileName: %s\n"
@@ -115,7 +115,7 @@ bool error_msg( bool* _pDoAssert, const char* _file_name, const char* _function_
     _short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
+    ex_log ( "Error: %s(%zd)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
     mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
 
     // release buffer we allocate
@@ -156,7 +156,7 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
     _short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
+    ex_log ( "Warning: %s(%zd)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
     mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
 
     // release buffer we allocate

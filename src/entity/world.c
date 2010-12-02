@@ -22,9 +22,9 @@
 
 void ex_world_update ( ex_world_t* _world ) {
     //
-    _update_ai();
-    _update_physics();
+    // _update_ai();
+    // _update_physics();
 
     //
-    _render_scene();
+    // _render_scene();
 }

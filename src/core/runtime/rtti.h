@@ -61,7 +61,7 @@ void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, ui
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( char* _class );
+ex_rtti_t* ex_rtti_get ( const char* _class );
 
 // ------------------------------------------------------------------ 
 // Desc: 

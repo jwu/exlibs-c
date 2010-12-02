@@ -267,7 +267,7 @@ void _dump () {
             char text[2048];
             ex_memzero ( text, 2048 );
             snprintf ( text, 2048, 
-                       "%s:%d: error memory leak\r\n"
+                       "%s:%zd: error memory leak\r\n"
                        "function name:  %s\r\n"
                        "tag name:       %s\r\n"
                        "original addr:  %#.8lx\r\n"
@@ -275,13 +275,13 @@ void _dump () {
                        "original size:  %lu(%#.8lX)\r\n"
                        "debug size:     %lu(%#.8lX)\r\n"
                        "alloc nr:       %lu(%#.8lX)\r\n"
-                       "thread ID:      %lu(%#.8lX)\r\n"
+                       "thread ID:      %u(%#.8X)\r\n"
                        "\r\n"
                        ,au->file_name ,au->line_nr 
                        ,au->func_name 
                        ,au->tag_name 
-                       ,au->org_addr 
-                       ,au->dbg_addr 
+                       ,ex_ptr_to_addr(au->org_addr) 
+                       ,ex_ptr_to_addr(au->dbg_addr) 
                        ,au->org_size, au->org_size 
                        ,au->dbg_size, au->dbg_size 
                        ,au->alloc_nr, au->alloc_nr 

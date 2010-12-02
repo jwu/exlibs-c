@@ -70,7 +70,7 @@ inline void ex_angf_set_by_radians_nosafe ( ex_angf_t* _a, float _radians ) {
  set the angle by radians
 */// ------------------------------------------------------------------ 
 
-inline void ex_angf_set_by_radians ( ex_angf_t* _a, float _radians ) { 
+static inline void ex_angf_set_by_radians ( ex_angf_t* _a, float _radians ) { 
     if ( _radians > (float)EX_TWO_PI )
         _a->rad = fmodf(_radians,(float)EX_TWO_PI); 
     else if ( _radians < 0.0f )

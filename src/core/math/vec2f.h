@@ -147,7 +147,7 @@ inline void ex_vec2f_neg ( ex_vec2f_t* _v ) {
  @sa ex_vec2f_neg
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec2f_get_neg ( ex_vec2f_t* _r, ex_vec2f_t* _v ) { 
+static inline void ex_vec2f_get_neg ( ex_vec2f_t* _r, ex_vec2f_t* _v ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
     _r->y = -_v->y; 
@@ -551,7 +551,7 @@ inline bool ex_vec2f_normalize ( ex_vec2f_t* _v ) {
  @sa ex_vec2f_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec2f_get_normalize ( ex_vec2f_t* _r, ex_vec2f_t* _v ) {
+static inline bool ex_vec2f_get_normalize ( ex_vec2f_t* _r, ex_vec2f_t* _v ) {
     float length_sqr, inv_length;
 
     ex_assert ( _r != _v, "can't use self as return value." );
@@ -616,7 +616,7 @@ inline void ex_vec2f_truncate ( ex_vec2f_t* _r, float _maxLength ) {
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec2f_project_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
+static inline void ex_vec2f_project_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
     float projection;
     ex_assert ( ex_vec2f_is_normalized(_to), "vector _to must be normalized." );
     projection = ex_vec2f_dot( _from, _to );
@@ -634,7 +634,7 @@ inline void ex_vec2f_project_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t*
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec2f_perpendicular_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
+static inline void ex_vec2f_perpendicular_to ( ex_vec2f_t* _r, ex_vec2f_t* _from, ex_vec2f_t* _to ) {
     ex_vec2f_t v;
     ex_assert ( ex_vec2f_is_normalized(_to), "vector _to must be normalized." );
     ex_vec2f_project_to ( &v, _from, _to );

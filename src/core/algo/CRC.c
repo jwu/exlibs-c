@@ -289,15 +289,14 @@
 
 uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
 {
-    register uint32 result = ~0UL;
+    register uint32 result = (uint32)~0UL;
 #if EX_USE_CRC_TABLE
     uint32 i;
+    const uint32 *buf_array = (const uint32*)_data;
 #if !EX_USE_CRC_TABLE_FAST 
     uint32 count;
 #endif
 #endif
-
-    const uint32 *buf_array = (const uint32*)_data;
 
     ex_assert( _data, "invalid _data value" );
     ex_assert( ex_is_pow_of_2(_crcSize), "_crcSize should be power of 2" );
@@ -413,9 +412,11 @@ uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
 
 uint32 calcCRC_str ( int _crcSize, const char* _data )
 {
-    register uint32 result = ~0UL;
+    register uint32 result = (uint32)~0UL;
+#if EX_USE_CRC_TABLE
     const char* p = _data;
     uint32 m = 0x7efefeff, n = ~m, i = 0;
+#endif
 
     ex_assert( _data, "invalid _data value" );
     ex_assert( ex_is_pow_of_2(_crcSize), "_crcSize should be power of 2" );

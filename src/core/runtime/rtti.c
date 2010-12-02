@@ -79,7 +79,6 @@ ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super )
 {
     strid_t my_classid = ex_strid(_class);
     ex_rtti_t* my_rtti = ex_rtti_get(_class);
-    ex_rtti_t* super_rtti = NULL;
     bool result = false;
 
     // check if my class already exists.
@@ -120,7 +119,7 @@ void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, ui
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( char* _class )
+ex_rtti_t* ex_rtti_get ( const char* _class )
 {
     strid_t classID = ex_strid(_class);
     ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &classID, NULL );

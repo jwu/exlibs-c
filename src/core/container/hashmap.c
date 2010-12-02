@@ -50,7 +50,6 @@ ex_hashmap_t* ex_hashmap_alloc ( size_t _key_bytes,
                            keycmp_t _keycmp )
 {
     ex_hashmap_t* hashmap = ex_malloc( sizeof(ex_hashmap_t) );
-    size_t i = 0;
 
     // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
     ex_assert_exec( ex_is_pow_of_2(_count), 
@@ -88,7 +87,6 @@ ex_hashmap_t* ex_hashmap_alloc ( size_t _key_bytes,
 ex_hashmap_t* ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp )
 {
     ex_hashmap_t* hashmap = ex_malloc_nomng( sizeof(ex_hashmap_t) );
-    size_t i = 0;
 
     // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
     ex_assert_exec( ex_is_pow_of_2(_count), 

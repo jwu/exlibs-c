@@ -230,7 +230,6 @@ void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count )
 int ex_pool_insert ( ex_pool_t* _pool, const void* _value )
 {
     ex_pool_node_t* node = NULL;
-    void* element = NULL;
     int idx = -1;
 
     node = _request_free_node(_pool);
@@ -252,7 +251,6 @@ int ex_pool_insert ( ex_pool_t* _pool, const void* _value )
 int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value )
 {
     ex_pool_node_t* node = NULL;
-    void* element = NULL;
     int idx = -1;
 
     node = _request_free_node_nomng(_pool);
