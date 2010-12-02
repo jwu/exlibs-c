@@ -67,7 +67,7 @@ typedef struct ex_quatf_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_zero ( ex_quatf_t* _r )
+ @fn static inline void ex_quatf_zero ( ex_quatf_t* _r )
  @retval _r the result quaternion
  @details make a zero quaternion:
 
@@ -78,11 +78,11 @@ typedef struct ex_quatf_t {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_zero ( ex_quatf_t* _r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z = 0.0f, _r->w = 0.0f; }
+static inline void ex_quatf_zero ( ex_quatf_t* _r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z = 0.0f, _r->w = 0.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_identity ( ex_quatf_t* _r )
+ @fn static inline void ex_quatf_identity ( ex_quatf_t* _r )
  @retval _r the result quaternion
  @details make a identity quaternion:
 
@@ -93,11 +93,11 @@ inline void ex_quatf_zero ( ex_quatf_t* _r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_identity ( ex_quatf_t* _r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z = 0.0f, _r->w = 1.0f; }
+static inline void ex_quatf_identity ( ex_quatf_t* _r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z = 0.0f, _r->w = 1.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_set ( ex_quatf_t* _r, float _x, float _y, float _z, float _w )
+ @fn static inline void ex_quatf_set ( ex_quatf_t* _r, float _x, float _y, float _z, float _w )
  @retval _r the result quaternion
  @param x
  @param y
@@ -112,11 +112,11 @@ inline void ex_quatf_identity ( ex_quatf_t* _r ) { _r->x = 0.0f, _r->y = 0.0f, _
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_set ( ex_quatf_t* _r, float _x, float _y, float _z, float _w ) { _r->x = _x, _r->y = _y, _r->z = _z, _r->w = _w; }
+static inline void ex_quatf_set ( ex_quatf_t* _r, float _x, float _y, float _z, float _w ) { _r->x = _x, _r->y = _y, _r->z = _z, _r->w = _w; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_set_from_axis_radians ( ex_quatf_t* _r, ex_vec3f_t* _axis, float _radians )
+ @fn static inline void ex_quatf_set_from_axis_radians ( ex_quatf_t* _r, ex_vec3f_t* _axis, float _radians )
  @retval _r the result quaternion
  @param _axis
  @param _radians
@@ -132,7 +132,7 @@ inline void ex_quatf_set ( ex_quatf_t* _r, float _x, float _y, float _z, float _
  \f]
 */// ------------------------------------------------------------------ 
 
-extern inline void ex_quatf_set_from_axis_radians ( ex_quatf_t* _r, ex_vec3f_t* _axis, float _radians ) { 
+static inline void ex_quatf_set_from_axis_radians ( ex_quatf_t* _r, ex_vec3f_t* _axis, float _radians ) { 
     float half_radian;
     ex_assert( ex_vec3f_is_normalized(_axis), "axis have not been normalized." );
 
@@ -146,14 +146,14 @@ extern inline void ex_quatf_set_from_axis_radians ( ex_quatf_t* _r, ex_vec3f_t* 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs )
+ @fn static inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs )
  @param _lhs the left hand side quaternion
  @param _rhs the right hand side quaternion
  @return the result of the comparation
  @details compare if the two quaternion is equal to each other
 */// ------------------------------------------------------------------ 
 
-inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
+static inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
     return ex_is_equalf(_lhs->x,_rhs->x,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->y,_rhs->y,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS)
@@ -163,7 +163,7 @@ inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_neg ( ex_quatf_t* _r )
+ @fn static inline void ex_quatf_neg ( ex_quatf_t* _r )
  @retval _r the result quaternion
  @param _r the in quaternion
  @details get the negtive value from quaternion _r, override and return it as the result:
@@ -179,18 +179,18 @@ inline bool ex_quatf_is_equal ( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
  @sa ex_quatf_get_neg
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_neg ( ex_quatf_t* _r ) { _r->x = -_r->x; _r->y = -_r->y; _r->z = -_r->z; _r->w = -_r->w; }
+static inline void ex_quatf_neg ( ex_quatf_t* _r ) { _r->x = -_r->x; _r->y = -_r->y; _r->z = -_r->z; _r->w = -_r->w; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_get_neg ( ex_quatf_t* _r, ex_quatf_t* _q )
+ @fn static inline void ex_quatf_get_neg ( ex_quatf_t* _r, ex_quatf_t* _q )
  @retval _r the result quaternion
  @param _q
  @details get the negtive value from quaternion _q and set it in quaternion _r.
  @sa ex_quatf_neg
 */// ------------------------------------------------------------------ 
 
-extern inline void ex_quatf_get_neg ( ex_quatf_t* _r, ex_quatf_t* _q ) { 
+static inline void ex_quatf_get_neg ( ex_quatf_t* _r, ex_quatf_t* _q ) { 
     ex_assert ( _r != _q, "can't use self as return value." );
     _r->x = -_q->x; 
     _r->y = -_q->y; 
@@ -200,7 +200,7 @@ extern inline void ex_quatf_get_neg ( ex_quatf_t* _r, ex_quatf_t* _q ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_add ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs )
+ @fn static inline void ex_quatf_add ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side quaternion 
@@ -223,7 +223,7 @@ extern inline void ex_quatf_get_neg ( ex_quatf_t* _r, ex_quatf_t* _q ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_add ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) { 
+static inline void ex_quatf_add ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) { 
     _r->x = _lhs->x + _rhs->x; 
     _r->y = _lhs->y + _rhs->y; 
     _r->z = _lhs->z + _rhs->z; 
@@ -232,7 +232,7 @@ inline void ex_quatf_add ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_add_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
+ @fn static inline void ex_quatf_add_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side float 
@@ -252,7 +252,7 @@ inline void ex_quatf_add ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_add_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) {
+static inline void ex_quatf_add_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) {
     _r->x = _lhs->x + _rhs; 
     _r->y = _lhs->y + _rhs; 
     _r->z = _lhs->z + _rhs; 
@@ -261,7 +261,7 @@ inline void ex_quatf_add_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_sub ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs )
+ @fn static inline void ex_quatf_sub ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side quaternion 
@@ -284,7 +284,7 @@ inline void ex_quatf_add_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_sub ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) { 
+static inline void ex_quatf_sub ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) { 
     _r->x = _lhs->x - _rhs->x; 
     _r->y = _lhs->y - _rhs->y; 
     _r->z = _lhs->z - _rhs->z; 
@@ -293,7 +293,7 @@ inline void ex_quatf_sub ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_sub_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
+ @fn static inline void ex_quatf_sub_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side quaternion 
@@ -314,7 +314,7 @@ inline void ex_quatf_sub ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) 
  @sa ex_scalar_sub_quatf
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_sub_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) {
+static inline void ex_quatf_sub_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) {
     _r->x = _lhs->x - _rhs; 
     _r->y = _lhs->y - _rhs; 
     _r->z = _lhs->z - _rhs; 
@@ -323,7 +323,7 @@ inline void ex_quatf_sub_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_scalar_sub_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
+ @fn static inline void ex_scalar_sub_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side quaternion 
@@ -345,7 +345,7 @@ inline void ex_quatf_sub_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  @sa ex_quatf_sub_scalar
 */// ------------------------------------------------------------------ 
 
-inline void ex_scalar_sub_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs ) { 
+static inline void ex_scalar_sub_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs ) { 
     _r->x = _lhs - _rhs->x;
     _r->y = _lhs - _rhs->y;
     _r->z = _lhs - _rhs->z;
@@ -354,7 +354,7 @@ inline void ex_scalar_sub_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_mul ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs )
+ @fn static inline void ex_quatf_mul ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side quaternion 
@@ -388,7 +388,7 @@ inline void ex_scalar_sub_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
 
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_mul ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) { 
+static inline void ex_quatf_mul ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) { 
     float x, y, z, w;
 
     x = _lhs->x * _rhs->w + _lhs->w * _rhs->x + _lhs->z * _rhs->y - _lhs->y * _rhs->z;
@@ -401,7 +401,7 @@ inline void ex_quatf_mul ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_mul_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
+ @fn static inline void ex_quatf_mul_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion 
  @param _rhs right hand side float 
@@ -421,7 +421,7 @@ inline void ex_quatf_mul ( ex_quatf_t* _r, ex_quatf_t* _lhs, ex_quatf_t* _rhs ) 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_mul_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) { 
+static inline void ex_quatf_mul_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x * _rhs;
     _r->y = _lhs->y * _rhs;
     _r->z = _lhs->z * _rhs;
@@ -430,7 +430,7 @@ inline void ex_quatf_mul_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_scalar_div_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
+ @fn static inline void ex_scalar_div_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side float 
  @param _rhs right hand side quaternion 
@@ -451,7 +451,7 @@ inline void ex_quatf_mul_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_scalar_div_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs ) { 
+static inline void ex_scalar_div_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
     _r->y = _lhs / _rhs->y;
     _r->z = _lhs / _rhs->z;
@@ -460,7 +460,7 @@ inline void ex_scalar_div_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_div_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
+ @fn static inline void ex_quatf_div_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs )
  @retval _r the result quaternion
  @param _lhs left hand side quaternion
  @param _rhs right hand side float  
@@ -480,7 +480,7 @@ inline void ex_scalar_div_quatf ( ex_quatf_t* _r, float _lhs, ex_quatf_t* _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_div_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) { 
+static inline void ex_quatf_div_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
     _r->y = _lhs->y / _rhs;
     _r->z = _lhs->z / _rhs;
@@ -511,7 +511,7 @@ bool ex_quatf_get_inverse ( ex_quatf_t* _r, ex_quatf_t* _q );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_conjugate( ex_quatf_t* _r )
+ @fn static inline void ex_quatf_conjugate( ex_quatf_t* _r )
  @retval _r the result quaternion
  @param _r then in quaternion
  @details get the conjugate quaternion from _r, override and return it.
@@ -527,7 +527,7 @@ bool ex_quatf_get_inverse ( ex_quatf_t* _r, ex_quatf_t* _q );
  @sa ex_quatf_get_conjugate
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_conjugate( ex_quatf_t* _r ) {
+static inline void ex_quatf_conjugate( ex_quatf_t* _r ) {
     _r->x = -_r->x;
     _r->y = -_r->y;
     _r->z = -_r->z;
@@ -536,14 +536,14 @@ inline void ex_quatf_conjugate( ex_quatf_t* _r ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_quatf_get_conjugate ( ex_quatf_t* _r, ex_quatf_t* _q )
+ @fn static inline void ex_quatf_get_conjugate ( ex_quatf_t* _r, ex_quatf_t* _q )
  @retval _r the result quaternion
  @param _q then in quaternion
  @details get the conjugate quaternion from _r, set and return it to _q. 
  @sa ex_quatf_conjugate
 */// ------------------------------------------------------------------ 
 
-inline void ex_quatf_get_conjugate ( ex_quatf_t* _r, ex_quatf_t* _q ) {
+static inline void ex_quatf_get_conjugate ( ex_quatf_t* _r, ex_quatf_t* _q ) {
     _r->x = -_q->x;
     _r->y = -_q->y;
     _r->z = -_q->z;
@@ -552,7 +552,7 @@ inline void ex_quatf_get_conjugate ( ex_quatf_t* _r, ex_quatf_t* _q ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_quatf_dot( ex_quatf_t* _lhs, ex_quatf_t* _rhs )
+ @fn static inline float ex_quatf_dot( ex_quatf_t* _lhs, ex_quatf_t* _rhs )
  @param _lhs the left hand quaternion
  @param _rhs the right hand quaternion
  @return the dot product result
@@ -576,7 +576,7 @@ inline void ex_quatf_get_conjugate ( ex_quatf_t* _r, ex_quatf_t* _q ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline float ex_quatf_dot( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
+static inline float ex_quatf_dot( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
     return _lhs->x * _rhs->x 
          + _lhs->y * _rhs->y 
          + _lhs->z * _rhs->z 
@@ -585,33 +585,33 @@ inline float ex_quatf_dot( ex_quatf_t* _lhs, ex_quatf_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_quatf_len( ex_quatf_t* _r )
+ @fn static inline float ex_quatf_len( ex_quatf_t* _r )
  @param _r the in quaternion
  @return the length of the in quaternion
  @details return the length of quaternion _r
  @sa ex_quatf_lenSQR
 */// ------------------------------------------------------------------ 
 
-inline float ex_quatf_len( ex_quatf_t* _r ) {
+static inline float ex_quatf_len( ex_quatf_t* _r ) {
     return sqrtf ( ex_quatf_dot(_r,_r) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_quatf_lenSQR( ex_quatf_t* _r )
+ @fn static inline float ex_quatf_lenSQR( ex_quatf_t* _r )
  @param _r the in quaternion
  @return the length square of the in quaternion
  @details return the length square of quaternion _r
  @sa ex_quatf_len
 */// ------------------------------------------------------------------ 
 
-inline float ex_quatf_lenSQR( ex_quatf_t* _r ) {
+static inline float ex_quatf_lenSQR( ex_quatf_t* _r ) {
     return ex_quatf_dot(_r,_r);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_quatf_is_normalized( ex_quatf_t* _r )
+ @fn static inline bool ex_quatf_is_normalized( ex_quatf_t* _r )
  @param _r the in quaternion
  @return if the inverse operation successed 
  - true: successful
@@ -621,7 +621,7 @@ inline float ex_quatf_lenSQR( ex_quatf_t* _r ) {
  @sa ex_quatf_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_quatf_is_normalized( ex_quatf_t* _r ) {
+static inline bool ex_quatf_is_normalized( ex_quatf_t* _r ) {
     return ex_is_equalf( ex_quatf_lenSQR(_r), 1.0f, EX_FLOAT_EPS );
 }
 
@@ -638,7 +638,7 @@ inline bool ex_quatf_is_normalized( ex_quatf_t* _r ) {
  @sa ex_quatf_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_quatf_get_normalize( ex_quatf_t* _r, ex_quatf_t* _q ) {
+static inline bool ex_quatf_get_normalize( ex_quatf_t* _r, ex_quatf_t* _q ) {
     float len_sqr, inv_len;
 
     len_sqr = ex_quatf_lenSQR(_q);
@@ -668,7 +668,7 @@ inline bool ex_quatf_get_normalize( ex_quatf_t* _r, ex_quatf_t* _q ) {
  @sa ex_quatf_get_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_quatf_normalize( ex_quatf_t* _r ) {
+static inline bool ex_quatf_normalize( ex_quatf_t* _r ) {
     float len_sqr, inv_len;
 
     len_sqr = ex_quatf_lenSQR(_r);

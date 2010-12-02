@@ -33,17 +33,19 @@ typedef struct ex_class_t {
 
 //
 extern ex_rtti_t* __RTTI_ex_class_t;
-extern void __ex_register_class_ex_class_t ();
+static inline void __ex_register_class_ex_class_t () { 
+    __RTTI_ex_class_t = ex_rtti_register_class ( "ex_class_t", NULL );
+}
 
 //
-inline ex_class_t* alloc_ex_class_t() {
+static inline ex_class_t* alloc_ex_class_t() {
     ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(ex_class_t));
     obj->_rtti = __RTTI_ex_class_t;
     return obj;
 }
 
 //
-inline void free_ex_class_t(void* _ptr) {
+static inline void free_ex_class_t(void* _ptr) {
     ex_free (_ptr);
 }
 
@@ -79,7 +81,7 @@ inline void free_ex_class_t(void* _ptr) {
 #define EX_DEF_CLASS_BEGIN(_name) \
     extern void __ex_register_properties_##_name (); \
     extern ex_rtti_t* __RTTI_##_name; /*for EX_RTTI, EX_CLASSID*/ \
-    inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+    static inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
         __RTTI_##_name = ex_rtti_register_class ( #_name, EX_RTTI(ex_class_t) ); \
         __ex_register_properties_##_name(); \
     } \
@@ -93,7 +95,7 @@ inline void free_ex_class_t(void* _ptr) {
 #define EX_DEF_CLASS_SUPER_BEGIN(_name,_super) \
     extern void __ex_register_properties_##_name (); \
     extern ex_rtti_t* __RTTI_##_name; /*for EX_RTTI, EX_CLASSID*/ \
-    inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+    static inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
         __RTTI_##_name = ex_rtti_register_class ( #_name, EX_RTTI(_super) ); \
         __ex_register_properties_##_name(); \
     } \
@@ -106,7 +108,7 @@ inline void free_ex_class_t(void* _ptr) {
 
 #define EX_DEF_CLASS_END(_name) \
     } _name; \
-    inline _name* alloc_##_name() { \
+    static inline _name* alloc_##_name() { \
         ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(_name)); \
         obj->_rtti = EX_RTTI(_name); \
         return (_name*)obj; \
@@ -114,7 +116,7 @@ inline void free_ex_class_t(void* _ptr) {
     /*NOTE: the reason to add free function is for function pointer. 
      * remeber ex_free is a macro not a function, so can't be treat as 
      * a function pointer like void (*func) (void*) */ \
-    inline void free_##_name(void* _ptr) { \
+    static inline void free_##_name(void* _ptr) { \
         ex_free(_ptr); \
     }
 
@@ -126,7 +128,7 @@ inline void free_ex_class_t(void* _ptr) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
+static inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
     return ((ex_class_t*)_obj)->_rtti;
 }
 
@@ -135,7 +137,7 @@ inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
 // ------------------------------------------------------------------ 
 
 #define ex_classof(_type,_objPtr) __ex_classof((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     return ex_rtti_classof( _obj->_rtti, _rtti );
 }
 
@@ -144,7 +146,7 @@ inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_childof(_type,_objPtr) __ex_childof((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_childof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_childof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     return ex_rtti_childof( _obj->_rtti, _rtti );
 }
 
@@ -153,7 +155,7 @@ inline bool __ex_childof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_superof(_type,_objPtr) __ex_superof((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_superof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_superof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     return ex_rtti_superof( _obj->_rtti, _rtti );
 }
 
@@ -162,7 +164,7 @@ inline bool __ex_superof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_isa(_type,_objPtr) __ex_isa((ex_class_t*)_objPtr,EX_RTTI(_type))
-inline bool __ex_isa ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_isa ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     return ex_rtti_isa( _obj->_rtti, _rtti );
 }
 

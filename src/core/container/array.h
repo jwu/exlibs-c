@@ -166,12 +166,12 @@ void* ex_array_get ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline size_t ex_array_len ( ex_array_t* _array )
+ @fn static inline size_t ex_array_len ( ex_array_t* _array )
  @param _array the in array
  @details get the array element count.
 */// ------------------------------------------------------------------ 
 
-inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_length; } 
+static inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_length; } 
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -213,59 +213,59 @@ void* ex_array_append_nomng ( ex_array_t* _array, const void* _value );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline int8* ex_array_append_int8 ( ex_array_t* _array, int8 _value )
+ @fn static inline int8* ex_array_append_int8 ( ex_array_t* _array, int8 _value )
  @details append int8 to the array
 
- @fn inline int16* ex_array_append_int16 ( ex_array_t* _array, int16 _value )
+ @fn static inline int16* ex_array_append_int16 ( ex_array_t* _array, int16 _value )
  @details append int16 to the array
 
- @fn inline int32* ex_array_append_int32 ( ex_array_t* _array, int32 _value )
+ @fn static inline int32* ex_array_append_int32 ( ex_array_t* _array, int32 _value )
  @details append int32 to the array
 
- @fn inline int64* ex_array_append_int64 ( ex_array_t* _array, int64 _value )
+ @fn static inline int64* ex_array_append_int64 ( ex_array_t* _array, int64 _value )
  @details append int64 to the array
 
- @fn inline uint8* ex_array_append_uint8 ( ex_array_t* _array, uint8 _value )
+ @fn static inline uint8* ex_array_append_uint8 ( ex_array_t* _array, uint8 _value )
  @details append uint8 to the array
 
- @fn inline uint16* ex_array_append_uint16 ( ex_array_t* _array, uint16 _value )
+ @fn static inline uint16* ex_array_append_uint16 ( ex_array_t* _array, uint16 _value )
  @details append uint16 to the array
 
- @fn inline uint32* ex_array_append_uint32 ( ex_array_t* _array, uint32 _value )
+ @fn static inline uint32* ex_array_append_uint32 ( ex_array_t* _array, uint32 _value )
  @details append uint32 to the array
 
- @fn inline uint64* ex_array_append_uint64 ( ex_array_t* _array, uint64 _value )
+ @fn static inline uint64* ex_array_append_uint64 ( ex_array_t* _array, uint64 _value )
  @details append uint64 to the array
 
- @fn inline float* ex_array_append_float ( ex_array_t* _array, float _value )
+ @fn static inline float* ex_array_append_float ( ex_array_t* _array, float _value )
  @details append float to the array
 
- @fn inline double* ex_array_append_double ( ex_array_t* _array, double _value )
+ @fn static inline double* ex_array_append_double ( ex_array_t* _array, double _value )
  @details append double to the array
 
- @fn inline char** ex_array_append_string ( ex_array_t* _array, char* _value )
+ @fn static inline char** ex_array_append_string ( ex_array_t* _array, char* _value )
  @details append c-string to the array
 
- @fn inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value )
+ @fn static inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value )
  @details append w-string to the array
 
 */// ------------------------------------------------------------------ 
 
-inline int8* ex_array_append_int8 ( ex_array_t* _array, int8 _value ) { return (int8*)ex_array_append ( _array, &_value ); }
-inline int16* ex_array_append_int16 ( ex_array_t* _array, int16 _value ) { return (int16*)ex_array_append ( _array, &_value ); }
-inline int32* ex_array_append_int32 ( ex_array_t* _array, int32 _value ) { return (int32*)ex_array_append ( _array, &_value ); }
-inline int64* ex_array_append_int64 ( ex_array_t* _array, int64 _value ) { return (int64*)ex_array_append ( _array, &_value ); }
+static inline int8* ex_array_append_int8 ( ex_array_t* _array, int8 _value ) { return (int8*)ex_array_append ( _array, &_value ); }
+static inline int16* ex_array_append_int16 ( ex_array_t* _array, int16 _value ) { return (int16*)ex_array_append ( _array, &_value ); }
+static inline int32* ex_array_append_int32 ( ex_array_t* _array, int32 _value ) { return (int32*)ex_array_append ( _array, &_value ); }
+static inline int64* ex_array_append_int64 ( ex_array_t* _array, int64 _value ) { return (int64*)ex_array_append ( _array, &_value ); }
 
-inline uint8* ex_array_append_uint8 ( ex_array_t* _array, uint8 _value ) { return (uint8*)ex_array_append ( _array, &_value ); }
-inline uint16* ex_array_append_uint16 ( ex_array_t* _array, uint16 _value ) { return (uint16*)ex_array_append ( _array, &_value ); }
-inline uint32* ex_array_append_uint32 ( ex_array_t* _array, uint32 _value ) { return (uint32*)ex_array_append ( _array, &_value ); }
-inline uint64* ex_array_append_uint64 ( ex_array_t* _array, uint64 _value ) { return (uint64*)ex_array_append ( _array, &_value ); }
+static inline uint8* ex_array_append_uint8 ( ex_array_t* _array, uint8 _value ) { return (uint8*)ex_array_append ( _array, &_value ); }
+static inline uint16* ex_array_append_uint16 ( ex_array_t* _array, uint16 _value ) { return (uint16*)ex_array_append ( _array, &_value ); }
+static inline uint32* ex_array_append_uint32 ( ex_array_t* _array, uint32 _value ) { return (uint32*)ex_array_append ( _array, &_value ); }
+static inline uint64* ex_array_append_uint64 ( ex_array_t* _array, uint64 _value ) { return (uint64*)ex_array_append ( _array, &_value ); }
 
-inline float* ex_array_append_float ( ex_array_t* _array, float _value ) { return (float*)ex_array_append ( _array, &_value ); }
-inline double* ex_array_append_double ( ex_array_t* _array, double _value ) { return (double*)ex_array_append ( _array, &_value ); }
+static inline float* ex_array_append_float ( ex_array_t* _array, float _value ) { return (float*)ex_array_append ( _array, &_value ); }
+static inline double* ex_array_append_double ( ex_array_t* _array, double _value ) { return (double*)ex_array_append ( _array, &_value ); }
 
-inline char** ex_array_append_string ( ex_array_t* _array, char* _value ) { return (char**)ex_array_append ( _array, &_value ); }
-inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value ) { return (wchar_t**)ex_array_append ( _array, &_value ); }
+static inline char** ex_array_append_string ( ex_array_t* _array, char* _value ) { return (char**)ex_array_append ( _array, &_value ); }
+static inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _value ) { return (wchar_t**)ex_array_append ( _array, &_value ); }
 
 // ------------------------------------------------------------------ 
 /*! 

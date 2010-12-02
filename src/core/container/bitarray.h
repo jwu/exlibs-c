@@ -70,7 +70,7 @@ void ex_bitarray_resize_nomng ( ex_bitarray_t* _bitarray, size_t _bitcount );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline size_t ex_bitarray_len ( ex_bitarray_t* _bitarray ) { return _bitarray->_length; } 
+static inline size_t ex_bitarray_len ( ex_bitarray_t* _bitarray ) { return _bitarray->_length; } 
 
 // ######################### 
 #ifdef __cplusplus

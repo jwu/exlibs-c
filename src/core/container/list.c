@@ -17,7 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // managed
-inline ex_list_node_t* _alloc_node ( ex_list_t* _list, const void* _value ) {
+static inline ex_list_node_t* _alloc_node ( ex_list_t* _list, const void* _value ) {
     // allocate the node ( node_size + value_size ), and assign the value ptr to address point 
     // to the extract space allocate in the node. 
     ex_list_node_t* node = (ex_list_node_t*)ex_malloc ( _list->_element_bytes + sizeof(ex_list_node_t) ); 
@@ -29,7 +29,7 @@ inline ex_list_node_t* _alloc_node ( ex_list_t* _list, const void* _value ) {
 }
 
 // no managed
-inline ex_list_node_t* _alloc_node_nomng ( ex_list_t* _list, const void* _value ) {
+static inline ex_list_node_t* _alloc_node_nomng ( ex_list_t* _list, const void* _value ) {
     // allocate the node ( node_size + value_size ), and assign the value ptr to address point 
     // to the extract space allocate in the node. 
     ex_list_node_t* node = (ex_list_node_t*)ex_malloc_nomng ( _list->_element_bytes + sizeof(ex_list_node_t) ); 

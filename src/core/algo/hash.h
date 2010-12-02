@@ -100,10 +100,10 @@ void ex_hashbig2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed
 // ------------------------------------------------------------------
 
 // uint32
-inline uint32 ex_hashbob3( const uint32* _data, uint32 _len, uint32 _seed ) { return ex_hashword( _data, _len, _seed ); }
+static inline uint32 ex_hashbob3( const uint32* _data, uint32 _len, uint32 _seed ) { return ex_hashword( _data, _len, _seed ); }
 
 // void* 
-inline uint32 ex_hashbob3_ptr( const void* _data, uint32 _len, uint32 _seed )
+static inline uint32 ex_hashbob3_ptr( const void* _data, uint32 _len, uint32 _seed )
 {
 #if (EX_ENDIAN == EX_LITTLE_ENDIAN)
     return ex_hashlittle( _data, _len, _seed );
@@ -117,10 +117,10 @@ inline uint32 ex_hashbob3_ptr( const void* _data, uint32 _len, uint32 _seed )
 // ------------------------------------------------------------------
 
 // uint32
-inline void ex_hashbob3_2( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ) { ex_hashword2( _data, _len, _seed1, _seed2 ); }
+static inline void ex_hashbob3_2( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ) { ex_hashword2( _data, _len, _seed1, _seed2 ); }
 
 // void* 
-inline void ex_hashbob3_ptr2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
+static inline void ex_hashbob3_ptr2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
 {
 #if (EX_ENDIAN == EX_LITTLE_ENDIAN)
     ex_hashlittle2( _data, _len, _seed1, _seed2 );
@@ -144,13 +144,13 @@ uint32 ex_hashpaul ( const uint8* _data, uint32 _len );
 ///////////////////////////////////////////////////////////////////////////////
 
 // uint32 
-inline uint32 ex_hashcrc ( int _crcSize, const uint8* _data, uint32 _len )
+static inline uint32 ex_hashcrc ( int _crcSize, const uint8* _data, uint32 _len )
 {
     return ex_calc_CRC ( _crcSize, _data, _len );
 }
 
 // string
-inline uint32 ex_hashcrc_str ( int _crcSize, const char* _str )
+static inline uint32 ex_hashcrc_str ( int _crcSize, const char* _str )
 {
     return ex_calc_CRC_str ( _crcSize, _str );
 }
@@ -170,7 +170,7 @@ inline uint32 ex_hashcrc_str ( int _crcSize, const char* _str )
 // ------------------------------------------------------------------
 
 // private
-inline uint32 _hashstr ( const void* _str, uint32 _bytes )
+static inline uint32 __ex_hashstr ( const void* _str, uint32 _bytes )
 {
 #if (EX_HASH_METHOD == EX_HASH_PAUL)
     return ex_hashpaul( (uint8*)_str, _bytes );
@@ -188,16 +188,16 @@ inline uint32 _hashstr ( const void* _str, uint32 _bytes )
 // ------------------------------------------------------------------
 
 // const char* 
-inline uint32 ex_hashstr( const char* _str ) { return _hashstr ( _str, strlen(_str) ); }
+static inline uint32 ex_hashstr( const char* _str ) { return __ex_hashstr ( _str, strlen(_str) ); }
 
 // const wchar* 
-inline uint32 ex_hashstr_w( const wchar_t* _str ) { return _hashstr( _str, wcslen(_str) * 2 ); }
+static inline uint32 ex_hashstr_w( const wchar_t* _str ) { return __ex_hashstr( _str, wcslen(_str) * 2 ); }
 
 // ------------------------------------------------------------------
 // Desc: hashuse string
 // ------------------------------------------------------------------
 
-extern inline uint32 _hashuse( int _method, const void* _str, uint32 _bytes ) {
+static inline uint32 _hashuse( int _method, const void* _str, uint32 _bytes ) {
     switch( _method ) {
     case EX_HASH_PAUL:
         return ex_hashpaul( (uint8*)_str, _bytes );
@@ -222,13 +222,13 @@ extern inline uint32 _hashuse( int _method, const void* _str, uint32 _bytes ) {
 // ------------------------------------------------------------------
 
 // const char*
-inline uint32 ex_hashuse( int _method, const char* _str )
+static inline uint32 ex_hashuse( int _method, const char* _str )
 {
     return _hashuse( _method, _str, strlen(_str) );
 }
 
 // const wchar* 
-inline uint32 ex_hashuse_w( int _method, const wchar_t* _str )
+static inline uint32 ex_hashuse_w( int _method, const wchar_t* _str )
 {
     return _hashuse( _method, _str, wcslen(_str) * 2 );
 }

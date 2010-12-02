@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : test_array.c
+// File         : mutex_mac.c
 // Author       : Wu Jie 
-// Last Change  : 07/07/2010 | 13:57:37 PM | Wednesday,July
+// Last Change  : 12/03/2010 | 02:03:19 AM | Friday,December
 // Description  : 
 // ======================================================================================
 
@@ -9,7 +9,7 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "../../core/core_inc.h"
+#include "exsdk.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -19,39 +19,43 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
+struct ex_mutex_t { 
+    // HANDLE id;
+};
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_mutex_t* ex_mutex_create ()
 {
-    ex_array_t* array = ex_array_alloc ( sizeof(uint32), 20 ); 
-    {
-        size_t i = 0;
-        while ( i != 100 ) {
-            ex_array_append_uint32( array, i );
-            ++i;
-        }
-    }
-    ex_array_free ( array );
+	ex_mutex_t* mutex = NULL;
+	return mutex;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid()
+void ex_mutex_destroy ( ex_mutex_t* _mutex )
 {
-    ex_array_t* array = ex_array_alloc ( sizeof(uint32), 20 ); 
-    {
-        void* pval = ex_array_get( array, 40 );
-		(void*)pval;
-    }
-    ex_array_free ( array );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_array ()
+int ex_mutex_lock ( ex_mutex_t* _mutex )
 {
-    normal();
-    invalid();
+	return(0);
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_mutex_unlock ( ex_mutex_t* _mutex )
+{
+	return(0);
+}
+

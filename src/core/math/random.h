@@ -27,7 +27,7 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_srand( uint _seed )
+ @fn static inline void ex_srand( uint _seed )
  @param _seed 
  @details 
  This function establishes _seed as the seed for a new series of 
@@ -37,60 +37,60 @@ extern "C" {
  do: srand (time (0))
 */// ------------------------------------------------------------------ 
 
-inline void ex_srand( uint _seed ) { srand(_seed); }
+static inline void ex_srand( uint _seed ) { srand(_seed); }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_unit_randf()
+ @fn static inline float ex_unit_randf()
  @return the random value
  @details 
  get random value in range of [0,1], the return type is float.
 
- @fn inline double ex_unit_rand()
+ @fn static inline double ex_unit_rand()
  @return the random value
  @details 
  get random value in range of [0,1], the return type is double.
 */// ------------------------------------------------------------------ 
 
-inline float ex_unit_randf() { return (float)rand()/(float)RAND_MAX; }
-inline double ex_unit_rand() { return rand()/RAND_MAX; }
+static inline float ex_unit_randf() { return (float)rand()/(float)RAND_MAX; }
+static inline double ex_unit_rand() { return rand()/RAND_MAX; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline ex_unit2_randf ()
+ @fn static inline ex_unit2_randf ()
  @return the random value
  @details 
  get random value in range of [-1,1], the return type is float.
 
- @fn inline double ex_unit2_rand ()
+ @fn static inline double ex_unit2_rand ()
  @return the random value
  @details 
  get random value in range of [-1,1], the return type is double.
 */// ------------------------------------------------------------------ 
 
-inline float ex_unit2_randf() { return ( 2.0f * ex_unit_randf() ) - 1.0f; }
-inline double ex_unit2_rand() { return ( 2.0 * ex_unit_randf() ) - 1.0; }
+static inline float ex_unit2_randf() { return ( 2.0f * ex_unit_randf() ) - 1.0f; }
+static inline double ex_unit2_rand() { return ( 2.0 * ex_unit_randf() ) - 1.0; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_range_randf( float _low_bound, float _high_bound )
+ @fn static inline float ex_range_randf( float _low_bound, float _high_bound )
  @param _low_bound low bound
  @param _high_bound high bound
  @return the random value
  @details 
  get random value in range of [_low_bound,_high_bound], the return type is float.
 
- @fn inline double ex_range_rand( double _low_bound, double _high_bound )
+ @fn static inline double ex_range_rand( double _low_bound, double _high_bound )
  @return the random value
  @details 
  get random value in range of [_low_bound,_high_bound], the return type is double.
 */// ------------------------------------------------------------------ 
 
-extern inline float ex_range_randf( float _low_bound, float _high_bound ) { 
+static inline float ex_range_randf( float _low_bound, float _high_bound ) { 
     ex_assert( _low_bound < _high_bound, "low bound should less than high bound" );
     return ( ( _high_bound - _low_bound ) * ex_unit_randf() ) + _low_bound;
 }
-extern inline double ex_range_rand( double _low_bound, double _high_bound ) {
+static inline double ex_range_rand( double _low_bound, double _high_bound ) {
     ex_assert( _low_bound < _high_bound, "low bound should less than high bound" );
     return ( ( _high_bound - _low_bound ) * ex_unit_randf() ) + _low_bound;
 }

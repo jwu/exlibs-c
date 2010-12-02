@@ -56,7 +56,7 @@ typedef struct ex_vec3f_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_zero ( ex_vec3f_t* _r )
+ @fn static inline void ex_vec3f_zero ( ex_vec3f_t* _r )
  @retval _r the result vector3
  @details make a zero vector3:
 
@@ -67,11 +67,11 @@ typedef struct ex_vec3f_t {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_zero ( ex_vec3f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; }
+static inline void ex_vec3f_zero ( ex_vec3f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_one ( ex_vec3f_t* _r )
+ @fn static inline void ex_vec3f_one ( ex_vec3f_t* _r )
  @retval _r the result vector3
  @details make an one vector3:
 
@@ -82,11 +82,11 @@ inline void ex_vec3f_zero ( ex_vec3f_t* _r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_one ( ex_vec3f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; }
+static inline void ex_vec3f_one ( ex_vec3f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_set ( ex_vec3f_t* _r, float _x, float _y, float _z )
+ @fn static inline void ex_vec3f_set ( ex_vec3f_t* _r, float _x, float _y, float _z )
  @retval _r the result vector3
  @param x
  @param y
@@ -100,18 +100,18 @@ inline void ex_vec3f_one ( ex_vec3f_t* _r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_set ( ex_vec3f_t* _r, float _x, float _y, float _z ) { _r->x = _x, _r->y = _y, _r->z = _z; }
+static inline void ex_vec3f_set ( ex_vec3f_t* _r, float _x, float _y, float _z ) { _r->x = _x, _r->y = _y, _r->z = _z; }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @param _lhs the left hand side vector3
  @param _rhs the right hand side vector3
  @return the result of the comparation
  @details compare if the two vector3 is equal to each other
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
+static inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     return ex_is_equalf(_lhs->x,_rhs->x,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->y,_rhs->y,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS);
@@ -119,7 +119,7 @@ inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_neg ( ex_vec3f_t* _v )
+ @fn static inline void ex_vec3f_neg ( ex_vec3f_t* _v )
  @retval _v the result vector3
  @param _v the in vector3
  @details get the negtive value from vector3 _v, override and return it as the result:
@@ -135,7 +135,7 @@ inline bool ex_vec3f_is_equal ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
  @sa ex_vec3f_get_neg
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_neg ( ex_vec3f_t* _v ) { 
+static inline void ex_vec3f_neg ( ex_vec3f_t* _v ) { 
     _v->x = -_v->x; 
     _v->y = -_v->y; 
     _v->z = -_v->z; 
@@ -143,14 +143,14 @@ inline void ex_vec3f_neg ( ex_vec3f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v )
+ @fn static inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v )
  @retval _r the result vector3
  @param _v the in vector3
  @details get the negtive value from vector3 _v, set and return it to vector3 _v
  @sa ex_vec3f_neg
 */// ------------------------------------------------------------------ 
 
-extern inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v ) { 
+static inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
     _r->y = -_v->y; 
@@ -159,7 +159,7 @@ extern inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side vector3
@@ -181,7 +181,7 @@ extern inline void ex_vec3f_get_neg ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
+static inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x + _rhs->x;
     _r->y = _lhs->y + _rhs->y;
     _r->z = _lhs->z + _rhs->z;
@@ -189,7 +189,7 @@ inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side float
@@ -208,7 +208,7 @@ inline void ex_vec3f_add ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
+static inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x + _rhs;
     _r->y = _lhs->y + _rhs;
     _r->z = _lhs->z + _rhs;
@@ -216,7 +216,7 @@ inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side vector3
@@ -238,7 +238,7 @@ inline void ex_vec3f_add_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
+static inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x - _rhs->x;
     _r->y = _lhs->y - _rhs->y;
     _r->z = _lhs->z - _rhs->z;
@@ -246,7 +246,7 @@ inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side float
@@ -265,7 +265,7 @@ inline void ex_vec3f_sub ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
+static inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x - _rhs;
     _r->y = _lhs->y - _rhs;
     _r->z = _lhs->z - _rhs;
@@ -273,7 +273,7 @@ inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
+ @fn static inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side float
  @param _rhs the right hand side vector3
@@ -293,7 +293,7 @@ inline void ex_vec3f_sub_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs ) { 
+static inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs - _rhs->x;
     _r->y = _lhs - _rhs->y;
     _r->z = _lhs - _rhs->z;
@@ -301,7 +301,7 @@ inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side vector3
@@ -323,7 +323,7 @@ inline void ex_scalar_sub_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
+static inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x * _rhs->x;
     _r->y = _lhs->y * _rhs->y;
     _r->z = _lhs->z * _rhs->z;
@@ -331,7 +331,7 @@ inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side float
@@ -350,7 +350,7 @@ inline void ex_vec3f_mul ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
+static inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x * _rhs;
     _r->y = _lhs->y * _rhs;
     _r->z = _lhs->z * _rhs;
@@ -358,7 +358,7 @@ inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side vector3
@@ -380,7 +380,7 @@ inline void ex_vec3f_mul_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
+static inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs->x / _rhs->x;
     _r->y = _lhs->y / _rhs->y;
     _r->z = _lhs->z / _rhs->z;
@@ -388,7 +388,7 @@ inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side vector3
  @param _rhs the right hand side float
@@ -407,7 +407,7 @@ inline void ex_vec3f_div ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) 
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
+static inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
     _r->y = _lhs->y / _rhs;
     _r->z = _lhs->z / _rhs;
@@ -415,7 +415,7 @@ inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
+ @fn static inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
  @retval _r the result vector3
  @param _lhs the left hand side float
  @param _rhs the right hand side vector3
@@ -435,7 +435,7 @@ inline void ex_vec3f_div_scalar ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, float _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs ) { 
+static inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
     _r->y = _lhs / _rhs->y;
     _r->z = _lhs / _rhs->z;
@@ -443,7 +443,7 @@ inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @param _lhs the left hand vector3
  @param _rhs the right hand vector3
  @return the dot product result
@@ -465,7 +465,7 @@ inline void ex_scalar_div_vec3f ( ex_vec3f_t* _r, float _lhs, ex_vec3f_t* _rhs )
  \f]
 */// ------------------------------------------------------------------ 
 
-inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
+static inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
     return _lhs->x * _rhs->x 
          + _lhs->y * _rhs->y 
          + _lhs->z * _rhs->z;
@@ -473,7 +473,7 @@ inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
+ @fn static inline float ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs )
  @retval _r the cross product result
  @param _lhs the left hand vector3
  @param _rhs the right hand vector3
@@ -497,7 +497,7 @@ inline float ex_vec3f_dot ( ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
+static inline void ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs ) {
     _r->x = _lhs->y * _rhs->z - _lhs->z * _rhs->y;
     _r->y = _lhs->z * _rhs->x - _lhs->x * _rhs->z;
     _r->z = _lhs->x * _rhs->y - _lhs->y * _rhs->x;
@@ -505,33 +505,33 @@ inline void ex_vec3f_cross ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_vec3f_t* _rhs 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec3f_len( ex_vec3f_t* _v )
+ @fn static inline float ex_vec3f_len( ex_vec3f_t* _v )
  @param _v the in vector3
  @return the length of the in vector3
  @details return the length of vector3 _v
  @sa ex_vec3f_lenSQR
 */// ------------------------------------------------------------------ 
 
-inline float ex_vec3f_len ( ex_vec3f_t* _v ) {
+static inline float ex_vec3f_len ( ex_vec3f_t* _v ) {
     return sqrtf ( ex_vec3f_dot(_v,_v) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_vec3f_lenSQR( ex_vec3f_t* _v )
+ @fn static inline float ex_vec3f_lenSQR( ex_vec3f_t* _v )
  @param _v the in vector3
  @return the length square of the in vector3
  @details return the length square of vector3 _v
  @sa ex_vec3f_len
 */// ------------------------------------------------------------------ 
 
-inline float ex_vec3f_lenSQR ( ex_vec3f_t* _v ) {
+static inline float ex_vec3f_lenSQR ( ex_vec3f_t* _v ) {
     return ex_vec3f_dot(_v,_v);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v )
+ @fn static inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v )
  @param _v the in vector3
  @return if the inverse operation successed 
  - true: successful
@@ -541,13 +541,13 @@ inline float ex_vec3f_lenSQR ( ex_vec3f_t* _v ) {
  @sa ex_vec3f_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v ) {
+static inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v ) {
     return ex_is_equalf( ex_vec3f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline bool ex_vec3f_normalize ( ex_vec3f_t* _v )
+ @fn static inline bool ex_vec3f_normalize ( ex_vec3f_t* _v )
  @param _v the in vector3
  @return if the inverse operation successed 
  - true: successful
@@ -557,7 +557,7 @@ inline bool ex_vec3f_is_normalized ( ex_vec3f_t* _v ) {
  @sa ex_vec3f_get_normalize
 */// ------------------------------------------------------------------ 
 
-inline bool ex_vec3f_normalize ( ex_vec3f_t* _v ) {
+static inline bool ex_vec3f_normalize ( ex_vec3f_t* _v ) {
     float length_sqr = ex_vec3f_lenSQR(_v);
     float inv_length = 0.0f; 
 
@@ -585,7 +585,7 @@ inline bool ex_vec3f_normalize ( ex_vec3f_t* _v ) {
  @sa ex_vec3f_normalize
 */// ------------------------------------------------------------------ 
 
-extern inline bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
+static inline bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
     float length_sqr, inv_length;
 
     ex_assert ( _r != _v, "can't use self as return value." );
@@ -607,7 +607,7 @@ extern inline bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLength )
+ @fn static inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLength )
  @retval _r the result vector2
  @param _v the in vector2
  @param _maxLength the truncate length
@@ -615,7 +615,7 @@ extern inline bool ex_vec3f_get_normalize ( ex_vec3f_t* _r, ex_vec3f_t* _v ) {
  @sa ex_vec3f_truncate
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLength ) {
+static inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLength ) {
     const float maxLengthSQR = _maxLength * _maxLength;
     const float vecLengthSQR = ex_vec3f_lenSQR(_v);
     if ( vecLengthSQR > maxLengthSQR )
@@ -624,7 +624,7 @@ inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLe
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength )
+ @fn static inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength )
  @retval _r the result vector2
  @param _r the in vector2
  @param _maxLength the truncate length
@@ -632,7 +632,7 @@ inline void ex_vec3f_get_truncate ( ex_vec3f_t* _r, ex_vec3f_t* _v, float _maxLe
  @sa ex_vec3f_truncate
 */// ------------------------------------------------------------------ 
 
-inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
+static inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
     const float maxLengthSQR = _maxLength * _maxLength;
     const float vecLengthSQR = ex_vec3f_lenSQR(_r);
     if ( vecLengthSQR > maxLengthSQR )
@@ -641,7 +641,7 @@ inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
+ @fn static inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector parallel to
@@ -650,7 +650,7 @@ inline void ex_vec3f_truncate ( ex_vec3f_t* _r, float _maxLength ) {
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-extern inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
+static inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
     float projection;
     ex_assert ( ex_vec3f_is_normalized(_to), "vector _to must be normalized." );
     projection = ex_vec3f_dot( _from, _to );
@@ -659,7 +659,7 @@ extern inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_v
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
+ @fn static inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector perpendicular to
@@ -668,7 +668,7 @@ extern inline void ex_vec3f_project_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_v
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-extern inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
+static inline void ex_vec3f_perpendicular_to ( ex_vec3f_t* _r, ex_vec3f_t* _from, ex_vec3f_t* _to ) {
     ex_vec3f_t v;
     ex_assert ( ex_vec3f_is_normalized(_to), "vector _to must be normalized." );
     ex_vec3f_project_to ( &v, _from, _to );

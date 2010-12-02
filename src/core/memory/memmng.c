@@ -88,7 +88,7 @@ static bool _initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline size_t _calc_dbg_size ( size_t _size )
+static inline size_t _calc_dbg_size ( size_t _size )
 {
     return _size + pattern_size;
 }
@@ -97,7 +97,7 @@ inline size_t _calc_dbg_size ( size_t _size )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-alloc_unit_t* _request_au ()
+static alloc_unit_t* _request_au ()
 {
     alloc_unit_t* tmp_au;
 
@@ -139,7 +139,7 @@ alloc_unit_t* _request_au ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const char* _func_name, size_t _line_nr )
+static void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     // verify pre-pattern
 #if VERIFY_PREFIX
@@ -190,7 +190,7 @@ void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const char* _f
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _reclaim_au ( alloc_unit_t* _au ) {
+static void _reclaim_au ( alloc_unit_t* _au ) {
     if ( ex_hashmap_remove_at ( au_map, &_au->org_addr ) == NULL )
         ex_error ( "failed to reclaim alloc unit" );
 
@@ -210,19 +210,19 @@ void _reclaim_au ( alloc_unit_t* _au ) {
 // ------------------------------------------------------------------ 
 
 //
-inline int _push_au ( alloc_unit_t* _au ) { 
+static inline int _push_au ( alloc_unit_t* _au ) { 
     size_t idx = -1;
     ex_hashmap_insert_nomng ( au_map, &_au->org_addr, &_au, &idx ); 
     return idx;
 }
 
 //
-inline alloc_unit_t* _get_au ( void* _ptr ) { 
+static inline alloc_unit_t* _get_au ( void* _ptr ) { 
     return *((alloc_unit_t**)ex_hashmap_get ( au_map, &_ptr, NULL )); 
 }
 
 //
-inline int _rearrange_au ( void* _ptr, alloc_unit_t* au ) {
+static inline int _rearrange_au ( void* _ptr, alloc_unit_t* au ) {
     if ( ex_hashmap_remove_at ( au_map, &_ptr ) == NULL )
         return -1;
     return _push_au ( au );
@@ -232,7 +232,7 @@ inline int _rearrange_au ( void* _ptr, alloc_unit_t* au ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _log ( const char* _file_name, const char* _format, ... )
+static void _log ( const char* _file_name, const char* _format, ... )
 {
     char buffer[2048];
     FILE* fp;
@@ -257,7 +257,7 @@ void _log ( const char* _file_name, const char* _format, ... )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _dump () {
+static void _dump () {
     //
     ex_assert ( ex_hashmap_len(au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_len(au_map) );
     
@@ -302,7 +302,7 @@ void _dump () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool mem_init ()
+bool ex_mem_init ()
 {
     // if the core already initialized, don't init it second times.
     if ( _initialized ) {
@@ -327,7 +327,7 @@ bool mem_init ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void mem_deinit ()
+void ex_mem_deinit ()
 {
     if ( _initialized ) {
         if ( access_mutex )
@@ -349,7 +349,7 @@ void mem_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* _mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
+void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     size_t dbg_size;
     void *dbg_ptr, *org_ptr;
@@ -425,7 +425,7 @@ void* _mng_malloc( size_t _size, const char* _tag, const char* _file_name, const
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* _mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
+void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     alloc_unit_t* au;
     size_t dbg_size;
@@ -438,12 +438,12 @@ void* _mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _fil
     // alloc NULL memory address
     if ( _ptr == NULL ) {
         ex_mutex_unlock(access_mutex);
-        return _mng_malloc( _size, _tag, _file_name, _func_name, _line_nr );
+        return __ex_mng_malloc( _size, _tag, _file_name, _func_name, _line_nr );
     }
 
     // realloc zero bytes free 
     if ( _size == 0 ) {
-        _mng_free( _ptr, _file_name, _func_name, _line_nr );
+        __ex_mng_free( _ptr, _file_name, _func_name, _line_nr );
         ex_mutex_unlock(access_mutex);
         return NULL;
     }
@@ -520,7 +520,7 @@ void* _mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _fil
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr )
+void __ex_mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     alloc_unit_t* au;
 

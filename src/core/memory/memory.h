@@ -26,16 +26,16 @@ extern "C" {
 // private memory functions
 ///////////////////////////////////////////////////////////////////////////////
 
-void* _mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
-void* _mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
-void _mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr );
+void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
+void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
+void __ex_mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr );
 
 ///////////////////////////////////////////////////////////////////////////////
 // memory mng
 ///////////////////////////////////////////////////////////////////////////////
 
-bool mem_init ();
-void mem_deinit ();
+bool ex_mem_init ();
+void ex_mem_deinit ();
 
 ///////////////////////////////////////////////////////////////////////////////
 // global namespace function declaration & define 
@@ -70,8 +70,8 @@ void mem_deinit ();
 #define ex_malloc_nomng( size )             dlmemalign( EX_MEM_ALIGN, size)
 
 #if EX_USE_MEMORY_MANAGER
-    #define ex_malloc( size )                               _mng_malloc( size, "default", __FILE__, __FUNCTION__, __LINE__ )
-    #define ex_malloc_tag( size, tag )                      _mng_malloc( size, tag, __FILE__, __FUNCTION__, __LINE__ ) 
+    #define ex_malloc( size )                               __ex_mng_malloc( size, "default", __FILE__, __FUNCTION__, __LINE__ )
+    #define ex_malloc_tag( size, tag )                      __ex_mng_malloc( size, tag, __FILE__, __FUNCTION__, __LINE__ ) 
 #else
     #define ex_malloc( size )                               ex_malloc_nomng( size )
     #define ex_malloc_tag( size, tag )                      ex_malloc_nomng( size )
@@ -84,8 +84,8 @@ void mem_deinit ();
 #define ex_realloc_nomng( ptr, size )       dlrealloc(ptr,size)
 
 #if EX_USE_MEMORY_MANAGER
-    #define ex_realloc( ptr, size )                             _mng_realloc( ptr, size, "default", __FILE__, __FUNCTION__, __LINE__ )
-    #define ex_realloc_tag( ptr, size, tag )                    _mng_realloc( ptr, size, tag, __FILE__, __FUNCTION__, __LINE__ )
+    #define ex_realloc( ptr, size )                             __ex_mng_realloc( ptr, size, "default", __FILE__, __FUNCTION__, __LINE__ )
+    #define ex_realloc_tag( ptr, size, tag )                    __ex_mng_realloc( ptr, size, tag, __FILE__, __FUNCTION__, __LINE__ )
 #else
     #define ex_realloc( ptr, size )                             ex_realloc_nomng( ptr, size )
     #define ex_realloc_tag( ptr, size, tag )                    ex_realloc_nomng( ptr, size ) 
@@ -102,7 +102,7 @@ void mem_deinit ();
 #define ex_free_nomng( ptr )                dlfree( ptr )
 
 #if EX_USE_MEMORY_MANAGER
-    #define ex_free( ptr )                                  _mng_free( ptr, __FILE__, __FUNCTION__, __LINE__ )
+    #define ex_free( ptr )                                  __ex_mng_free( ptr, __FILE__, __FUNCTION__, __LINE__ )
 #else
     #define ex_free( ptr )                                  ex_free_nomng( ptr )
 #endif
@@ -147,7 +147,7 @@ void mem_deinit ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline void* ex_memzero ( void* _ptr, size_t _size ) { 
+static inline void* ex_memzero ( void* _ptr, size_t _size ) { 
     return memset ( _ptr, 0x00, _size ); 
 }
 

@@ -22,24 +22,24 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_saturatef ( float _x )
+ @fn static inline float ex_saturatef ( float _x )
  @param _x value for clamp
  @return the result will be clamp to [0,1]
  @sa ex_saturate
 
- @fn inline double ex_saturate ( double _x )
+ @fn static inline double ex_saturate ( double _x )
  @param _x value for clamp
  @return the result will be clamp to [0,1]
  @sa ex_saturatef
 */// ------------------------------------------------------------------ 
 
-inline float ex_saturatef ( float _x ) {
+static inline float ex_saturatef ( float _x ) {
     if (_x < 0.0f) return 0.0f;
     if (_x > 1.0f) return 1.0f;
     return _x;
 }
 
-inline double ex_saturate ( double _x ) {
+static inline double ex_saturate ( double _x ) {
     if (_x < 0.0) return 0.0;
     if (_x > 1.0) return 1.0;
     return _x;
@@ -47,14 +47,14 @@ inline double ex_saturate ( double _x ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_clampf ( float _x, float _min, float _max )
+ @fn static inline float ex_clampf ( float _x, float _min, float _max )
  @param _x value for clamp
  @param _min the min bound for clamp
  @param _max the min bound for clamp
  @return the result will be clamp to [_min,_max]
  @sa ex_clamp
 
- @fn inline double ex_clamp ( double _x, double _min, double _max )
+ @fn static inline double ex_clamp ( double _x, double _min, double _max )
  @param _x value for clamp
  @param _min the min bound for clamp
  @param _max the min bound for clamp
@@ -62,14 +62,14 @@ inline double ex_saturate ( double _x ) {
  @sa ex_clampf
 */// ------------------------------------------------------------------ 
 
-extern inline float ex_clampf ( float _x, float _min, float _max ) {
+static inline float ex_clampf ( float _x, float _min, float _max ) {
     ex_assert ( _min < _max, "the _min must less than _max" );
     if (_x < _min) return _min;
     if (_x > _max) return _max;
     return _x;
 }
 
-extern inline double ex_clamp ( double _x, double _min, double _max ) {
+static inline double ex_clamp ( double _x, double _min, double _max ) {
     ex_assert ( _min < _max, "the _min must less than _max" );
     if (_x < _min) return _min;
     if (_x > _max) return _max;
@@ -78,14 +78,14 @@ extern inline double ex_clamp ( double _x, double _min, double _max ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_lerpf ( float _from, float _to, float _ratio )
+ @fn static inline float ex_lerpf ( float _from, float _to, float _ratio )
  @param _from source value
  @param _to dest value
  @param _ratio lerp ratio
  @return linear lerp the result between source and dest by ratio
  @sa ex_lerp
 
- @fn inline double ex_lerp ( double _from, double _to, double _ratio )
+ @fn static inline double ex_lerp ( double _from, double _to, double _ratio )
  @param _from source value
  @param _to dest value
  @param _ratio lerp ratio
@@ -93,24 +93,24 @@ extern inline double ex_clamp ( double _x, double _min, double _max ) {
  @sa ex_lerpf
 */// ------------------------------------------------------------------ 
 
-inline float ex_lerpf ( float _from, float _to, float _ratio ) {
+static inline float ex_lerpf ( float _from, float _to, float _ratio ) {
     return _from + (_to - _from) * _ratio;
 }
 
-inline double ex_lerp ( double _from, double _to, double _ratio ) {
+static inline double ex_lerp ( double _from, double _to, double _ratio ) {
     return _from + (_to - _from) * _ratio;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_unit_remapf ( float _value, float _min, float _max )
+ @fn static inline float ex_unit_remapf ( float _value, float _min, float _max )
  @param _value value between [min,max]
  @param _min min bound value
  @param _max max bound value
  @return remap the value between _min and _max to [0,1]
  @sa ex_unit_remap
 
- @fn inline double ex_unit_remap ( double _value, double _min, double _max )
+ @fn static inline double ex_unit_remap ( double _value, double _min, double _max )
  @param _value value between [min,max]
  @param _min min bound value
  @param _max max bound value
@@ -118,14 +118,14 @@ inline double ex_lerp ( double _from, double _to, double _ratio ) {
  @sa ex_unit_remapf
 */// ------------------------------------------------------------------ 
 
-extern inline float ex_unit_remapf ( float _value, float _min, float _max ) {
+static inline float ex_unit_remapf ( float _value, float _min, float _max ) {
     ex_assert ( _min < _max, "the _min value must less than _max" );
     ex_assert ( _value <= _max && _value >= _min, "_value must between [_min,_max]" );
 
     return (_value - _min) / (_max - _min);
 }
 
-extern inline double ex_unit_remap ( double _value, double _min, double _max ) {
+static inline double ex_unit_remap ( double _value, double _min, double _max ) {
     ex_assert ( _min < _max, "the _min value must less than _max" );
     ex_assert ( _value <= _max && _value >= _min, "_value must between [_min,_max]" );
 
@@ -134,7 +134,7 @@ extern inline double ex_unit_remap ( double _value, double _min, double _max ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_remapf ( float _value, float _from_min, float _from_max, float _to_min, float _to_max )
+ @fn static inline float ex_remapf ( float _value, float _from_min, float _from_max, float _to_min, float _to_max )
  @param _value value between [from_min,from_max]
  @param _from_min min bound value for source range
  @param _from_max max bound value for source range
@@ -143,7 +143,7 @@ extern inline double ex_unit_remap ( double _value, double _min, double _max ) {
  @return remap the value between _from_min and _from_max to [_to_min,_to_max]
  @sa ex_unit_remap
 
- @fn inline double ex_remap ( double _value, double _from_min, double _from_max, double _to_min, double _to_max )
+ @fn static inline double ex_remap ( double _value, double _from_min, double _from_max, double _to_min, double _to_max )
  @param _value value between [from_min,from_max]
  @param _from_min min bound value for source range
  @param _from_max max bound value for source range
@@ -153,7 +153,7 @@ extern inline double ex_unit_remap ( double _value, double _min, double _max ) {
  @sa ex_unit_remapf
 */// ------------------------------------------------------------------ 
 
-extern inline float ex_remapf ( float _value, 
+static inline float ex_remapf ( float _value, 
                          float _from_min, float _from_max, 
                          float _to_min, float _to_max ) {
     float ratio;
@@ -166,7 +166,7 @@ extern inline float ex_remapf ( float _value,
     return ex_lerpf( _to_min, _to_max, ratio );
 }
 
-extern inline double ex_remap ( double _value, 
+static inline double ex_remap ( double _value, 
                          double _from_min, double _from_max, 
                          double _to_min, double _to_max ) {
     double ratio;

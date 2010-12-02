@@ -33,7 +33,7 @@ bool ex_core_init ()
 
     //
     ex_log ("init memory");
-    if ( mem_init() == false ) {
+    if ( ex_mem_init() == false ) {
         ex_log ("failed to init memory");
         return false;
     }
@@ -76,7 +76,7 @@ void ex_core_deinit ()
         ex_strid_deinit();
 
         ex_log ("deinit memory");
-        mem_deinit();
+        ex_mem_deinit();
 
         //
         ex_log ("exsdk deinitied");

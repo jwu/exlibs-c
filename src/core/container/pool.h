@@ -99,8 +99,8 @@ void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline size_t ex_pool_len ( ex_pool_t* _pool ) { return _pool->_length; }
-inline size_t ex_pool_capacity ( ex_pool_t* _pool ) { return _pool->_capacity; }
+static inline size_t ex_pool_len ( ex_pool_t* _pool ) { return _pool->_length; }
+static inline size_t ex_pool_capacity ( ex_pool_t* _pool ) { return _pool->_capacity; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -110,21 +110,21 @@ inline size_t ex_pool_capacity ( ex_pool_t* _pool ) { return _pool->_capacity; }
 int ex_pool_insert ( ex_pool_t* _pool, const void* _value );
 int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value );
 
-inline int ex_pool_insert_int8 ( ex_pool_t* _pool, int8 _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_int16 ( ex_pool_t* _pool, int16 _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_int32 ( ex_pool_t* _pool, int32 _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_int64 ( ex_pool_t* _pool, int64 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_int8 ( ex_pool_t* _pool, int8 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_int16 ( ex_pool_t* _pool, int16 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_int32 ( ex_pool_t* _pool, int32 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_int64 ( ex_pool_t* _pool, int64 _value ) { return ex_pool_insert ( _pool, &_value ); }
 
-inline int ex_pool_insert_uint8 ( ex_pool_t* _pool, uint8 _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_uint16 ( ex_pool_t* _pool, uint16 _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_uint32 ( ex_pool_t* _pool, uint32 _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_uint64 ( ex_pool_t* _pool, uint64 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_uint8 ( ex_pool_t* _pool, uint8 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_uint16 ( ex_pool_t* _pool, uint16 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_uint32 ( ex_pool_t* _pool, uint32 _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_uint64 ( ex_pool_t* _pool, uint64 _value ) { return ex_pool_insert ( _pool, &_value ); }
 
-inline int ex_pool_insert_float ( ex_pool_t* _pool, float _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_double ( ex_pool_t* _pool, double _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_float ( ex_pool_t* _pool, float _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_double ( ex_pool_t* _pool, double _value ) { return ex_pool_insert ( _pool, &_value ); }
 
-inline int ex_pool_insert_string ( ex_pool_t* _pool, char* _value ) { return ex_pool_insert ( _pool, &_value ); }
-inline int ex_pool_insert_wstring ( ex_pool_t* _pool, wchar_t* _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_string ( ex_pool_t* _pool, char* _value ) { return ex_pool_insert ( _pool, &_value ); }
+static inline int ex_pool_insert_wstring ( ex_pool_t* _pool, wchar_t* _value ) { return ex_pool_insert ( _pool, &_value ); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -132,21 +132,21 @@ inline int ex_pool_insert_wstring ( ex_pool_t* _pool, wchar_t* _value ) { return
 
 void* ex_pool_get ( ex_pool_t* _pool, int _idx );
 
-inline int8 ex_pool_get_int8 ( ex_pool_t* _pool, int _idx ) { return *((int8*)ex_pool_get ( _pool, _idx )); }
-inline int16 ex_pool_get_int16 ( ex_pool_t* _pool, int _idx ) { return *((int16*)ex_pool_get ( _pool, _idx )); }
-inline int32 ex_pool_get_int32 ( ex_pool_t* _pool, int _idx ) { return *((int32*)ex_pool_get ( _pool, _idx )); }
-inline int64 ex_pool_get_int64 ( ex_pool_t* _pool, int _idx ) { return *((int64*)ex_pool_get ( _pool, _idx )); }
+static inline int8 ex_pool_get_int8 ( ex_pool_t* _pool, int _idx ) { return *((int8*)ex_pool_get ( _pool, _idx )); }
+static inline int16 ex_pool_get_int16 ( ex_pool_t* _pool, int _idx ) { return *((int16*)ex_pool_get ( _pool, _idx )); }
+static inline int32 ex_pool_get_int32 ( ex_pool_t* _pool, int _idx ) { return *((int32*)ex_pool_get ( _pool, _idx )); }
+static inline int64 ex_pool_get_int64 ( ex_pool_t* _pool, int _idx ) { return *((int64*)ex_pool_get ( _pool, _idx )); }
 
-inline uint8 ex_pool_get_uint8 ( ex_pool_t* _pool, int _idx ) { return *((uint8*)(ex_pool_get ( _pool, _idx ))); }
-inline uint16 ex_pool_get_uint16 ( ex_pool_t* _pool, int _idx ) { return *((uint16*)ex_pool_get ( _pool, _idx )); }
-inline uint32 ex_pool_get_uint32 ( ex_pool_t* _pool, int _idx ) { return *((uint32*)ex_pool_get ( _pool, _idx )); }
-inline uint64 ex_pool_get_uint64 ( ex_pool_t* _pool, int _idx ) { return *((uint64*)ex_pool_get ( _pool, _idx )); }
+static inline uint8 ex_pool_get_uint8 ( ex_pool_t* _pool, int _idx ) { return *((uint8*)(ex_pool_get ( _pool, _idx ))); }
+static inline uint16 ex_pool_get_uint16 ( ex_pool_t* _pool, int _idx ) { return *((uint16*)ex_pool_get ( _pool, _idx )); }
+static inline uint32 ex_pool_get_uint32 ( ex_pool_t* _pool, int _idx ) { return *((uint32*)ex_pool_get ( _pool, _idx )); }
+static inline uint64 ex_pool_get_uint64 ( ex_pool_t* _pool, int _idx ) { return *((uint64*)ex_pool_get ( _pool, _idx )); }
 
-inline float ex_pool_get_float ( ex_pool_t* _pool, int _idx ) { return *((float*)ex_pool_get ( _pool, _idx )); }
-inline double ex_pool_get_double ( ex_pool_t* _pool, int _idx ) { return *((double*)ex_pool_get ( _pool, _idx )); }
+static inline float ex_pool_get_float ( ex_pool_t* _pool, int _idx ) { return *((float*)ex_pool_get ( _pool, _idx )); }
+static inline double ex_pool_get_double ( ex_pool_t* _pool, int _idx ) { return *((double*)ex_pool_get ( _pool, _idx )); }
 
-inline char* ex_pool_get_string ( ex_pool_t* _pool, int _idx ) { return *((char**)ex_pool_get ( _pool, _idx )); }
-inline wchar_t* ex_pool_get_wstring ( ex_pool_t* _pool, int _idx ) { return *((wchar_t**)ex_pool_get ( _pool, _idx )); }
+static inline char* ex_pool_get_string ( ex_pool_t* _pool, int _idx ) { return *((char**)ex_pool_get ( _pool, _idx )); }
+static inline wchar_t* ex_pool_get_wstring ( ex_pool_t* _pool, int _idx ) { return *((wchar_t**)ex_pool_get ( _pool, _idx )); }
 
 // ------------------------------------------------------------------ 
 // Desc: 

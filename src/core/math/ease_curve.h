@@ -22,17 +22,17 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn inline float ex_ease_linearf ( float _t )
+ @fn static inline float ex_ease_linearf ( float _t )
  @param _t ratio range in [0,1]
  @return the ease result
 
- @fn inline double ex_ease_linear ( double _t )
+ @fn static inline double ex_ease_linear ( double _t )
  @param _t ratio range in [0,1]
  @return the ease result
 */// ------------------------------------------------------------------ 
 
-inline float ex_ease_linearf ( float _t ) { return _t; }
-inline double ex_ease_linear ( double _t ) { return _t; }
+static inline float ex_ease_linearf ( float _t ) { return _t; }
+static inline double ex_ease_linear ( double _t ) { return _t; }
 
 // ------------------------------------------------------------------ 
 /*! 

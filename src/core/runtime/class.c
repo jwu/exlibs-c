@@ -21,14 +21,6 @@ ex_rtti_t* __RTTI_ex_class_t = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __ex_register_class_ex_class_t () {
-    __RTTI_ex_class_t = ex_rtti_register_class ( "ex_class_t", NULL );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 void* __ex_as ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
     if ( ex_rtti_isa ( _obj->_rtti, _rtti ) )
         return _obj;

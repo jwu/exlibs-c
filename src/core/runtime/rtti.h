@@ -67,7 +67,7 @@ ex_rtti_t* ex_rtti_get ( const char* _class );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline const char* ex_rtti_classname ( ex_rtti_t* _info ) { 
+static inline const char* ex_rtti_classname ( ex_rtti_t* _info ) { 
     return ex_strid_to_cstr(_info->_classid); 
 } 
 
@@ -75,7 +75,7 @@ inline const char* ex_rtti_classname ( ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline strid_t ex_rtti_classid ( ex_rtti_t* _info ) { 
+static inline strid_t ex_rtti_classid ( ex_rtti_t* _info ) { 
     return _info->_classid; 
 }
 
@@ -83,7 +83,7 @@ inline strid_t ex_rtti_classid ( ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline ex_rtti_t* ex_rtti_super ( ex_rtti_t* _info ) { 
+static inline ex_rtti_t* ex_rtti_super ( ex_rtti_t* _info ) { 
     return _info->_super; 
 }
 
@@ -91,7 +91,7 @@ inline ex_rtti_t* ex_rtti_super ( ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_classof ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass ) { 
+static inline bool ex_rtti_classof ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass ) { 
     return _myclass->_classid == _yourclass->_classid;
 }
 
@@ -105,7 +105,7 @@ bool ex_rtti_childof ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_superof ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) { 
+static inline bool ex_rtti_superof ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) { 
     return ex_rtti_childof( _subclass, _myclass );
 }
 
@@ -113,7 +113,7 @@ inline bool ex_rtti_superof ( ex_rtti_t* _myclass, ex_rtti_t* _subclass ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-inline bool ex_rtti_isa ( ex_rtti_t* _myclass, ex_rtti_t* _class ) { 
+static inline bool ex_rtti_isa ( ex_rtti_t* _myclass, ex_rtti_t* _class ) { 
     return ex_rtti_classof(_myclass,_class) || ex_rtti_childof(_myclass,_class);
 }
 
