@@ -197,7 +197,7 @@ inline uint32 ex_hashstr_w( const wchar_t* _str ) { return _hashstr( _str, wcsle
 // Desc: hashuse string
 // ------------------------------------------------------------------
 
-static inline uint32 _hashuse( int _method, const void* _str, uint32 _bytes ) {
+extern inline uint32 _hashuse( int _method, const void* _str, uint32 _bytes ) {
     switch( _method ) {
     case EX_HASH_PAUL:
         return ex_hashpaul( (uint8*)_str, _bytes );

@@ -86,11 +86,11 @@ inline double ex_unit2_rand() { return ( 2.0 * ex_unit_randf() ) - 1.0; }
  get random value in range of [_low_bound,_high_bound], the return type is double.
 */// ------------------------------------------------------------------ 
 
-static inline float ex_range_randf( float _low_bound, float _high_bound ) { 
+extern inline float ex_range_randf( float _low_bound, float _high_bound ) { 
     ex_assert( _low_bound < _high_bound, "low bound should less than high bound" );
     return ( ( _high_bound - _low_bound ) * ex_unit_randf() ) + _low_bound;
 }
-static inline double ex_range_rand( double _low_bound, double _high_bound ) {
+extern inline double ex_range_rand( double _low_bound, double _high_bound ) {
     ex_assert( _low_bound < _high_bound, "low bound should less than high bound" );
     return ( ( _high_bound - _low_bound ) * ex_unit_randf() ) + _low_bound;
 }

@@ -36,7 +36,7 @@ inline bool ex_is_pow_of_2 ( uint _value ) {
 //  If the mod of the _value with _align is 0, then it is aligned
 // ------------------------------------------------------------------
 
-static inline bool ex_is_aligned ( uint _value, uint _align ) {
+extern inline bool ex_is_aligned ( uint _value, uint _align ) {
     ex_assert( ex_is_pow_of_2(_align), "_align must be pow of 2" );
     return ( (_value & (_align-1)) == 0 );
 }

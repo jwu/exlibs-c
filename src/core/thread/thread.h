@@ -20,7 +20,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline uint32 ex_current_threadID () {
+extern inline uint32 ex_current_threadID () {
 #if ( EX_PLATFORM == EX_WIN32 )
     return (uint32)GetCurrentThreadId();
 #else

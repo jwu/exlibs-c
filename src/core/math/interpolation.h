@@ -62,14 +62,14 @@ inline double ex_saturate ( double _x ) {
  @sa ex_clampf
 */// ------------------------------------------------------------------ 
 
-static inline float ex_clampf ( float _x, float _min, float _max ) {
+extern inline float ex_clampf ( float _x, float _min, float _max ) {
     ex_assert ( _min < _max, "the _min must less than _max" );
     if (_x < _min) return _min;
     if (_x > _max) return _max;
     return _x;
 }
 
-static inline double ex_clamp ( double _x, double _min, double _max ) {
+extern inline double ex_clamp ( double _x, double _min, double _max ) {
     ex_assert ( _min < _max, "the _min must less than _max" );
     if (_x < _min) return _min;
     if (_x > _max) return _max;
@@ -118,14 +118,14 @@ inline double ex_lerp ( double _from, double _to, double _ratio ) {
  @sa ex_unit_remapf
 */// ------------------------------------------------------------------ 
 
-static inline float ex_unit_remapf ( float _value, float _min, float _max ) {
+extern inline float ex_unit_remapf ( float _value, float _min, float _max ) {
     ex_assert ( _min < _max, "the _min value must less than _max" );
     ex_assert ( _value <= _max && _value >= _min, "_value must between [_min,_max]" );
 
     return (_value - _min) / (_max - _min);
 }
 
-static inline double ex_unit_remap ( double _value, double _min, double _max ) {
+extern inline double ex_unit_remap ( double _value, double _min, double _max ) {
     ex_assert ( _min < _max, "the _min value must less than _max" );
     ex_assert ( _value <= _max && _value >= _min, "_value must between [_min,_max]" );
 
@@ -153,7 +153,7 @@ static inline double ex_unit_remap ( double _value, double _min, double _max ) {
  @sa ex_unit_remapf
 */// ------------------------------------------------------------------ 
 
-static inline float ex_remapf ( float _value, 
+extern inline float ex_remapf ( float _value, 
                          float _from_min, float _from_max, 
                          float _to_min, float _to_max ) {
     float ratio;
@@ -166,7 +166,7 @@ static inline float ex_remapf ( float _value,
     return ex_lerpf( _to_min, _to_max, ratio );
 }
 
-static inline double ex_remap ( double _value, 
+extern inline double ex_remap ( double _value, 
                          double _from_min, double _from_max, 
                          double _to_min, double _to_max ) {
     double ratio;
