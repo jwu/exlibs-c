@@ -130,7 +130,7 @@ inline float ex_angf_to_degrees_360 ( ex_angf_t* _a ) {
 */// ------------------------------------------------------------------ 
 
 inline void ex_angf_neg ( ex_angf_t* _a ) { 
-    ex_angf_set_by_radians_nosafe( _a, EX_TWO_PI - _a->rad );
+    ex_angf_set_by_radians_nosafe( _a, (float)EX_TWO_PI - _a->rad );
 }
 
 // ------------------------------------------------------------------ 
@@ -143,7 +143,7 @@ inline void ex_angf_neg ( ex_angf_t* _a ) {
 */// ------------------------------------------------------------------ 
 
 inline void ex_angf_get_neg ( ex_angf_t* _r, ex_angf_t* _a ) { 
-    ex_angf_set_by_radians_nosafe( _r, EX_TWO_PI - _a->rad );
+    ex_angf_set_by_radians_nosafe( _r, (float)EX_TWO_PI - _a->rad );
 }
 
 // ------------------------------------------------------------------ 
