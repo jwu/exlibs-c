@@ -27,7 +27,7 @@ extern "C" {
     #define false 0
 
     // C doesn't have inline in MSVC
-    #define inline __inline
+    // #define inline __inline
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////

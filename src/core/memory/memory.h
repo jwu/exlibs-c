@@ -156,7 +156,7 @@ static inline void* ex_memzero ( void* _ptr, size_t _size ) {
 // ------------------------------------------------------------------
 
 // TODO { 
-// inline void memswap( void* _p1, void* _p2, size_t _size ) {
+// static inline void memswap( void* _p1, void* _p2, size_t _size ) {
     // void* pTmp = ex_stack_malloc(EX_ALIGN_ROUND(_size,EX_DEFAULT_ALIGNMENT));
 
     // memcpy( pTmp, _p1,  _size );
