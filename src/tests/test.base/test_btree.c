@@ -30,7 +30,7 @@ static bt_node_t* action_say ( const char* _someting )
 {
     bt_node_t* node = ex_malloc ( sizeof(bt_node_t) );
     node->children = NULL;
-    (const char*)(node->user_data) = _someting;
+    node->user_data = (void*)_someting;
     node->exec = _say_exec;
     return node;
 }

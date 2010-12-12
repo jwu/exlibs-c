@@ -245,19 +245,20 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
 // ------------------------------------------------------------------
 
 #ifdef EX_DEBUG
-    #if ( EX_PLATFORM == EX_WIN32 )
-        #if ( EX_COMPILER == EX_MSVC )
-            #define EX_HW_BREAK()   {__asm {int 3}}
-        #elif ( EX_COMPILER == EX_GCC )
-            #define EX_HW_BREAK()   {__asm__ __volatile__ ("int3");}
-        #endif
-    #elif ( EX_PLATFORM == EX_LINUX )
+    #if ( (EX_COMPILER==EX_MSVC) && ((_M_IX86) || (_M_X64)) )
+        #define EX_HW_BREAK()   {__asm {int 3}}
+    #elif ( (EX_COMPILER==EX_GCC) && ((__i386__) || (__x86_64__)) )
         #define EX_HW_BREAK()   {__asm__ __volatile__ ("int3");}
+    #elif ( EX_PLATFORM == EX_ANDROID ) || ( EX_PLATFORM == EX_IOS )
+        #include <signal.h>
+        #define EX_HW_BREAK()   raise(SIGTRAP)
     #elif ( EX_PLATFORM == EX_XENON )
         #define EX_HW_BREAK()   {__debugbreak();}
     #elif ( EX_PLATFORM == EX_PS3 )
-        #define EX_HW_BREAK()   __asm__ volatile ( "tw 31,1,1" ) // found in CELL_SDK samples, found "BREAK" tag to get it.
+        #define EX_HW_BREAK()   {__asm__ volatile ( "tw 31,1,1" )} // found in CELL_SDK samples, found "BREAK" tag to get it.
         // #define EX_HW_BREAK()   snPause // need #include <libsn.h> || use __builtin_snpause() #ifdef __SNC__
+    #else
+        #define EX_HW_BREAK() EX_NOOP
     #endif
 #else
     #define EX_HW_BREAK() EX_NOOP

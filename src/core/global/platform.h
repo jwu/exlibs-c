@@ -26,46 +26,50 @@
 //  use EX_PLATFORM to judge current operator system.
 // ------------------------------------------------------------------
 
-#define EX_WIN32    0x01
-#define EX_LINUX    0x02
-#define EX_MAC      0x03
-#define EX_XENON    0x04
-#define EX_PS3      0x05
+// pc
+#define EX_WIN32    0x0001
+#define EX_LINUX    0x0002
+#define EX_MACOSX   0x0003
+
+// mobile
+#define EX_IOS      0x0010
+#define EX_ANDROID  0x0020
+
+// console
+#define EX_XENON    0x0100
+#define EX_PS3      0x0200
 
 // ------------------------------------------------------------------
 // Desc: Platform choose
 // ------------------------------------------------------------------
 
-#if defined ( __EX_WIN32__ ) || defined ( WIN32 ) || defined ( _WIN32 )
+// windows 32-bit 
+#if defined ( WIN32 ) || defined ( _WIN32 )
     #define EX_PLATFORM EX_WIN32
-#elif defined ( __EX_LINUX__ )
+// linux
+#elif defined(linux) || defined(__linux) || defined(__linux__)
     #define EX_PLATFORM EX_LINUX 
-#elif defined ( __EX_MAC__ )
-    #define EX_PLATFORM EX_MAC 
+// apple
+#elif defined(__APPLE__)
+// ios
+    #if TARGET_OS_IPHONE
+        #define EX_PLATFORM EX_IOS
+// mac osx
+    #else
+        #define EX_PLATFORM EX_MACOSX
+    #endif
+// android
+#elif defined(__ANDROID)
+    #define EX_PLATFORM EX_ANDROID
+// xenon
 #elif defined ( __EX_XENON__ )
     #define EX_PLATFORM EX_XENON 
+// ps3
 #elif defined ( __EX_PS3__ )
     #define EX_PLATFORM EX_PS3
+// unknown
 #else
     #define EX_PLATFORM EX_UNKNOWN
-#endif
-
-// ------------------------------------------------------------------
-// Desc: Platform Names
-//  This macro will be used in including cross platform files.
-//  NOTE: all platform name formate will be ==> exPlatformName
-// ------------------------------------------------------------------
-
-#if ( EX_PLATFORM == EX_WIN32 )
-    #define EX_PLATFORM_NAME exWin32
-#elif ( EX_PLATFORM == EX_LINUX )
-    #define EX_PLATFORM_NAME exLinux
-#elif ( EX_PLATFORM == EX_XENON )
-    #define EX_PLATFORM_NAME exXenon
-#elif ( EX_PLATFORM == EX_PS3 )
-    #define EX_PLATFORM_NAME exPS3
-#else
-    #define EX_PLATFORM_NAME exUnknown
 #endif
 
 // ------------------------------------------------------------------
@@ -82,12 +86,25 @@
 // Desc: Check if platform support unicode 
 // ------------------------------------------------------------------
 
+// win32
 #if ( EX_PLATFORM == EX_WIN32 )
     #define EX_UNICODE_PLATFORM 1
+// linux
 #elif ( EX_PLATFORM == EX_LINUX )
     #define EX_UNICODE_PLATFORM 1
+// mac osx
+#elif ( EX_PLATFORM == EX_MACOSX )
+    #define EX_UNICODE_PLATFORM 1
+// ios
+#elif ( EX_PLATFORM == EX_IOS )
+    #define EX_UNICODE_PLATFORM 1
+// android
+#elif ( EX_PLATFORM == EX_ANDROID )
+    #define EX_UNICODE_PLATFORM 1
+// xenon
 #elif ( EX_PLATFORM == EX_XENON )
     #define EX_UNICODE_PLATFORM 0
+// ps3
 #elif ( EX_PLATFORM == EX_PS3 )
     #define EX_UNICODE_PLATFORM 0
 #endif
@@ -111,14 +128,27 @@
 #define EX_LITTLE_ENDIAN 0
 #define EX_BIG_ENDIAN    1
 
+// win32
 #if ( EX_PLATFORM == EX_WIN32 )
     #define EX_ENDIAN   EX_LITTLE_ENDIAN
+// linux
 #elif ( EX_PLATFORM == EX_LINUX )
     #define EX_ENDIAN   EX_LITTLE_ENDIAN
+// mac osx
+#elif ( EX_PLATFORM == EX_MACOSX )
+    #define EX_ENDIAN   EX_BIG_ENDIAN
+// xenon
 #elif ( EX_PLATFORM == EX_XENON )
     #define EX_ENDIAN   EX_BIG_ENDIAN
+// ps3
 #elif ( EX_PLATFORM == EX_PS3 )
     #define EX_ENDIAN   EX_BIG_ENDIAN
+// ios
+#elif ( EX_PLATFORM == EX_IOS )
+    #define EX_ENDIAN   EX_LITTLE_ENDIAN
+// android
+#elif ( EX_PLATFORM == EX_ANDROID )
+    #define EX_ENDIAN   EX_LITTLE_ENDIAN
 #endif
 
 // ------------------------------------------------------------------

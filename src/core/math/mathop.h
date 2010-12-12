@@ -272,7 +272,7 @@ static inline double ex_inv_sqrt ( double _val ) { return 1.0 / sqrt(_val); }
 */// ------------------------------------------------------------------ 
 
 static inline bool ex_is_equalf ( float _lhs, float _rhs, float _eps ) {
-    return fabsf (_lhs-_rhs) < _eps;
+    return fabsf (_lhs-_rhs) <= _eps;
 } 
 
 // ------------------------------------------------------------------ 
@@ -286,7 +286,7 @@ static inline bool ex_is_equalf ( float _lhs, float _rhs, float _eps ) {
 */// ------------------------------------------------------------------ 
 
 static inline bool ex_is_equal ( double _lhs, double _rhs, double _eps ) {
-    return fabs (_lhs-_rhs) < _eps;
+    return fabs (_lhs-_rhs) <= _eps;
 }
 
 // ------------------------------------------------------------------ 
@@ -299,7 +299,7 @@ static inline bool ex_is_equal ( double _lhs, double _rhs, double _eps ) {
 */// ------------------------------------------------------------------ 
 
 static inline bool ex_is_zerof ( float _v, float _eps ) {
-    return fabsf (_v) < _eps;
+    return fabsf (_v) <= _eps;
 } 
 
 // ------------------------------------------------------------------ 
@@ -312,7 +312,7 @@ static inline bool ex_is_zerof ( float _v, float _eps ) {
 */// ------------------------------------------------------------------ 
 
 static inline bool ex_is_zero ( double _v, double _eps ) {
-    return fabs (_v) < _eps;
+    return fabs (_v) <= _eps;
 }
 
 // ------------------------------------------------------------------ 

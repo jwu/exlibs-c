@@ -26,12 +26,6 @@
 
     #include <windows.h>
     #include <malloc.h> 
-    // #include <io.h>
-    // #include <direct.h>
-    // #include <process.h>
-    // #include <sys/stat.h>
-    // #include <sys/utime.h>
-    // #include <errno.h>
 
     // // to use the sse intrins in gcc, please add -msse compile flag in makefile of this project
     // #include <xmmintrin.h>  // for type __m128
@@ -45,10 +39,9 @@
     // to use the sse intrins in gcc, please add -msse compile flag in makefile of this project
     #include <xmmintrin.h>  // for type __m128
 
-    // stl container
-    #include <pair> 
-    #include <multiset>
-    #include <multimap>
+#elif (EX_PLATFORM == EX_MACOSX)
+
+    #include <unistd.h> 
 
 #endif
 
@@ -71,6 +64,7 @@
 // general
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <time.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
