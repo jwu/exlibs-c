@@ -250,7 +250,6 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
     #elif ( (EX_COMPILER==EX_GCC) && ((__i386__) || (__x86_64__)) )
         #define EX_HW_BREAK()   {__asm__ __volatile__ ("int3");}
     #elif ( EX_PLATFORM == EX_ANDROID ) || ( EX_PLATFORM == EX_IOS )
-        #include <signal.h>
         #define EX_HW_BREAK()   raise(SIGTRAP)
     #elif ( EX_PLATFORM == EX_XENON )
         #define EX_HW_BREAK()   {__debugbreak();}

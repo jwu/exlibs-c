@@ -16,16 +16,17 @@ extern "C" {
 #endif
 // ######################### 
 
+typedef unsigned long thread_id_t;
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline uint32 ex_current_threadID () {
+static inline thread_id_t ex_current_threadID () {
 #if ( EX_PLATFORM == EX_WIN32 )
-    return (uint32)GetCurrentThreadId();
+    return (thread_id_t)GetCurrentThreadId();
 #else
-    ex_assert ( false, "pls implement ex_current_threadID in other platform." );
-    return -1;
+    return (thread_id_t)pthread_self();
 #endif
 }
 

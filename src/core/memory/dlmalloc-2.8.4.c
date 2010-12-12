@@ -547,8 +547,10 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
 
 #ifndef ONLY_MSPACES
 #define ONLY_MSPACES 0     /* define to a value */
-#else
-#define ONLY_MSPACES 1
+// jwu DISABLE: looks like a writting error { 
+// #else
+// #define ONLY_MSPACES 1
+// } jwu DISABLE end 
 #endif  /* ONLY_MSPACES */
 #ifndef MSPACES
 #if ONLY_MSPACES

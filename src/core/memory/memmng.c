@@ -54,7 +54,7 @@ typedef struct alloc_unit_t
     bool                 break_onfree;
     bool                 break_onrealloc;
     size_t               alloc_nr;
-    uint32               thread_id;
+    thread_id_t          thread_id;
     struct alloc_unit_t* next;
     struct alloc_unit_t* prev;
 } alloc_unit_t; // end struct alloc_unit_t 
@@ -275,7 +275,7 @@ static void _dump () {
                        "original size:  %lu(%#.8lX)\r\n"
                        "debug size:     %lu(%#.8lX)\r\n"
                        "alloc nr:       %lu(%#.8lX)\r\n"
-                       "thread ID:      %u(%#.8X)\r\n"
+                       "thread ID:      %lu(%#.8lX)\r\n"
                        "\r\n"
                        ,au->file_name ,au->line_nr 
                        ,au->func_name 

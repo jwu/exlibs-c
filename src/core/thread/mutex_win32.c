@@ -32,8 +32,8 @@ ex_mutex_t* ex_mutex_create ()
 	ex_mutex_t* mutex;
 
 	// allocate mutex memory
-	mutex = (ex_mutex_t*)ex_malloc_nomng(sizeof(ex_mutex_t*));
-	if ( mutex ) {
+	mutex = (ex_mutex_t*)ex_malloc_nomng(sizeof(ex_mutex_t));
+	if (mutex) {
 		// Create the mutex, with initial value signaled
 		mutex->id = CreateMutex(NULL, FALSE, NULL);
 		if ( !mutex->id ) {
@@ -42,6 +42,11 @@ ex_mutex_t* ex_mutex_create ()
 			mutex = NULL;
 		}
 	}
+    // TODO { 
+    // else {
+    //     SDL_OutOfMemory();
+    // }
+    // } TODO end 
 	return mutex;
 }
 

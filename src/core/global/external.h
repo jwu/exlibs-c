@@ -42,6 +42,8 @@
 #elif (EX_PLATFORM == EX_MACOSX)
 
     #include <unistd.h> 
+    #include <pthread.h>
+    #include <signal.h>
 
 #endif
 
