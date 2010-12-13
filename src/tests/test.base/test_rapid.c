@@ -17,6 +17,8 @@
 
 void test_rapid ()
 {
+    ex_assert ( false, "hello world!" );
+
     uint indices[256];
     uint i = 0;
 

@@ -36,8 +36,7 @@ int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ...
 #endif
 
     // keep get va string until success 
-    while ( result == -1 )
-    {
+    while ( result == -1 ) {
         pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
@@ -53,6 +52,14 @@ int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ...
         type = MB_ICONWARNING;
 
     ret = MessageBox( NULL, pBuffer, _caption, type );
+#elif (EX_PLATFORM == EX_MACOSX)
+    // TODO: use mac osx message box { 
+    ret = 1;
+    printf ( "%s", pBuffer );
+    // } TODO end 
+#else
+    ret = 1;
+    printf ( "%s", pBuffer );
 #endif
 
     // release buffer we allocate

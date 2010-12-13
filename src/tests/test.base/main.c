@@ -50,7 +50,7 @@ int main( int argc, char* argv[] )
         // test_list ();
         // test_memmng ();
         // test_pool ();
-        test_rtti ();
+        // test_rtti ();
         // test_stringID ();
 
         // special

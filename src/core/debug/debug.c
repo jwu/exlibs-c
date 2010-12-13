@@ -35,9 +35,7 @@ void _short_funcname ( char _short_name[], const char* _function_name, int _len 
         _short_name[_len-3] = '.'; 
         _short_name[_len-2] = '.'; 
         _short_name[_len-1] = 0; 
-    } 
-    else 
-    { 
+    } else { 
         strncpy( _short_name, _function_name, len ); 
     } 
 }
@@ -56,8 +54,7 @@ bool assert_failed( bool* _pDoAssert, const char* _file_name, const char* _funct
     int     mbResult = -1;
 
     // keep get va string until success 
-    while ( result == -1 )
-    {
+    while ( result == -1 ) {
         pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
@@ -103,8 +100,7 @@ bool error_msg( bool* _pDoAssert, const char* _file_name, const char* _function_
     int     mbResult;
 
     // keep get va string until success 
-    while ( result == -1 )
-    {
+    while ( result == -1 ) {
         pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
@@ -144,8 +140,7 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
     int     mbResult;
 
     // keep get va string until success 
-    while ( result == -1 )
-    {
+    while ( result == -1 ) {
         pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
