@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B245483012B91EF300EF7261 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B245482F12B91EF300EF7261 /* main.c */; };
+		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
+		B245485112B920D200EF7261 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
 		B2DD23FF12A7C86E0053CA3F /* test_array.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F312A7C86E0053CA3F /* test_array.c */; };
 		B2DD240012A7C86E0053CA3F /* test_bitarry.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F412A7C86E0053CA3F /* test_bitarry.c */; };
@@ -117,6 +121,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B245484512B9205C00EF7261 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* exsdk */;
+			remoteInfo = exsdk;
+		};
 		B2DD245712A7FC0F0053CA3F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
@@ -127,6 +138,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B245482812B91E9900EF7261 /* test_gl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_gl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B245482A12B91E9900EF7261 /* test_gl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test_gl-Info.plist"; sourceTree = "<group>"; };
+		B245482F12B91EF300EF7261 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		B2DD23EA12A7C7CE0053CA3F /* test.base */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test.base; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD23F212A7C86E0053CA3F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2DD23F312A7C86E0053CA3F /* test_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_array.c; sourceTree = "<group>"; };
@@ -242,6 +258,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B245482612B91E9900EF7261 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */,
+				B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */,
+				B245485112B920D200EF7261 /* libexsdk.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2DD23E812A7C7CE0053CA3F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,23 +290,13 @@
 			isa = PBXGroup;
 			children = (
 				B2DD23F012A7C81B0053CA3F /* tests */,
-				08FB7795FE84155DC02AAC07 /* exsdk */,
+				B245483712B91F9E00EF7261 /* exsdk */,
 				C6A0FF2B0290797F04C91782 /* doc */,
 				1AB674ADFE9D54B511CA2CBB /* bin */,
 				B2DD23EB12A7C7CE0053CA3F /* Products */,
-			);
-			name = exsdk;
-			sourceTree = "<group>";
-		};
-		08FB7795FE84155DC02AAC07 /* exsdk */ = {
-			isa = PBXGroup;
-			children = (
-				B2E0B70012A6B144009FE3E8 /* ai */,
-				B2E0B70912A6B144009FE3E8 /* autogen */,
-				B2E0B70B12A6B144009FE3E8 /* core */,
-				B2E0B76612A6B144009FE3E8 /* entity */,
-				B2E0B76F12A6B144009FE3E8 /* exsdk.c */,
-				B2E0B77012A6B144009FE3E8 /* exsdk.h */,
+				B245482A12B91E9900EF7261 /* test_gl-Info.plist */,
+				B245484712B9207800EF7261 /* OpenGL.framework */,
+				B245484B12B9209000EF7261 /* GLUT.framework */,
 			);
 			name = exsdk;
 			sourceTree = "<group>";
@@ -293,10 +309,34 @@
 			name = bin;
 			sourceTree = "<group>";
 		};
+		B245482E12B91EF300EF7261 /* test_gl */ = {
+			isa = PBXGroup;
+			children = (
+				B245482F12B91EF300EF7261 /* main.c */,
+			);
+			name = test_gl;
+			path = ../../src/tests/test_gl;
+			sourceTree = SOURCE_ROOT;
+		};
+		B245483712B91F9E00EF7261 /* exsdk */ = {
+			isa = PBXGroup;
+			children = (
+				B2E0B70012A6B144009FE3E8 /* ai */,
+				B2E0B70912A6B144009FE3E8 /* autogen */,
+				B2E0B70B12A6B144009FE3E8 /* core */,
+				B2E0B76612A6B144009FE3E8 /* entity */,
+				B2E0B76F12A6B144009FE3E8 /* exsdk.c */,
+				B2E0B77012A6B144009FE3E8 /* exsdk.h */,
+			);
+			name = exsdk;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
 		B2DD23EB12A7C7CE0053CA3F /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				B2DD23EA12A7C7CE0053CA3F /* test.base */,
+				B245482812B91E9900EF7261 /* test_gl.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -304,12 +344,13 @@
 		B2DD23F012A7C81B0053CA3F /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				B2DD23F112A7C86E0053CA3F /* test.base */,
+				B245482E12B91EF300EF7261 /* test_gl */,
+				B2DD23F112A7C86E0053CA3F /* test_base */,
 			);
 			name = tests;
 			sourceTree = "<group>";
 		};
-		B2DD23F112A7C86E0053CA3F /* test.base */ = {
+		B2DD23F112A7C86E0053CA3F /* test_base */ = {
 			isa = PBXGroup;
 			children = (
 				B2DD23F212A7C86E0053CA3F /* main.c */,
@@ -325,8 +366,8 @@
 				B2DD23FC12A7C86E0053CA3F /* test_rtti.c */,
 				B2DD23FD12A7C86E0053CA3F /* test_stringID.c */,
 			);
-			name = test.base;
-			path = ../../src/tests/test.base;
+			name = test_base;
+			path = ../../src/tests/test_base;
 			sourceTree = SOURCE_ROOT;
 		};
 		B2E0B70012A6B144009FE3E8 /* ai */ = {
@@ -626,9 +667,27 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B2DD23E912A7C7CE0053CA3F /* test.base */ = {
+		B245482712B91E9900EF7261 /* test_gl */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B2DD23EF12A7C7CF0053CA3F /* Build configuration list for PBXNativeTarget "test.base" */;
+			buildConfigurationList = B245482D12B91E9900EF7261 /* Build configuration list for PBXNativeTarget "test_gl" */;
+			buildPhases = (
+				B245482412B91E9900EF7261 /* Resources */,
+				B245482512B91E9900EF7261 /* Sources */,
+				B245482612B91E9900EF7261 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B245484612B9205C00EF7261 /* PBXTargetDependency */,
+			);
+			name = test_gl;
+			productName = test_gl;
+			productReference = B245482812B91E9900EF7261 /* test_gl.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B2DD23E912A7C7CE0053CA3F /* test_base */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2DD23EF12A7C7CF0053CA3F /* Build configuration list for PBXNativeTarget "test_base" */;
 			buildPhases = (
 				B2DD23E712A7C7CE0053CA3F /* Sources */,
 				B2DD23E812A7C7CE0053CA3F /* Frameworks */,
@@ -638,7 +697,7 @@
 			dependencies = (
 				B2DD245812A7FC0F0053CA3F /* PBXTargetDependency */,
 			);
-			name = test.base;
+			name = test_base;
 			productName = test.base;
 			productReference = B2DD23EA12A7C7CE0053CA3F /* test.base */;
 			productType = "com.apple.product-type.tool";
@@ -681,12 +740,31 @@
 			projectRoot = "";
 			targets = (
 				D2AAC045055464E500DB518D /* exsdk */,
-				B2DD23E912A7C7CE0053CA3F /* test.base */,
+				B2DD23E912A7C7CE0053CA3F /* test_base */,
+				B245482712B91E9900EF7261 /* test_gl */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		B245482412B91E9900EF7261 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		B245482512B91E9900EF7261 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B245483012B91EF300EF7261 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B2DD23E712A7C7CE0053CA3F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -749,6 +827,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B245484612B9205C00EF7261 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* exsdk */;
+			targetProxy = B245484512B9205C00EF7261 /* PBXContainerItemProxy */;
+		};
 		B2DD245812A7FC0F0053CA3F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D2AAC045055464E500DB518D /* exsdk */;
@@ -820,6 +903,60 @@
 			};
 			name = Release;
 		};
+		B245482B12B91E9900EF7261 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = ../../src;
+				INFOPLIST_FILE = "test_gl-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = test_gl;
+			};
+			name = Debug;
+		};
+		B245482C12B91E9900EF7261 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = ../../src;
+				INFOPLIST_FILE = "test_gl-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = test_gl;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		B2DD23ED12A7C7CF0053CA3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -878,7 +1015,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2DD23EF12A7C7CF0053CA3F /* Build configuration list for PBXNativeTarget "test.base" */ = {
+		B245482D12B91E9900EF7261 /* Build configuration list for PBXNativeTarget "test_gl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B245482B12B91E9900EF7261 /* Debug */,
+				B245482C12B91E9900EF7261 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2DD23EF12A7C7CF0053CA3F /* Build configuration list for PBXNativeTarget "test_base" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2DD23ED12A7C7CF0053CA3F /* Debug */,

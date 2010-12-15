@@ -34,7 +34,6 @@ extern void test_rapid();
 
 int main( int argc, char* argv[] )
 {
-
     printf ("================\n");
     printf ("start testing...\n");
     printf ("================\n");
