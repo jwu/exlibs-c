@@ -132,6 +132,19 @@ static void createWindow ( int argc, const char *argv[] ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void exit_fn () {
+    // deinit
+    ex_core_deinit();
+
+    printf ("================\n");
+    printf ("exit test_base...\n");
+    printf ("================\n");
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int main( int argc, const char* argv[] ) {
     printf ("================\n");
     printf ("start gl testing...\n");
@@ -139,6 +152,10 @@ int main( int argc, const char* argv[] ) {
 
     // init
     if ( ex_core_init() ) {
+        // register exit function
+        atexit(exit_fn);
+
+        //
         createWindow ( argc, argv );
         glutSetWindowTitle("test_gl");
 
@@ -149,9 +166,6 @@ int main( int argc, const char* argv[] ) {
 
         glutMainLoop();
     }
-
-    // deinit
-    ex_core_deinit();
 
     return 0;
 }

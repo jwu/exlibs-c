@@ -21,6 +21,19 @@ extern void test_normal();
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void exit_fn () {
+    // deinit
+    ex_core_deinit();
+
+    printf ("================\n");
+    printf ("exit test_base...\n");
+    printf ("================\n");
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int main( int argc, char* argv[] )
 {
     printf ("================\n");
@@ -28,13 +41,13 @@ int main( int argc, char* argv[] )
     printf ("================\n");
 
     // init
-    ex_core_init();
+    if ( ex_core_init() ) {
+        // register exit function
+        atexit(exit_fn);
 
-    //
-    test_normal ();
-
-    // deinit
-    ex_core_deinit();
+        //
+        test_normal ();
+    }
 
     return 0;
 }

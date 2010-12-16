@@ -32,14 +32,30 @@ extern void test_rapid();
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void exit_fn () {
+    // deinit
+    ex_core_deinit();
+
+    printf ("================\n");
+    printf ("exit test_base...\n");
+    printf ("================\n");
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int main( int argc, char* argv[] )
 {
     printf ("================\n");
-    printf ("start testing...\n");
+    printf ("start test_base...\n");
     printf ("================\n");
 
     // init
     if ( ex_core_init() ) {
+        // register exit function
+        atexit(exit_fn);
+
         // general
         // test_array ();
         // test_bitarry ();
@@ -55,10 +71,6 @@ int main( int argc, char* argv[] )
         // special
         test_rapid ();
     }
-
-    // deinit
-    ex_core_deinit();
-
 
     return 0;
 }
