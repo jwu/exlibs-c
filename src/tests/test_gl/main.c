@@ -10,6 +10,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
+#include "../../graphics/graphics_inc.h"
+
+#include "../../entity/world.h"
+#include "../../entity/entity.h"
 
 #if (EX_PLATFORM == EX_MACOSX)
 	#include "OpenGL/gl.h"
@@ -27,11 +31,15 @@
 
 extern void test_rapid();
 
+// system
 // DISABLE { 
 // static int paused = 0;
 // static int step = 0;
 // } DISABLE end 
 static int ticks = 0;
+
+// game
+ex_world_t* world = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -41,16 +49,7 @@ static int ticks = 0;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void initGL () {
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-	glEnableClientState(GL_VERTEX_ARRAY);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void reshape ( int _width, int _height ) {
+static void _reshape ( int _width, int _height ) {
 	glViewport(0, 0, _width, _height);
 
 	double rx = _width / 2.0;
@@ -59,14 +58,14 @@ static void reshape ( int _width, int _height ) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
-	glTranslated(0.5, 0.5, 0.0);
+    glTranslated(0.5, 0.5, 0.0);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void display() {
+static void _display() {
 
     // DISABLE { 
     // cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
@@ -83,18 +82,60 @@ static void display() {
     // }
     // } TODO end 
 
-    glClearColor(1.0f,0.0f,0.0f,1.0f); // background color
+    glClearColor(0.0f,0.5f,1.0f,1.0f); // RGBA background color
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // drawSpace(space, currDemo->drawOptions ? currDemo->drawOptions : &options);
-    // if(!paused){
-    //     drawInstructions();
-    //     drawInfo();
-    // }
-    // drawString(-300, -210, messageString);
+    // TODO: draw things
+
+    ex_draw_string( -300, 210, "press ESC to quit." );
 
     glutSwapBuffers();
     ++ticks;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void _keyboard ( unsigned char _key, int _x, int _y ) {
+    if ( _key == EX_KEY_ESC ) {
+        exit(0);
+    }
+    printf ( "key is %c \n", _key );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void _mouse ( int _x, int _y ) {
+    // TODO:
+    // mousePoint = mouseToSpace(x, y);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void _click ( int _button, int _state, int _x, int _y ) {
+    // if(button == GLUT_LEFT_BUTTON){
+    //     if(state == GLUT_DOWN){
+    //         cpVect point = mouseToSpace(x, y);
+    //     
+    //         cpShape *shape = cpSpacePointQueryFirst(space, point, GRABABLE_MASK_BIT, CP_NO_GROUP);
+    //         if(shape){
+    //             cpBody *body = shape->body;
+    //             mouseJoint = cpPivotJointNew2(mouseBody, body, cpvzero, cpBodyWorld2Local(body, point));
+    //             mouseJoint->maxForce = 50000.0f;
+    //             mouseJoint->biasCoef = 0.15f;
+    //             cpSpaceAddConstraint(space, mouseJoint);
+    //         }
+    //     } else if(mouseJoint){
+    //         cpSpaceRemoveConstraint(space, mouseJoint);
+    //         cpConstraintFree(mouseJoint);
+    //         mouseJoint = NULL;
+    //     }
+    // }
 }
 
 // ------------------------------------------------------------------ 
@@ -106,26 +147,65 @@ static void createWindow ( int argc, const char *argv[] ) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(640, 480);
 	glutCreateWindow("test_gl");
-	
-	initGL();
-	
-	glutReshapeFunc(reshape);
-	glutDisplayFunc(display);
+    glutSetWindowTitle("test_gl");
+}
 
-#if 0
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void initGL () {
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+	glEnableClientState(GL_VERTEX_ARRAY);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void registerFuncs () {
+	glutReshapeFunc(_reshape);
+	glutDisplayFunc(_display);
+
+    // DISABLE { 
     // glutIdleFunc(idle);
-	glutTimerFunc(SLEEP_TICKS, timercall, 0);
+    // glutTimerFunc(SLEEP_TICKS, timercall, 0);
+    // } DISABLE end 
 
 	glutIgnoreKeyRepeat(1);
-	glutKeyboardFunc(keyboard);
-	
-	glutSpecialFunc(arrowKeyDownFunc);
-	glutSpecialUpFunc(arrowKeyUpFunc);
+	glutKeyboardFunc(_keyboard);
+    // glutSpecialFunc(arrowKeyDownFunc);
+    // glutSpecialUpFunc(arrowKeyUpFunc);
 
-	glutMotionFunc(mouse);
-	glutPassiveMotionFunc(mouse);
-	glutMouseFunc(click);
-#endif
+	glutMotionFunc(_mouse);
+	glutPassiveMotionFunc(_mouse);
+	glutMouseFunc(_click);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void initGame () {
+    ex_entity_t* ent;
+
+    world = ex_world_alloc();
+
+    // TODO { 
+    // init the world
+    // serialize the world
+    // } TODO end 
+
+    // TEMP: instead of serialize the world, I hardcoded the entities.
+    ent = ex_world_create_entity ( world, "ent1" );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void quitGame () {
+    ex_world_free(world);
 }
 
 // ------------------------------------------------------------------ 
@@ -134,6 +214,7 @@ static void createWindow ( int argc, const char *argv[] ) {
 
 static void exit_fn () {
     // deinit
+    quitGame ();
     ex_core_deinit();
 
     printf ("================\n");
@@ -155,15 +236,15 @@ int main( int argc, const char* argv[] ) {
         // register exit function
         atexit(exit_fn);
 
-        //
+        // init graphics
         createWindow ( argc, argv );
-        glutSetWindowTitle("test_gl");
+        initGL();
+        registerFuncs();
 
-        // TODO { 
-        // special
-        // test_rapid ();
-        // } TODO end 
+        // init game
+        initGame();
 
+        //
         glutMainLoop();
     }
 

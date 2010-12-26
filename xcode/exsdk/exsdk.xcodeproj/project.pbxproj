@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20715A512C7A38900071C29 /* debug_draw.c in Sources */ = {isa = PBXBuildFile; fileRef = B20715A012C7A38900071C29 /* debug_draw.c */; };
+		B20715A612C7A38900071C29 /* debug_draw.h in Headers */ = {isa = PBXBuildFile; fileRef = B20715A112C7A38900071C29 /* debug_draw.h */; };
+		B20715A912C7A38900071C29 /* graphics_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B20715A412C7A38900071C29 /* graphics_inc.h */; };
+		B20715BF12C7A4AC00071C29 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245483012B91EF300EF7261 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B245482F12B91EF300EF7261 /* main.c */; };
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
@@ -125,7 +129,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* exsdk */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = exsdk;
 		};
 		B2DD245712A7FC0F0053CA3F /* PBXContainerItemProxy */ = {
@@ -138,6 +142,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B20715A012C7A38900071C29 /* debug_draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = debug_draw.c; path = graphics/debug_draw.c; sourceTree = "<group>"; };
+		B20715A112C7A38900071C29 /* debug_draw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debug_draw.h; path = graphics/debug_draw.h; sourceTree = "<group>"; };
+		B20715A412C7A38900071C29 /* graphics_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics_inc.h; path = graphics/graphics_inc.h; sourceTree = "<group>"; };
 		B245482812B91E9900EF7261 /* test_gl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_gl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B245482A12B91E9900EF7261 /* test_gl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test_gl-Info.plist"; sourceTree = "<group>"; };
 		B245482F12B91EF300EF7261 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -280,6 +287,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20715BF12C7A4AC00071C29 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +317,16 @@
 			name = bin;
 			sourceTree = "<group>";
 		};
+		B207159F12C7A36D00071C29 /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				B20715A012C7A38900071C29 /* debug_draw.c */,
+				B20715A112C7A38900071C29 /* debug_draw.h */,
+				B20715A412C7A38900071C29 /* graphics_inc.h */,
+			);
+			name = graphics;
+			sourceTree = "<group>";
+		};
 		B245482E12B91EF300EF7261 /* test_gl */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +339,7 @@
 		B245483712B91F9E00EF7261 /* exsdk */ = {
 			isa = PBXGroup;
 			children = (
+				B207159F12C7A36D00071C29 /* graphics */,
 				B2E0B70012A6B144009FE3E8 /* ai */,
 				B2E0B70912A6B144009FE3E8 /* autogen */,
 				B2E0B70B12A6B144009FE3E8 /* core */,
@@ -661,6 +680,8 @@
 				B2E0B7D512A6B144009FE3E8 /* trans2d.h in Headers */,
 				B2E0B7D712A6B144009FE3E8 /* world.h in Headers */,
 				B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */,
+				B20715A612C7A38900071C29 /* debug_draw.h in Headers */,
+				B20715A912C7A38900071C29 /* graphics_inc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +842,7 @@
 				B2E0B7D612A6B144009FE3E8 /* world.c in Sources */,
 				B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */,
 				B2DD24D112A817E50053CA3F /* mutex_mac.c in Sources */,
+				B20715A512C7A38900071C29 /* debug_draw.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,6 +28,26 @@ EX_DEF_PROPS_END(ex_entity_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
+ex_entity_t* ex_entity_alloc () {
+    ex_entity_t* ent = (ex_entity_t*)ex_malloc(sizeof(ex_entity_t));
+    ent->_name = EX_STRID_INVALID;
+    ent->_comps = ex_array_alloc( sizeof(ex_component_t*), 1 );
+    return ent;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_entity_free ( ex_entity_t* _entity ) {
+    ex_array_free ( _entity->_comps );
+    ex_free ( _entity );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 EX_RESULT ex_entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp ) {
     return EX_RESULT_OK;
 }

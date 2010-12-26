@@ -45,6 +45,9 @@
     #include <pthread.h>
     #include <signal.h>
 
+	#include "OpenGL/gl.h"
+	#include "OpenGL/glu.h"
+	#include <GLUT/glut.h>
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
