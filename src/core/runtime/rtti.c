@@ -109,10 +109,14 @@ ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super )
 void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count )
 {
     ex_assert_return( _info->_props == NULL, /*dummy*/, "properties already registerd!" );
-    ex_assert_return( _props != NULL && _count > 0, /*dummy*/, "incoming properties can't be NULL, or can't be empty!" );
 
-    _info->_props = (ex_prop_t*)ex_malloc( sizeof(ex_prop_t) * _count );
-    memcpy( _info->_props, _props, sizeof(ex_prop_t) * _count );
+    // NOTE: you could have empty properties for a structure.
+    if ( _count != 0 ) {
+        ex_assert_return( _props != NULL, /*dummy*/, "incoming properties can't be NULL, or can't be empty!" );
+
+        _info->_props = (ex_prop_t*)ex_malloc( sizeof(ex_prop_t) * _count );
+        memcpy( _info->_props, _props, sizeof(ex_prop_t) * _count );
+    }
 }
 
 // ------------------------------------------------------------------ 

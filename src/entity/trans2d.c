@@ -36,6 +36,22 @@ EX_DEF_PROPS_END(ex_trans2d_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_trans2d_internal_init () {
+    _trans2d_pool = ex_array_alloc( sizeof(ex_trans2d_t), 1024 );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_internal_deinit () {
+    ex_array_free (_trans2d_pool);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 ex_trans2d_t* ex_trans2d_request () {
     return ex_array_append( _trans2d_pool, NULL );
 }

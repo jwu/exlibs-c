@@ -22,6 +22,7 @@ extern "C" {
 
 bool ex_core_init ();
 void ex_core_deinit ();
+bool ex_core_initialized ();
 
 // ######################### 
 #ifdef __cplusplus

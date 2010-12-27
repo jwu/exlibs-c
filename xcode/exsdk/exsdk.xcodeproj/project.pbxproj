@@ -11,6 +11,8 @@
 		B20715A612C7A38900071C29 /* debug_draw.h in Headers */ = {isa = PBXBuildFile; fileRef = B20715A112C7A38900071C29 /* debug_draw.h */; };
 		B20715A912C7A38900071C29 /* graphics_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B20715A412C7A38900071C29 /* graphics_inc.h */; };
 		B20715BF12C7A4AC00071C29 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B207165512C82D2800071C29 /* engine.c in Sources */ = {isa = PBXBuildFile; fileRef = B207165312C82D2800071C29 /* engine.c */; };
+		B207165612C82D2800071C29 /* engine.h in Headers */ = {isa = PBXBuildFile; fileRef = B207165412C82D2800071C29 /* engine.h */; };
 		B245483012B91EF300EF7261 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B245482F12B91EF300EF7261 /* main.c */; };
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
@@ -145,6 +147,8 @@
 		B20715A012C7A38900071C29 /* debug_draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = debug_draw.c; path = graphics/debug_draw.c; sourceTree = "<group>"; };
 		B20715A112C7A38900071C29 /* debug_draw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debug_draw.h; path = graphics/debug_draw.h; sourceTree = "<group>"; };
 		B20715A412C7A38900071C29 /* graphics_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics_inc.h; path = graphics/graphics_inc.h; sourceTree = "<group>"; };
+		B207165312C82D2800071C29 /* engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = engine.c; sourceTree = "<group>"; };
+		B207165412C82D2800071C29 /* engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
 		B245482812B91E9900EF7261 /* test_gl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_gl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B245482A12B91E9900EF7261 /* test_gl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test_gl-Info.plist"; sourceTree = "<group>"; };
 		B245482F12B91EF300EF7261 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -592,6 +596,8 @@
 		B2E0B76612A6B144009FE3E8 /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				B207165312C82D2800071C29 /* engine.c */,
+				B207165412C82D2800071C29 /* engine.h */,
 				B2E0B76712A6B144009FE3E8 /* component.c */,
 				B2E0B76812A6B144009FE3E8 /* component.h */,
 				B2E0B76912A6B144009FE3E8 /* entity.c */,
@@ -682,6 +688,7 @@
 				B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */,
 				B20715A612C7A38900071C29 /* debug_draw.h in Headers */,
 				B20715A912C7A38900071C29 /* graphics_inc.h in Headers */,
+				B207165612C82D2800071C29 /* engine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +850,7 @@
 				B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */,
 				B2DD24D112A817E50053CA3F /* mutex_mac.c in Sources */,
 				B20715A512C7A38900071C29 /* debug_draw.c in Sources */,
+				B207165512C82D2800071C29 /* engine.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : core.c
+// File         : engine.c
 // Author       : Wu Jie 
-// Last Change  : 07/01/2010 | 07:50:05 AM | Thursday,July
+// Last Change  : 12/27/2010 | 09:56:51 AM | Monday,December
 // Description  : 
 // ======================================================================================
 
@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "core.h"
+#include "engine.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -20,43 +20,26 @@ static bool _initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void ex_register_classes ();
 // ------------------------------------------------------------------ 
 
-bool ex_core_init ()
-{
+bool ex_engine_init () {
+    // we can't init ex_engine before ex_core initialized.
+    if ( ex_core_initialized () == false ) {
+        ex_warning ( "ex_core haven't initialed." );
+        return false;
+    }
+
     // if the core already inited, don't init it second times.
     if ( _initialized ) {
-        ex_warning ( "core already inited" );
+        ex_warning ( "ex_engine already inited" );
         return true;
     }
 
-    //
-    ex_log ("init memory");
-    if ( ex_mem_init() == false ) {
-        ex_log ("failed to init memory");
-        return false;
-    }
-
-    ex_log ("init string ID table");
-    if ( ex_strid_init(65536) == false ) {
-        ex_log ("failed to init string ID table");
-        return false;
-    }
-
-    ex_log ("init rtti classes");
-    if ( ex_rtti_init() == false ) {
-        ex_log ("failed to init rtti table");
-        return false;
-    }
-
-    // after we init rtti, we can register all the classes we used in the app
-    ex_register_classes ();
-
-    // TODO: ex_log ("init lua");
+    // 
+    ex_trans2d_internal_init ();
 
     //
-    ex_log ("ex_core inited");
+    ex_log ("ex_engine inited");
     _initialized = true;
     return true;
 }
@@ -65,20 +48,11 @@ bool ex_core_init ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_core_deinit ()
-{
+void ex_engine_deinit () {
     if ( _initialized ) {
-        ex_log ("deinit rtti table");
-        ex_rtti_deinit();
+        ex_trans2d_internal_deinit();
 
-        ex_log ("deinit string ID table");
-        ex_strid_deinit();
-
-        ex_log ("deinit memory");
-        ex_mem_deinit();
-
-        //
-        ex_log ("ex_core deinitied");
+        ex_log ( "ex_engine deinitied" );
         _initialized = false;
     }
 }
@@ -87,4 +61,5 @@ void ex_core_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_core_initialized () { return _initialized; }
+bool ex_engine_initialized () { return _initialized; }
+

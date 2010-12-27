@@ -57,8 +57,9 @@ static void _reshape ( int _width, int _height ) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
+    glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
     glTranslated(0.5, 0.5, 0.0);
+    // glOrtho(0, _width, _height, 0, -1.0, 1.0); // jwu DISABLE
 }
 
 // ------------------------------------------------------------------ 
@@ -86,7 +87,6 @@ static void _display() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // TODO: draw things
-
     ex_draw_string( -300, 210, "press ESC to quit." );
 
     glutSwapBuffers();
@@ -215,6 +215,7 @@ static void quitGame () {
 static void exit_fn () {
     // deinit
     quitGame ();
+    ex_engine_deinit();
     ex_core_deinit();
 
     printf ("================\n");
@@ -242,6 +243,7 @@ int main( int argc, const char* argv[] ) {
         registerFuncs();
 
         // init game
+        ex_engine_init();
         initGame();
 
         //
