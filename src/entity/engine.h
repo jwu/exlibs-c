@@ -31,9 +31,9 @@ typedef struct ex_engine_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_engine_init ();
-void ex_engine_deinit ();
-bool ex_engine_initialized ();
+extern bool ex_engine_init ();
+extern void ex_engine_deinit ();
+extern bool ex_engine_initialized ();
 
 // ######################### 
 #ifdef __cplusplus

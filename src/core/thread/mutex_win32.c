@@ -19,15 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-struct ex_mutex_t { 
-    HANDLE id;
-};
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_mutex_t* ex_mutex_create ()
+ex_mutex_t* ex_create_mutex ()
 {
 	ex_mutex_t* mutex;
 
@@ -41,12 +33,10 @@ ex_mutex_t* ex_mutex_create ()
 			ex_free_nomng(mutex);
 			mutex = NULL;
 		}
-	}
-    // TODO { 
-    // else {
-    //     SDL_OutOfMemory();
-    // }
-    // } TODO end 
+	} else {
+        ex_error ("out of memory!");
+    }
+
 	return mutex;
 }
 
@@ -54,7 +44,7 @@ ex_mutex_t* ex_mutex_create ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mutex_destroy ( ex_mutex_t* _mutex )
+void ex_destroy_mutex ( ex_mutex_t* _mutex )
 {
 	if ( _mutex ) {
 		if ( _mutex->id ) {

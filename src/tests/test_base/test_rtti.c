@@ -63,8 +63,7 @@ EX_DEF_PROPS_END(test_cls_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
 	EX_REGISTER_CLASS(test_cls_t);
 }
 
@@ -72,8 +71,7 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_rtti ()
-{
+void test_rtti () {
     normal();
 }
 

@@ -42,25 +42,25 @@ EX_DEF_CLASS_END(ex_entity_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t* ex_entity_alloc ();
+extern ex_entity_t* ex_entity_alloc ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_free ( ex_entity_t* _entity );
+extern void ex_entity_free ( ex_entity_t* _entity );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_RESULT ex_entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp );
+extern EX_RESULT ex_entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_component_t* ex_entity_get_comp ( ex_entity_t* _ent, const char* _typename );
+extern ex_component_t* ex_entity_get_comp ( ex_entity_t* _ent, const char* _typename );
 
 // ######################### 
 #ifdef __cplusplus

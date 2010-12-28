@@ -1,12 +1,12 @@
 // ======================================================================================
-// File         : test_memmng.c
+// File         : test_thread.c
 // Author       : Wu Jie 
-// Last Change  : 07/01/2010 | 00:05:42 AM | Thursday,July
+// Last Change  : 12/28/2010 | 17:53:59 PM | Tuesday,December
 // Description  : 
 // ======================================================================================
 
 ///////////////////////////////////////////////////////////////////////////////
-// includes
+// include
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
@@ -15,40 +15,46 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+static int thread_func1 ( void* _data ) {
+    int counter = 20;
+    ex_log ("this is thread1");
+    while ( counter > 0 ) {
+        ex_log ("thread1 tick");
+        ex_sleep(1000);
+        --counter;
+    }
+    ex_log ("thread1 ended");
+}
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 static void normal () {
-    const int BUFFER_SIZE = 5;
-    const int MAX_COUNT = 256;
-    int i;
-    void* ptr;
-
-    ptr = ex_malloc ( 2048 * sizeof(void*) );
-    for ( i = 0; i < MAX_COUNT; ++i )
-    {
-        char* testBuf = (char*)ex_malloc( sizeof(char)*BUFFER_SIZE ); 
-        ((char**)ptr)[i] = testBuf;
-        ex_free(testBuf);
+    int counter = 5;
+    ex_thread_t* thread1 = ex_create_thread ( thread_func1, NULL );
+    while ( counter > 0 ) {
+        ex_log ("main tick");
+        ex_sleep(1000);
+        --counter;
     }
-    ex_free(ptr);
+    ex_log ("main waiting thread1");
+    ex_wait_thread ( thread1, NULL );
+    ex_log ("main thread ended");
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void memleak () {
+static void invalid() {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_memmng ()
-{
-    normal ();
-    memleak ();
+void test_thread () {
+    normal();
+    invalid();
 }
-

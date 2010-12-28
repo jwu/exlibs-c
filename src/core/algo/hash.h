@@ -68,7 +68,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed );
+extern uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed );
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Bob Jenkins' Hash 3
@@ -78,22 +78,22 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed );
 // Desc: ex_hashword 
 // ------------------------------------------------------------------
 
-uint32 ex_hashword ( const uint32* _data, uint32 _len, uint32 _seed );
-void ex_hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 );
+extern uint32 ex_hashword ( const uint32* _data, uint32 _len, uint32 _seed );
+extern void ex_hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 );
 
 // ------------------------------------------------------------------
 // Desc: ex_hashlittle
 // ------------------------------------------------------------------
 
-uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed );
-void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ); 
+extern uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed );
+extern void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ); 
 
 // ------------------------------------------------------------------
 // Desc: ex_hashbig
 // ------------------------------------------------------------------
 
-uint32 ex_hashbig ( const void* _data, uint32 _len, uint32 _seed );
-void ex_hashbig2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 );
+extern uint32 ex_hashbig ( const void* _data, uint32 _len, uint32 _seed );
+extern void ex_hashbig2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 );
 
 // ------------------------------------------------------------------
 // Desc: ex_hashbob3 ( 1 seed )
@@ -137,7 +137,7 @@ static inline void ex_hashbob3_ptr2 ( const uint32* _data, uint32 _len, uint32* 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 ex_hashpaul ( const uint8* _data, uint32 _len );
+extern uint32 ex_hashpaul ( const uint8* _data, uint32 _len );
 
 ///////////////////////////////////////////////////////////////////////////////
 // CRC Hash

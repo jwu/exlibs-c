@@ -78,22 +78,22 @@ typedef struct ex_pool_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_pool_t* ex_pool_alloc ( size_t _element_bytes, size_t _count );
-ex_pool_t* ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count );
+extern ex_pool_t* ex_pool_alloc ( size_t _element_bytes, size_t _count );
+extern ex_pool_t* ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_pool_free ( ex_pool_t* _pool );
-void ex_pool_free_nomng ( ex_pool_t* _pool );
+extern void ex_pool_free ( ex_pool_t* _pool );
+extern void ex_pool_free_nomng ( ex_pool_t* _pool );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_pool_reserve ( ex_pool_t* _pool, size_t _count ); 
-void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count ); 
+extern void ex_pool_reserve ( ex_pool_t* _pool, size_t _count ); 
+extern void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -107,8 +107,8 @@ static inline size_t ex_pool_capacity ( ex_pool_t* _pool ) { return _pool->_capa
 // @param _value: if NULL, means insert an empty node.
 // ------------------------------------------------------------------ 
 
-int ex_pool_insert ( ex_pool_t* _pool, const void* _value );
-int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value );
+extern int ex_pool_insert ( ex_pool_t* _pool, const void* _value );
+extern int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value );
 
 static inline int ex_pool_insert_int8 ( ex_pool_t* _pool, int8 _value ) { return ex_pool_insert ( _pool, &_value ); }
 static inline int ex_pool_insert_int16 ( ex_pool_t* _pool, int16 _value ) { return ex_pool_insert ( _pool, &_value ); }
@@ -130,7 +130,7 @@ static inline int ex_pool_insert_wstring ( ex_pool_t* _pool, wchar_t* _value ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_get ( ex_pool_t* _pool, int _idx );
+extern void* ex_pool_get ( ex_pool_t* _pool, int _idx );
 
 static inline int8 ex_pool_get_int8 ( ex_pool_t* _pool, int _idx ) { return *((int8*)ex_pool_get ( _pool, _idx )); }
 static inline int16 ex_pool_get_int16 ( ex_pool_t* _pool, int _idx ) { return *((int16*)ex_pool_get ( _pool, _idx )); }
@@ -152,7 +152,7 @@ static inline wchar_t* ex_pool_get_wstring ( ex_pool_t* _pool, int _idx ) { retu
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx );
+extern void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx );
 
 // ######################### 
 #ifdef __cplusplus

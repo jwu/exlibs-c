@@ -311,7 +311,7 @@ bool ex_mem_init ()
     }
 
     //
-    access_mutex = ex_mutex_create();
+    access_mutex = ex_create_mutex();
 
     au_map = ex_hashmap_alloc_nomng ( sizeof(void*), sizeof(alloc_unit_t*), 256, ex_hashkey_ptr, ex_keycmp_ptr );
     au_bucket = ex_list_alloc_nomng ( sizeof(alloc_unit_t*) );
@@ -331,7 +331,7 @@ void ex_mem_deinit ()
 {
     if ( _initialized ) {
         if ( access_mutex )
-            ex_mutex_destroy(access_mutex);
+            ex_destroy_mutex(access_mutex);
 
         _dump ();
 

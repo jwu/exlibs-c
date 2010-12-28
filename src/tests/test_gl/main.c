@@ -37,6 +37,8 @@ extern void test_rapid();
 // static int step = 0;
 // } DISABLE end 
 static int ticks = 0;
+static int win_width = 640; 
+static int win_height = 480; 
 
 // game
 ex_world_t* world = NULL;
@@ -50,16 +52,19 @@ ex_world_t* world = NULL;
 // ------------------------------------------------------------------ 
 
 static void _reshape ( int _width, int _height ) {
-	glViewport(0, 0, _width, _height);
+    win_width = _width;
+    win_height = _height;
 
-	double rx = _width / 2.0;
-	double ry = _height / 2.0;
+	glViewport(0, 0, win_width, win_height);
+
+	double rx = win_width / 2.0;
+	double ry = win_height / 2.0;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
     glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
     glTranslated(0.5, 0.5, 0.0);
-    // glOrtho(0, _width, _height, 0, -1.0, 1.0); // jwu DISABLE
+    // glOrtho(0, win_width, win_height, 0, -1.0, 1.0); // jwu DISABLE
 }
 
 // ------------------------------------------------------------------ 
@@ -67,7 +72,6 @@ static void _reshape ( int _width, int _height ) {
 // ------------------------------------------------------------------ 
 
 static void _display() {
-
     // DISABLE { 
     // cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
 
@@ -86,8 +90,30 @@ static void _display() {
     glClearColor(0.0f,0.5f,1.0f,1.0f); // RGBA background color
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // TODO: draw things
-    ex_draw_string( -300, 210, "press ESC to quit." );
+    // render 2D/3D objects in world space 
+	double rx = win_width / 2.0;
+	double ry = win_height / 2.0;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+    glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
+    glTranslated(0.5, 0.5, 0.0);
+
+    {
+        // TODO:
+    }
+
+    // draw 2D objects in screen space
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+    glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
+
+    {
+        int x = 10;
+        int y = 10;
+        ex_draw_string( x, y, "press ESC to quit." );
+        y += 12;
+        ex_draw_string( x, y, "this is simple gl test." );
+    }
 
     glutSwapBuffers();
     ++ticks;
@@ -145,7 +171,7 @@ static void _click ( int _button, int _state, int _x, int _y ) {
 static void createWindow ( int argc, const char *argv[] ) {
 	glutInit(&argc, (char**)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(640, 480);
+	glutInitWindowSize(win_width, win_height);
 	glutCreateWindow("test_gl");
     glutSetWindowTitle("test_gl");
 }
@@ -206,6 +232,14 @@ static void initGame () {
 
 static void quitGame () {
     ex_world_free(world);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void updateGame () {
+    ex_world_update(world);
 }
 
 // ------------------------------------------------------------------ 

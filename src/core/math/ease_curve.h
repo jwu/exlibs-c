@@ -63,17 +63,17 @@ static inline double ex_ease_linear ( double _t ) { return _t; }
  @sa ex_ease_in_quadf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_quadf ( float _t );
-double ex_ease_in_quad ( double _t );
+extern float ex_ease_in_quadf ( float _t );
+extern double ex_ease_in_quad ( double _t );
 
-float ex_ease_out_quadf ( float _t );
-double ex_ease_out_quad ( double _t );
+extern float ex_ease_out_quadf ( float _t );
+extern double ex_ease_out_quad ( double _t );
 
-float ex_ease_inout_quadf ( float _t ); 
-double ex_ease_inout_quad ( double _t ); 
+extern float ex_ease_inout_quadf ( float _t ); 
+extern double ex_ease_inout_quad ( double _t ); 
 
-float ex_ease_outin_quadf ( float _t ); 
-double ex_ease_outin_quad ( double _t ); 
+extern float ex_ease_outin_quadf ( float _t ); 
+extern double ex_ease_outin_quad ( double _t ); 
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -104,17 +104,17 @@ double ex_ease_outin_quad ( double _t );
  @sa ex_ease_in_cubicf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_cubicf ( float _t );
-double ex_ease_in_cubic ( double _t );
+extern float ex_ease_in_cubicf ( float _t );
+extern double ex_ease_in_cubic ( double _t );
 
-float ex_ease_out_cubicf ( float _t );
-double ex_ease_out_cubic ( double _t );
+extern float ex_ease_out_cubicf ( float _t );
+extern double ex_ease_out_cubic ( double _t );
 
-float ex_ease_inout_cubicf ( float _t ); 
-double ex_ease_inout_cubic ( double _t ); 
+extern float ex_ease_inout_cubicf ( float _t ); 
+extern double ex_ease_inout_cubic ( double _t ); 
 
-float ex_ease_outin_cubicf ( float _t ); 
-double ex_ease_outin_cubic ( double _t ); 
+extern float ex_ease_outin_cubicf ( float _t ); 
+extern double ex_ease_outin_cubic ( double _t ); 
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -145,17 +145,17 @@ double ex_ease_outin_cubic ( double _t );
  @sa ex_ease_in_quartf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_quartf ( float _t );
-double ex_ease_in_quart ( double _t );
+extern float ex_ease_in_quartf ( float _t );
+extern double ex_ease_in_quart ( double _t );
 
-float ex_ease_out_quartf ( float _t );
-double ex_ease_out_quart ( double _t );
+extern float ex_ease_out_quartf ( float _t );
+extern double ex_ease_out_quart ( double _t );
 
-float ex_ease_inout_quartf ( float _t ); 
-double ex_ease_inout_quart ( double _t ); 
+extern float ex_ease_inout_quartf ( float _t ); 
+extern double ex_ease_inout_quart ( double _t ); 
 
-float ex_ease_outin_quartf ( float _t ); 
-double ex_ease_outin_quart ( double _t ); 
+extern float ex_ease_outin_quartf ( float _t ); 
+extern double ex_ease_outin_quart ( double _t ); 
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -186,17 +186,17 @@ double ex_ease_outin_quart ( double _t );
  @sa ex_ease_in_quintf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_quintf ( float _t );
-double ex_ease_in_quint ( double _t );
+extern float ex_ease_in_quintf ( float _t );
+extern double ex_ease_in_quint ( double _t );
 
-float ex_ease_out_quintf ( float _t );
-double ex_ease_out_quint ( double _t );
+extern float ex_ease_out_quintf ( float _t );
+extern double ex_ease_out_quint ( double _t );
 
-float ex_ease_inout_quintf ( float _t );
-double ex_ease_inout_quint ( double _t );
+extern float ex_ease_inout_quintf ( float _t );
+extern double ex_ease_inout_quint ( double _t );
 
-float ex_ease_outin_quintf ( float _t );
-double ex_ease_outin_quint ( double _t );
+extern float ex_ease_outin_quintf ( float _t );
+extern double ex_ease_outin_quint ( double _t );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -227,17 +227,17 @@ double ex_ease_outin_quint ( double _t );
  @sa ex_ease_in_sinef
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_sinef ( float _t );
-double ex_ease_in_sine ( double _t );
+extern float ex_ease_in_sinef ( float _t );
+extern double ex_ease_in_sine ( double _t );
 
-float ex_ease_out_sinef ( float _t );
-double ex_ease_out_sine ( double _t );
+extern float ex_ease_out_sinef ( float _t );
+extern double ex_ease_out_sine ( double _t );
 
-float ex_ease_inout_sinef ( float _t );
-double ex_ease_inout_sine ( double _t );
+extern float ex_ease_inout_sinef ( float _t );
+extern double ex_ease_inout_sine ( double _t );
 
-float ex_ease_outin_sinef ( float _t ); 
-double ex_ease_outin_sine ( double _t ); 
+extern float ex_ease_outin_sinef ( float _t ); 
+extern double ex_ease_outin_sine ( double _t ); 
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -268,17 +268,17 @@ double ex_ease_outin_sine ( double _t );
  @sa ex_ease_in_expof
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_expof ( float _t );
-double ex_ease_in_expo ( double _t );
+extern float ex_ease_in_expof ( float _t );
+extern double ex_ease_in_expo ( double _t );
 
-float ex_ease_out_expof ( float _t );
-double ex_ease_out_expo ( double _t );
+extern float ex_ease_out_expof ( float _t );
+extern double ex_ease_out_expo ( double _t );
 
-float ex_ease_inout_expof ( float _t );
-double ex_ease_inout_expo ( double _t );
+extern float ex_ease_inout_expof ( float _t );
+extern double ex_ease_inout_expo ( double _t );
 
-float ex_ease_outin_expof ( float _t );
-double ex_ease_outin_expo ( double _t );
+extern float ex_ease_outin_expof ( float _t );
+extern double ex_ease_outin_expo ( double _t );
 
 // ------------------------------------------------------------------ 
 /*!
@@ -309,17 +309,17 @@ double ex_ease_outin_expo ( double _t );
  @sa ex_ease_in_circf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_circf ( float _t );
-double ex_ease_in_circ ( double _t );
+extern float ex_ease_in_circf ( float _t );
+extern double ex_ease_in_circ ( double _t );
 
-float ex_ease_out_circf ( float _t );
-double ex_ease_out_circ ( double _t );
+extern float ex_ease_out_circf ( float _t );
+extern double ex_ease_out_circ ( double _t );
 
-float ex_ease_inout_circf ( float _t ); 
-double ex_ease_inout_circ ( double _t ); 
+extern float ex_ease_inout_circf ( float _t ); 
+extern double ex_ease_inout_circ ( double _t ); 
 
-float ex_ease_outin_circf ( float _t );
-double ex_ease_outin_circ ( double _t );
+extern float ex_ease_outin_circf ( float _t );
+extern double ex_ease_outin_circ ( double _t );
 
 // ------------------------------------------------------------------ 
 /*!
@@ -354,17 +354,17 @@ double ex_ease_outin_circ ( double _t );
  @sa ex_ease_in_elasticf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_elasticf ( float _t, float _a, float _p );
-double ex_ease_in_elastic ( double _t, double _a, double _p );
+extern float ex_ease_in_elasticf ( float _t, float _a, float _p );
+extern double ex_ease_in_elastic ( double _t, double _a, double _p );
 
-float ex_ease_out_elasticf ( float _t, float _a, float _p );
-double ex_ease_out_elastic ( double _t, double _a, double _p );
+extern float ex_ease_out_elasticf ( float _t, float _a, float _p );
+extern double ex_ease_out_elastic ( double _t, double _a, double _p );
 
-float ex_ease_inout_elasticf ( float _t, float _a, float _p ); 
-double ex_ease_inout_elastic ( double _t, double _a, double _p ); 
+extern float ex_ease_inout_elasticf ( float _t, float _a, float _p ); 
+extern double ex_ease_inout_elastic ( double _t, double _a, double _p ); 
 
-float ex_ease_outin_elasticf ( float _t, float _a, float _p ); 
-double ex_ease_outin_elastic ( double _t, double _a, double _p ); 
+extern float ex_ease_outin_elasticf ( float _t, float _a, float _p ); 
+extern double ex_ease_outin_elastic ( double _t, double _a, double _p ); 
 
 // ------------------------------------------------------------------ 
 /*!
@@ -396,17 +396,17 @@ double ex_ease_outin_elastic ( double _t, double _a, double _p );
  @sa ex_ease_in_backf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_backf ( float _t, float _s );
-double ex_ease_in_back ( double _t, double _s );
+extern float ex_ease_in_backf ( float _t, float _s );
+extern double ex_ease_in_back ( double _t, double _s );
 
-float ex_ease_out_backf ( float _t, float _s );
-double ex_ease_out_back ( double _t, double _s );
+extern float ex_ease_out_backf ( float _t, float _s );
+extern double ex_ease_out_back ( double _t, double _s );
 
-float ex_ease_inout_backf ( float _t, float _s ); 
-double ex_ease_inout_back ( double _t, double _s ); 
+extern float ex_ease_inout_backf ( float _t, float _s ); 
+extern double ex_ease_inout_back ( double _t, double _s ); 
 
-float ex_ease_outin_backf ( float _t, float _s ); 
-double ex_ease_outin_back ( double _t, double _s ); 
+extern float ex_ease_outin_backf ( float _t, float _s ); 
+extern double ex_ease_outin_back ( double _t, double _s ); 
 
 // ------------------------------------------------------------------ 
 /*!
@@ -438,17 +438,17 @@ double ex_ease_outin_back ( double _t, double _s );
  @sa ex_ease_in_bouncef
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_bouncef ( float _t, float _a );
-double ex_ease_in_bounce ( double _t, double _a );
+extern float ex_ease_in_bouncef ( float _t, float _a );
+extern double ex_ease_in_bounce ( double _t, double _a );
 
-float ex_ease_out_bouncef ( float _t, float _a );
-double ex_ease_out_bounce ( double _t, double _a );
+extern float ex_ease_out_bouncef ( float _t, float _a );
+extern double ex_ease_out_bounce ( double _t, double _a );
 
-float ex_ease_inout_bouncef ( float _t, float _a ); 
-double ex_ease_inout_bounce ( double _t, double _a ); 
+extern float ex_ease_inout_bouncef ( float _t, float _a ); 
+extern double ex_ease_inout_bounce ( double _t, double _a ); 
 
-float ex_ease_outin_bouncef ( float _t, float _a ); 
-double ex_ease_outin_bounce ( double _t, double _a ); 
+extern float ex_ease_outin_bouncef ( float _t, float _a ); 
+extern double ex_ease_outin_bounce ( double _t, double _a ); 
 
 // ------------------------------------------------------------------ 
 /*!
@@ -461,8 +461,8 @@ double ex_ease_outin_bounce ( double _t, double _a );
  @sa ex_ease_smoothf
 */// ------------------------------------------------------------------ 
 
-float ex_ease_smoothf ( float _t );
-double ex_ease_smooth ( double _t );
+extern float ex_ease_smoothf ( float _t );
+extern double ex_ease_smooth ( double _t );
 
 // ------------------------------------------------------------------ 
 /*!
@@ -475,8 +475,8 @@ double ex_ease_smooth ( double _t );
  @sa ex_ease_fadef
 */// ------------------------------------------------------------------ 
 
-float ex_ease_fadef ( float _t );
-double ex_ease_fade ( double _t );
+extern float ex_ease_fadef ( float _t );
+extern double ex_ease_fade ( double _t );
 
 // ------------------------------------------------------------------ 
 /*!
@@ -525,17 +525,17 @@ double ex_ease_fade ( double _t );
 
 */// ------------------------------------------------------------------ 
 
-float ex_ease_in_curvef ( float _t );
-double ex_ease_in_curve ( double _t );
+extern float ex_ease_in_curvef ( float _t );
+extern double ex_ease_in_curve ( double _t );
 
-float ex_ease_out_curvef ( float _t );
-double ex_ease_out_curve ( double _t );
+extern float ex_ease_out_curvef ( float _t );
+extern double ex_ease_out_curve ( double _t );
 
-float ex_ease_curve_sinef ( float _t ); 
-double ex_ease_curve_sine ( double _t ); 
+extern float ex_ease_curve_sinef ( float _t ); 
+extern double ex_ease_curve_sine ( double _t ); 
 
-float ex_ease_curve_cosinef ( float _t ); 
-double ex_ease_curve_cosine ( double _t ); 
+extern float ex_ease_curve_cosinef ( float _t ); 
+extern double ex_ease_curve_cosine ( double _t ); 
 
 //! @}
 

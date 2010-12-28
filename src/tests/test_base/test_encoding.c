@@ -19,8 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void string ()
-{
+static void string () {
 #if ( EX_PLATFORM == EX_WIN32 )
     {
         char char_src[128];
@@ -47,8 +46,7 @@ static void string ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void filesystem ()
-{
+static void filesystem () {
 #if ( EX_PLATFORM == EX_WIN32 )
     {
         HANDLE hFile;
@@ -71,8 +69,7 @@ static void filesystem ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_encoding ()
-{
+void test_encoding () {
     string();
     filesystem();
 }

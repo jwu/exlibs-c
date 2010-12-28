@@ -19,8 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
     {
         uint32 key; 
         float val;
@@ -84,8 +83,7 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid ()
-{
+static void invalid () {
     ex_hashmap_t* hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 10, ex_hashkey_uint32, ex_keycmp_uint32 );
     ex_hashmap_free ( hashmap );
 }
@@ -94,8 +92,7 @@ static void invalid ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_hashmap ()
-{
+void test_hashmap () {
     normal();
     invalid();
 }

@@ -21,6 +21,7 @@
 #include "memory/memory_inc.h"
 #include "debug/debug_inc.h"
 #include "thread/thread_inc.h"
+#include "timer/timer_inc.h"
 
 // data structure and algorithm
 #include "algo/algo_inc.h"

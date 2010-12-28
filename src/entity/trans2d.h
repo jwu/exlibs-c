@@ -42,21 +42,21 @@ EX_DEF_CLASS_END(ex_trans2d_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_internal_init (); 
-void ex_trans2d_internal_deinit (); 
+extern void ex_trans2d_internal_init (); 
+extern void ex_trans2d_internal_deinit (); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_trans2d_t* ex_trans2d_request (); 
+extern ex_trans2d_t* ex_trans2d_request (); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_init ( ex_trans2d_t* _comp ); 
-void ex_trans2d_deinit ( ex_trans2d_t* _comp ); 
+extern void ex_trans2d_init ( ex_trans2d_t* _comp ); 
+extern void ex_trans2d_deinit ( ex_trans2d_t* _comp ); 
 
 // ######################### 
 #ifdef __cplusplus

@@ -89,15 +89,15 @@ typedef struct ex_hashmap_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_hashmap_t* ex_hashmap_alloc ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
-ex_hashmap_t* ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
+extern ex_hashmap_t* ex_hashmap_alloc ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
+extern ex_hashmap_t* ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_hashmap_free ( ex_hashmap_t* _hashmap );
-void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap );
+extern void ex_hashmap_free ( ex_hashmap_t* _hashmap );
+extern void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -105,23 +105,23 @@ void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap );
 //  exists then go for it.
 // ------------------------------------------------------------------ 
 
-void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index );
-void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index );
+extern void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index );
+extern void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
-size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
+extern void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
+extern size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 //  @return: -1: already exists
 // ------------------------------------------------------------------ 
 
-bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index );
-bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index );
+extern bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index );
+extern bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index );
 
 // TODO: void ex_hashmap_set ( ex_hashmap_t* _hashmap, const void* _key, const void* _val );
 
@@ -129,7 +129,7 @@ bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const v
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key );
+extern void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key );
 
 // ------------------------------------------------------------------ 
 // Desc: 

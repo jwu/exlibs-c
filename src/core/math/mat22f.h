@@ -420,7 +420,7 @@ static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, fl
  @sa ex_vec2f_mul_mat22f
 */// ------------------------------------------------------------------ 
 
-void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs );
+extern void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -443,7 +443,7 @@ void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs )
  @sa ex_mat22f_mul_vec2f
 */// ------------------------------------------------------------------ 
 
-void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs );
+extern void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -561,7 +561,7 @@ static inline void ex_mat22f_get_transpose ( ex_mat22f_t* _r, ex_mat22f_t* _m ) 
  @sa ex_mat22f_get_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_mat22f_inverse ( ex_mat22f_t* _m );
+extern bool ex_mat22f_inverse ( ex_mat22f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -575,7 +575,7 @@ bool ex_mat22f_inverse ( ex_mat22f_t* _m );
  @sa ex_mat22f_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, ex_mat22f_t* _m );
+extern bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, ex_mat22f_t* _m );
 
 //! @}
 

@@ -26,6 +26,7 @@
 
     #include <windows.h>
     #include <malloc.h> 
+    #include <time.h>
 
     // // to use the sse intrins in gcc, please add -msse compile flag in makefile of this project
     // #include <xmmintrin.h>  // for type __m128
@@ -44,10 +45,13 @@
     #include <unistd.h> 
     #include <pthread.h>
     #include <signal.h>
+    #include <semaphore.h>
+    #include <errno.h>
 
 	#include "OpenGL/gl.h"
 	#include "OpenGL/glu.h"
 	#include <GLUT/glut.h>
+    #include <sys/time.h>
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +73,6 @@
 // general
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <time.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>

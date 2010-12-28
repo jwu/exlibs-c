@@ -22,7 +22,7 @@ void ex_draw_string ( int _x, int _y, const char* _text ) {
 	
 	for ( int i=0, len=strlen(_text); i<len; ++i ){
         if ( _text[i] == '\n' ) {
-            _y -= 16;
+            _y += 12;
             glRasterPos2i(_x,_y);
         } else {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, _text[i]);

@@ -41,27 +41,27 @@ typedef struct ex_rtti_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_init ();
-void ex_rtti_deinit ();
-bool ex_rtti_is_inited ();
+extern bool ex_rtti_init ();
+extern void ex_rtti_deinit ();
+extern bool ex_rtti_is_inited ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super );
+extern ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count );
+extern void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( const char* _class );
+extern ex_rtti_t* ex_rtti_get ( const char* _class );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -99,7 +99,7 @@ static inline bool ex_rtti_classof ( ex_rtti_t* _myclass, ex_rtti_t* _yourclass 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_childof ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
+extern bool ex_rtti_childof ( ex_rtti_t* _myclass, ex_rtti_t* _superclass );
 
 // ------------------------------------------------------------------ 
 // Desc: 

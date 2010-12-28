@@ -23,8 +23,7 @@ const char* media_file = "e:/project/dev/exsdk/res/";
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
     char path[maxPATH];
     FILE* fp;
     size_t fsize;
@@ -97,8 +96,7 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void widechar()
-{
+static void widechar() {
     size_t id = -1;
     id = ex_strid_from_wcs( L"Hello World" );
     ex_log ( "id = %zd", id );
@@ -136,16 +134,14 @@ static void widechar()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid()
-{
+static void invalid() {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_stringID ()
-{
+void test_stringID () {
     normal();
     widechar();
     invalid();

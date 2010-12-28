@@ -19,8 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
     ex_array_t* array = ex_array_alloc ( sizeof(uint32), 20 ); 
     {
         size_t i = 0;
@@ -36,8 +35,7 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid()
-{
+static void invalid() {
     ex_array_t* array = ex_array_alloc ( sizeof(uint32), 20 ); 
     {
         void* pval = ex_array_get( array, 40 );
@@ -50,8 +48,7 @@ static void invalid()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_array ()
-{
+void test_array () {
     normal();
     invalid();
 }

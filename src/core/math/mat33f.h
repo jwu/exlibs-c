@@ -497,7 +497,7 @@ static inline void ex_mat33f_mul_scalar ( ex_mat33f_t* _r, ex_mat33f_t* _lhs, fl
  @sa ex_vec3f_mul_mat33f
 */// ------------------------------------------------------------------ 
 
-void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs );
+extern void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -523,7 +523,7 @@ void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs )
  @sa ex_mat33f_mul_vec3f
 */// ------------------------------------------------------------------ 
 
-void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_mat33f_t* _rhs );
+extern void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_mat33f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -672,7 +672,7 @@ static inline void ex_mat33f_get_transpose ( ex_mat33f_t* _r, ex_mat33f_t* _m ) 
  @sa ex_mat33f_get_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_mat33f_inverse ( ex_mat33f_t* _m );
+extern bool ex_mat33f_inverse ( ex_mat33f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -686,7 +686,7 @@ bool ex_mat33f_inverse ( ex_mat33f_t* _m );
  @sa ex_mat33f_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m );
+extern bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m );
 
 //! @}
 

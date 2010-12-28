@@ -20,14 +20,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _say_exec ( bt_node_t* _node )
-{
+static bool _say_exec ( bt_node_t* _node ) {
     printf ("%s\n", (const char*)_node->user_data );
     return true;
 }
 
-static bt_node_t* action_say ( const char* _someting )
-{
+static bt_node_t* action_say ( const char* _someting ) {
     bt_node_t* node = ex_malloc ( sizeof(bt_node_t) );
     node->children = NULL;
     node->user_data = (void*)_someting;
@@ -39,8 +37,7 @@ static bt_node_t* action_say ( const char* _someting )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
     bt_node_t* root = bt_random_selector();
 
     bt_node_add ( root, action_say("foo") );
@@ -63,16 +60,14 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid ()
-{
+static void invalid () {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_btree ()
-{
+void test_btree () {
     normal();
     invalid();
 }

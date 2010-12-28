@@ -20,7 +20,7 @@ extern "C" {
 // declare
 ///////////////////////////////////////////////////////////////////////////////
 
-void ex_draw_string ( int _x, int _y, const char* _text );
+extern void ex_draw_string ( int _x, int _y, const char* _text );
 
 // ######################### 
 #ifdef __cplusplus

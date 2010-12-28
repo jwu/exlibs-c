@@ -26,16 +26,16 @@ extern "C" {
 // private memory functions
 ///////////////////////////////////////////////////////////////////////////////
 
-void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
-void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
-void __ex_mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr );
+extern void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
+extern void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
+extern void __ex_mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr );
 
 ///////////////////////////////////////////////////////////////////////////////
 // memory mng
 ///////////////////////////////////////////////////////////////////////////////
 
-bool ex_mem_init ();
-void ex_mem_deinit ();
+extern bool ex_mem_init ();
+extern void ex_mem_deinit ();
 
 ///////////////////////////////////////////////////////////////////////////////
 // global namespace function declaration & define 

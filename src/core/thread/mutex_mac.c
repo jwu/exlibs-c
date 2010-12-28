@@ -19,15 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-struct ex_mutex_t { 
-    pthread_mutex_t id;
-};
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_mutex_t* ex_mutex_create ()
+ex_mutex_t* ex_create_mutex ()
 {
     ex_mutex_t* mutex = NULL;
     pthread_mutexattr_t attr;
@@ -42,12 +34,9 @@ ex_mutex_t* ex_mutex_create ()
             ex_free_nomng(mutex);
             mutex = NULL;
         }
-    } 
-    // TODO { 
-    // else {
-    //     SDL_OutOfMemory();
-    // }
-    // } TODO end 
+    } else {
+        ex_error ("out of memory!");
+    }
 
     return mutex;
 }
@@ -56,7 +45,7 @@ ex_mutex_t* ex_mutex_create ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mutex_destroy ( ex_mutex_t* _mutex )
+void ex_destroy_mutex ( ex_mutex_t* _mutex )
 {
     if (_mutex) {
         pthread_mutex_destroy(&_mutex->id);

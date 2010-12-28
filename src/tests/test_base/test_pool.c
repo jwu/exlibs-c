@@ -19,8 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
     //
     ex_pool_t* pool = ex_pool_alloc ( sizeof(int32), 10 );
     {
@@ -98,8 +97,7 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid()
-{
+static void invalid() {
     //
     ex_pool_t* pool = ex_pool_alloc ( sizeof(int32), 10 );
     {
@@ -146,8 +144,7 @@ static void invalid()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_pool ()
-{
+void test_pool () {
     normal();
     invalid();
 }

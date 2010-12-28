@@ -496,7 +496,7 @@ static inline void ex_quatf_div_scalar ( ex_quatf_t* _r, ex_quatf_t* _lhs, float
  @sa ex_quatf_get_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_quatf_inverse( ex_quatf_t* _r );
+extern bool ex_quatf_inverse( ex_quatf_t* _r );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -507,7 +507,7 @@ bool ex_quatf_inverse( ex_quatf_t* _r );
  @sa ex_quatf_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_quatf_get_inverse ( ex_quatf_t* _r, ex_quatf_t* _q );
+extern bool ex_quatf_get_inverse ( ex_quatf_t* _r, ex_quatf_t* _q );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -693,7 +693,7 @@ static inline bool ex_quatf_normalize( ex_quatf_t* _r ) {
  @sa ex_quatf_to_axis_xyz
 */// ------------------------------------------------------------------ 
 
-void ex_quatf_to_mat33( ex_quatf_t* _q, ex_mat33f_t* _m );
+extern void ex_quatf_to_mat33( ex_quatf_t* _q, ex_mat33f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -705,7 +705,7 @@ void ex_quatf_to_mat33( ex_quatf_t* _q, ex_mat33f_t* _m );
  @sa ex_quatf_to_axis_xyz
 */// ------------------------------------------------------------------ 
 
-void ex_quatf_to_mat44( ex_quatf_t* _q, ex_mat44f_t* _m );
+extern void ex_quatf_to_mat44( ex_quatf_t* _q, ex_mat44f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -719,7 +719,7 @@ void ex_quatf_to_mat44( ex_quatf_t* _q, ex_mat44f_t* _m );
  @sa ex_quatf_to_mat44
 */// ------------------------------------------------------------------ 
 
-void ex_quatf_to_axis_xyz( ex_quatf_t* _q, ex_vec3f_t* _x, ex_vec3f_t* _y, ex_vec3f_t* _z );
+extern void ex_quatf_to_axis_xyz( ex_quatf_t* _q, ex_vec3f_t* _x, ex_vec3f_t* _y, ex_vec3f_t* _z );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -732,7 +732,7 @@ void ex_quatf_to_axis_xyz( ex_quatf_t* _q, ex_vec3f_t* _x, ex_vec3f_t* _y, ex_ve
  @sa ex_quatf_get_axis_z
 */// ------------------------------------------------------------------ 
 
-void ex_quatf_get_axis_x( ex_vec3f_t* _r, ex_quatf_t* _q );
+extern void ex_quatf_get_axis_x( ex_vec3f_t* _r, ex_quatf_t* _q );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -745,7 +745,7 @@ void ex_quatf_get_axis_x( ex_vec3f_t* _r, ex_quatf_t* _q );
  @sa ex_quatf_get_axis_z
 */// ------------------------------------------------------------------ 
 
-void ex_quatf_get_axis_y( ex_vec3f_t* _r, ex_quatf_t* _q );
+extern void ex_quatf_get_axis_y( ex_vec3f_t* _r, ex_quatf_t* _q );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -758,7 +758,7 @@ void ex_quatf_get_axis_y( ex_vec3f_t* _r, ex_quatf_t* _q );
  @sa ex_quatf_get_axis_y
 */// ------------------------------------------------------------------ 
 
-void ex_quatf_get_axis_z( ex_vec3f_t* _r, ex_quatf_t* _q );
+extern void ex_quatf_get_axis_z( ex_vec3f_t* _r, ex_quatf_t* _q );
 
 //! @}
 

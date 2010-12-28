@@ -248,6 +248,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 typedef size_t strid_t;
+typedef unsigned long thread_id_t;
 
 // ######################### 
 #ifdef __cplusplus

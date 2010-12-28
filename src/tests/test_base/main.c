@@ -25,6 +25,7 @@ extern void test_memmng();
 extern void test_pool();
 extern void test_rtti();
 extern void test_stringID();
+extern void test_thread();
 
 extern void test_rapid();
 
@@ -67,9 +68,10 @@ int main( int argc, char* argv[] )
         // test_pool ();
         // test_rtti ();
         // test_stringID ();
+        test_thread();
 
         // special
-        test_rapid ();
+        // test_rapid ();
     }
 
     return 0;

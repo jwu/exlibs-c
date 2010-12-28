@@ -119,8 +119,8 @@ typedef struct ex_array_t {
  @sa ex_array_alloc
 */// ------------------------------------------------------------------ 
 
-ex_array_t* ex_array_alloc ( size_t _element_bytes, size_t _count );
-ex_array_t* ex_array_alloc_nomng ( size_t _element_bytes, size_t _count );
+extern ex_array_t* ex_array_alloc ( size_t _element_bytes, size_t _count );
+extern ex_array_t* ex_array_alloc_nomng ( size_t _element_bytes, size_t _count );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -135,8 +135,8 @@ ex_array_t* ex_array_alloc_nomng ( size_t _element_bytes, size_t _count );
  @sa ex_array_free
 */// ------------------------------------------------------------------ 
 
-void ex_array_free ( ex_array_t* _array );
-void ex_array_free_nomng ( ex_array_t* _array );
+extern void ex_array_free ( ex_array_t* _array );
+extern void ex_array_free_nomng ( ex_array_t* _array );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -162,7 +162,7 @@ void ex_array_free_nomng ( ex_array_t* _array );
  @note you must cast the type of the element by yourself.
 */// ------------------------------------------------------------------ 
 
-void* ex_array_get ( ex_array_t* _array, size_t _idx );
+extern void* ex_array_get ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -208,8 +208,8 @@ static inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_lengt
  @sa ex_array_append
 */// ------------------------------------------------------------------ 
 
-void* ex_array_append ( ex_array_t* _array, const void* _value );
-void* ex_array_append_nomng ( ex_array_t* _array, const void* _value );
+extern void* ex_array_append ( ex_array_t* _array, const void* _value );
+extern void* ex_array_append_nomng ( ex_array_t* _array, const void* _value );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -276,7 +276,7 @@ static inline wchar_t** ex_array_append_wstring ( ex_array_t* _array, wchar_t* _
  @sa ex_array_remove_at_fast
 */// ------------------------------------------------------------------ 
 
-void ex_array_remove_at ( ex_array_t* _array, size_t _idx );
+extern void ex_array_remove_at ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -290,7 +290,7 @@ void ex_array_remove_at ( ex_array_t* _array, size_t _idx );
  @sa ex_array_remove_at
 */// ------------------------------------------------------------------ 
 
-void ex_array_remove_at_fast ( ex_array_t* _array, size_t _idx );
+extern void ex_array_remove_at_fast ( ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -301,7 +301,7 @@ void ex_array_remove_at_fast ( ex_array_t* _array, size_t _idx );
  @details remove n count of element from index i
 */// ------------------------------------------------------------------ 
 
-void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
+extern void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -311,15 +311,15 @@ void ex_array_remove_range ( ex_array_t* _array, size_t _idx, size_t _count );
  it won't do anything but just set the array count to zero. 
 */// ------------------------------------------------------------------ 
 
- void ex_array_remove_all ( ex_array_t* _array );
+extern void ex_array_remove_all ( ex_array_t* _array );
 
 // TODO { 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_shrink ( ex_array_t* _array );
-void ex_array_shrink_nomng ( ex_array_t* _array );
+extern void ex_array_shrink ( ex_array_t* _array );
+extern void ex_array_shrink_nomng ( ex_array_t* _array );
 // } TODO end 
 
 //! @}

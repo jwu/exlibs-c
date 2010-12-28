@@ -49,7 +49,7 @@ static inline int ex_wcs_nicmp( const wchar_t* _str1, const wchar_t* _str2, uint
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_str_split_into_array( struct ex_array_t* _outList, const char* _token, const char* _text );
+extern int ex_str_split_into_array( struct ex_array_t* _outList, const char* _token, const char* _text );
 
 // ######################### 
 #ifdef __cplusplus

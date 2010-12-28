@@ -21,13 +21,13 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 ex_calc_CRC ( int _size, const uint8* _data, uint _len );
+extern uint32 ex_calc_CRC ( int _size, const uint8* _data, uint _len );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 ex_calc_CRC_str ( int _size, const char* _data );
+extern uint32 ex_calc_CRC_str ( int _size, const char* _data );
 
 // ######################### 
 #ifdef __cplusplus

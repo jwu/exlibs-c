@@ -592,7 +592,7 @@ static inline void ex_mat44f_mul_scalar ( ex_mat44f_t* _r, ex_mat44f_t* _lhs, fl
  @sa ex_vec4f_mul_mat44f
 */// ------------------------------------------------------------------ 
 
-void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs );
+extern void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -620,7 +620,7 @@ void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs )
  @sa mat44f_mul_vec4f
 */// ------------------------------------------------------------------ 
 
-void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_mat44f_t* _rhs );
+extern void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_mat44f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -804,7 +804,7 @@ static inline void ex_mat44f_get_transpose ( ex_mat44f_t* _r, ex_mat44f_t* _m ) 
  @sa mat44f_get_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_mat44f_inverse ( ex_mat44f_t* _m );
+extern bool ex_mat44f_inverse ( ex_mat44f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -818,7 +818,7 @@ bool ex_mat44f_inverse ( ex_mat44f_t* _m );
  @sa mat44f_inverse
 */// ------------------------------------------------------------------ 
 
-bool ex_mat44f_get_inverse ( ex_mat44f_t* _r, ex_mat44f_t* _m );
+extern bool ex_mat44f_get_inverse ( ex_mat44f_t* _r, ex_mat44f_t* _m );
 
 //! @}
 

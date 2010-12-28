@@ -19,8 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal ()
-{
+static void normal () {
     int result = -1;
 
     ex_bitarray_t* bitArray = ex_bitarray_alloc ( 20 );
@@ -48,8 +47,7 @@ static void normal ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void invalid ()
-{
+static void invalid () {
     ex_bitarray_t* bitArray = ex_bitarray_alloc ( 20 );
     {
         // set out of range
@@ -68,8 +66,7 @@ static void invalid ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_bitarry ()
-{
+void test_bitarry () {
     normal ();
     invalid();
 }
