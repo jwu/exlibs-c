@@ -41,8 +41,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-typedef struct alloc_unit_t
-{
+typedef struct alloc_unit_t {
     size_t               org_size;
     size_t               dbg_size;
     void*                org_addr;
@@ -63,22 +62,22 @@ typedef struct alloc_unit_t
 // variables
 ///////////////////////////////////////////////////////////////////////////////
 
-static const size_t prefix_size = sizeof(uint32) * PREFIX_COUNT;
-static const size_t suffix_size = sizeof(uint32) * SUFFIX_COUNT;
-static const size_t pattern_size = sizeof(uint32) * PREFIX_COUNT + sizeof(uint32) * SUFFIX_COUNT;
+static const size_t __prefix_size = sizeof(uint32) * PREFIX_COUNT;
+static const size_t __suffix_size = sizeof(uint32) * SUFFIX_COUNT;
+static const size_t __pattern_size = sizeof(uint32) * PREFIX_COUNT + sizeof(uint32) * SUFFIX_COUNT;
 
-static alloc_unit_t* reserved_au_list = NULL;
-static ex_hashmap_t* au_map = NULL;
-static ex_list_t* au_bucket = NULL;
-static ex_mutex_t* access_mutex = NULL;
+static alloc_unit_t* __reserved_au_list = NULL;
+static ex_hashmap_t* __au_map = NULL;
+static ex_list_t* __au_bucket = NULL;
+static ex_mutex_t* __access_mutex = NULL;
 
-static size_t au_count = 0;
-static size_t total_org_memory = 0;
-static size_t total_dbg_memory = 0;
-static size_t accumulate_org_memory = 0;
-static size_t accumulate_dbg_memory = 0;
+static size_t __au_count = 0;
+static size_t __total_org_memory = 0;
+static size_t __total_dbg_memory = 0;
+static size_t __accumulate_org_memory = 0;
+static size_t __accumulate_dbg_memory = 0;
 
-static bool _initialized = false;
+static bool __initialized = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 // private
@@ -88,44 +87,42 @@ static bool _initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t _calc_dbg_size ( size_t _size )
-{
-    return _size + pattern_size;
+static inline size_t __calc_dbg_size ( size_t _size ) {
+    return _size + __pattern_size;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static alloc_unit_t* _request_au ()
-{
+static alloc_unit_t* __request_au () {
     alloc_unit_t* tmp_au;
 
-    if ( !reserved_au_list ) {
+    if ( !__reserved_au_list ) {
         uint i = 0;
 
         // Allocate MAX_NEW_ALLOCINFO reserve alloc-info
-        reserved_au_list = (alloc_unit_t*)ex_malloc_nomng( MAX_NEW_ALLOCINFO * sizeof(alloc_unit_t) );
+        __reserved_au_list = (alloc_unit_t*)ex_malloc_nomng( MAX_NEW_ALLOCINFO * sizeof(alloc_unit_t) );
 
         // Assert exAllocInfo != NULL
-        ex_assert_return( reserved_au_list != NULL, NULL, "out of memory!" );
+        ex_assert_return( __reserved_au_list != NULL, NULL, "out of memory!" );
 
         // Build a linked-list of the elements in our reserve-allocinfo-list
         // ex_memzero setting
-        ex_memzero( reserved_au_list, MAX_NEW_ALLOCINFO * sizeof(alloc_unit_t) );
+        ex_memzero( __reserved_au_list, MAX_NEW_ALLOCINFO * sizeof(alloc_unit_t) );
         for( i = 0; i < MAX_NEW_ALLOCINFO-1; ++i )
         {
-            reserved_au_list[i].next = reserved_au_list + (i+1);
-            reserved_au_list[i+1].prev = reserved_au_list + i; 
+            __reserved_au_list[i].next = __reserved_au_list + (i+1);
+            __reserved_au_list[i+1].prev = __reserved_au_list + i; 
         }
 
-        // Add this address to our reserved_au_list so we can free it later
-        ex_list_append_nomng ( au_bucket, reserved_au_list );
+        // Add this address to our __reserved_au_list so we can free it later
+        ex_list_append_nomng ( __au_bucket, __reserved_au_list );
     }
 
     // this is the standard use of go next and unlink
-    tmp_au = reserved_au_list;
-    reserved_au_list = reserved_au_list->next;
+    tmp_au = __reserved_au_list;
+    __reserved_au_list = __reserved_au_list->next;
 
     // unlink the getted alloc info
     tmp_au->next = NULL;
@@ -139,7 +136,10 @@ static alloc_unit_t* _request_au ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const char* _func_name, size_t _line_nr )
+static void __verify_pattern ( alloc_unit_t* _au, 
+                               const char* _file_name, 
+                               const char* _func_name, 
+                               size_t _line_nr )
 {
     // verify pre-pattern
 #if VERIFY_PREFIX
@@ -166,7 +166,7 @@ static void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const c
     // verify post-pattern
 #if VERIFY_SUFFIX
     {
-        uint32* post = (uint32*)( (int8*)_au->dbg_addr + prefix_size + _au->org_size );
+        uint32* post = (uint32*)( (int8*)_au->dbg_addr + __suffix_size + _au->org_size );
         uint i_post;
 
         //
@@ -190,19 +190,19 @@ static void _verify_pattern ( alloc_unit_t* _au, const char* _file_name, const c
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _reclaim_au ( alloc_unit_t* _au ) {
-    if ( ex_hashmap_remove_at ( au_map, &_au->org_addr ) == NULL )
+static void __reclaim_au ( alloc_unit_t* _au ) {
+    if ( ex_hashmap_remove_at ( __au_map, &_au->org_addr ) == NULL )
         ex_error ( "failed to reclaim alloc unit" );
 
     // append to reserve alloc info
-    _au->next = reserved_au_list;
+    _au->next = __reserved_au_list;
     _au->prev = NULL;
 
     // reserve alloc info could be use out
-    if ( reserved_au_list )
-        reserved_au_list->prev = _au;
+    if ( __reserved_au_list )
+        __reserved_au_list->prev = _au;
 
-    reserved_au_list = _au;
+    __reserved_au_list = _au;
 }
 
 // ------------------------------------------------------------------ 
@@ -210,30 +210,29 @@ static void _reclaim_au ( alloc_unit_t* _au ) {
 // ------------------------------------------------------------------ 
 
 //
-static inline int _push_au ( alloc_unit_t* _au ) { 
+static inline int __push_au ( alloc_unit_t* _au ) { 
     size_t idx = -1;
-    ex_hashmap_insert_nomng ( au_map, &_au->org_addr, &_au, &idx ); 
+    ex_hashmap_insert_nomng ( __au_map, &_au->org_addr, &_au, &idx ); 
     return idx;
 }
 
 //
-static inline alloc_unit_t* _get_au ( void* _ptr ) { 
-    return *((alloc_unit_t**)ex_hashmap_get ( au_map, &_ptr, NULL )); 
+static inline alloc_unit_t* __get_au ( void* _ptr ) { 
+    return *((alloc_unit_t**)ex_hashmap_get ( __au_map, &_ptr, NULL )); 
 }
 
 //
-static inline int _rearrange_au ( void* _ptr, alloc_unit_t* au ) {
-    if ( ex_hashmap_remove_at ( au_map, &_ptr ) == NULL )
+static inline int __rearrange_au ( void* _ptr, alloc_unit_t* au ) {
+    if ( ex_hashmap_remove_at ( __au_map, &_ptr ) == NULL )
         return -1;
-    return _push_au ( au );
+    return __push_au ( au );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _log ( const char* _file_name, const char* _format, ... )
-{
+static void __log ( const char* _file_name, const char* _format, ... ) {
     char buffer[2048];
     FILE* fp;
 
@@ -257,13 +256,13 @@ static void _log ( const char* _file_name, const char* _format, ... )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _dump () {
+static void __dump () {
     //
-    ex_assert ( ex_hashmap_len(au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_len(au_map) );
+    ex_assert ( ex_hashmap_len(__au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_len(__au_map) );
     
     //
-    if ( ex_hashmap_len(au_map) ) {
-        ex_hashmap_each ( alloc_unit_t*, au, au_map ) {
+    if ( ex_hashmap_len(__au_map) ) {
+        ex_hashmap_each ( alloc_unit_t*, au, __au_map ) {
             char text[2048];
             ex_memzero ( text, 2048 );
             snprintf ( text, 2048, 
@@ -289,7 +288,7 @@ static void _dump () {
                      );
 
             // format log info
-            _log ( MEM_LOG, "%s", text );
+            __log ( MEM_LOG, "%s", text );
         } ex_hashmap_each_end;
     }
 }
@@ -305,21 +304,21 @@ static void _dump () {
 bool ex_mem_init ()
 {
     // if the core already initialized, don't init it second times.
-    if ( _initialized ) {
+    if ( __initialized ) {
         ex_warning ( "memory manager already initialized" );
         return true;
     }
 
     //
-    access_mutex = ex_create_mutex();
+    __access_mutex = ex_create_mutex();
 
-    au_map = ex_hashmap_alloc_nomng ( sizeof(void*), sizeof(alloc_unit_t*), 256, ex_hashkey_ptr, ex_keycmp_ptr );
-    au_bucket = ex_list_alloc_nomng ( sizeof(alloc_unit_t*) );
+    __au_map = ex_hashmap_alloc_nomng ( sizeof(void*), sizeof(alloc_unit_t*), 256, ex_hashkey_ptr, ex_keycmp_ptr );
+    __au_bucket = ex_list_alloc_nomng ( sizeof(alloc_unit_t*) );
 
     // remove log file if it exists
     unlink ( MEM_LOG );
 
-    _initialized = true;
+    __initialized = true;
     return true;
 }
 
@@ -329,19 +328,19 @@ bool ex_mem_init ()
 
 void ex_mem_deinit ()
 {
-    if ( _initialized ) {
-        if ( access_mutex )
-            ex_destroy_mutex(access_mutex);
+    if ( __initialized ) {
+        if ( __access_mutex )
+            ex_destroy_mutex(__access_mutex);
 
-        _dump ();
+        __dump ();
 
         //
-        ex_hashmap_free_nomng ( au_map );
+        ex_hashmap_free_nomng ( __au_map );
 
         // free the reserve alloc info buffer
-        ex_list_free_nomng ( au_bucket );
+        ex_list_free_nomng ( __au_bucket );
 
-        _initialized = false;
+        __initialized = false;
     }
 }
 
@@ -349,7 +348,7 @@ void ex_mem_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
+void* ex_malloc_mng( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     size_t dbg_size;
     void *dbg_ptr, *org_ptr;
@@ -357,21 +356,21 @@ void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, c
     uint i_pre, i_post;
     alloc_unit_t* au;
 
-    ex_mutex_lock(access_mutex);
+    ex_mutex_lock(__access_mutex);
 
     // ANSI says: allocation requests of 0 bytes will still return a valid value
     if ( _size == 0) _size = 1;
 
     // use allocator to allocate memory
-    dbg_size = _calc_dbg_size(_size);
+    dbg_size = __calc_dbg_size(_size);
     dbg_ptr = dlmemalign( EX_MEM_ALIGN, dbg_size );
-    org_ptr = (void*)( (int8*)dbg_ptr + prefix_size );
+    org_ptr = (void*)( (int8*)dbg_ptr + __prefix_size );
 
     // get au, if not, create one
-    au = _request_au();
+    au = __request_au();
     if ( au == NULL ) {
         ex_error( "AllocInfo not found, check if the _ptr have been free or invalid" );
-        ex_mutex_unlock(access_mutex);
+        ex_mutex_unlock(__access_mutex);
         return NULL;
     }
     // write information
@@ -385,7 +384,7 @@ void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, c
     au->line_nr          = _line_nr;
     au->break_onfree     = false;
     au->break_onrealloc  = false;
-    au->alloc_nr         = au_count;
+    au->alloc_nr         = __au_count;
     au->thread_id        = ex_current_threadID () ;
 
     //
@@ -404,20 +403,20 @@ void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, c
         *post = SUFFIX_PATTERN;
 
     // Record memory information
-    au_count += 1;
-    total_org_memory       += au->org_size;      
-    total_dbg_memory       += au->dbg_size;
-    accumulate_org_memory  += au->org_size;
-    accumulate_dbg_memory  += au->dbg_size;
+    __au_count += 1;
+    __total_org_memory       += au->org_size;      
+    __total_dbg_memory       += au->dbg_size;
+    __accumulate_org_memory  += au->org_size;
+    __accumulate_dbg_memory  += au->dbg_size;
 
     // finally push the alloc info into hash_list 
-    if ( _push_au (au) == -1 ) {
+    if ( __push_au (au) == -1 ) {
         ex_error ( "failed to insert alloc unit" );
-        ex_mutex_unlock(access_mutex);
+        ex_mutex_unlock(__access_mutex);
         return NULL;
     }
 
-    ex_mutex_unlock(access_mutex);
+    ex_mutex_unlock(__access_mutex);
     return org_ptr;
 }
 
@@ -425,7 +424,7 @@ void* __ex_mng_malloc( size_t _size, const char* _tag, const char* _file_name, c
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
+void* ex_realloc_mng( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     alloc_unit_t* au;
     size_t dbg_size;
@@ -433,42 +432,42 @@ void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* 
     uint32 *pre, *post;
     uint i_pre, i_post;
 
-    ex_mutex_lock(access_mutex);
+    ex_mutex_lock(__access_mutex);
 
     // alloc NULL memory address
     if ( _ptr == NULL ) {
-        ex_mutex_unlock(access_mutex);
-        return __ex_mng_malloc( _size, _tag, _file_name, _func_name, _line_nr );
+        ex_mutex_unlock(__access_mutex);
+        return ex_malloc_mng( _size, _tag, _file_name, _func_name, _line_nr );
     }
 
     // realloc zero bytes free 
     if ( _size == 0 ) {
-        __ex_mng_free( _ptr, _file_name, _func_name, _line_nr );
-        ex_mutex_unlock(access_mutex);
+        ex_free_mng( _ptr, _file_name, _func_name, _line_nr );
+        ex_mutex_unlock(__access_mutex);
         return NULL;
     }
 
     // find au* by address
-    au =  _get_au(_ptr);
+    au =  __get_au(_ptr);
     if ( au == NULL ) {
         ex_error ( "AllocInfo not found, check if the _ptr have been free or invalid" );
-        ex_mutex_unlock(access_mutex);
+        ex_mutex_unlock(__access_mutex);
         return NULL;
     }
 
     // verify memory conflic first if needed
 #if VERIFY_REALLOC
-    _verify_pattern ( au, _file_name, _func_name, _line_nr );
+    __verify_pattern ( au, _file_name, _func_name, _line_nr );
 #endif
 
     // remove original memory information
-    total_org_memory -= au->org_size;      
-    total_dbg_memory -= au->dbg_size;
+    __total_org_memory -= au->org_size;      
+    __total_dbg_memory -= au->dbg_size;
 
     // use allocator to allocate memory
-    dbg_size = _calc_dbg_size(_size);
+    dbg_size = __calc_dbg_size(_size);
     dbg_ptr = dlrealloc ( au->dbg_addr, dbg_size );
-    org_ptr = (void*)( (int8*)dbg_ptr + prefix_size );
+    org_ptr = (void*)( (int8*)dbg_ptr + __prefix_size );
 
     // write information
     au->org_size          = _size;
@@ -500,19 +499,19 @@ void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* 
         *post = SUFFIX_PATTERN;
 
     // Record memory information
-    total_org_memory       += au->org_size;      
-    total_dbg_memory       += au->dbg_size;
-    accumulate_org_memory  += au->org_size;
-    accumulate_dbg_memory  += au->dbg_size;
+    __total_org_memory       += au->org_size;      
+    __total_dbg_memory       += au->dbg_size;
+    __accumulate_org_memory  += au->org_size;
+    __accumulate_dbg_memory  += au->dbg_size;
 
     // finally push the alloc info into hash_list 
-    if ( _rearrange_au ( _ptr, au ) == -1 ) {
+    if ( __rearrange_au ( _ptr, au ) == -1 ) {
         ex_error ( "failed to re-arrange alloc unit" );
-        ex_mutex_unlock(access_mutex);
+        ex_mutex_unlock(__access_mutex);
         return NULL;
     }
 
-    ex_mutex_unlock(access_mutex);
+    ex_mutex_unlock(__access_mutex);
     return org_ptr;
 }
 
@@ -520,39 +519,39 @@ void* __ex_mng_realloc( void* _ptr, size_t _size, const char* _tag, const char* 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __ex_mng_free( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr )
+void ex_free_mng( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr )
 {
     alloc_unit_t* au;
 
-    ex_mutex_lock ( access_mutex );
+    ex_mutex_lock ( __access_mutex );
 
     // nothing to do with NULL ptr
     if ( _ptr == NULL ) {
-        ex_mutex_unlock(access_mutex);
+        ex_mutex_unlock(__access_mutex);
         return;
     }
 
     // find SAllocInfo* by address
-    au = _get_au (_ptr);
+    au = __get_au (_ptr);
 
     // verify memory conflic first if needed
 #if VERIFY_FREE
-    _verify_pattern( au, _file_name, _func_name, _line_nr );
+    __verify_pattern( au, _file_name, _func_name, _line_nr );
 #endif
 
     // check allocator
     dlfree( au->dbg_addr );
 
     // remove original memory information
-    au_count               -= 1;
-    total_org_memory       -= au->org_size;      
-    total_dbg_memory       -= au->dbg_size;
-    accumulate_org_memory  -= au->org_size;
-    accumulate_dbg_memory  -= au->dbg_size;
+    __au_count               -= 1;
+    __total_org_memory       -= au->org_size;      
+    __total_dbg_memory       -= au->dbg_size;
+    __accumulate_org_memory  -= au->org_size;
+    __accumulate_dbg_memory  -= au->dbg_size;
 
     // reclaim the alloc info for next alloc
-    _reclaim_au ( au );
+    __reclaim_au ( au );
 
-    ex_mutex_unlock(access_mutex);
+    ex_mutex_unlock(__access_mutex);
 }
 

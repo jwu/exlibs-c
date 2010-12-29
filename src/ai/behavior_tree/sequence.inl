@@ -28,7 +28,7 @@ static bool _sequence_exec ( bt_node_t* _node )
 
 bt_node_t* bt_sequence ()
 {
-    bt_node_t* node = _bt_node_alloc ();
+    bt_node_t* node = __bt_node_alloc ();
     node->type = "sequence";
     node->exec = _sequence_exec;
     return node;

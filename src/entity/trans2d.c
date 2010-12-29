@@ -16,7 +16,7 @@
 // static 
 ///////////////////////////////////////////////////////////////////////////////
 
-static ex_array_t* _trans2d_pool = NULL;
+static ex_array_t* __trans2d_pool = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
@@ -37,7 +37,7 @@ EX_DEF_PROPS_END(ex_trans2d_t)
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_internal_init () {
-    _trans2d_pool = ex_array_alloc( sizeof(ex_trans2d_t), 1024 );
+    __trans2d_pool = ex_array_alloc( sizeof(ex_trans2d_t), 1024 );
 }
 
 // ------------------------------------------------------------------ 
@@ -45,7 +45,7 @@ void ex_trans2d_internal_init () {
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_internal_deinit () {
-    ex_array_free (_trans2d_pool);
+    ex_array_free (__trans2d_pool);
 }
 
 // ------------------------------------------------------------------ 
@@ -53,7 +53,7 @@ void ex_trans2d_internal_deinit () {
 // ------------------------------------------------------------------ 
 
 ex_trans2d_t* ex_trans2d_request () {
-    return ex_array_append( _trans2d_pool, NULL );
+    return ex_array_append( __trans2d_pool, NULL );
 }
 
 // ------------------------------------------------------------------ 

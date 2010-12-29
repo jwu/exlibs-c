@@ -17,8 +17,8 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static ex_hashmap_t* _classid_to_rtti = NULL;
-static bool _initialized = false;
+static ex_hashmap_t* __classid_to_rtti = NULL;
+static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -27,7 +27,7 @@ static bool _initialized = false;
 bool ex_rtti_init () 
 {
     // if the core already initialized, don't init it second times.
-    if ( _initialized ) {
+    if ( __initialized ) {
         ex_warning ( "rtti table already initialized" );
         return true;
     }
@@ -38,13 +38,13 @@ bool ex_rtti_init ()
         return false;
     }
 
-    _classid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
-                                          sizeof(ex_rtti_t*), 
-                                          256,
-                                          ex_hashkey_strid, 
-                                          ex_keycmp_strid );
+    __classid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
+                                           sizeof(ex_rtti_t*), 
+                                           256,
+                                           ex_hashkey_strid, 
+                                           ex_keycmp_strid );
 
-    _initialized = true;
+    __initialized = true;
     return true;
 }
 
@@ -54,14 +54,14 @@ bool ex_rtti_init ()
 
 void ex_rtti_deinit ()
 {
-    if ( _initialized ) {
+    if ( __initialized ) {
         // free all allocated string
-        ex_hashmap_each ( ex_rtti_t*, _info, _classid_to_rtti ) {
+        ex_hashmap_each ( ex_rtti_t*, _info, __classid_to_rtti ) {
             ex_free(_info->_props);
             ex_free(_info);
         } ex_hashmap_each_end;
-        ex_hashmap_free(_classid_to_rtti);
-        _initialized = false;
+        ex_hashmap_free(__classid_to_rtti);
+        __initialized = false;
     }
 }
 
@@ -69,7 +69,7 @@ void ex_rtti_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_is_inited () { return _initialized; }
+bool ex_rtti_is_inited () { return __initialized; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -91,7 +91,7 @@ ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super )
     my_rtti->_props = NULL;
 
     // insert the new rtti to the hashmap
-    result = ex_hashmap_insert( _classid_to_rtti, &my_classid, &my_rtti, NULL );
+    result = ex_hashmap_insert( __classid_to_rtti, &my_classid, &my_rtti, NULL );
     if ( result == false ) {
         ex_warning( "failed to insert new rtti info in to hashmap" );
         ex_free (my_rtti);
@@ -126,7 +126,7 @@ void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, ui
 ex_rtti_t* ex_rtti_get ( const char* _class )
 {
     strid_t classID = ex_strid(_class);
-    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( _classid_to_rtti, &classID, NULL );
+    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( __classid_to_rtti, &classID, NULL );
     if ( result != NULL )
         return *result;
     return NULL;

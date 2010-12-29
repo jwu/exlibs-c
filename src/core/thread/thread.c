@@ -31,9 +31,9 @@ typedef struct thread_args_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int __create_thread ( ex_thread_t* _thread, void* _args );
-extern void __wait_thread ( ex_thread_t* _thread );
-extern void __setup_thread ();
+extern int ex_sys_create_thread ( ex_thread_t* _thread, void* _args );
+extern void ex_sys_wait_thread ( ex_thread_t* _thread );
+extern void ex_sys_setup_thread ();
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -80,7 +80,7 @@ ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
     // } jwu DISABLE end 
 
     // Create the thread and go!
-    ret = __create_thread(thread, args);
+    ret = ex_sys_create_thread(thread, args);
     if ( ret >= 0 ) {
         // Wait for the thread function to use arguments
         ex_semaphore_wait(args->wait);
@@ -105,7 +105,7 @@ ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
 
 void ex_wait_thread ( ex_thread_t* _thread, int* _status ) {
     if ( _thread ) {
-        __wait_thread(_thread);
+        ex_sys_wait_thread(_thread);
         if ( _status ) {
             *_status = _thread->status;
         }
@@ -128,7 +128,7 @@ void ex_run_thread ( void* _data ) {
 
     // Perform any system-dependent setup
     // this function cannot fail
-    __setup_thread();
+    ex_sys_setup_thread();
 
     // Get the thread id
     args = (thread_args_t*)_data;

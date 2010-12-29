@@ -18,19 +18,19 @@
 // fwd-decls
 ///////////////////////////////////////////////////////////////////////////////
 
-static inline uint32 _hash_index ( ex_hashmap_t* _hashmap, const void* _key ) {
+static inline uint32 __hash_index ( ex_hashmap_t* _hashmap, const void* _key ) {
     return _hashmap->_hashkey(_key) & ( _hashmap->_hashsize - 1 );
 }
 
-static inline ex_hashmap_node_t* _getnode ( ex_hashmap_t* _hashmap, size_t _idx ) {
+static inline ex_hashmap_node_t* __getnode ( ex_hashmap_t* _hashmap, size_t _idx ) {
     return (ex_hashmap_node_t*)ex_pool_get(_hashmap->_nodes,_idx);
 }
 
-static inline void* _getkey ( ex_hashmap_t* _hashmap, size_t _idx ) {
+static inline void* __getkey ( ex_hashmap_t* _hashmap, size_t _idx ) {
     return (char*)_hashmap->_keys + _idx * _hashmap->_key_bytes;
 }
 
-static inline void* _getvalue ( ex_hashmap_t* _hashmap, size_t _idx ) {
+static inline void* __getvalue ( ex_hashmap_t* _hashmap, size_t _idx ) {
     return (char*)_hashmap->_values + _idx * _hashmap->_value_bytes;
 }
 
@@ -186,7 +186,7 @@ void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const voi
 
     //
     if ( next_idx != -1 )
-        _getnode(_hashmap,next_idx)->prev = cur_idx;
+        __getnode(_hashmap,next_idx)->prev = cur_idx;
 
     // set key and value
     memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
@@ -217,7 +217,7 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, con
 
     //
     if ( next_idx != -1 )
-        _getnode(_hashmap,next_idx)->prev = cur_idx;
+        __getnode(_hashmap,next_idx)->prev = cur_idx;
 
     // set key and value
     memcpy ( (char*)_hashmap->_keys + cur_idx * _hashmap->_key_bytes,  _key, _hashmap->_key_bytes );
@@ -233,15 +233,15 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, con
 void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
 {
     size_t hash_next;
-    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+    uint32 hash_idx = __hash_index ( _hashmap, _key ); 
 
     // check if the key exists. if yes, don't do any thing.
-    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
     {
         // compare the key
-        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+        if ( _hashmap->_keycmp(_key, __getkey( _hashmap, hash_next ) ) == 0 ) {
             if ( _index ) *_index = hash_next;
-            return _getvalue(_hashmap, hash_next);
+            return __getvalue(_hashmap, hash_next);
         }
     }
 
@@ -257,13 +257,13 @@ void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index 
 size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
 {
     size_t hash_next;
-    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+    uint32 hash_idx = __hash_index ( _hashmap, _key ); 
 
     // check if the key exists. if yes, don't do any thing.
-    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
     {
         // compare the key
-        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+        if ( _hashmap->_keycmp(_key, __getkey( _hashmap, hash_next ) ) == 0 ) {
             if ( _index ) *_index = hash_next;
             return hash_idx;
         }
@@ -282,13 +282,13 @@ size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t
 bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index )
 {
     size_t hash_next;
-    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+    uint32 hash_idx = __hash_index ( _hashmap, _key ); 
 
     // check if the key exists. if yes, don't do any thing.
-    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
     {
         // compare the key
-        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+        if ( _hashmap->_keycmp(_key, __getkey( _hashmap, hash_next ) ) == 0 ) {
             if ( _index ) *_index = hash_next;
             return false;
         }
@@ -302,13 +302,13 @@ bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _
 bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index )
 {
     size_t hash_next;
-    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+    uint32 hash_idx = __hash_index ( _hashmap, _key ); 
 
     // check if the key exists. if yes, don't do any thing.
-    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
     {
         // compare the key
-        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+        if ( _hashmap->_keycmp(_key, __getkey( _hashmap, hash_next ) ) == 0 ) {
             if ( _index ) *_index = hash_next;
             return false;
         }
@@ -326,15 +326,15 @@ bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const v
 void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key )
 {
     size_t hash_next;
-    uint32 hash_idx = _hash_index ( _hashmap, _key ); 
+    uint32 hash_idx = __hash_index ( _hashmap, _key ); 
     size_t prev_idx, next_idx;
     ex_hashmap_node_t* node;
 
     // check if the key exists. if yes, don't do any thing.
-    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = _getnode(_hashmap,hash_next)->next )
+    for ( hash_next = _hashmap->_indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
     {
         // compare the key
-        if ( _hashmap->_keycmp(_key, _getkey( _hashmap, hash_next ) ) == 0 ) {
+        if ( _hashmap->_keycmp(_key, __getkey( _hashmap, hash_next ) ) == 0 ) {
             break;
         }
     }
@@ -345,12 +345,12 @@ void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key )
     }
 
     //
-    prev_idx = _getnode(_hashmap,hash_next)->prev;
-    next_idx = _getnode(_hashmap,hash_next)->next;
+    prev_idx = __getnode(_hashmap,hash_next)->prev;
+    next_idx = __getnode(_hashmap,hash_next)->next;
 
     // if the erase node is not the tail
     if ( next_idx != -1 ) {
-        _getnode (_hashmap,next_idx)->prev = prev_idx;
+        __getnode (_hashmap,next_idx)->prev = prev_idx;
     }
 
     // if the erase node is the header, change the index
@@ -358,13 +358,13 @@ void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key )
         _hashmap->_indices[hash_idx] = next_idx;
     // if not header
     else 
-        _getnode(_hashmap,prev_idx)->next = next_idx;
+        __getnode(_hashmap,prev_idx)->next = next_idx;
 
     // now erase node
     node = ex_pool_remove_at ( _hashmap->_nodes, hash_next );
     node->next = -1;
     node->prev = -1;
-    return _getvalue ( _hashmap, hash_next );
+    return __getvalue ( _hashmap, hash_next );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -32,15 +32,15 @@ typedef struct ex_class_t {
 } ex_class_t;
 
 //
-extern ex_rtti_t* __RTTI_ex_class_t;
+extern ex_rtti_t* __RTTI_ex_class_t__;
 static inline void __ex_register_class_ex_class_t () { 
-    __RTTI_ex_class_t = ex_rtti_register_class ( "ex_class_t", NULL );
+    __RTTI_ex_class_t__ = ex_rtti_register_class ( "ex_class_t", NULL );
 }
 
 //
 static inline ex_class_t* alloc_ex_class_t() {
     ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(ex_class_t));
-    obj->_rtti = __RTTI_ex_class_t;
+    obj->_rtti = __RTTI_ex_class_t__;
     return obj;
 }
 
@@ -58,7 +58,7 @@ static inline void free_ex_class_t(void* _ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_RTTI(_name) \
-    (__RTTI_##_name)
+    (__RTTI_##_name##__)
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -80,9 +80,9 @@ static inline void free_ex_class_t(void* _ptr) {
 
 #define EX_DEF_CLASS_BEGIN(_name) \
     extern void __ex_register_properties_##_name (); \
-    extern ex_rtti_t* __RTTI_##_name; /*for EX_RTTI, EX_CLASSID*/ \
+    extern ex_rtti_t* __RTTI_##_name##__; /*for EX_RTTI, EX_CLASSID*/ \
     static inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __RTTI_##_name = ex_rtti_register_class ( #_name, EX_RTTI(ex_class_t) ); \
+        __RTTI_##_name##__ = ex_rtti_register_class ( #_name, EX_RTTI(ex_class_t) ); \
         __ex_register_properties_##_name(); \
     } \
     typedef struct _name { \
@@ -94,9 +94,9 @@ static inline void free_ex_class_t(void* _ptr) {
 
 #define EX_DEF_CLASS_SUPER_BEGIN(_name,_super) \
     extern void __ex_register_properties_##_name (); \
-    extern ex_rtti_t* __RTTI_##_name; /*for EX_RTTI, EX_CLASSID*/ \
+    extern ex_rtti_t* __RTTI_##_name##__; /*for EX_RTTI, EX_CLASSID*/ \
     static inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __RTTI_##_name = ex_rtti_register_class ( #_name, EX_RTTI(_super) ); \
+        __RTTI_##_name##__ = ex_rtti_register_class ( #_name, EX_RTTI(_super) ); \
         __ex_register_properties_##_name(); \
     } \
     typedef struct _name { \

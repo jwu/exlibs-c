@@ -24,6 +24,7 @@ static int thread_func1 ( void* _data ) {
         --counter;
     }
     ex_log ("thread1 ended");
+	return 1;
 }
 
 // ------------------------------------------------------------------ 

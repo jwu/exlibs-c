@@ -16,7 +16,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int _log ( lua_State* _l ) {
+static int __log ( lua_State* _l ) {
     const char* msg = luaL_checkstring ( _l, 1 );
     ex_log (msg);
     return 0;
@@ -27,7 +27,7 @@ int _log ( lua_State* _l ) {
 ///////////////////////////////////////////////////////////////////////////////
 
 static const luaL_Reg functions[] = {
-    { "log", _log },
+    { "log", __log },
     { 0, 0 }
 };
 

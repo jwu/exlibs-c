@@ -20,7 +20,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static const char white_space_list[] = {
+static const char __white_space_list[] = {
     (L' '),
     (L'\t'),
     (L'\r'),

@@ -33,7 +33,7 @@ static inline uint64 ex_cpu_cycle() {
     uint64 counter;
     __asm__ __volatile__( "mftb %0" : "=r" (counter) );
     return counter;
-#else
+#else // unix-like sys (mac, apple, linux)
     struct timeval now;
     gettimeofday(&now, NULL);
     return now.tv_sec * 1000 + now.tv_usec/1000;

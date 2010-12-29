@@ -65,7 +65,7 @@ typedef struct ex_prop_t {
 // // why not use strid_t ???
 // // because if use strid_t for the property name, we can't define it in
 // // compile-time, but the array below is store in compile time.
-// static const ex_prop_t __PROPS_test_cls_t[] = {
+// static const ex_prop_t __PROPS_test_cls_t__[] = {
 //     { "id",     EX_PROP_ATTR_READ_ONLY, offsetof(struct test_cls_t, id),    ex_prop_set_raw_int32, ex_prop_get_raw_int32 }
 //   , { "data1",  EX_PROP_ATTR_NONE,      offsetof(struct test_cls_t, data1), ex_prop_set_raw_float, ex_prop_get_raw_float }
 //   , { "data2",  EX_PROP_ATTR_NONE,      offsetof(struct test_cls_t, data2), ex_prop_set_raw_float, ex_prop_get_raw_float }
@@ -76,9 +76,9 @@ typedef struct ex_prop_t {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_PROPS_BEGIN(_name) \
-    ex_rtti_t* __RTTI_##_name = NULL; \
+    ex_rtti_t* __RTTI_##_name##__ = NULL; \
     void __ex_register_properties_##_name () { \
-        static const ex_prop_t __PROPS_##_name[] = { \
+        static const ex_prop_t __PROPS_##_name##__[] = { \
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -93,10 +93,10 @@ typedef struct ex_prop_t {
 
 #define EX_DEF_PROPS_END(_name) \
             { "", 0, -1, NULL, NULL } \
-        }; /*end of __PROPS_##_name*/ \
+        }; /*end of __PROPS_##_name##__*/ \
         ex_rtti_t* rtti = EX_RTTI(_name); \
         ex_assert_return( rtti, /**/, "failed to register class %s", #_name ); \
-        ex_rtti_register_properties ( rtti, __PROPS_##_name, EX_ARRAY_COUNT(__PROPS_##_name)-1 ); \
+        ex_rtti_register_properties ( rtti, __PROPS_##_name##__, EX_ARRAY_COUNT(__PROPS_##_name##__)-1 ); \
     }
 
 ///////////////////////////////////////////////////////////////////////////////

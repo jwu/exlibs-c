@@ -16,7 +16,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static bool _initialized = false;
+static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -30,7 +30,7 @@ bool ex_engine_init () {
     }
 
     // if the core already inited, don't init it second times.
-    if ( _initialized ) {
+    if ( __initialized ) {
         ex_warning ( "ex_engine already inited" );
         return true;
     }
@@ -40,7 +40,7 @@ bool ex_engine_init () {
 
     //
     ex_log ("ex_engine inited");
-    _initialized = true;
+    __initialized = true;
     return true;
 }
 
@@ -49,11 +49,11 @@ bool ex_engine_init () {
 // ------------------------------------------------------------------ 
 
 void ex_engine_deinit () {
-    if ( _initialized ) {
+    if ( __initialized ) {
         ex_trans2d_internal_deinit();
 
         ex_log ( "ex_engine deinitied" );
-        _initialized = false;
+        __initialized = false;
     }
 }
 
@@ -61,5 +61,5 @@ void ex_engine_deinit () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_engine_initialized () { return _initialized; }
+bool ex_engine_initialized () { return __initialized; }
 

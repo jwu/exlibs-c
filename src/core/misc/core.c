@@ -16,7 +16,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static bool _initialized = false;
+static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -26,7 +26,7 @@ extern void ex_register_classes ();
 bool ex_core_init ()
 {
     // if the core already inited, don't init it second times.
-    if ( _initialized ) {
+    if ( __initialized ) {
         ex_warning ( "core already inited" );
         return true;
     }
@@ -57,7 +57,7 @@ bool ex_core_init ()
 
     //
     ex_log ("ex_core inited");
-    _initialized = true;
+    __initialized = true;
     return true;
 }
 
@@ -67,7 +67,7 @@ bool ex_core_init ()
 
 void ex_core_deinit ()
 {
-    if ( _initialized ) {
+    if ( __initialized ) {
         ex_log ("deinit rtti table");
         ex_rtti_deinit();
 
@@ -79,7 +79,7 @@ void ex_core_deinit ()
 
         //
         ex_log ("ex_core deinitied");
-        _initialized = false;
+        __initialized = false;
     }
 }
 
@@ -87,4 +87,4 @@ void ex_core_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_core_initialized () { return _initialized; }
+bool ex_core_initialized () { return __initialized; }

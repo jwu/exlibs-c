@@ -26,7 +26,7 @@ static bool _parallel_exec ( bt_node_t* _node )
 
 bt_node_t* bt_parallel()
 {
-    bt_node_t* node = _bt_node_alloc ();
+    bt_node_t* node = __bt_node_alloc ();
     node->type = "parallel";
     node->exec = _parallel_exec;
     return node;

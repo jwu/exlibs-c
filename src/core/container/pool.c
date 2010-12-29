@@ -16,11 +16,11 @@
 // fwd-decls
 ///////////////////////////////////////////////////////////////////////////////
 
-static ex_pool_node_t* _request_free_node( ex_pool_t* ); 
-static ex_pool_node_t* _request_free_node_nomng( ex_pool_t* ); 
-static void _push_to_used ( ex_pool_t*, ex_pool_node_t* );
-static void _push_to_used_reverse ( ex_pool_t*, ex_pool_node_t* );
-static void _push_to_free ( ex_pool_t*, ex_pool_node_t* );
+static ex_pool_node_t* __request_free_node( ex_pool_t* ); 
+static ex_pool_node_t* __request_free_node_nomng( ex_pool_t* ); 
+static void __push_to_used ( ex_pool_t*, ex_pool_node_t* );
+static void __push_to_used_reverse ( ex_pool_t*, ex_pool_node_t* );
+static void __push_to_free ( ex_pool_t*, ex_pool_node_t* );
 
 ///////////////////////////////////////////////////////////////////////////////
 // public
@@ -181,10 +181,10 @@ void ex_pool_reserve ( ex_pool_t* _pool, size_t _count )
     while ( i >= 0 ) {
         // if curren index is in used.
         if ( ex_bitarray_get ( _pool->_used_bits, i ) ) {
-            _push_to_used_reverse ( _pool, _pool->_nodes + i );
+            __push_to_used_reverse ( _pool, _pool->_nodes + i );
         }
         else {
-            _push_to_free ( _pool, _pool->_nodes + i );
+            __push_to_free ( _pool, _pool->_nodes + i );
         }
         --i;
     }
@@ -213,10 +213,10 @@ void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count )
     while ( i >= 0 ) {
         // if curren index is in used.
         if ( ex_bitarray_get ( _pool->_used_bits, i ) ) {
-            _push_to_used_reverse ( _pool, _pool->_nodes + i );
+            __push_to_used_reverse ( _pool, _pool->_nodes + i );
         }
         else {
-            _push_to_free ( _pool, _pool->_nodes + i );
+            __push_to_free ( _pool, _pool->_nodes + i );
         }
         --i;
     }
@@ -232,10 +232,10 @@ int ex_pool_insert ( ex_pool_t* _pool, const void* _value )
     ex_pool_node_t* node = NULL;
     int idx = -1;
 
-    node = _request_free_node(_pool);
+    node = __request_free_node(_pool);
     ex_assert ( node != NULL, "error: can't get freed nodes." );
 
-    _push_to_used( _pool, node );
+    __push_to_used( _pool, node );
     idx = node - _pool->_nodes;
 
     // if _value is NULL, that means insert an empty node.
@@ -253,10 +253,10 @@ int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value )
     ex_pool_node_t* node = NULL;
     int idx = -1;
 
-    node = _request_free_node_nomng(_pool);
+    node = __request_free_node_nomng(_pool);
     ex_assert ( node != NULL, "error: can't get freed nodes." );
 
-    _push_to_used( _pool, node );
+    __push_to_used( _pool, node );
     idx = node - _pool->_nodes;
 
     // if _value is NULL, that means insert an empty node.
@@ -297,7 +297,7 @@ void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx )
         node->next->prev = node->prev;
 
     // return it to free_nodes
-    _push_to_free( _pool, node );
+    __push_to_free( _pool, node );
     --_pool->_length;
 
     return (char*)(_pool->_data) + _idx * _pool->_element_bytes;
@@ -324,7 +324,7 @@ void* ex_pool_get ( ex_pool_t* _pool, int _idx )
 // ------------------------------------------------------------------ 
 
 // managed
-ex_pool_node_t* _request_free_node( ex_pool_t* _pool ) 
+ex_pool_node_t* __request_free_node( ex_pool_t* _pool ) 
 {
     ex_pool_node_t* node = NULL;
 
@@ -340,7 +340,7 @@ ex_pool_node_t* _request_free_node( ex_pool_t* _pool )
 }
 
 // no managed
-ex_pool_node_t* _request_free_node_nomng( ex_pool_t* _pool ) 
+ex_pool_node_t* __request_free_node_nomng( ex_pool_t* _pool ) 
 {
     ex_pool_node_t* node = NULL;
 
@@ -359,7 +359,7 @@ ex_pool_node_t* _request_free_node_nomng( ex_pool_t* _pool )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _push_to_used ( ex_pool_t* _pool, ex_pool_node_t* _node )
+void __push_to_used ( ex_pool_t* _pool, ex_pool_node_t* _node )
 {
     if ( _pool->_used_nodes_end ) { // if we have used nodes
         _pool->_used_nodes_end->next = _node;
@@ -379,7 +379,7 @@ void _push_to_used ( ex_pool_t* _pool, ex_pool_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _push_to_used_reverse ( ex_pool_t* _pool, ex_pool_node_t* _node )
+void __push_to_used_reverse ( ex_pool_t* _pool, ex_pool_node_t* _node )
 {
     if ( _pool->_used_nodes_begin ) { // if we have used nodes
         _pool->_used_nodes_begin->prev = _node;
@@ -399,7 +399,7 @@ void _push_to_used_reverse ( ex_pool_t* _pool, ex_pool_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _push_to_free ( ex_pool_t* _pool, ex_pool_node_t* _node )
+void __push_to_free ( ex_pool_t* _pool, ex_pool_node_t* _node )
 {
     if ( _pool->_free_nodes ) { // if we have used nodes
         _pool->_free_nodes->next = _node;

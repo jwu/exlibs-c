@@ -97,6 +97,7 @@
 //      Use for hash table lookup, or anything where one collision in 2^32 is
 //      acceptable.  Do NOT use for cryptographic purposes.
 // ------------------------------------------------------------------
+
 uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 {
     register uint32 a,b,c,len;
@@ -178,6 +179,7 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 // ------------------------------------------------------------------
 // Desc: 
 // ------------------------------------------------------------------
+
 #if (EX_ENDIAN == EX_LITTLE_ENDIAN)
     #define __HASH_LITTLE_ENDIAN 1
     #define __HASH_BIG_ENDIAN 0
@@ -189,6 +191,7 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 // ------------------------------------------------------------------
 // Desc: 
 // ------------------------------------------------------------------
+
 #ifdef __rot 
 #undef __rot
 #endif
@@ -238,6 +241,7 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 //  on, and rotates are much kinder to the top and bottom bits, so I used
 //  rotates.
 // ------------------------------------------------------------------
+
 #ifdef __mix 
 #undef __mix
 #endif
@@ -277,6 +281,7 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 //  10  8 15 26 3 22 24
 //  11  8 15 26 3 22 24
 // ------------------------------------------------------------------
+
 #ifdef __final
 #undef __final
 #endif
@@ -1072,6 +1077,7 @@ void ex_hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2
 // ------------------------------------------------------------------
 // Desc: 
 // ------------------------------------------------------------------
+
 uint32 ex_hashpaul( const uint8* _data, uint32 _len )
 {
     uint32 hash = _len, tmp;
@@ -1119,7 +1125,6 @@ uint32 ex_hashpaul( const uint8* _data, uint32 _len )
 
     return hash;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Undef block. 

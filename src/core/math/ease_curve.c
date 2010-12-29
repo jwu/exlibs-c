@@ -509,12 +509,12 @@ double ex_ease_outin_circ ( double _t ) {
 // ------------------------------------------------------------------ 
 
 // in helper float
-static float _ease_in_elasticf_helper ( float _t, 
-                                        float _b, 
-                                        float _c, 
-                                        float _d, 
-                                        float _a, 
-                                        float _p )
+static float __ease_in_elasticf_helper ( float _t, 
+                                         float _b, 
+                                         float _c, 
+                                         float _d, 
+                                         float _a, 
+                                         float _p )
 {
     float t_adj,_s;
 
@@ -535,12 +535,12 @@ static float _ease_in_elasticf_helper ( float _t,
 }
 
 // in helper double
-static double _ease_in_elastic_helper ( double _t, 
-                                        double _b, 
-                                        double _c, 
-                                        double _d, 
-                                        double _a, 
-                                        double _p )
+static double __ease_in_elastic_helper ( double _t, 
+                                         double _b, 
+                                         double _c, 
+                                         double _d, 
+                                         double _a, 
+                                         double _p )
 {
     double t_adj,_s;
 
@@ -562,12 +562,12 @@ static double _ease_in_elastic_helper ( double _t,
 
 // float
 float ex_ease_in_elasticf ( float _t, float _a, float _p ) {
-    return _ease_in_elasticf_helper(_t, 0, 1, 1, _a, _p);
+    return __ease_in_elasticf_helper(_t, 0, 1, 1, _a, _p);
 }
 
 // double
 double ex_ease_in_elastic ( double _t, double _a, double _p ) {
-    return _ease_in_elastic_helper(_t, 0, 1, 1, _a, _p);
+    return __ease_in_elastic_helper(_t, 0, 1, 1, _a, _p);
 }
 
 // ------------------------------------------------------------------ 
@@ -575,12 +575,12 @@ double ex_ease_in_elastic ( double _t, double _a, double _p ) {
 // ------------------------------------------------------------------ 
 
 // out helper float
-static float _ease_out_elasticf_helper ( float _t, 
-                                         float _b /*dummy*/, 
-                                         float _c, 
-                                         float _d /*dummy*/, 
-                                         float _a, 
-                                         float _p )
+static float __ease_out_elasticf_helper ( float _t, 
+                                          float _b /*dummy*/, 
+                                          float _c, 
+                                          float _d /*dummy*/, 
+                                          float _a, 
+                                          float _p )
 {
     float _s;
 
@@ -598,12 +598,12 @@ static float _ease_out_elasticf_helper ( float _t,
 }
 
 // out helper double
-static double _ease_out_elastic_helper ( double _t, 
-                                         double _b /*dummy*/, 
-                                         double _c, 
-                                         double _d /*dummy*/, 
-                                         double _a, 
-                                         double _p )
+static double __ease_out_elastic_helper ( double _t, 
+                                          double _b /*dummy*/, 
+                                          double _c, 
+                                          double _d /*dummy*/, 
+                                          double _a, 
+                                          double _p )
 {
     double _s;
 
@@ -622,12 +622,12 @@ static double _ease_out_elastic_helper ( double _t,
 
 // float
 float ex_ease_out_elasticf ( float _t, float _a, float _p ) {
-    return _ease_out_elasticf_helper(_t, 0, 1, 1, _a, _p);
+    return __ease_out_elasticf_helper(_t, 0, 1, 1, _a, _p);
 }
 
 // double
 double ex_ease_out_elastic ( double _t, double _a, double _p ) {
-    return _ease_out_elastic_helper(_t, 0, 1, 1, _a, _p);
+    return __ease_out_elastic_helper(_t, 0, 1, 1, _a, _p);
 }
 
 // ------------------------------------------------------------------ 
@@ -678,14 +678,14 @@ double ex_ease_inout_elastic ( double _t, double _a, double _p ) {
 
 // float
 float ex_ease_outin_elasticf ( float _t, float _a, float _p ) {
-    if (_t < 0.5f) return _ease_out_elasticf_helper(_t*2, 0, 0.5f, 1.0f, _a, _p);
-    return _ease_in_elasticf_helper(2*_t - 1.0f, 0.5f, 0.5f, 1.0f, _a, _p);
+    if (_t < 0.5f) return __ease_out_elasticf_helper(_t*2, 0, 0.5f, 1.0f, _a, _p);
+    return __ease_in_elasticf_helper(2*_t - 1.0f, 0.5f, 0.5f, 1.0f, _a, _p);
 }
  
 // double
 double ex_ease_outin_elastic ( double _t, double _a, double _p ) {
-    if (_t < 0.5) return _ease_out_elastic_helper(_t*2, 0, 0.5, 1.0, _a, _p);
-    return _ease_in_elastic_helper(2*_t - 1.0, 0.5, 0.5, 1.0, _a, _p);
+    if (_t < 0.5) return __ease_out_elastic_helper(_t*2, 0, 0.5, 1.0, _a, _p);
+    return __ease_in_elastic_helper(2*_t - 1.0, 0.5, 0.5, 1.0, _a, _p);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -777,9 +777,9 @@ double ex_ease_outin_back ( double _t, double _s ) {
 // ------------------------------------------------------------------ 
 
 // float
-static float _ease_out_bouncef_helper ( float _t, 
-                                        float _c, 
-                                        float _a )
+static float __ease_out_bouncef_helper ( float _t, 
+                                         float _c, 
+                                         float _a )
 {
     if (_t == 1.0f) return _c;
     if (_t < (4/11.0f)) {
@@ -797,9 +797,9 @@ static float _ease_out_bouncef_helper ( float _t,
 }
 
 // double
-static double _ease_out_bounce_helper ( double _t, 
-                                        double _c, 
-                                        double _a )
+static double __ease_out_bounce_helper ( double _t, 
+                                         double _c, 
+                                         double _a )
 {
     if (_t == 1.0) return _c;
     if (_t < (4/11.0)) {
@@ -822,12 +822,12 @@ static double _ease_out_bounce_helper ( double _t,
 
 // float
 float ex_ease_in_bouncef ( float _t, float _a ) {
-    return 1.0f - _ease_out_bouncef_helper(1.0f-_t, 1.0f, _a);
+    return 1.0f - __ease_out_bouncef_helper(1.0f-_t, 1.0f, _a);
 }
 
 // double
 double ex_ease_in_bounce ( double _t, double _a ) {
-    return 1.0 - _ease_out_bounce_helper(1.0-_t, 1.0, _a);
+    return 1.0 - __ease_out_bounce_helper(1.0-_t, 1.0, _a);
 }
 
 // ------------------------------------------------------------------ 
@@ -836,12 +836,12 @@ double ex_ease_in_bounce ( double _t, double _a ) {
 
 // float
 float ex_ease_out_bouncef ( float _t, float _a ) {
-    return _ease_out_bouncef_helper(_t, 1, _a);
+    return __ease_out_bouncef_helper(_t, 1, _a);
 }
 
 // double
 double ex_ease_out_bounce ( double _t, double _a ) {
-    return _ease_out_bounce_helper(_t, 1, _a);
+    return __ease_out_bounce_helper(_t, 1, _a);
 }
 
 // ------------------------------------------------------------------ 
@@ -866,14 +866,14 @@ double ex_ease_inout_bounce ( double _t, double _a ) {
 
 // float
 float ex_ease_outin_bouncef ( float _t, float _a ) {
-    if (_t < 0.5f) return _ease_out_bouncef_helper(_t*2, 0.5f, _a);
-    return 1.0f - _ease_out_bouncef_helper (2.0f-2*_t, 0.5f, _a);
+    if (_t < 0.5f) return __ease_out_bouncef_helper(_t*2, 0.5f, _a);
+    return 1.0f - __ease_out_bouncef_helper (2.0f-2*_t, 0.5f, _a);
 }
  
 // double
 double ex_ease_outin_bounce ( double _t, double _a ) {
-    if (_t < 0.5) return _ease_out_bounce_helper(_t*2, 0.5, _a);
-    return 1.0 - _ease_out_bounce_helper (2.0-2*_t, 0.5, _a);
+    if (_t < 0.5) return __ease_out_bounce_helper(_t*2, 0.5, _a);
+    return 1.0 - __ease_out_bounce_helper (2.0-2*_t, 0.5, _a);
 }
  
 
@@ -928,30 +928,30 @@ double ex_ease_fade ( double _t ) {
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
-// Desc: _sin_progress
+// Desc: __sin_progress
 // ------------------------------------------------------------------ 
 
 // float
-static float _sin_progress_f ( float _v ) {
+static float __sin_progress_f ( float _v ) {
     return sinf((_v * EX_PI) - (float)EX_HALF_PI) / 2.0f + 0.5f;
 }
 
 // double
-static double _sin_progress ( double _v ) {
+static double __sin_progress ( double _v ) {
     return sin((_v * EX_PI) - (float)EX_HALF_PI) / 2.0 + 0.5;
 }
 
 // ------------------------------------------------------------------ 
-// Desc: _smooth_begin_end_mix_factor
+// Desc: __smooth_begin_end_mix_factor
 // ------------------------------------------------------------------ 
 
 // float
-static float _smooth_begin_end_mix_factor_f ( float _v ) { 
+static float __smooth_begin_end_mix_factor_f ( float _v ) { 
     return EX_MIN( EX_MAX( 1.0f - _v * 2.0f + 0.3f, 0.0f ), 1.0f );
 }
 
 // double
-static double _smooth_begin_end_mix_factor ( double _v ) { 
+static double __smooth_begin_end_mix_factor ( double _v ) { 
     return EX_MIN( EX_MAX( 1.0 - _v * 2.0 + 0.3, 0.0 ), 1.0 );
 }
 
@@ -961,15 +961,15 @@ static double _smooth_begin_end_mix_factor ( double _v ) {
 
 // float
 float ex_ease_in_curvef ( float _t ) {
-    const float sinProgress = _sin_progress_f(_t);
-    const float mix = _smooth_begin_end_mix_factor_f(_t);
+    const float sinProgress = __sin_progress_f(_t);
+    const float mix = __smooth_begin_end_mix_factor_f(_t);
     return sinProgress * mix + _t * (1 - mix);
 }
 
 // double
 double ex_ease_in_curve ( double _t ) {
-    const double sinProgress = _sin_progress(_t);
-    const double mix = _smooth_begin_end_mix_factor(_t);
+    const double sinProgress = __sin_progress(_t);
+    const double mix = __smooth_begin_end_mix_factor(_t);
     return sinProgress * mix + _t * (1 - mix);
 }
 
@@ -979,15 +979,15 @@ double ex_ease_in_curve ( double _t ) {
 
 // float
 float ex_ease_out_curvef ( float _t ) {
-    const float sinProgress = _sin_progress_f(_t);
-    const float mix = _smooth_begin_end_mix_factor_f(1 - _t);
+    const float sinProgress = __sin_progress_f(_t);
+    const float mix = __smooth_begin_end_mix_factor_f(1 - _t);
     return sinProgress * mix + _t * (1 - mix);
 }
 
 // double
 double ex_ease_out_curve ( double _t ) {
-    const double sinProgress = _sin_progress(_t);
-    const double mix = _smooth_begin_end_mix_factor(1 - _t);
+    const double sinProgress = __sin_progress(_t);
+    const double mix = __smooth_begin_end_mix_factor(1 - _t);
     return sinProgress * mix + _t * (1 - mix);
 }
 

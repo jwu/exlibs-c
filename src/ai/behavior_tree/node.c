@@ -29,7 +29,7 @@ void bt_node_add ( bt_node_t* _self, bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bt_node_t* _bt_node_alloc ()
+static bt_node_t* __bt_node_alloc ()
 {
     bt_node_t* node = ex_malloc( sizeof(bt_node_t) );
     node->children = ex_array_alloc ( sizeof(bt_node_t*), 8 );

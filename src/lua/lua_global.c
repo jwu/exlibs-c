@@ -16,7 +16,7 @@
 // internal defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static lua_State* s_L = NULL;
+static lua_State* __L = NULL;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -106,13 +106,13 @@ extern int luaopen_core ( lua_State* _l );
 
 void ex_lua_init ()
 {
-    if ( s_L ) {
+    if ( __L ) {
         ex_warning ( "the lua engine already inited." );
         return;
     }
 
-    s_L = lua_open();
-    luaL_openlibs(s_L);
+    __L = lua_open();
+    luaL_openlibs(__L);
 
     // we create global ex table if it not exists.
     ex_lua_global_module ( ex_lua_state(), "ex" );
@@ -127,15 +127,15 @@ void ex_lua_init ()
 
 void ex_lua_deinit ()
 {
-    lua_close(s_L);
-    s_L = NULL;
+    lua_close(__L);
+    __L = NULL;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-lua_State* ex_lua_state () { return s_L; }
+lua_State* ex_lua_state () { return __L; }
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -23,7 +23,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _short_funcname ( char _short_name[], const char* _function_name, int _len )
+static void __short_funcname ( char _short_name[], const char* _function_name, int _len )
 {
     int len; 
 
@@ -62,7 +62,7 @@ bool assert_failed( bool* _pDoAssert, const char* _file_name, const char* _funct
     pBuffer[result] = 0;
 
     // short the function name
-    _short_funcname( short_name, _function_name, 64 );
+    __short_funcname( short_name, _function_name, 64 );
 
     //
     ex_log ( "Assert Failed: %s(%zd)::%s, %s", _file_name, _line_nr, short_name, pBuffer );
@@ -108,7 +108,7 @@ bool error_msg( bool* _pDoAssert, const char* _file_name, const char* _function_
     pBuffer[result] = 0;
 
     // short the function name
-    _short_funcname( short_name, _function_name, 64 );
+    __short_funcname( short_name, _function_name, 64 );
 
     //
     ex_log ( "Error: %s(%zd)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
@@ -148,7 +148,7 @@ bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _functi
     pBuffer[result] = 0;
 
     // short the function name
-    _short_funcname( short_name, _function_name, 64 );
+    __short_funcname( short_name, _function_name, 64 );
 
     //
     ex_log ( "Warning: %s(%zd)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );

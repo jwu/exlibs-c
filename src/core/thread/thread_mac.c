@@ -19,7 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static const int _sig_list[] = {
+static const int __sig_list[] = {
     SIGHUP, 
     SIGINT, 
     SIGQUIT, 
@@ -38,7 +38,7 @@ static const int _sig_list[] = {
 // ------------------------------------------------------------------ 
 
 extern void ex_run_thread ( void* );
-static void* run_thread (void* _data) {
+static void* __run_thread (void* _data) {
     ex_run_thread(_data);
     pthread_exit((void *) 0);
     return ((void *) 0); // Prevent compiler warning
@@ -48,7 +48,7 @@ static void* run_thread (void* _data) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int __create_thread ( ex_thread_t* _thread, void* _args ) {
+int ex_sys_create_thread ( ex_thread_t* _thread, void* _args ) {
     pthread_attr_t type;
 
     // Set the thread attributes
@@ -59,7 +59,7 @@ int __create_thread ( ex_thread_t* _thread, void* _args ) {
     pthread_attr_setdetachstate(&type, PTHREAD_CREATE_JOINABLE);
 
     // Create the thread and go!
-    if ( pthread_create(&_thread->handle, &type, run_thread, _args) != 0 ) {
+    if ( pthread_create(&_thread->handle, &type, __run_thread, _args) != 0 ) {
         ex_error ( "Not enough resources to create thread" );
         return -1;
     }
@@ -71,7 +71,7 @@ int __create_thread ( ex_thread_t* _thread, void* _args ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __wait_thread ( ex_thread_t* _thread ) {
+void ex_sys_wait_thread ( ex_thread_t* _thread ) {
     pthread_join(_thread->handle, 0);
 }
 
@@ -79,14 +79,14 @@ void __wait_thread ( ex_thread_t* _thread ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __setup_thread () {
+void ex_sys_setup_thread () {
     int i;
     sigset_t mask;
 
     // Mask asynchronous signals for this thread
     sigemptyset(&mask);
-    for ( i = 0; _sig_list[i]; ++i ) {
-        sigaddset(&mask, _sig_list[i]);
+    for ( i = 0; __sig_list[i]; ++i ) {
+        sigaddset(&mask, __sig_list[i]);
     }
     pthread_sigmask(SIG_BLOCK, &mask, 0);
 

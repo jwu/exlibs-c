@@ -28,7 +28,7 @@ static bool _selector_exec ( bt_node_t* _node )
 
 bt_node_t* bt_selector()
 {
-    bt_node_t* node = _bt_node_alloc ();
+    bt_node_t* node = __bt_node_alloc ();
     node->type = "selector";
     node->exec = _selector_exec;
     return node;
@@ -92,7 +92,7 @@ void _random_selector_free ( bt_node_t* _node )
 
 bt_node_t* bt_random_selector()
 {
-    bt_node_t* node = _bt_node_alloc ();
+    bt_node_t* node = __bt_node_alloc ();
     node->type = "random.selector";
     node->exec = _random_selector_exec;
     node->free = _random_selector_free;
