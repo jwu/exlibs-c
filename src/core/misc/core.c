@@ -32,6 +32,13 @@ bool ex_core_init ()
     }
 
     //
+    ex_log ("init timer");
+    if ( ex_timer_init() == false ) {
+        ex_log ("failed to init timer");
+        return false;
+    }
+
+    //
     ex_log ("init memory");
     if ( ex_mem_init() == false ) {
         ex_log ("failed to init memory");
@@ -76,6 +83,9 @@ void ex_core_deinit ()
 
         ex_log ("deinit memory");
         ex_mem_deinit();
+
+        ex_log ("deinit timer");
+        ex_timer_deinit();
 
         //
         ex_log ("ex_core deinitied");

@@ -81,6 +81,13 @@ static inline void ex_sleep ( uint32 _ms ) {
 #endif
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern bool ex_timer_init ();
+extern void ex_timer_deinit ();
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 
