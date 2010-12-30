@@ -27,6 +27,8 @@ extern int ex_timer_running;
 
 static void __threaded_timer_tick () {
     // TODO:
+    // you should use list timer.
+    // you should remove timer at the end of the tick.
 }
 
 // ------------------------------------------------------------------ 
