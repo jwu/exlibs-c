@@ -99,8 +99,8 @@ extern void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_pool_len ( ex_pool_t* _pool ) { return _pool->_length; }
-static inline size_t ex_pool_capacity ( ex_pool_t* _pool ) { return _pool->_capacity; }
+static inline size_t ex_pool_len ( const ex_pool_t* _pool ) { return _pool->_length; }
+static inline size_t ex_pool_capacity ( const ex_pool_t* _pool ) { return _pool->_capacity; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -130,29 +130,31 @@ static inline int ex_pool_insert_wstring ( ex_pool_t* _pool, wchar_t* _value ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void* ex_pool_get ( ex_pool_t* _pool, int _idx );
+extern void* ex_pool_get ( const ex_pool_t* _pool, int _idx );
 
-static inline int8 ex_pool_get_int8 ( ex_pool_t* _pool, int _idx ) { return *((int8*)ex_pool_get ( _pool, _idx )); }
-static inline int16 ex_pool_get_int16 ( ex_pool_t* _pool, int _idx ) { return *((int16*)ex_pool_get ( _pool, _idx )); }
-static inline int32 ex_pool_get_int32 ( ex_pool_t* _pool, int _idx ) { return *((int32*)ex_pool_get ( _pool, _idx )); }
-static inline int64 ex_pool_get_int64 ( ex_pool_t* _pool, int _idx ) { return *((int64*)ex_pool_get ( _pool, _idx )); }
+static inline int8 ex_pool_get_int8 ( const ex_pool_t* _pool, int _idx ) { return *((int8*)ex_pool_get ( _pool, _idx )); }
+static inline int16 ex_pool_get_int16 ( const ex_pool_t* _pool, int _idx ) { return *((int16*)ex_pool_get ( _pool, _idx )); }
+static inline int32 ex_pool_get_int32 ( const ex_pool_t* _pool, int _idx ) { return *((int32*)ex_pool_get ( _pool, _idx )); }
+static inline int64 ex_pool_get_int64 ( const ex_pool_t* _pool, int _idx ) { return *((int64*)ex_pool_get ( _pool, _idx )); }
 
-static inline uint8 ex_pool_get_uint8 ( ex_pool_t* _pool, int _idx ) { return *((uint8*)(ex_pool_get ( _pool, _idx ))); }
-static inline uint16 ex_pool_get_uint16 ( ex_pool_t* _pool, int _idx ) { return *((uint16*)ex_pool_get ( _pool, _idx )); }
-static inline uint32 ex_pool_get_uint32 ( ex_pool_t* _pool, int _idx ) { return *((uint32*)ex_pool_get ( _pool, _idx )); }
-static inline uint64 ex_pool_get_uint64 ( ex_pool_t* _pool, int _idx ) { return *((uint64*)ex_pool_get ( _pool, _idx )); }
+static inline uint8 ex_pool_get_uint8 ( const ex_pool_t* _pool, int _idx ) { return *((uint8*)(ex_pool_get ( _pool, _idx ))); }
+static inline uint16 ex_pool_get_uint16 ( const ex_pool_t* _pool, int _idx ) { return *((uint16*)ex_pool_get ( _pool, _idx )); }
+static inline uint32 ex_pool_get_uint32 ( const ex_pool_t* _pool, int _idx ) { return *((uint32*)ex_pool_get ( _pool, _idx )); }
+static inline uint64 ex_pool_get_uint64 ( const ex_pool_t* _pool, int _idx ) { return *((uint64*)ex_pool_get ( _pool, _idx )); }
 
-static inline float ex_pool_get_float ( ex_pool_t* _pool, int _idx ) { return *((float*)ex_pool_get ( _pool, _idx )); }
-static inline double ex_pool_get_double ( ex_pool_t* _pool, int _idx ) { return *((double*)ex_pool_get ( _pool, _idx )); }
+static inline float ex_pool_get_float ( const ex_pool_t* _pool, int _idx ) { return *((float*)ex_pool_get ( _pool, _idx )); }
+static inline double ex_pool_get_double ( const ex_pool_t* _pool, int _idx ) { return *((double*)ex_pool_get ( _pool, _idx )); }
 
-static inline char* ex_pool_get_string ( ex_pool_t* _pool, int _idx ) { return *((char**)ex_pool_get ( _pool, _idx )); }
-static inline wchar_t* ex_pool_get_wstring ( ex_pool_t* _pool, int _idx ) { return *((wchar_t**)ex_pool_get ( _pool, _idx )); }
+static inline char* ex_pool_get_string ( const ex_pool_t* _pool, int _idx ) { return *((char**)ex_pool_get ( _pool, _idx )); }
+static inline wchar_t* ex_pool_get_wstring ( const ex_pool_t* _pool, int _idx ) { return *((wchar_t**)ex_pool_get ( _pool, _idx )); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern bool ex_pool_isvalid ( const ex_pool_t* _pool, int _idx );
 extern void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx );
+extern void* ex_pool_remove_at_safe ( ex_pool_t* _pool, int _idx );
 
 // ######################### 
 #ifdef __cplusplus

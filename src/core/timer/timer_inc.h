@@ -10,11 +10,10 @@
 #define TIMER_INC_H_1293526049
 // #################################################################################
 
-#include "timer.h"
 #include "timespan.h"
-#include "daytime.h"
+#include "dtime.h"
 #include "date.h"
-#include "daytime.h"
+#include "timer.h"
 
 // #################################################################################
 #endif // END TIMER_INC_H_1293526049

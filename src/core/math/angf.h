@@ -95,28 +95,28 @@ static inline void ex_angf_set_by_degrees ( ex_angf_t* _a, float _degrees ) {
 
 // ------------------------------------------------------------------ 
 /*!
- @fn static inline float ex_angf_to_degrees_180 ( ex_angf_t* _a ) 
+ @fn static inline float ex_angf_to_degrees_180 ( const ex_angf_t* _a ) 
  @param _a the in angle
  @return the result degrees
  @details
  convert angle to degrees in [-180,180]
 */// ------------------------------------------------------------------ 
 
-static inline float ex_angf_to_degrees_180 ( ex_angf_t* _a ) {
+static inline float ex_angf_to_degrees_180 ( const ex_angf_t* _a ) {
     float degrees = ex_rad2deg_f(_a->rad);
     return _a->rad >= (float)EX_PI ? degrees - 360.0f : degrees;
 }
 
 // ------------------------------------------------------------------ 
 /*!
- @fn static inline float ex_angf_to_degrees_360 ( ex_angf_t* _a ) 
+ @fn static inline float ex_angf_to_degrees_360 ( const ex_angf_t* _a ) 
  @param _a the in angle
  @return the result degrees
  @details
  convert angle to degrees in [0,360]
 */// ------------------------------------------------------------------ 
 
-static inline float ex_angf_to_degrees_360 ( ex_angf_t* _a ) { 
+static inline float ex_angf_to_degrees_360 ( const ex_angf_t* _a ) { 
     return ex_rad2deg_f(_a->rad);
 } 
 
@@ -135,105 +135,105 @@ static inline void ex_angf_neg ( ex_angf_t* _a ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_get_neg ( ex_angf_t* _r, ex_angf_t* _a )
+ @fn static inline void ex_angf_get_neg ( ex_angf_t* _r, const ex_angf_t* _a )
  @retval _r the result angle
  @param _v the in angle
  @details get the negtive value from angle _a, set and return it to angle _r
  @sa ex_angf_neg
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_get_neg ( ex_angf_t* _r, ex_angf_t* _a ) { 
+static inline void ex_angf_get_neg ( ex_angf_t* _r, const ex_angf_t* _a ) { 
     ex_angf_set_by_radians_nosafe( _r, (float)EX_TWO_PI - _a->rad );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_mul ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs )
+ @fn static inline void ex_angf_mul ( ex_angf_t* _r, const ex_angf_t* _lhs, const ex_angf_t* _rhs )
  @retval _r the result angle
  @param _lhs left hand side angle 
  @param _rhs right hand side angle 
  @details multiply two angles
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_mul ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs ) { 
+static inline void ex_angf_mul ( ex_angf_t* _r, const ex_angf_t* _lhs, const ex_angf_t* _rhs ) { 
     ex_angf_set_by_radians( _r, _lhs->rad * _rhs->rad );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_mul_scalar ( ex_angf_t* _r, ex_angf_t* _lhs, float _scalar )
+ @fn static inline void ex_angf_mul_scalar ( ex_angf_t* _r, const ex_angf_t* _lhs, float _scalar )
  @retval _r the result angle
  @param _lhs left hand side angle 
  @param _rhs right hand scalar
  @details multiply angle with scalar
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_mul_scalar ( ex_angf_t* _r, ex_angf_t* _lhs, float _scalar ) { 
+static inline void ex_angf_mul_scalar ( ex_angf_t* _r, const ex_angf_t* _lhs, float _scalar ) { 
     ex_angf_set_by_radians( _r, _lhs->rad * _scalar );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_div ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs )
+ @fn static inline void ex_angf_div ( ex_angf_t* _r, const ex_angf_t* _lhs, ex_angf_t* _rhs )
  @retval _r the result angle
  @param _lhs left hand side angle 
  @param _rhs right hand side angle 
  @details divide two angles
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_div ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs ) { 
+static inline void ex_angf_div ( ex_angf_t* _r, const ex_angf_t* _lhs, ex_angf_t* _rhs ) { 
     ex_angf_set_by_radians( _r, _lhs->rad / _rhs->rad );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_div_scalar ( ex_angf_t* _r, ex_angf_t* _lhs, float _scalar )
+ @fn static inline void ex_angf_div_scalar ( ex_angf_t* _r, const ex_angf_t* _lhs, float _scalar )
  @retval _r the result angle
  @param _lhs left hand side angle 
  @param _rhs right hand scalar
  @details divide angle with scalar
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_div_scalar ( ex_angf_t* _r, ex_angf_t* _lhs, float _scalar ) { 
+static inline void ex_angf_div_scalar ( ex_angf_t* _r, const ex_angf_t* _lhs, float _scalar ) { 
     ex_angf_set_by_radians( _r, _lhs->rad / _scalar );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_add ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs )
+ @fn static inline void ex_angf_add ( ex_angf_t* _r, const ex_angf_t* _lhs, const ex_angf_t* _rhs )
  @retval _r the result angle
  @param _lhs left hand side angle 
  @param _rhs right hand side angle
  @details add two angles
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_add ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs ) { 
+static inline void ex_angf_add ( ex_angf_t* _r, const ex_angf_t* _lhs, const ex_angf_t* _rhs ) { 
     ex_angf_set_by_radians( _r, _lhs->rad + _rhs->rad );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_angf_sub ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs )
+ @fn static inline void ex_angf_sub ( ex_angf_t* _r, const ex_angf_t* _lhs, const ex_angf_t* _rhs )
  @retval _r the result angle
  @param _lhs left hand side angle 
  @param _rhs right hand side angle
  @details sub two angles
 */// ------------------------------------------------------------------ 
 
-static inline void ex_angf_sub ( ex_angf_t* _r, ex_angf_t* _lhs, ex_angf_t* _rhs ) { 
+static inline void ex_angf_sub ( ex_angf_t* _r, const ex_angf_t* _lhs, const ex_angf_t* _rhs ) { 
     ex_angf_set_by_radians( _r, _lhs->rad - _rhs->rad );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline bool ex_angf_is_equal ( ex_angf_t* _lhs, ex_angf_t* _rhs )
+ @fn static inline bool ex_angf_is_equal ( const ex_angf_t* _lhs, const ex_angf_t* _rhs )
  @param _lhs the left hand side angle
  @param _rhs the right hand side angle
  @return the result of the comparation
  @details compare if the two angles is equal to each other
 */// ------------------------------------------------------------------ 
 
-static inline bool ex_angf_is_equal ( ex_angf_t* _lhs, ex_angf_t* _rhs ) { 
+static inline bool ex_angf_is_equal ( const ex_angf_t* _lhs, const ex_angf_t* _rhs ) { 
     return ex_is_equalf(_lhs->rad,_rhs->rad,EX_FLOAT_EPS);
 }
 

@@ -18,19 +18,19 @@
 // fwd-decls
 ///////////////////////////////////////////////////////////////////////////////
 
-static inline uint32 __hash_index ( ex_hashmap_t* _hashmap, const void* _key ) {
+static inline uint32 __hash_index ( const ex_hashmap_t* _hashmap, const void* _key ) {
     return _hashmap->_hashkey(_key) & ( _hashmap->_hashsize - 1 );
 }
 
-static inline ex_hashmap_node_t* __getnode ( ex_hashmap_t* _hashmap, size_t _idx ) {
+static inline ex_hashmap_node_t* __getnode ( const ex_hashmap_t* _hashmap, size_t _idx ) {
     return (ex_hashmap_node_t*)ex_pool_get(_hashmap->_nodes,_idx);
 }
 
-static inline void* __getkey ( ex_hashmap_t* _hashmap, size_t _idx ) {
+static inline void* __getkey ( const ex_hashmap_t* _hashmap, size_t _idx ) {
     return (char*)_hashmap->_keys + _idx * _hashmap->_key_bytes;
 }
 
-static inline void* __getvalue ( ex_hashmap_t* _hashmap, size_t _idx ) {
+static inline void* __getvalue ( const ex_hashmap_t* _hashmap, size_t _idx ) {
     return (char*)_hashmap->_values + _idx * _hashmap->_value_bytes;
 }
 
@@ -230,7 +230,7 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, con
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
+void* ex_hashmap_get ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
@@ -254,7 +254,7 @@ void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
+size_t ex_hashmap_get_hashidx ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 

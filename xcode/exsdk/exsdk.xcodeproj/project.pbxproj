@@ -19,6 +19,12 @@
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
 		B245485112B920D200EF7261 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
+		B261C0E712CD637B0018BCDA /* date.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C0E112CD637B0018BCDA /* date.c */; };
+		B261C0E812CD637B0018BCDA /* date.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C0E212CD637B0018BCDA /* date.h */; };
+		B261C0EB12CD637B0018BCDA /* timespan.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C0E512CD637B0018BCDA /* timespan.c */; };
+		B261C0EC12CD637B0018BCDA /* timespan.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C0E612CD637B0018BCDA /* timespan.h */; };
+		B261C13512CDACAF0018BCDA /* dtime.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C13312CDACAF0018BCDA /* dtime.c */; };
+		B261C13612CDACAF0018BCDA /* dtime.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C13412CDACAF0018BCDA /* dtime.h */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
 		B2DD23FF12A7C86E0053CA3F /* test_array.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F312A7C86E0053CA3F /* test_array.c */; };
 		B2DD240012A7C86E0053CA3F /* test_bitarry.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F412A7C86E0053CA3F /* test_bitarry.c */; };
@@ -167,6 +173,12 @@
 		B245482F12B91EF300EF7261 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		B261C0E112CD637B0018BCDA /* date.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = date.c; sourceTree = "<group>"; };
+		B261C0E212CD637B0018BCDA /* date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = date.h; sourceTree = "<group>"; };
+		B261C0E512CD637B0018BCDA /* timespan.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timespan.c; sourceTree = "<group>"; };
+		B261C0E612CD637B0018BCDA /* timespan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timespan.h; sourceTree = "<group>"; };
+		B261C13312CDACAF0018BCDA /* dtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtime.c; sourceTree = "<group>"; };
+		B261C13412CDACAF0018BCDA /* dtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtime.h; sourceTree = "<group>"; };
 		B2DD23EA12A7C7CE0053CA3F /* test.base */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test.base; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD23F212A7C86E0053CA3F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2DD23F312A7C86E0053CA3F /* test_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_array.c; sourceTree = "<group>"; };
@@ -644,6 +656,12 @@
 		B2E2690812C9DB8700833568 /* timer */ = {
 			isa = PBXGroup;
 			children = (
+				B261C13312CDACAF0018BCDA /* dtime.c */,
+				B261C13412CDACAF0018BCDA /* dtime.h */,
+				B261C0E112CD637B0018BCDA /* date.c */,
+				B261C0E212CD637B0018BCDA /* date.h */,
+				B261C0E512CD637B0018BCDA /* timespan.c */,
+				B261C0E612CD637B0018BCDA /* timespan.h */,
 				B23B2D2B12CAF7140011E237 /* timer_mac.c */,
 				B23B2D2C12CAF7140011E237 /* timer.c */,
 				B2E2690912C9DB8700833568 /* timer.h */,
@@ -734,6 +752,9 @@
 				B2E2690C12C9DB8700833568 /* timer_inc.h in Headers */,
 				B2E2692012C9DC3100833568 /* semaphore.h in Headers */,
 				B2E269BB12C9FA5900833568 /* cond.h in Headers */,
+				B261C0E812CD637B0018BCDA /* date.h in Headers */,
+				B261C0EC12CD637B0018BCDA /* timespan.h in Headers */,
+				B261C13612CDACAF0018BCDA /* dtime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,6 +924,9 @@
 				B2E269BA12C9FA5900833568 /* cond_mac.c in Sources */,
 				B23B2D2D12CAF7140011E237 /* timer_mac.c in Sources */,
 				B23B2D2E12CAF7140011E237 /* timer.c in Sources */,
+				B261C0E712CD637B0018BCDA /* date.c in Sources */,
+				B261C0EB12CD637B0018BCDA /* timespan.c in Sources */,
+				B261C13512CDACAF0018BCDA /* dtime.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

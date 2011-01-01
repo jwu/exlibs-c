@@ -22,7 +22,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs ) {
+void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, const ex_mat33f_t* _lhs, const ex_vec3f_t* _rhs ) {
     float x, y, z;
     ex_vec3f_t tmp;
 
@@ -40,7 +40,7 @@ void ex_mat33f_mul_vec3f ( ex_vec3f_t* _r, ex_mat33f_t* _lhs, ex_vec3f_t* _rhs )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, ex_vec3f_t* _lhs, ex_mat33f_t* _rhs ) {
+void ex_vec3f_mul_mat33f ( ex_vec3f_t* _r, const ex_vec3f_t* _lhs, const ex_mat33f_t* _rhs ) {
     float x, y, z;
     ex_vec3f_t tmp;
 
@@ -89,7 +89,7 @@ bool ex_mat33f_inverse ( ex_mat33f_t* _m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, ex_mat33f_t* _m ) {
+bool ex_mat33f_get_inverse ( ex_mat33f_t* _r, const ex_mat33f_t* _m ) {
     float det, inv;
 
     _r->m00 = _m->m11 * _m->m22 - _m->m12 * _m->m21;

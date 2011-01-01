@@ -83,9 +83,9 @@ extern ex_list_node_t* ex_list_remove_at_nomng ( ex_list_t* _list, ex_list_node_
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_list_len ( ex_list_t* _list ) { return _list->_length; }
-static inline ex_list_node_t* ex_list_head ( ex_list_t* _list ) { return _list->_head; }
-static inline ex_list_node_t* ex_list_tail ( ex_list_t* _list ) { return _list->_tail; }
+static inline size_t ex_list_len ( const ex_list_t* _list ) { return _list->_length; }
+static inline ex_list_node_t* ex_list_head ( const ex_list_t* _list ) { return _list->_head; }
+static inline ex_list_node_t* ex_list_tail ( const ex_list_t* _list ) { return _list->_tail; }
 
 // ######################### 
 #ifdef __cplusplus

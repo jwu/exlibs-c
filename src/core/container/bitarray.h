@@ -51,7 +51,7 @@ extern void ex_bitarray_free_nomng ( ex_bitarray_t* _bitarray );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_bitarray_get ( ex_bitarray_t* _bitarray, size_t _idx );
+extern int ex_bitarray_get ( const ex_bitarray_t* _bitarray, size_t _idx );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -70,7 +70,7 @@ extern void ex_bitarray_resize_nomng ( ex_bitarray_t* _bitarray, size_t _bitcoun
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_bitarray_len ( ex_bitarray_t* _bitarray ) { return _bitarray->_length; } 
+static inline size_t ex_bitarray_len ( const ex_bitarray_t* _bitarray ) { return _bitarray->_length; } 
 
 // ######################### 
 #ifdef __cplusplus

@@ -75,7 +75,7 @@ void ex_bitarray_free_nomng ( ex_bitarray_t* _bitarray )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_bitarray_get ( ex_bitarray_t* _bitarray, size_t _idx )
+int ex_bitarray_get ( const ex_bitarray_t* _bitarray, size_t _idx )
 {
     char* ptr;
 

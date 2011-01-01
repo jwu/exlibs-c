@@ -140,7 +140,7 @@ extern void ex_array_free_nomng ( ex_array_t* _array );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void* ex_array_get ( ex_array_t* _array, size_t _idx )
+ @fn void* ex_array_get ( const ex_array_t* _array, size_t _idx )
  @param _array the in array.
  @param _idx the element index
  @return get the element pointer address
@@ -162,7 +162,7 @@ extern void ex_array_free_nomng ( ex_array_t* _array );
  @note you must cast the type of the element by yourself.
 */// ------------------------------------------------------------------ 
 
-extern void* ex_array_get ( ex_array_t* _array, size_t _idx );
+extern void* ex_array_get ( const ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -171,7 +171,7 @@ extern void* ex_array_get ( ex_array_t* _array, size_t _idx );
  @details get the array element count.
 */// ------------------------------------------------------------------ 
 
-static inline size_t ex_array_len ( ex_array_t* _array ) { return _array->_length; } 
+static inline size_t ex_array_len ( const ex_array_t* _array ) { return _array->_length; } 
 
 // ------------------------------------------------------------------ 
 /*! 

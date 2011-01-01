@@ -143,7 +143,7 @@ static inline float ex_mat22f_get ( ex_mat22f_t* _m, uint _row, uint _col ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_row ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _row )
+ @fn static inline void ex_mat22f_row ( ex_vec2f_t* _r, const ex_mat22f_t* _m, uint _row )
  @retval _r the result vector
  @param _m the matrix
  @param _row the row index, range in [0,2)
@@ -157,7 +157,7 @@ static inline float ex_mat22f_get ( ex_mat22f_t* _m, uint _row, uint _col ) {
  the r is equal to vector2 (m.m00, m.m01) 
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_row ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _row ) {
+static inline void ex_mat22f_row ( ex_vec2f_t* _r, const ex_mat22f_t* _m, uint _row ) {
     ex_assert( _row >= 0 && _row < 2, "out of range" );
     _r->x = _m->m[2*_row+0]; 
     _r->y = _m->m[2*_row+1]; 
@@ -165,7 +165,7 @@ static inline void ex_mat22f_row ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _row ) 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_col ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _col )
+ @fn static inline void ex_mat22f_col ( ex_vec2f_t* _r, const ex_mat22f_t* _m, uint _col )
  @retval _r the result vector
  @param _m the matrix
  @param _col the column index, range in [0,2)
@@ -179,7 +179,7 @@ static inline void ex_mat22f_row ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _row ) 
  the r is equal to vector2 (m.m00, m.m10) 
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_col ( ex_vec2f_t* _r, ex_mat22f_t* _m, uint _col ) {
+static inline void ex_mat22f_col ( ex_vec2f_t* _r, const ex_mat22f_t* _m, uint _col ) {
     ex_assert( _col >= 0 && _col < 2, "out of range" );
     _r->x = _m->m[2*0+_col]; 
     _r->y = _m->m[2*1+_col]; 
@@ -215,14 +215,14 @@ static inline void ex_mat22f_neg ( ex_mat22f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_get_neg ( ex_mat22f_t* _r, ex_mat22f_t* _m )
+ @fn static inline void ex_mat22f_get_neg ( ex_mat22f_t* _r, const ex_mat22f_t* _m )
  @retval _r the result matrix
  @param _m in matrix
  @details get the negtive value from matrix _m and set it in matrix _r as the result:
  @sa ex_mat22f_neg
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_get_neg ( ex_mat22f_t* _r, ex_mat22f_t* _m ) {
+static inline void ex_mat22f_get_neg ( ex_mat22f_t* _r, const ex_mat22f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = -_m->m00, _r->m01 = -_m->m01; 
     _r->m10 = -_m->m10, _r->m11 = -_m->m11; 
@@ -258,14 +258,14 @@ static inline void ex_mat22f_abs ( ex_mat22f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_get_abs ( ex_mat22f_t* _r, ex_mat22f_t* _m )
+ @fn static inline void ex_mat22f_get_abs ( ex_mat22f_t* _r, const ex_mat22f_t* _m )
  @retval _r the result matrix
  @param _m in matrix
  @details get the absolute value from matrix _m and set it in matrix _r as the result:
  @sa ex_mat22f_abs
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_get_abs ( ex_mat22f_t* _r, ex_mat22f_t* _m ) {
+static inline void ex_mat22f_get_abs ( ex_mat22f_t* _r, const ex_mat22f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = fabsf(_m->m00), _r->m01 = fabsf(_m->m01); 
     _r->m10 = fabsf(_m->m10), _r->m11 = fabsf(_m->m11); 
@@ -273,7 +273,7 @@ static inline void ex_mat22f_get_abs ( ex_mat22f_t* _r, ex_mat22f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_add ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f_t* _rhs )
+ @fn static inline void ex_mat22f_add ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, const ex_mat22f_t* _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side matrix 
@@ -296,14 +296,14 @@ static inline void ex_mat22f_get_abs ( ex_mat22f_t* _r, ex_mat22f_t* _m ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_add ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f_t* _rhs ) {
+static inline void ex_mat22f_add ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, const ex_mat22f_t* _rhs ) {
     _r->m00 = _lhs->m00 + _rhs->m00; _r->m01 = _lhs->m01 + _rhs->m01;
     _r->m10 = _lhs->m10 + _rhs->m10; _r->m11 = _lhs->m11 + _rhs->m11;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_sub ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f_t* _rhs )
+ @fn static inline void ex_mat22f_sub ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, const ex_mat22f_t* _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side matrix 
@@ -326,14 +326,14 @@ static inline void ex_mat22f_add ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_sub ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f_t* _rhs ) {
+static inline void ex_mat22f_sub ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, const ex_mat22f_t* _rhs ) {
     _r->m00 = _lhs->m00 - _rhs->m00; _r->m01 = _lhs->m01 - _rhs->m01;
     _r->m10 = _lhs->m10 - _rhs->m10; _r->m11 = _lhs->m11 - _rhs->m11;
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_mul ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f_t* _rhs )
+ @fn static inline void ex_mat22f_mul ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, const ex_mat22f_t* _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side matrix 
@@ -356,7 +356,7 @@ static inline void ex_mat22f_sub ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_mul ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f_t* _rhs ) {
+static inline void ex_mat22f_mul ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, const ex_mat22f_t* _rhs ) {
     float m00, m01, m10, m11;
 
     m00 = _lhs->m00 * _rhs->m00 + _lhs->m01 * _rhs->m10;
@@ -371,7 +371,7 @@ static inline void ex_mat22f_mul ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, float _rhs )
+ @fn static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, float _rhs )
  @retval _r the result matrix
  @param _lhs left hand side matrix 
  @param _rhs right hand side scalar 
@@ -391,7 +391,7 @@ static inline void ex_mat22f_mul ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, ex_mat22f
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, float _rhs ) {
+static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, float _rhs ) {
     _r->m00 = _lhs->m00 * _rhs;
     _r->m01 = _lhs->m01 * _rhs;
     _r->m10 = _lhs->m10 * _rhs;
@@ -400,7 +400,7 @@ static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, fl
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs )
+ @fn void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, const ex_mat22f_t* _lhs, const ex_vec2f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix 
  @param _rhs right hand side vector 
@@ -420,11 +420,11 @@ static inline void ex_mat22f_mul_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, fl
  @sa ex_vec2f_mul_mat22f
 */// ------------------------------------------------------------------ 
 
-extern void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs );
+extern void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, const ex_mat22f_t* _lhs, const ex_vec2f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs )
+ @fn void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, const ex_vec2f_t* _lhs, const ex_mat22f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side vector
  @param _rhs right hand side matrix  
@@ -443,11 +443,11 @@ extern void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t*
  @sa ex_mat22f_mul_vec2f
 */// ------------------------------------------------------------------ 
 
-extern void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs );
+extern void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, const ex_vec2f_t* _lhs, const ex_mat22f_t* _rhs );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_scalar_div_mat22f ( ex_mat22f_t* _r, float _lhs, ex_mat22f_t* _rhs )
+ @fn static inline void ex_scalar_div_mat22f ( ex_mat22f_t* _r, float _lhs, const ex_mat22f_t* _rhs )
  @retval _r the result vector
  @param _lhs left hand side float
  @param _rhs right hand side matrix  
@@ -468,7 +468,7 @@ extern void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t*
  @sa ex_mat22f_div_scalar
 */// ------------------------------------------------------------------ 
 
-static inline void ex_scalar_div_mat22f ( ex_mat22f_t* _r, float _lhs, ex_mat22f_t* _rhs ) {
+static inline void ex_scalar_div_mat22f ( ex_mat22f_t* _r, float _lhs, const ex_mat22f_t* _rhs ) {
     _r->m00 = _lhs / _rhs->m00;
     _r->m01 = _lhs / _rhs->m01;
     _r->m10 = _lhs / _rhs->m10;
@@ -477,7 +477,7 @@ static inline void ex_scalar_div_mat22f ( ex_mat22f_t* _r, float _lhs, ex_mat22f
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_div_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, float _rhs )
+ @fn static inline void ex_mat22f_div_scalar ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, float _rhs )
  @retval _r the result vector
  @param _lhs left hand side matrix  
  @param _rhs right hand side float
@@ -498,7 +498,7 @@ static inline void ex_scalar_div_mat22f ( ex_mat22f_t* _r, float _lhs, ex_mat22f
  @sa ex_scalar_div_mat22f
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_div_scalar ( ex_mat22f_t* _r, ex_mat22f_t* _lhs, float _rhs ) {
+static inline void ex_mat22f_div_scalar ( ex_mat22f_t* _r, const ex_mat22f_t* _lhs, float _rhs ) {
     _r->m00 = _lhs->m00 / _rhs;
     _r->m01 = _lhs->m01 / _rhs;
     _r->m10 = _lhs->m10 / _rhs;
@@ -536,14 +536,14 @@ static inline void ex_mat22f_transpose ( ex_mat22f_t* _m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_get_transpose ( ex_mat22f_t* _r, ex_mat22f_t* _m )
+ @fn static inline void ex_mat22f_get_transpose ( ex_mat22f_t* _r, const ex_mat22f_t* _m )
  @retval _r the result vector
  @param _m the in matrix
  @details get the transposed matrix from matrix _m, return it to matrix _r
  @sa ex_mat22f_transpose
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat22f_get_transpose ( ex_mat22f_t* _r, ex_mat22f_t* _m ) {
+static inline void ex_mat22f_get_transpose ( ex_mat22f_t* _r, const ex_mat22f_t* _m ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = _m->m00, _r->m01 = _m->m10;
     _r->m10 = _m->m01, _r->m11 = _m->m11;
@@ -565,7 +565,7 @@ extern bool ex_mat22f_inverse ( ex_mat22f_t* _m );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, ex_mat22f_t* _m )
+ @fn bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, const ex_mat22f_t* _m )
  @retval _r the result vector
  @param _m the in matrix
  @return if the inverse operation successed 
@@ -575,7 +575,7 @@ extern bool ex_mat22f_inverse ( ex_mat22f_t* _m );
  @sa ex_mat22f_inverse
 */// ------------------------------------------------------------------ 
 
-extern bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, ex_mat22f_t* _m );
+extern bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, const ex_mat22f_t* _m );
 
 //! @}
 

@@ -137,7 +137,7 @@ static inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
 // ------------------------------------------------------------------ 
 
 #define ex_classof(_type,_objPtr) __ex_classof((ex_class_t*)_objPtr,EX_RTTI(_type))
-static inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_classof ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
     return ex_rtti_classof( _obj->_rtti, _rtti );
 }
 
@@ -146,7 +146,7 @@ static inline bool __ex_classof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_childof(_type,_objPtr) __ex_childof((ex_class_t*)_objPtr,EX_RTTI(_type))
-static inline bool __ex_childof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_childof ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
     return ex_rtti_childof( _obj->_rtti, _rtti );
 }
 
@@ -155,7 +155,7 @@ static inline bool __ex_childof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_superof(_type,_objPtr) __ex_superof((ex_class_t*)_objPtr,EX_RTTI(_type))
-static inline bool __ex_superof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_superof ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
     return ex_rtti_superof( _obj->_rtti, _rtti );
 }
 
@@ -164,7 +164,7 @@ static inline bool __ex_superof ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_isa(_type,_objPtr) __ex_isa((ex_class_t*)_objPtr,EX_RTTI(_type))
-static inline bool __ex_isa ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+static inline bool __ex_isa ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
     return ex_rtti_isa( _obj->_rtti, _rtti );
 }
 
@@ -173,7 +173,7 @@ static inline bool __ex_isa ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
 // ------------------------------------------------------------------ 
 
 #define ex_as(_type,_objPtr) (_type*)__ex_as((ex_class_t*)_objPtr,EX_RTTI(_type))
-void* __ex_as ( ex_class_t* _obj, ex_rtti_t* _rtti );
+void* __ex_as ( ex_class_t* _obj, const ex_rtti_t* _rtti );
 
 // ######################### 
 #ifdef __cplusplus

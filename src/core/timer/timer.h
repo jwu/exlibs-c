@@ -16,12 +16,20 @@ extern "C" {
 #endif
 // ######################### 
 
+#define EX_TIMER_STATE_RUNNING   1
+#define EX_TIMER_STATE_PAUSED    2
+#define EX_TIMER_STATE_STOPPED   3
+#define EX_TIMER_STATE_RESET     4
+
+typedef uint32 (*ex_timer_pfn) ( uint32 _interval, void* _param );
+
 ///////////////////////////////////////////////////////////////////////////////
 // decls
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// returns usecs since the process start up.
 // ------------------------------------------------------------------ 
 
 static inline uint64 ex_cpu_cycle() {
@@ -36,7 +44,7 @@ static inline uint64 ex_cpu_cycle() {
 #else // unix-like sys (mac, apple, linux)
     struct timeval now;
     gettimeofday(&now, NULL);
-    return now.tv_sec * 1000 + now.tv_usec/1000;
+    return now.tv_sec * 1000 * 1000 + now.tv_usec;
 #endif
 }
 
@@ -87,6 +95,23 @@ static inline void ex_sleep ( uint32 _ms ) {
 
 extern bool ex_timer_init ();
 extern void ex_timer_deinit ();
+extern void ex_timer_pause ();
+extern void ex_timer_resume ();
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern int ex_add_timer ( ex_timer_pfn _cb, void* _params, size_t _size, 
+                          timespan_t _interval,
+                          timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ );
+extern bool ex_remove_timer ( int _id );
+
+extern void ex_start_timer ( int _id );
+extern void ex_stop_timer ( int _id );
+extern void ex_pause_timer ( int _id );
+extern void ex_resume_timer ( int _id );
+extern void ex_reset_timer ( int _id );
 
 // ######################### 
 #ifdef __cplusplus

@@ -14,13 +14,12 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-typedef struct ex_date_t {
-    uint _julian;
-} ex_date_t;
+// NOTE: you can directly compare date_t 
+//       you can add/sub days directly in date_t
+//       you can sub two date_t which will get days between them
+//       you can't add two date_t
+typedef uint date_t; // we use julian date
+#define EX_DATE_INVALID -1
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -34,109 +33,25 @@ const char* ex_month_name ( uint _month );
 // ------------------------------------------------------------------ 
 
 extern bool ex_is_valid_date ( uint _year, uint _month, uint _day );
+
+// NOTE: to check date_t is leap, just use: ex_is_leap_year( ex_date_year(_date) )   
 extern bool ex_is_leap_year ( uint _year );
-extern void ex_greg2jul ( uint* _out_jul, int _year, int _month, int _day );
-extern void ex_jul2greg ( int* _out_year, int* _out_month, int* _out_day, uint _jul );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_date_set ( ex_date_t* _date, uint _year, uint _month, uint _day );
+extern date_t ex_date_from ( uint _year, uint _month, uint _day );
+// NOTE: if you don't need the out parameter, set it to NULL 
+extern void ex_date_to ( date_t _date, int* _year, int* _month, int* _day );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_date_day ( const ex_date_t* _date );
-extern void ex_date_month ( const ex_date_t* _date );
-extern void ex_date_year ( const ex_date_t* _date );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern uint ex_date_day_of_week ( const ex_date_t* _date );
-extern uint ex_date_day_of_year ( const ex_date_t* _date );
-extern uint ex_date_days_in_month ( const ex_date_t* _date );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern bool ex_date_is_leap_year ( const ex_date_t* _date );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline bool ex_date_eq ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian == _rhs->_julian;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline bool ex_date_ne ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian != _rhs->_julian;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline bool ex_date_gt ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian > _rhs->_julian;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline bool ex_date_ge ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian >= _rhs->_julian;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline bool ex_date_lt ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian < _rhs->_julian;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline bool ex_date_le ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian <= _rhs->_julian;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline void ex_date_add_days ( ex_date_t* _result, const ex_date_t* _date, int _days ) {
-    _result->_julian = _date->_julian + _days;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline void ex_date_sub_days ( ex_date_t* _result, const ex_date_t* _date, int _days ) {
-    _result->_julian = _date->_julian - _days;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static inline int ex_date_sub_days ( const ex_date_t* _lhs, const ex_date_t* _rhs ) {
-    return _lhs->_julian - _rhs->_julian;
-}
+extern uint ex_date_day_of_week ( date_t _date );
+extern uint ex_date_day_of_year ( date_t _date );
+extern uint ex_date_days_in_month ( date_t _date );
 
 // #################################################################################
 #endif // END DATE_H_1293711048

@@ -22,7 +22,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs ) {
+void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, const ex_mat22f_t* _lhs, const ex_vec2f_t* _rhs ) {
     float x, y;
     ex_vec2f_t tmp;
 
@@ -38,7 +38,7 @@ void ex_mat22f_mul_vec2f ( ex_vec2f_t* _r, ex_mat22f_t* _lhs, ex_vec2f_t* _rhs )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, ex_vec2f_t* _lhs, ex_mat22f_t* _rhs ) {
+void ex_vec2f_mul_mat22f ( ex_vec2f_t* _r, const ex_vec2f_t* _lhs, const ex_mat22f_t* _rhs ) {
     float x, y;
     ex_vec2f_t tmp;
 
@@ -78,7 +78,7 @@ bool ex_mat22f_inverse ( ex_mat22f_t* _m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, ex_mat22f_t* _m ) {
+bool ex_mat22f_get_inverse ( ex_mat22f_t* _r, const ex_mat22f_t* _m ) {
     float det, inv;
 
     ex_assert ( _r != _m, "can't use self as return value." );

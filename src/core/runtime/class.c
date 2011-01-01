@@ -21,7 +21,7 @@ ex_rtti_t* __RTTI_ex_class_t__ = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* __ex_as ( ex_class_t* _obj, ex_rtti_t* _rtti ) {
+void* __ex_as ( ex_class_t* _obj, const ex_rtti_t* _rtti ) {
     if ( ex_rtti_isa ( _obj->_rtti, _rtti ) )
         return _obj;
     return NULL;

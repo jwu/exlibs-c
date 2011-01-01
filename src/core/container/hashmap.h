@@ -112,8 +112,8 @@ extern void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _k
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void* ex_hashmap_get ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
-extern size_t ex_hashmap_get_hashidx ( ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
+extern void* ex_hashmap_get ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
+extern size_t ex_hashmap_get_hashidx ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _index );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -135,8 +135,8 @@ extern void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_hashmap_len ( ex_hashmap_t* _hashmap ) { return ex_pool_len(_hashmap->_nodes); }
-static inline size_t ex_hashmap_capacity ( ex_hashmap_t* _hashmap ) { return _hashmap->_capacity; }
+static inline size_t ex_hashmap_len ( const ex_hashmap_t* _hashmap ) { return ex_pool_len(_hashmap->_nodes); }
+static inline size_t ex_hashmap_capacity ( const ex_hashmap_t* _hashmap ) { return _hashmap->_capacity; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // useful callback

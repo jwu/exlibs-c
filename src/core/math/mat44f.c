@@ -22,7 +22,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs ) {
+void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, const ex_mat44f_t* _lhs, const ex_vec4f_t* _rhs ) {
     float x, y, z, w;
     ex_vec4f_t tmp;
 
@@ -42,7 +42,7 @@ void ex_mat44f_mul_vec4f ( ex_vec4f_t* _r, ex_mat44f_t* _lhs, ex_vec4f_t* _rhs )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_mat44f_t* _rhs ) {
+void ex_vec4f_mul_mat44f ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_mat44f_t* _rhs ) {
     float x, y, z, w;
     ex_vec4f_t tmp;
 
@@ -155,7 +155,7 @@ bool ex_mat44f_inverse ( ex_mat44f_t* _m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_mat44f_get_inverse ( ex_mat44f_t* _r, ex_mat44f_t* _m ) {
+bool ex_mat44f_get_inverse ( ex_mat44f_t* _r, const ex_mat44f_t* _m ) {
     float t0, t1, t2, t3;
     float t4, t5, t6, t7;
     float t8, t9, t10, t11;

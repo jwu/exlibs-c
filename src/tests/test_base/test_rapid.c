@@ -19,23 +19,16 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
+#define TIMER_RESOLUTION 10
+#define ROUND_RESOLUTION(X)	\
+	(((X+TIMER_RESOLUTION-1)/TIMER_RESOLUTION)*TIMER_RESOLUTION)
+
 void test_rapid () {
-    uint indices[256];
-    uint i = 0;
+    int x = ROUND_RESOLUTION(0);
+    int x1 = ROUND_RESOLUTION(1);
+    int x2 = ROUND_RESOLUTION(2);
 
-    for ( i = 0; i < 256; ++i ) {
-        indices[i] = i;
-    }
-
-    // shuffle the indices
-    for ( i = 0; i < 256-1; ++i ) {
-        uint r = i + ( rand() % (256-i) ); // random remaining position.
-        uint temp = indices[i]; 
-        indices[i] = indices[r]; 
-        indices[r] = temp;
-    }
-
-    for ( i = 0; i < 256; ++i ) {
-        printf ( "%d is %d\n", i, indices[i] );
-    }
+    printf("round 0 is : %d\n", x );
+    printf("round 1 is : %d\n", x1 );
+    printf("round 2 is : %d\n", x2 );
 }

@@ -86,7 +86,7 @@ void ex_array_free_nomng ( ex_array_t* _array )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_array_get ( ex_array_t* _array, size_t _idx )
+void* ex_array_get ( const ex_array_t* _array, size_t _idx )
 {
     ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->_length, NULL, "error: _idx out of range" );

@@ -85,7 +85,7 @@ bool ex_is_leap_year ( uint _year ) {
 // NOTE: the input y,m,d must be int
 // ------------------------------------------------------------------ 
 
-void ex_greg2jul ( uint* _out_jul, int _year, int _month, int _day ) {
+static void __greg2jul ( uint* _out_jul, int _year, int _month, int _day ) {
     if( !ex_is_valid_date ( _year, _month, _day ) ) {
         ex_warning ( "can't set date (%dy,%dm,%dd). the value is invalid!", _year, _month, _day );
         *_out_jul = 0;
@@ -100,7 +100,7 @@ void ex_greg2jul ( uint* _out_jul, int _year, int _month, int _day ) {
 // NOTE: the input y,m,d must be int
 // ------------------------------------------------------------------ 
 
-void ex_jul2greg ( int* _out_year, int* _out_month, int* _out_day, uint _jul ) {
+static void __jul2greg ( uint _jul, int* _out_year, int* _out_month, int* _out_day ) {
     register int l,n,i,j;
     l=_jul+68569;
     n=(4*l)/146097;
@@ -108,89 +108,64 @@ void ex_jul2greg ( int* _out_year, int* _out_month, int* _out_day, uint _jul ) {
     i=(4000*(l+1))/1461001;
     l=l-(1461*i)/4+31;
     j=(80*l)/2447;
-    *_out_day=l-(2447*j)/80;
+    if ( _out_day )
+        *_out_day=l-(2447*j)/80;
     l=j/11;
-    *_out_month=j+2-(12*l);
-    *_out_year=100*(n-49)+i+l;
+    if ( _out_month )
+        *_out_month=j+2-(12*l);
+    if (_out_year)
+        *_out_year=100*(n-49)+i+l;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_date_set ( ex_date_t* _date, uint _year, uint _month, uint _day ) {
-    ex_greg2jul( &(_date->_julian), _year, _month, _day);
+date_t ex_date_from ( uint _year, uint _month, uint _day ) {
+    date_t date;
+    __greg2jul( &date, _year, _month, _day);
+    return date;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_date_day ( const ex_date_t* _date ) {
-    int d,m,y;
-    ex_jul2greg ( _date->_julian, &y, &m, &d );
-    return d;
+void ex_date_to ( date_t _date, int* _year, int* _month, int* _day ) {
+    __jul2greg ( _date, _year, _month, _day );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_date_month ( const ex_date_t* _date ) {
-    int d,m,y;
-    ex_jul2greg ( _date->_julian, &y, &m, &d );
-    return m;
+uint ex_date_day_of_week ( date_t _date ) {
+    return (_date+1) % 7;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_date_year ( const ex_date_t* _date ) {
-    int d,m,y;
-    ex_jul2greg ( _date->_julian, &y, &m, &d );
-    return y;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-uint ex_date_day_of_week ( const ex_date_t* _date ) {
-    return (_date->_julian+1) % 7;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-uint ex_date_day_of_year ( const ex_date_t* _date ) {
-    int y,m,d;
+uint ex_date_day_of_year ( date_t _date ) {
+    int y;
     uint jd;
-    ex_jul2greg ( _date->_julian, &y, &m, &d );
-    ex_greg2jul ( &jd, y, 1, 1 );
+    __jul2greg ( _date, &y, NULL, NULL );
+    __greg2jul ( &jd, y, 1, 1 );
 
-    return _date->_julian-jd+1;
+    return _date-jd+1;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint ex_date_days_in_month ( const ex_date_t* _date ) {
-    int y,m,d;
-    ex_jul2greg ( _date->_julian, &y, &m, &d );
+uint ex_date_days_in_month ( date_t _date ) {
+    int y,m;
+    __jul2greg ( _date, &y, &m, NULL );
 
     if( m==2 && ex_is_leap_year(y) )
         return 29;
 
     return __month_days[m-1];
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-bool ex_date_is_leap_year ( const ex_date_t* _date ) {
-    return ex_is_leap_year( ex_date_year(_date) );
 }

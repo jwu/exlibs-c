@@ -136,7 +136,7 @@ ex_rtti_t* ex_rtti_get ( const char* _class )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_childof ( ex_rtti_t* _myclass, ex_rtti_t* _superclass ) 
+bool ex_rtti_childof ( const ex_rtti_t* _myclass, const ex_rtti_t* _superclass ) 
 { 
     ex_rtti_t* tmp = ex_rtti_super(_myclass);
     while ( tmp ) {

@@ -15,11 +15,11 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static const int64 __usecs_per_msec = 1000;
-static const int64 __usecs_per_sec  = __usecs_per_msec * 1000;
-static const int64 __usecs_per_min  = __usecs_per_sec  * 60;
-static const int64 __usecs_per_hour = __usecs_per_min  * 60;
-static const int64 __usecs_per_day  = __usecs_per_hour * 24;
+#define __USECS_PER_MSEC (1000)
+#define __USECS_PER_SEC  (1000000)      /*__USECS_PER_MSEC * 1000*/
+#define __USECS_PER_MIN  (60000000)     /*__USECS_PER_SEC  * 60*/
+#define __USECS_PER_HOUR (360000000)    /*__USECS_PER_MIN  * 60*/
+#define __USECS_PER_DAY  (8640000000)   /*__USECS_PER_HOUR * 24*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // function defines
@@ -29,124 +29,121 @@ static const int64 __usecs_per_day  = __usecs_per_hour * 24;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_timespan_set ( ex_timespan_t* _ts, 
-                       int _seconds, 
-                       int _milliseconds ) 
+timespan_t ex_timespan_from ( int _seconds, int _milliseconds )
 {
-    _ts->_micro_secs = _seconds * __usecs_per_sec + _milliseconds * __usecs_per_msec;
+    return _seconds * __USECS_PER_SEC + _milliseconds * __USECS_PER_MSEC;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_timespan_set2 ( ex_timespan_t* _ts, 
-                        int _days, 
-                        int _hours, 
-                        int _miniutes, 
-                        int _seconds, 
-                        int _milliseconds ) 
+timespan_t ex_timespan_from2 ( int _days, 
+                               int _hours, 
+                               int _miniutes, 
+                               int _seconds, 
+                               int _milliseconds ) 
 {
-    _ts->_micro_secs = _days * __usecs_per_day
-                    + _hours * __usecs_per_hour
-                    + _miniutes * __usecs_per_min
-                    + _seconds * __usecs_per_sec
-                    + _milliseconds * __usecs_per_msec;
+    return _days * __USECS_PER_DAY
+        + _hours * __USECS_PER_HOUR
+        + _miniutes * __USECS_PER_MIN
+        + _seconds * __USECS_PER_SEC
+        + _milliseconds * __USECS_PER_MSEC;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_timespan_set_secs_f32 ( ex_timespan_t* _ts, float _s ) {
+timespan_t ex_timespan_from_secs_f32 ( float _s ) {
     int64 int_sec = (int64)ex_truncf(_s);
     float f_ms = (_s - int_sec) * 1000.0f;
     int64 int_ms = (int64)ex_truncf(f_ms);
     int64 int_us = (int64)ex_roundf((f_ms - int_ms) * 1000.0f);
 
-    _ts->_micro_secs = int_sec * __usecs_per_sec
-                    + int_ms  * __usecs_per_msec
-                    + int_us;
+    return int_sec * __USECS_PER_SEC
+        + int_ms  * __USECS_PER_MSEC
+        + int_us;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_timespan_set_secs_f64 ( ex_timespan_t* _ts, double _s ) {
+timespan_t ex_timespan_from_secs_f64 ( double _s ) {
     int64 int_sec = (int64)ex_trunc(_s);
     float f_ms = (_s - int_sec) * 1000.0;
     int64 int_ms = (int64)ex_trunc(f_ms);
     int64 int_us = (int64)ex_round((f_ms - int_ms) * 1000.0);
 
-    _ts->_micro_secs = int_sec * __usecs_per_sec
-                    + int_ms  * __usecs_per_msec
-                    + int_us;
+    return int_sec * __USECS_PER_SEC
+        + int_ms  * __USECS_PER_MSEC
+        + int_us;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_timespan_set_msecs_f32 ( ex_timespan_t* _ts, float _ms ) {
+timespan_t ex_timespan_from_msecs_f32 ( float _ms ) {
     int64 int_ms = (int64)ex_truncf(_ms);
-    _ts->_micro_secs = int_ms * __usecs_per_msec + int64( ex_roundf((_ms - int_ms) * 1000.0f) );
+    return int_ms * __USECS_PER_MSEC + (int64)ex_roundf((_ms - int_ms) * 1000.0f) ;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_timespan_set_msecs_f64 ( ex_timespan_t* _ts, double _ms ) {
+timespan_t ex_timespan_from_msecs_f64 ( double _ms ) {
     int64 int_ms = (int64)ex_trunc(_ms);
-    _ts->_micro_secs = int_ms * __usecs_per_msec + int64( ex_round((_ms - int_ms) * 1000.0) );
+    return int_ms * __USECS_PER_MSEC + (int64)ex_round((_ms - int_ms) * 1000.0) ;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-double ex_timespan_total_days ( ex_timespan_t* _ts ) {
-    return (double)_ts->_micro_secs / (double)__usecs_per_day;
+double ex_timespan_total_days ( timespan_t _ts ) {
+    return (double)_ts / (double)__USECS_PER_DAY;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-double ex_timespan_total_hours ( ex_timespan_t* _ts ) {
-    return (double)_ts->_micro_secs / (double)__usecs_per_hour;
+double ex_timespan_total_hours ( timespan_t _ts ) {
+    return (double)_ts / (double)__USECS_PER_HOUR;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-double ex_timespan_total_minutes ( ex_timespan_t* _ts ) {
-    return (double)_ts->_micro_secs / (double)__usecs_per_min;
+double ex_timespan_total_minutes ( timespan_t _ts ) {
+    return (double)_ts / (double)__USECS_PER_MIN;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-double ex_timespan_total_seconds ( ex_timespan_t* _ts ) {
-    return (double)_ts->_micro_secs / (double)__usecs_per_sec;
+double ex_timespan_total_seconds ( timespan_t _ts ) {
+    return (double)_ts / (double)__USECS_PER_SEC;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-double ex_timespan_total_milliseconds ( ex_timespan_t* _ts ) {
-    return (double)_ts->_micro_secs / (double)__usecs_per_msec;
+double ex_timespan_total_mseconds ( timespan_t _ts ) {
+    return (double)_ts / (double)__USECS_PER_MSEC;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int64 ex_timespan_to_secs ( ex_timespan_t* _ts ) {
+int64 ex_timespan_to_secs ( timespan_t _ts ) {
     return (int64)ex_round( ex_timespan_total_seconds(_ts) );
 }
 
@@ -154,77 +151,31 @@ int64 ex_timespan_to_secs ( ex_timespan_t* _ts ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int64 ex_timespan_to_msecs ( ex_timespan_t* _ts ) {
-    return (int64)ex_round( ex_timespan_total_milliseconds(_ts) );
+int64 ex_timespan_to_msecs ( timespan_t _ts ) {
+    return (int64)ex_round( ex_timespan_total_mseconds(_ts) );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int64 ex_timespan_to_usecs ( ex_timespan_t* _ts ) {
-    return _ts->_micro_secs;
-}
+void ex_timespan_to ( timespan_t _ts, 
+                      int* _d, 
+                      int* _h, 
+                      int* _m, 
+                      int* _s, 
+                      int* _ms, 
+                      int* _us ) {
+    int64 mod_day = _ts % __USECS_PER_DAY;
+    int64 mod_hour = mod_day % __USECS_PER_HOUR;
+    int64 mod_min = mod_hour % __USECS_PER_MIN;
+    int64 mod_sec = mod_min % __USECS_PER_SEC;
+    int64 mod_msec = mod_sec % __USECS_PER_MSEC;
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_timespan_days ( ex_timespan_t* _ts ) {
-    return int(_ts->_micro_secs / __usecs_per_day);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_timespan_hours ( ex_timespan_t* _ts ) {
-    int64 mod_day = _ts->_micro_secs % __usecs_per_day;
-    return int(mod_day / __usecs_per_hour);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_timespan_minutes ( ex_timespan_t* _ts ) {
-    int64 mod_day = _ts->_micro_secs % __usecs_per_day;
-    int64 mod_hour = mod_day % __usecs_per_hour;
-    return int(mod_hour / __usecs_per_min);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_timespan_seconds ( ex_timespan_t* _ts ) {
-    int64 mod_day = _ts->_micro_secs % __usecs_per_day;
-    int64 mod_hour = mod_day % __usecs_per_hour;
-    int64 mod_min = mod_hour % __usecs_per_min;
-    return int(mod_min / __usecs_per_sec);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_timespan_milliseconds ( ex_timespan_t* _ts ) {
-    int64 mod_day = _ts->_micro_secs % __usecs_per_day;
-    int64 mod_hour = mod_day % __usecs_per_hour;
-    int64 mod_min = mod_hour % __usecs_per_min;
-    int64 mod_sec = mod_min % __usecs_per_sec;
-    return int(mod_sec / __usecs_per_msec);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_timespan_microseconds ( ex_timespan_t* _ts ) {
-    int64 mod_day = _ts->_micro_secs % __usecs_per_day;
-    int64 mod_hour = mod_day % __usecs_per_hour;
-    int64 mod_min = mod_hour % __usecs_per_min;
-    int64 mod_sec = mod_min % __usecs_per_sec;
-    int64 mod_msec = mod_sec % __usecs_per_msec;
-    return int(mod_msec);
+    if ( _d ) *_d = (int)(_ts / __USECS_PER_DAY); 
+    if ( _h ) *_h = (int)(mod_day / __USECS_PER_HOUR); 
+    if ( _m ) *_m = (int)(mod_hour / __USECS_PER_MIN); 
+    if ( _s ) *_s = (int)(mod_min / __USECS_PER_SEC); 
+    if ( _ms ) *_ms = (int)(mod_sec / __USECS_PER_MSEC); 
+    if ( _us ) *_us = (int)mod_msec;
 }

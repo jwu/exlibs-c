@@ -112,7 +112,7 @@ static inline void ex_vec4f_set ( ex_vec4f_t* _r, float _x, float _y, float _z, 
  @details compare if the two vector4 is equal to each other
 */// ------------------------------------------------------------------ 
 
-static inline bool ex_vec4f_is_equal ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+static inline bool ex_vec4f_is_equal ( const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) { 
     return ex_is_equalf(_lhs->x,_rhs->x,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->y,_rhs->y,EX_FLOAT_EPS)
         && ex_is_equalf(_lhs->z,_rhs->z,EX_FLOAT_EPS)
@@ -146,14 +146,14 @@ static inline void ex_vec4f_neg ( ex_vec4f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, ex_vec4f_t* _v )
+ @fn static inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, const ex_vec4f_t* _v )
  @retval _r the result vector4
  @param _v the in vector4
  @details get the negtive value from vector4 _v, set and return it to vector4 _v
  @sa ex_vec4f_neg
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, ex_vec4f_t* _v ) { 
+static inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, const ex_vec4f_t* _v ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
     _r->y = -_v->y; 
@@ -163,7 +163,7 @@ static inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_add ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn static inline void ex_vec4f_add ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side vector4
@@ -186,7 +186,7 @@ static inline void ex_vec4f_get_neg ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_add ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+static inline void ex_vec4f_add ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) { 
     _r->x = _lhs->x + _rhs->x;
     _r->y = _lhs->y + _rhs->y;
     _r->z = _lhs->z + _rhs->z;
@@ -195,7 +195,7 @@ static inline void ex_vec4f_add ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side float
@@ -215,7 +215,7 @@ static inline void ex_vec4f_add ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+static inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x + _rhs;
     _r->y = _lhs->y + _rhs;
     _r->z = _lhs->z + _rhs;
@@ -224,7 +224,7 @@ static inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_sub ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn static inline void ex_vec4f_sub ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side vector4
@@ -247,7 +247,7 @@ static inline void ex_vec4f_add_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_sub ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+static inline void ex_vec4f_sub ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) { 
     _r->x = _lhs->x - _rhs->x;
     _r->y = _lhs->y - _rhs->y;
     _r->z = _lhs->z - _rhs->z;
@@ -256,7 +256,7 @@ static inline void ex_vec4f_sub ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side float
@@ -276,7 +276,7 @@ static inline void ex_vec4f_sub ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+static inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x - _rhs;
     _r->y = _lhs->y - _rhs;
     _r->z = _lhs->z - _rhs;
@@ -285,7 +285,7 @@ static inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs )
+ @fn static inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, const ex_vec4f_t* _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side float
  @param _rhs the right hand side vector4
@@ -306,7 +306,7 @@ static inline void ex_vec4f_sub_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs ) { 
+static inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, const ex_vec4f_t* _rhs ) { 
     _r->x = _lhs - _rhs->x;
     _r->y = _lhs - _rhs->y;
     _r->z = _lhs - _rhs->z;
@@ -315,7 +315,7 @@ static inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t*
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_mul ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn static inline void ex_vec4f_mul ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side vector4
@@ -338,7 +338,7 @@ static inline void ex_scalar_sub_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t*
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_mul ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+static inline void ex_vec4f_mul ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) { 
     _r->x = _lhs->x * _rhs->x;
     _r->y = _lhs->y * _rhs->y;
     _r->z = _lhs->z * _rhs->z;
@@ -347,7 +347,7 @@ static inline void ex_vec4f_mul ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side float
@@ -367,7 +367,7 @@ static inline void ex_vec4f_mul ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+static inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x * _rhs;
     _r->y = _lhs->y * _rhs;
     _r->z = _lhs->z * _rhs;
@@ -376,7 +376,7 @@ static inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_div ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn static inline void ex_vec4f_div ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side vector4
@@ -399,7 +399,7 @@ static inline void ex_vec4f_mul_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_div ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) { 
+static inline void ex_vec4f_div ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) { 
     _r->x = _lhs->x / _rhs->x;
     _r->y = _lhs->y / _rhs->y;
     _r->z = _lhs->z / _rhs->z;
@@ -408,7 +408,7 @@ static inline void ex_vec4f_div ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs )
+ @fn static inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side vector4
  @param _rhs the right hand side float
@@ -428,7 +428,7 @@ static inline void ex_vec4f_div ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* 
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float _rhs ) { 
+static inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, float _rhs ) { 
     _r->x = _lhs->x / _rhs;
     _r->y = _lhs->y / _rhs;
     _r->z = _lhs->z / _rhs;
@@ -437,7 +437,7 @@ static inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs )
+ @fn static inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, const ex_vec4f_t* _rhs )
  @retval _r the result vector4
  @param _lhs the left hand side float
  @param _rhs the right hand side vector4
@@ -458,7 +458,7 @@ static inline void ex_vec4f_div_scalar ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, float
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t* _rhs ) { 
+static inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, const ex_vec4f_t* _rhs ) { 
     _r->x = _lhs / _rhs->x;
     _r->y = _lhs / _rhs->y;
     _r->z = _lhs / _rhs->z;
@@ -467,7 +467,7 @@ static inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t*
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline float ex_vec4f_dot ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn static inline float ex_vec4f_dot ( const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs )
  @param _lhs the left hand vector4
  @param _rhs the right hand vector4
  @return the dot product result
@@ -491,7 +491,7 @@ static inline void ex_scalar_div_vec4f ( ex_vec4f_t* _r, float _lhs, ex_vec4f_t*
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline float ex_vec4f_dot ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) {
+static inline float ex_vec4f_dot ( const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) {
     return _lhs->x * _rhs->x 
          + _lhs->y * _rhs->y 
          + _lhs->z * _rhs->z 
@@ -500,7 +500,7 @@ static inline float ex_vec4f_dot ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline float ex_vec4f_cross ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs )
+ @fn static inline float ex_vec4f_cross ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs )
  @retval _r the cross product result
  @param _lhs the left hand vector4
  @param _rhs the right hand vector4
@@ -526,7 +526,7 @@ static inline float ex_vec4f_dot ( ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) {
  \f]
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_cross ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t* _rhs ) {
+static inline void ex_vec4f_cross ( ex_vec4f_t* _r, const ex_vec4f_t* _lhs, const ex_vec4f_t* _rhs ) {
     _r->x = _lhs->y * _rhs->z - _lhs->z * _rhs->y;
     _r->y = _lhs->z * _rhs->x - _lhs->x * _rhs->z;
     _r->z = _lhs->x * _rhs->y - _lhs->y * _rhs->x;
@@ -535,33 +535,33 @@ static inline void ex_vec4f_cross ( ex_vec4f_t* _r, ex_vec4f_t* _lhs, ex_vec4f_t
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline float ex_vec4f_len( ex_vec4f_t* _v )
+ @fn static inline float ex_vec4f_len( const ex_vec4f_t* _v )
  @param _v the in vector4
  @return the length of the in vector4
  @details return the length of vector4 _v
  @sa ex_vec4f_lenSQR
 */// ------------------------------------------------------------------ 
 
-static inline float ex_vec4f_len ( ex_vec4f_t* _v ) {
+static inline float ex_vec4f_len ( const ex_vec4f_t* _v ) {
     return sqrtf ( ex_vec4f_dot(_v,_v) );
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline float ex_vec4f_lenSQR( ex_vec4f_t* _v )
+ @fn static inline float ex_vec4f_lenSQR( const ex_vec4f_t* _v )
  @param _v the in vector4
  @return the length square of the in vector4
  @details return the length square of vector4 _v
  @sa ex_vec4f_len
 */// ------------------------------------------------------------------ 
 
-static inline float ex_vec4f_lenSQR ( ex_vec4f_t* _v ) {
+static inline float ex_vec4f_lenSQR ( const ex_vec4f_t* _v ) {
     return ex_vec4f_dot(_v,_v);
 }
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline bool ex_vec4f_is_normalized ( ex_vec4f_t* _v )
+ @fn static inline bool ex_vec4f_is_normalized ( const ex_vec4f_t* _v )
  @param _v the in vector4
  @return if the inverse operation successed 
  - true: successful
@@ -571,7 +571,7 @@ static inline float ex_vec4f_lenSQR ( ex_vec4f_t* _v ) {
  @sa ex_vec4f_normalize
 */// ------------------------------------------------------------------ 
 
-static inline bool ex_vec4f_is_normalized ( ex_vec4f_t* _v ) {
+static inline bool ex_vec4f_is_normalized ( const ex_vec4f_t* _v ) {
     return ex_is_equalf( ex_vec4f_lenSQR(_v), 1.0f, EX_FLOAT_EPS);
 }
 
@@ -604,7 +604,7 @@ static inline bool ex_vec4f_normalize ( ex_vec4f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v )
+ @fn bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, const ex_vec4f_t* _v )
  @retval _r the result vector4
  @param _v the in vector4
  @return if the inverse operation successed 
@@ -615,7 +615,7 @@ static inline bool ex_vec4f_normalize ( ex_vec4f_t* _v ) {
  @sa ex_vec4f_normalize
 */// ------------------------------------------------------------------ 
 
-static inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
+static inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, const ex_vec4f_t* _v ) {
     float length_sqr, inv_length;
 
     ex_assert ( _r != _v, "can't use self as return value." );
@@ -637,7 +637,7 @@ static inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_get_truncate ( ex_vec4f_t* _r, ex_vec4f_t* _v, float _maxLength )
+ @fn static inline void ex_vec4f_get_truncate ( ex_vec4f_t* _r, const ex_vec4f_t* _v, float _maxLength )
  @retval _r the result vector2
  @param _v the in vector2
  @param _maxLength the truncate length
@@ -645,7 +645,7 @@ static inline bool ex_vec4f_get_normalize ( ex_vec4f_t* _r, ex_vec4f_t* _v ) {
  @sa ex_vec4f_truncate
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_get_truncate ( ex_vec4f_t* _r, ex_vec4f_t* _v, float _maxLength ) {
+static inline void ex_vec4f_get_truncate ( ex_vec4f_t* _r, const ex_vec4f_t* _v, float _maxLength ) {
     const float maxLengthSQR = _maxLength * _maxLength;
     const float vecLengthSQR = ex_vec4f_lenSQR(_v);
     if ( vecLengthSQR > maxLengthSQR )
@@ -671,7 +671,7 @@ static inline void ex_vec4f_truncate ( ex_vec4f_t* _r, float _maxLength ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to )
+ @fn static inline void ex_vec4f_project_to ( ex_vec4f_t* _r, const ex_vec4f_t* _from, const ex_vec4f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector parallel to
@@ -680,7 +680,7 @@ static inline void ex_vec4f_truncate ( ex_vec4f_t* _r, float _maxLength ) {
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to ) {
+static inline void ex_vec4f_project_to ( ex_vec4f_t* _r, const ex_vec4f_t* _from, const ex_vec4f_t* _to ) {
     float projection;
     ex_assert ( ex_vec4f_is_normalized(_to), "vector _to must be normalized." );
     projection = ex_vec4f_dot( _from, _to );
@@ -689,7 +689,7 @@ static inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_v
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to )
+ @fn static inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, const ex_vec4f_t* _from, const ex_vec4f_t* _to )
  @retval _r the result vector2
  @param _from the in vector 
  @param _to the vector perpendicular to
@@ -698,7 +698,7 @@ static inline void ex_vec4f_project_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_v
  @note _to must be normalized.
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, ex_vec4f_t* _from, ex_vec4f_t* _to ) {
+static inline void ex_vec4f_perpendicular_to ( ex_vec4f_t* _r, const ex_vec4f_t* _from, const ex_vec4f_t* _to ) {
     ex_vec4f_t v;
     ex_assert ( ex_vec4f_is_normalized(_to), "vector _to must be normalized." );
     ex_vec4f_project_to ( &v, _from, _to );

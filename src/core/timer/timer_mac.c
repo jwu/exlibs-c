@@ -16,20 +16,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 static int __timer_alive = 0;
-static ex_thread_t* __timer = NULL;
+static ex_thread_t* __timer_thread = NULL;
 
-extern int ex_timer_started;
-extern int ex_timer_running;
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __threaded_timer_tick () {
-    // TODO:
-    // you should use list timer.
-    // you should remove timer at the end of the tick.
-}
+extern int __timer_running;
+extern void __threaded_timer_tick ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -37,7 +27,7 @@ static void __threaded_timer_tick () {
 
 static int __run_timer ( void* _unused ) {
     while ( __timer_alive ) {
-        if ( ex_timer_running ) {
+        if ( __timer_running ) {
             __threaded_timer_tick ();
         }
         ex_sleep(1);
@@ -51,8 +41,8 @@ static int __run_timer ( void* _unused ) {
 
 bool ex_sys_timer_init () {
     __timer_alive = 1;
-    __timer = ex_create_thread ( __run_timer, NULL ); 
-    if ( __timer == NULL )
+    __timer_thread = ex_create_thread ( __run_timer, NULL ); 
+    if ( __timer_thread == NULL )
         return false;
     return true;
 }
@@ -63,8 +53,8 @@ bool ex_sys_timer_init () {
 
 void ex_sys_timer_deinit () {
     __timer_alive = 0;
-    if ( __timer ) {
-        ex_wait_thread ( __timer, NULL );
-        __timer = NULL;
+    if ( __timer_thread ) {
+        ex_wait_thread ( __timer_thread, NULL );
+        __timer_thread = NULL;
     }
 }
