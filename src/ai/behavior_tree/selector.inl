@@ -15,7 +15,7 @@
 
 static bool _selector_exec ( bt_node_t* _node )
 {
-    ex_array_each ( bt_node_t*, child, _node->children ) {
+    ex_array_each ( _node->children, bt_node_t*, child ) {
         if ( (*(child->exec))(child) == true )
             return true;
     } ex_array_each_end

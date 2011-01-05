@@ -43,14 +43,14 @@ extern "C" {
  Usage:
  @code
  ex_array_t* my_array = ex_array_alloc( sizeof(float), 10 );
- ex_array_each ( float, item, my_array ) {
+ ex_array_each ( my_array, float, item ) {
     printf( "item_%d is %f", idx, item );
  } ex_array_each_end;
  @endcode
  @sa ex_array_each_end
 */// ------------------------------------------------------------------ 
 
-#define ex_array_each( _type, _el, _array ) \
+#define ex_array_each( _array, _type, _el ) \
     { \
         _type _el; \
         size_t count = _array->_length; \

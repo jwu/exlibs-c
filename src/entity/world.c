@@ -32,7 +32,7 @@ ex_world_t* ex_world_alloc () {
 // ------------------------------------------------------------------ 
 
 void ex_world_free ( ex_world_t* _world ) {
-    ex_array_each ( ex_entity_t*, ent, _world->_entities ) {
+    ex_array_each ( _world->_entities, ex_entity_t*, ent ) {
         ex_entity_free(ent);
     } ex_array_each_end;
     ex_array_free ( _world->_entities );

@@ -50,7 +50,7 @@ void ex_strid_deinit ()
 {
     if ( __initialized ) {
         // free all allocated string
-        ex_hashmap_each ( char*, str, __string_set ) {
+        ex_hashmap_each ( __string_set, char*, str ) {
             ex_free(str);
         } ex_hashmap_each_end;
         ex_hashmap_free(__string_set);

@@ -115,14 +115,14 @@ int ex_semaphore_wait_timeout ( ex_semaphore_t* _sem, uint32 _timeout ) {
 
     // Ack!  We have to busy wait...
     // FIXME: Use sem_timedwait()?
-    curTime = ex_cpu_cycle();
+    curTime = ex_timer_get_ticks();
     do {
         retval = ex_semaphore_try_wait(_sem);
         if (retval == 0) {
             break;
         }
         ex_sleep(1);
-    } while ( (uint32)(ex_cpu_cycle() - curTime) < _timeout );
+    } while ( (uint32)(ex_timer_get_ticks() - curTime) < _timeout );
 
     return retval;
 }

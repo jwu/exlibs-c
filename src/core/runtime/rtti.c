@@ -56,7 +56,7 @@ void ex_rtti_deinit ()
 {
     if ( __initialized ) {
         // free all allocated string
-        ex_hashmap_each ( ex_rtti_t*, _info, __classid_to_rtti ) {
+        ex_hashmap_each ( __classid_to_rtti, ex_rtti_t*, _info ) {
             ex_free(_info->_props);
             ex_free(_info);
         } ex_hashmap_each_end;

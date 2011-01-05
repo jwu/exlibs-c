@@ -23,6 +23,9 @@ extern "C" {
 
 typedef uint32 (*ex_timer_pfn) ( uint32 _interval, void* _param );
 
+#define EX_TIMER_SLICE 10
+#define EX_TIMER_RESOLUTION 10
+
 ///////////////////////////////////////////////////////////////////////////////
 // decls
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,9 +45,8 @@ static inline uint64 ex_cpu_cycle() {
     __asm__ __volatile__( "mftb %0" : "=r" (counter) );
     return counter;
 #else // unix-like sys (mac, apple, linux)
-    struct timeval now;
-    gettimeofday(&now, NULL);
-    return now.tv_sec * 1000 * 1000 + now.tv_usec;
+    ex_warning( "please implement it in unix!" );
+    return 0;
 #endif
 }
 
@@ -97,6 +99,12 @@ extern bool ex_timer_init ();
 extern void ex_timer_deinit ();
 extern void ex_timer_pause ();
 extern void ex_timer_resume ();
+
+// ------------------------------------------------------------------ 
+// Desc: return ms 
+// ------------------------------------------------------------------ 
+
+uint32 ex_timer_get_ticks ();
 
 // ------------------------------------------------------------------ 
 // Desc: 

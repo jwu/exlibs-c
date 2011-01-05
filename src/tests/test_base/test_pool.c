@@ -36,7 +36,7 @@ static void normal () {
 
         {
             int i = 0;
-            ex_pool_each ( int32, el, pool ) {
+            ex_pool_each ( pool, int32, el ) {
                 printf ("[%d] value is %d\n", i, el );
                 ++i;
             } ex_pool_each_end
@@ -67,7 +67,7 @@ static void normal () {
 
         {
             int i = 0;
-            ex_pool_each ( int32, el, pool ) {
+            ex_pool_each ( pool, int32, el ) {
                 printf ("[%d] value is %d\n", i, el );
                 ++i;
             } ex_pool_each_end

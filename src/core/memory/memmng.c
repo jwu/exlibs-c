@@ -262,7 +262,7 @@ static void __dump () {
     
     //
     if ( ex_hashmap_len(__au_map) ) {
-        ex_hashmap_each ( alloc_unit_t*, au, __au_map ) {
+        ex_hashmap_each ( __au_map, alloc_unit_t*, au ) {
             char text[2048];
             ex_memzero ( text, 2048 );
             snprintf ( text, 2048, 

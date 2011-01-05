@@ -64,7 +64,7 @@ ex_component_t* ex_entity_get_comp ( ex_entity_t* _ent, const char* _typename ) 
     ex_assert( rtti, "can't find the rtti type: %s", _typename );
     comps = _ent->_comps;
 
-    ex_array_each ( ex_component_t*, comp, comps ) {
+    ex_array_each ( comps, ex_component_t*, comp ) {
         if ( ex_rtti_isa( ex_rtti_info(comp), rtti ) )
             return comp;
     } ex_array_each_end

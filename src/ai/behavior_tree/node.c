@@ -52,7 +52,7 @@ void bt_node_free ( bt_node_t* _node )
     // the array could be NULL;
     if ( _node->children ) {
         // free children nodes
-        ex_array_each ( bt_node_t*, child, _node->children ) {
+        ex_array_each ( _node->children, bt_node_t*, child ) {
             bt_node_free ( child );
         } ex_array_each_end
 

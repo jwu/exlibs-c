@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : timer_mac.c
+// File         : timer_win32.c
 // Author       : Wu Jie 
-// Last Change  : 12/29/2010 | 10:11:37 AM | Wednesday,December
+// Last Change  : 01/05/2011 | 20:48:02 PM | Wednesday,January
 // Description  : 
 // ======================================================================================
 
@@ -15,25 +15,23 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static int __timer_alive = 0;
-static ex_thread_t* __timer_thread = NULL;
-static struct timeval __start_ticks;
-
-extern int __timer_running;
+static UINT __timerID = 0;
 extern void __threaded_timer_tick ();
+
+static LARGE_INTEGER __start_ticks;
+static LARGE_INTEGER __freq;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __run_timer ( void* _unused ) {
-    while ( __timer_alive ) {
-        if ( __timer_running ) {
-            __threaded_timer_tick ();
-        }
-        ex_sleep(1);
-    }
-    return 0;
+static void CALLBACK HandleAlarm ( UINT uID, 
+                                   UINT uMsg, 
+                                   DWORD_PTR dwUser, 
+                                   DWORD_PTR dw1, 
+                                   DWORD_PTR dw2 )
+{
+    __threaded_timer_tick();
 }
 
 // ------------------------------------------------------------------ 
@@ -41,14 +39,24 @@ static int __run_timer ( void* _unused ) {
 // ------------------------------------------------------------------ 
 
 bool ex_sys_timer_init () {
-    // init start ticks
-    gettimeofday(&__start_ticks, NULL);
+    MMRESULT result;
 
-    //
-    __timer_alive = 1;
-    __timer_thread = ex_create_thread ( __run_timer, NULL ); 
-    if ( __timer_thread == NULL )
+    // init start ticks and cpu frequency
+    QueryPerformanceFrequency(&__freq);
+    QueryPerformanceCounter(&__start_ticks);
+
+    // Set timer resolution
+    result = timeBeginPeriod(EX_TIMER_RESOLUTION);
+    if ( result != TIMERR_NOERROR ) {
+        ex_error("Warning: Can't set %d ms timer resolution", EX_TIMER_RESOLUTION);
+    }
+
+    // Allow 10 ms of drift so we don't chew on CPU
+    __timerID = timeSetEvent(EX_TIMER_RESOLUTION, 1, HandleAlarm, 0, TIME_PERIODIC);
+    if ( !__timerID ) {
+        ex_error("timeSetEvent() failed");
         return false;
+    }
     return true;
 }
 
@@ -57,11 +65,10 @@ bool ex_sys_timer_init () {
 // ------------------------------------------------------------------ 
 
 void ex_sys_timer_deinit () {
-    __timer_alive = 0;
-    if ( __timer_thread ) {
-        ex_wait_thread ( __timer_thread, NULL );
-        __timer_thread = NULL;
+    if ( __timerID ) {
+        timeKillEvent(__timerID);
     }
+    timeEndPeriod(EX_TIMER_RESOLUTION);
 }
 
 // ------------------------------------------------------------------ 
@@ -69,10 +76,12 @@ void ex_sys_timer_deinit () {
 // ------------------------------------------------------------------ 
 
 uint32 ex_timer_get_ticks () {
-    uint32 ticks;
-    struct timeval now;
-    gettimeofday(&now, NULL);
-    ticks = (now.tv_sec - __start_ticks.tv_sec) * 1000 
-        + (now.tv_usec - __start_ticks.tv_usec) / 1000;
-    return (ticks);
+    LARGE_INTEGER now;
+    QueryPerformanceCounter(&now);
+
+    now.QuadPart -= __start_ticks.QuadPart;
+    now.QuadPart *= 1000;
+    now.QuadPart /= __freq.QuadPart;
+
+    return (DWORD) now.QuadPart;
 }

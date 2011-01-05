@@ -30,12 +30,12 @@ extern "C" {
 /**
 Usage: 
 
-    ex_hashmap_each ( uint32, i, &hashmap ) {
+    ex_hashmap_each ( &hashmap, uint32, i ) {
         ...
     } ex_hashmap_each_end;
 */
 
-#define ex_hashmap_each( _type, _el, _hashmap ) \
+#define ex_hashmap_each( _hashmap, _type, _el ) \
     { \
         ex_pool_node_t* node = (_hashmap)->_nodes->_used_nodes_begin; \
         ex_pool_node_t* node_begin = (_hashmap)->_nodes->_nodes; \

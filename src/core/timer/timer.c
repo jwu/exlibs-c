@@ -12,26 +12,29 @@
 #include "exsdk.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// defines
+// private defines
 ///////////////////////////////////////////////////////////////////////////////
 
-#define EX_TIMER_RESOLUTION 10
 #define __ROUND_RESOLUTION(_x) \
 	(((_x+EX_TIMER_RESOLUTION-1)/EX_TIMER_RESOLUTION)*EX_TIMER_RESOLUTION)
 
-struct timer_t {
+// ------------------------------------------------------------------ 
+// Desc: timer_t 
+// ------------------------------------------------------------------ 
+
+typedef struct timer_t {
     int state;
 
-    timespan_t counter;
     timespan_t interval;
     timespan_t lifetime; // if reach lifetime, the timer will stopped but not removed
 
-    int64 start;    // usecs
-    int64 current;  // usecs
+    uint32 start;    // msecs
+    uint32 counter;  // msecs
+    uint32 last_alarm;
 
     ex_timer_pfn cb;
     void* params;
-};
+} timer_t;
 
 int __timer_running = 0; // controlled by ex_timer_pause, ex_timer_resume
 ex_pool_t* __timers = NULL; 
@@ -48,18 +51,51 @@ extern void ex_sys_timer_deinit ();
 // ------------------------------------------------------------------ 
 
 void __threaded_timer_tick () {
+    uint32 now, ms;
+
     ex_mutex_lock(__timer_mutex);
-    ex_pool_each ( timer_t, t, __timers ) {
-        // TODO:
+    now = ex_timer_get_ticks();
+    ex_pool_id_each ( __timers, timer_t, t, id ) {
+        ms = t.interval - EX_TIMER_SLICE;
+
+        // TODO: lifetime (should consider pause, stopped...)
+        // TODO: pause, stopped ...
+
+        // if we exceed the interval
+        if ( (int)(now - t.last_alarm) > (int)ms ) {
+            if ( (now - t.last_alarm) < t.interval )
+                t.last_alarm += t.interval;
+            else
+                t.last_alarm = now;
+
+            // execute the timer callback
+            ex_mutex_unlock(__timer_mutex);
+            ms = t.cb(t.interval, t.params);
+            ex_mutex_lock(__timer_mutex);
+
+            // process return interval
+            if (ms != t.interval) {
+                // if ms not zero round it and set as the next interval.
+                if ( ms != 0 )
+                    t.interval = __ROUND_RESOLUTION(ms);
+                else
+                    ex_remove_timer(id);
+            }
+        }
+
     } ex_pool_each_end
 
     // remove all timer here
-    ex_array_each ( array_t, id, __unused_timers ) {
+    ex_array_each ( __unused_timers, int, id ) {
         ex_pool_remove_at_safe ( __timers, id ); // this can work around if we got several same id to remove.
-    } ex_array_end
+    } ex_array_each_end
     ex_array_remove_all(__unused_timers);
     ex_mutex_unlock(__timer_mutex);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// defines
+///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -103,7 +139,7 @@ void ex_timer_deinit () {
         ex_timer_pause();
 
         // free params in timer
-        ex_pool_each ( timer_t, t, __timers ) {
+        ex_pool_each ( __timers, timer_t, t ) {
             ex_free_nomng (t.params);
         } ex_pool_each_end
 
@@ -151,9 +187,9 @@ int ex_add_timer ( ex_timer_pfn _cb, void* _params, size_t _size,
     // init new timer
     newTimer.state = EX_TIMER_STATE_STOPPED;
     newTimer.counter = 0;
-    newTimer.interval = EX_TIMER_RESOLUTION(_interval);
-    newTimer.lifetime = (_lifetime == EX_TIMESPAN_INFINITY) ? EX_TIMESPAN_INFINITY : EX_TIMER_RESOLUTION(_lifetime);
-    newTimer.start = newTimer.current = ex_cpu_cycle();
+    newTimer.interval = __ROUND_RESOLUTION(_interval);
+    newTimer.lifetime = (_lifetime == EX_TIMESPAN_INFINITY) ? EX_TIMESPAN_INFINITY : __ROUND_RESOLUTION(_lifetime);
+    newTimer.start = newTimer.counter = ex_timer_get_ticks();
     newTimer.cb = _cb;
     if ( _params ) {
         newTimer.params = ex_malloc_nomng(_size);

@@ -32,17 +32,34 @@ extern "C" {
 /**
 Usage: 
 
-    ex_pool_each ( uint32, i, &pool ) {
+    ex_pool_each ( &pool, uint32, i ) {
         ...
     } ex_pool_each_end;
 */
 
-#define ex_pool_each( _type, _el, _pool ) \
+#define ex_pool_each( _pool, _type, _el ) \
     { \
         ex_pool_node_t* node = (_pool)->_used_nodes_begin; \
         _type _el; \
         while ( node ) { \
             _el = *( (_type*) ex_pool_get( _pool, node - (_pool)->_nodes ) );
+
+/**
+Usage: 
+
+    ex_pool_id_each ( &pool, uint32, i, id ) {
+        ...
+    } ex_pool_each_end;
+*/
+
+#define ex_pool_id_each( _pool, _type, _el, _id ) \
+    { \
+        ex_pool_node_t* node = (_pool)->_used_nodes_begin; \
+        _type _el; \
+        int _id; \
+        while ( node ) { \
+            _id = node - (_pool)->_nodes; \
+            _el = *( (_type*) ex_pool_get( _pool, _id ) );
 
 #define ex_pool_each_end \
             node = node->next; \

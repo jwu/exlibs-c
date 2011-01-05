@@ -34,7 +34,7 @@ static void normal () {
         }
 
         i = 0;
-        ex_hashmap_each ( float, el, hashmap ) {
+        ex_hashmap_each ( hashmap, float, el ) {
             printf ( "[%d] value is %f\n", i, el );
             ++i;
         } ex_hashmap_each_end;
