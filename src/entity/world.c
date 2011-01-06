@@ -52,9 +52,12 @@ ex_entity_t* ex_world_create_entity ( ex_world_t* _world, strid_t _name ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __eng_time_tick ();
 // ------------------------------------------------------------------ 
 
 void ex_world_update ( ex_world_t* _world ) {
+    __eng_time_tick ();
+
     // _handle_input();
     // _update_ai();
     // ??? _update_animation();

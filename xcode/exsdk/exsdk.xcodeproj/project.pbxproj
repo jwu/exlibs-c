@@ -142,6 +142,8 @@
 		B2E2698812C9EC0100833568 /* test_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E2698712C9EC0100833568 /* test_thread.c */; };
 		B2E269BA12C9FA5900833568 /* cond_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E269B812C9FA5900833568 /* cond_mac.c */; };
 		B2E269BB12C9FA5900833568 /* cond.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E269B912C9FA5900833568 /* cond.h */; };
+		B2F397C412D623BB00F7E252 /* eng_time.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F397C212D623BB00F7E252 /* eng_time.c */; };
+		B2F397C512D623BB00F7E252 /* eng_time.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F397C312D623BB00F7E252 /* eng_time.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,6 +303,8 @@
 		B2E2698712C9EC0100833568 /* test_thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_thread.c; path = ../../src/tests/test_base/test_thread.c; sourceTree = SOURCE_ROOT; };
 		B2E269B812C9FA5900833568 /* cond_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cond_mac.c; sourceTree = "<group>"; };
 		B2E269B912C9FA5900833568 /* cond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cond.h; sourceTree = "<group>"; };
+		B2F397C212D623BB00F7E252 /* eng_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = eng_time.c; sourceTree = "<group>"; };
+		B2F397C312D623BB00F7E252 /* eng_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eng_time.h; sourceTree = "<group>"; };
 		D2AAC046055464E500DB518D /* libexsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexsdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -641,6 +645,8 @@
 		B2E0B76612A6B144009FE3E8 /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				B2F397C212D623BB00F7E252 /* eng_time.c */,
+				B2F397C312D623BB00F7E252 /* eng_time.h */,
 				B207165312C82D2800071C29 /* engine.c */,
 				B207165412C82D2800071C29 /* engine.h */,
 				B2E0B76712A6B144009FE3E8 /* component.c */,
@@ -758,6 +764,7 @@
 				B261C0E812CD637B0018BCDA /* date.h in Headers */,
 				B261C0EC12CD637B0018BCDA /* timespan.h in Headers */,
 				B261C13612CDACAF0018BCDA /* dtime.h in Headers */,
+				B2F397C512D623BB00F7E252 /* eng_time.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -931,6 +938,7 @@
 				B261C0E712CD637B0018BCDA /* date.c in Sources */,
 				B261C0EB12CD637B0018BCDA /* timespan.c in Sources */,
 				B261C13512CDACAF0018BCDA /* dtime.c in Sources */,
+				B2F397C412D623BB00F7E252 /* eng_time.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

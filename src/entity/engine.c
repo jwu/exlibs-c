@@ -21,6 +21,7 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __eng_time_start ();
 // ------------------------------------------------------------------ 
 
 bool ex_engine_init () {
@@ -38,6 +39,9 @@ bool ex_engine_init () {
 
     // 
     ex_trans2d_internal_init ();
+
+    // start engine timer
+    __eng_time_start ();
 
     //
     ex_log ("ex_engine inited");
