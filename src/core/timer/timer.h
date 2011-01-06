@@ -19,12 +19,15 @@ extern "C" {
 #define EX_TIMER_STATE_RUNNING   1
 #define EX_TIMER_STATE_PAUSED    2
 #define EX_TIMER_STATE_STOPPED   3
-#define EX_TIMER_STATE_RESET     4
 
-typedef uint32 (*ex_timer_pfn) ( uint32 _interval, void* _param );
-
-#define EX_TIMER_SLICE 10
+#define EX_TIMER_SLICE      10
 #define EX_TIMER_RESOLUTION 10
+
+// ------------------------------------------------------------------ 
+// Desc: return the new interval, if 0 the timer will be removed. 
+// ------------------------------------------------------------------ 
+
+typedef int32 (*ex_timer_pfn) ( uint32 _interval, void* _param );
 
 ///////////////////////////////////////////////////////////////////////////////
 // decls
@@ -97,8 +100,6 @@ static inline void ex_sleep ( uint32 _ms ) {
 
 extern bool ex_timer_init ();
 extern void ex_timer_deinit ();
-extern void ex_timer_pause ();
-extern void ex_timer_resume ();
 
 // ------------------------------------------------------------------ 
 // Desc: return ms 

@@ -29,9 +29,9 @@ extern "C" {
 // ------------------------------------------------------------------ 
 /*! 
  @def ex_array_each
+ @param _array the in array
  @param _type the type of the element in the array.
  @param _el the element variable you want to define.
- @param _array the in array
  @details macro for easy iterates the array container.
 
  when use the macro, it will define the local variable below:
@@ -48,6 +48,7 @@ extern "C" {
  } ex_array_each_end;
  @endcode
  @sa ex_array_each_end
+ @note DO NOT USE continue in this loop, use ex_array_continue instead 
 */// ------------------------------------------------------------------ 
 
 #define ex_array_each( _array, _type, _el ) \
@@ -60,14 +61,62 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
+ @def ex_array_raw_each
+ @param _array the in array
+ @param _type the point-type of the element in the array.
+ @param _el the element variable you want to define.
+ @details macro for easy iterates the array container.
+
+ when use the macro, it will define the local variable below:
+ - count: the count of the element in the array.
+ - idx: the current index.
+
+ to finish the code, you must write ex_array_each_end.
+
+ Usage:
+ @code
+ ex_array_t* my_array = ex_array_alloc( sizeof(float), 10 );
+ ex_array_raw_each ( my_array, float*, item ) {
+    printf( "item_%d is %f", idx, *item );
+ } ex_array_each_end;
+ @endcode
+ @sa ex_array_each_end
+ @note DO NOT USE continue in this loop, use ex_array_continue instead 
+*/// ------------------------------------------------------------------ 
+
+#define ex_array_raw_each( _array, _type, _el ) \
+    { \
+        _type _el; \
+        size_t count = _array->_length; \
+        size_t idx = 0; \
+        while ( idx < count ) { \
+            _el = (_type) (_array->_data) + idx;
+
+// ------------------------------------------------------------------ 
+/*! 
  @def ex_array_each_end
- @details macro to end the ex_array_each macro
+ @details macro to end the ex_array_each, ex_array_raw_each macro
  @sa ex_array_each
+ @sa ex_array_raw_each
 */// ------------------------------------------------------------------ 
 
 #define ex_array_each_end \
             ++idx; \
         } \
+    }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_array_continue
+ @details macro to let the continue work in each
+ @sa ex_array_each
+ @sa ex_array_raw_each
+*/// ------------------------------------------------------------------ 
+
+#define ex_array_continue \
+    { \
+        ++idx; \
+        continue; \
     }
 
 // ------------------------------------------------------------------ 

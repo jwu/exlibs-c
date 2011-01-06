@@ -27,13 +27,30 @@ extern "C" {
 // foreach
 ///////////////////////////////////////////////////////////////////////////////
 
-/**
-Usage: 
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_hashmap_each
+ @param _hashmap the in hashmap
+ @param _type the type of the value in the hashmap.
+ @param _el the value variable you want to define.
+ @details macro for easy iterates the hashmap container.
 
-    ex_hashmap_each ( &hashmap, uint32, i ) {
-        ...
-    } ex_hashmap_each_end;
-*/
+ when use the macro, it will define the local variable below:
+ - node: the current node of the hashmap
+ - node_begin: the the beginning of the node
+
+ to finish the code, you must write ex_hashmap_each_end.
+
+ Usage:
+ @code
+ ex_hashmap_t* my_hashmap = ex_hashmap_alloc( sizeof(int), sizeof(float), 10 );
+ ex_hashmap_each ( my_hashmap, float, item ) {
+    printf( "item_%d is %f", idx, item );
+ } ex_hashmap_each_end;
+ @endcode
+ @sa ex_hashmap_each_end
+ @note DO NOT USE continue in this loop, use ex_hashmap_continue instead 
+*/// ------------------------------------------------------------------ 
 
 #define ex_hashmap_each( _hashmap, _type, _el ) \
     { \
@@ -43,9 +60,64 @@ Usage:
         while ( node ) { \
             _el = *( (_type*) ( (char*)(_hashmap)->_values + (node - node_begin) * (_hashmap)->_value_bytes ) );
 
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_hashmap_each
+ @param _hashmap the in hashmap
+ @param _type the point-type of the value in the hashmap.
+ @param _el the value variable you want to define.
+ @details macro for easy iterates the hashmap container.
+
+ when use the macro, it will define the local variable below:
+ - node: the current node of the hashmap
+ - node_begin: the the beginning of the node
+
+ to finish the code, you must write ex_hashmap_each_end.
+
+ Usage:
+ @code
+ ex_hashmap_t* my_hashmap = ex_hashmap_alloc( sizeof(int), sizeof(float), 10 );
+ ex_hashmap_raw_each ( my_hashmap, float*, item ) {
+    printf( "item_%d is %f", idx, *item );
+ } ex_hashmap_each_end;
+ @endcode
+ @sa ex_hashmap_each_end
+ @note DO NOT USE continue in this loop, use ex_hashmap_continue instead 
+*/// ------------------------------------------------------------------ 
+
+#define ex_hashmap_raw_each( _hashmap, _type, _el ) \
+    { \
+        ex_pool_node_t* node = (_hashmap)->_nodes->_used_nodes_begin; \
+        ex_pool_node_t* node_begin = (_hashmap)->_nodes->_nodes; \
+        _type _el; \
+        while ( node ) { \
+            _el = (_type)( (char*)(_hashmap)->_values + (node - node_begin) * (_hashmap)->_value_bytes );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_hashmap_each_end
+ @details macro to end the ex_hashmap_each, ex_hashmap_raw_each macro
+ @sa ex_hashmap_each
+ @sa ex_hashmap_raw_each
+*/// ------------------------------------------------------------------ 
+
 #define ex_hashmap_each_end \
             node = node->next; \
         } \
+    }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_hashmap_continue
+ @details macro to let the continue work in each
+ @sa ex_hashmap_each
+ @sa ex_hashmap_raw_each
+*/// ------------------------------------------------------------------ 
+
+#define ex_hashmap_continue \
+    { \
+        node = node->next; \
+        continue; \
     }
 
 ///////////////////////////////////////////////////////////////////////////////

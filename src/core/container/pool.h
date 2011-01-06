@@ -29,41 +29,97 @@ extern "C" {
 // foreach
 ///////////////////////////////////////////////////////////////////////////////
 
-/**
-Usage: 
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_pool_each
+ @param _pool the in pool
+ @param _type the type of the element in the pool.
+ @param _el the element variable you want to define.
+ @details macro for easy iterates the pool container.
 
-    ex_pool_each ( &pool, uint32, i ) {
-        ...
-    } ex_pool_each_end;
-*/
+ when use the macro, it will define the local variable below:
+ - id: the current index.
+
+ to finish the code, you must write ex_pool_each_end.
+
+ Usage:
+ @code
+ ex_pool_t* my_pool = ex_pool_alloc( sizeof(float), 10 );
+ ex_pool_each ( my_pool, float, item ) {
+    printf( "item_%d is %f", idx, item );
+ } ex_pool_each_end;
+ @endcode
+ @sa ex_pool_each_end
+ @note DO NOT USE continue in this loop, use ex_pool_continue instead 
+*/// ------------------------------------------------------------------ 
 
 #define ex_pool_each( _pool, _type, _el ) \
     { \
         ex_pool_node_t* node = (_pool)->_used_nodes_begin; \
         _type _el; \
+        int id; \
         while ( node ) { \
-            _el = *( (_type*) ex_pool_get( _pool, node - (_pool)->_nodes ) );
+            id = node - (_pool)->_nodes; \
+            _el = *( (_type*) ex_pool_get( _pool, id ) );
 
-/**
-Usage: 
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_pool_raw_each
+ @param _pool the in pool
+ @param _type the point-type of the element in the pool.
+ @param _el the element variable you want to define.
+ @details macro for easy iterates the pool container.
 
-    ex_pool_id_each ( &pool, uint32, i, id ) {
-        ...
-    } ex_pool_each_end;
-*/
+ when use the macro, it will define the local variable below:
+ - id: the current index.
 
-#define ex_pool_id_each( _pool, _type, _el, _id ) \
+ to finish the code, you must write ex_pool_each_end.
+
+ Usage:
+ @code
+ ex_pool_t* my_pool = ex_pool_alloc( sizeof(float), 10 );
+ ex_pool_raw_each ( my_pool, float*, item ) {
+    printf( "item_%d is %f", idx, *item );
+ } ex_pool_each_end;
+ @endcode
+ @sa ex_pool_each_end
+ @note DO NOT USE continue in this loop, use ex_pool_continue instead 
+*/// ------------------------------------------------------------------ 
+
+#define ex_pool_raw_each( _pool, _type, _el ) \
     { \
         ex_pool_node_t* node = (_pool)->_used_nodes_begin; \
         _type _el; \
-        int _id; \
+        int id; \
         while ( node ) { \
-            _id = node - (_pool)->_nodes; \
-            _el = *( (_type*) ex_pool_get( _pool, _id ) );
+            id = node - (_pool)->_nodes; \
+            _el = (_type) ex_pool_get( _pool, id );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_pool_each_end
+ @details macro to end the ex_pool_each, ex_pool_raw_each macro
+ @sa ex_pool_each
+ @sa ex_pool_raw_each
+*/// ------------------------------------------------------------------ 
 
 #define ex_pool_each_end \
             node = node->next; \
         } \
+    }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_pool_continue
+ @details macro to let the continue work in each
+ @sa ex_pool_each
+ @sa ex_pool_raw_each
+*/// ------------------------------------------------------------------ 
+
+#define ex_pool_continue \
+    { \
+        node = node->next; \
+        continue; \
     }
 
 // ------------------------------------------------------------------ 

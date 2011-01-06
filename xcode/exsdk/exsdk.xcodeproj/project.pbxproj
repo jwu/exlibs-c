@@ -13,6 +13,7 @@
 		B20715BF12C7A4AC00071C29 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B207165512C82D2800071C29 /* engine.c in Sources */ = {isa = PBXBuildFile; fileRef = B207165312C82D2800071C29 /* engine.c */; };
 		B207165612C82D2800071C29 /* engine.h in Headers */ = {isa = PBXBuildFile; fileRef = B207165412C82D2800071C29 /* engine.h */; };
+		B21CB6D112D574EB00CDD369 /* test_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = B21CB6D012D574EB00CDD369 /* test_timer.c */; };
 		B23B2D2D12CAF7140011E237 /* timer_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B23B2D2B12CAF7140011E237 /* timer_mac.c */; };
 		B23B2D2E12CAF7140011E237 /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = B23B2D2C12CAF7140011E237 /* timer.c */; };
 		B245483012B91EF300EF7261 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B245482F12B91EF300EF7261 /* main.c */; };
@@ -166,6 +167,7 @@
 		B20715A412C7A38900071C29 /* graphics_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics_inc.h; path = graphics/graphics_inc.h; sourceTree = "<group>"; };
 		B207165312C82D2800071C29 /* engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = engine.c; sourceTree = "<group>"; };
 		B207165412C82D2800071C29 /* engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
+		B21CB6D012D574EB00CDD369 /* test_timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_timer.c; sourceTree = "<group>"; };
 		B23B2D2B12CAF7140011E237 /* timer_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer_mac.c; sourceTree = "<group>"; };
 		B23B2D2C12CAF7140011E237 /* timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer.c; sourceTree = "<group>"; };
 		B245482812B91E9900EF7261 /* test_gl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_gl.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -411,6 +413,7 @@
 		B2DD23F112A7C86E0053CA3F /* test_base */ = {
 			isa = PBXGroup;
 			children = (
+				B21CB6D012D574EB00CDD369 /* test_timer.c */,
 				B2DD23F212A7C86E0053CA3F /* main.c */,
 				B2DD23F312A7C86E0053CA3F /* test_array.c */,
 				B2DD23F412A7C86E0053CA3F /* test_bitarry.c */,
@@ -876,6 +879,7 @@
 				B2DD240812A7C86E0053CA3F /* test_rtti.c in Sources */,
 				B2DD240912A7C86E0053CA3F /* test_stringID.c in Sources */,
 				B2E2698812C9EC0100833568 /* test_thread.c in Sources */,
+				B21CB6D112D574EB00CDD369 /* test_timer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
