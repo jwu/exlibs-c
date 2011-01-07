@@ -10,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
+#include "../../entity/eng_time.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -47,6 +48,41 @@ static void normal () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void timescale () {
+    // timer with timescale
+    int id = ex_add_timer( _callback1, NULL, 0, ex_timespan_from(0,2000), EX_TIMESPAN_INFINITY );
+
+    ex_start_timer(id); ex_log("start!");
+    ex_sleep(4000);
+    ex_set_time_scale(0.5f);
+    ex_sleep(5000);
+    ex_set_time_scale(1.0f);
+    ex_stop_timer(id); ex_log("stop!");
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void lifetime () {
+    uint32 start,counter;
+    int id = ex_add_timer( _callback1, NULL, 0, ex_timespan_from(0,500), ex_timespan_from(0,2000) );
+    ex_start_timer(id);
+
+    start = counter = ex_timer_get_ticks();
+    while (1) {
+        counter = ex_timer_get_ticks() - start;
+        // printf( "seconds %f\n", (float)counter/1000.0f );
+        ex_sleep(10);
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void test_timer () {
-    normal();
+    // normal();
+    // timescale();
+    lifetime();
 }

@@ -19,11 +19,11 @@ static int __timer_alive = 0;
 static ex_thread_t* __timer_thread = NULL;
 static struct timeval __start_ticks;
 
-extern int __timer_running;
-extern void __threaded_timer_tick ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern int __timer_running;
+extern void __threaded_timer_tick ();
 // ------------------------------------------------------------------ 
 
 static int __run_timer ( void* _unused ) {

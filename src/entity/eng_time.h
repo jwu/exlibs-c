@@ -42,6 +42,8 @@ float ex_dt_physics ();
 
 float ex_time_scale ();
 void ex_set_time_scale ( float _scale );
+void ex_pause ();
+void ex_resume ();
 
 
 // ######################### 

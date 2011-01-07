@@ -97,11 +97,9 @@ int ex_lua_parse ( lua_State* _l, int status )
 // engine level
 ///////////////////////////////////////////////////////////////////////////////
 
-// all the wraps declare here.
-extern int luaopen_core ( lua_State* _l );
-
 // ------------------------------------------------------------------ 
 // Desc: 
+extern int luaopen_core ( lua_State* _l );
 // ------------------------------------------------------------------ 
 
 void ex_lua_init ()

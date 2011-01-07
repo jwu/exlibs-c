@@ -111,7 +111,9 @@ uint32 ex_timer_get_ticks ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_add_timer ( ex_timer_pfn _cb, void* _params, size_t _size, 
+extern int ex_add_timer ( ex_timer_pfn _cb, 
+                          void* _params, 
+                          size_t _size, /*parameter byte-size*/ 
                           timespan_t _interval,
                           timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ );
 extern bool ex_remove_timer ( int _id );

@@ -35,9 +35,9 @@ static const int __sig_list[] = {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_run_thread ( void* );
 // ------------------------------------------------------------------ 
 
-extern void ex_run_thread ( void* );
 static void* __run_thread (void* _data) {
     ex_run_thread(_data);
     pthread_exit((void *) 0);

@@ -27,20 +27,13 @@ typedef struct thread_args_t {
     ex_semaphore_t* wait;
 } thread_args_t;
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern int ex_sys_create_thread ( ex_thread_t* _thread, void* _args );
-extern void ex_sys_wait_thread ( ex_thread_t* _thread );
-extern void ex_sys_setup_thread ();
-
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern int ex_sys_create_thread ( ex_thread_t* _thread, void* _args );
 // ------------------------------------------------------------------ 
 
 ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
@@ -101,6 +94,7 @@ ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_sys_wait_thread ( ex_thread_t* _thread );
 // ------------------------------------------------------------------ 
 
 void ex_wait_thread ( ex_thread_t* _thread, int* _status ) {
@@ -118,6 +112,7 @@ void ex_wait_thread ( ex_thread_t* _thread, int* _status ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_sys_setup_thread ();
 // ------------------------------------------------------------------ 
 
 void ex_run_thread ( void* _data ) {

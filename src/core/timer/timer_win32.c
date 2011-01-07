@@ -16,13 +16,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 static UINT __timerID = 0;
-extern void __threaded_timer_tick ();
-
 static LARGE_INTEGER __start_ticks;
 static LARGE_INTEGER __freq;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __threaded_timer_tick ();
 // ------------------------------------------------------------------ 
 
 static void CALLBACK HandleAlarm ( UINT uID, 

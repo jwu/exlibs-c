@@ -24,6 +24,7 @@
 
 typedef struct timer_t {
     int state;
+    bool affect_by_timescale;
 
     uint32 interval;    // msecs
     // if reach lifetime, the timer will stopped but not removed
@@ -48,9 +49,6 @@ ex_array_t* __unused_timers = NULL;
 static bool __initialized = false;
 static ex_mutex_t* __timer_mutex = NULL;
 
-extern bool ex_sys_timer_init ();
-extern void ex_sys_timer_deinit ();
-
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -64,18 +62,6 @@ void __threaded_timer_tick () {
     ex_pool_raw_each ( __timers, timer_t*, t ) {
         if ( t->state != EX_TIMER_STATE_RUNNING )
             ex_pool_continue;
-
-        // process lifetime
-        if ( t->lifetime != -1 ) {
-            ms = t->lifetime_counter - EX_TIMER_SLICE;
-            int32 time_since_start = (int32)(now - t->start); 
-
-            // if we exceed the lifetime, remove the timer
-            if ( time_since_start > ms ) {
-                ex_array_append_int32(__unused_timers, id);
-                ex_pool_continue;
-            }
-        }
 
         // process internval
         ms = t->interval_counter - EX_TIMER_SLICE;
@@ -106,6 +92,18 @@ void __threaded_timer_tick () {
             }
         }
 
+        // process lifetime
+        if ( t->lifetime != -1 ) {
+            ms = t->lifetime_counter - EX_TIMER_SLICE;
+            int32 time_since_start = (int32)(now - t->start); 
+
+            // if we exceed the lifetime, remove the timer
+            if ( time_since_start > ms ) {
+                ex_array_append_int32(__unused_timers, id);
+                ex_pool_continue;
+            }
+        }
+
     } ex_pool_each_end
 
     // remove all timer here
@@ -124,6 +122,7 @@ void __threaded_timer_tick () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern bool ex_sys_timer_init ();
 // ------------------------------------------------------------------ 
 
 bool ex_timer_init () {
@@ -155,6 +154,7 @@ bool ex_timer_init () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_sys_timer_deinit ();
 // ------------------------------------------------------------------ 
 
 void ex_timer_deinit () {
@@ -186,9 +186,11 @@ void ex_timer_deinit () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_add_timer ( ex_timer_pfn _cb, void* _params, size_t _size, 
+int ex_add_timer ( ex_timer_pfn _cb, 
+                   void* _params, 
+                   size_t _size, /*parameter byte-size*/ 
                    timespan_t _interval,
-                   timespan_t _lifetime ) {
+                   timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ ) {
     //
     timer_t newTimer;
 

@@ -15,21 +15,6 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-extern void test_array();
-extern void test_bitarry();
-extern void test_btree();
-extern void test_encoding();
-extern void test_hashmap();
-extern void test_list();
-extern void test_memmng();
-extern void test_pool();
-extern void test_rtti();
-extern void test_stringID();
-extern void test_thread();
-extern void test_timer();
-
-extern void test_rapid();
-
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -45,6 +30,19 @@ static void exit_fn () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void test_array();
+extern void test_bitarry();
+extern void test_btree();
+extern void test_encoding();
+extern void test_hashmap();
+extern void test_list();
+extern void test_memmng();
+extern void test_pool();
+extern void test_rtti();
+extern void test_stringID();
+extern void test_thread();
+extern void test_timer();
+extern void test_rapid();
 // ------------------------------------------------------------------ 
 
 int main( int argc, char* argv[] )

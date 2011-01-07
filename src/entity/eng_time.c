@@ -26,6 +26,7 @@ static float __realtime = 0.0f;
 static float __dt = 0.0f;
 static float __dt_physics = 1.0f;
 static float __time_scale = 1.0f;
+static float __last_time_scale = 1.0f;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -107,3 +108,24 @@ float ex_time_scale () { return __time_scale; }
 // ------------------------------------------------------------------ 
 
 void ex_set_time_scale ( float _scale ) { __time_scale = _scale; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_pause () {
+    if ( ex_is_zerof(__time_scale,EX_FLOAT_EPS) ) {
+        ex_warning("the engine already paused!");
+        return;
+    }
+    __last_time_scale = __time_scale;
+    __time_scale = 0.0f;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_resume () {
+    __time_scale = __last_time_scale;
+}
