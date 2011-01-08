@@ -105,7 +105,7 @@ extern void ex_timer_deinit ();
 // Desc: return ms 
 // ------------------------------------------------------------------ 
 
-uint32 ex_timer_get_ticks ();
+extern uint32 ex_timer_get_ticks ();
 
 // ------------------------------------------------------------------ 
 // Desc: 

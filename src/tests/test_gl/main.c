@@ -12,8 +12,11 @@
 #include "../../core/core_inc.h"
 #include "../../graphics/graphics_inc.h"
 
+#include "../../entity/engine.h"
 #include "../../entity/world.h"
 #include "../../entity/entity.h"
+#include "../../entity/eng_time.h"
+#include "../../entity/trans2d.h"
 
 #if (EX_PLATFORM == EX_MACOSX)
 	#include "OpenGL/gl.h"
@@ -49,6 +52,44 @@ ex_world_t* world = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void initGame () {
+    ex_entity_t* ent;
+
+    world = ex_world_alloc();
+
+    // TODO { 
+    // init the world
+    // serialize the world
+    // } TODO end 
+
+    // TEMP: instead of serialize the world, I hardcoded the entities.
+    ent = ex_world_create_entity ( world, ex_strid("ent1") ); {
+        ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_trans2d_t) );
+        ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_debug2d_t) );
+        // ex_debug2d_add_rect ( dbg2d, ex_rect_from() ) // TODO:
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void quitGame () {
+    ex_world_free(world);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void updateGame () {
+    ex_world_update(world);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void _reshape ( int _width, int _height ) {
     win_width = _width;
     win_height = _height;
@@ -63,6 +104,15 @@ static void _reshape ( int _width, int _height ) {
     glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
     glTranslated(0.5, 0.5, 0.0);
     // glOrtho(0, win_width, win_height, 0, -1.0, 1.0); // jwu DISABLE
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void _idle() {
+    updateGame();
+	glutPostRedisplay();
 }
 
 // ------------------------------------------------------------------ 
@@ -85,7 +135,7 @@ static void _display() {
     // }
     // } TODO end 
 
-    glClearColor(0.0f,0.5f,1.0f,1.0f); // RGBA background color
+    glClearColor( 0.0f,0.5f,1.0f,1.0f); // RGBA background color
     glClear(GL_COLOR_BUFFER_BIT);
 
     // render 2D/3D objects in world space 
@@ -106,11 +156,12 @@ static void _display() {
     glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
 
     {
-        int x = 10;
-        int y = 10;
-        ex_draw_string( x, y, "press ESC to quit." );
-        y += 12;
-        ex_draw_string( x, y, "this is simple gl test." );
+        char text[128];
+        int x = 10; int y = 10;
+        snprintf( text, 128, "fps: %f", ex_fps() );
+        ex_draw_string( x, y, text );
+        y += 12; ex_draw_string( x, y, "press ESC to quit." );
+        y += 12; ex_draw_string( x, y, "this is a simple gl test." );
     }
 
     glutSwapBuffers();
@@ -190,9 +241,9 @@ static void initGL () {
 static void registerFuncs () {
 	glutReshapeFunc(_reshape);
 	glutDisplayFunc(_display);
+    glutIdleFunc(_idle);
 
     // DISABLE { 
-    // glutIdleFunc(idle);
     // glutTimerFunc(SLEEP_TICKS, timercall, 0);
     // } DISABLE end 
 
@@ -204,40 +255,6 @@ static void registerFuncs () {
 	glutMotionFunc(_mouse);
 	glutPassiveMotionFunc(_mouse);
 	glutMouseFunc(_click);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void initGame () {
-    ex_entity_t* ent;
-
-    world = ex_world_alloc();
-
-    // TODO { 
-    // init the world
-    // serialize the world
-    // } TODO end 
-
-    // TEMP: instead of serialize the world, I hardcoded the entities.
-    ent = ex_world_create_entity ( world, "ent1" );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void quitGame () {
-    ex_world_free(world);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void updateGame () {
-    ex_world_update(world);
 }
 
 // ------------------------------------------------------------------ 

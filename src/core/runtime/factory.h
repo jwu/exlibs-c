@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : component.h
+// File         : factory.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:25:33 PM | Thursday,November
+// Last Change  : 01/08/2011 | 11:59:28 AM | Saturday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef COMPONENT_H_1290677135
-#define COMPONENT_H_1290677135
+#ifndef FACTORY_H_1294459170
+#define FACTORY_H_1294459170
 // #################################################################################
 
 // ######################### 
@@ -17,27 +17,24 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// struct
+// includes
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-/*! 
- @struct ex_component_t
- @details
-*/// ------------------------------------------------------------------ 
-
-EX_DEF_CLASS_BEGIN(ex_component_t)
-    struct ex_entity_t* _owner;
-    void (*init) ( void* _self ); // invoked after the component created
-    void (*deinit) ( void* _self ); // invoked before the component destroyed
-    void (*start) ( void* _self ); // invoked when all the component in the entity been added.
-    void (*update) ( void* _self );
-    void (*post_update) ( void* _self );
-EX_DEF_CLASS_END(ex_component_t)
+#include "rtti.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// functions
+// declares pfn
 ///////////////////////////////////////////////////////////////////////////////
+
+typedef void* (*ex_create_pfn_t) ();
+
+///////////////////////////////////////////////////////////////////////////////
+// declares functions
+///////////////////////////////////////////////////////////////////////////////
+
+extern void ex_factory_register ( strid_t _classID, ex_create_pfn_t _pfn );
+extern void ex_factory_unregister ( strid_t _classID );
+extern void* ex_factory_create ( strid_t _classID );
 
 // ######################### 
 #ifdef __cplusplus
@@ -45,9 +42,8 @@ EX_DEF_CLASS_END(ex_component_t)
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END COMPONENT_H_1290677135
+#endif // END FACTORY_H_1294459170
 // #################################################################################
 
 

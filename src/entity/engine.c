@@ -37,9 +37,6 @@ bool ex_engine_init () {
         return true;
     }
 
-    // 
-    ex_trans2d_internal_init ();
-
     // start engine timer
     __eng_time_start ();
 
@@ -55,8 +52,6 @@ bool ex_engine_init () {
 
 void ex_engine_deinit () {
     if ( __initialized ) {
-        ex_trans2d_internal_deinit();
-
         ex_log ( "ex_engine deinitied" );
         __initialized = false;
     }

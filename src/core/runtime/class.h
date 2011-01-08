@@ -21,6 +21,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "rtti.h"
+#include "factory.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // struct
@@ -34,7 +35,7 @@ typedef struct ex_class_t {
 //
 extern ex_rtti_t* __RTTI_ex_class_t__;
 static inline void __ex_register_class_ex_class_t () { 
-    __RTTI_ex_class_t__ = ex_rtti_register_class ( "ex_class_t", NULL );
+    __RTTI_ex_class_t__ = ex_rtti_register_class ( ex_strid("ex_class_t"), NULL );
 }
 
 //
@@ -79,11 +80,13 @@ static inline void free_ex_class_t(void* _ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_CLASS_BEGIN(_name) \
+    extern void* __ex_create_##_name(); \
     extern void __ex_register_properties_##_name (); \
     extern ex_rtti_t* __RTTI_##_name##__; /*for EX_RTTI, EX_CLASSID*/ \
     static inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __RTTI_##_name##__ = ex_rtti_register_class ( #_name, EX_RTTI(ex_class_t) ); \
+        __RTTI_##_name##__ = ex_rtti_register_class ( ex_strid(#_name), EX_RTTI(ex_class_t) ); \
         __ex_register_properties_##_name(); \
+        ex_factory_register(ex_strid(#_name),__ex_create_##_name); \
     } \
     typedef struct _name { \
         const struct ex_class_t _;
@@ -93,11 +96,13 @@ static inline void free_ex_class_t(void* _ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_CLASS_SUPER_BEGIN(_name,_super) \
+    extern void* __ex_create_##_name(); \
     extern void __ex_register_properties_##_name (); \
     extern ex_rtti_t* __RTTI_##_name##__; /*for EX_RTTI, EX_CLASSID*/ \
     static inline void __ex_register_class_##_name () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __RTTI_##_name##__ = ex_rtti_register_class ( #_name, EX_RTTI(_super) ); \
+        __RTTI_##_name##__ = ex_rtti_register_class ( ex_strid(#_name), EX_RTTI(_super) ); \
         __ex_register_properties_##_name(); \
+        ex_factory_register(ex_strid(#_name),__ex_create_##_name); \
     } \
     typedef struct _name { \
         const struct _super _;
@@ -119,6 +124,13 @@ static inline void free_ex_class_t(void* _ptr) {
     static inline void free_##_name(void* _ptr) { \
         ex_free(_ptr); \
     }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_DEF_CLASS_CREATOR(_name) \
+    void* __ex_create_##_name()
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

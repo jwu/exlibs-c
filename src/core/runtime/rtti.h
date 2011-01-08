@@ -49,7 +49,7 @@ extern bool ex_rtti_is_inited ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super );
+extern ex_rtti_t* ex_rtti_register_class ( strid_t _classID, ex_rtti_t* _super );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -61,7 +61,7 @@ extern void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _pr
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_rtti_t* ex_rtti_get ( const char* _class );
+extern ex_rtti_t* ex_rtti_get ( strid_t _classID );
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -16,6 +16,8 @@ extern "C" {
 #endif
 // ######################### 
 
+#include "component.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // struct
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,7 +28,7 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_BEGIN(ex_trans2d_t)
+EX_DEF_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_vec2f_t  _pos;
     ex_angf_t   _ang;
     ex_vec2f_t  _scale;
@@ -42,21 +44,8 @@ EX_DEF_CLASS_END(ex_trans2d_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_trans2d_internal_init (); 
-extern void ex_trans2d_internal_deinit (); 
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern ex_trans2d_t* ex_trans2d_request (); 
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_trans2d_init ( ex_trans2d_t* _comp ); 
-extern void ex_trans2d_deinit ( ex_trans2d_t* _comp ); 
+extern void ex_trans2d_init ( void* _self ); 
+extern void ex_trans2d_deinit ( void* _self ); 
 
 // ######################### 
 #ifdef __cplusplus

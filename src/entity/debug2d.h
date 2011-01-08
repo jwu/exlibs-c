@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : entity.h
+// File         : debug2d.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:16:24 PM | Thursday,November
+// Last Change  : 01/08/2011 | 16:42:18 PM | Saturday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef ENTITY_H_1290676586
-#define ENTITY_H_1290676586
+#ifndef DEBUG2D_H_1294476144
+#define DEBUG2D_H_1294476144
 // #################################################################################
 
 // ######################### 
@@ -24,15 +24,13 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct ex_entity_t
+ @struct ex_debug2d_t
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_BEGIN(ex_entity_t)
-    strid_t _name;
-    // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
-    ex_array_t* _comps;
-EX_DEF_CLASS_END(ex_entity_t)
+EX_DEF_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
+    // ex_rect_t _rect;
+EX_DEF_CLASS_END(ex_debug2d_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -42,25 +40,8 @@ EX_DEF_CLASS_END(ex_entity_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_entity_t* ex_entity_alloc ();
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_entity_free ( ex_entity_t* _ent );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern ex_component_t* ex_entity_get_comp ( const ex_entity_t* _ent, strid_t _typeID );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID );
+extern void ex_debug2d_init ( void* _self ); 
+extern void ex_debug2d_deinit ( void* _self ); 
 
 // ######################### 
 #ifdef __cplusplus
@@ -68,9 +49,6 @@ extern ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID )
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END ENTITY_H_1290676586
+#endif // END DEBUG2D_H_1294476144
 // #################################################################################
-
-

@@ -26,6 +26,8 @@
 		B261C0EC12CD637B0018BCDA /* timespan.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C0E612CD637B0018BCDA /* timespan.h */; };
 		B261C13512CDACAF0018BCDA /* dtime.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C13312CDACAF0018BCDA /* dtime.c */; };
 		B261C13612CDACAF0018BCDA /* dtime.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C13412CDACAF0018BCDA /* dtime.h */; };
+		B2C921A212D834B6000FB811 /* factory.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C921A012D834B6000FB811 /* factory.c */; };
+		B2C921A312D834B6000FB811 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C921A112D834B6000FB811 /* factory.h */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
 		B2DD23FF12A7C86E0053CA3F /* test_array.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F312A7C86E0053CA3F /* test_array.c */; };
 		B2DD240012A7C86E0053CA3F /* test_bitarry.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F412A7C86E0053CA3F /* test_bitarry.c */; };
@@ -183,6 +185,8 @@
 		B261C0E612CD637B0018BCDA /* timespan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timespan.h; sourceTree = "<group>"; };
 		B261C13312CDACAF0018BCDA /* dtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtime.c; sourceTree = "<group>"; };
 		B261C13412CDACAF0018BCDA /* dtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtime.h; sourceTree = "<group>"; };
+		B2C921A012D834B6000FB811 /* factory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = factory.c; sourceTree = "<group>"; };
+		B2C921A112D834B6000FB811 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
 		B2DD23EA12A7C7CE0053CA3F /* test.base */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test.base; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD23F212A7C86E0053CA3F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2DD23F312A7C86E0053CA3F /* test_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_array.c; sourceTree = "<group>"; };
@@ -600,6 +604,8 @@
 		B2E0B75112A6B144009FE3E8 /* runtime */ = {
 			isa = PBXGroup;
 			children = (
+				B2C921A012D834B6000FB811 /* factory.c */,
+				B2C921A112D834B6000FB811 /* factory.h */,
 				B2E0B75212A6B144009FE3E8 /* class.c */,
 				B2E0B75312A6B144009FE3E8 /* class.h */,
 				B2E0B75412A6B144009FE3E8 /* prop.c */,
@@ -765,6 +771,7 @@
 				B261C0EC12CD637B0018BCDA /* timespan.h in Headers */,
 				B261C13612CDACAF0018BCDA /* dtime.h in Headers */,
 				B2F397C512D623BB00F7E252 /* eng_time.h in Headers */,
+				B2C921A312D834B6000FB811 /* factory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -939,6 +946,7 @@
 				B261C0EB12CD637B0018BCDA /* timespan.c in Sources */,
 				B261C13512CDACAF0018BCDA /* dtime.c in Sources */,
 				B2F397C412D623BB00F7E252 /* eng_time.c in Sources */,
+				B2C921A212D834B6000FB811 /* factory.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,7 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __factory_init ();
 // ------------------------------------------------------------------ 
 
 bool ex_rtti_init () 
@@ -43,6 +44,7 @@ bool ex_rtti_init ()
                                            256,
                                            ex_hashkey_strid, 
                                            ex_keycmp_strid );
+    __factory_init();
 
     __initialized = true;
     return true;
@@ -50,11 +52,14 @@ bool ex_rtti_init ()
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __factory_deinit ();
 // ------------------------------------------------------------------ 
 
 void ex_rtti_deinit ()
 {
     if ( __initialized ) {
+        __factory_deinit();
+
         // free all allocated string
         ex_hashmap_each ( __classid_to_rtti, ex_rtti_t*, _info ) {
             ex_free(_info->_props);
@@ -75,23 +80,22 @@ bool ex_rtti_is_inited () { return __initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_register_class ( char* _class, ex_rtti_t* _super )
+ex_rtti_t* ex_rtti_register_class ( strid_t _classID, ex_rtti_t* _super )
 {
-    strid_t my_classid = ex_strid(_class);
-    ex_rtti_t* my_rtti = ex_rtti_get(_class);
+    ex_rtti_t* my_rtti = ex_rtti_get(_classID);
     bool result = false;
 
     // check if my class already exists.
-    ex_assert_return ( my_rtti == NULL, NULL, "the class %s already registered.", _class );
+    ex_assert_return ( my_rtti == NULL, NULL, "the class %s already registered.", ex_strid_to_cstr(_classID) );
 
     // we got everything we want, now we can create rtti info.
     my_rtti = (ex_rtti_t*)ex_malloc ( sizeof(ex_rtti_t) );
     my_rtti->_super = _super;
-    my_rtti->_classid = my_classid;
+    my_rtti->_classid = _classID;
     my_rtti->_props = NULL;
 
     // insert the new rtti to the hashmap
-    result = ex_hashmap_insert( __classid_to_rtti, &my_classid, &my_rtti, NULL );
+    result = ex_hashmap_insert( __classid_to_rtti, &_classID, &my_rtti, NULL );
     if ( result == false ) {
         ex_warning( "failed to insert new rtti info in to hashmap" );
         ex_free (my_rtti);
@@ -123,10 +127,9 @@ void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, ui
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t* ex_rtti_get ( const char* _class )
+ex_rtti_t* ex_rtti_get ( strid_t _classID )
 {
-    strid_t classID = ex_strid(_class);
-    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( __classid_to_rtti, &classID, NULL );
+    ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( __classid_to_rtti, &_classID, NULL );
     if ( result != NULL )
         return *result;
     return NULL;

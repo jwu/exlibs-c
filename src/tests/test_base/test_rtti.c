@@ -37,7 +37,7 @@ static strid_t __RTTI_test_cls_t__;
 
 //
 void __ex_register_test_cls_t () {
-    __RTTI_test_cls_t__ = ex_rtti_register_class ( "test_cls_t", "ex_class_t" );
+    __RTTI_test_cls_t__ = ex_rtti_register_class ( ex_strid("test_cls_t"), "ex_class_t" );
     ex_rtti_register_properties ( __RTTI_test_cls_t__, 
                                   __PROPS_test_cls_t__, 
                                   EX_ARRAY_COUNT(__PROPS_test_cls_t__)-1 ); \
@@ -49,6 +49,10 @@ EX_DEF_CLASS_BEGIN(test_cls_t)
     float   data1;
     float   data2;
 EX_DEF_CLASS_END(test_cls_t)
+
+EX_DEF_CLASS_CREATOR(test_cls_t) {
+    return alloc_test_cls_t();
+}
 
 EX_DEF_PROPS_BEGIN(test_cls_t)
     EX_PROP( test_cls_t, id,    "id",    EX_PROP_ATTR_READ_ONLY, ex_prop_set_raw_int32, ex_prop_get_raw_int32 )

@@ -25,8 +25,8 @@ typedef uint date_t; // we use julian date
 // Desc: 
 // ------------------------------------------------------------------ 
 
-const char* ex_week_day_name ( uint _wday );
-const char* ex_month_name ( uint _month );
+extern const char* ex_week_day_name ( uint _wday );
+extern const char* ex_month_name ( uint _month );
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -28,15 +28,34 @@ static float __dt_physics = 1.0f;
 static float __time_scale = 1.0f;
 static float __last_time_scale = 1.0f;
 
+static float __fps = 0.0f;
+static uint32 __frame_count = 0;
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int32 __calc_fps ( uint32 _interval, void* _param ) {
+    float secs = (float)_interval/1000.0f;
+    __fps = (float)__frame_count / secs;
+    __frame_count = 0;
+    return _interval;
+}
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 void __eng_time_start () {
+    int id; 
     uint32 now = ex_timer_get_ticks();
+
     __timer_engine_start = now; 
     __timer_frame_start = now;
     __time = (float)now/1000.0f;
+
+    id = ex_add_timer ( __calc_fps, NULL, 0, ex_timespan_from(1,0), EX_TIMESPAN_INFINITY );
+    ex_start_timer(id);
 }
 
 // ------------------------------------------------------------------ 
@@ -56,6 +75,7 @@ void __world_time_start () {
 void __eng_time_tick () {
     uint32 now = ex_timer_get_ticks();
 
+    ++__frame_count;
     __dt = (float)(now-__timer_frame_start)/1000.0f * __time_scale;
     __realtime = (float)(now-__timer_engine_start)/1000.0f;
     __time += __dt;
@@ -129,3 +149,9 @@ void ex_pause () {
 void ex_resume () {
     __time_scale = __last_time_scale;
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+float ex_fps () { return __fps; }
