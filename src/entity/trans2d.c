@@ -41,6 +41,7 @@ EX_DEF_PROPS_END(ex_trans2d_t)
 void ex_trans2d_init ( void* _self ) {
     ex_trans2d_t* trans2d = (ex_trans2d_t*)_self; 
 
+    ex_component_init(_self); // parent init
     ex_vec2f_zero(&trans2d->_pos);
     ex_angf_zero(&trans2d->_ang);
     ex_vec2f_zero(&trans2d->_scale);
@@ -56,4 +57,5 @@ void ex_trans2d_deinit ( void* _self ) {
     ex_trans2d_t* trans2d = (ex_trans2d_t*)_self; 
 
     ex_array_free(trans2d->_childrent);
+    ex_component_deinit(_self); // parent deinint
 }

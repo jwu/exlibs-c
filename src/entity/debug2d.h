@@ -22,6 +22,9 @@ extern "C" {
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
+#define EX_DEBUG_SHAPE_RECT     0
+#define EX_DEBUG_SHAPE_CIRCLE   1
+
 // ------------------------------------------------------------------ 
 /*! 
  @struct ex_debug2d_t
@@ -29,7 +32,9 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DEF_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
-    // ex_rect_t _rect;
+    int _shapeType;
+    ex_rectf_t _rect;
+    ex_circlef_t _circle;
 EX_DEF_CLASS_END(ex_debug2d_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,6 +47,19 @@ EX_DEF_CLASS_END(ex_debug2d_t)
 
 extern void ex_debug2d_init ( void* _self ); 
 extern void ex_debug2d_deinit ( void* _self ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_debug2d_set_rect ( ex_debug2d_t* _self, 
+                                  float _x, float _y, float _width, float _height ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_debug2d_draw ( ex_debug2d_t* _self ); 
 
 // ######################### 
 #ifdef __cplusplus

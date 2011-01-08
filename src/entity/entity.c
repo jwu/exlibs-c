@@ -12,6 +12,8 @@
 #include "exsdk.h"
 #include "entity.h"
 
+#include "trans2d.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // private
 ///////////////////////////////////////////////////////////////////////////////
@@ -101,9 +103,14 @@ ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID ) {
     // create a component and added to the component list, then return it.
     comp = (ex_component_t*)ex_factory_create(_typeID);
     if ( comp ) {
+        comp->_owner = _ent; // set the owner of the component before init.
         if ( comp->init )
             comp->init(comp);
         ex_array_append( _ent->_comps, &comp );
+
+        // cache internal component
+        if ( _typeID == EX_CLASSID(ex_trans2d_t) )
+            _ent->_trans2d = (ex_trans2d_t*)comp; 
     }
 
     return comp;

@@ -32,6 +32,8 @@ EX_DEF_CLASS_BEGIN(ex_entity_t)
     strid_t _name;
     // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
     ex_array_t* _comps;
+    // cached components 
+    struct ex_trans2d_t* _trans2d;
 EX_DEF_CLASS_END(ex_entity_t)
 
 ///////////////////////////////////////////////////////////////////////////////

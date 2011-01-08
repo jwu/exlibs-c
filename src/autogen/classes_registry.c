@@ -12,9 +12,10 @@
 #include "exsdk.h"
 
 // TEMP: should be in one header file { 
+#include "../entity/entity.h"
 #include "../entity/component.h"
 #include "../entity/trans2d.h"
-#include "../entity/entity.h"
+#include "../entity/debug2d.h"
 // } TEMP end 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,8 +27,9 @@ void ex_register_classes () {
     EX_REGISTER_CLASS(ex_class_t);
 
     // ex engine
+    EX_REGISTER_CLASS(ex_entity_t);
     EX_REGISTER_CLASS(ex_component_t);
     EX_REGISTER_CLASS(ex_trans2d_t);
-    EX_REGISTER_CLASS(ex_entity_t);
+    EX_REGISTER_CLASS(ex_debug2d_t);
 }
 

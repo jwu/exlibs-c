@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : component.h
+// File         : rectf.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:25:33 PM | Thursday,November
+// Last Change  : 01/08/2011 | 22:34:03 PM | Saturday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef COMPONENT_H_1290677135
-#define COMPONENT_H_1290677135
+#ifndef RECTF_H_1294497245
+#define RECTF_H_1294497245
 // #################################################################################
 
 // ######################### 
@@ -21,32 +21,28 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
-/*! 
- @struct ex_component_t
- @details
-*/// ------------------------------------------------------------------ 
+// Desc: ex_rectf_t
+// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_BEGIN(ex_component_t)
-    struct ex_entity_t* _owner;
-
-    // override functions
-    void (*init) ( void* _self ); // invoked after the component created
-    void (*deinit) ( void* _self ); // invoked before the component destroyed
-    void (*start) ( void* _self ); // invoked when all the component in the entity been added.
-    void (*update) ( void* _self );
-    void (*post_update) ( void* _self );
-EX_DEF_CLASS_END(ex_component_t)
-
-///////////////////////////////////////////////////////////////////////////////
-// functions
-///////////////////////////////////////////////////////////////////////////////
+typedef struct ex_rectf_t {
+    ex_vec2f_t center;
+    float width;
+    float height;
+} ex_rectf_t;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_component_init ( void* _self ); 
-extern void ex_component_deinit ( void* _self ); 
+static inline void ex_rectf_set ( ex_rectf_t* _r, 
+                                  ex_vec2f_t _center, 
+                                  float _width, 
+                                  float _height ) 
+{ 
+    _r->center = _center;
+    _r->width = _width;
+    _r->height = _height;
+}
 
 // ######################### 
 #ifdef __cplusplus
@@ -54,9 +50,6 @@ extern void ex_component_deinit ( void* _self );
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END COMPONENT_H_1290677135
+#endif // END RECTF_H_1294497245
 // #################################################################################
-
-

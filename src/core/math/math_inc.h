@@ -18,6 +18,9 @@
 #include "mathop.h"
 #include "random.h"
 #include "interpolation.h"
+#include "ease_curve.h"
+
+// algebelar
 #include "angf.h"
 #include "vec2f.h"
 #include "vec3f.h"
@@ -26,6 +29,11 @@
 #include "mat33f.h"
 #include "mat44f.h"
 #include "quatf.h"
+
+// geometry
+#include "line2f.h"
+#include "rectf.h"
+#include "circlef.h"
 
 // #################################################################################
 #endif // END MATH_INC_H_1277686586

@@ -29,9 +29,9 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DEF_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
-    ex_vec2f_t  _pos;
-    ex_angf_t   _ang;
-    ex_vec2f_t  _scale;
+    ex_vec2f_t  _pos;   // local position
+    ex_angf_t   _ang;   // local angle
+    ex_vec2f_t  _scale; // local scale
     struct ex_trans2d_t* _parent;
     ex_array_t* _childrent;
 EX_DEF_CLASS_END(ex_trans2d_t)

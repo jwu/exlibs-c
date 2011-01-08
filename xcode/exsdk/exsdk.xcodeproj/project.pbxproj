@@ -28,6 +28,11 @@
 		B261C13612CDACAF0018BCDA /* dtime.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C13412CDACAF0018BCDA /* dtime.h */; };
 		B2C921A212D834B6000FB811 /* factory.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C921A012D834B6000FB811 /* factory.c */; };
 		B2C921A312D834B6000FB811 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C921A112D834B6000FB811 /* factory.h */; };
+		B2C9220E12D8B4AA000FB811 /* circlef.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220B12D8B4AA000FB811 /* circlef.h */; };
+		B2C9220F12D8B4AA000FB811 /* line2f.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220C12D8B4AA000FB811 /* line2f.h */; };
+		B2C9221012D8B4AA000FB811 /* rectf.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220D12D8B4AA000FB811 /* rectf.h */; };
+		B2C9221312D8B4B6000FB811 /* debug2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C9221112D8B4B6000FB811 /* debug2d.c */; };
+		B2C9221412D8B4B6000FB811 /* debug2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9221212D8B4B6000FB811 /* debug2d.h */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
 		B2DD23FF12A7C86E0053CA3F /* test_array.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F312A7C86E0053CA3F /* test_array.c */; };
 		B2DD240012A7C86E0053CA3F /* test_bitarry.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F412A7C86E0053CA3F /* test_bitarry.c */; };
@@ -187,6 +192,11 @@
 		B261C13412CDACAF0018BCDA /* dtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtime.h; sourceTree = "<group>"; };
 		B2C921A012D834B6000FB811 /* factory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = factory.c; sourceTree = "<group>"; };
 		B2C921A112D834B6000FB811 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
+		B2C9220B12D8B4AA000FB811 /* circlef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circlef.h; sourceTree = "<group>"; };
+		B2C9220C12D8B4AA000FB811 /* line2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = line2f.h; sourceTree = "<group>"; };
+		B2C9220D12D8B4AA000FB811 /* rectf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rectf.h; sourceTree = "<group>"; };
+		B2C9221112D8B4B6000FB811 /* debug2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug2d.c; sourceTree = "<group>"; };
+		B2C9221212D8B4B6000FB811 /* debug2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug2d.h; sourceTree = "<group>"; };
 		B2DD23EA12A7C7CE0053CA3F /* test.base */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test.base; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD23F212A7C86E0053CA3F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2DD23F312A7C86E0053CA3F /* test_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_array.c; sourceTree = "<group>"; };
@@ -552,6 +562,9 @@
 		B2E0B72F12A6B144009FE3E8 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B2C9220B12D8B4AA000FB811 /* circlef.h */,
+				B2C9220C12D8B4AA000FB811 /* line2f.h */,
+				B2C9220D12D8B4AA000FB811 /* rectf.h */,
 				B2E0B73012A6B144009FE3E8 /* angf.h */,
 				B2E0B73112A6B144009FE3E8 /* ease_curve.c */,
 				B2E0B73212A6B144009FE3E8 /* ease_curve.h */,
@@ -651,6 +664,8 @@
 		B2E0B76612A6B144009FE3E8 /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				B2C9221112D8B4B6000FB811 /* debug2d.c */,
+				B2C9221212D8B4B6000FB811 /* debug2d.h */,
 				B2F397C212D623BB00F7E252 /* eng_time.c */,
 				B2F397C312D623BB00F7E252 /* eng_time.h */,
 				B207165312C82D2800071C29 /* engine.c */,
@@ -772,6 +787,10 @@
 				B261C13612CDACAF0018BCDA /* dtime.h in Headers */,
 				B2F397C512D623BB00F7E252 /* eng_time.h in Headers */,
 				B2C921A312D834B6000FB811 /* factory.h in Headers */,
+				B2C9220E12D8B4AA000FB811 /* circlef.h in Headers */,
+				B2C9220F12D8B4AA000FB811 /* line2f.h in Headers */,
+				B2C9221012D8B4AA000FB811 /* rectf.h in Headers */,
+				B2C9221412D8B4B6000FB811 /* debug2d.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -947,6 +966,7 @@
 				B261C13512CDACAF0018BCDA /* dtime.c in Sources */,
 				B2F397C412D623BB00F7E252 /* eng_time.c in Sources */,
 				B2C921A212D834B6000FB811 /* factory.c in Sources */,
+				B2C9221312D8B4B6000FB811 /* debug2d.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

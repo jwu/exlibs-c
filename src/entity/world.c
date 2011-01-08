@@ -13,6 +13,26 @@
 #include "world.h"
 #include "entity.h"
 
+#include "trans2d.h"
+#include "debug2d.h"
+
+///////////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __debug_draw ( ex_world_t* _world ) {
+    ex_array_each ( _world->_entities, ex_entity_t*, ent ) {
+        ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_get_comp( ent, EX_CLASSID(ex_debug2d_t) );
+        if ( dbg2d ) {
+            ex_debug2d_draw(dbg2d);
+        }
+    } ex_array_each_end;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,9 +78,12 @@ extern void __eng_time_tick ();
 void ex_world_update ( ex_world_t* _world ) {
     __eng_time_tick ();
 
-    // _handle_input();
-    // _update_ai();
-    // ??? _update_animation();
-    // _update_physics();
-    // _render_scene();
+    // TODO { 
+    // __handle_input();
+    // __update_ai(_world); // including scripts (or we call behaviors)
+    // __update_animation(_world);
+    // __update_physics(_world);
+    // __render_scene(_world);
+    // } TODO end 
+    __debug_draw(_world);
 }

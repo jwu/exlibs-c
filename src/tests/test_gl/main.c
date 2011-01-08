@@ -17,6 +17,7 @@
 #include "../../entity/entity.h"
 #include "../../entity/eng_time.h"
 #include "../../entity/trans2d.h"
+#include "../../entity/debug2d.h"
 
 #if (EX_PLATFORM == EX_MACOSX)
 	#include "OpenGL/gl.h"
@@ -64,9 +65,9 @@ static void initGame () {
 
     // TEMP: instead of serialize the world, I hardcoded the entities.
     ent = ex_world_create_entity ( world, ex_strid("ent1") ); {
-        ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_trans2d_t) );
+        /*ex_trans2d_t* trans2d =*/ (ex_trans2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_trans2d_t) );
         ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_debug2d_t) );
-        // ex_debug2d_add_rect ( dbg2d, ex_rect_from() ) // TODO:
+        ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 1.0f, 1.0f );
     }
 }
 
