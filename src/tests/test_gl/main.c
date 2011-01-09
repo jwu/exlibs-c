@@ -18,6 +18,7 @@
 #include "../../entity/eng_time.h"
 #include "../../entity/trans2d.h"
 #include "../../entity/debug2d.h"
+#include "../../entity/camera.h"
 
 #if (EX_PLATFORM == EX_MACOSX)
 	#include "OpenGL/gl.h"
@@ -44,6 +45,7 @@ static int win_height = 480;
 
 // game
 ex_world_t* world = NULL;
+ex_entity_t* entity1 = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -54,8 +56,6 @@ ex_world_t* world = NULL;
 // ------------------------------------------------------------------ 
 
 static void initGame () {
-    ex_entity_t* ent;
-
     world = ex_world_alloc();
 
     // TODO { 
@@ -63,11 +63,26 @@ static void initGame () {
     // serialize the world
     // } TODO end 
 
+    {
+        ex_camera_t* mainCam;
+        ex_world_create_camera2d ( world, ex_strid("main_camera") );
+        mainCam = ex_world_main_camera (world);
+        ex_assert ( mainCam, "can't find main camera" );
+        ex_camera_set_ortho( mainCam, true );
+        ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
+        ex_camera_set_ortho_size( mainCam, (float)win_width/2.0f );
+    }
+
     // TEMP: instead of serialize the world, I hardcoded the entities.
-    ent = ex_world_create_entity ( world, ex_strid("ent1") ); {
-        /*ex_trans2d_t* trans2d =*/ (ex_trans2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_trans2d_t) );
-        ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_debug2d_t) );
-        ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 1.0f, 1.0f );
+    for ( int i = 0; i < 200; ++i ) {
+        entity1 = ex_world_create_entity ( world, ex_strid("ent1") ); {
+            ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_add_comp( entity1, EX_CLASSID(ex_trans2d_t) );
+            ex_vec2f_set ( &trans2d->_pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
+            ex_vec2f_set ( &trans2d->_scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
+            ex_angf_set_by_radians ( &trans2d->_ang, ex_range_randf(0.0f,EX_TWO_PI) );
+            ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_add_comp( entity1, EX_CLASSID(ex_debug2d_t) );
+            ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
+        }
     }
 }
 
@@ -84,6 +99,20 @@ static void quitGame () {
 // ------------------------------------------------------------------ 
 
 static void updateGame () {
+    {
+        ex_vec2f_t d_pos;
+        ex_angf_t d_ang;
+        ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_get_comp( entity1, EX_CLASSID(ex_trans2d_t) );
+
+        // ex_vec2f_set ( &d_pos, 100.0f, 0.0f );
+        // ex_vec2f_mul_scalar ( &d_pos, &d_pos, ex_dt() );
+        // ex_vec2f_add ( &trans2d->_pos, &trans2d->_pos, &d_pos );
+
+        ex_angf_set_by_degrees( &d_ang, 1.0f );
+        ex_angf_mul_scalar ( &d_ang, &d_ang, ex_dt() * 10.0f );
+        ex_angf_add ( &trans2d->_ang, &trans2d->_ang, &d_ang );
+    }
+
     ex_world_update(world);
 }
 
@@ -94,17 +123,16 @@ static void updateGame () {
 static void _reshape ( int _width, int _height ) {
     win_width = _width;
     win_height = _height;
+    ex_camera_t* mainCam = ex_world_main_camera (world);
 
-	glViewport(0, 0, win_width, win_height);
+    // setup viewport
+    glViewport(0, 0, win_width, win_height);
 
-	double rx = win_width / 2.0;
-	double ry = win_height / 2.0;
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-    glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
-    glTranslated(0.5, 0.5, 0.0);
-    // glOrtho(0, win_width, win_height, 0, -1.0, 1.0); // jwu DISABLE
+    // set camera
+    ex_assert ( mainCam, "can't find main camera" );
+    ex_camera_set_ortho( mainCam, true );
+    ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
+    ex_camera_set_ortho_size( mainCam, (float)win_height/2.0f );
 }
 
 // ------------------------------------------------------------------ 
@@ -136,22 +164,14 @@ static void _display() {
     // }
     // } TODO end 
 
-    glClearColor( 0.0f,0.5f,1.0f,1.0f); // RGBA background color
-    glClear(GL_COLOR_BUFFER_BIT);
-
     // render 2D/3D objects in world space 
-	double rx = win_width / 2.0;
-	double ry = win_height / 2.0;
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-    glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
-    glTranslated(0.5, 0.5, 0.0);
-
     {
-        // TODO:
+        ex_world_render(world);
     }
 
     // draw 2D objects in screen space
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
     glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
@@ -233,6 +253,15 @@ static void createWindow ( int argc, const char *argv[] ) {
 static void initGL () {
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 	glEnableClientState(GL_VERTEX_ARRAY);
+
+    // anti-aliasing { 
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
+    // } anti-aliasing end 
 }
 
 // ------------------------------------------------------------------ 

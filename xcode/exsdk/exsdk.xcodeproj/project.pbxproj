@@ -33,6 +33,9 @@
 		B2C9221012D8B4AA000FB811 /* rectf.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220D12D8B4AA000FB811 /* rectf.h */; };
 		B2C9221312D8B4B6000FB811 /* debug2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C9221112D8B4B6000FB811 /* debug2d.c */; };
 		B2C9221412D8B4B6000FB811 /* debug2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9221212D8B4B6000FB811 /* debug2d.h */; };
+		B2C9226512D96539000FB811 /* color.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9226412D96539000FB811 /* color.h */; };
+		B2C922FC12DA0332000FB811 /* camera.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C922FA12DA0332000FB811 /* camera.c */; };
+		B2C922FD12DA0332000FB811 /* camera.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C922FB12DA0332000FB811 /* camera.h */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
 		B2DD23FF12A7C86E0053CA3F /* test_array.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F312A7C86E0053CA3F /* test_array.c */; };
 		B2DD240012A7C86E0053CA3F /* test_bitarry.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F412A7C86E0053CA3F /* test_bitarry.c */; };
@@ -197,6 +200,9 @@
 		B2C9220D12D8B4AA000FB811 /* rectf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rectf.h; sourceTree = "<group>"; };
 		B2C9221112D8B4B6000FB811 /* debug2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug2d.c; sourceTree = "<group>"; };
 		B2C9221212D8B4B6000FB811 /* debug2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug2d.h; sourceTree = "<group>"; };
+		B2C9226412D96539000FB811 /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = color.h; sourceTree = "<group>"; };
+		B2C922FA12DA0332000FB811 /* camera.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = camera.c; sourceTree = "<group>"; };
+		B2C922FB12DA0332000FB811 /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
 		B2DD23EA12A7C7CE0053CA3F /* test.base */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test.base; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD23F212A7C86E0053CA3F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2DD23F312A7C86E0053CA3F /* test_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_array.c; sourceTree = "<group>"; };
@@ -562,6 +568,7 @@
 		B2E0B72F12A6B144009FE3E8 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B2C9226412D96539000FB811 /* color.h */,
 				B2C9220B12D8B4AA000FB811 /* circlef.h */,
 				B2C9220C12D8B4AA000FB811 /* line2f.h */,
 				B2C9220D12D8B4AA000FB811 /* rectf.h */,
@@ -664,6 +671,8 @@
 		B2E0B76612A6B144009FE3E8 /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				B2C922FA12DA0332000FB811 /* camera.c */,
+				B2C922FB12DA0332000FB811 /* camera.h */,
 				B2C9221112D8B4B6000FB811 /* debug2d.c */,
 				B2C9221212D8B4B6000FB811 /* debug2d.h */,
 				B2F397C212D623BB00F7E252 /* eng_time.c */,
@@ -791,6 +800,8 @@
 				B2C9220F12D8B4AA000FB811 /* line2f.h in Headers */,
 				B2C9221012D8B4AA000FB811 /* rectf.h in Headers */,
 				B2C9221412D8B4B6000FB811 /* debug2d.h in Headers */,
+				B2C9226512D96539000FB811 /* color.h in Headers */,
+				B2C922FD12DA0332000FB811 /* camera.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -967,6 +978,7 @@
 				B2F397C412D623BB00F7E252 /* eng_time.c in Sources */,
 				B2C921A212D834B6000FB811 /* factory.c in Sources */,
 				B2C9221312D8B4B6000FB811 /* debug2d.c in Sources */,
+				B2C922FC12DA0332000FB811 /* camera.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

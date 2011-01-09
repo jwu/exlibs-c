@@ -47,6 +47,14 @@ EX_DEF_CLASS_END(ex_trans2d_t)
 extern void ex_trans2d_init ( void* _self ); 
 extern void ex_trans2d_deinit ( void* _self ); 
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_trans2d_world_position ( ex_trans2d_t* _self, ex_vec2f_t* _pos ); 
+extern void ex_trans2d_world_rotation ( ex_trans2d_t* _self, ex_angf_t* _ang ); 
+extern void ex_trans2d_world_scale ( ex_trans2d_t* _self, ex_vec2f_t* _scale ); 
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

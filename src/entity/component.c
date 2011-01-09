@@ -11,6 +11,7 @@
 
 #include "exsdk.h"
 #include "component.h"
+#include "entity.h"
 
 #include "trans2d.h"
 
@@ -35,8 +36,6 @@ EX_DEF_PROPS_END(ex_component_t)
 // ------------------------------------------------------------------ 
 
 void ex_component_init ( void* _self ) {
-    ex_component_t* comp = (ex_component_t*)_self; 
-    comp->_owner = NULL;
 }
 
 // ------------------------------------------------------------------ 
@@ -44,6 +43,12 @@ void ex_component_init ( void* _self ) {
 // ------------------------------------------------------------------ 
 
 void ex_component_deinit ( void* _self ) {
-    ex_component_t* comp = (ex_component_t*)_self; 
-    comp->_owner = NULL;
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_entity_t* ex_component_owner ( const ex_component_t* _self ) {
+    return _self->_owner; 
+} 

@@ -13,6 +13,7 @@
 #include "entity.h"
 
 #include "trans2d.h"
+#include "camera.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // private
@@ -109,8 +110,12 @@ ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID ) {
         ex_array_append( _ent->_comps, &comp );
 
         // cache internal component
-        if ( _typeID == EX_CLASSID(ex_trans2d_t) )
+        if ( _typeID == EX_CLASSID(ex_trans2d_t) ) {
             _ent->_trans2d = (ex_trans2d_t*)comp; 
+        }
+        else if ( _typeID == EX_CLASSID(ex_camera_t) ) {
+            _ent->_camera = (ex_camera_t*)comp; 
+        }
     }
 
     return comp;

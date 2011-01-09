@@ -16,6 +16,7 @@
 #include "../entity/component.h"
 #include "../entity/trans2d.h"
 #include "../entity/debug2d.h"
+#include "../entity/camera.h"
 // } TEMP end 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,5 +32,6 @@ void ex_register_classes () {
     EX_REGISTER_CLASS(ex_component_t);
     EX_REGISTER_CLASS(ex_trans2d_t);
     EX_REGISTER_CLASS(ex_debug2d_t);
+    EX_REGISTER_CLASS(ex_camera_t);
 }
 

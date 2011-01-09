@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : entity.h
+// File         : camera.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:16:24 PM | Thursday,November
+// Last Change  : 01/09/2011 | 10:33:20 AM | Sunday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef ENTITY_H_1290676586
-#define ENTITY_H_1290676586
+#ifndef CAMERA_H_1294540402
+#define CAMERA_H_1294540402
 // #################################################################################
 
 // ######################### 
@@ -22,21 +22,25 @@ extern "C" {
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
+#define EX_CLEAR_NONE  0x00000000
+#define EX_CLEAR_COLOR 0x00000001
+#define EX_CLEAR_DEPTH 0x00000002
+
 // ------------------------------------------------------------------ 
 /*! 
- @struct ex_entity_t
+ @struct ex_camera_t
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_BEGIN(ex_entity_t)
-    strid_t _name;
-    // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
-    ex_array_t* _comps;
-    struct ex_world_t* _world; // the world it belongs
-    // cached components 
-    struct ex_trans2d_t* _trans2d;
-    struct ex_camera_t* _camera;
-EX_DEF_CLASS_END(ex_entity_t)
+EX_DEF_CLASS_SUPER_BEGIN(ex_camera_t,ex_component_t)
+    bool _isOrtho;
+    float _orthoSize; // camera's half-height when in orthographic mode.
+    uint32 _clearFlags;
+    float _aspect; // width/height
+    ex_color3f_t _bgColor; // background color
+    ex_mat44f_t _matWorldToView;
+    ex_mat44f_t _matProjection;
+EX_DEF_CLASS_END(ex_camera_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -46,25 +50,35 @@ EX_DEF_CLASS_END(ex_entity_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_entity_t* ex_entity_alloc ();
+extern void ex_camera_init ( void* _self ); 
+extern void ex_camera_deinit ( void* _self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_entity_free ( ex_entity_t* _ent );
+extern void ex_camera_set_ortho ( ex_camera_t* _self, bool _isOrtho ); 
+extern bool ex_camera_is_ortho ( ex_camera_t* _self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_component_t* ex_entity_get_comp ( const ex_entity_t* _ent, strid_t _typeID );
+extern void ex_camera_set_ortho_size ( ex_camera_t* _self, float _orthoSize ); 
+extern float ex_camera_ortho_size ( ex_camera_t* _self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID );
+extern void ex_camera_set_aspect ( ex_camera_t* _self, float _aspect ); 
+extern float ex_camera_aspect ( ex_camera_t* _self ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_camera_apply ( ex_camera_t* _self );
 
 // ######################### 
 #ifdef __cplusplus
@@ -72,9 +86,6 @@ extern ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID )
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END ENTITY_H_1290676586
+#endif // END CAMERA_H_1294540402
 // #################################################################################
-
-

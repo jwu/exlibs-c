@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>B2C9226012D8CC76000FB811</string>
+						<string>B2C9239912DA1716000FB811</string>
 						<key>history</key>
 						<array>
 							<string>B2DBEEFA12D6D452001F92F2</string>
@@ -317,13 +317,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>46</integer>
+									<integer>47</integer>
 									<integer>5</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 670}, {186, 656}}</string>
+							<string>{{0, 721}, {186, 656}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -358,7 +358,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>eng_time.c</string>
+								<string>world.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -366,11 +366,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>eng_time.c</string>
+										<string>world.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2C9225F12D8CC76000FB811</string>
+										<string>B2C9239812DA1716000FB811</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -396,7 +396,6 @@
 											<string>B20715CD12C7A59100071C29</string>
 											<string>B207166512C82F8600071C29</string>
 											<string>B2E2686412C975D100833568</string>
-											<string>B2E268B712C9D65200833568</string>
 											<string>B2E269A412C9EF4B00833568</string>
 											<string>B2E269C012C9FA8900833568</string>
 											<string>B2B5025F12CAD7FB00D50FDE</string>
@@ -433,7 +432,6 @@
 											<string>B2C9215A12D7794B000FB811</string>
 											<string>B2C9215D12D7794B000FB811</string>
 											<string>B2C9215E12D7794B000FB811</string>
-											<string>B2C9216E12D77A9E000FB811</string>
 											<string>B2C9222312D8B5EB000FB811</string>
 											<string>B2C9222412D8B5EB000FB811</string>
 											<string>B2C9222512D8B5EB000FB811</string>
@@ -452,7 +450,10 @@
 											<string>B2C9223212D8B5EB000FB811</string>
 											<string>B2C9223312D8B5EB000FB811</string>
 											<string>B2C9223412D8B5EB000FB811</string>
-											<string>B2C9223512D8B5EB000FB811</string>
+											<string>B2C922AA12D9D7C2000FB811</string>
+											<string>B2C922AB12D9D7C2000FB811</string>
+											<string>B2C922AC12D9D7C2000FB811</string>
+											<string>B2C9225C12D8CC4E000FB811</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -650,14 +651,14 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2C9226112D8CC76000FB811</string>
+		<string>B2C9239A12DA1716000FB811</string>
 		<string>B2C9211E12D7779A000FB811</string>
 		<string>B2C9211F12D7779A000FB811</string>
-		<string>B21CB6EE12D576AF00CDD369</string>
 		<string>B2C9214712D778CA000FB811</string>
+		<string>B21CB6EE12D576AF00CDD369</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 	</array>
 	<key>WindowString</key>
@@ -677,14 +678,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>world.c</string>
+								<string>main.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -701,6 +700,8 @@
 							<string>416pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

@@ -11,6 +11,8 @@
 
 #include "exsdk.h"
 #include "debug2d.h"
+#include "entity.h"
+#include "trans2d.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
@@ -83,15 +85,36 @@ void ex_debug2d_set_rect ( ex_debug2d_t* _self,
 // ------------------------------------------------------------------ 
 
 void ex_debug2d_draw ( ex_debug2d_t* _self ) {
+    ex_entity_t* ent = ex_component_owner( (ex_component_t*)_self );
+    ex_trans2d_t* trans2d = ent->_trans2d;
+    ex_vec2f_t worldPos;
+    ex_vec2f_t worldScale;
+    ex_angf_t worldRot;
+
     if ( _self->_shapeType == EX_DEBUG_SHAPE_RECT ) {
+        float cx = _self->_rect.center.x;
+        float cy = _self->_rect.center.y;
         float half_width = _self->_rect.width * 0.5f; 
         float half_height = _self->_rect.height * 0.5f; 
+        float verts[8];
 
-        // glColor3f(v,v,v);
-        glRectf( _self->_rect.center.x - half_width, 
-                 _self->_rect.center.y - half_height, 
-                 _self->_rect.center.x + half_width, 
-                 _self->_rect.center.y + half_height 
-               );
+        verts[0] = cx - half_width; verts[1] = cy + half_height;  
+        verts[2] = cx + half_width; verts[3] = cy + half_height;  
+        verts[4] = cx + half_width; verts[5] = cy - half_height;  
+        verts[6] = cx - half_width; verts[7] = cy - half_height;  
+
+        ex_trans2d_world_position( trans2d, &worldPos );
+        ex_trans2d_world_scale( trans2d, &worldScale );
+        ex_trans2d_world_rotation( trans2d, &worldRot );
+
+        glMatrixMode( GL_MODELVIEW );
+        glLoadIdentity();
+        glTranslatef(_self->_rect.center.x + worldPos.x, _self->_rect.center.y + worldPos.y, 0.0f);
+        glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
+        glScalef(worldScale.x, worldScale.y, 1.0f);
+
+        glVertexPointer ( 2, GL_FLOAT, 0, verts );
+        glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+        glDrawArrays(GL_LINE_LOOP, 0, 4);
     }
 }

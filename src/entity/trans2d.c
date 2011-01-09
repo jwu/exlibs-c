@@ -44,7 +44,7 @@ void ex_trans2d_init ( void* _self ) {
     ex_component_init(_self); // parent init
     ex_vec2f_zero(&trans2d->_pos);
     ex_angf_zero(&trans2d->_ang);
-    ex_vec2f_zero(&trans2d->_scale);
+    ex_vec2f_one(&trans2d->_scale);
     trans2d->_parent = NULL;
     trans2d->_childrent = ex_array_alloc( sizeof(ex_trans2d_t), 8 );
 }
@@ -58,4 +58,43 @@ void ex_trans2d_deinit ( void* _self ) {
 
     ex_array_free(trans2d->_childrent);
     ex_component_deinit(_self); // parent deinint
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_world_position ( ex_trans2d_t* _self, ex_vec2f_t* _pos ) {
+    ex_trans2d_t* parent = _self->_parent;
+    *_pos = _self->_pos;
+    while ( parent ) {
+        ex_vec2f_add( _pos, _pos, &(parent->_pos) );
+        parent = parent->_parent;
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_world_rotation ( ex_trans2d_t* _self, ex_angf_t* _ang ) {
+    ex_trans2d_t* parent = _self->_parent;
+    *_ang = _self->_ang;
+    while ( parent ) {
+        ex_angf_add( _ang, _ang, &(parent->_ang) );
+        parent = parent->_parent;
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_world_scale ( ex_trans2d_t* _self, ex_vec2f_t* _scale ) {
+    ex_trans2d_t* parent = _self->_parent;
+    *_scale = _self->_scale;
+    while ( parent ) {
+        ex_vec2f_mul( _scale, _scale, &(parent->_scale) );
+        parent = parent->_parent;
+    }
 }

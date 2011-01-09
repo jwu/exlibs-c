@@ -48,6 +48,12 @@ EX_DEF_CLASS_END(ex_component_t)
 extern void ex_component_init ( void* _self ); 
 extern void ex_component_deinit ( void* _self ); 
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern struct ex_entity_t* ex_component_owner ( const ex_component_t* _self ); 
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 
