@@ -314,7 +314,7 @@ extern bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* 
 // ======================================================== 
 
 // TODO { 
-#define ex_log( msg, ... ) printf( msg"\n", ##__VA_ARGS__ )
+#define ex_log( msg, ... ) printf( msg"\n", ##__VA_ARGS__ ); fflush(stdout)
 // } TODO end 
 
 #if ( EX_DEBUG_LEVEL == SERIOUS )

@@ -23,6 +23,14 @@ extern "C" {
 // ------------------------------------------------------------------ 
 /*! 
  @struct ex_color3u_t
+
+ @note you can use: 
+
+ @code
+ ex_color3u_t c = { 255, 255, 255 }; 
+ @endcode
+
+ to initialize a color.  
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_color3u_t {
@@ -32,9 +40,25 @@ typedef struct ex_color3u_t {
     };
 } ex_color3u_t;
 
+extern ex_color3u_t ex_color3u_red;
+extern ex_color3u_t ex_color3u_green;
+extern ex_color3u_t ex_color3u_blue;
+extern ex_color3u_t ex_color3u_black;
+extern ex_color3u_t ex_color3u_white;
+extern ex_color3u_t ex_color3u_yellow;
+extern ex_color3u_t ex_color3u_cyan;
+extern ex_color3u_t ex_color3u_magenta;
+extern ex_color3u_t ex_color3u_gray;
+
 // ------------------------------------------------------------------ 
 /*! 
  @struct ex_color4u_t
+
+ @code
+ ex_color4u_t c = { 255, 255, 255, 255 }; 
+ @endcode
+
+ to initialize a color.  
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_color4u_t {
@@ -44,9 +68,25 @@ typedef struct ex_color4u_t {
     };
 } ex_color4u_t;
 
+extern ex_color4u_t ex_color4u_red;
+extern ex_color4u_t ex_color4u_green;
+extern ex_color4u_t ex_color4u_blue;
+extern ex_color4u_t ex_color4u_black;
+extern ex_color4u_t ex_color4u_white;
+extern ex_color4u_t ex_color4u_yellow;
+extern ex_color4u_t ex_color4u_cyan;
+extern ex_color4u_t ex_color4u_magenta;
+extern ex_color4u_t ex_color4u_gray;
+
 // ------------------------------------------------------------------ 
 /*! 
  @struct ex_color3f_t
+
+ @code
+ ex_color3f_t c = { 1.0f, 1.0f, 1.0f }; 
+ @endcode
+
+ to initialize a color.  
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_color3f_t {
@@ -56,9 +96,25 @@ typedef struct ex_color3f_t {
     };
 } ex_color3f_t;
 
+extern ex_color3f_t ex_color3f_red;
+extern ex_color3f_t ex_color3f_green;
+extern ex_color3f_t ex_color3f_blue;
+extern ex_color3f_t ex_color3f_black;
+extern ex_color3f_t ex_color3f_white;
+extern ex_color3f_t ex_color3f_yellow;
+extern ex_color3f_t ex_color3f_cyan;
+extern ex_color3f_t ex_color3f_magenta;
+extern ex_color3f_t ex_color3f_gray;
+
 // ------------------------------------------------------------------ 
 /*! 
  @struct ex_color4f_t
+
+ @code
+ ex_color4f_t c = { 1.0f, 1.0f, 1.0f, 1.0f }; 
+ @endcode
+
+ to initialize a color.  
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_color4f_t {
@@ -67,6 +123,16 @@ typedef struct ex_color4f_t {
         float c[4];
     };
 } ex_color4f_t;
+
+extern ex_color4f_t ex_color4f_red;
+extern ex_color4f_t ex_color4f_green;
+extern ex_color4f_t ex_color4f_blue;
+extern ex_color4f_t ex_color4f_black;
+extern ex_color4f_t ex_color4f_white;
+extern ex_color4f_t ex_color4f_yellow;
+extern ex_color4f_t ex_color4f_cyan;
+extern ex_color4f_t ex_color4f_magenta;
+extern ex_color4f_t ex_color4f_gray;
 
 ///////////////////////////////////////////////////////////////////////////////
 // color3u function defines

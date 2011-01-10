@@ -26,6 +26,7 @@
 		B261C0EC12CD637B0018BCDA /* timespan.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C0E612CD637B0018BCDA /* timespan.h */; };
 		B261C13512CDACAF0018BCDA /* dtime.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C13312CDACAF0018BCDA /* dtime.c */; };
 		B261C13612CDACAF0018BCDA /* dtime.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C13412CDACAF0018BCDA /* dtime.h */; };
+		B2B113FF12DAAE66002E6C1A /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B113FE12DAAE66002E6C1A /* color.c */; };
 		B2C921A212D834B6000FB811 /* factory.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C921A012D834B6000FB811 /* factory.c */; };
 		B2C921A312D834B6000FB811 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C921A112D834B6000FB811 /* factory.h */; };
 		B2C9220E12D8B4AA000FB811 /* circlef.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220B12D8B4AA000FB811 /* circlef.h */; };
@@ -193,6 +194,7 @@
 		B261C0E612CD637B0018BCDA /* timespan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timespan.h; sourceTree = "<group>"; };
 		B261C13312CDACAF0018BCDA /* dtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtime.c; sourceTree = "<group>"; };
 		B261C13412CDACAF0018BCDA /* dtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtime.h; sourceTree = "<group>"; };
+		B2B113FE12DAAE66002E6C1A /* color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = color.c; sourceTree = "<group>"; };
 		B2C921A012D834B6000FB811 /* factory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = factory.c; sourceTree = "<group>"; };
 		B2C921A112D834B6000FB811 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
 		B2C9220B12D8B4AA000FB811 /* circlef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circlef.h; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 		B2E0B72F12A6B144009FE3E8 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B2B113FE12DAAE66002E6C1A /* color.c */,
 				B2C9226412D96539000FB811 /* color.h */,
 				B2C9220B12D8B4AA000FB811 /* circlef.h */,
 				B2C9220C12D8B4AA000FB811 /* line2f.h */,
@@ -979,6 +982,7 @@
 				B2C921A212D834B6000FB811 /* factory.c in Sources */,
 				B2C9221312D8B4B6000FB811 /* debug2d.c in Sources */,
 				B2C922FC12DA0332000FB811 /* camera.c in Sources */,
+				B2B113FF12DAAE66002E6C1A /* color.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

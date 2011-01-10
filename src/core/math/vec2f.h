@@ -45,6 +45,14 @@ extern "C" {
    v_{0}, v_{1}
    \end{array} \right]
  \f$
+
+ @note you can use: 
+
+ @code
+ ex_vec2f_t v = { 1.0f, 1.0f }; 
+ @endcode
+
+ to initialize a vector.  
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_vec2f_t {
