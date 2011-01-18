@@ -83,13 +83,14 @@ ex_list_t* ex_list_alloc_nomng ( size_t _element_bytes )
 // managed
 void ex_list_free ( ex_list_t* _list )
 {
-    ex_list_node_t* node;
+    ex_list_node_t *tmp,*node;
     ex_assert_return( _list != NULL, /*void*/, "NULL input" );
 
     node = _list->_head;
     while ( node != NULL ) {
-        ex_free ( node );
+        tmp = node;
         node = node->next;
+        ex_free ( tmp );
     }
 
     _list->_length = 0;
@@ -102,13 +103,14 @@ void ex_list_free ( ex_list_t* _list )
 // no managed
 void ex_list_free_nomng ( ex_list_t* _list )
 {
-    ex_list_node_t* node; 
+    ex_list_node_t *tmp,*node; 
     ex_assert_return( _list != NULL, /*void*/, "NULL input" );
 
     node = _list->_head;
     while ( node != NULL ) {
-        ex_free_nomng ( node );
+        tmp = node;
         node = node->next;
+        ex_free_nomng ( node );
     }
 
     _list->_length = 0;

@@ -21,27 +21,27 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 #define DEF_BUILTIN_SERIALIZE(_type) \
-    static inline void __ex_serialize_##_type ( ex_stream_t* _stream, const char* _name, _type* _val ) { \
-        if ( _stream->check_node ) { \
-            int ret = _stream->check_node( _stream, _name, EX_TYPEID(_type) ); \
+    static inline void __ex_serialize_##_type ( ex_stream_t* _stream, strid_t _name, _type* _val ) { \
+        if ( _stream->next_child ) { \
+            int ret = _stream->next_child( _stream, _name, EX_TYPEID(_type) ); \
             if ( ret != 0 ) { \
-                ex_warning ( "failed to find %s", _name ); \
+                ex_warning ( "failed to find %s", ex_strid_to_cstr(_name) ); \
                 return; \
             } \
         } \
-        _stream->serialize_##_type(_stream,_name,_val); \
+        _stream->serialize_##_type(_stream,_val); \
     }
 
 #define DEF_BUILTIN_SERIALIZE_2( _typeName, _type ) \
-    static inline void __ex_serialize_##_typeName ( ex_stream_t* _stream, const char* _name, _type* _val ) { \
-        if ( _stream->check_node ) { \
-            int ret = _stream->check_node( _stream, _name, EX_TYPEID(_typeName) ); \
+    static inline void __ex_serialize_##_typeName ( ex_stream_t* _stream, strid_t _name, _type* _val ) { \
+        if ( _stream->next_child ) { \
+            int ret = _stream->next_child( _stream, _name, EX_TYPEID(_typeName) ); \
             if ( ret != 0 ) { \
-                ex_warning ( "failed to find %s", _name ); \
+                ex_warning ( "failed to find %s", ex_strid_to_cstr(_name) ); \
                 return; \
             } \
         } \
-        _stream->serialize_##_typeName(_stream,_name,_val); \
+        _stream->serialize_##_typeName(_stream,_val); \
     }
 
 DEF_BUILTIN_SERIALIZE(int8)

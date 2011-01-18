@@ -45,7 +45,7 @@ extern "C" {
  @code
  ex_hashmap_t* my_hashmap = ex_hashmap_alloc( sizeof(int), sizeof(float), 10 );
  ex_hashmap_each ( my_hashmap, float, item ) {
-    printf( "item_%d is %f", idx, item );
+    printf( "item is %f", item );
  } ex_hashmap_each_end;
  @endcode
  @sa ex_hashmap_each_end
@@ -78,7 +78,7 @@ extern "C" {
  @code
  ex_hashmap_t* my_hashmap = ex_hashmap_alloc( sizeof(int), sizeof(float), 10 );
  ex_hashmap_raw_each ( my_hashmap, float*, item ) {
-    printf( "item_%d is %f", idx, *item );
+    printf( "item is %f", *item );
  } ex_hashmap_each_end;
  @endcode
  @sa ex_hashmap_each_end

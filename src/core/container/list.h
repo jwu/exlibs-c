@@ -17,12 +17,107 @@ extern "C" {
 // ######################### 
 
 // ------------------------------------------------------------------ 
+/*! 
+ @def ex_list_each
+ @param _list the in list
+ @param _type the type of the value in the list.
+ @param _el the value variable you want to define.
+ @details macro for easy iterates the hashmap container.
+
+ when use the macro, it will define the local variable below:
+ - node: the current node of the list
+ - idx: the index
+
+ to finish the code, you must write ex_list_each_end.
+
+ Usage:
+ @code
+ ex_list_t* my_list = ex_list_alloc( sizeof(float), 10 );
+ ex_list_each ( my_list, float, item ) {
+    printf( "item_%d is %f", idx, item );
+ } ex_list_each_end;
+ @endcode
+ @sa ex_list_each_end
+ @note DO NOT USE continue in this loop, use ex_list_continue instead 
+*/// ------------------------------------------------------------------ 
+
+#define ex_list_each( _list, _type, _el ) \
+    { \
+        ex_list_node_t* node = (_list)->_head; \
+        int idx = 0; \
+        _type _el; \
+        while ( node ) { \
+            _el = *( (_type*) ( node->value ) );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_list_raw_each
+ @param _list the in list
+ @param _type the type of the value in the list.
+ @param _el the value variable you want to define.
+ @details macro for easy iterates the hashmap container.
+
+ when use the macro, it will define the local variable below:
+ - node: the current node of the list
+ - idx: the index
+
+ to finish the code, you must write ex_list_each_end.
+
+ Usage:
+ @code
+ ex_list_t* my_list = ex_list_alloc( sizeof(float), 10 );
+ ex_list_raw_each ( my_list, float*, item ) {
+    printf( "item_%d is %f", idx, *item );
+ } ex_list_each_end;
+ @endcode
+ @sa ex_list_each_end
+ @note DO NOT USE continue in this loop, use ex_list_continue instead 
+*/// ------------------------------------------------------------------ 
+
+#define ex_list_raw_each( _list, _type, _el ) \
+    { \
+        ex_list_node_t* node = (_list)->_head; \
+        int idx = 0; \
+        _type _el; \
+        while ( node ) { \
+            _el = (_type) ( node->value );
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_list_each_end
+ @details macro to end the ex_list_each, ex_list_raw_each macro
+ @sa ex_list_each
+ @sa ex_list_raw_each
+*/// ------------------------------------------------------------------ 
+
+#define ex_list_each_end \
+            ++idx; \
+            node = node->next; \
+        } \
+    }
+
+// ------------------------------------------------------------------ 
+/*! 
+ @def ex_list_continue
+ @details macro to let the continue work in each
+ @sa ex_list_each
+ @sa ex_list_raw_each
+*/// ------------------------------------------------------------------ 
+
+#define ex_list_continue \
+    { \
+        node = node->next; \
+        continue; \
+    }
+
+// ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 // when allocate the node, it actually allocate the a memory block which the
 // size is equal to the size of the node plus the size of the value store in the node.
 // then it assign the address of the value to the node->value in the node. 
+
 typedef struct ex_list_node_t {
     void* value;
     struct ex_list_node_t* prev;

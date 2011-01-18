@@ -25,14 +25,14 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_BEGIN(_class) \
-    void __ex_serialize_##_class( ex_stream_t* _stream, const char* _name, _class* _val ) { \
-        if ( _stream->check_node ) { \
-            int ret = _stream->check_node( _stream, _name, EX_CLASSID(_class) ); \
+    void __ex_serialize_##_class( ex_stream_t* _stream, strid_t _name, _class* _val ) { \
+        if ( _stream->next_child ) { \
+            int ret = _stream->next_child( _stream, _name, EX_CLASSID(_class) ); \
             if ( ret != 0 ) { \
-                ex_warning ( "failed to find %s", _name ); \
+                ex_warning ( "failed to find %s", ex_strid_to_cstr(_name) ); \
                 return; \
             } \
-        } \
+        }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -46,7 +46,6 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_END }
-
 
 // ######################### 
 #ifdef __cplusplus

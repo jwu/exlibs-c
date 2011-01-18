@@ -24,7 +24,7 @@ typedef struct __json_node_t {
     strid_t _name; 
     void* _val;
 	struct __json_node_t* _parent;
-	struct ex_array_t* _children;
+	struct ex_list_t* _children;
 } __json_node_t;    
 
 //
@@ -43,10 +43,10 @@ static __json_node_t* __create_node () {
 //
 static void __destroy_node ( __json_node_t* _node ) {
     if ( _node->_children ) {
-        ex_array_each ( _node->_children, __json_node_t*, _child ) {
+        ex_list_each ( _node->_children, __json_node_t*, _child ) {
             __destroy_node (_child);
-        } ex_array_each_end 
-        ex_array_free ( _node->_children );
+        } ex_list_each_end 
+        ex_list_free ( _node->_children );
     }
 
     if ( _node->_val )
@@ -57,9 +57,9 @@ static void __destroy_node ( __json_node_t* _node ) {
 //
 static void __add_child ( __json_node_t* _parent, __json_node_t* _child ) {
     if ( _parent->_children == NULL ) {
-        _parent->_children = ex_array_alloc( sizeof(__json_node_t*), 8 );
+        _parent->_children = ex_list_alloc( sizeof(__json_node_t*) );
     }
-    ex_array_append( _parent->_children, &_child );
+    ex_list_append( _parent->_children, &_child );
     _child->_parent = _parent;
 }
 
@@ -340,7 +340,12 @@ static void* __yajl_realloc( void* _ctx, void* _ptr, unsigned int _sz ) {
 // name-invalid: -1
 // ------------------------------------------------------------------ 
 
-static int __check_node ( ex_stream_t* _stream, const char* _name, strid_t _typeID ) {
+static int __next_child ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
+    ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    if ( stream->_cur->_name != _name )
+        return -1;
+    if ( stream->_cur->_typeid != _typeID )
+        return 1;
     return 0;
 }
 
@@ -348,378 +353,384 @@ static int __check_node ( ex_stream_t* _stream, const char* _name, strid_t _type
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_int8 ( ex_stream_t* _stream, const char* _name, int8* _val ) {
+static void __read_int8 ( ex_stream_t* _stream, int8* _val ) {
+    ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    // if ( stream->_cur )
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_int16 ( ex_stream_t* _stream, const char* _name, int16* _val ) {
+static void __read_int16 ( ex_stream_t* _stream, int16* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_int32 ( ex_stream_t* _stream, const char* _name, int32* _val ) {
+static void __read_int32 ( ex_stream_t* _stream, int32* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_int64 ( ex_stream_t* _stream, const char* _name, int64* _val ) {
+static void __read_int64 ( ex_stream_t* _stream, int64* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_uint8 ( ex_stream_t* _stream, const char* _name, uint8* _val ) {
+static void __read_uint8 ( ex_stream_t* _stream, uint8* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_uint16 ( ex_stream_t* _stream, const char* _name, uint16* _val ) {
+static void __read_uint16 ( ex_stream_t* _stream, uint16* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_uint32 ( ex_stream_t* _stream, const char* _name, uint32* _val ) {
+static void __read_uint32 ( ex_stream_t* _stream, uint32* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_uint64 ( ex_stream_t* _stream, const char* _name, uint64* _val ) {
+static void __read_uint64 ( ex_stream_t* _stream, uint64* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_float ( ex_stream_t* _stream, const char* _name, float* _val ) {
+static void __read_float ( ex_stream_t* _stream, float* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_double ( ex_stream_t* _stream, const char* _name, double* _val ) {
+static void __read_double ( ex_stream_t* _stream, double* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_boolean ( ex_stream_t* _stream, const char* _name, bool* _val ) {
+static void __read_boolean ( ex_stream_t* _stream, bool* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_string ( ex_stream_t* _stream, const char* _name, const char** _val ) {
+static void __read_string ( ex_stream_t* _stream, const char** _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_strid ( ex_stream_t* _stream, const char* _name, strid_t* _val ) {
+static void __read_strid ( ex_stream_t* _stream, strid_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_array ( ex_stream_t* _stream, const char* _name, ex_array_t* _val ) {
+static void __read_array ( ex_stream_t* _stream, ex_array_t* _val ) {
+    // TODO { 
+    // typeid_to_serialize_func();
+    // for child
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_map ( ex_stream_t* _stream, const char* _name, ex_hashmap_t* _val ) {
+static void __read_map ( ex_stream_t* _stream, ex_hashmap_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_vec2f ( ex_stream_t* _stream, const char* _name, ex_vec2f_t* _val ) {
+static void __read_vec2f ( ex_stream_t* _stream, ex_vec2f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_vec3f ( ex_stream_t* _stream, const char* _name, ex_vec3f_t* _val ) {
+static void __read_vec3f ( ex_stream_t* _stream, ex_vec3f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_vec4f ( ex_stream_t* _stream, const char* _name, ex_vec4f_t* _val ) {
+static void __read_vec4f ( ex_stream_t* _stream, ex_vec4f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_mat22f ( ex_stream_t* _stream, const char* _name, ex_mat22f_t* _val ) {
+static void __read_mat22f ( ex_stream_t* _stream, ex_mat22f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_mat33f ( ex_stream_t* _stream, const char* _name, ex_mat33f_t* _val ) {
+static void __read_mat33f ( ex_stream_t* _stream, ex_mat33f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_mat44f ( ex_stream_t* _stream, const char* _name, ex_mat44f_t* _val ) {
+static void __read_mat44f ( ex_stream_t* _stream, ex_mat44f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_quatf ( ex_stream_t* _stream, const char* _name, ex_quatf_t* _val ) {
+static void __read_quatf ( ex_stream_t* _stream, ex_quatf_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_angf ( ex_stream_t* _stream, const char* _name, ex_angf_t* _val ) {
+static void __read_angf ( ex_stream_t* _stream, ex_angf_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_color3u ( ex_stream_t* _stream, const char* _name, ex_color3u_t* _val ) {
+static void __read_color3u ( ex_stream_t* _stream, ex_color3u_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_color3f ( ex_stream_t* _stream, const char* _name, ex_color3f_t* _val ) {
+static void __read_color3f ( ex_stream_t* _stream, ex_color3f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_color4u ( ex_stream_t* _stream, const char* _name, ex_color4u_t* _val ) {
+static void __read_color4u ( ex_stream_t* _stream, ex_color4u_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_color4f ( ex_stream_t* _stream, const char* _name, ex_color4f_t* _val ) {
+static void __read_color4f ( ex_stream_t* _stream, ex_color4f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_int8 ( ex_stream_t* _stream, const char* _name, int8* _val ) {
+static void __write_int8 ( ex_stream_t* _stream, int8* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_int16 ( ex_stream_t* _stream, const char* _name, int16* _val ) {
+static void __write_int16 ( ex_stream_t* _stream, int16* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_int32 ( ex_stream_t* _stream, const char* _name, int32* _val ) {
+static void __write_int32 ( ex_stream_t* _stream, int32* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_int64 ( ex_stream_t* _stream, const char* _name, int64* _val ) {
+static void __write_int64 ( ex_stream_t* _stream, int64* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_uint8 ( ex_stream_t* _stream, const char* _name, uint8* _val ) {
+static void __write_uint8 ( ex_stream_t* _stream, uint8* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_uint16 ( ex_stream_t* _stream, const char* _name, uint16* _val ) {
+static void __write_uint16 ( ex_stream_t* _stream, uint16* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_uint32 ( ex_stream_t* _stream, const char* _name, uint32* _val ) {
+static void __write_uint32 ( ex_stream_t* _stream, uint32* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_uint64 ( ex_stream_t* _stream, const char* _name, uint64* _val ) {
+static void __write_uint64 ( ex_stream_t* _stream, uint64* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_float ( ex_stream_t* _stream, const char* _name, float* _val ) {
+static void __write_float ( ex_stream_t* _stream, float* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_double ( ex_stream_t* _stream, const char* _name, double* _val ) {
+static void __write_double ( ex_stream_t* _stream, double* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_boolean ( ex_stream_t* _stream, const char* _name, bool* _val ) {
+static void __write_boolean ( ex_stream_t* _stream, bool* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_string ( ex_stream_t* _stream, const char* _name, const char** _val ) {
+static void __write_string ( ex_stream_t* _stream, const char** _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_strid ( ex_stream_t* _stream, const char* _name, strid_t* _val ) {
+static void __write_strid ( ex_stream_t* _stream, strid_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_array ( ex_stream_t* _stream, const char* _name, ex_array_t* _val ) {
+static void __write_array ( ex_stream_t* _stream, ex_array_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_map ( ex_stream_t* _stream, const char* _name, ex_hashmap_t* _val ) {
+static void __write_map ( ex_stream_t* _stream, ex_hashmap_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_vec2f ( ex_stream_t* _stream, const char* _name, ex_vec2f_t* _val ) {
+static void __write_vec2f ( ex_stream_t* _stream, ex_vec2f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_vec3f ( ex_stream_t* _stream, const char* _name, ex_vec3f_t* _val ) {
+static void __write_vec3f ( ex_stream_t* _stream, ex_vec3f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_vec4f ( ex_stream_t* _stream, const char* _name, ex_vec4f_t* _val ) {
+static void __write_vec4f ( ex_stream_t* _stream, ex_vec4f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_mat22f ( ex_stream_t* _stream, const char* _name, ex_mat22f_t* _val ) {
+static void __write_mat22f ( ex_stream_t* _stream, ex_mat22f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_mat33f ( ex_stream_t* _stream, const char* _name, ex_mat33f_t* _val ) {
+static void __write_mat33f ( ex_stream_t* _stream, ex_mat33f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_mat44f ( ex_stream_t* _stream, const char* _name, ex_mat44f_t* _val ) {
+static void __write_mat44f ( ex_stream_t* _stream, ex_mat44f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_quatf ( ex_stream_t* _stream, const char* _name, ex_quatf_t* _val ) {
+static void __write_quatf ( ex_stream_t* _stream, ex_quatf_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_angf ( ex_stream_t* _stream, const char* _name, ex_angf_t* _val ) {
+static void __write_angf ( ex_stream_t* _stream, ex_angf_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_color3u ( ex_stream_t* _stream, const char* _name, ex_color3u_t* _val ) {
+static void __write_color3u ( ex_stream_t* _stream, ex_color3u_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_color3f ( ex_stream_t* _stream, const char* _name, ex_color3f_t* _val ) {
+static void __write_color3f ( ex_stream_t* _stream, ex_color3f_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_color4u ( ex_stream_t* _stream, const char* _name, ex_color4u_t* _val ) {
+static void __write_color4u ( ex_stream_t* _stream, ex_color4u_t* _val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_color4f ( ex_stream_t* _stream, const char* _name, ex_color4f_t* _val ) {
+static void __write_color4f ( ex_stream_t* _stream, ex_color4f_t* _val ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -736,7 +747,7 @@ ex_stream_t* ex_create_json_read_stream ( const char* _fileName ) {
         EX_STREAM_READ,
 
         //
-        __check_node,
+        __next_child,
 
         // methods
         __read_int8,
@@ -858,7 +869,7 @@ ex_stream_t* ex_create_json_write_stream () {
         EX_STREAM_WRITE,
 
         //
-        __check_node,
+        __next_child,
 
         // methods
         __write_int8,
