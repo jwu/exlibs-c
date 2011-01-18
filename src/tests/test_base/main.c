@@ -38,11 +38,12 @@ extern void test_hashmap();
 extern void test_list();
 extern void test_memmng();
 extern void test_pool();
+extern void test_rapid();
 extern void test_rtti();
+extern void test_stream();
 extern void test_stringID();
 extern void test_thread();
 extern void test_timer();
-extern void test_rapid();
 // ------------------------------------------------------------------ 
 
 int main( int argc, char* argv[] )
@@ -52,7 +53,7 @@ int main( int argc, char* argv[] )
     printf ("================\n");
 
     // init
-    if ( ex_core_init() ) {
+    if ( ex_core_init() != -1 ) {
         // register exit function
         atexit(exit_fn);
 
@@ -66,12 +67,13 @@ int main( int argc, char* argv[] )
         // test_memmng ();
         // test_pool ();
         // test_rtti ();
+        test_stream ();
         // test_stringID ();
         // test_thread();
-        test_timer();
+        // test_timer();
 
         // special
-        test_rapid ();
+        // test_rapid ();
     }
 
     return 0;

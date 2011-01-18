@@ -120,38 +120,6 @@
 #endif
 
 // ------------------------------------------------------------------
-// Desc: Endian detect                                                   
-//  First we define the usually platform endian known by experience 
-//  Then we define the endian by detail after "External.h"    
-// ------------------------------------------------------------------
-
-#define EX_LITTLE_ENDIAN 0
-#define EX_BIG_ENDIAN    1
-
-// win32
-#if ( EX_PLATFORM == EX_WIN32 )
-    #define EX_ENDIAN   EX_LITTLE_ENDIAN
-// linux
-#elif ( EX_PLATFORM == EX_LINUX )
-    #define EX_ENDIAN   EX_LITTLE_ENDIAN
-// mac osx
-#elif ( EX_PLATFORM == EX_MACOSX )
-    #define EX_ENDIAN   EX_BIG_ENDIAN
-// xenon
-#elif ( EX_PLATFORM == EX_XENON )
-    #define EX_ENDIAN   EX_BIG_ENDIAN
-// ps3
-#elif ( EX_PLATFORM == EX_PS3 )
-    #define EX_ENDIAN   EX_BIG_ENDIAN
-// ios
-#elif ( EX_PLATFORM == EX_IOS )
-    #define EX_ENDIAN   EX_LITTLE_ENDIAN
-// android
-#elif ( EX_PLATFORM == EX_ANDROID )
-    #define EX_ENDIAN   EX_LITTLE_ENDIAN
-#endif
-
-// ------------------------------------------------------------------
 // Desc: define EX_DLL if we have DLL/_DLL macro
 // ------------------------------------------------------------------
 
@@ -174,29 +142,6 @@
 #else
     #define EX_DLL_EXPORT
     #define EX_DLL_IMPORT
-#endif
-
-// ------------------------------------------------------------------
-// Desc: Endian detect
-//  First we define the usually platform endian known by experience
-//  Then we define the endian by detail after "Base_GExternal.h"
-//  endian define by detail
-// ------------------------------------------------------------------
-
-#if ( defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && __BYTE_ORDER == __LITTLE_ENDIAN ) || \
-    ( defined(i386) || defined(__i386__) || defined(__i486__) || defined(__i586__) || defined(__i686__) || defined(vax) || defined(MIPSEL) )
-    // Big-endian machine
-    #ifdef EX_ENDIAN
-        #undef EX_ENDIAN
-    #endif
-    #define EX_ENDIAN EX_LITTLE_ENDIAN
-#elif ( defined(__BYTE_ORDER) && defined(__BIG_ENDIAN) && __BYTE_ORDER == __BIG_ENDIAN ) || \
-      ( defined(sparc) || defined(POWERPC) || defined(mc68000) || defined(sel) )
-    // Little-endian machine
-    #ifdef EX_ENDIAN
-        #undef EX_ENDIAN
-    #endif
-    #define EX_ENDIAN EX_BIG_ENDIAN
 #endif
 
 // #################################################################################

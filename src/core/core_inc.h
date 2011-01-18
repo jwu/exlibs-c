@@ -22,6 +22,7 @@
 #include "debug/debug_inc.h"
 #include "thread/thread_inc.h"
 #include "timer/timer_inc.h"
+#include "file/file_inc.h"
 
 // data structure and algorithm
 #include "algo/algo_inc.h"
@@ -31,6 +32,7 @@
 // program pattern
 #include "string/string_inc.h"
 #include "runtime/runtime_inc.h"
+#include "serialize/serialize_inc.h"
 
 #include "misc/misc_inc.h"
 

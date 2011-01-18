@@ -54,10 +54,10 @@ extern "C" {
 #define ex_array_each( _array, _type, _el ) \
     { \
         _type _el; \
-        size_t count = _array->_length; \
+        size_t count = (_array)->_length; \
         size_t idx = 0; \
         while ( idx < count ) { \
-            _el = *( (_type*) (_array->_data) + idx );
+            _el = *( (_type*) ((_array)->_data) + idx );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -87,10 +87,10 @@ extern "C" {
 #define ex_array_raw_each( _array, _type, _el ) \
     { \
         _type _el; \
-        size_t count = _array->_length; \
+        size_t count = (_array)->_length; \
         size_t idx = 0; \
         while ( idx < count ) { \
-            _el = (_type) (_array->_data) + idx;
+            _el = (_type) ((_array)->_data) + idx;
 
 // ------------------------------------------------------------------ 
 /*! 

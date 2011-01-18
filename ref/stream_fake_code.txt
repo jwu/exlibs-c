@@ -1,0 +1,44 @@
+"component" : {
+    "ex_trans2d_t" : {
+        "_pos" : { "vec3f" : [10.0,10.0,10.0] },
+        "_ang" : { "float" : 1.0 },
+        "_scale" : { "vec3f" : [1.0,1.0,1.0] },
+        "children" : { "array" : [
+            { "vec3f": [2.0,2.0,2.0] },
+            { "vec3f": [2.0,2.0,2.0] },
+            { "vec3f": [2.0,2.0,2.0] },
+            { "vec3f": [2.0,2.0,2.0] },
+        ] },
+        "children" : { "map" : {
+            { "strid": "hello" },
+            { "vec3f": [2.0,2.0,2.0] },
+            { "strid": "foo" },
+            { "vec3f": [2.0,2.0,2.0] },
+            { "strid": "bar" },
+            { "vec3f": [2.0,2.0,2.0] },
+        } },
+    }
+}
+
+
+ex_serialize_vec3f  ( ex_stream_t* _stream, const char* _name, ex_vec3f_t* _val ) {
+    if ( _stream->check_node ) _stream->check_node( _name, EX_TYPEID(vec3f) );
+    _stream->serialize_vec3f(_stream, _name, _val); // can be read, can be write.
+}
+
+ex_serialize_ex_trans2d_t ( ex_stream_t* _stream, const char* _name, ex_trans2d_t* _val ) {
+    if ( _stream->check_node ) _stream->check_node( _name, EX_CLASSID(ex_trans2d_t) );
+    ex_serialize_vec3f  ( _stream, "_pos", _val->_pos );
+    ex_serialize_ang    ( _stream, "_ang", _val->_ang );
+    ex_serialize_vec3f  ( _stream, "_scale", _val->_scale );
+}
+
+
+
+json_node = ex_create_json_node("foobar.json");
+json_stream = ex_create_json_read_stream(json_node);
+ex_serialize_trans2d(json_stream,"trans2d",trans2d);
+
+bin_stream = ex_create_bin_write_stream();
+ex_serialize_trans2d(bin_stream,"trans2d",trans2d);
+ex_write_bin_stream_to_file ( bin_stream, "foobar.bin" )

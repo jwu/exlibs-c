@@ -20,7 +20,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool ex_core_init ();
+extern int ex_core_init ();
 extern void ex_core_deinit ();
 extern bool ex_core_initialized ();
 

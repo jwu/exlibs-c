@@ -100,7 +100,7 @@ static void quitGame () {
 
 static void updateGame () {
     {
-        ex_vec2f_t d_pos = { 1.0f, 1.0f };
+        // ex_vec2f_t d_pos = { 1.0f, 1.0f };
         ex_angf_t d_ang;
         ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_get_comp( entity1, EX_CLASSID(ex_trans2d_t) );
 
@@ -312,7 +312,7 @@ int main( int argc, const char* argv[] ) {
     printf ("================\n");
 
     // init
-    if ( ex_core_init() ) {
+    if ( ex_core_init() != -1 ) {
         // register exit function
         atexit(exit_fn);
 

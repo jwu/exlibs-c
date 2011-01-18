@@ -25,18 +25,18 @@ static bool __initialized = false;
 extern void __factory_init ();
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_init () 
+int ex_rtti_init () 
 {
     // if the core already initialized, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "rtti table already initialized" );
-        return true;
+        return 1;
     }
 
     // rtti must init after strid
-    if ( ex_strid_is_inited() == false ) {
+    if ( ex_strid_initialized() == false ) {
         ex_warning ( "strid not initialized, please init it before rtti init." );
-        return false;
+        return -1;
     }
 
     __classid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
@@ -47,7 +47,7 @@ bool ex_rtti_init ()
     __factory_init();
 
     __initialized = true;
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -74,7 +74,7 @@ void ex_rtti_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_rtti_is_inited () { return __initialized; }
+bool ex_rtti_initialized () { return __initialized; }
 
 // ------------------------------------------------------------------ 
 // Desc: 

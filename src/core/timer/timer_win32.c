@@ -37,7 +37,7 @@ static void CALLBACK HandleAlarm ( UINT uID,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_sys_timer_init () {
+int ex_sys_timer_init () {
     MMRESULT result;
 
     // init start ticks and cpu frequency
@@ -54,9 +54,9 @@ bool ex_sys_timer_init () {
     __timerID = timeSetEvent(EX_TIMER_RESOLUTION, 1, HandleAlarm, 0, TIME_PERIODIC);
     if ( !__timerID ) {
         ex_error("timeSetEvent() failed");
-        return false;
+        return -1;
     }
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 

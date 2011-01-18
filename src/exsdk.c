@@ -94,10 +94,12 @@
     #endif
     
     // log endian
-    #if ( EX_ENDIAN == EX_BIG_ENDIAN )
+    #if ( EX_BYTEORDER == EX_BIG_ENDIAN )
         #pragma message("endian: big")
-    #else
+    #elif ( EX_BYTEORDER == EX_LIL_ENDIAN )
         #pragma message("endian: little")
+    #else
+        #pragma message("endian: unknown")
     #endif
 
     // log use dll or not
@@ -175,10 +177,12 @@
     #endif
     
     // log endian
-    #if ( EX_ENDIAN == EX_BIG_ENDIAN )
-        #warning "endian: big"
+    #if ( EX_BYTEORDER == EX_BIG_ENDIAN )
+        #warning "byte order: big endian"
+    #elif ( EX_BYTEORDER == EX_LIL_ENDIAN )
+        #warning "byte order: little endian"
     #else
-        #warning "endian: little"
+        #warning "byte order: unknown"
     #endif
 
     // log use dll or not

@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : main.cpp
+// File         : test_stream.c
 // Author       : Wu Jie 
-// Last Change  : 07/18/2010 | 17:38:21 PM | Sunday,July
+// Last Change  : 01/17/2011 | 15:58:01 PM | Monday,January
 // Description  : 
 // ======================================================================================
 
@@ -9,43 +9,32 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "ogre_game.h"
-#include "app.h"
+#include "../../core/core_inc.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+// static const char* media_file = "e:/project/dev/exsdk/res/";
+static const char* media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
+#define maxPATH 256
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int main( int argc, char* argv[] )
-{
-    // init
-    if ( ex_core_init() != -1 ) {
+static void json_read () {
+    char path[maxPATH];
 
-        // ogre app
-        {
-            // init ogre
-            App app;
-            if ( app.init() ) {
-
-                // main loop
-                while ( app.window()->isClosed() == false ) {
-                    app.tick();
-                }
-
-                // deinit ogre
-                app.deinit();
-            }
-        }
-
-        // deinit
-        ex_core_deinit();
-    }
-
-    return 0;
+    strncpy ( path, media_file, maxPATH );
+    ex_stream_t* stream = ex_create_json_read_stream( strcat(path, "simple_json.json") );
+    ex_destroy_json_stream((ex_stream_json_t*)stream);
 }
-    
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void test_stream () {
+    json_read();
+}

@@ -30,6 +30,16 @@ EX_DEF_PROPS_BEGIN(ex_trans2d_t)
     // EX_PROP( ex_trans2d_t, _scale, "scale",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END(ex_trans2d_t)
 
+// TODO { 
+// EX_SERIALIZE_BEGIN(ex_trans2d_t)
+//     EX_SERIALIZE( ex_trans2d_t, ex_vec2f_t, _pos );
+//     EX_SERIALIZE( ex_trans2d_t, ex_angf_t, _ang );
+//     EX_SERIALIZE( ex_trans2d_t, ex_vec2f_t, _scale );
+//     EX_SERIALIZE( ex_trans2d_t, reference, _parent );
+//     EX_SERIALIZE( ex_trans2d_t, ex_array_t*, _children );
+// EX_SERIALIZE_END(ex_trans2d_t)
+// } TODO end 
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,7 +56,7 @@ void ex_trans2d_init ( void* _self ) {
     ex_angf_zero(&trans2d->_ang);
     ex_vec2f_one(&trans2d->_scale);
     trans2d->_parent = NULL;
-    trans2d->_childrent = ex_array_alloc( sizeof(ex_trans2d_t), 8 );
+    trans2d->_children = ex_array_alloc( sizeof(ex_trans2d_t), 8 );
 }
 
 // ------------------------------------------------------------------ 
@@ -56,7 +66,7 @@ void ex_trans2d_init ( void* _self ) {
 void ex_trans2d_deinit ( void* _self ) {
     ex_trans2d_t* trans2d = (ex_trans2d_t*)_self; 
 
-    ex_array_free(trans2d->_childrent);
+    ex_array_free(trans2d->_children);
     ex_component_deinit(_self); // parent deinint
 }
 

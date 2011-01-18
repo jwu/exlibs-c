@@ -180,10 +180,10 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 // Desc: 
 // ------------------------------------------------------------------
 
-#if (EX_ENDIAN == EX_LITTLE_ENDIAN)
+#if (EX_BYTEORDER == EX_LIL_ENDIAN)
     #define __HASH_LITTLE_ENDIAN 1
     #define __HASH_BIG_ENDIAN 0
-#elif (EX_ENDIAN == EX_BIG_ENDIAN)
+#elif (EX_BYTEORDER == EX_BIG_ENDIAN)
     #define __HASH_LITTLE_ENDIAN 0
     #define __HASH_BIG_ENDIAN 1
 #endif

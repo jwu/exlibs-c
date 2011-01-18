@@ -33,7 +33,7 @@ EX_DEF_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_angf_t   _ang;   // local angle
     ex_vec2f_t  _scale; // local scale
     struct ex_trans2d_t* _parent;
-    ex_array_t* _childrent;
+    ex_array_t* _children;
 EX_DEF_CLASS_END(ex_trans2d_t)
 
 ///////////////////////////////////////////////////////////////////////////////

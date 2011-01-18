@@ -26,9 +26,12 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool ex_strid_init ( size_t _size );
+// success: 0
+// already inited: 1
+// failed: -1
+extern int ex_strid_init ( size_t _size );
 extern void ex_strid_deinit ();
-extern bool ex_strid_is_inited ();
+extern bool ex_strid_initialized ();
 
 // ------------------------------------------------------------------ 
 // Desc: 

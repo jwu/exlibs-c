@@ -27,19 +27,19 @@ static bool __initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_strid_init ( size_t _size )
+int ex_strid_init ( size_t _size )
 {
     // if the core already initialized, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "string ID table already initialized" );
-        return true;
+        return 1;
     }
 
     __string_set = ex_hashmap_alloc ( sizeof(char*), sizeof(char*), _size, ex_hashkey_string, ex_keycmp_string );
-    ex_assert_return ( __string_set, false, "string table alloc failed" );
+    ex_assert_return ( __string_set, -1, "string table alloc failed" );
 
     __initialized = true;
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -62,7 +62,7 @@ void ex_strid_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_strid_is_inited () { return __initialized; }
+bool ex_strid_initialized () { return __initialized; }
 
 // ------------------------------------------------------------------ 
 // Desc: 

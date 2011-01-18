@@ -34,8 +34,12 @@ extern void ex_free_mng( void* _ptr, const char* _file_name, const char* _func_n
 // memory mng
 ///////////////////////////////////////////////////////////////////////////////
 
-extern bool ex_mem_init ();
+// success: 0
+// already inited: 1
+// failed: -1
+extern int ex_mem_init ();
 extern void ex_mem_deinit ();
+extern bool ex_mem_initialized ();
 
 ///////////////////////////////////////////////////////////////////////////////
 // global namespace function declaration & define 

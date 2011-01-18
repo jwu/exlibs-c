@@ -98,8 +98,12 @@ static inline void ex_sleep ( uint32 _ms ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool ex_timer_init ();
+// success: 0
+// already inited: 1
+// failed: -1
+extern int ex_timer_init ();
 extern void ex_timer_deinit ();
+extern bool ex_timer_initialized ();
 
 // ------------------------------------------------------------------ 
 // Desc: return ms 

@@ -40,7 +40,7 @@ int main( int argc, char* argv[] )
     printf ("================\n");
 
     // init
-    if ( ex_core_init() ) {
+    if ( ex_core_init() != -1 ) {
         // register exit function
         atexit(exit_fn);
 

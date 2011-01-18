@@ -301,12 +301,12 @@ static void __dump () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_mem_init ()
+int ex_mem_init ()
 {
     // if the core already initialized, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "memory manager already initialized" );
-        return true;
+        return 1;
     }
 
     //
@@ -319,7 +319,7 @@ bool ex_mem_init ()
     unlink ( MEM_LOG );
 
     __initialized = true;
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -342,6 +342,14 @@ void ex_mem_deinit ()
 
         __initialized = false;
     }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_mem_initialized () {
+    return __initialized;
 }
 
 // ------------------------------------------------------------------ 

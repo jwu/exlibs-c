@@ -41,9 +41,12 @@ typedef struct ex_rtti_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool ex_rtti_init ();
+// success: 0
+// already inited: 1
+// failed: -1
+extern int ex_rtti_init ();
 extern void ex_rtti_deinit ();
-extern bool ex_rtti_is_inited ();
+extern bool ex_rtti_initialized ();
 
 // ------------------------------------------------------------------ 
 // Desc: 

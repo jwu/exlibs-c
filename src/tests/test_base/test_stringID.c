@@ -15,8 +15,8 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-const char* media_file = "e:/project/dev/exsdk/res/";
-// const char* media_file = "e:/dev/exsdk/res/";
+static const char* media_file = "e:/project/dev/exsdk/res/";
+// static const char* media_file = "e:/dev/exsdk/res/";
 #define maxPATH 256
 
 // ------------------------------------------------------------------ 
@@ -31,7 +31,7 @@ static void normal () {
     ex_array_t *words, *word_IDs;
 
     strncpy ( path, media_file, maxPATH );
-    fp = fopen ( strcat(  path, "sid.test.txt" ), "r" );
+    fp = fopen ( strcat(  path, "sid_test.txt" ), "r" );
     ex_assert_return ( fp, /*void*/, "file %s not found!", path );
 
     fseek ( fp, 0L, SEEK_END );

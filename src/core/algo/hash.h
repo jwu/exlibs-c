@@ -105,7 +105,7 @@ static inline uint32 ex_hashbob3( const uint32* _data, uint32 _len, uint32 _seed
 // void* 
 static inline uint32 ex_hashbob3_ptr( const void* _data, uint32 _len, uint32 _seed )
 {
-#if (EX_ENDIAN == EX_LITTLE_ENDIAN)
+#if (EX_BYTEORDER == EX_LIL_ENDIAN)
     return ex_hashlittle( _data, _len, _seed );
 #else
     return ex_hashbig( _data, _len, _seed );
@@ -122,7 +122,7 @@ static inline void ex_hashbob3_2( const uint32* _data, uint32 _len, uint32* _see
 // void* 
 static inline void ex_hashbob3_ptr2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
 {
-#if (EX_ENDIAN == EX_LITTLE_ENDIAN)
+#if (EX_BYTEORDER == EX_LIL_ENDIAN)
     ex_hashlittle2( _data, _len, _seed1, _seed2 );
 #else
     ex_hashbig2( _data, _len, _seed1, _seed2 );

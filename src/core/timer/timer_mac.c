@@ -40,7 +40,7 @@ static int __run_timer ( void* _unused ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_sys_timer_init () {
+int ex_sys_timer_init () {
     // init start ticks
     gettimeofday(&__start_ticks, NULL);
 
@@ -48,8 +48,8 @@ bool ex_sys_timer_init () {
     __timer_alive = 1;
     __timer_thread = ex_create_thread ( __run_timer, NULL ); 
     if ( __timer_thread == NULL )
-        return false;
-    return true;
+        return -1;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 

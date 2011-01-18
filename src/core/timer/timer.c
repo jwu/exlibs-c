@@ -125,20 +125,20 @@ void __threaded_timer_tick () {
 extern bool ex_sys_timer_init ();
 // ------------------------------------------------------------------ 
 
-bool ex_timer_init () {
-    bool ret = false;
+int ex_timer_init () {
+    int ret = false;
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "timer already inited" );
-        return true;
+        return 1;
     }
 
     // init timer
     ret = ex_sys_timer_init();
     __timer_mutex = ex_create_mutex();
-    if ( ret == false )
-        return false;
+    if ( ret == -1 )
+        return -1;
 
     //
     __timers = ex_pool_alloc_nomng( sizeof(timer_t), 8 ); 
@@ -149,7 +149,7 @@ bool ex_timer_init () {
 
     //
     __initialized = true;
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -180,6 +180,14 @@ void ex_timer_deinit () {
         //
         __initialized = false;
     }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_timer_initialized () {
+    return __initialized;
 }
 
 // ------------------------------------------------------------------ 

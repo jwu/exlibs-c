@@ -24,17 +24,17 @@ static bool __initialized = false;
 extern void __eng_time_start ();
 // ------------------------------------------------------------------ 
 
-bool ex_engine_init () {
+int ex_engine_init () {
     // we can't init ex_engine before ex_core initialized.
     if ( ex_core_initialized () == false ) {
         ex_warning ( "ex_core haven't initialed." );
-        return false;
+        return -1;
     }
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "ex_engine already inited" );
-        return true;
+        return 1;
     }
 
     // start engine timer
@@ -43,7 +43,7 @@ bool ex_engine_init () {
     //
     ex_log ("ex_engine inited");
     __initialized = true;
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 

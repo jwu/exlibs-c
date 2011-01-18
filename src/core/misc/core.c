@@ -20,44 +20,52 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_register_builtin_types ();
 extern void ex_register_classes ();
 // ------------------------------------------------------------------ 
 
-bool ex_core_init ()
+// success: 0
+// already inited: 1
+// failed: -1
+int ex_core_init ()
 {
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "core already inited" );
-        return true;
+        return 1;
     }
+
+    // NOTE: we don't allowed already-initialized in these sub-system.
+    //       they are strongly initialized by order.
 
     //
     ex_log ("init timer");
-    if ( ex_timer_init() == false ) {
+    if ( ex_timer_init() != 0 ) {
         ex_log ("failed to init timer");
-        return false;
+        return -1;
     }
 
     //
     ex_log ("init memory");
-    if ( ex_mem_init() == false ) {
+    if ( ex_mem_init() != 0 ) {
         ex_log ("failed to init memory");
-        return false;
+        return -1;
     }
 
     ex_log ("init string ID table");
-    if ( ex_strid_init(65536) == false ) {
+    if ( ex_strid_init(65536) != 0 ) {
         ex_log ("failed to init string ID table");
-        return false;
+        return -1;
     }
 
     ex_log ("init rtti classes");
-    if ( ex_rtti_init() == false ) {
+    if ( ex_rtti_init() != 0 ) {
         ex_log ("failed to init rtti table");
-        return false;
+        return -1;
     }
 
     // after we init rtti, we can register all the classes we used in the app
+    ex_register_builtin_types ();
     ex_register_classes ();
 
     // TODO: ex_log ("init lua");
@@ -65,7 +73,7 @@ bool ex_core_init ()
     //
     ex_log ("ex_core inited");
     __initialized = true;
-    return true;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 

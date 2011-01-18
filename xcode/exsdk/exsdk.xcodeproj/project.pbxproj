@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B200D2BC12E17384003B4944 /* file_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2B912E17384003B4944 /* file_inc.h */; };
+		B200D2BD12E17384003B4944 /* file_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B200D2BA12E17384003B4944 /* file_mac.c */; };
+		B200D2BE12E17384003B4944 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2BB12E17384003B4944 /* file.h */; };
+		B200D2F912E42DF7003B4944 /* serialize_builtin.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F112E42DF7003B4944 /* serialize_builtin.h */; };
+		B200D2FA12E42DF7003B4944 /* serialize_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F212E42DF7003B4944 /* serialize_inc.h */; };
+		B200D2FB12E42DF7003B4944 /* serialize_macro.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F312E42DF7003B4944 /* serialize_macro.h */; };
+		B200D2FC12E42DF7003B4944 /* stream_bin.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F412E42DF7003B4944 /* stream_bin.h */; };
+		B200D2FD12E42DF7003B4944 /* stream_json.c in Sources */ = {isa = PBXBuildFile; fileRef = B200D2F512E42DF7003B4944 /* stream_json.c */; };
+		B200D2FE12E42DF7003B4944 /* stream_json.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F612E42DF7003B4944 /* stream_json.h */; };
+		B200D2FF12E42DF7003B4944 /* stream_xml.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F712E42DF7003B4944 /* stream_xml.h */; };
+		B200D30012E42DF7003B4944 /* stream.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F812E42DF7003B4944 /* stream.h */; };
+		B200D30212E4335E003B4944 /* builtin_type_registry.c in Sources */ = {isa = PBXBuildFile; fileRef = B200D30112E4335E003B4944 /* builtin_type_registry.c */; };
+		B200D30412E43369003B4944 /* builtin_type.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D30312E43369003B4944 /* builtin_type.h */; };
+		B200D37312E44B06003B4944 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B200D3D812E48DAA003B4944 /* test_stream.c in Sources */ = {isa = PBXBuildFile; fileRef = B200D3D712E48DAA003B4944 /* test_stream.c */; };
+		B200D3E412E48F51003B4944 /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
 		B20715A512C7A38900071C29 /* debug_draw.c in Sources */ = {isa = PBXBuildFile; fileRef = B20715A012C7A38900071C29 /* debug_draw.c */; };
 		B20715A612C7A38900071C29 /* debug_draw.h in Headers */ = {isa = PBXBuildFile; fileRef = B20715A112C7A38900071C29 /* debug_draw.h */; };
 		B20715A912C7A38900071C29 /* graphics_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B20715A412C7A38900071C29 /* graphics_inc.h */; };
@@ -175,6 +191,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B200D2B912E17384003B4944 /* file_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = file_inc.h; path = file/file_inc.h; sourceTree = "<group>"; };
+		B200D2BA12E17384003B4944 /* file_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = file_mac.c; path = file/file_mac.c; sourceTree = "<group>"; };
+		B200D2BB12E17384003B4944 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = file.h; path = file/file.h; sourceTree = "<group>"; };
+		B200D2F112E42DF7003B4944 /* serialize_builtin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serialize_builtin.h; path = serialize/serialize_builtin.h; sourceTree = "<group>"; };
+		B200D2F212E42DF7003B4944 /* serialize_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serialize_inc.h; path = serialize/serialize_inc.h; sourceTree = "<group>"; };
+		B200D2F312E42DF7003B4944 /* serialize_macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serialize_macro.h; path = serialize/serialize_macro.h; sourceTree = "<group>"; };
+		B200D2F412E42DF7003B4944 /* stream_bin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_bin.h; path = serialize/stream_bin.h; sourceTree = "<group>"; };
+		B200D2F512E42DF7003B4944 /* stream_json.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stream_json.c; path = serialize/stream_json.c; sourceTree = "<group>"; };
+		B200D2F612E42DF7003B4944 /* stream_json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_json.h; path = serialize/stream_json.h; sourceTree = "<group>"; };
+		B200D2F712E42DF7003B4944 /* stream_xml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream_xml.h; path = serialize/stream_xml.h; sourceTree = "<group>"; };
+		B200D2F812E42DF7003B4944 /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stream.h; path = serialize/stream.h; sourceTree = "<group>"; };
+		B200D30112E4335E003B4944 /* builtin_type_registry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = builtin_type_registry.c; sourceTree = "<group>"; };
+		B200D30312E43369003B4944 /* builtin_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = builtin_type.h; sourceTree = "<group>"; };
+		B200D3D712E48DAA003B4944 /* test_stream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_stream.c; sourceTree = "<group>"; };
+		B200D3E312E48F51003B4944 /* libyajl_s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyajl_s.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/yajl-1.0.11/lib/libyajl_s.a"; sourceTree = "<absolute>"; };
 		B20715A012C7A38900071C29 /* debug_draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = debug_draw.c; path = graphics/debug_draw.c; sourceTree = "<group>"; };
 		B20715A112C7A38900071C29 /* debug_draw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debug_draw.h; path = graphics/debug_draw.h; sourceTree = "<group>"; };
 		B20715A412C7A38900071C29 /* graphics_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics_inc.h; path = graphics/graphics_inc.h; sourceTree = "<group>"; };
@@ -346,6 +377,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */,
+				B200D37312E44B06003B4944 /* OpenGL.framework in Frameworks */,
+				B200D3E412E48F51003B4944 /* libyajl_s.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +405,7 @@
 				B245482A12B91E9900EF7261 /* test_gl-Info.plist */,
 				B245484712B9207800EF7261 /* OpenGL.framework */,
 				B245484B12B9209000EF7261 /* GLUT.framework */,
+				B200D3E312E48F51003B4944 /* libyajl_s.a */,
 			);
 			name = exsdk;
 			sourceTree = "<group>";
@@ -382,6 +416,31 @@
 				D2AAC046055464E500DB518D /* libexsdk.a */,
 			);
 			name = bin;
+			sourceTree = "<group>";
+		};
+		B200D2B812E17375003B4944 /* file */ = {
+			isa = PBXGroup;
+			children = (
+				B200D2B912E17384003B4944 /* file_inc.h */,
+				B200D2BA12E17384003B4944 /* file_mac.c */,
+				B200D2BB12E17384003B4944 /* file.h */,
+			);
+			name = file;
+			sourceTree = "<group>";
+		};
+		B200D2F012E42DDF003B4944 /* serialize */ = {
+			isa = PBXGroup;
+			children = (
+				B200D2F112E42DF7003B4944 /* serialize_builtin.h */,
+				B200D2F212E42DF7003B4944 /* serialize_inc.h */,
+				B200D2F312E42DF7003B4944 /* serialize_macro.h */,
+				B200D2F412E42DF7003B4944 /* stream_bin.h */,
+				B200D2F512E42DF7003B4944 /* stream_json.c */,
+				B200D2F612E42DF7003B4944 /* stream_json.h */,
+				B200D2F712E42DF7003B4944 /* stream_xml.h */,
+				B200D2F812E42DF7003B4944 /* stream.h */,
+			);
+			name = serialize;
 			sourceTree = "<group>";
 		};
 		B207159F12C7A36D00071C29 /* graphics */ = {
@@ -439,6 +498,7 @@
 		B2DD23F112A7C86E0053CA3F /* test_base */ = {
 			isa = PBXGroup;
 			children = (
+				B200D3D712E48DAA003B4944 /* test_stream.c */,
 				B21CB6D012D574EB00CDD369 /* test_timer.c */,
 				B2DD23F212A7C86E0053CA3F /* main.c */,
 				B2DD23F312A7C86E0053CA3F /* test_array.c */,
@@ -483,6 +543,7 @@
 		B2E0B70912A6B144009FE3E8 /* autogen */ = {
 			isa = PBXGroup;
 			children = (
+				B200D30112E4335E003B4944 /* builtin_type_registry.c */,
 				B2E0B70A12A6B144009FE3E8 /* classes_registry.c */,
 			);
 			name = autogen;
@@ -492,6 +553,8 @@
 		B2E0B70B12A6B144009FE3E8 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				B200D2F012E42DDF003B4944 /* serialize */,
+				B200D2B812E17375003B4944 /* file */,
 				B2E2690812C9DB8700833568 /* timer */,
 				B2E0B70C12A6B144009FE3E8 /* algo */,
 				B2E0B71312A6B144009FE3E8 /* container */,
@@ -555,6 +618,7 @@
 		B2E0B72612A6B144009FE3E8 /* global */ = {
 			isa = PBXGroup;
 			children = (
+				B200D30312E43369003B4944 /* builtin_type.h */,
 				B2E0B72712A6B144009FE3E8 /* compiler.h */,
 				B2E0B72812A6B144009FE3E8 /* config.h */,
 				B2E0B72912A6B144009FE3E8 /* constants.h */,
@@ -805,6 +869,16 @@
 				B2C9221412D8B4B6000FB811 /* debug2d.h in Headers */,
 				B2C9226512D96539000FB811 /* color.h in Headers */,
 				B2C922FD12DA0332000FB811 /* camera.h in Headers */,
+				B200D2BC12E17384003B4944 /* file_inc.h in Headers */,
+				B200D2BE12E17384003B4944 /* file.h in Headers */,
+				B200D2F912E42DF7003B4944 /* serialize_builtin.h in Headers */,
+				B200D2FA12E42DF7003B4944 /* serialize_inc.h in Headers */,
+				B200D2FB12E42DF7003B4944 /* serialize_macro.h in Headers */,
+				B200D2FC12E42DF7003B4944 /* stream_bin.h in Headers */,
+				B200D2FE12E42DF7003B4944 /* stream_json.h in Headers */,
+				B200D2FF12E42DF7003B4944 /* stream_xml.h in Headers */,
+				B200D30012E42DF7003B4944 /* stream.h in Headers */,
+				B200D30412E43369003B4944 /* builtin_type.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -927,6 +1001,7 @@
 				B2DD240912A7C86E0053CA3F /* test_stringID.c in Sources */,
 				B2E2698812C9EC0100833568 /* test_thread.c in Sources */,
 				B21CB6D112D574EB00CDD369 /* test_timer.c in Sources */,
+				B200D3D812E48DAA003B4944 /* test_stream.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -983,6 +1058,9 @@
 				B2C9221312D8B4B6000FB811 /* debug2d.c in Sources */,
 				B2C922FC12DA0332000FB811 /* camera.c in Sources */,
 				B2B113FF12DAAE66002E6C1A /* color.c in Sources */,
+				B200D2BD12E17384003B4944 /* file_mac.c in Sources */,
+				B200D2FD12E42DF7003B4944 /* stream_json.c in Sources */,
+				B200D30212E4335E003B4944 /* builtin_type_registry.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,8 +1095,12 @@
 				GCC_PREFIX_HEADER = "$(PREFIX_HEADER)../../src/exsdk.h";
 				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = ../../src/;
+				HEADER_SEARCH_PATHS = (
+					../../src/,
+					"../../ext/yajl-1.0.11/include",
+				);
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = exsdk;
 				USER_HEADER_SEARCH_PATHS = "";
 				USE_HEADERMAP = NO;
@@ -1035,8 +1117,12 @@
 				GCC_PREFIX_HEADER = "$(PREFIX_HEADER)../../src/exsdk.h";
 				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = ../../src/;
+				HEADER_SEARCH_PATHS = (
+					../../src/,
+					"../../ext/yajl-1.0.11/include",
+				);
 				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = exsdk;
 				USER_HEADER_SEARCH_PATHS = "";
 				USE_HEADERMAP = NO;
@@ -1136,8 +1222,15 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					"../../ext/yajl-1.0.11/include",
+				);
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"../../ext/yajl-1.0.11/lib/",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib\"",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = test.base;
 			};
@@ -1154,8 +1247,15 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					"../../ext/yajl-1.0.11/include",
+				);
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"../../ext/yajl-1.0.11/lib/",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib\"",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = test.base;
 				ZERO_LINK = NO;

@@ -324,7 +324,7 @@ uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
     {
         uint32 val = buf_array[i];
 
-#if (EX_ENDIAN == EX_BIG_ENDIAN)
+#if (EX_BYTEORDER == EX_BIG_ENDIAN)
         SwapByte(val);
 #endif
 
@@ -375,7 +375,7 @@ uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
     {        
         uint32 val = *(uint32 const*)_data;
 
-#if (EX_ENDIAN == EX_BIG_ENDIAN)
+#if (EX_BYTEORDER == EX_BIG_ENDIAN)
         SwapByte(val);
 #endif
 
@@ -441,7 +441,7 @@ uint32 calcCRC_str ( int _crcSize, const char* _data )
     {
         i = *(uint32 const*)p;
 
-#if (EX_ENDIAN == EX_BIG_ENDIAN)
+#if (EX_BYTEORDER == EX_BIG_ENDIAN)
         SwapByte(i);
 #endif
 

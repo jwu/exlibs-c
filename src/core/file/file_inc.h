@@ -1,28 +1,19 @@
 // ======================================================================================
-// File         : global_inc.h
+// File         : file_inc.h
 // Author       : Wu Jie 
-// Last Change  : 06/26/2010 | 08:31:46 AM | Saturday,June
+// Last Change  : 01/15/2011 | 11:21:36 AM | Saturday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef GLOBAL_INC_H_1277512309
-#define GLOBAL_INC_H_1277512309
+#ifndef FILE_INC_H_1295061698
+#define FILE_INC_H_1295061698
 // #################################################################################
 
-#include "config.h"
-#include "compiler.h"
-#include "platform.h"
-#include "endian.h"
-#include "macro.h"
-#include "constants.h"
-
-#include "external.h"
-#include "types.h" // depends external
-#include "builtin_type.h" // depends external
+#include "file.h"
 
 // #################################################################################
-#endif // END GLOBAL_INC_H_1277512309
+#endif // END FILE_INC_H_1295061698
 // #################################################################################
 
 
