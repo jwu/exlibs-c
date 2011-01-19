@@ -332,7 +332,7 @@ static void* __yajl_realloc( void* _ctx, void* _ptr, unsigned int _sz ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// defines
+// read functions
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -341,7 +341,7 @@ static void* __yajl_realloc( void* _ctx, void* _ptr, unsigned int _sz ) {
 // failed: -1
 // ------------------------------------------------------------------ 
 
-static int __next ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
+static int __read_next ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
     ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
     __json_node_t* parent = stream->anchor;
 
@@ -364,7 +364,7 @@ static int __next ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __push ( ex_stream_t* _stream ) {
+static void __read_push ( ex_stream_t* _stream ) {
     ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
     stream->anchor = stream->current;
 }
@@ -373,7 +373,7 @@ static void __push ( ex_stream_t* _stream ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __pop ( ex_stream_t* _stream ) {
+static void __read_pop ( ex_stream_t* _stream ) {
     ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
     stream->anchor = stream->anchor->parent;
 }
@@ -383,8 +383,14 @@ static void __pop ( ex_stream_t* _stream ) {
 // ------------------------------------------------------------------ 
 
 static void __read_int8 ( ex_stream_t* _stream, int8* _val ) {
-    ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
-    // if ( stream->_cur )
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (int8)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -392,6 +398,14 @@ static void __read_int8 ( ex_stream_t* _stream, int8* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_int16 ( ex_stream_t* _stream, int16* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (int16)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -399,6 +413,14 @@ static void __read_int16 ( ex_stream_t* _stream, int16* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_int32 ( ex_stream_t* _stream, int32* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (int32)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -406,6 +428,14 @@ static void __read_int32 ( ex_stream_t* _stream, int32* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_int64 ( ex_stream_t* _stream, int64* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (int64)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -413,6 +443,14 @@ static void __read_int64 ( ex_stream_t* _stream, int64* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_uint8 ( ex_stream_t* _stream, uint8* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (uint8)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -420,6 +458,14 @@ static void __read_uint8 ( ex_stream_t* _stream, uint8* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_uint16 ( ex_stream_t* _stream, uint16* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (uint16)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -427,6 +473,14 @@ static void __read_uint16 ( ex_stream_t* _stream, uint16* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_uint32 ( ex_stream_t* _stream, uint32* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (uint32)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -434,6 +488,14 @@ static void __read_uint32 ( ex_stream_t* _stream, uint32* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_uint64 ( ex_stream_t* _stream, uint64* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (uint64)(*(long*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -441,6 +503,14 @@ static void __read_uint64 ( ex_stream_t* _stream, uint64* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_float ( ex_stream_t* _stream, float* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (float)(*(double*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -448,6 +518,14 @@ static void __read_float ( ex_stream_t* _stream, float* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_double ( ex_stream_t* _stream, double* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = (*(double*)node->val);
 }
 
 // ------------------------------------------------------------------ 
@@ -455,30 +533,31 @@ static void __read_double ( ex_stream_t* _stream, double* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_boolean ( ex_stream_t* _stream, bool* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = *(int*)node->val;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_string ( ex_stream_t* _stream, const char** _val ) {
-}
+static void __read_string ( ex_stream_t* _stream, char** _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
 
-static void __read_strid ( ex_stream_t* _stream, strid_t* _val ) {
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __read_array ( ex_stream_t* _stream, ex_array_t* _val ) {
-    // TODO { 
-    // typeid_to_serialize_func();
-    // for child
+    // TODO: think about this, can have fix string and dynamic string { 
+    *_val = (char*)ex_malloc ( strlen((const char*)node->val)+1 );
+    strcpy ( *_val, (const char*)node->val );
     // } TODO end 
 }
 
@@ -486,7 +565,56 @@ static void __read_array ( ex_stream_t* _stream, ex_array_t* _val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __read_strid ( ex_stream_t* _stream, strid_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    *_val = ex_strid((char*)node->val);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_array ( ex_stream_t* _stream, ex_array_t* _val ) {
+    typedef void (*pfn) ( ex_stream_t*, strid_t, void* );
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    void* buf;
+    pfn serialize_func;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    // get serialize function
+    if ( node->children && node->children->count > 0 ) {
+        __json_node_t* a_child = *((__json_node_t**)(node->children->head->value));
+        serialize_func = (pfn)ex_rtti_get_serialize_pfn(a_child->typeid);
+        buf = ex_malloc ( _val->element_bytes );
+
+        ex_list_each ( node->children, __json_node_t*, _child ) {
+            serialize_func ( _stream, _child->name /*must be EX_STRID_INVALID*/, &buf );
+            ex_array_append ( _val, buf );
+        } ex_list_each_end 
+
+        ex_free(buf);
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __read_map ( ex_stream_t* _stream, ex_hashmap_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    // TODO:
 }
 
 // ------------------------------------------------------------------ 
@@ -494,6 +622,16 @@ static void __read_map ( ex_stream_t* _stream, ex_hashmap_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_vec2f ( ex_stream_t* _stream, ex_vec2f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_vec2f_set( _val, (float)(buf[0]), (float)(buf[1]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -501,6 +639,16 @@ static void __read_vec2f ( ex_stream_t* _stream, ex_vec2f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_vec3f ( ex_stream_t* _stream, ex_vec3f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_vec3f_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -508,6 +656,16 @@ static void __read_vec3f ( ex_stream_t* _stream, ex_vec3f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_vec4f ( ex_stream_t* _stream, ex_vec4f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_vec4f_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]), (float)(buf[3]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -515,6 +673,18 @@ static void __read_vec4f ( ex_stream_t* _stream, ex_vec4f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_mat22f ( ex_stream_t* _stream, ex_mat22f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_mat22f_set( _val, 
+                   (float)(buf[0]), (float)(buf[1]), 
+                   (float)(buf[2]), (float)(buf[3]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -522,6 +692,19 @@ static void __read_mat22f ( ex_stream_t* _stream, ex_mat22f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_mat33f ( ex_stream_t* _stream, ex_mat33f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_mat33f_set( _val, 
+                   (float)(buf[0]), (float)(buf[1]), (float)(buf[2]),
+                   (float)(buf[3]), (float)(buf[4]), (float)(buf[5]),
+                   (float)(buf[6]), (float)(buf[7]), (float)(buf[8]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -529,6 +712,20 @@ static void __read_mat33f ( ex_stream_t* _stream, ex_mat33f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_mat44f ( ex_stream_t* _stream, ex_mat44f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_mat44f_set( _val, 
+                   (float)(buf[0]),  (float)(buf[1]),  (float)(buf[2]),  (float)(buf[3]),
+                   (float)(buf[4]),  (float)(buf[5]),  (float)(buf[6]),  (float)(buf[7]),
+                   (float)(buf[8]),  (float)(buf[9]),  (float)(buf[10]), (float)(buf[11]),
+                   (float)(buf[12]), (float)(buf[13]), (float)(buf[14]), (float)(buf[15]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -536,6 +733,16 @@ static void __read_mat44f ( ex_stream_t* _stream, ex_mat44f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_quatf ( ex_stream_t* _stream, ex_quatf_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_quatf_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]), (float)(buf[3]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -543,6 +750,14 @@ static void __read_quatf ( ex_stream_t* _stream, ex_quatf_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_angf ( ex_stream_t* _stream, ex_angf_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    ex_angf_set_by_radians( _val, (float)(*((double*)node->val)) );
 }
 
 // ------------------------------------------------------------------ 
@@ -550,6 +765,16 @@ static void __read_angf ( ex_stream_t* _stream, ex_angf_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_color3u ( ex_stream_t* _stream, ex_color3u_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    long* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (long*)(node->val);
+    ex_color3u_set( _val, (uint8)(buf[0]), (uint8)(buf[1]), (uint8)(buf[2]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -557,6 +782,16 @@ static void __read_color3u ( ex_stream_t* _stream, ex_color3u_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_color3f ( ex_stream_t* _stream, ex_color3f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_color3f_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -564,6 +799,16 @@ static void __read_color3f ( ex_stream_t* _stream, ex_color3f_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_color4u ( ex_stream_t* _stream, ex_color4u_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    long* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (long*)(node->val);
+    ex_color4u_set( _val, (uint8)(buf[0]), (uint8)(buf[1]), (uint8)(buf[2]), (uint8)(buf[3]) );
 }
 
 // ------------------------------------------------------------------ 
@@ -571,6 +816,64 @@ static void __read_color4u ( ex_stream_t* _stream, ex_color4u_t* _val ) {
 // ------------------------------------------------------------------ 
 
 static void __read_color4f ( ex_stream_t* _stream, ex_color4f_t* _val ) {
+    ex_stream_json_t* stream;
+    __json_node_t* node; 
+    double* buf; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t*)_stream; 
+    node = stream->current;
+
+    buf = (double*)(node->val);
+    ex_color4f_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]), (float)(buf[3]) );
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// write functions
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// successful: 0
+// failed: -1
+// ------------------------------------------------------------------ 
+
+static int __write_next ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
+    // ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    // __json_node_t* parent = stream->anchor;
+
+    // ex_list_each( parent->children, __json_node_t*, jnode ) {
+    //     // if we found the node with the same name and type
+    //     if ( jnode->used == false && 
+    //          jnode->name == _name && 
+    //          jnode->typeid == _typeID ) 
+    //     {
+    //         stream->current = jnode;
+    //         jnode->used = true;
+    //         return 0;
+    //     }
+    // } ex_list_each_end
+
+    // return -1;
+    return -1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_push ( ex_stream_t* _stream ) {
+    // ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    // stream->anchor = stream->current;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_pop ( ex_stream_t* _stream ) {
+    // ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    // stream->anchor = stream->anchor->parent;
 }
 
 // ------------------------------------------------------------------ 
@@ -654,7 +957,7 @@ static void __write_boolean ( ex_stream_t* _stream, bool* _val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_string ( ex_stream_t* _stream, const char** _val ) {
+static void __write_string ( ex_stream_t* _stream, char** _val ) {
 }
 
 // ------------------------------------------------------------------ 
@@ -776,9 +1079,9 @@ ex_stream_t* ex_create_json_read_stream ( const char* _fileName ) {
         EX_STREAM_READ,
 
         //
-        __next,
-        __push,
-        __pop,
+        __read_next,
+        __read_push,
+        __read_pop,
 
         // methods
         __read_int8,
@@ -900,9 +1203,9 @@ ex_stream_t* ex_create_json_write_stream () {
         EX_STREAM_WRITE,
 
         //
-        __next,
-        __push,
-        __pop,
+        __write_next,
+        __write_push,
+        __write_pop,
 
         // methods
         __write_int8,

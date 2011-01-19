@@ -43,6 +43,7 @@
 		B261C13512CDACAF0018BCDA /* dtime.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C13312CDACAF0018BCDA /* dtime.c */; };
 		B261C13612CDACAF0018BCDA /* dtime.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C13412CDACAF0018BCDA /* dtime.h */; };
 		B2B113FF12DAAE66002E6C1A /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B113FE12DAAE66002E6C1A /* color.c */; };
+		B2BD881B12E6F86A001F9D38 /* test_cstr.c in Sources */ = {isa = PBXBuildFile; fileRef = B2BD881A12E6F86A001F9D38 /* test_cstr.c */; };
 		B2C921A212D834B6000FB811 /* factory.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C921A012D834B6000FB811 /* factory.c */; };
 		B2C921A312D834B6000FB811 /* factory.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C921A112D834B6000FB811 /* factory.h */; };
 		B2C9220E12D8B4AA000FB811 /* circlef.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220B12D8B4AA000FB811 /* circlef.h */; };
@@ -226,6 +227,7 @@
 		B261C13312CDACAF0018BCDA /* dtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtime.c; sourceTree = "<group>"; };
 		B261C13412CDACAF0018BCDA /* dtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtime.h; sourceTree = "<group>"; };
 		B2B113FE12DAAE66002E6C1A /* color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = color.c; sourceTree = "<group>"; };
+		B2BD881A12E6F86A001F9D38 /* test_cstr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test_cstr.c; path = ../../src/tests/test_base/test_cstr.c; sourceTree = SOURCE_ROOT; };
 		B2C921A012D834B6000FB811 /* factory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = factory.c; sourceTree = "<group>"; };
 		B2C921A112D834B6000FB811 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
 		B2C9220B12D8B4AA000FB811 /* circlef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circlef.h; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 		08FB7794FE84155DC02AAC07 /* exsdk */ = {
 			isa = PBXGroup;
 			children = (
+				B2BD881A12E6F86A001F9D38 /* test_cstr.c */,
 				B2E2698712C9EC0100833568 /* test_thread.c */,
 				B2DD23F012A7C81B0053CA3F /* tests */,
 				B245483712B91F9E00EF7261 /* exsdk */,
@@ -1002,6 +1005,7 @@
 				B2E2698812C9EC0100833568 /* test_thread.c in Sources */,
 				B21CB6D112D574EB00CDD369 /* test_timer.c in Sources */,
 				B200D3D812E48DAA003B4944 /* test_stream.c in Sources */,
+				B2BD881B12E6F86A001F9D38 /* test_cstr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

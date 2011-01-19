@@ -17,6 +17,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+static ex_hashmap_t* __id_to_serialize = NULL;
 static ex_hashmap_t* __classid_to_rtti = NULL;
 static bool __initialized = false;
 
@@ -27,6 +28,7 @@ extern void __factory_init ();
 
 int ex_rtti_init () 
 {
+
     // if the core already initialized, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "rtti table already initialized" );
@@ -38,6 +40,12 @@ int ex_rtti_init ()
         ex_warning ( "strid not initialized, please init it before rtti init." );
         return -1;
     }
+
+    __id_to_serialize = ex_hashmap_alloc ( sizeof(strid_t), 
+                                           sizeof(void*), 
+                                           256,
+                                           ex_hashkey_strid, 
+                                           ex_keycmp_strid );
 
     __classid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
                                            sizeof(ex_rtti_t*), 
@@ -66,6 +74,7 @@ void ex_rtti_deinit ()
             ex_free(_info);
         } ex_hashmap_each_end;
         ex_hashmap_free(__classid_to_rtti);
+        ex_hashmap_free(__id_to_serialize);
         __initialized = false;
     }
 }
@@ -75,6 +84,14 @@ void ex_rtti_deinit ()
 // ------------------------------------------------------------------ 
 
 bool ex_rtti_initialized () { return __initialized; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_rtti_register_serialize ( strid_t _typeID, void* _pfn ) {
+    ex_hashmap_insert ( __id_to_serialize, &_typeID, &_pfn, NULL );
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -130,6 +147,17 @@ void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, ui
 ex_rtti_t* ex_rtti_get ( strid_t _classID )
 {
     ex_rtti_t** result = (ex_rtti_t**)ex_hashmap_get( __classid_to_rtti, &_classID, NULL );
+    if ( result != NULL )
+        return *result;
+    return NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void* ex_rtti_get_serialize_pfn ( strid_t _typeID ) {
+    void** result = (void**)ex_hashmap_get( __id_to_serialize, &_typeID, NULL );
     if ( result != NULL )
         return *result;
     return NULL;

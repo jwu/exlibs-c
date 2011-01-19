@@ -52,7 +52,7 @@ typedef struct ex_stream_t {
 
     void (*serialize_boolean)   ( struct ex_stream_t* _stream, bool* _val );
 
-    void (*serialize_string)    ( struct ex_stream_t* _stream, const char** _val );
+    void (*serialize_string)    ( struct ex_stream_t* _stream, char** _val );
     void (*serialize_strid)     ( struct ex_stream_t* _stream, strid_t* _val );
 
     void (*serialize_array)     ( struct ex_stream_t* _stream, ex_array_t* _val );

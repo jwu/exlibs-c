@@ -60,6 +60,8 @@ EX_DEF_PROPS_BEGIN(test_cls_t)
     EX_PROP( test_cls_t, data2, "data2", EX_PROP_ATTR_NONE,      ex_prop_set_raw_float, ex_prop_get_raw_float )
 EX_DEF_PROPS_END(test_cls_t)
 
+EX_SERIALIZE_BEGIN(test_cls_t)
+EX_SERIALIZE_END
 
 #endif
 

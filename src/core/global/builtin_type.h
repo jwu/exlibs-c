@@ -21,7 +21,8 @@
     strid_t __TYPEID_##_name##__ = EX_STRID_INVALID
 
 #define EX_REGISTER_BUILTIN_TYPE(_name) \
-    __TYPEID_##_name##__ = ex_strid(#_name) \
+    __TYPEID_##_name##__ = ex_strid(#_name); \
+    ex_rtti_register_serialize ( __TYPEID_##_name##__, __ex_serialize_##_name );
 
 #define EX_DECL_BUILTIN_TYPE(_name) \
     extern strid_t __TYPEID_##_name##__ 

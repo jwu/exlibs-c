@@ -30,15 +30,14 @@ EX_DEF_PROPS_BEGIN(ex_trans2d_t)
     // EX_PROP( ex_trans2d_t, scale, "scale",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END(ex_trans2d_t)
 
-// TODO { 
-// EX_SERIALIZE_BEGIN(ex_trans2d_t)
-//     EX_SERIALIZE( ex_trans2d_t, ex_vec2f_t, pos );
-//     EX_SERIALIZE( ex_trans2d_t, ex_angf_t, ang );
-//     EX_SERIALIZE( ex_trans2d_t, ex_vec2f_t, scale );
-//     EX_SERIALIZE( ex_trans2d_t, reference, parent );
-//     EX_SERIALIZE( ex_trans2d_t, ex_array_t*, children );
-// EX_SERIALIZE_END(ex_trans2d_t)
-// } TODO end 
+EX_SERIALIZE_BEGIN(ex_trans2d_t)
+    EX_SERIALIZE( vec2f, pos );
+    EX_SERIALIZE( angf, ang );
+    EX_SERIALIZE( vec2f, scale );
+    // EX_SERIALIZE( reference, parent );
+    // EX_SERIALIZE_ARRAY( float, children );
+    // EX_SERIALIZE_MAP( strid, float, children_map );
+EX_SERIALIZE_END
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

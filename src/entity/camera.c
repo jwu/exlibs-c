@@ -33,6 +33,9 @@ EX_DEF_PROPS_BEGIN(ex_camera_t)
     // EX_PROP( ex_camera_t, _scale, "scale",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END(ex_camera_t)
 
+EX_SERIALIZE_BEGIN(ex_camera_t)
+EX_SERIALIZE_END
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////

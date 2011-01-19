@@ -40,6 +40,9 @@ EX_DEF_PROPS_BEGIN(ex_entity_t)
     EX_PROP( ex_entity_t, name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
 EX_DEF_PROPS_END(ex_entity_t)
 
+EX_SERIALIZE_BEGIN(ex_entity_t)
+EX_SERIALIZE_END
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////

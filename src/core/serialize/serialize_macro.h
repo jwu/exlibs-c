@@ -25,19 +25,41 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_BEGIN(_class) \
-    void __ex_serialize_##_class( ex_stream_t* _stream, strid_t _name, _class* _val ) { \
+    void __ex_serialize_##_class( ex_stream_t* _stream, strid_t _name, void* _val ) { \
+        _class* self = (_class*)_val; \
         if ( _stream->next ) { \
             int ret = _stream->next( _stream, _name, EX_CLASSID(_class) ); \
             if ( ret != 0 ) return; \
         } \
-        if ( _stream->push ) _stream->push(_stream); \
+        if ( _stream->push ) _stream->push(_stream);
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_SERIALIZE(_class,_type,_val) \
-        __ex_serialize_##_type(_stream,#_val,_val);
+#define EX_SERIALIZE(_type,_member) \
+        __ex_serialize_##_type(_stream,ex_strid(#_member),&(self->_member));
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_ARRAY(_el_type,_member) \
+        __ex_serialize_array(_stream, \
+                             ex_strid(#_member), \
+                             &(self->_member), \
+                             __ex_serialize_##_el_type);
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_MAP(_key_type,_val_type,_member) \
+        __ex_serialize_map(_stream, \
+                           ex_strid(#_member), \
+                           &(self->_member), \
+                           __ex_serialize_##_key_type, \
+                           __ex_serialize_##_val_type);
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -45,6 +67,7 @@ extern "C" {
 
 #define EX_SERIALIZE_END \
         if ( _stream->pop ) _stream->pop(_stream); \
+        (void*)self; /*to avoid unused compile warning*/ \
     }
 
 // ######################### 

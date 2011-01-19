@@ -52,6 +52,12 @@ extern bool ex_rtti_initialized ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_rtti_register_serialize ( strid_t _typeID, void* _pfn );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern ex_rtti_t* ex_rtti_register_class ( strid_t _classID, ex_rtti_t* _super );
 
 // ------------------------------------------------------------------ 
@@ -65,6 +71,13 @@ extern void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _pr
 // ------------------------------------------------------------------ 
 
 extern ex_rtti_t* ex_rtti_get ( strid_t _classID );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// can be EX_TYPEID or EX_CLASSID
+// ------------------------------------------------------------------ 
+
+extern void* ex_rtti_get_serialize_pfn ( strid_t _typeID );
 
 // ------------------------------------------------------------------ 
 // Desc: 

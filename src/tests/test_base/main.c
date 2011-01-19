@@ -33,6 +33,7 @@ static void exit_fn () {
 extern void test_array();
 extern void test_bitarry();
 extern void test_btree();
+extern void test_cstr();
 extern void test_encoding();
 extern void test_hashmap();
 extern void test_list();
@@ -61,6 +62,7 @@ int main( int argc, char* argv[] )
         // test_array ();
         // test_bitarry ();
         // test_btree ();
+        test_cstr ();
         // test_encoding ();
         // test_hashmap ();
         // test_list ();

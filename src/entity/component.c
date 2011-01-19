@@ -27,6 +27,9 @@ EX_DEF_PROPS_BEGIN(ex_component_t)
     // EX_PROP( ex_trans2d_t, _pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END(ex_component_t)
 
+EX_SERIALIZE_BEGIN(ex_component_t)
+EX_SERIALIZE_END
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
