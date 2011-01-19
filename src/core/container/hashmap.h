@@ -36,8 +36,8 @@ extern "C" {
  @details macro for easy iterates the hashmap container.
 
  when use the macro, it will define the local variable below:
- - node: the current node of the hashmap
- - node_begin: the the beginning of the node
+ - __node__: the current node of the hashmap
+ - __node_begin__: the the beginning of the node
 
  to finish the code, you must write ex_hashmap_each_end.
 
@@ -54,11 +54,11 @@ extern "C" {
 
 #define ex_hashmap_each( _hashmap, _type, _el ) \
     { \
-        ex_pool_node_t* node = (_hashmap)->_nodes->_used_nodes_begin; \
-        ex_pool_node_t* node_begin = (_hashmap)->_nodes->_nodes; \
+        ex_pool_node_t* __node__ = (_hashmap)->nodes->used_nodes_begin; \
+        ex_pool_node_t* __node_begin__ = (_hashmap)->nodes->nodes; \
         _type _el; \
-        while ( node ) { \
-            _el = *( (_type*) ( (char*)(_hashmap)->_values + (node - node_begin) * (_hashmap)->_value_bytes ) );
+        while ( __node__ ) { \
+            _el = *( (_type*) ( (char*)(_hashmap)->values + (__node__ - __node_begin__) * (_hashmap)->value_bytes ) );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -69,8 +69,8 @@ extern "C" {
  @details macro for easy iterates the hashmap container.
 
  when use the macro, it will define the local variable below:
- - node: the current node of the hashmap
- - node_begin: the the beginning of the node
+ - __node__: the current node of the hashmap
+ - __node_begin__: the the beginning of the node
 
  to finish the code, you must write ex_hashmap_each_end.
 
@@ -87,11 +87,11 @@ extern "C" {
 
 #define ex_hashmap_raw_each( _hashmap, _type, _el ) \
     { \
-        ex_pool_node_t* node = (_hashmap)->_nodes->_used_nodes_begin; \
-        ex_pool_node_t* node_begin = (_hashmap)->_nodes->_nodes; \
+        ex_pool_node_t* __node__ = (_hashmap)->nodes->used_nodes_begin; \
+        ex_pool_node_t* __node_begin__ = (_hashmap)->nodes->nodes; \
         _type _el; \
-        while ( node ) { \
-            _el = (_type)( (char*)(_hashmap)->_values + (node - node_begin) * (_hashmap)->_value_bytes );
+        while ( __node__ ) { \
+            _el = (_type)( (char*)(_hashmap)->values + (__node__ - __node_begin__) * (_hashmap)->value_bytes );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -102,7 +102,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 #define ex_hashmap_each_end \
-            node = node->next; \
+            __node__ = __node__->next; \
         } \
     }
 
@@ -116,7 +116,7 @@ extern "C" {
 
 #define ex_hashmap_continue \
     { \
-        node = node->next; \
+        __node__ = __node__->next; \
         continue; \
     }
 
@@ -143,18 +143,18 @@ typedef struct ex_hashmap_node_t {
 //
 typedef struct ex_hashmap_t {
     // public
-    size_t _capacity;
+    size_t capacity;
 
     // private
-    size_t _hashsize;
-    void* _values;
-    size_t _value_bytes;
-    void* _keys;
-    size_t _key_bytes;
-    size_t* _indices;
-    ex_pool_t*  _nodes;
-    hashkey_t _hashkey;
-    keycmp_t _keycmp;
+    size_t hashsize;
+    void* values;
+    size_t value_bytes;
+    void* keys;
+    size_t key_bytes;
+    size_t* indices;
+    ex_pool_t* nodes;
+    hashkey_t hashkey;
+    keycmp_t keycmp;
 } ex_hashmap_t;
 
 // ------------------------------------------------------------------ 
@@ -207,8 +207,8 @@ extern void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_hashmap_len ( const ex_hashmap_t* _hashmap ) { return ex_pool_len(_hashmap->_nodes); }
-static inline size_t ex_hashmap_capacity ( const ex_hashmap_t* _hashmap ) { return _hashmap->_capacity; }
+static inline size_t ex_hashmap_count ( const ex_hashmap_t* _hashmap ) { return ex_pool_count(_hashmap->nodes); }
+static inline size_t ex_hashmap_capacity ( const ex_hashmap_t* _hashmap ) { return _hashmap->capacity; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // useful callback

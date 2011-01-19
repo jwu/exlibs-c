@@ -45,14 +45,14 @@ static void normal () {
             val = 1.0f + i;
             EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == val );
         }
-        EX_TEST ( ex_hashmap_len(hashmap) == 512 );
+        EX_TEST ( ex_hashmap_count(hashmap) == 512 );
 
         // erase
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
             EX_TEST ( ex_hashmap_remove_at(hashmap, &key) != NULL );
         }
-        EX_TEST ( ex_hashmap_len(hashmap) == 0 );
+        EX_TEST ( ex_hashmap_count(hashmap) == 0 );
 
         ex_hashmap_free ( hashmap );
     }
@@ -73,7 +73,7 @@ static void normal () {
         key = "hello"; EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == 3.0f );
         key = "world"; EX_TEST ( *((float*)ex_hashmap_get ( hashmap, &key, NULL )) == 4.0f );
 
-        EX_TEST ( ex_hashmap_len(hashmap) == 4 );
+        EX_TEST ( ex_hashmap_count(hashmap) == 4 );
 
         ex_hashmap_free ( hashmap );
     }

@@ -37,7 +37,7 @@ EX_DEF_CLASS_CREATOR(ex_entity_t) {
 }
 
 EX_DEF_PROPS_BEGIN(ex_entity_t)
-    EX_PROP( ex_entity_t, _name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
+    EX_PROP( ex_entity_t, name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
 EX_DEF_PROPS_END(ex_entity_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,8 +50,8 @@ EX_DEF_PROPS_END(ex_entity_t)
 
 ex_entity_t* ex_entity_alloc () {
     ex_entity_t* ent = (ex_entity_t*)ex_malloc(sizeof(ex_entity_t));
-    ent->_name = EX_STRID_INVALID;
-    ent->_comps = ex_array_alloc( sizeof(ex_component_t*), 1 );
+    ent->name = EX_STRID_INVALID;
+    ent->comps = ex_array_alloc( sizeof(ex_component_t*), 1 );
     return ent;
 }
 
@@ -60,12 +60,12 @@ ex_entity_t* ex_entity_alloc () {
 // ------------------------------------------------------------------ 
 
 void ex_entity_free ( ex_entity_t* _ent ) {
-    ex_array_each ( _ent->_comps, ex_component_t*, comp ) {
+    ex_array_each ( _ent->comps, ex_component_t*, comp ) {
         if ( comp->deinit )
             comp->deinit(comp);
         ex_free(comp);
     } ex_array_each_end;
-    ex_array_free ( _ent->_comps );
+    ex_array_free ( _ent->comps );
     ex_free ( _ent );
 }
 
@@ -79,7 +79,7 @@ ex_component_t* ex_entity_get_comp ( const ex_entity_t* _ent, strid_t _typeID ) 
     rtti = ex_rtti_get(_typeID);
     ex_assert( rtti, "can't find the rtti type: %s", ex_strid_to_cstr(_typeID) );
 
-    ex_array_each ( _ent->_comps, ex_component_t*, comp ) {
+    ex_array_each ( _ent->comps, ex_component_t*, comp ) {
         if ( ex_rtti_isa( ex_rtti_info(comp), rtti ) )
             return comp;
     } ex_array_each_end
@@ -104,17 +104,17 @@ ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID ) {
     // create a component and added to the component list, then return it.
     comp = (ex_component_t*)ex_factory_create(_typeID);
     if ( comp ) {
-        comp->_owner = _ent; // set the owner of the component before init.
+        comp->owner = _ent; // set the owner of the component before init.
         if ( comp->init )
             comp->init(comp);
-        ex_array_append( _ent->_comps, &comp );
+        ex_array_append( _ent->comps, &comp );
 
         // cache internal component
         if ( _typeID == EX_CLASSID(ex_trans2d_t) ) {
-            _ent->_trans2d = (ex_trans2d_t*)comp; 
+            _ent->trans2d = (ex_trans2d_t*)comp; 
         }
         else if ( _typeID == EX_CLASSID(ex_camera_t) ) {
-            _ent->_camera = (ex_camera_t*)comp; 
+            _ent->camera = (ex_camera_t*)comp; 
         }
     }
 

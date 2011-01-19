@@ -85,7 +85,7 @@ void __threaded_timer_tick () {
                 if ( ms > 0 )
                     t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
                 else
-                    ex_array_append_int32(__unused_timers, id);
+                    ex_array_append_int32(__unused_timers, __id__);
             }
             else {
                 t->interval_counter = t->interval;
@@ -99,7 +99,7 @@ void __threaded_timer_tick () {
 
             // if we exceed the lifetime, remove the timer
             if ( time_since_start > ms ) {
-                ex_array_append_int32(__unused_timers, id);
+                ex_array_append_int32(__unused_timers, __id__);
                 ex_pool_continue;
             }
         }

@@ -26,10 +26,10 @@ ex_bitarray_t* ex_bitarray_alloc ( size_t _bitcount )
     ex_bitarray_t* bitArray = ex_malloc ( sizeof(ex_bitarray_t) );
     size_t bytes = (_bitcount + 7)/8;
 
-    bitArray->_data = ex_malloc(bytes);
-    ex_memzero ( bitArray->_data, bytes );
+    bitArray->data = ex_malloc(bytes);
+    ex_memzero ( bitArray->data, bytes );
 
-    bitArray->_length = _bitcount;
+    bitArray->count = _bitcount;
 
     return bitArray;
 }
@@ -40,9 +40,9 @@ ex_bitarray_t* ex_bitarray_alloc_nomng ( size_t _bitcount )
     ex_bitarray_t* bitArray = ex_malloc_nomng ( sizeof(ex_bitarray_t) );
     size_t bytes = (_bitcount + 7)/8;
 
-    bitArray->_data = ex_malloc_nomng(bytes);
-    bitArray->_length = _bitcount;
-    ex_memzero ( bitArray->_data, bytes );
+    bitArray->data = ex_malloc_nomng(bytes);
+    bitArray->count = _bitcount;
+    ex_memzero ( bitArray->data, bytes );
 
     return bitArray;
 }
@@ -56,8 +56,8 @@ void ex_bitarray_free ( ex_bitarray_t* _bitarray )
 {
     ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
-    ex_free(_bitarray->_data);
-    _bitarray->_length = 0;
+    ex_free(_bitarray->data);
+    _bitarray->count = 0;
     ex_free(_bitarray);
 }
 
@@ -66,8 +66,8 @@ void ex_bitarray_free_nomng ( ex_bitarray_t* _bitarray )
 {
     ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
-    ex_free_nomng(_bitarray->_data);
-    _bitarray->_length = 0;
+    ex_free_nomng(_bitarray->data);
+    _bitarray->count = 0;
     ex_free_nomng(_bitarray);
 }
 
@@ -79,8 +79,8 @@ int ex_bitarray_get ( const ex_bitarray_t* _bitarray, size_t _idx )
 {
     char* ptr;
 
-    ex_assert_return ( _idx >= 0 && _idx < _bitarray->_length, -1, "_idx is out of range" );
-    ptr = _bitarray->_data + _idx / 8;
+    ex_assert_return ( _idx >= 0 && _idx < _bitarray->count, -1, "_idx is out of range" );
+    ptr = _bitarray->data + _idx / 8;
     return ( *ptr & (1 << (_idx % 8) ) ) != 0; /* 0 or 1 */
 }
 
@@ -92,10 +92,10 @@ void ex_bitarray_set ( ex_bitarray_t* _bitarray, size_t _idx, int _value )
 {
     char* ptr;
 
-    ex_assert_return ( _idx >= 0 && _idx < _bitarray->_length, /*void*/, "_idx is out of range." );
+    ex_assert_return ( _idx >= 0 && _idx < _bitarray->count, /*void*/, "_idx is out of range." );
     ex_assert_return ( _value == 0 || _value == 1, /*void*/, "invalid input value, should be 0 or 1." );
 
-    ptr = _bitarray->_data + _idx / 8;
+    ptr = _bitarray->data + _idx / 8;
     if ( _value )
         *ptr |= 1 << ( _idx % 8 ); /*set bit*/
     else
@@ -111,17 +111,17 @@ void ex_bitarray_resize ( ex_bitarray_t* _bitarray, size_t _bitcount )
 {
     size_t old_bytes, new_bytes;
 
-    if ( _bitarray->_length == _bitcount )
+    if ( _bitarray->count == _bitcount )
         return;
 
-    old_bytes = (_bitarray->_length + 7)/8;
+    old_bytes = (_bitarray->count + 7)/8;
     new_bytes = (_bitcount + 7)/8;
 
-    _bitarray->_data = ex_realloc(_bitarray->_data, new_bytes);
+    _bitarray->data = ex_realloc(_bitarray->data, new_bytes);
     // if new size is more than the old one, we need to set clear the memory to zero.
     if ( new_bytes > old_bytes )
-        ex_memzero ( _bitarray->_data + old_bytes, new_bytes - old_bytes );
-    _bitarray->_length = _bitcount;
+        ex_memzero ( _bitarray->data + old_bytes, new_bytes - old_bytes );
+    _bitarray->count = _bitcount;
 }
 
 // no managed
@@ -129,15 +129,15 @@ void ex_bitarray_resize_nomng ( ex_bitarray_t* _bitarray, size_t _bitcount )
 {
     size_t old_bytes, new_bytes;
 
-    if ( _bitarray->_length == _bitcount )
+    if ( _bitarray->count == _bitcount )
         return;
 
-    old_bytes = (_bitarray->_length + 7)/8;
+    old_bytes = (_bitarray->count + 7)/8;
     new_bytes = (_bitcount + 7)/8;
 
-    _bitarray->_data = ex_realloc_nomng(_bitarray->_data, new_bytes);
+    _bitarray->data = ex_realloc_nomng(_bitarray->data, new_bytes);
     // if new size is more than the old one, we need to set clear the memory to zero.
     if ( new_bytes > old_bytes )
-        ex_memzero ( _bitarray->_data + old_bytes, new_bytes - old_bytes );
-    _bitarray->_length = _bitcount;
+        ex_memzero ( _bitarray->data + old_bytes, new_bytes - old_bytes );
+    _bitarray->count = _bitcount;
 }

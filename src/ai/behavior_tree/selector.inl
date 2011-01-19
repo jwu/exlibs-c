@@ -41,7 +41,7 @@ bt_node_t* bt_selector()
 static bool _random_selector_exec ( bt_node_t* _node )
 {
     static uint last_idx_len = 0;
-    uint count = ex_array_len(_node->children);
+    uint count = ex_array_count(_node->children);
     uint* indices = NULL;
     uint i = 0; 
 

@@ -25,8 +25,8 @@ extern "C" {
  @details macro for easy iterates the hashmap container.
 
  when use the macro, it will define the local variable below:
- - node: the current node of the list
- - idx: the index
+ - __node__: the current node of the list
+ - __idx__: the index
 
  to finish the code, you must write ex_list_each_end.
 
@@ -34,7 +34,7 @@ extern "C" {
  @code
  ex_list_t* my_list = ex_list_alloc( sizeof(float), 10 );
  ex_list_each ( my_list, float, item ) {
-    printf( "item_%d is %f", idx, item );
+    printf( "item_%d is %f", __idx__, item );
  } ex_list_each_end;
  @endcode
  @sa ex_list_each_end
@@ -43,11 +43,11 @@ extern "C" {
 
 #define ex_list_each( _list, _type, _el ) \
     { \
-        ex_list_node_t* node = (_list)->_head; \
-        int idx = 0; \
+        ex_list_node_t* __node__ = (_list)->head; \
+        int __idx__ = 0; \
         _type _el; \
-        while ( node ) { \
-            _el = *( (_type*) ( node->value ) );
+        while ( __node__ ) { \
+            _el = *( (_type*) ( __node__->value ) );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -58,8 +58,8 @@ extern "C" {
  @details macro for easy iterates the hashmap container.
 
  when use the macro, it will define the local variable below:
- - node: the current node of the list
- - idx: the index
+ - __node__: the current node of the list
+ - __idx__: the index
 
  to finish the code, you must write ex_list_each_end.
 
@@ -67,7 +67,7 @@ extern "C" {
  @code
  ex_list_t* my_list = ex_list_alloc( sizeof(float), 10 );
  ex_list_raw_each ( my_list, float*, item ) {
-    printf( "item_%d is %f", idx, *item );
+    printf( "item_%d is %f", __idx__, *item );
  } ex_list_each_end;
  @endcode
  @sa ex_list_each_end
@@ -76,11 +76,11 @@ extern "C" {
 
 #define ex_list_raw_each( _list, _type, _el ) \
     { \
-        ex_list_node_t* node = (_list)->_head; \
-        int idx = 0; \
+        ex_list_node_t* __node__ = (_list)->head; \
+        int __idx__ = 0; \
         _type _el; \
-        while ( node ) { \
-            _el = (_type) ( node->value );
+        while ( __node__ ) { \
+            _el = (_type) ( __node__->value );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -91,8 +91,8 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 #define ex_list_each_end \
-            ++idx; \
-            node = node->next; \
+            ++__idx__; \
+            __node__ = __node__->next; \
         } \
     }
 
@@ -106,7 +106,7 @@ extern "C" {
 
 #define ex_list_continue \
     { \
-        node = node->next; \
+        __node__ = __node__->next; \
         continue; \
     }
 
@@ -127,10 +127,10 @@ typedef struct ex_list_node_t {
 //
 typedef struct ex_list_t {
     // private
-    size_t _length;
-    size_t _element_bytes;
-    ex_list_node_t* _head;
-    ex_list_node_t* _tail;
+    size_t count;
+    size_t element_bytes;
+    ex_list_node_t* head;
+    ex_list_node_t* tail;
 } ex_list_t;
 
 // ------------------------------------------------------------------ 
@@ -178,9 +178,9 @@ extern ex_list_node_t* ex_list_remove_at_nomng ( ex_list_t* _list, ex_list_node_
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_list_len ( const ex_list_t* _list ) { return _list->_length; }
-static inline ex_list_node_t* ex_list_head ( const ex_list_t* _list ) { return _list->_head; }
-static inline ex_list_node_t* ex_list_tail ( const ex_list_t* _list ) { return _list->_tail; }
+static inline size_t ex_list_count ( const ex_list_t* _list ) { return _list->count; }
+static inline ex_list_node_t* ex_list_head ( const ex_list_t* _list ) { return _list->head; }
+static inline ex_list_node_t* ex_list_tail ( const ex_list_t* _list ) { return _list->tail; }
 
 // ######################### 
 #ifdef __cplusplus

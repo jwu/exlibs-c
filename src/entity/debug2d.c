@@ -51,9 +51,9 @@ void ex_debug2d_init ( void* _self ) {
     ex_rectf_set ( &r, center, 1.0f, 1.0f );
     ex_circlef_set ( &c, center, 1.0f );
 
-    dbg2d->_shapeType = EX_DEBUG_SHAPE_RECT;
-    dbg2d->_rect = r;
-    dbg2d->_circle = c;
+    dbg2d->shapeType = EX_DEBUG_SHAPE_RECT;
+    dbg2d->rect = r;
+    dbg2d->circle = c;
 }
 
 // ------------------------------------------------------------------ 
@@ -76,8 +76,8 @@ void ex_debug2d_set_rect ( ex_debug2d_t* _self,
 
     ex_vec2f_set ( &v, _x, _y );
     ex_rectf_set ( &r, v, _width, _height );
-    _self->_rect = r;
-    _self->_shapeType = EX_DEBUG_SHAPE_RECT;
+    _self->rect = r;
+    _self->shapeType = EX_DEBUG_SHAPE_RECT;
 }
 
 // ------------------------------------------------------------------ 
@@ -86,16 +86,16 @@ void ex_debug2d_set_rect ( ex_debug2d_t* _self,
 
 void ex_debug2d_draw ( ex_debug2d_t* _self ) {
     ex_entity_t* ent = ex_component_owner( (ex_component_t*)_self );
-    ex_trans2d_t* trans2d = ent->_trans2d;
+    ex_trans2d_t* trans2d = ent->trans2d;
     ex_vec2f_t worldPos;
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;
 
-    if ( _self->_shapeType == EX_DEBUG_SHAPE_RECT ) {
-        float cx = _self->_rect.center.x;
-        float cy = _self->_rect.center.y;
-        float half_width = _self->_rect.width * 0.5f; 
-        float half_height = _self->_rect.height * 0.5f; 
+    if ( _self->shapeType == EX_DEBUG_SHAPE_RECT ) {
+        float cx = _self->rect.center.x;
+        float cy = _self->rect.center.y;
+        float half_width = _self->rect.width * 0.5f; 
+        float half_height = _self->rect.height * 0.5f; 
         float verts[8];
 
         verts[0] = cx - half_width; verts[1] = cy + half_height;  
@@ -109,7 +109,7 @@ void ex_debug2d_draw ( ex_debug2d_t* _self ) {
 
         glMatrixMode( GL_MODELVIEW );
         glLoadIdentity();
-        glTranslatef(_self->_rect.center.x + worldPos.x, _self->_rect.center.y + worldPos.y, 0.0f);
+        glTranslatef(_self->rect.center.x + worldPos.x, _self->rect.center.y + worldPos.y, 0.0f);
         glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
         glScalef(worldScale.x, worldScale.y, 1.0f);
 

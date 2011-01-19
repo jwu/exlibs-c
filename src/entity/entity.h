@@ -29,13 +29,13 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DEF_CLASS_BEGIN(ex_entity_t)
-    strid_t _name;
+    strid_t name;
     // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
-    ex_array_t* _comps;
-    struct ex_world_t* _world; // the world it belongs
+    ex_array_t* comps;
+    struct ex_world_t* world; // the world it belongs
     // cached components 
-    struct ex_trans2d_t* _trans2d;
-    struct ex_camera_t* _camera;
+    struct ex_trans2d_t* trans2d;
+    struct ex_camera_t* camera;
 EX_DEF_CLASS_END(ex_entity_t)
 
 ///////////////////////////////////////////////////////////////////////////////

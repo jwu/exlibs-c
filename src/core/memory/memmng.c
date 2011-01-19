@@ -258,10 +258,10 @@ static void __log ( const char* _file_name, const char* _format, ... ) {
 
 static void __dump () {
     //
-    ex_assert ( ex_hashmap_len(__au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_len(__au_map) );
+    ex_assert ( ex_hashmap_count(__au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_count(__au_map) );
     
     //
-    if ( ex_hashmap_len(__au_map) ) {
+    if ( ex_hashmap_count(__au_map) ) {
         ex_hashmap_each ( __au_map, alloc_unit_t*, au ) {
             char text[2048];
             ex_memzero ( text, 2048 );

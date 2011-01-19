@@ -29,7 +29,7 @@ static void normal () {
         for ( i = 0; i < 512; ++i ) {
             ex_list_append ( list, &i );
         }
-        EX_TEST( ex_list_len(list) == 512 );
+        EX_TEST( ex_list_count(list) == 512 );
 
         // check value
         node = ex_list_head(list);
@@ -45,7 +45,7 @@ static void normal () {
         while ( node ) {
             node = ex_list_remove_at ( list, node );
         }
-        EX_TEST( ex_list_len(list) == 0 );
+        EX_TEST( ex_list_count(list) == 0 );
     }
     ex_list_free (list);
 }

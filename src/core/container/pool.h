@@ -38,7 +38,8 @@ extern "C" {
  @details macro for easy iterates the pool container.
 
  when use the macro, it will define the local variable below:
- - id: the current index.
+ - __node__: the current node of the pool
+ - __id__: the current index.
 
  to finish the code, you must write ex_pool_each_end.
 
@@ -55,12 +56,12 @@ extern "C" {
 
 #define ex_pool_each( _pool, _type, _el ) \
     { \
-        ex_pool_node_t* node = (_pool)->_used_nodes_begin; \
+        ex_pool_node_t* __node__ = (_pool)->used_nodes_begin; \
         _type _el; \
-        int id; \
-        while ( node ) { \
-            id = node - (_pool)->_nodes; \
-            _el = *( (_type*) ex_pool_get( _pool, id ) );
+        int __id__; \
+        while ( __node__ ) { \
+            __id__ = __node__ - (_pool)->nodes; \
+            _el = *( (_type*) ex_pool_get( _pool, __id__ ) );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -71,7 +72,8 @@ extern "C" {
  @details macro for easy iterates the pool container.
 
  when use the macro, it will define the local variable below:
- - id: the current index.
+ - __node__: the current node of the pool
+ - __id__: the current index.
 
  to finish the code, you must write ex_pool_each_end.
 
@@ -79,7 +81,7 @@ extern "C" {
  @code
  ex_pool_t* my_pool = ex_pool_alloc( sizeof(float), 10 );
  ex_pool_raw_each ( my_pool, float*, item ) {
-    printf( "item_%d is %f", idx, *item );
+    printf( "item_%d is %f", __id__, *item );
  } ex_pool_each_end;
  @endcode
  @sa ex_pool_each_end
@@ -88,12 +90,12 @@ extern "C" {
 
 #define ex_pool_raw_each( _pool, _type, _el ) \
     { \
-        ex_pool_node_t* node = (_pool)->_used_nodes_begin; \
+        ex_pool_node_t* __node__ = (_pool)->used_nodes_begin; \
         _type _el; \
-        int id; \
-        while ( node ) { \
-            id = node - (_pool)->_nodes; \
-            _el = (_type) ex_pool_get( _pool, id );
+        int __id__; \
+        while ( __node__ ) { \
+            __id__ = __node__ - (_pool)->nodes; \
+            _el = (_type) ex_pool_get( _pool, __id__ );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -104,7 +106,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 #define ex_pool_each_end \
-            node = node->next; \
+            __node__ = __node__->next; \
         } \
     }
 
@@ -118,7 +120,7 @@ extern "C" {
 
 #define ex_pool_continue \
     { \
-        node = node->next; \
+        __node__ = __node__->next; \
         continue; \
     }
 
@@ -135,16 +137,16 @@ typedef struct ex_pool_node_t {
 //
 typedef struct ex_pool_t {
     // private
-    size_t _length;
-    size_t _capacity;
-    size_t _element_bytes;
-    void* _data;
-    ex_pool_node_t* _nodes;
-    ex_bitarray_t* _used_bits;
+    size_t count;
+    size_t capacity;
+    size_t element_bytes;
+    void* data;
+    ex_pool_node_t* nodes;
+    ex_bitarray_t* used_bits;
 
-    ex_pool_node_t* _used_nodes_begin;
-    ex_pool_node_t* _used_nodes_end;
-    ex_pool_node_t* _free_nodes;
+    ex_pool_node_t* used_nodes_begin;
+    ex_pool_node_t* used_nodes_end;
+    ex_pool_node_t* free_nodes;
 } ex_pool_t;
 
 // ------------------------------------------------------------------ 
@@ -172,8 +174,8 @@ extern void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_pool_len ( const ex_pool_t* _pool ) { return _pool->_length; }
-static inline size_t ex_pool_capacity ( const ex_pool_t* _pool ) { return _pool->_capacity; }
+static inline size_t ex_pool_count ( const ex_pool_t* _pool ) { return _pool->count; }
+static inline size_t ex_pool_capacity ( const ex_pool_t* _pool ) { return _pool->capacity; }
 
 // ------------------------------------------------------------------ 
 // Desc: 

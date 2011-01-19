@@ -27,7 +27,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DEF_CLASS_BEGIN(ex_component_t)
-    struct ex_entity_t* _owner;
+    struct ex_entity_t* owner;
 
     // override functions
     void (*init) ( void* _self ); // invoked after the component created

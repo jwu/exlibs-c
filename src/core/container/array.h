@@ -35,8 +35,8 @@ extern "C" {
  @details macro for easy iterates the array container.
 
  when use the macro, it will define the local variable below:
- - count: the count of the element in the array.
- - idx: the current index.
+ - __count__: the count of the element in the array.
+ - __idx__: the current index.
 
  to finish the code, you must write ex_array_each_end.
 
@@ -44,7 +44,7 @@ extern "C" {
  @code
  ex_array_t* my_array = ex_array_alloc( sizeof(float), 10 );
  ex_array_each ( my_array, float, item ) {
-    printf( "item_%d is %f", idx, item );
+    printf( "item_%d is %f", __idx__, item );
  } ex_array_each_end;
  @endcode
  @sa ex_array_each_end
@@ -54,10 +54,10 @@ extern "C" {
 #define ex_array_each( _array, _type, _el ) \
     { \
         _type _el; \
-        size_t count = (_array)->_length; \
-        size_t idx = 0; \
-        while ( idx < count ) { \
-            _el = *( (_type*) ((_array)->_data) + idx );
+        size_t __count__ = (_array)->count; \
+        size_t __idx__ = 0; \
+        while ( __idx__ < __count__ ) { \
+            _el = *( (_type*) ((_array)->data) + __idx__ );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -68,8 +68,8 @@ extern "C" {
  @details macro for easy iterates the array container.
 
  when use the macro, it will define the local variable below:
- - count: the count of the element in the array.
- - idx: the current index.
+ - __count__: the count of the element in the array.
+ - __idx__: the current index.
 
  to finish the code, you must write ex_array_each_end.
 
@@ -77,7 +77,7 @@ extern "C" {
  @code
  ex_array_t* my_array = ex_array_alloc( sizeof(float), 10 );
  ex_array_raw_each ( my_array, float*, item ) {
-    printf( "item_%d is %f", idx, *item );
+    printf( "item_%d is %f", __idx__, *item );
  } ex_array_each_end;
  @endcode
  @sa ex_array_each_end
@@ -87,10 +87,10 @@ extern "C" {
 #define ex_array_raw_each( _array, _type, _el ) \
     { \
         _type _el; \
-        size_t count = (_array)->_length; \
-        size_t idx = 0; \
-        while ( idx < count ) { \
-            _el = (_type) ((_array)->_data) + idx;
+        size_t __count__ = (_array)->count; \
+        size_t __idx__ = 0; \
+        while ( __idx__ < __count__ ) { \
+            _el = (_type) ((_array)->data) + __idx__;
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -101,7 +101,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 #define ex_array_each_end \
-            ++idx; \
+            ++__idx__; \
         } \
     }
 
@@ -115,7 +115,7 @@ extern "C" {
 
 #define ex_array_continue \
     { \
-        ++idx; \
+        ++__idx__; \
         continue; \
     }
 
@@ -129,10 +129,10 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 typedef struct ex_array_t {
-    char* _data;
-    size_t _element_bytes;
-    size_t _length;
-    size_t _capacity;
+    char* data;
+    size_t element_bytes;
+    size_t count;
+    size_t capacity;
 } ex_array_t;
 
 // ------------------------------------------------------------------ 
@@ -215,12 +215,12 @@ extern void* ex_array_get ( const ex_array_t* _array, size_t _idx );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline size_t ex_array_len ( ex_array_t* _array )
+ @fn static inline size_t ex_array_count ( ex_array_t* _array )
  @param _array the in array
  @details get the array element count.
 */// ------------------------------------------------------------------ 
 
-static inline size_t ex_array_len ( const ex_array_t* _array ) { return _array->_length; } 
+static inline size_t ex_array_count ( const ex_array_t* _array ) { return _array->count; } 
 
 // ------------------------------------------------------------------ 
 /*! 

@@ -20,47 +20,49 @@
 // ------------------------------------------------------------------ 
 
 typedef struct __json_node_t {
-    strid_t _typeid;
-    strid_t _name; 
-    void* _val;
-	struct __json_node_t* _parent;
-	struct ex_list_t* _children;
+    strid_t typeid;
+    strid_t name; 
+    bool used;
+    void* val;
+	struct __json_node_t* parent;
+	struct ex_list_t* children;
 } __json_node_t;    
 
 //
 static __json_node_t* __create_node () {
     __json_node_t* node = (__json_node_t*)ex_malloc( sizeof(__json_node_t) );
 
-    node->_typeid = EX_STRID_INVALID;
-    node->_name = EX_STRID_INVALID;
-    node->_val = NULL;
-    node->_parent = NULL;
-    node->_children = NULL;
+    node->typeid = EX_STRID_INVALID;
+    node->name = EX_STRID_INVALID;
+    node->used = false;
+    node->val = NULL;
+    node->parent = NULL;
+    node->children = NULL;
 
     return node;
 }
 
 //
 static void __destroy_node ( __json_node_t* _node ) {
-    if ( _node->_children ) {
-        ex_list_each ( _node->_children, __json_node_t*, _child ) {
+    if ( _node->children ) {
+        ex_list_each ( _node->children, __json_node_t*, _child ) {
             __destroy_node (_child);
         } ex_list_each_end 
-        ex_list_free ( _node->_children );
+        ex_list_free ( _node->children );
     }
 
-    if ( _node->_val )
-        ex_free ( _node->_val );
+    if ( _node->val )
+        ex_free ( _node->val );
     ex_free(_node);
 }
 
 //
 static void __add_child ( __json_node_t* _parent, __json_node_t* _child ) {
-    if ( _parent->_children == NULL ) {
-        _parent->_children = ex_list_alloc( sizeof(__json_node_t*) );
+    if ( _parent->children == NULL ) {
+        _parent->children = ex_list_alloc( sizeof(__json_node_t*) );
     }
-    ex_list_append( _parent->_children, &_child );
-    _child->_parent = _parent;
+    ex_list_append( _parent->children, &_child );
+    _child->parent = _parent;
 }
 
 // ------------------------------------------------------------------ 
@@ -91,8 +93,8 @@ static int __yajl_null( void* _ctx ) {
 static int __yajl_boolean ( void* _ctx, int _bool ) {
     __context* ctx = (__context*)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
-        ctx->current->_val = ex_malloc ( sizeof(int) ); 
-        memcpy ( ctx->current->_val, &_bool, sizeof(int) );
+        ctx->current->val = ex_malloc ( sizeof(int) ); 
+        memcpy ( ctx->current->val, &_bool, sizeof(int) );
     }
     return 1;
 }
@@ -100,11 +102,11 @@ static int __yajl_boolean ( void* _ctx, int _bool ) {
 static int __yajl_integer ( void* _ctx, long _integer ) {
     __context* ctx = (__context*)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
-        ctx->current->_val = ex_malloc ( sizeof(long) ); 
-        memcpy ( ctx->current->_val, &_integer, sizeof(long) );
+        ctx->current->val = ex_malloc ( sizeof(long) ); 
+        memcpy ( ctx->current->val, &_integer, sizeof(long) );
     }
     else if ( ctx->get_method == NODE_STATUS_GET_ARRAY ) {
-        ((long*)ctx->current->_val)[ctx->tmp_idx] = _integer;
+        ((long*)ctx->current->val)[ctx->tmp_idx] = _integer;
         ctx->tmp_idx++;
     }
     return 1;
@@ -113,11 +115,11 @@ static int __yajl_integer ( void* _ctx, long _integer ) {
 static int __yajl_double ( void* _ctx, double _double ) {
     __context* ctx = (__context*)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
-        ctx->current->_val = ex_malloc ( sizeof(double) ); 
-        memcpy ( ctx->current->_val, &_double, sizeof(double) );
+        ctx->current->val = ex_malloc ( sizeof(double) ); 
+        memcpy ( ctx->current->val, &_double, sizeof(double) );
     }
     else if ( ctx->get_method == NODE_STATUS_GET_ARRAY ) {
-        ((double*)ctx->current->_val)[ctx->tmp_idx] = _double;
+        ((double*)ctx->current->val)[ctx->tmp_idx] = _double;
         ctx->tmp_idx++;
     }
     return 1;
@@ -129,7 +131,7 @@ static int __yajl_string ( void* _ctx, const unsigned char* _text, unsigned int 
         char* buf = ex_malloc ( sizeof(char) * (_len+1) ); 
         strncpy ( buf, (const char*)_text, sizeof(_len) );
         buf[_len] = 0;
-        ctx->current->_val = buf; 
+        ctx->current->val = buf; 
     }
     return 1;
 }
@@ -146,21 +148,21 @@ static int __yajl_map_key ( void* _ctx, const unsigned char* _text, unsigned int
     strncpy( my_buf, (const char*)_text, _len );
     my_buf[_len] = 0; 
 
-    // the childrent of array or map doesn't have _name
-    if ( ctx->parent->_typeid == EX_TYPEID(array) ||
-         ctx->parent->_typeid == EX_TYPEID(map) )
+    // the childrent of array or map doesn't have name
+    if ( ctx->parent->typeid == EX_TYPEID(array) ||
+         ctx->parent->typeid == EX_TYPEID(map) )
     {
         ex_assert( ctx->next == NULL, "next is not NULL, something is wrong!" );
 
         ctx->next = __create_node();
-        ctx->next->_typeid = ex_strid(my_buf); 
+        ctx->next->typeid = ex_strid(my_buf); 
         __add_child( ctx->parent, ctx->next );
         ctx->current = ctx->next;
         ctx->next = NULL;
 
-        if ( ctx->current->_typeid == EX_TYPEID(array) ||
-             ctx->current->_typeid == EX_TYPEID(map) ||
-             ex_is_builtin_type( ctx->current->_typeid ) == false ) 
+        if ( ctx->current->typeid == EX_TYPEID(array) ||
+             ctx->current->typeid == EX_TYPEID(map) ||
+             ex_is_builtin_type( ctx->current->typeid ) == false ) 
         {
             ctx->parent = ctx->current; 
         }
@@ -169,17 +171,17 @@ static int __yajl_map_key ( void* _ctx, const unsigned char* _text, unsigned int
     {
         if ( ctx->next == NULL ) {
             ctx->next = __create_node();
-            ctx->next->_name = ex_strid(my_buf);
+            ctx->next->name = ex_strid(my_buf);
         }
-        else if ( ctx->next->_typeid == EX_STRID_INVALID ) {
-            ctx->next->_typeid = ex_strid(my_buf); 
+        else if ( ctx->next->typeid == EX_STRID_INVALID ) {
+            ctx->next->typeid = ex_strid(my_buf); 
             __add_child( ctx->parent, ctx->next );
             ctx->current = ctx->next;
             ctx->next = NULL;
 
-            if ( ctx->current->_typeid == EX_TYPEID(array) ||
-                 ctx->current->_typeid == EX_TYPEID(map) ||
-                 ex_is_builtin_type( ctx->current->_typeid ) == false ) 
+            if ( ctx->current->typeid == EX_TYPEID(array) ||
+                 ctx->current->typeid == EX_TYPEID(map) ||
+                 ex_is_builtin_type( ctx->current->typeid ) == false ) 
             {
                 ctx->parent = ctx->current; 
             }
@@ -200,7 +202,7 @@ static int __yajl_start_map ( void* _ctx ) {
     if ( ctx->root == NULL ) {
         ctx->current = __create_node();
         ctx->root = ctx->parent = ctx->current;
-        ctx->root->_typeid = ex_strid("__root__"); // this will make him not a builtin-type.
+        ctx->root->typeid = ex_strid("__root__"); // this will make him not a builtin-type.
         return 1;
     }
 
@@ -213,7 +215,7 @@ static int __yajl_end_map ( void* _ctx ) {
 
     // nice tricks to detect if pop-up to parent.
     if ( ctx->current == ctx->parent )
-        ctx->parent = ctx->current->_parent;
+        ctx->parent = ctx->current->parent;
     else
         ctx->current = ctx->parent;
 
@@ -224,48 +226,48 @@ static int __yajl_start_array ( void* _ctx ) {
     __context* ctx = (__context*)_ctx;
 
     ctx->tmp_idx = 0;
-    if ( ctx->current->_typeid == EX_TYPEID(vec2f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*2 );
+    if ( ctx->current->typeid == EX_TYPEID(vec2f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*2 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(vec3f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*3 );
+    else if ( ctx->current->typeid == EX_TYPEID(vec3f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*3 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(vec4f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*4 );
+    else if ( ctx->current->typeid == EX_TYPEID(vec4f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*4 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(mat22f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*4 );
+    else if ( ctx->current->typeid == EX_TYPEID(mat22f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*4 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(mat33f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*9 );
+    else if ( ctx->current->typeid == EX_TYPEID(mat33f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*9 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(mat44f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*16 );
+    else if ( ctx->current->typeid == EX_TYPEID(mat44f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*16 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(quatf) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*4 );
+    else if ( ctx->current->typeid == EX_TYPEID(quatf) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*4 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(color3f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*3 );
+    else if ( ctx->current->typeid == EX_TYPEID(color3f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*3 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(color4f) ) {
-        ctx->current->_val = ex_malloc( sizeof(double)*4 );
+    else if ( ctx->current->typeid == EX_TYPEID(color4f) ) {
+        ctx->current->val = ex_malloc( sizeof(double)*4 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(color3u) ) {
-        ctx->current->_val = ex_malloc( sizeof(long)*3 );
+    else if ( ctx->current->typeid == EX_TYPEID(color3u) ) {
+        ctx->current->val = ex_malloc( sizeof(long)*3 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
-    else if ( ctx->current->_typeid == EX_TYPEID(color4u) ) {
-        ctx->current->_val = ex_malloc( sizeof(long)*4 );
+    else if ( ctx->current->typeid == EX_TYPEID(color4u) ) {
+        ctx->current->val = ex_malloc( sizeof(long)*4 );
         ctx->get_method = NODE_STATUS_GET_ARRAY;
     }
 
@@ -336,17 +338,44 @@ static void* __yajl_realloc( void* _ctx, void* _ptr, unsigned int _sz ) {
 // ------------------------------------------------------------------ 
 // Desc: 
 // successful: 0
-// type-invalid: 1
-// name-invalid: -1
+// failed: -1
 // ------------------------------------------------------------------ 
 
-static int __next_child ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
+static int __next ( ex_stream_t* _stream, strid_t _name, strid_t _typeID ) {
     ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
-    if ( stream->_cur->_name != _name )
-        return -1;
-    if ( stream->_cur->_typeid != _typeID )
-        return 1;
-    return 0;
+    __json_node_t* parent = stream->anchor;
+
+    ex_list_each( parent->children, __json_node_t*, jnode ) {
+        // if we found the node with the same name and type
+        if ( jnode->used == false && 
+             jnode->name == _name && 
+             jnode->typeid == _typeID ) 
+        {
+            stream->current = jnode;
+            jnode->used = true;
+            return 0;
+        }
+    } ex_list_each_end
+
+    return -1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __push ( ex_stream_t* _stream ) {
+    ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    stream->anchor = stream->current;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __pop ( ex_stream_t* _stream ) {
+    ex_stream_json_t* stream = (ex_stream_json_t*)_stream; 
+    stream->anchor = stream->anchor->parent;
 }
 
 // ------------------------------------------------------------------ 
@@ -747,7 +776,9 @@ ex_stream_t* ex_create_json_read_stream ( const char* _fileName ) {
         EX_STREAM_READ,
 
         //
-        __next_child,
+        __next,
+        __push,
+        __pop,
 
         // methods
         __read_int8,
@@ -852,8 +883,8 @@ ex_stream_t* ex_create_json_read_stream ( const char* _fileName ) {
     // copy the read methods
     ex_stream_json_t* r_stream = (ex_stream_json_t*)ex_malloc( sizeof(ex_stream_json_t) );
     memcpy ( r_stream, &json_stream, sizeof(ex_stream_json_t) );
-    r_stream->_root = context.root;
-    r_stream->_cur = context.root;
+    r_stream->root = context.root;
+    r_stream->current = context.root;
 
     return (ex_stream_t*)r_stream;
 }
@@ -869,7 +900,9 @@ ex_stream_t* ex_create_json_write_stream () {
         EX_STREAM_WRITE,
 
         //
-        __next_child,
+        __next,
+        __push,
+        __pop,
 
         // methods
         __write_int8,
@@ -910,8 +943,8 @@ ex_stream_t* ex_create_json_write_stream () {
     // copy the read methods
     ex_stream_json_t* w_stream = (ex_stream_json_t*)ex_malloc( sizeof(ex_stream_json_t) );
     memcpy ( w_stream, &json_stream, sizeof(ex_stream_json_t) );
-    w_stream->_root = node;
-    w_stream->_cur = node;
+    w_stream->root = node;
+    w_stream->current = node;
 
     return (ex_stream_t*)w_stream;
 }
@@ -921,6 +954,6 @@ ex_stream_t* ex_create_json_write_stream () {
 // ------------------------------------------------------------------ 
 
 void ex_destroy_json_stream ( ex_stream_json_t* _stream ) {
-    __destroy_node(_stream->_root);
+    __destroy_node(_stream->root);
     ex_free(_stream);
 }

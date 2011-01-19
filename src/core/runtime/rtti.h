@@ -27,10 +27,10 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 typedef struct ex_rtti_t {
-    struct ex_rtti_t* _super;
-    strid_t _classid;
-    ex_prop_t* _props;
-    uint32 _prop_count;
+    struct ex_rtti_t* super;
+    strid_t classid;
+    ex_prop_t* props;
+    uint32 prop_count;
 } ex_rtti_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ extern ex_rtti_t* ex_rtti_get ( strid_t _classID );
 // ------------------------------------------------------------------ 
 
 static inline const char* ex_rtti_classname ( const ex_rtti_t* _info ) { 
-    return ex_strid_to_cstr(_info->_classid); 
+    return ex_strid_to_cstr(_info->classid); 
 } 
 
 // ------------------------------------------------------------------ 
@@ -79,7 +79,7 @@ static inline const char* ex_rtti_classname ( const ex_rtti_t* _info ) {
 // ------------------------------------------------------------------ 
 
 static inline strid_t ex_rtti_classid ( const ex_rtti_t* _info ) { 
-    return _info->_classid; 
+    return _info->classid; 
 }
 
 // ------------------------------------------------------------------ 
@@ -87,7 +87,7 @@ static inline strid_t ex_rtti_classid ( const ex_rtti_t* _info ) {
 // ------------------------------------------------------------------ 
 
 static inline ex_rtti_t* ex_rtti_super ( const ex_rtti_t* _info ) { 
-    return _info->_super; 
+    return _info->super; 
 }
 
 // ------------------------------------------------------------------ 
@@ -95,7 +95,7 @@ static inline ex_rtti_t* ex_rtti_super ( const ex_rtti_t* _info ) {
 // ------------------------------------------------------------------ 
 
 static inline bool ex_rtti_classof ( const ex_rtti_t* _myclass, const ex_rtti_t* _yourclass ) { 
-    return _myclass->_classid == _yourclass->_classid;
+    return _myclass->classid == _yourclass->classid;
 }
 
 // ------------------------------------------------------------------ 

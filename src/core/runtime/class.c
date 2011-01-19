@@ -22,7 +22,7 @@ ex_rtti_t* __RTTI_ex_class_t__ = NULL;
 // ------------------------------------------------------------------ 
 
 void* __ex_as ( ex_class_t* _obj, const ex_rtti_t* _rtti ) {
-    if ( ex_rtti_isa ( _obj->_rtti, _rtti ) )
+    if ( ex_rtti_isa ( _obj->rtti, _rtti ) )
         return _obj;
     return NULL;
 }

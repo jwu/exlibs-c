@@ -120,7 +120,7 @@ strid_t ex_strid_from_wcs ( const wchar_t* _string )
 
 char* ex_strid_to_cstr ( strid_t _id )
 {
-    char* addr = (char*)__string_set->_keys + _id * __string_set->_key_bytes;
+    char* addr = (char*)__string_set->keys + _id * __string_set->key_bytes;
     return *((char**)addr);
 }
 

@@ -77,9 +77,9 @@ static void initGame () {
     for ( int i = 0; i < 200; ++i ) {
         entity1 = ex_world_create_entity ( world, ex_strid("ent1") ); {
             ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_add_comp( entity1, EX_CLASSID(ex_trans2d_t) );
-            ex_vec2f_set ( &trans2d->_pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
-            ex_vec2f_set ( &trans2d->_scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
-            ex_angf_set_by_radians ( &trans2d->_ang, ex_range_randf(0.0f,EX_TWO_PI) );
+            ex_vec2f_set ( &trans2d->pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
+            ex_vec2f_set ( &trans2d->scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
+            ex_angf_set_by_radians ( &trans2d->ang, ex_range_randf(0.0f,EX_TWO_PI) );
             ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_add_comp( entity1, EX_CLASSID(ex_debug2d_t) );
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
         }
@@ -106,11 +106,11 @@ static void updateGame () {
 
         // ex_vec2f_set ( &d_pos, 100.0f, 0.0f );
         // ex_vec2f_mul_scalar ( &d_pos, &d_pos, ex_dt() );
-        // ex_vec2f_add ( &trans2d->_pos, &trans2d->_pos, &d_pos );
+        // ex_vec2f_add ( &trans2d->pos, &trans2d->pos, &d_pos );
 
         ex_angf_set_by_degrees( &d_ang, 1.0f );
         ex_angf_mul_scalar ( &d_ang, &d_ang, ex_dt() * 10.0f );
-        ex_angf_add ( &trans2d->_ang, &trans2d->_ang, &d_ang );
+        ex_angf_add ( &trans2d->ang, &trans2d->ang, &d_ang );
     }
 
     ex_world_update(world);

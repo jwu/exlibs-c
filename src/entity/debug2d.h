@@ -32,9 +32,9 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DEF_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
-    int _shapeType;
-    ex_rectf_t _rect;
-    ex_circlef_t _circle;
+    int shapeType;
+    ex_rectf_t rect;
+    ex_circlef_t circle;
 EX_DEF_CLASS_END(ex_debug2d_t)
 
 ///////////////////////////////////////////////////////////////////////////////

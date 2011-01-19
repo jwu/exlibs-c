@@ -29,7 +29,7 @@ extern "C" {
 
 //
 typedef struct ex_class_t {
-    ex_rtti_t* _rtti;
+    ex_rtti_t* rtti;
 } ex_class_t;
 
 //
@@ -41,7 +41,7 @@ static inline void __ex_register_class_ex_class_t () {
 //
 static inline ex_class_t* alloc_ex_class_t() {
     ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(ex_class_t));
-    obj->_rtti = __RTTI_ex_class_t__;
+    obj->rtti = __RTTI_ex_class_t__;
     return obj;
 }
 
@@ -66,7 +66,7 @@ static inline void free_ex_class_t(void* _ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_CLASSID(_class_name) \
-    (EX_RTTI(_class_name)->_classid)
+    (EX_RTTI(_class_name)->classid)
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -116,7 +116,7 @@ static inline void free_ex_class_t(void* _ptr) {
     extern void __ex_serialize_##_class_name( struct ex_stream_t* _stream, const char* _name, _class_name* _val ); \
     static inline _class_name* alloc_##_class_name() { \
         ex_class_t* obj = (ex_class_t*)ex_malloc(sizeof(_class_name)); \
-        obj->_rtti = EX_RTTI(_class_name); \
+        obj->rtti = EX_RTTI(_class_name); \
         return (_class_name*)obj; \
     } \
     /*NOTE: the reason to add free function is for function pointer. 
@@ -142,7 +142,7 @@ static inline void free_ex_class_t(void* _ptr) {
 // ------------------------------------------------------------------ 
 
 static inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
-    return ((ex_class_t*)_obj)->_rtti;
+    return ((ex_class_t*)_obj)->rtti;
 }
 
 // ------------------------------------------------------------------ 
@@ -151,7 +151,7 @@ static inline ex_rtti_t* ex_rtti_info ( void* _obj ) {
 
 #define ex_classof(_type,_objPtr) __ex_classof((ex_class_t*)_objPtr,EX_RTTI(_type))
 static inline bool __ex_classof ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
-    return ex_rtti_classof( _obj->_rtti, _rtti );
+    return ex_rtti_classof( _obj->rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
@@ -160,7 +160,7 @@ static inline bool __ex_classof ( const ex_class_t* _obj, const ex_rtti_t* _rtti
 
 #define ex_childof(_type,_objPtr) __ex_childof((ex_class_t*)_objPtr,EX_RTTI(_type))
 static inline bool __ex_childof ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
-    return ex_rtti_childof( _obj->_rtti, _rtti );
+    return ex_rtti_childof( _obj->rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
@@ -169,7 +169,7 @@ static inline bool __ex_childof ( const ex_class_t* _obj, const ex_rtti_t* _rtti
 
 #define ex_superof(_type,_objPtr) __ex_superof((ex_class_t*)_objPtr,EX_RTTI(_type))
 static inline bool __ex_superof ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
-    return ex_rtti_superof( _obj->_rtti, _rtti );
+    return ex_rtti_superof( _obj->rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
@@ -178,7 +178,7 @@ static inline bool __ex_superof ( const ex_class_t* _obj, const ex_rtti_t* _rtti
 
 #define ex_isa(_type,_objPtr) __ex_isa((ex_class_t*)_objPtr,EX_RTTI(_type))
 static inline bool __ex_isa ( const ex_class_t* _obj, const ex_rtti_t* _rtti ) {
-    return ex_rtti_isa( _obj->_rtti, _rtti );
+    return ex_rtti_isa( _obj->rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 

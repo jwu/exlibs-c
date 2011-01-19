@@ -21,9 +21,9 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 typedef struct ex_world_t {
-    ex_array_t* _entities;
-    ex_array_t* _cameras;
-    struct ex_camera_t* _mainCamera;
+    ex_array_t* entities;
+    ex_array_t* cameras;
+    struct ex_camera_t* mainCamera;
 } ex_world_t;
 
 ///////////////////////////////////////////////////////////////////////////////

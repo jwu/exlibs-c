@@ -26,8 +26,9 @@ extern "C" {
 
 typedef struct ex_stream_json_t {
     const ex_stream_t _;
-    struct __json_node_t* _root;
-    struct __json_node_t* _cur;
+    struct __json_node_t* root;
+    struct __json_node_t* anchor; // locate current's parent
+    struct __json_node_t* current;
 } ex_stream_json_t;
 
 ///////////////////////////////////////////////////////////////////////////////

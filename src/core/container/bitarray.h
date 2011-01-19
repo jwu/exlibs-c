@@ -29,8 +29,8 @@ USAGE:
 
 typedef struct ex_bitarray_t {
     // private
-    size_t _length;
-    char* _data;
+    size_t count;
+    char* data;
 } ex_bitarray_t; // end struct _bitarray
 
 // ------------------------------------------------------------------ 
@@ -70,7 +70,7 @@ extern void ex_bitarray_resize_nomng ( ex_bitarray_t* _bitarray, size_t _bitcoun
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline size_t ex_bitarray_len ( const ex_bitarray_t* _bitarray ) { return _bitarray->_length; } 
+static inline size_t ex_bitarray_count ( const ex_bitarray_t* _bitarray ) { return _bitarray->count; } 
 
 // ######################### 
 #ifdef __cplusplus

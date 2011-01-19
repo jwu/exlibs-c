@@ -79,5 +79,5 @@ int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const cha
         ex_array_append ( _outList, sub_str );
     }
 
-    return (int)ex_array_len(_outList);
+    return (int)ex_array_count(_outList);
 }

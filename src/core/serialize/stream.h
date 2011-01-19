@@ -29,10 +29,12 @@ extern "C" {
 
 typedef struct ex_stream_t {
     // properties
-    int _type; // read or write
+    int type; // read or write
 
     // common functions
-    int (*next_child) ( struct ex_stream_t* _stream, strid_t _name, strid_t _typeID );
+    int (*next) ( struct ex_stream_t* _stream, strid_t _name, strid_t _typeID );
+    void (*push) ( struct ex_stream_t* _stream );
+    void (*pop) ( struct ex_stream_t* _stream );
 
     // serialize methods
     void (*serialize_int8)      ( struct ex_stream_t* _stream, int8* _val );

@@ -62,7 +62,7 @@ void ex_rtti_deinit ()
 
         // free all allocated string
         ex_hashmap_each ( __classid_to_rtti, ex_rtti_t*, _info ) {
-            ex_free(_info->_props);
+            ex_free(_info->props);
             ex_free(_info);
         } ex_hashmap_each_end;
         ex_hashmap_free(__classid_to_rtti);
@@ -90,9 +90,9 @@ ex_rtti_t* ex_rtti_register_class ( strid_t _classID, ex_rtti_t* _super )
 
     // we got everything we want, now we can create rtti info.
     my_rtti = (ex_rtti_t*)ex_malloc ( sizeof(ex_rtti_t) );
-    my_rtti->_super = _super;
-    my_rtti->_classid = _classID;
-    my_rtti->_props = NULL;
+    my_rtti->super = _super;
+    my_rtti->classid = _classID;
+    my_rtti->props = NULL;
 
     // insert the new rtti to the hashmap
     result = ex_hashmap_insert( __classid_to_rtti, &_classID, &my_rtti, NULL );
@@ -112,14 +112,14 @@ ex_rtti_t* ex_rtti_register_class ( strid_t _classID, ex_rtti_t* _super )
 
 void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count )
 {
-    ex_assert_return( _info->_props == NULL, /*dummy*/, "properties already registerd!" );
+    ex_assert_return( _info->props == NULL, /*dummy*/, "properties already registerd!" );
 
     // NOTE: you could have empty properties for a structure.
     if ( _count != 0 ) {
         ex_assert_return( _props != NULL, /*dummy*/, "incoming properties can't be NULL, or can't be empty!" );
 
-        _info->_props = (ex_prop_t*)ex_malloc( sizeof(ex_prop_t) * _count );
-        memcpy( _info->_props, _props, sizeof(ex_prop_t) * _count );
+        _info->props = (ex_prop_t*)ex_malloc( sizeof(ex_prop_t) * _count );
+        memcpy( _info->props, _props, sizeof(ex_prop_t) * _count );
     }
 }
 

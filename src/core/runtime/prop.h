@@ -31,9 +31,9 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 typedef struct ex_prop_t {
-    const char* _name;  // NOTE: we not use strid_t, cause property defined before strid_t initialize.
-    uint32 _attrs;      // attribute flags, default is EX_PROP_ATTR_NONE
-    size_t _offset;     // use function: size_t offsetof (type, member), if not use, set it to -1
+    const char* name;  // NOTE: we not use strid_t, cause property defined before strid_t initialize.
+    uint32 attrs;      // attribute flags, default is EX_PROP_ATTR_NONE
+    size_t offset;     // use function: size_t offsetof (type, member), if not use, set it to -1
     void (*set_property) ( void* _pObj, size_t _offset, const void* _value ); // if not use, set it to NULL
     void (*get_property) ( void* _pObj, size_t _offset, void* _value ); // if not use, set it to NULL
 } ex_prop_t;

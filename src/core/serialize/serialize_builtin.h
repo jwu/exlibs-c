@@ -22,26 +22,31 @@ extern "C" {
 
 #define DEF_BUILTIN_SERIALIZE(_type) \
     static inline void __ex_serialize_##_type ( ex_stream_t* _stream, strid_t _name, _type* _val ) { \
-        if ( _stream->next_child ) { \
-            int ret = _stream->next_child( _stream, _name, EX_TYPEID(_type) ); \
-            if ( ret != 0 ) { \
-                ex_warning ( "failed to find %s", ex_strid_to_cstr(_name) ); \
-                return; \
-            } \
+        if ( _stream->next ) { \
+            int ret = _stream->next( _stream, _name, EX_TYPEID(_type) ); \
+            if ( ret != 0 ) return; \
         } \
         _stream->serialize_##_type(_stream,_val); \
     }
 
-#define DEF_BUILTIN_SERIALIZE_2( _typeName, _type ) \
-    static inline void __ex_serialize_##_typeName ( ex_stream_t* _stream, strid_t _name, _type* _val ) { \
-        if ( _stream->next_child ) { \
-            int ret = _stream->next_child( _stream, _name, EX_TYPEID(_typeName) ); \
-            if ( ret != 0 ) { \
-                ex_warning ( "failed to find %s", ex_strid_to_cstr(_name) ); \
-                return; \
-            } \
+#define DEF_BUILTIN_SERIALIZE_2( _typename, _type ) \
+    static inline void __ex_serialize_##_typename ( ex_stream_t* _stream, strid_t _name, _type* _val ) { \
+        if ( _stream->next ) { \
+            int ret = _stream->next( _stream, _name, EX_TYPEID(_typename) ); \
+            if ( ret != 0 ) return; \
         } \
-        _stream->serialize_##_typeName(_stream,_val); \
+        _stream->serialize_##_typename(_stream,_val); \
+    }
+
+#define DEF_BUILTIN_SERIALIZE_PUSH_POP( _typename, _type ) \
+    static inline void __ex_serialize_##_typename ( ex_stream_t* _stream, strid_t _name, _type* _val ) { \
+        if ( _stream->next ) { \
+            int ret = _stream->next( _stream, _name, EX_TYPEID(_typename) ); \
+            if ( ret != 0 ) return; \
+        } \
+        if ( _stream->push ) _stream->push(_stream); \
+        _stream->serialize_##_typename(_stream,_val); \
+        if ( _stream->pop ) _stream->pop(_stream); \
     }
 
 DEF_BUILTIN_SERIALIZE(int8)
@@ -62,8 +67,8 @@ DEF_BUILTIN_SERIALIZE_2(boolean, bool) // NOTE: bool will be replaced to "int"
 DEF_BUILTIN_SERIALIZE_2(string, const char*)
 DEF_BUILTIN_SERIALIZE_2(strid, strid_t)
 
-DEF_BUILTIN_SERIALIZE_2(array, ex_array_t)
-DEF_BUILTIN_SERIALIZE_2(map, ex_hashmap_t)
+DEF_BUILTIN_SERIALIZE_PUSH_POP(array, ex_array_t)
+DEF_BUILTIN_SERIALIZE_PUSH_POP(map, ex_hashmap_t)
 
 DEF_BUILTIN_SERIALIZE_2(vec2f, ex_vec2f_t)
 DEF_BUILTIN_SERIALIZE_2(vec3f, ex_vec3f_t)

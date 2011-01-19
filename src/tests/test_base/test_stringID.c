@@ -70,7 +70,7 @@ static void normal () {
 
         // check if the string ID consistent with string
         cur = 0;
-        while ( cur < ex_array_len(words) ) {
+        while ( cur < ex_array_count(words) ) {
             char* word = *((char**)ex_array_get( words, cur ));
             size_t sid = *((size_t*)ex_array_get( word_IDs, cur )); 
             // EX_TEST ( wcscmp(ex_strid_to_cstr(sid), word) == 0 );
@@ -80,7 +80,7 @@ static void normal () {
 
         // release all memory
         cur = 0;
-        while ( cur < ex_array_len(words) ) {
+        while ( cur < ex_array_count(words) ) {
             void* ptr = *((char**)ex_array_get( words, cur ));
             ex_free(ptr);
             ++cur;

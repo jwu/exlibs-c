@@ -50,5 +50,5 @@ void ex_component_deinit ( void* _self ) {
 // ------------------------------------------------------------------ 
 
 ex_entity_t* ex_component_owner ( const ex_component_t* _self ) {
-    return _self->_owner; 
+    return _self->owner; 
 } 
