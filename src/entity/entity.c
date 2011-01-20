@@ -33,7 +33,7 @@ static EX_RESULT __entity_add_comp ( ex_entity_t *_ent, ex_component_t *_comp ) 
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_CREATOR(ex_entity_t) {
-    return alloc_ex_entity_t();
+    return __alloc_ex_entity_t();
 }
 
 EX_DEF_PROPS_BEGIN(ex_entity_t)

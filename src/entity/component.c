@@ -20,7 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_CREATOR(ex_component_t) {
-    return alloc_ex_component_t();
+    return __alloc_ex_component_t();
 }
 
 EX_DEF_PROPS_BEGIN(ex_component_t)

@@ -51,7 +51,7 @@ EX_DEF_CLASS_BEGIN(test_cls_t)
 EX_DEF_CLASS_END(test_cls_t)
 
 EX_DEF_CLASS_CREATOR(test_cls_t) {
-    return alloc_test_cls_t();
+    return __alloc_test_cls_t();
 }
 
 EX_DEF_PROPS_BEGIN(test_cls_t)

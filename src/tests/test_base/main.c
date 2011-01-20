@@ -62,7 +62,7 @@ int main( int argc, char *argv[] )
         // test_array ();
         // test_bitarry ();
         // test_btree ();
-        test_cstr ();
+        // test_cstr ();
         // test_encoding ();
         // test_hashmap ();
         // test_list ();

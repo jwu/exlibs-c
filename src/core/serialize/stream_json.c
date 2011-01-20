@@ -357,6 +357,7 @@ static int __read_next ( ex_stream_t *_stream, strid_t _name, strid_t _typeID ) 
         }
     } ex_list_each_end
 
+    ex_warning( "can't find node %s with type %s", ex_strid_to_cstr(_name), ex_strid_to_cstr(_typeID) );
     return -1;
 }
 
@@ -1210,7 +1211,8 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     ex_stream_json_t *r_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );
     memcpy ( r_stream, &json_stream, sizeof(ex_stream_json_t) );
     r_stream->root = context.root;
-    r_stream->current = context.root;
+    r_stream->anchor = context.root;
+    r_stream->current = NULL;
 
     return (ex_stream_t *)r_stream;
 }

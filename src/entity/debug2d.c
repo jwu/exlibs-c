@@ -19,7 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_CREATOR(ex_debug2d_t) {
-    ex_debug2d_t *obj = alloc_ex_debug2d_t();
+    ex_debug2d_t *obj = __alloc_ex_debug2d_t();
     ex_component_t *comp = (ex_component_t *)obj;
     comp->init = ex_debug2d_init;
     comp->deinit = NULL;

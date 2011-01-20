@@ -39,7 +39,7 @@ static inline void __ex_register_class_ex_class_t () {
 }
 
 //
-static inline ex_class_t *alloc_ex_class_t() {
+static inline ex_class_t *__alloc_ex_class_t() {
     ex_class_t *obj = (ex_class_t *)ex_malloc(sizeof(ex_class_t));
     obj->rtti = __RTTI_ex_class_t__;
     return obj;
@@ -80,7 +80,7 @@ static inline void free_ex_class_t(void *_ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_CLASS_BEGIN(_class_name) \
-    extern void *__ex_create_##_class_name(); \
+    extern void *ex_create_##_class_name(); \
     extern void __ex_register_properties_##_class_name (); \
     extern void __ex_serialize_##_class_name( struct ex_stream_t *, strid_t, void * ); \
     extern ex_rtti_t *__RTTI_##_class_name##__; /*for EX_RTTI, EX_CLASSID*/ \
@@ -88,7 +88,7 @@ static inline void free_ex_class_t(void *_ptr) {
         strid_t classID = ex_strid(#_class_name); \
         __RTTI_##_class_name##__ = ex_rtti_register_class ( classID, EX_RTTI(ex_class_t) ); \
         __ex_register_properties_##_class_name(); \
-        ex_factory_register(classID,__ex_create_##_class_name); \
+        ex_factory_register(classID,ex_create_##_class_name); \
         ex_rtti_register_serialize(classID,__ex_serialize_##_class_name); \
     } \
     typedef struct _class_name { \
@@ -99,7 +99,7 @@ static inline void free_ex_class_t(void *_ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_CLASS_SUPER_BEGIN(_class_name,_super) \
-    extern void *__ex_create_##_class_name(); \
+    extern void *ex_create_##_class_name(); \
     extern void __ex_register_properties_##_class_name (); \
     extern void __ex_serialize_##_class_name( struct ex_stream_t *, strid_t, void * ); \
     extern ex_rtti_t *__RTTI_##_class_name##__; /*for EX_RTTI, EX_CLASSID*/ \
@@ -107,7 +107,7 @@ static inline void free_ex_class_t(void *_ptr) {
         strid_t classID = ex_strid(#_class_name); \
         __RTTI_##_class_name##__ = ex_rtti_register_class ( classID, EX_RTTI(_super) ); \
         __ex_register_properties_##_class_name(); \
-        ex_factory_register(classID,__ex_create_##_class_name); \
+        ex_factory_register(classID,ex_create_##_class_name); \
         ex_rtti_register_serialize(classID,__ex_serialize_##_class_name); \
     } \
     typedef struct _class_name { \
@@ -119,7 +119,7 @@ static inline void free_ex_class_t(void *_ptr) {
 
 #define EX_DEF_CLASS_END(_class_name) \
     } _class_name; \
-    static inline _class_name *alloc_##_class_name() { \
+    static inline _class_name *__alloc_##_class_name() { \
         ex_class_t *obj = (ex_class_t *)ex_malloc(sizeof(_class_name)); \
         obj->rtti = EX_RTTI(_class_name); \
         return (_class_name *)obj; \
@@ -136,7 +136,7 @@ static inline void free_ex_class_t(void *_ptr) {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_CLASS_CREATOR(_class_name) \
-    void *__ex_create_##_class_name()
+    void *ex_create_##_class_name()
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

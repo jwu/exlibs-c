@@ -316,7 +316,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>memmng.c</string>
+								<string>test_stream.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -324,11 +324,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>memmng.c</string>
+										<string>test_stream.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2BD889812E7E469001F9D38</string>
+										<string>B2BD88D812E80151001F9D38</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -419,11 +419,11 @@
 											<string>B200D40412E491C1003B4944</string>
 											<string>B200D40612E491C1003B4944</string>
 											<string>B200D41C12E4A1F6003B4944</string>
-											<string>B200D51012E54106003B4944</string>
 											<string>B200D5BC12E55EC9003B4944</string>
 											<string>B2BD883712E6F912001F9D38</string>
 											<string>B2BD883812E6F912001F9D38</string>
-											<string>B2BD883912E6F912001F9D38</string>
+											<string>B2BD889D12E7FCBB001F9D38</string>
+											<string>B2BD889E12E7FCBB001F9D38</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -624,9 +624,9 @@
 		<string>B2BD883D12E6F912001F9D38</string>
 		<string>B2BD883E12E6F912001F9D38</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>290 1059 1030 715 -320 800 1920 1200 </string>
@@ -645,12 +645,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>stream_json.c</string>
+								<string>test_stream.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -667,8 +669,6 @@
 							<string>416pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -804,10 +804,10 @@
 									<key>Frame</key>
 									<string>{{589, 0}, {702, 516}}</string>
 									<key>RubberWindowFrame</key>
-									<string>-24 883 1291 1008 -320 800 1920 1200 </string>
+									<string>-125 880 1291 1008 -320 800 1920 1200 </string>
 								</dict>
 								<key>RubberWindowFrame</key>
-								<string>-24 883 1291 1008 -320 800 1920 1200 </string>
+								<string>-125 880 1291 1008 -320 800 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugSessionModule</string>
@@ -841,7 +841,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
 			<key>WindowString</key>
-			<string>-24 883 1291 1008 -320 800 1920 1200 </string>
+			<string>-125 880 1291 1008 -320 800 1920 1200 </string>
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>

@@ -1,0 +1,16 @@
+{
+    "trans2d_01": {
+        "ex_trans2d_t": {
+            "pos": { "vec2f": [10.0,10.0] },
+            "ang": { "angf": 1.0 },
+            "scale": { "vec2f": [1.0,1.0] }
+        }
+    },
+    "trans2d_02": {
+        "ex_trans2d_t": {
+            "pos": { "vec2f": [5.0,5.0] },
+            "ang": { "angf": 1.57 },
+            "scale": { "vec2f": [2.0,2.0] }
+        }
+    }
+}

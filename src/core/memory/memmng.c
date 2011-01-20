@@ -289,6 +289,7 @@ static void __dump () {
 
             // format log info
             __log ( MEM_LOG, "%s", text );
+            printf ( "%s", text ); // also show on the console.
         } ex_hashmap_each_end;
     }
 }

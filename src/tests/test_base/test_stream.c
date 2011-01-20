@@ -10,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
+#include "../../entity/trans2d.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -35,6 +36,41 @@ static void json_read () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void json_serialize () {
+    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
+    char path[maxPATH];
+    pfn serialize_func;
+    ex_trans2d_t *trans1, *trans2;
+
+    strncpy ( path, media_file, maxPATH );
+    ex_stream_t *stream = ex_create_json_read_stream( strcat(path, "trans2d.json") );
+    serialize_func = (pfn)ex_rtti_get_serialize_pfn(EX_CLASSID(ex_trans2d_t));
+
+    // serialize trans1
+    trans1 = ex_create_ex_trans2d_t();
+    ex_trans2d_init(trans1);
+    serialize_func(stream, ex_strid("trans2d_01"), trans1 );
+
+    // serialize trans2
+    trans2 = ex_create_ex_trans2d_t();
+    ex_trans2d_init(trans2);
+    serialize_func(stream, ex_strid("trans2d_02"), trans2 );
+
+    //
+    ex_destroy_json_stream((ex_stream_json_t *)stream);
+
+    // destroy
+    ex_trans2d_deinit(trans1);
+    ex_free(trans1);
+    ex_trans2d_deinit(trans2);
+    ex_free(trans2);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void test_stream () {
-    json_read();
+    // json_read();
+    json_serialize();
 }
