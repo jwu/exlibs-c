@@ -57,7 +57,7 @@ protected:
 ///////////////////////////////////////////////////////////////////////////////
 
 struct lua_proxy_t {
-    void* user_data;
+    void *user_data;
     bool  own_by_gc;
 }; // end struct lua_proxy_t
 

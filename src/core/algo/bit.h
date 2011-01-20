@@ -115,7 +115,7 @@ static inline int64 ex_gen_int64 ( int32 _highVal, int32 _lowVal ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void ex_split_uint64 ( uint64 _value, uint32* _pHighVal, uint32* _pLowVal ) {
+static inline void ex_split_uint64 ( uint64 _value, uint32 *_pHighVal, uint32 *_pLowVal ) {
     if ( _pLowVal )
     {
         (*_pLowVal) = (uint32)(_value & 0xffffffffull);
@@ -131,7 +131,7 @@ static inline void ex_split_uint64 ( uint64 _value, uint32* _pHighVal, uint32* _
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void ex_split_int64 ( int64 _value, int32* _pHighVal, int32* _pLowVal ) {
+static inline void ex_split_int64 ( int64 _value, int32 *_pHighVal, int32 *_pLowVal ) {
     if ( _pLowVal )
     {
         (*_pLowVal) = (int32)(_value & 0xffffffffull);
@@ -151,8 +151,8 @@ static inline void ex_split_int64 ( int64 _value, int32* _pHighVal, int32* _pLow
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void ex_swap_n_bytes ( int _n, void* _value ) {
-    uint8* p = (uint8*)_value;
+static inline void ex_swap_n_bytes ( int _n, void *_value ) {
+    uint8 *p = (uint8 *)_value;
     uint32 i = 0;
     uint32 j = _n - 1;
     uint8  t;
@@ -173,7 +173,7 @@ static inline void ex_swap_n_bytes ( int _n, void* _value ) {
 // Desc: swap 1 byte. Does nothing (no swapping needed).
 // ------------------------------------------------------------------ 
 
-static inline void ex_swap_1_bytes ( void* _value ) {
+static inline void ex_swap_1_bytes ( void *_value ) {
     EX_UNUSED(_value);
 }
 
@@ -181,16 +181,16 @@ static inline void ex_swap_1_bytes ( void* _value ) {
 // Desc: swap 2 bytes
 // ------------------------------------------------------------------ 
 
-static inline void ex_swap_2_bytes ( void* _value ) {
-    uint16* pVal = (uint16*)_value;
-    *pVal = (((*pVal) >> 8) & 0xff) | (((*pVal) & 0xff) << 8);
+static inline void ex_swap_2_bytes ( void *_value ) {
+    uint16 *val = (uint16 *)_value;
+    *val = (((*val) >> 8) & 0xff) | (((*val) & 0xff) << 8);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: swap 4 bytes
 // ------------------------------------------------------------------ 
 
-static inline void ex_swap_4_bytes ( void* _value ) {
+static inline void ex_swap_4_bytes ( void *_value ) {
 #if ( EX_PLATFORM == EX_WIN32 ) && ( EX_COMPILER == EX_MSVC )
     __asm
     {
@@ -208,7 +208,7 @@ static inline void ex_swap_4_bytes ( void* _value ) {
 // Desc: swap 8 bytes
 // ------------------------------------------------------------------ 
 
-static inline void ex_swap_8_bytes ( void* _value ) {
+static inline void ex_swap_8_bytes ( void *_value ) {
 #if ( EX_PLATFORM == EX_WIN32 ) && ( EX_COMPILER == EX_MSVC )
     __asm
     {

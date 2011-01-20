@@ -38,20 +38,20 @@ EX_SERIALIZE_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_component_init ( void* _self ) {
+void ex_component_init ( void *_self ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_component_deinit ( void* _self ) {
+void ex_component_deinit ( void *_self ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t* ex_component_owner ( const ex_component_t* _self ) {
+ex_entity_t *ex_component_owner ( const ex_component_t *_self ) {
     return _self->owner; 
 } 

@@ -20,15 +20,15 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _say_exec ( bt_node_t* _node ) {
-    printf ("%s\n", (const char*)_node->user_data );
+static bool _say_exec ( bt_node_t *_node ) {
+    printf ("%s\n", (const char *)_node->user_data );
     return true;
 }
 
-static bt_node_t* action_say ( const char* _someting ) {
-    bt_node_t* node = ex_malloc ( sizeof(bt_node_t) );
+static bt_node_t *action_say ( const char *_someting ) {
+    bt_node_t *node = ex_malloc ( sizeof(bt_node_t) );
     node->children = NULL;
-    node->user_data = (void*)_someting;
+    node->user_data = (void *)_someting;
     node->exec = _say_exec;
     return node;
 }
@@ -38,7 +38,7 @@ static bt_node_t* action_say ( const char* _someting ) {
 // ------------------------------------------------------------------ 
 
 static void normal () {
-    bt_node_t* root = bt_random_selector();
+    bt_node_t *root = bt_random_selector();
 
     bt_node_add ( root, action_say("foo") );
     bt_node_add ( root, action_say("bar") );

@@ -45,21 +45,21 @@ EX_DEF_CLASS_END(ex_debug2d_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_init ( void* _self ); 
-extern void ex_debug2d_deinit ( void* _self ); 
+extern void ex_debug2d_init ( void *_self ); 
+extern void ex_debug2d_deinit ( void *_self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_set_rect ( ex_debug2d_t* _self, 
+extern void ex_debug2d_set_rect ( ex_debug2d_t *_self, 
                                   float _x, float _y, float _width, float _height ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_draw ( ex_debug2d_t* _self ); 
+extern void ex_debug2d_draw ( ex_debug2d_t *_self ); 
 
 // ######################### 
 #ifdef __cplusplus

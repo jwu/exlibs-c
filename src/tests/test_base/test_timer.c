@@ -16,7 +16,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static int32 _callback1 ( uint32 _interval, void* _param ) {
+static int32 _callback1 ( uint32 _interval, void *_param ) {
     printf("callback1 invoked! interval = %d\n", _interval);
     // EX_HW_BREAK();
     return _interval;

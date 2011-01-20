@@ -15,7 +15,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static int thread_func1 ( void* _data ) {
+static int thread_func1 ( void *_data ) {
     int counter = 20;
     ex_log ("this is thread1");
     while ( counter > 0 ) {
@@ -33,7 +33,7 @@ static int thread_func1 ( void* _data ) {
 
 static void normal () {
     int counter = 5;
-    ex_thread_t* thread1 = ex_create_thread ( thread_func1, NULL );
+    ex_thread_t *thread1 = ex_create_thread ( thread_func1, NULL );
     while ( counter > 0 ) {
         ex_log ("main tick");
         ex_sleep(1000);

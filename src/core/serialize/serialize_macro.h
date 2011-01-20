@@ -25,8 +25,8 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_BEGIN(_class) \
-    void __ex_serialize_##_class( ex_stream_t* _stream, strid_t _name, void* _val ) { \
-        _class* self = (_class*)_val; \
+    void __ex_serialize_##_class( ex_stream_t *_stream, strid_t _name, void *_val ) { \
+        _class *self = (_class *)_val; \
         if ( _stream->next ) { \
             int ret = _stream->next( _stream, _name, EX_CLASSID(_class) ); \
             if ( ret != 0 ) return; \
@@ -67,7 +67,7 @@ extern "C" {
 
 #define EX_SERIALIZE_END \
         if ( _stream->pop ) _stream->pop(_stream); \
-        (void*)self; /*to avoid unused compile warning*/ \
+        (void *)self; /*to avoid unused compile warning*/ \
     }
 
 // ######################### 

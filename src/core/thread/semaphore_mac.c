@@ -22,16 +22,16 @@
 struct ex_semaphore_t {
     uint32 count;
     uint32 waiters_count;
-    ex_mutex_t* count_lock;
-    ex_cond_t* count_nonzero;
+    ex_mutex_t *count_lock;
+    ex_cond_t *count_nonzero;
 };
 
 // ------------------------------------------------------------------ 
 // Desc: Create a semaphore, initialized with value
 // ------------------------------------------------------------------ 
 
-ex_semaphore_t* ex_create_semaphore ( uint32 _initial_value ) {
-    ex_semaphore_t* sem = (ex_semaphore_t*) ex_malloc_nomng( sizeof(ex_semaphore_t) );
+ex_semaphore_t *ex_create_semaphore ( uint32 _initial_value ) {
+    ex_semaphore_t *sem = (ex_semaphore_t *) ex_malloc_nomng( sizeof(ex_semaphore_t) );
     if (!sem) {
         ex_error("out of memory!");
         return NULL;
@@ -53,7 +53,7 @@ ex_semaphore_t* ex_create_semaphore ( uint32 _initial_value ) {
 // Desc: You cannot call this function when another thread is using the semaphore.
 // ------------------------------------------------------------------ 
 
-void ex_destroy_semaphore ( ex_semaphore_t* _sem ) {
+void ex_destroy_semaphore ( ex_semaphore_t *_sem ) {
     if (_sem) {
         _sem->count = 0xFFFFFFFF;
         while (_sem->waiters_count > 0) {
@@ -74,7 +74,7 @@ void ex_destroy_semaphore ( ex_semaphore_t* _sem ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_semaphore_try_wait ( ex_semaphore_t* _sem ) {
+int ex_semaphore_try_wait ( ex_semaphore_t *_sem ) {
     int retval;
 
     if (!_sem) {
@@ -96,7 +96,7 @@ int ex_semaphore_try_wait ( ex_semaphore_t* _sem ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_semaphore_wait ( ex_semaphore_t* _sem ) {
+int ex_semaphore_wait ( ex_semaphore_t *_sem ) {
     return ex_semaphore_wait_timeout(_sem, EX_MUTEX_MAXWAIT);
 }
 
@@ -104,7 +104,7 @@ int ex_semaphore_wait ( ex_semaphore_t* _sem ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_semaphore_wait_timeout ( ex_semaphore_t* _sem, uint32 _timeout ) {
+int ex_semaphore_wait_timeout ( ex_semaphore_t *_sem, uint32 _timeout ) {
     int retval;
 
     if (!_sem) {
@@ -135,7 +135,7 @@ int ex_semaphore_wait_timeout ( ex_semaphore_t* _sem, uint32 _timeout ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 ex_semaphore_value ( ex_semaphore_t* _sem ) {
+uint32 ex_semaphore_value ( ex_semaphore_t *_sem ) {
     uint32 value;
     value = 0;
     if (_sem) {
@@ -150,7 +150,7 @@ uint32 ex_semaphore_value ( ex_semaphore_t* _sem ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_semaphore_post ( ex_semaphore_t* _sem ) {
+int ex_semaphore_post ( ex_semaphore_t *_sem ) {
     if (!_sem) {
         ex_error("Passed a NULL semaphore");
         return -1;

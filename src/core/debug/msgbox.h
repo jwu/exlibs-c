@@ -29,7 +29,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ... );
+extern int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ... );
 
 // ######################### 
 #ifdef __cplusplus

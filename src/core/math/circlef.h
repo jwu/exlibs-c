@@ -33,7 +33,7 @@ typedef struct ex_circlef_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void ex_circlef_set ( ex_circlef_t* _r, 
+static inline void ex_circlef_set ( ex_circlef_t *_r, 
                                     ex_vec2f_t _center, 
                                     float _radius ) 
 { 

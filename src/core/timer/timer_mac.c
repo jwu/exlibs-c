@@ -16,7 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 static int __timer_alive = 0;
-static ex_thread_t* __timer_thread = NULL;
+static ex_thread_t *__timer_thread = NULL;
 static struct timeval __start_ticks;
 
 
@@ -26,7 +26,7 @@ extern int __timer_running;
 extern void __threaded_timer_tick ();
 // ------------------------------------------------------------------ 
 
-static int __run_timer ( void* _unused ) {
+static int __run_timer ( void *_unused ) {
     while ( __timer_alive ) {
         if ( __timer_running ) {
             __threaded_timer_tick ();

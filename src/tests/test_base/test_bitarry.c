@@ -22,7 +22,7 @@
 static void normal () {
     int result = -1;
 
-    ex_bitarray_t* bitArray = ex_bitarray_alloc ( 20 );
+    ex_bitarray_t *bitArray = ex_bitarray_alloc ( 20 );
     {
         ex_bitarray_set ( bitArray, 0, 1 );
         ex_bitarray_set ( bitArray, 10, 1 );
@@ -48,7 +48,7 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 static void invalid () {
-    ex_bitarray_t* bitArray = ex_bitarray_alloc ( 20 );
+    ex_bitarray_t *bitArray = ex_bitarray_alloc ( 20 );
     {
         // set out of range
         ex_bitarray_set ( bitArray, 30, 1 );

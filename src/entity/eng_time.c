@@ -35,7 +35,7 @@ static uint32 __frame_count = 0;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int32 __calc_fps ( uint32 _interval, void* _param ) {
+static int32 __calc_fps ( uint32 _interval, void *_param ) {
     float secs = (float)_interval/1000.0f;
     __fps = (float)__frame_count / secs;
     __frame_count = 0;

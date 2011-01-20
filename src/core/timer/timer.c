@@ -38,16 +38,16 @@ typedef struct timer_t {
     int32 lifetime_counter; // msecs
 
     ex_timer_pfn cb;
-    void* params;
+    void *params;
 } timer_t;
 
 // when finish ex_timer_init, this will set to 1. in ex_timer_deinit, it will set to 0
 int __timer_running = 0;
-ex_pool_t* __timers = NULL; 
-ex_array_t* __unused_timers = NULL; 
+ex_pool_t *__timers = NULL; 
+ex_array_t *__unused_timers = NULL; 
 
 static bool __initialized = false;
-static ex_mutex_t* __timer_mutex = NULL;
+static ex_mutex_t *__timer_mutex = NULL;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -59,7 +59,7 @@ void __threaded_timer_tick () {
 
     ex_mutex_lock(__timer_mutex);
     now = ex_timer_get_ticks();
-    ex_pool_raw_each ( __timers, timer_t*, t ) {
+    ex_pool_raw_each ( __timers, timer_t *, t ) {
         if ( t->state != EX_TIMER_STATE_RUNNING )
             ex_pool_continue;
 
@@ -108,7 +108,7 @@ void __threaded_timer_tick () {
 
     // remove all timer here
     ex_array_each ( __unused_timers, int, id ) {
-        timer_t* t = (timer_t*)ex_pool_get ( __timers, id );
+        timer_t *t = (timer_t *)ex_pool_get ( __timers, id );
         if (t) ex_free_nomng (t->params);
         ex_pool_remove_at_safe ( __timers, id ); // this can work around if we got several same id to remove.
     } ex_array_each_end
@@ -164,7 +164,7 @@ void ex_timer_deinit () {
         __timer_running = 0;
 
         // free params in timer
-        ex_pool_raw_each ( __timers, timer_t*, t ) {
+        ex_pool_raw_each ( __timers, timer_t *, t ) {
             ex_free_nomng (t->params);
         } ex_pool_each_end
 
@@ -195,7 +195,7 @@ bool ex_timer_initialized () {
 // ------------------------------------------------------------------ 
 
 int ex_add_timer ( ex_timer_pfn _cb, 
-                   void* _params, 
+                   void *_params, 
                    size_t _size, /*parameter byte-size*/ 
                    timespan_t _interval,
                    timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ ) {
@@ -247,7 +247,7 @@ bool ex_remove_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_start_timer ( int _id ) {
-    timer_t* t = (timer_t*)ex_pool_get ( __timers, _id );
+    timer_t *t = (timer_t *)ex_pool_get ( __timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = ex_timer_get_ticks();
@@ -263,7 +263,7 @@ void ex_start_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_stop_timer ( int _id ) {
-    timer_t* t = (timer_t*)ex_pool_get ( __timers, _id );
+    timer_t *t = (timer_t *)ex_pool_get ( __timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = -1;
@@ -277,7 +277,7 @@ void ex_stop_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_pause_timer ( int _id ) {
-    timer_t* t = (timer_t*)ex_pool_get ( __timers, _id );
+    timer_t *t = (timer_t *)ex_pool_get ( __timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             uint32 now = ex_timer_get_ticks();
@@ -295,7 +295,7 @@ void ex_pause_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_resume_timer ( int _id ) {
-    timer_t* t = (timer_t*)ex_pool_get ( __timers, _id );
+    timer_t *t = (timer_t *)ex_pool_get ( __timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             uint32 now = ex_timer_get_ticks();
@@ -310,7 +310,7 @@ void ex_resume_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_reset_timer ( int _id ) {
-    timer_t* t = (timer_t*)ex_pool_get ( __timers, _id );
+    timer_t *t = (timer_t *)ex_pool_get ( __timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = ex_timer_get_ticks();

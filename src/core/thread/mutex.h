@@ -41,25 +41,25 @@ typedef struct ex_mutex_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_mutex_t* ex_create_mutex ();
+extern ex_mutex_t *ex_create_mutex ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_destroy_mutex ( ex_mutex_t* );
+extern void ex_destroy_mutex ( ex_mutex_t * );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_mutex_lock ( ex_mutex_t* );
+extern int ex_mutex_lock ( ex_mutex_t * );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_mutex_unlock ( ex_mutex_t* );
+extern int ex_mutex_unlock ( ex_mutex_t * );
 
 // ######################### 
 #ifdef __cplusplus

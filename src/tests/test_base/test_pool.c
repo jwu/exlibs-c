@@ -21,7 +21,7 @@
 
 static void normal () {
     //
-    ex_pool_t* pool = ex_pool_alloc ( sizeof(int32), 10 );
+    ex_pool_t *pool = ex_pool_alloc ( sizeof(int32), 10 );
     {
         // normal insert
         ex_pool_insert_int32 ( pool, 10 );
@@ -84,7 +84,7 @@ static void normal () {
     ex_pool_free ( pool );
 
     //
-    pool = ex_pool_alloc ( sizeof(char*), 10 );
+    pool = ex_pool_alloc ( sizeof(char *), 10 );
     {
         // normal insert
         ex_pool_insert_string ( pool, "hello world!" );
@@ -99,7 +99,7 @@ static void normal () {
 
 static void invalid() {
     //
-    ex_pool_t* pool = ex_pool_alloc ( sizeof(int32), 10 );
+    ex_pool_t *pool = ex_pool_alloc ( sizeof(int32), 10 );
     {
         int val = 0;
 

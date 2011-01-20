@@ -16,7 +16,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-void ex_draw_string ( int _x, int _y, const char* _text ) {
+void ex_draw_string ( int _x, int _y, const char *_text ) {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glRasterPos2i(_x, _y);
 	

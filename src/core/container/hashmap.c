@@ -18,20 +18,20 @@
 // fwd-decls
 ///////////////////////////////////////////////////////////////////////////////
 
-static inline uint32 __hash_index ( const ex_hashmap_t* _hashmap, const void* _key ) {
+static inline uint32 __hash_index ( const ex_hashmap_t *_hashmap, const void *_key ) {
     return _hashmap->hashkey(_key) & ( _hashmap->hashsize - 1 );
 }
 
-static inline ex_hashmap_node_t* __getnode ( const ex_hashmap_t* _hashmap, size_t _idx ) {
-    return (ex_hashmap_node_t*)ex_pool_get(_hashmap->nodes,_idx);
+static inline ex_hashmap_node_t *__getnode ( const ex_hashmap_t *_hashmap, size_t _idx ) {
+    return (ex_hashmap_node_t *)ex_pool_get(_hashmap->nodes,_idx);
 }
 
-static inline void* __getkey ( const ex_hashmap_t* _hashmap, size_t _idx ) {
-    return (char*)_hashmap->keys + _idx * _hashmap->key_bytes;
+static inline void *__getkey ( const ex_hashmap_t *_hashmap, size_t _idx ) {
+    return (char *)_hashmap->keys + _idx * _hashmap->key_bytes;
 }
 
-static inline void* __getvalue ( const ex_hashmap_t* _hashmap, size_t _idx ) {
-    return (char*)_hashmap->values + _idx * _hashmap->value_bytes;
+static inline void *__getvalue ( const ex_hashmap_t *_hashmap, size_t _idx ) {
+    return (char *)_hashmap->values + _idx * _hashmap->value_bytes;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,13 +43,13 @@ static inline void* __getvalue ( const ex_hashmap_t* _hashmap, size_t _idx ) {
 // ------------------------------------------------------------------ 
 
 // managed
-ex_hashmap_t* ex_hashmap_alloc ( size_t _key_bytes, 
+ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes, 
                            size_t _value_bytes, 
                            size_t _count, 
                            hashkey_t _hashkey, 
                            keycmp_t _keycmp )
 {
-    ex_hashmap_t* hashmap = ex_malloc( sizeof(ex_hashmap_t) );
+    ex_hashmap_t *hashmap = ex_malloc( sizeof(ex_hashmap_t) );
 
     // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
     ex_assert_exec( ex_is_pow_of_2(_count), 
@@ -84,9 +84,9 @@ ex_hashmap_t* ex_hashmap_alloc ( size_t _key_bytes,
 }
 
 // no managed
-ex_hashmap_t* ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp )
+ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp )
 {
-    ex_hashmap_t* hashmap = ex_malloc_nomng( sizeof(ex_hashmap_t) );
+    ex_hashmap_t *hashmap = ex_malloc_nomng( sizeof(ex_hashmap_t) );
 
     // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
     ex_assert_exec( ex_is_pow_of_2(_count), 
@@ -125,7 +125,7 @@ ex_hashmap_t* ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, s
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_hashmap_free ( ex_hashmap_t* _hashmap )
+void ex_hashmap_free ( ex_hashmap_t *_hashmap )
 {
     ex_assert_return( _hashmap != NULL, /*void*/, "NULL input" );
 
@@ -143,7 +143,7 @@ void ex_hashmap_free ( ex_hashmap_t* _hashmap )
 }
 
 // no managed
-void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap )
+void ex_hashmap_free_nomng ( ex_hashmap_t *_hashmap )
 {
     ex_assert_return( _hashmap != NULL, /*void*/, "NULL input" );
 
@@ -165,10 +165,10 @@ void ex_hashmap_free_nomng ( ex_hashmap_t* _hashmap )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index )
+void ex_hashmap_insert_new ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t _hash_idx, size_t *_index )
 {
     size_t cur_idx, next_idx;
-    ex_hashmap_node_t* node;
+    ex_hashmap_node_t *node;
 
     cur_idx = ex_pool_insert ( _hashmap->nodes, NULL );
     if ( cur_idx > _hashmap->capacity-1 ) {
@@ -179,7 +179,7 @@ void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const voi
 
     next_idx = _hashmap->indices[_hash_idx];
 
-    node = (ex_hashmap_node_t*)ex_pool_get( _hashmap->nodes, cur_idx );
+    node = (ex_hashmap_node_t *)ex_pool_get( _hashmap->nodes, cur_idx );
     node->next = next_idx;
     node->prev = -1;
     _hashmap->indices[_hash_idx] = cur_idx;
@@ -189,17 +189,17 @@ void ex_hashmap_insert_new ( ex_hashmap_t* _hashmap, const void* _key, const voi
         __getnode(_hashmap,next_idx)->prev = cur_idx;
 
     // set key and value
-    memcpy ( (char*)_hashmap->keys + cur_idx * _hashmap->key_bytes,  _key, _hashmap->key_bytes );
-    memcpy ( (char*)_hashmap->values + cur_idx * _hashmap->value_bytes,  _val, _hashmap->value_bytes );
+    memcpy ( (char *)_hashmap->keys + cur_idx * _hashmap->key_bytes,  _key, _hashmap->key_bytes );
+    memcpy ( (char *)_hashmap->values + cur_idx * _hashmap->value_bytes,  _val, _hashmap->value_bytes );
 
     if ( _index ) *_index = cur_idx;
 }
 
 // no managed
-void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t _hash_idx, size_t* _index )
+void ex_hashmap_insert_new_nomng ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t _hash_idx, size_t *_index )
 {
     size_t cur_idx, next_idx;
-    ex_hashmap_node_t* node;
+    ex_hashmap_node_t *node;
 
     cur_idx = ex_pool_insert_nomng ( _hashmap->nodes, NULL );
     if ( cur_idx > _hashmap->capacity-1 ) {
@@ -210,7 +210,7 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, con
 
     next_idx = _hashmap->indices[_hash_idx];
 
-    node = (ex_hashmap_node_t*)ex_pool_get( _hashmap->nodes, cur_idx );
+    node = (ex_hashmap_node_t *)ex_pool_get( _hashmap->nodes, cur_idx );
     node->next = next_idx;
     node->prev = -1;
     _hashmap->indices[_hash_idx] = cur_idx;
@@ -220,8 +220,8 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, con
         __getnode(_hashmap,next_idx)->prev = cur_idx;
 
     // set key and value
-    memcpy ( (char*)_hashmap->keys + cur_idx * _hashmap->key_bytes,  _key, _hashmap->key_bytes );
-    memcpy ( (char*)_hashmap->values + cur_idx * _hashmap->value_bytes,  _val, _hashmap->value_bytes );
+    memcpy ( (char *)_hashmap->keys + cur_idx * _hashmap->key_bytes,  _key, _hashmap->key_bytes );
+    memcpy ( (char *)_hashmap->values + cur_idx * _hashmap->value_bytes,  _val, _hashmap->value_bytes );
 
     if ( _index ) *_index = cur_idx;
 }
@@ -230,7 +230,7 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t* _hashmap, const void* _key, con
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_get ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
+void *ex_hashmap_get ( const ex_hashmap_t *_hashmap, const void *_key, size_t *_index )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
@@ -254,7 +254,7 @@ void* ex_hashmap_get ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_hashmap_get_hashidx ( const ex_hashmap_t* _hashmap, const void* _key, size_t* _index )
+size_t ex_hashmap_get_hashidx ( const ex_hashmap_t *_hashmap, const void *_key, size_t *_index )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
@@ -279,7 +279,7 @@ size_t ex_hashmap_get_hashidx ( const ex_hashmap_t* _hashmap, const void* _key, 
 // ------------------------------------------------------------------ 
 
 // managed
-bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index )
+bool ex_hashmap_insert ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t *_index )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
@@ -299,7 +299,7 @@ bool ex_hashmap_insert ( ex_hashmap_t* _hashmap, const void* _key, const void* _
 }
 
 // no managed
-bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const void* _val, size_t* _index )
+bool ex_hashmap_insert_nomng ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t *_index )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
@@ -323,12 +323,12 @@ bool ex_hashmap_insert_nomng ( ex_hashmap_t* _hashmap, const void* _key, const v
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_hashmap_remove_at ( ex_hashmap_t* _hashmap, const void* _key )
+void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key )
 {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
     size_t prev_idx, next_idx;
-    ex_hashmap_node_t* node;
+    ex_hashmap_node_t *node;
 
     // check if the key exists. if yes, don't do any thing.
     for ( hash_next = _hashmap->indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )

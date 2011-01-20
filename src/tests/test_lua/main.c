@@ -33,7 +33,7 @@ static void exit_fn () {
 extern void test_normal();
 // ------------------------------------------------------------------ 
 
-int main( int argc, char* argv[] )
+int main( int argc, char *argv[] )
 {
     printf ("================\n");
     printf ("start testing...\n");

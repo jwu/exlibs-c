@@ -21,7 +21,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int main( int argc, char* argv[] )
+int main( int argc, char *argv[] )
 {
     // init
     if ( ex_core_init() != -1 ) {

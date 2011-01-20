@@ -30,43 +30,43 @@ typedef struct ex_semaphore_t ex_semaphore_t;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_semaphore_t* ex_create_semaphore ( uint32 );
+extern ex_semaphore_t *ex_create_semaphore ( uint32 );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_destroy_semaphore ( ex_semaphore_t* );
+extern void ex_destroy_semaphore ( ex_semaphore_t * );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_semaphore_try_wait ( ex_semaphore_t* );
+extern int ex_semaphore_try_wait ( ex_semaphore_t * );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_semaphore_wait ( ex_semaphore_t* );
+extern int ex_semaphore_wait ( ex_semaphore_t * );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_semaphore_wait_timeout ( ex_semaphore_t*, uint32 );
+extern int ex_semaphore_wait_timeout ( ex_semaphore_t *, uint32 );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern uint32 ex_semaphore_value ( ex_semaphore_t* );
+extern uint32 ex_semaphore_value ( ex_semaphore_t * );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_semaphore_post ( ex_semaphore_t* );
+extern int ex_semaphore_post ( ex_semaphore_t * );
 
 
 // ######################### 

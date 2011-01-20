@@ -316,7 +316,7 @@ uint32 ex_hashbob2( const uint8* _data, uint32 _len, uint32 _seed )
 //      _seed      : can be any 4-byte value
 // ------------------------------------------------------------------
 
-uint32 ex_hashword( const uint32* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashword( const uint32 *_data, uint32 _len, uint32 _seed )
 {
     uint32 a,b,c;
 
@@ -363,7 +363,7 @@ uint32 ex_hashword( const uint32* _data, uint32 _len, uint32 _seed )
 //      _seed2    :    IN: more seed OUT: secondary hash value 
 // ------------------------------------------------------------------
 
-void ex_hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
+void ex_hashword2 ( const uint32 *_data, uint32 _len, uint32 *_seed1, uint32 *_seed2 )
 {
     uint32 a,b,c;
 
@@ -424,10 +424,10 @@ void ex_hashword2 ( const uint32* _data, uint32 _len, uint32* _seed1, uint32* _s
 //  acceptable.  Do NOT use for cryptographic purposes.
 // ------------------------------------------------------------------
 
-uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashlittle ( const void *_data, uint32 _len, uint32 _seed )
 {
     uint32 a,b,c;                                          /* internal state */
-    union { const void* ptr; size_t i; } u;     /* needed for Mac Powerbook G4 */
+    union { const void *ptr; size_t i; } u;     /* needed for Mac Powerbook G4 */
 
     /* Set up the internal state */
     a = b = c = 0xdeadbeef + ((uint32)_len) + _seed;
@@ -479,7 +479,7 @@ uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed )
 
 #else /* make valgrind happy */
 
-        const uint8* pData8 = (const uint8 *)pData32;
+        const uint8 *pData8 = (const uint8 *)pData32;
         switch(_len)
         {
         case 12: c+=pData32[2]; b+=pData32[1]; a+=pData32[0]; break;
@@ -502,8 +502,8 @@ uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed )
     } 
     else if (__HASH_LITTLE_ENDIAN && ((u.i & 0x1) == 0)) 
     {
-        const uint16* pData16 = (const uint16 *)_data;         /* read 16-bit chunks */
-        const uint8* pData8;
+        const uint16 *pData16 = (const uint16 *)_data;         /* read 16-bit chunks */
+        const uint8 *pData8;
 
         /*--------------- all but last block: aligned reads and different mixing */
         while (_len > 12)
@@ -615,7 +615,7 @@ uint32 ex_hashlittle ( const void* _data, uint32 _len, uint32 _seed )
 //      _seed2    :    IN: more seed OUT: secondary hash value 
 // ------------------------------------------------------------------
 
-void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 ) 
+void ex_hashlittle2 ( const void *_data, uint32 _len, uint32 *_seed1, uint32 *_seed2 ) 
 {
     uint32 a,b,c;                                          /* internal state */
     union { const void *ptr; size_t i; } u;     /* needed for Mac Powerbook G4 */
@@ -627,7 +627,7 @@ void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _s
     u.ptr = _data;
     if (__HASH_LITTLE_ENDIAN && ((u.i & 0x3) == 0)) 
     {
-        const uint32* pData32 = (const uint32 *)_data;         /* read 32-bit chunks */
+        const uint32 *pData32 = (const uint32 *)_data;         /* read 32-bit chunks */
 
         /*------ all but last block: aligned reads and affect 32 bits of (a,b,c) */
         while (_len > 12)
@@ -671,7 +671,7 @@ void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _s
 
 #else /* make valgrind happy */
 
-        const uint8* pData8 = (const uint8 *)pData32;
+        const uint8 *pData8 = (const uint8 *)pData32;
         switch(_len)
         {
         case 12: c+=pData32[2]; b+=pData32[1]; a+=pData32[0]; break;
@@ -797,7 +797,7 @@ void ex_hashlittle2 ( const void* _data, uint32 _len, uint32* _seed1, uint32* _s
 //  big-endian byte ordering. 
 // ------------------------------------------------------------------
 
-uint32 ex_hashbig( const void* _data, uint32 _len, uint32 _seed )
+uint32 ex_hashbig( const void *_data, uint32 _len, uint32 _seed )
 {
     uint32 a,b,c;
     union { const void *ptr; size_t i; } u; /* to cast _data to (size_t) happily */
@@ -808,7 +808,7 @@ uint32 ex_hashbig( const void* _data, uint32 _len, uint32 _seed )
     u.ptr = _data;
     if (__HASH_BIG_ENDIAN && ((u.i & 0x3) == 0)) 
     {
-        const uint32* pData32 = (const uint32 *)_data;         /* read 32-bit chunks */
+        const uint32 *pData32 = (const uint32 *)_data;         /* read 32-bit chunks */
 
         /*------ all but last block: aligned reads and affect 32 bits of (a,b,c) */
         while (_len > 12)
@@ -852,7 +852,7 @@ uint32 ex_hashbig( const void* _data, uint32 _len, uint32 _seed )
 
 #else  /* make valgrind happy */
 
-        const uint8* pData8 = (const uint8 *)pData32;
+        const uint8 *pData8 = (const uint8 *)pData32;
         switch(_len)                   /* all the case statements fall through */
         {
         case 12: c+=pData32[2]; b+=pData32[1]; a+=pData32[0]; break;
@@ -938,7 +938,7 @@ uint32 ex_hashbig( const void* _data, uint32 _len, uint32 _seed )
 //       _seed2    :    IN: more seed OUT: secondary hash value 
 // ------------------------------------------------------------------
 
-void ex_hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2 )
+void ex_hashbig2( const void *_data, uint32 _len, uint32 *_seed1, uint32 *_seed2 )
 {
     uint32 a,b,c;
     union { const void *ptr; size_t i; } u; /* to cast _data to (size_t) happily */
@@ -950,7 +950,7 @@ void ex_hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2
     u.ptr = _data;
     if (__HASH_BIG_ENDIAN && ((u.i & 0x3) == 0)) 
     {
-        const uint32* pData32 = (const uint32 *)_data;         /* read 32-bit chunks */
+        const uint32 *pData32 = (const uint32 *)_data;         /* read 32-bit chunks */
 
         /*------ all but last block: aligned reads and affect 32 bits of (a,b,c) */
         while (_len > 12)
@@ -994,7 +994,7 @@ void ex_hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2
 
 #else  /* make valgrind happy */
 
-        const uint8* pData8 = (const uint8 *)pData32;
+        const uint8 *pData8 = (const uint8 *)pData32;
         switch(_len)                   /* all the case statements fall through */
         {
         case 12: c+=pData32[2]; b+=pData32[1]; a+=pData32[0]; break;
@@ -1078,7 +1078,7 @@ void ex_hashbig2( const void* _data, uint32 _len, uint32* _seed1, uint32* _seed2
 // Desc: 
 // ------------------------------------------------------------------
 
-uint32 ex_hashpaul( const uint8* _data, uint32 _len )
+uint32 ex_hashpaul( const uint8 *_data, uint32 _len )
 {
     uint32 hash = _len, tmp;
     int32 rem;

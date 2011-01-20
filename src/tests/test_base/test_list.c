@@ -20,10 +20,10 @@
 // ------------------------------------------------------------------ 
 
 static void normal () {
-    ex_list_t* list = ex_list_alloc ( sizeof(uint32) );
+    ex_list_t *list = ex_list_alloc ( sizeof(uint32) );
     {
         int i; 
-        ex_list_node_t* node = NULL;
+        ex_list_node_t *node = NULL;
 
         // test push
         for ( i = 0; i < 512; ++i ) {
@@ -35,7 +35,7 @@ static void normal () {
         node = ex_list_head(list);
         i = 0;
         while ( node ) {
-            EX_TEST( *((uint32*)node->value) == i );
+            EX_TEST( *((uint32 *)node->value) == i );
             node = node->next;
             ++i;
         }

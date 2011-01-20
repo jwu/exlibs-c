@@ -20,8 +20,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_CREATOR(ex_camera_t) {
-    ex_camera_t* obj = alloc_ex_camera_t();
-    ex_component_t* comp = (ex_component_t*)obj;
+    ex_camera_t *obj = alloc_ex_camera_t();
+    ex_component_t *comp = (ex_component_t *)obj;
     comp->init = ex_camera_init;
     comp->deinit = ex_camera_deinit;
     return comp;
@@ -44,9 +44,9 @@ EX_SERIALIZE_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_init ( void* _self ) {
-    ex_component_t* comp = (ex_component_t*)_self; 
-    ex_camera_t* cam = (ex_camera_t*)_self; 
+void ex_camera_init ( void *_self ) {
+    ex_component_t *comp = (ex_component_t *)_self; 
+    ex_camera_t *cam = (ex_camera_t *)_self; 
 
     ex_component_init(_self); // parent init
     cam->isOrtho = true;       // default is 2D
@@ -63,9 +63,9 @@ void ex_camera_init ( void* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_deinit ( void* _self ) {
-	ex_component_t* comp = (ex_component_t*)_self; 
-    ex_camera_t* cam = (ex_camera_t*)_self; 
+void ex_camera_deinit ( void *_self ) {
+	ex_component_t *comp = (ex_component_t *)_self; 
+    ex_camera_t *cam = (ex_camera_t *)_self; 
 
     ex_world_remove_camera( comp->owner->world, cam );
 }
@@ -74,7 +74,7 @@ void ex_camera_deinit ( void* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_set_ortho ( ex_camera_t* _self, bool _isOrtho ) {
+void ex_camera_set_ortho ( ex_camera_t *_self, bool _isOrtho ) {
     _self->isOrtho = _isOrtho;
 }
 
@@ -82,7 +82,7 @@ void ex_camera_set_ortho ( ex_camera_t* _self, bool _isOrtho ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_camera_is_ortho ( ex_camera_t* _self ) {
+bool ex_camera_is_ortho ( ex_camera_t *_self ) {
     return _self->isOrtho;
 }
 
@@ -90,7 +90,7 @@ bool ex_camera_is_ortho ( ex_camera_t* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_set_ortho_size ( ex_camera_t* _self, float _orthoSize ) {
+void ex_camera_set_ortho_size ( ex_camera_t *_self, float _orthoSize ) {
     _self->orthoSize = _orthoSize;
 } 
 
@@ -98,7 +98,7 @@ void ex_camera_set_ortho_size ( ex_camera_t* _self, float _orthoSize ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_camera_ortho_size ( ex_camera_t* _self ) {
+float ex_camera_ortho_size ( ex_camera_t *_self ) {
     return _self->orthoSize;
 }
 
@@ -106,7 +106,7 @@ float ex_camera_ortho_size ( ex_camera_t* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_set_aspect ( ex_camera_t* _self, float _aspect ) {
+void ex_camera_set_aspect ( ex_camera_t *_self, float _aspect ) {
     _self->aspect = _aspect;
 }
 
@@ -114,7 +114,7 @@ void ex_camera_set_aspect ( ex_camera_t* _self, float _aspect ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_camera_aspect ( ex_camera_t* _self ) {
+float ex_camera_aspect ( ex_camera_t *_self ) {
     return _self->aspect;
 }
 
@@ -122,7 +122,7 @@ float ex_camera_aspect ( ex_camera_t* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_apply ( ex_camera_t* _self ) {
+void ex_camera_apply ( ex_camera_t *_self ) {
     GLbitfield clearFlags = 0;
     double rx = _self->orthoSize * _self->aspect; // half viewport width
     double ry = _self->orthoSize; // half viewport height

@@ -25,8 +25,8 @@ typedef uint date_t; // we use julian date
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern const char* ex_week_day_name ( uint _wday );
-extern const char* ex_month_name ( uint _month );
+extern const char *ex_week_day_name ( uint _wday );
+extern const char *ex_month_name ( uint _month );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -43,7 +43,7 @@ extern bool ex_is_leap_year ( uint _year );
 
 extern date_t ex_date_from ( uint _year, uint _month, uint _day );
 // NOTE: if you don't need the out parameter, set it to NULL 
-extern void ex_date_to ( date_t _date, int* _year, int* _month, int* _day );
+extern void ex_date_to ( date_t _date, int *_year, int *_month, int *_day );
 
 // ------------------------------------------------------------------ 
 // Desc: 

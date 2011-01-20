@@ -67,12 +67,12 @@ extern int64 ex_timespan_to_msecs ( timespan_t _ts );
 // ------------------------------------------------------------------ 
 
 extern void ex_timespan_to ( timespan_t _ts, 
-                             int* _d, 
-                             int* _h, 
-                             int* _m, 
-                             int* _s, 
-                             int* _ms, 
-                             int* _us );
+                             int *_d, 
+                             int *_h, 
+                             int *_m, 
+                             int *_s, 
+                             int *_ms, 
+                             int *_us );
 
 // ######################### 
 #ifdef __cplusplus

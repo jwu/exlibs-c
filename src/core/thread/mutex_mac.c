@@ -19,13 +19,13 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_mutex_t* ex_create_mutex ()
+ex_mutex_t *ex_create_mutex ()
 {
-    ex_mutex_t* mutex = NULL;
+    ex_mutex_t *mutex = NULL;
     pthread_mutexattr_t attr;
 
     /* Allocate the structure */
-    mutex = (ex_mutex_t*)ex_malloc_nomng(sizeof(ex_mutex_t));
+    mutex = (ex_mutex_t *)ex_malloc_nomng(sizeof(ex_mutex_t));
     if (mutex) {
         pthread_mutexattr_init(&attr);
         pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
@@ -45,7 +45,7 @@ ex_mutex_t* ex_create_mutex ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_destroy_mutex ( ex_mutex_t* _mutex )
+void ex_destroy_mutex ( ex_mutex_t *_mutex )
 {
     if (_mutex) {
         pthread_mutex_destroy(&_mutex->id);
@@ -57,7 +57,7 @@ void ex_destroy_mutex ( ex_mutex_t* _mutex )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_mutex_lock ( ex_mutex_t* _mutex )
+int ex_mutex_lock ( ex_mutex_t *_mutex )
 {
     int retval;
 
@@ -81,7 +81,7 @@ int ex_mutex_lock ( ex_mutex_t* _mutex )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_mutex_unlock ( ex_mutex_t* _mutex )
+int ex_mutex_unlock ( ex_mutex_t *_mutex )
 {
     int retval;
 

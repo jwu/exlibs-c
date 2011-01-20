@@ -23,13 +23,13 @@ static void normal () {
     const int BUFFER_SIZE = 5;
     const int MAX_COUNT = 256;
     int i;
-    void* ptr;
+    void *ptr;
 
-    ptr = ex_malloc ( 2048 * sizeof(void*) );
+    ptr = ex_malloc ( 2048 * sizeof(void *) );
     for ( i = 0; i < MAX_COUNT; ++i )
     {
-        char* testBuf = (char*)ex_malloc( sizeof(char)*BUFFER_SIZE ); 
-        ((char**)ptr)[i] = testBuf;
+        char *testBuf = (char *)ex_malloc( sizeof(char)*BUFFER_SIZE ); 
+        ((char **)ptr)[i] = testBuf;
         ex_free(testBuf);
     }
     ex_free(ptr);

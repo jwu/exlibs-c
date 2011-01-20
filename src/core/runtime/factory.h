@@ -26,7 +26,7 @@ extern "C" {
 // declares pfn
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef void* (*ex_create_pfn_t) ();
+typedef void * (*ex_create_pfn_t) ();
 
 ///////////////////////////////////////////////////////////////////////////////
 // declares functions
@@ -34,7 +34,7 @@ typedef void* (*ex_create_pfn_t) ();
 
 extern void ex_factory_register ( strid_t _classID, ex_create_pfn_t _pfn );
 extern void ex_factory_unregister ( strid_t _classID );
-extern void* ex_factory_create ( strid_t _classID );
+extern void *ex_factory_create ( strid_t _classID );
 
 // ######################### 
 #ifdef __cplusplus

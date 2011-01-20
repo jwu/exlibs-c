@@ -21,9 +21,9 @@
 // ------------------------------------------------------------------ 
 
 // managed
-ex_bitarray_t* ex_bitarray_alloc ( size_t _bitcount )
+ex_bitarray_t *ex_bitarray_alloc ( size_t _bitcount )
 {
-    ex_bitarray_t* bitArray = ex_malloc ( sizeof(ex_bitarray_t) );
+    ex_bitarray_t *bitArray = ex_malloc ( sizeof(ex_bitarray_t) );
     size_t bytes = (_bitcount + 7)/8;
 
     bitArray->data = ex_malloc(bytes);
@@ -35,9 +35,9 @@ ex_bitarray_t* ex_bitarray_alloc ( size_t _bitcount )
 }
 
 // no managed
-ex_bitarray_t* ex_bitarray_alloc_nomng ( size_t _bitcount )
+ex_bitarray_t *ex_bitarray_alloc_nomng ( size_t _bitcount )
 {
-    ex_bitarray_t* bitArray = ex_malloc_nomng ( sizeof(ex_bitarray_t) );
+    ex_bitarray_t *bitArray = ex_malloc_nomng ( sizeof(ex_bitarray_t) );
     size_t bytes = (_bitcount + 7)/8;
 
     bitArray->data = ex_malloc_nomng(bytes);
@@ -52,7 +52,7 @@ ex_bitarray_t* ex_bitarray_alloc_nomng ( size_t _bitcount )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_bitarray_free ( ex_bitarray_t* _bitarray )
+void ex_bitarray_free ( ex_bitarray_t *_bitarray )
 {
     ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
@@ -62,7 +62,7 @@ void ex_bitarray_free ( ex_bitarray_t* _bitarray )
 }
 
 // no managed
-void ex_bitarray_free_nomng ( ex_bitarray_t* _bitarray )
+void ex_bitarray_free_nomng ( ex_bitarray_t *_bitarray )
 {
     ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
@@ -75,9 +75,9 @@ void ex_bitarray_free_nomng ( ex_bitarray_t* _bitarray )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_bitarray_get ( const ex_bitarray_t* _bitarray, size_t _idx )
+int ex_bitarray_get ( const ex_bitarray_t *_bitarray, size_t _idx )
 {
-    char* ptr;
+    char *ptr;
 
     ex_assert_return ( _idx >= 0 && _idx < _bitarray->count, -1, "_idx is out of range" );
     ptr = _bitarray->data + _idx / 8;
@@ -88,9 +88,9 @@ int ex_bitarray_get ( const ex_bitarray_t* _bitarray, size_t _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_bitarray_set ( ex_bitarray_t* _bitarray, size_t _idx, int _value ) 
+void ex_bitarray_set ( ex_bitarray_t *_bitarray, size_t _idx, int _value ) 
 {
-    char* ptr;
+    char *ptr;
 
     ex_assert_return ( _idx >= 0 && _idx < _bitarray->count, /*void*/, "_idx is out of range." );
     ex_assert_return ( _value == 0 || _value == 1, /*void*/, "invalid input value, should be 0 or 1." );
@@ -107,7 +107,7 @@ void ex_bitarray_set ( ex_bitarray_t* _bitarray, size_t _idx, int _value )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_bitarray_resize ( ex_bitarray_t* _bitarray, size_t _bitcount ) 
+void ex_bitarray_resize ( ex_bitarray_t *_bitarray, size_t _bitcount ) 
 {
     size_t old_bytes, new_bytes;
 
@@ -125,7 +125,7 @@ void ex_bitarray_resize ( ex_bitarray_t* _bitarray, size_t _bitcount )
 }
 
 // no managed
-void ex_bitarray_resize_nomng ( ex_bitarray_t* _bitarray, size_t _bitcount ) 
+void ex_bitarray_resize_nomng ( ex_bitarray_t *_bitarray, size_t _bitcount ) 
 {
     size_t old_bytes, new_bytes;
 

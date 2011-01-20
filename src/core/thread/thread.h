@@ -30,7 +30,7 @@ typedef struct ex_thread_t {
     thread_id_t threadID;
     thread_handle_t handle;
     int status;
-    void* data;
+    void *data;
 } ex_thread_t;
 typedef int (*ex_thread_pfn_t) (void *_data);
 
@@ -50,13 +50,13 @@ static inline thread_id_t ex_current_threadID () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data );
+extern ex_thread_t *ex_create_thread ( ex_thread_pfn_t _fn, void *_data );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_wait_thread ( ex_thread_t* _thread, int* _status );
+extern void ex_wait_thread ( ex_thread_t *_thread, int *_status );
 
 // ######################### 
 #ifdef __cplusplus

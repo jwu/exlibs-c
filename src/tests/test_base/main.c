@@ -47,7 +47,7 @@ extern void test_thread();
 extern void test_timer();
 // ------------------------------------------------------------------ 
 
-int main( int argc, char* argv[] )
+int main( int argc, char *argv[] )
 {
     printf ("================\n");
     printf ("start test_base...\n");

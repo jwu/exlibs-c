@@ -30,13 +30,13 @@ typedef struct ex_cond_t ex_cond_t;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_cond_t* ex_create_cond ();
+extern ex_cond_t *ex_create_cond ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_destroy_cond ( ex_cond_t* _cond );
+extern void ex_destroy_cond ( ex_cond_t *_cond );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -44,7 +44,7 @@ extern void ex_destroy_cond ( ex_cond_t* _cond );
 // return 0 or -1 on error.
 // ------------------------------------------------------------------ 
 
-extern int ex_cond_signal ( ex_cond_t* _cond );
+extern int ex_cond_signal ( ex_cond_t *_cond );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -52,7 +52,7 @@ extern int ex_cond_signal ( ex_cond_t* _cond );
 // return 0 or -1 on error.
 // ------------------------------------------------------------------ 
 
-extern int ex_cond_broadcast ( ex_cond_t* _cond );
+extern int ex_cond_broadcast ( ex_cond_t *_cond );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -65,7 +65,7 @@ extern int ex_cond_broadcast ( ex_cond_t* _cond );
 // \return 0 when it is signaled, or -1 on error.
 // ------------------------------------------------------------------ 
 
-extern int ex_cond_wait ( ex_cond_t* _cond, ex_mutex_t* _mutex );
+extern int ex_cond_wait ( ex_cond_t *_cond, ex_mutex_t *_mutex );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -77,7 +77,7 @@ extern int ex_cond_wait ( ex_cond_t* _cond, ex_mutex_t* _mutex );
 //          delay of 1 ms, and so should be avoided if possible.
 // ------------------------------------------------------------------ 
 
-extern int ex_cond_wait_timeout ( ex_cond_t* _cond, ex_mutex_t* _mutex, uint32 _ms );
+extern int ex_cond_wait_timeout ( ex_cond_t *_cond, ex_mutex_t *_mutex, uint32 _ms );
 
 
 // ######################### 

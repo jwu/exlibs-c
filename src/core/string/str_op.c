@@ -31,11 +31,11 @@ static const char __white_space_list[] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const char* _text )
+int ex_str_split_into_array( ex_array_t *_outList, const char *_token, const char *_text )
 {
-    const char* string_to_parse = _text;
-    const char* string_to_split = string_to_parse;
-    const char* rest_string = NULL;
+    const char *string_to_parse = _text;
+    const char *string_to_split = string_to_parse;
+    const char *rest_string = NULL;
 
     int token_len = strlen(_token);
     int sub_str_len = 0;
@@ -48,7 +48,7 @@ int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const cha
         // check if split
         if ( ex_str_nicmp( string_to_parse, _token, token_len ) == 0 ) {
             if ( sub_str_len > 0 ) {
-                char* sub_str = (char*)ex_malloc ( sub_str_len );
+                char *sub_str = (char *)ex_malloc ( sub_str_len );
                 strncpy(sub_str, string_to_split, sub_str_len );
                 ex_array_append ( _outList, sub_str );
             }
@@ -74,7 +74,7 @@ int ex_str_split_into_array( ex_array_t* _outList, const char* _token, const cha
 
     if ( rest_string != NULL ) {
         int size = strlen(rest_string)+1;
-        char* sub_str = (char*)ex_malloc(size);
+        char *sub_str = (char *)ex_malloc(size);
         strncpy(sub_str, rest_string, size );
         ex_array_append ( _outList, sub_str );
     }

@@ -23,7 +23,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __short_funcname ( char _short_name[], const char* _function_name, int _len )
+static void __short_funcname ( char _short_name[], const char *_function_name, int _len )
 {
     int len; 
 
@@ -44,18 +44,18 @@ static void __short_funcname ( char _short_name[], const char* _function_name, i
 // Desc: 
 // ------------------------------------------------------------------
 
-bool assert_failed( bool* _pDoAssert, const char* _file_name, const char* _function_name, size_t _line_nr, const char* _expr, ... )
+bool assert_failed( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
 {
     //
     int     result = -1;
     int     buffer_count = 1024;
-    char*   pBuffer = NULL;
+    char   *pBuffer = NULL;
     char    short_name[64];
     int     mbResult = -1;
 
     // keep get va string until success 
     while ( result == -1 ) {
-        pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
+        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
     }
@@ -90,18 +90,18 @@ bool assert_failed( bool* _pDoAssert, const char* _file_name, const char* _funct
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool error_msg( bool* _pDoAssert, const char* _file_name, const char* _function_name, size_t _line_nr, const char* _expr, ... )
+bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
 {
     //
     int     result = -1;
     int     buffer_count = 1024;
-    char*   pBuffer = NULL;
+    char   *pBuffer = NULL;
     char    short_name[64];
     int     mbResult;
 
     // keep get va string until success 
     while ( result == -1 ) {
-        pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
+        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
     }
@@ -130,18 +130,18 @@ bool error_msg( bool* _pDoAssert, const char* _file_name, const char* _function_
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool warning_msg ( bool* _pDoAssert, const char* _file_name, const char* _function_name, size_t _line_nr, const char* _expr, ... )
+bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
 {
     //
     int     result = -1;
     int     buffer_count = 1024;
-    char*   pBuffer = NULL;
+    char   *pBuffer = NULL;
     char    short_name[64];
     int     mbResult;
 
     // keep get va string until success 
     while ( result == -1 ) {
-        pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
+        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
     }

@@ -27,7 +27,7 @@ extern "C" {
 // Desc: return the new interval, if 0 the timer will be removed. 
 // ------------------------------------------------------------------ 
 
-typedef int32 (*ex_timer_pfn) ( uint32 _interval, void* _param );
+typedef int32 (*ex_timer_pfn) ( uint32 _interval, void *_param );
 
 ///////////////////////////////////////////////////////////////////////////////
 // decls
@@ -116,7 +116,7 @@ extern uint32 ex_timer_get_ticks ();
 // ------------------------------------------------------------------ 
 
 extern int ex_add_timer ( ex_timer_pfn _cb, 
-                          void* _params, 
+                          void *_params, 
                           size_t _size, /*parameter byte-size*/ 
                           timespan_t _interval,
                           timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ );

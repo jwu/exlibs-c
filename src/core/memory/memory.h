@@ -26,9 +26,9 @@ extern "C" {
 // private memory functions
 ///////////////////////////////////////////////////////////////////////////////
 
-extern void* ex_malloc_mng( size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
-extern void* ex_realloc_mng( void* _ptr, size_t _size, const char* _tag, const char* _file_name, const char* _func_name, size_t _line_nr );
-extern void ex_free_mng( void* _ptr, const char* _file_name, const char* _func_name, size_t _line_nr );
+extern void *ex_malloc_mng( size_t _size, const char *_tag, const char *_file_name, const char *_func_name, size_t _line_nr );
+extern void *ex_realloc_mng( void *_ptr, size_t _size, const char *_tag, const char *_file_name, const char *_func_name, size_t _line_nr );
+extern void ex_free_mng( void *_ptr, const char *_file_name, const char *_func_name, size_t _line_nr );
 
 ///////////////////////////////////////////////////////////////////////////////
 // memory mng
@@ -151,7 +151,7 @@ extern bool ex_mem_initialized ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void* ex_memzero ( void* _ptr, size_t _size ) { 
+static inline void *ex_memzero ( void *_ptr, size_t _size ) { 
     return memset ( _ptr, 0x00, _size ); 
 }
 
@@ -160,8 +160,8 @@ static inline void* ex_memzero ( void* _ptr, size_t _size ) {
 // ------------------------------------------------------------------
 
 // TODO { 
-// static inline void memswap( void* _p1, void* _p2, size_t _size ) {
-    // void* pTmp = ex_stack_malloc(EX_ALIGN_ROUND(_size,EX_DEFAULT_ALIGNMENT));
+// static inline void memswap( void *_p1, void *_p2, size_t _size ) {
+    // void *pTmp = ex_stack_malloc(EX_ALIGN_ROUND(_size,EX_DEFAULT_ALIGNMENT));
 
     // memcpy( pTmp, _p1,  _size );
     // memcpy( _p1,  _p2,  _size );

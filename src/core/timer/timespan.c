@@ -160,12 +160,12 @@ int64 ex_timespan_to_msecs ( timespan_t _ts ) {
 // ------------------------------------------------------------------ 
 
 void ex_timespan_to ( timespan_t _ts, 
-                      int* _d, 
-                      int* _h, 
-                      int* _m, 
-                      int* _s, 
-                      int* _ms, 
-                      int* _us ) {
+                      int *_d, 
+                      int *_h, 
+                      int *_m, 
+                      int *_s, 
+                      int *_ms, 
+                      int *_us ) {
     int64 mod_day = _ts % __USECS_PER_DAY;
     int64 mod_hour = mod_day % __USECS_PER_HOUR;
     int64 mod_min = mod_hour % __USECS_PER_MIN;

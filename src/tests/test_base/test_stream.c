@@ -15,8 +15,8 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-// static const char* media_file = "e:/project/dev/exsdk/res/";
-static const char* media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
+// static const char *media_file = "e:/project/dev/exsdk/res/";
+static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
 #define maxPATH 256
 
 // ------------------------------------------------------------------ 
@@ -27,8 +27,8 @@ static void json_read () {
     char path[maxPATH];
 
     strncpy ( path, media_file, maxPATH );
-    ex_stream_t* stream = ex_create_json_read_stream( strcat(path, "simple_json.json") );
-    ex_destroy_json_stream((ex_stream_json_t*)stream);
+    ex_stream_t *stream = ex_create_json_read_stream( strcat(path, "simple_json.json") );
+    ex_destroy_json_stream((ex_stream_json_t *)stream);
 }
 
 // ------------------------------------------------------------------ 

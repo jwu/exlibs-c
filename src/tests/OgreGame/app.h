@@ -32,7 +32,7 @@ public:
     bool deinit ();
     void tick ();
 
-    Ogre::RenderWindow* window () const { return m_window; }
+    Ogre::RenderWindow *window () const { return m_window; }
 
     ///////////////////////////////////////////////////////////////////////////////
     // protected member functions
@@ -52,12 +52,12 @@ protected:
 protected:
 
     bool m_inited;
-    Ogre::Root* m_root;
-    Ogre::RenderWindow* m_window;
+    Ogre::Root *m_root;
+    Ogre::RenderWindow *m_window;
 
-	OIS::InputManager* m_inputMgr;
-	OIS::Mouse* m_mouse;
-	OIS::Keyboard* m_keyboard;
+	OIS::InputManager *m_inputMgr;
+	OIS::Mouse *m_mouse;
+	OIS::Keyboard *m_keyboard;
 
 }; // end class App
 

@@ -19,8 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_CREATOR(ex_debug2d_t) {
-    ex_debug2d_t* obj = alloc_ex_debug2d_t();
-    ex_component_t* comp = (ex_component_t*)obj;
+    ex_debug2d_t *obj = alloc_ex_debug2d_t();
+    ex_component_t *comp = (ex_component_t *)obj;
     comp->init = ex_debug2d_init;
     comp->deinit = NULL;
     return comp;
@@ -43,11 +43,11 @@ EX_SERIALIZE_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_debug2d_init ( void* _self ) {
+void ex_debug2d_init ( void *_self ) {
     ex_rectf_t r;
     ex_circlef_t c;
     ex_vec2f_t center;
-    ex_debug2d_t* dbg2d = (ex_debug2d_t*)_self; 
+    ex_debug2d_t *dbg2d = (ex_debug2d_t *)_self; 
 
     ex_component_init(_self); // parent init
     ex_vec2f_zero(&center);
@@ -63,7 +63,7 @@ void ex_debug2d_init ( void* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_debug2d_deinit ( void* _self ) {
+void ex_debug2d_deinit ( void *_self ) {
     ex_component_deinit(_self); // parent deinint
 }
 
@@ -71,7 +71,7 @@ void ex_debug2d_deinit ( void* _self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_debug2d_set_rect ( ex_debug2d_t* _self, 
+void ex_debug2d_set_rect ( ex_debug2d_t *_self, 
                            float _x, float _y, float _width, float _height ) 
 {
     ex_rectf_t r;
@@ -87,9 +87,9 @@ void ex_debug2d_set_rect ( ex_debug2d_t* _self,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_debug2d_draw ( ex_debug2d_t* _self ) {
-    ex_entity_t* ent = ex_component_owner( (ex_component_t*)_self );
-    ex_trans2d_t* trans2d = ent->trans2d;
+void ex_debug2d_draw ( ex_debug2d_t *_self ) {
+    ex_entity_t *ent = ex_component_owner( (ex_component_t *)_self );
+    ex_trans2d_t *trans2d = ent->trans2d;
     ex_vec2f_t worldPos;
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;

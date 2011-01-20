@@ -23,8 +23,8 @@ struct ex_cond_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_cond_t* ex_create_cond () {
-    ex_cond_t* cond;
+ex_cond_t *ex_create_cond () {
+    ex_cond_t *cond;
 
     cond = (ex_cond_t *) ex_malloc_nomng (sizeof(ex_cond_t));
     if (cond) {
@@ -41,7 +41,7 @@ ex_cond_t* ex_create_cond () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_destroy_cond ( ex_cond_t* _cond ) {
+void ex_destroy_cond ( ex_cond_t *_cond ) {
     if (_cond) {
         pthread_cond_destroy(&_cond->cond);
         ex_free_nomng(_cond);
@@ -54,7 +54,7 @@ void ex_destroy_cond ( ex_cond_t* _cond ) {
 // return 0 or -1 on error.
 // ------------------------------------------------------------------ 
 
-int ex_cond_signal ( ex_cond_t* _cond ) {
+int ex_cond_signal ( ex_cond_t *_cond ) {
     int retval;
 
     if (!_cond) {
@@ -76,7 +76,7 @@ int ex_cond_signal ( ex_cond_t* _cond ) {
 // return 0 or -1 on error.
 // ------------------------------------------------------------------ 
 
-int ex_cond_broadcast ( ex_cond_t* _cond ) {
+int ex_cond_broadcast ( ex_cond_t *_cond ) {
     int retval;
 
     if (!_cond) {
@@ -103,7 +103,7 @@ int ex_cond_broadcast ( ex_cond_t* _cond ) {
 // \return 0 when it is signaled, or -1 on error.
 // ------------------------------------------------------------------ 
 
-int ex_cond_wait ( ex_cond_t* _cond, ex_mutex_t* _mutex ) {
+int ex_cond_wait ( ex_cond_t *_cond, ex_mutex_t *_mutex ) {
     int retval;
 
     if (!_cond) {
@@ -129,7 +129,7 @@ int ex_cond_wait ( ex_cond_t* _cond, ex_mutex_t* _mutex ) {
 //          delay of 1 ms, and so should be avoided if possible.
 // ------------------------------------------------------------------ 
 
-int ex_cond_wait_timeout ( ex_cond_t* _cond, ex_mutex_t* _mutex, uint32 _ms ) {
+int ex_cond_wait_timeout ( ex_cond_t *_cond, ex_mutex_t *_mutex, uint32 _ms ) {
     int retval;
     struct timeval delta;
     struct timespec abstime;

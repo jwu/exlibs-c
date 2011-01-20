@@ -16,7 +16,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __utf_char2bytes( int c, uint8* buf )
+static int __utf_char2bytes( int c, uint8 *buf )
 {
     if (c < 0x80)		/* 7 bits */
     {
@@ -90,16 +90,16 @@ static int _utf_char2len ( int c )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_ucs2_to_utf8 ( const wchar_t* _instr, int _inlen, char* _outstr )
+int ex_ucs2_to_utf8 ( const wchar_t *_instr, int _inlen, char *_outstr )
 {
     int outlen = 0;
     int todo = _inlen;
-    const uint16* p = (const uint16*)_instr;
+    const uint16 *p = (const uint16 *)_instr;
     int l;
 
     while ( todo > 0 ) {
         if (_outstr != NULL) {
-            l = __utf_char2bytes(*p, (uint8*)_outstr);
+            l = __utf_char2bytes(*p, (uint8 *)_outstr);
             _outstr += l;
         }
         else

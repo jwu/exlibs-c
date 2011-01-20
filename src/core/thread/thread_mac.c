@@ -35,10 +35,10 @@ static const int __sig_list[] = {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void ex_run_thread ( void* );
+extern void ex_run_thread ( void * );
 // ------------------------------------------------------------------ 
 
-static void* __run_thread (void* _data) {
+static void *__run_thread (void *_data) {
     ex_run_thread(_data);
     pthread_exit((void *) 0);
     return ((void *) 0); // Prevent compiler warning
@@ -48,7 +48,7 @@ static void* __run_thread (void* _data) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_sys_create_thread ( ex_thread_t* _thread, void* _args ) {
+int ex_sys_create_thread ( ex_thread_t *_thread, void *_args ) {
     pthread_attr_t type;
 
     // Set the thread attributes
@@ -71,7 +71,7 @@ int ex_sys_create_thread ( ex_thread_t* _thread, void* _args ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_sys_wait_thread ( ex_thread_t* _thread ) {
+void ex_sys_wait_thread ( ex_thread_t *_thread ) {
     pthread_join(_thread->handle, 0);
 }
 

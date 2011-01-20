@@ -44,8 +44,8 @@ static int win_width = 640;
 static int win_height = 480; 
 
 // game
-ex_world_t* world = NULL;
-ex_entity_t* entity1 = NULL;
+ex_world_t *world = NULL;
+ex_entity_t *entity1 = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -64,7 +64,7 @@ static void initGame () {
     // } TODO end 
 
     {
-        ex_camera_t* mainCam;
+        ex_camera_t *mainCam;
         ex_world_create_camera2d ( world, ex_strid("main_camera") );
         mainCam = ex_world_main_camera (world);
         ex_assert ( mainCam, "can't find main camera" );
@@ -76,11 +76,11 @@ static void initGame () {
     // TEMP: instead of serialize the world, I hardcoded the entities.
     for ( int i = 0; i < 200; ++i ) {
         entity1 = ex_world_create_entity ( world, ex_strid("ent1") ); {
-            ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_add_comp( entity1, EX_CLASSID(ex_trans2d_t) );
+            ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_add_comp( entity1, EX_CLASSID(ex_trans2d_t) );
             ex_vec2f_set ( &trans2d->pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
             ex_vec2f_set ( &trans2d->scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
             ex_angf_set_by_radians ( &trans2d->ang, ex_range_randf(0.0f,EX_TWO_PI) );
-            ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_add_comp( entity1, EX_CLASSID(ex_debug2d_t) );
+            ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_add_comp( entity1, EX_CLASSID(ex_debug2d_t) );
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
         }
     }
@@ -102,7 +102,7 @@ static void updateGame () {
     {
         // ex_vec2f_t d_pos = { 1.0f, 1.0f };
         ex_angf_t d_ang;
-        ex_trans2d_t* trans2d = (ex_trans2d_t*)ex_entity_get_comp( entity1, EX_CLASSID(ex_trans2d_t) );
+        ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_get_comp( entity1, EX_CLASSID(ex_trans2d_t) );
 
         // ex_vec2f_set ( &d_pos, 100.0f, 0.0f );
         // ex_vec2f_mul_scalar ( &d_pos, &d_pos, ex_dt() );
@@ -123,7 +123,7 @@ static void updateGame () {
 static void _reshape ( int _width, int _height ) {
     win_width = _width;
     win_height = _height;
-    ex_camera_t* mainCam = ex_world_main_camera (world);
+    ex_camera_t *mainCam = ex_world_main_camera (world);
 
     // setup viewport
     glViewport(0, 0, win_width, win_height);
@@ -239,7 +239,7 @@ static void _click ( int _button, int _state, int _x, int _y ) {
 // ------------------------------------------------------------------ 
 
 static void createWindow ( int argc, const char *argv[] ) {
-	glutInit(&argc, (char**)argv);
+	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(win_width, win_height);
 	glutCreateWindow("test_gl");
@@ -306,7 +306,7 @@ static void exit_fn () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int main( int argc, const char* argv[] ) {
+int main( int argc, const char *argv[] ) {
     printf ("================\n");
     printf ("start gl testing...\n");
     printf ("================\n");

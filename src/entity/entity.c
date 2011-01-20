@@ -23,7 +23,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static EX_RESULT __entity_add_comp ( ex_entity_t* _ent, ex_component_t* _comp ) {
+static EX_RESULT __entity_add_comp ( ex_entity_t *_ent, ex_component_t *_comp ) {
     // TODO:
     return EX_RESULT_OK;
 }
@@ -51,10 +51,10 @@ EX_SERIALIZE_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t* ex_entity_alloc () {
-    ex_entity_t* ent = (ex_entity_t*)ex_malloc(sizeof(ex_entity_t));
+ex_entity_t *ex_entity_alloc () {
+    ex_entity_t *ent = (ex_entity_t *)ex_malloc(sizeof(ex_entity_t));
     ent->name = EX_STRID_INVALID;
-    ent->comps = ex_array_alloc( sizeof(ex_component_t*), 1 );
+    ent->comps = ex_array_alloc( sizeof(ex_component_t *), 1 );
     return ent;
 }
 
@@ -62,8 +62,8 @@ ex_entity_t* ex_entity_alloc () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_free ( ex_entity_t* _ent ) {
-    ex_array_each ( _ent->comps, ex_component_t*, comp ) {
+void ex_entity_free ( ex_entity_t *_ent ) {
+    ex_array_each ( _ent->comps, ex_component_t *, comp ) {
         if ( comp->deinit )
             comp->deinit(comp);
         ex_free(comp);
@@ -76,13 +76,13 @@ void ex_entity_free ( ex_entity_t* _ent ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_component_t* ex_entity_get_comp ( const ex_entity_t* _ent, strid_t _typeID ) {
-    ex_rtti_t* rtti;
+ex_component_t *ex_entity_get_comp ( const ex_entity_t *_ent, strid_t _typeID ) {
+    ex_rtti_t *rtti;
 
     rtti = ex_rtti_get(_typeID);
     ex_assert( rtti, "can't find the rtti type: %s", ex_strid_to_cstr(_typeID) );
 
-    ex_array_each ( _ent->comps, ex_component_t*, comp ) {
+    ex_array_each ( _ent->comps, ex_component_t *, comp ) {
         if ( ex_rtti_isa( ex_rtti_info(comp), rtti ) )
             return comp;
     } ex_array_each_end
@@ -94,8 +94,8 @@ ex_component_t* ex_entity_get_comp ( const ex_entity_t* _ent, strid_t _typeID ) 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID ) {
-    ex_component_t* comp;
+ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
+    ex_component_t *comp;
     
     // if the component already exists, show a warning and return it.
     comp = ex_entity_get_comp(_ent,_typeID);
@@ -105,7 +105,7 @@ ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID ) {
     }
 
     // create a component and added to the component list, then return it.
-    comp = (ex_component_t*)ex_factory_create(_typeID);
+    comp = (ex_component_t *)ex_factory_create(_typeID);
     if ( comp ) {
         comp->owner = _ent; // set the owner of the component before init.
         if ( comp->init )
@@ -114,10 +114,10 @@ ex_component_t* ex_entity_add_comp ( ex_entity_t* _ent, strid_t _typeID ) {
 
         // cache internal component
         if ( _typeID == EX_CLASSID(ex_trans2d_t) ) {
-            _ent->trans2d = (ex_trans2d_t*)comp; 
+            _ent->trans2d = (ex_trans2d_t *)comp; 
         }
         else if ( _typeID == EX_CLASSID(ex_camera_t) ) {
-            _ent->camera = (ex_camera_t*)comp; 
+            _ent->camera = (ex_camera_t *)comp; 
         }
     }
 

@@ -16,8 +16,8 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __log ( lua_State* _l ) {
-    const char* msg = luaL_checkstring ( _l, 1 );
+static int __log ( lua_State *_l ) {
+    const char *msg = luaL_checkstring ( _l, 1 );
     ex_log (msg);
     return 0;
 }
@@ -35,7 +35,7 @@ static const luaL_Reg functions[] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int luaopen_core ( lua_State* _l )
+int luaopen_core ( lua_State *_l )
 {
     // we create global ex table if it not exists.
     lua::global_module ( lua::state(), "ex" );

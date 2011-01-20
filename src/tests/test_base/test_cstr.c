@@ -19,7 +19,7 @@ static void normal () {
     // strcpy
     {
         char to[128];
-        const char* text = "hello world";
+        const char *text = "hello world";
 
         // right
         memset ( to, 1, 128 );
@@ -30,7 +30,7 @@ static void normal () {
     // strncpy
     {
         char to[128];
-        const char* text = "hello world";
+        const char *text = "hello world";
         int len = strlen(text);
 
         // wrong
@@ -46,8 +46,8 @@ static void normal () {
 
     // strlen
     {
-        char* to;
-        const char* text = "hello world";
+        char *to;
+        const char *text = "hello world";
         int len = strlen(text);
 
         // wrong

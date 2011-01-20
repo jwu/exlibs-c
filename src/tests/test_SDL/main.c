@@ -75,7 +75,7 @@ void main_loop ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int main ( int argc, char* argv[] )
+int main ( int argc, char *argv[] )
 {
     printf ( "start test...\n" );
 

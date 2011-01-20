@@ -28,7 +28,7 @@ void _init_window ()
     // Set the refresh rate. the nvidia graphic-card turn on the vsync when use opengl.
     // we need to turn this off.
 #if (EX_PLATFORM == EX_WIN32)
-    const char* extensions = (const char *)glGetString( GL_EXTENSIONS );
+    const char *extensions = (const char *)glGetString( GL_EXTENSIONS );
     typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
     PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
 
@@ -86,7 +86,7 @@ void ex_init_sdl_gl ()
 {
     uint32 vflags, bbColor, multiSample;
     uint32 width, height;
-    SDL_Surface* pScreen;
+    SDL_Surface *pScreen;
 
     // init sdl video subsystem
     ex_log ("Init SDL Video");

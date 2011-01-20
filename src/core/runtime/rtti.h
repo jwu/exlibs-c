@@ -27,9 +27,9 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 typedef struct ex_rtti_t {
-    struct ex_rtti_t* super;
+    struct ex_rtti_t *super;
     strid_t classid;
-    ex_prop_t* props;
+    ex_prop_t *props;
     uint32 prop_count;
 } ex_rtti_t;
 
@@ -52,38 +52,38 @@ extern bool ex_rtti_initialized ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_rtti_register_serialize ( strid_t _typeID, void* _pfn );
+extern void ex_rtti_register_serialize ( strid_t _typeID, void *_pfn );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_rtti_t* ex_rtti_register_class ( strid_t _classID, ex_rtti_t* _super );
+extern ex_rtti_t *ex_rtti_register_class ( strid_t _classID, ex_rtti_t *_super );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_rtti_register_properties ( ex_rtti_t* _info, const ex_prop_t* _props, uint32 _count );
+extern void ex_rtti_register_properties ( ex_rtti_t *_info, const ex_prop_t* _props, uint32 _count );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_rtti_t* ex_rtti_get ( strid_t _classID );
+extern ex_rtti_t *ex_rtti_get ( strid_t _classID );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // can be EX_TYPEID or EX_CLASSID
 // ------------------------------------------------------------------ 
 
-extern void* ex_rtti_get_serialize_pfn ( strid_t _typeID );
+extern void *ex_rtti_get_serialize_pfn ( strid_t _typeID );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline const char* ex_rtti_classname ( const ex_rtti_t* _info ) { 
+static inline const char *ex_rtti_classname ( const ex_rtti_t *_info ) { 
     return ex_strid_to_cstr(_info->classid); 
 } 
 
@@ -91,7 +91,7 @@ static inline const char* ex_rtti_classname ( const ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline strid_t ex_rtti_classid ( const ex_rtti_t* _info ) { 
+static inline strid_t ex_rtti_classid ( const ex_rtti_t *_info ) { 
     return _info->classid; 
 }
 
@@ -99,7 +99,7 @@ static inline strid_t ex_rtti_classid ( const ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline ex_rtti_t* ex_rtti_super ( const ex_rtti_t* _info ) { 
+static inline ex_rtti_t *ex_rtti_super ( const ex_rtti_t *_info ) { 
     return _info->super; 
 }
 
@@ -107,7 +107,7 @@ static inline ex_rtti_t* ex_rtti_super ( const ex_rtti_t* _info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline bool ex_rtti_classof ( const ex_rtti_t* _myclass, const ex_rtti_t* _yourclass ) { 
+static inline bool ex_rtti_classof ( const ex_rtti_t *_myclass, const ex_rtti_t *_yourclass ) { 
     return _myclass->classid == _yourclass->classid;
 }
 
@@ -115,13 +115,13 @@ static inline bool ex_rtti_classof ( const ex_rtti_t* _myclass, const ex_rtti_t*
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool ex_rtti_childof ( const ex_rtti_t* _myclass, const ex_rtti_t* _superclass );
+extern bool ex_rtti_childof ( const ex_rtti_t *_myclass, const ex_rtti_t *_superclass );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline bool ex_rtti_superof ( const ex_rtti_t* _myclass, const ex_rtti_t* _subclass ) { 
+static inline bool ex_rtti_superof ( const ex_rtti_t *_myclass, const ex_rtti_t *_subclass ) { 
     return ex_rtti_childof( _subclass, _myclass );
 }
 
@@ -129,7 +129,7 @@ static inline bool ex_rtti_superof ( const ex_rtti_t* _myclass, const ex_rtti_t*
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline bool ex_rtti_isa ( const ex_rtti_t* _myclass, const ex_rtti_t* _class ) { 
+static inline bool ex_rtti_isa ( const ex_rtti_t *_myclass, const ex_rtti_t *_class ) { 
     return ex_rtti_classof(_myclass,_class) || ex_rtti_childof(_myclass,_class);
 }
 

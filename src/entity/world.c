@@ -25,9 +25,9 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __debug_draw ( ex_world_t* _world ) {
-    ex_array_each ( _world->entities, ex_entity_t*, ent ) {
-        ex_debug2d_t* dbg2d = (ex_debug2d_t*)ex_entity_get_comp( ent, EX_CLASSID(ex_debug2d_t) );
+static void __debug_draw ( ex_world_t *_world ) {
+    ex_array_each ( _world->entities, ex_entity_t *, ent ) {
+        ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_get_comp( ent, EX_CLASSID(ex_debug2d_t) );
         if ( dbg2d ) {
             ex_debug2d_draw(dbg2d);
         }
@@ -42,10 +42,10 @@ static void __debug_draw ( ex_world_t* _world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_world_t* ex_world_alloc () {
-    ex_world_t* world = (ex_world_t*)ex_malloc(sizeof(ex_world_t));
-    world->entities = ex_array_alloc( sizeof(ex_entity_t*), 8 );
-    world->cameras = ex_array_alloc( sizeof(ex_camera_t*), 8 );
+ex_world_t *ex_world_alloc () {
+    ex_world_t *world = (ex_world_t *)ex_malloc(sizeof(ex_world_t));
+    world->entities = ex_array_alloc( sizeof(ex_entity_t *), 8 );
+    world->cameras = ex_array_alloc( sizeof(ex_camera_t *), 8 );
     world->mainCamera = NULL;
     return world;
 }
@@ -54,8 +54,8 @@ ex_world_t* ex_world_alloc () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_free ( ex_world_t* _world ) {
-    ex_array_each ( _world->entities, ex_entity_t*, ent ) {
+void ex_world_free ( ex_world_t *_world ) {
+    ex_array_each ( _world->entities, ex_entity_t *, ent ) {
         ex_entity_free(ent);
     } ex_array_each_end;
     ex_array_free ( _world->entities );
@@ -67,8 +67,8 @@ void ex_world_free ( ex_world_t* _world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t* ex_world_create_entity ( ex_world_t* _world, strid_t _name ) {
-    ex_entity_t* ent = ex_entity_alloc();
+ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name ) {
+    ex_entity_t *ent = ex_entity_alloc();
     ent->name = _name;
     ent->world = _world;
     ex_array_append( _world->entities, &ent );
@@ -80,11 +80,11 @@ ex_entity_t* ex_world_create_entity ( ex_world_t* _world, strid_t _name ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t* ex_world_create_camera2d ( ex_world_t* _world, strid_t _name ) {
-    ex_entity_t* ent = ex_world_create_entity( _world, _name );
+ex_entity_t *ex_world_create_camera2d ( ex_world_t *_world, strid_t _name ) {
+    ex_entity_t *ent = ex_world_create_entity( _world, _name );
 
     ex_entity_add_comp( ent, EX_CLASSID(ex_trans2d_t) );
-    ex_camera_t* cam2d = (ex_camera_t*)ex_entity_add_comp( ent, EX_CLASSID(ex_camera_t) );
+    ex_camera_t *cam2d = (ex_camera_t *)ex_entity_add_comp( ent, EX_CLASSID(ex_camera_t) );
     ex_camera_set_ortho( cam2d, true );
 
     return ent;
@@ -94,7 +94,7 @@ ex_entity_t* ex_world_create_camera2d ( ex_world_t* _world, strid_t _name ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t* ex_world_create_rect ( ex_world_t* _world, strid_t _name ) {
+ex_entity_t *ex_world_create_rect ( ex_world_t *_world, strid_t _name ) {
     // TODO:
     return NULL;
 }
@@ -103,7 +103,7 @@ ex_entity_t* ex_world_create_rect ( ex_world_t* _world, strid_t _name ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_add_camera ( ex_world_t* _world, ex_camera_t* _cam ) {
+void ex_world_add_camera ( ex_world_t *_world, ex_camera_t *_cam ) {
     ex_array_append( _world->cameras, &_cam );
     if ( ex_array_count(_world->cameras) == 1 ) {
         _world->mainCamera = _cam;
@@ -114,9 +114,9 @@ void ex_world_add_camera ( ex_world_t* _world, ex_camera_t* _cam ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_remove_camera ( ex_world_t* _world, ex_camera_t* _cam ) {
+void ex_world_remove_camera ( ex_world_t *_world, ex_camera_t *_cam ) {
     int result_idx = -1;
-    ex_array_each ( _world->cameras, ex_camera_t*, cam ) {
+    ex_array_each ( _world->cameras, ex_camera_t *, cam ) {
         if ( cam == _cam ) {
             result_idx = __idx__;
             break;
@@ -126,12 +126,12 @@ void ex_world_remove_camera ( ex_world_t* _world, ex_camera_t* _cam ) {
     if ( result_idx != -1 )
         ex_array_remove_at_fast( _world->cameras, result_idx );
     else {
-        ex_warning ( "can't find camera %s", ((ex_component_t*)_cam)->owner->name );
+        ex_warning ( "can't find camera %s", ((ex_component_t *)_cam)->owner->name );
         return;
     }
 
     if ( ex_array_count(_world->cameras) == 1 ) {
-        _world->mainCamera = *((ex_camera_t**)ex_array_get(_world->cameras,0));
+        _world->mainCamera = *((ex_camera_t **)ex_array_get(_world->cameras,0));
     }
 }
 
@@ -139,7 +139,7 @@ void ex_world_remove_camera ( ex_world_t* _world, ex_camera_t* _cam ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_camera_t* ex_world_main_camera ( ex_world_t* _world ) {
+ex_camera_t *ex_world_main_camera ( ex_world_t *_world ) {
     return _world->mainCamera;
 }
 
@@ -148,7 +148,7 @@ ex_camera_t* ex_world_main_camera ( ex_world_t* _world ) {
 extern void __eng_time_tick ();
 // ------------------------------------------------------------------ 
 
-void ex_world_update ( ex_world_t* _world ) {
+void ex_world_update ( ex_world_t *_world ) {
     __eng_time_tick ();
 
     // TODO { 
@@ -163,8 +163,8 @@ void ex_world_update ( ex_world_t* _world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_render ( ex_world_t* _world ) {
-    ex_array_each ( _world->cameras, ex_camera_t*, cam ) {
+void ex_world_render ( ex_world_t *_world ) {
+    ex_array_each ( _world->cameras, ex_camera_t *, cam ) {
         ex_camera_apply (cam);
 
         // TODO { 

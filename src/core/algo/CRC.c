@@ -287,12 +287,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
+uint32 ex_calc_CRC ( int _crcSize, const uint8 *_data, uint _len )
 {
     register uint32 result = (uint32)~0UL;
 #if EX_USE_CRC_TABLE
     uint32 i;
-    const uint32 *buf_array = (const uint32*)_data;
+    const uint32 *buf_array = (const uint32 *)_data;
 #if !EX_USE_CRC_TABLE_FAST 
     uint32 count;
 #endif
@@ -356,7 +356,7 @@ uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
 // ======================================================== 
 
     // Align on 4-bytes boundaries
-    for (; ((uint32)(size_t)(void*)_data) & (sizeof(uint32) - 1); _data++, _len--) 
+    for (; ((uint32)(size_t)(void *)_data) & (sizeof(uint32) - 1); _data++, _len--) 
     {
         result = ((result >> 8) ^ CRC_Table0[(result & 0xFFUL) ^ *_data]);
 
@@ -373,7 +373,7 @@ uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
     // 4-by-4
     for( i = 0; i < count; ++i )                    
     {        
-        uint32 val = *(uint32 const*)_data;
+        uint32 val = *(uint32 const *)_data;
 
 #if (EX_BYTEORDER == EX_BIG_ENDIAN)
         SwapByte(val);
@@ -410,11 +410,11 @@ uint32 ex_calc_CRC ( int _crcSize, const uint8* _data, uint _len )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-uint32 calcCRC_str ( int _crcSize, const char* _data )
+uint32 calcCRC_str ( int _crcSize, const char *_data )
 {
     register uint32 result = (uint32)~0UL;
 #if EX_USE_CRC_TABLE
-    const char* p = _data;
+    const char *p = _data;
     uint32 m = 0x7efefeff, n = ~m, i = 0;
 #endif
 
@@ -424,7 +424,7 @@ uint32 calcCRC_str ( int _crcSize, const char* _data )
 #if EX_USE_CRC_TABLE
 
     // Align on 4-bytes boundaries
-    for ( ; ((uint32)(size_t)(void*)p) & (sizeof(uint32) - 1); ++p ) 
+    for ( ; ((uint32)(size_t)(void *)p) & (sizeof(uint32) - 1); ++p ) 
     {
         if (!*p)
         {
@@ -439,7 +439,7 @@ uint32 calcCRC_str ( int _crcSize, const char* _data )
     // Process bytes 4-by-4 as much as possible, then one-by-one for the bytes left
     for (;;) 
     {
-        i = *(uint32 const*)p;
+        i = *(uint32 const *)p;
 
 #if (EX_BYTEORDER == EX_BIG_ENDIAN)
         SwapByte(i);

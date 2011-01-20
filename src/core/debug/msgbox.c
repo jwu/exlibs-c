@@ -23,12 +23,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ... )
+int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ... )
 {
     //
     int     result = -1;
     int     buffer_count = 1024;
-    char*   pBuffer = NULL;
+    char   *pBuffer = NULL;
     int ret;
 
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
@@ -37,7 +37,7 @@ int ex_message_box ( int _msgType, const char* _caption, const char* _expr,  ...
 
     // keep get va string until success 
     while ( result == -1 ) {
-        pBuffer = (char*)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
+        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
         EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
         buffer_count *= 2;
     }

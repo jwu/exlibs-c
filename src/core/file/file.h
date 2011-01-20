@@ -30,7 +30,7 @@ typedef struct ex_file_t {
 #if (EX_PLATFORM == EX_WIN32)
     HANDLE handle;
 #else
-    FILE* fp;
+    FILE *fp;
 #endif
 } ex_file_t;
 
@@ -38,21 +38,21 @@ typedef struct ex_file_t {
 // functions
 ///////////////////////////////////////////////////////////////////////////////
 
-extern ex_file_t* ex_open_file ( const char* _filename, const char* _mode ); 
+extern ex_file_t *ex_open_file ( const char *_filename, const char *_mode ); 
 
 // success: 0
 // failed: -1
-extern int ex_close_file ( ex_file_t* _file ); 
+extern int ex_close_file ( ex_file_t *_file ); 
 
 // success: 0
 // failed: -1
-extern int ex_file_seek ( ex_file_t* _file, size_t _offset, int _whence ); 
+extern int ex_file_seek ( ex_file_t *_file, size_t _offset, int _whence ); 
 
-extern int ex_file_read ( ex_file_t* _file, void* _buf, size_t _size, size_t _count );
-extern int ex_file_write ( ex_file_t* _file, const void* _buf, size_t _size, size_t _count ); 
+extern int ex_file_read ( ex_file_t *_file, void *_buf, size_t _size, size_t _count );
+extern int ex_file_write ( ex_file_t *_file, const void *_buf, size_t _size, size_t _count ); 
 
-extern size_t ex_file_size ( ex_file_t* _file ); 
-extern size_t ex_file_tell ( ex_file_t* _file ); 
+extern size_t ex_file_size ( ex_file_t *_file ); 
+extern size_t ex_file_tell ( ex_file_t *_file ); 
 
 // #################################################################################
 #endif // END FILE_H_1295057774

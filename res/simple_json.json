@@ -14,12 +14,9 @@
             },
             "_children_map": { 
                 "map": [
-                    { "strid": "hello" },
-                    { "vec3f": [2.0,2.0,2.0] },
-                    { "strid": "foo" },
-                    { "vec3f": [2.0,2.0,2.0] },
-                    { "strid": "bar" },
-                    { "vec3f": [2.0,2.0,2.0] }
+                    { "strid": "hello" }, { "vec3f": [2.0,2.0,2.0] },
+                    { "strid": "foo" }, { "vec3f": [2.0,2.0,2.0] },
+                    { "strid": "bar" }, { "vec3f": [2.0,2.0,2.0] }
                 ]
             }
         }

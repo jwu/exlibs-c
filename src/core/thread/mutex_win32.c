@@ -19,12 +19,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_mutex_t* ex_create_mutex ()
+ex_mutex_t *ex_create_mutex ()
 {
-	ex_mutex_t* mutex;
+	ex_mutex_t *mutex;
 
 	// allocate mutex memory
-	mutex = (ex_mutex_t*)ex_malloc_nomng(sizeof(ex_mutex_t));
+	mutex = (ex_mutex_t *)ex_malloc_nomng(sizeof(ex_mutex_t));
 	if (mutex) {
 		// Create the mutex, with initial value signaled
 		mutex->id = CreateMutex(NULL, FALSE, NULL);
@@ -44,7 +44,7 @@ ex_mutex_t* ex_create_mutex ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_destroy_mutex ( ex_mutex_t* _mutex )
+void ex_destroy_mutex ( ex_mutex_t *_mutex )
 {
 	if ( _mutex ) {
 		if ( _mutex->id ) {
@@ -59,7 +59,7 @@ void ex_destroy_mutex ( ex_mutex_t* _mutex )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_mutex_lock ( ex_mutex_t* _mutex )
+int ex_mutex_lock ( ex_mutex_t *_mutex )
 {
 	if ( _mutex == NULL ) {
 		ex_error("Passed a NULL mutex");
@@ -76,7 +76,7 @@ int ex_mutex_lock ( ex_mutex_t* _mutex )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_mutex_unlock ( ex_mutex_t* _mutex )
+int ex_mutex_unlock ( ex_mutex_t *_mutex )
 {
 	if ( _mutex == NULL ) {
 		ex_error("Passed a NULL mutex");

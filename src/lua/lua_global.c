@@ -16,13 +16,13 @@
 // internal defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static lua_State* __L = NULL;
+static lua_State *__L = NULL;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_lua_check ( lua_State* _l, int _status ) {
+void ex_lua_check ( lua_State *_l, int _status ) {
     if ( _status != 0 ) {
         lua_getglobal(_l, "_ALERT");
         if ( lua_isfunction(_l, -1) ) {
@@ -44,7 +44,7 @@ void ex_lua_check ( lua_State* _l, int _status ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_global_module ( lua_State* _l, const char* _key )
+int ex_lua_global_module ( lua_State *_l, const char *_key )
 {
     lua_getglobal(_l, _key);
 
@@ -65,7 +65,7 @@ int ex_lua_global_module ( lua_State* _l, const char* _key )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_module ( lua_State* _l, int _idx, const char* _key )
+int ex_lua_module ( lua_State *_l, int _idx, const char *_key )
 {
     lua_getfield(_l, _idx, _key);
 
@@ -84,7 +84,7 @@ int ex_lua_module ( lua_State* _l, int _idx, const char* _key )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_parse ( lua_State* _l, int status )
+int ex_lua_parse ( lua_State *_l, int status )
 {
     if (status == 0) {  /* parse OK? */
         status = lua_pcall(_l, 0, LUA_MULTRET, 0);  /* call main */
@@ -99,7 +99,7 @@ int ex_lua_parse ( lua_State* _l, int status )
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern int luaopen_core ( lua_State* _l );
+extern int luaopen_core ( lua_State *_l );
 // ------------------------------------------------------------------ 
 
 void ex_lua_init ()
@@ -133,25 +133,25 @@ void ex_lua_deinit ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-lua_State* ex_lua_state () { return __L; }
+lua_State *ex_lua_state () { return __L; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_module_byfile ( lua_State* _l, const wchar_t* _fullpath )
+int ex_lua_load_module_byfile ( lua_State *_l, const wchar_t *_fullpath )
 {
     wstring_t rel_wpath ( _fullpath );
     rel_wpath -= lua::base_path();
 
     char rel_path[1024];
-    char* p = rel_path;
+    char *p = rel_path;
     ex::mem::zero( rel_path, 1024 );
     wchar_to_char<1024> ( rel_wpath.c_str(), rel_path );
     if ( rel_path[0] == '/' ) {
         p++;
     }
-    char* dot = strrchr( p, '.' );
+    char *dot = strrchr( p, '.' );
     int count = ex::str::len(p);
     if ( dot != NULL ) {
         count = dot - p;
@@ -186,7 +186,7 @@ int ex_lua_load_module_byfile ( lua_State* _l, const wchar_t* _fullpath )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int load_module ( lua_State* _l, const char* _module )
+int load_module ( lua_State *_l, const char *_module )
 {
     Array<string_t> str_list;
     ex::str::splitIntoArray ( ".", _module, &str_list ); 
@@ -198,7 +198,7 @@ int load_module ( lua_State* _l, const char* _module )
         }
     }
     rel_path = rel_path + *(str_list.end()-1) + ".lua";
-    const char* rel_path_cstr = rel_path.c_str(); 
+    const char *rel_path_cstr = rel_path.c_str(); 
     wchar rel_wpath[1024];
     ex::mem::zero( rel_wpath, 1024 );
     char_to_wchar<1024> ( rel_path_cstr, rel_wpath );
@@ -234,7 +234,7 @@ int load_module ( lua_State* _l, const char* _module )
 
     // now load the buffer, this will create a function and put it at the top of the stack.
     int status = luaL_loadbuffer( _l,
-                                  (const char*)(dataHolder.data()), 
+                                  (const char *)(dataHolder.data()), 
                                   dataHolder.size(), 
                                   _module );
     ex_lua_check(_l, status);
@@ -260,7 +260,7 @@ int load_module ( lua_State* _l, const char* _module )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int get_module ( lua_State* _l, const char* _moduleName )
+int get_module ( lua_State *_l, const char *_moduleName )
 {
     lua_getglobal( ex_lua_state(), _moduleName );
     if( !lua_istable(_l, -1) ) {
@@ -274,7 +274,7 @@ int get_module ( lua_State* _l, const char* _moduleName )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int get_function ( lua_State* _l, const char* _moduleName, const char* _funcName )
+int get_function ( lua_State *_l, const char *_moduleName, const char *_funcName )
 {
     lua_getglobal( _l, _moduleName );
     lua_getfield( _l, -1, _funcName );
@@ -291,9 +291,9 @@ int get_function ( lua_State* _l, const char* _moduleName, const char* _funcName
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int w__gc ( lua_State* _l ) {
-    Proxy* p = (Proxy*)lua_touserdata(_l, 1);
-    Object* obj = (Object*)p->user_data;
+int w__gc ( lua_State *_l ) {
+    Proxy *p = (Proxy *)lua_touserdata(_l, 1);
+    Object *obj = (Object *)p->user_data;
     if ( p->own_by_gc )
         obj->release();
     return 0;
@@ -307,7 +307,7 @@ int w__gc ( lua_State* _l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void dump_stack (lua_State * _l) {
+void dump_stack (lua_State *_l) {
     int i;
     int top = lua_gettop(_l);
     ex_log("-- stack: top --\n");

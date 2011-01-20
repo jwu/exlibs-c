@@ -32,8 +32,8 @@ EX_DEF_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_vec2f_t  pos;   // local position
     ex_angf_t   ang;   // local angle
     ex_vec2f_t  scale; // local scale
-    struct ex_trans2d_t* parent;
-    ex_array_t* children;
+    struct ex_trans2d_t *parent;
+    ex_array_t *children;
 EX_DEF_CLASS_END(ex_trans2d_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,16 +44,16 @@ EX_DEF_CLASS_END(ex_trans2d_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_trans2d_init ( void* _self ); 
-extern void ex_trans2d_deinit ( void* _self ); 
+extern void ex_trans2d_init ( void *_self ); 
+extern void ex_trans2d_deinit ( void *_self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_trans2d_world_position ( ex_trans2d_t* _self, ex_vec2f_t* _pos ); 
-extern void ex_trans2d_world_rotation ( ex_trans2d_t* _self, ex_angf_t* _ang ); 
-extern void ex_trans2d_world_scale ( ex_trans2d_t* _self, ex_vec2f_t* _scale ); 
+extern void ex_trans2d_world_position ( ex_trans2d_t *_self, ex_vec2f_t *_pos ); 
+extern void ex_trans2d_world_rotation ( ex_trans2d_t *_self, ex_angf_t *_ang ); 
+extern void ex_trans2d_world_scale ( ex_trans2d_t *_self, ex_vec2f_t *_scale ); 
 
 // ######################### 
 #ifdef __cplusplus

@@ -15,8 +15,8 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static const char* media_file = "e:/project/dev/exsdk/res/";
-// static const char* media_file = "e:/dev/exsdk/res/";
+static const char *media_file = "e:/project/dev/exsdk/res/";
+// static const char *media_file = "e:/dev/exsdk/res/";
 #define maxPATH 256
 
 // ------------------------------------------------------------------ 
@@ -25,9 +25,9 @@ static const char* media_file = "e:/project/dev/exsdk/res/";
 
 static void normal () {
     char path[maxPATH];
-    FILE* fp;
+    FILE *fp;
     size_t fsize;
-    char* data;
+    char *data;
     ex_array_t *words, *word_IDs;
 
     strncpy ( path, media_file, maxPATH );
@@ -38,20 +38,20 @@ static void normal () {
     fsize = ftell(fp);
     fseek ( fp, 0L, SEEK_SET );
 
-    data = (char*)ex_malloc( fsize * sizeof(char) );
+    data = (char *)ex_malloc( fsize * sizeof(char) );
     fread ( data, sizeof(char), fsize, fp );
 
     {
         uint cur = 0,prev = 0;
         size_t sid;
 
-        words = ex_array_alloc ( sizeof(char*), 256 );
+        words = ex_array_alloc ( sizeof(char *), 256 );
         word_IDs = ex_array_alloc ( sizeof(size_t), 256 );
 
         // dump string and string ID
         while ( cur < fsize ) {
             if ( data[cur] == ' ' ) {
-                char* word = ex_malloc(sizeof(char)*128);
+                char *word = ex_malloc(sizeof(char)*128);
                 uint word_len = cur - prev;
 
                 ex_assert ( word_len < 128, "the word exceed the length of the string (e.g 128) " );
@@ -71,8 +71,8 @@ static void normal () {
         // check if the string ID consistent with string
         cur = 0;
         while ( cur < ex_array_count(words) ) {
-            char* word = *((char**)ex_array_get( words, cur ));
-            size_t sid = *((size_t*)ex_array_get( word_IDs, cur )); 
+            char *word = *((char **)ex_array_get( words, cur ));
+            size_t sid = *((size_t *)ex_array_get( word_IDs, cur )); 
             // EX_TEST ( wcscmp(ex_strid_to_cstr(sid), word) == 0 );
             ex_assert ( strcmp(ex_strid_to_cstr(sid), word) == 0, "%s(%d) is not equal to %s", ex_strid_to_cstr(sid), sid, word );
             ++cur;
@@ -81,7 +81,7 @@ static void normal () {
         // release all memory
         cur = 0;
         while ( cur < ex_array_count(words) ) {
-            void* ptr = *((char**)ex_array_get( words, cur ));
+            void *ptr = *((char **)ex_array_get( words, cur ));
             ex_free(ptr);
             ++cur;
         }
@@ -106,13 +106,13 @@ static void widechar() {
     // TODO { 
     // {
     //     size_t id = ex_strid ("c");
-    //     char* str = ex_strid_to_cstr(id);
+    //     char *str = ex_strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "c") == 0 );
     // }
 
     // {
     //     size_t id = ex_strid ( "ÖÐc");
-    //     char* str = ex_strid_to_cstr(id);
+    //     char *str = ex_strid_to_cstr(id);
     //     EX_TEST ( strcmp(str, "ÖÐc") == 0 );
     // }
 

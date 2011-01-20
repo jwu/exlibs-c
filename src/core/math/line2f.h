@@ -33,7 +33,7 @@ typedef struct ex_line2f_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void ex_line2f_set ( ex_line2f_t* _r, 
+static inline void ex_line2f_set ( ex_line2f_t *_r, 
                                    ex_vec2f_t _start, 
                                    ex_vec2f_t _end ) 
 {

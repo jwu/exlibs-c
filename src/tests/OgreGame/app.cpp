@@ -16,9 +16,9 @@
 // internal value
 ///////////////////////////////////////////////////////////////////////////////
 
-static const char* pluginFile = ""; // "plugins.cfg"; 
-static const char* configFile = ""; // "ogre.cfg"; 
-static const char* logFile = "ogre.log"; 
+static const char *pluginFile = ""; // "plugins.cfg"; 
+static const char *configFile = ""; // "ogre.cfg"; 
+static const char *logFile = "ogre.log"; 
 
 static const uint wnd_width = 1280;
 static const uint wnd_height = 720;
@@ -95,7 +95,7 @@ bool App::init ()
         ex_warning ( "no rendersystem was found!" );
         return false;
     }
-    Ogre::RenderSystem* rs = rs_list[0];
+    Ogre::RenderSystem *rs = rs_list[0];
     m_root->setRenderSystem(rs);
 
     // init root ( only when a rendersystem has been selected)
@@ -108,7 +108,7 @@ bool App::init ()
     initInput ();
 
     //
-	Ogre::Timer* timer = m_root->getTimer();
+	Ogre::Timer *timer = m_root->getTimer();
 	timer->reset();
 	m_window->setActive(true);
 	m_window->setAutoUpdated(false);
@@ -196,7 +196,7 @@ void App::tick ()
 
 void App::initWindow ()
 {
-    const char* wnd_title = "Ogre Game";
+    const char *wnd_title = "Ogre Game";
     uint width = wnd_width;
     uint height = wnd_height;
     bool fullScreen = false;
@@ -233,10 +233,10 @@ void App::initInput ()
     m_inputMgr = OIS::InputManager::createInputSystem( spec_params );
 
     // creation of the keyboard-representing object
-    m_keyboard = static_cast<OIS::Keyboard*>(m_inputMgr->createInputObject(OIS::OISKeyboard, false));
+    m_keyboard = static_cast<OIS::Keyboard *>(m_inputMgr->createInputObject(OIS::OISKeyboard, false));
 
     // creation of the mouse-representing object
-    m_mouse = static_cast<OIS::Mouse*>(m_inputMgr->createInputObject( OIS::OISMouse, false));
+    m_mouse = static_cast<OIS::Mouse *>(m_inputMgr->createInputObject( OIS::OISMouse, false));
 
     // then must tell the mouse how much it is allowed to move.
     const OIS::MouseState& infoSouris = m_mouse->getMouseState();

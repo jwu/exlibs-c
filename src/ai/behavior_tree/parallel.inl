@@ -13,7 +13,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _parallel_exec ( bt_node_t* _node )
+static bool _parallel_exec ( bt_node_t *_node )
 {
     // TODO:
     ex_assert( false, "pls implement this");
@@ -24,9 +24,9 @@ static bool _parallel_exec ( bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bt_node_t* bt_parallel()
+bt_node_t *bt_parallel()
 {
-    bt_node_t* node = __bt_node_alloc ();
+    bt_node_t *node = __bt_node_alloc ();
     node->type = "parallel";
     node->exec = _parallel_exec;
     return node;

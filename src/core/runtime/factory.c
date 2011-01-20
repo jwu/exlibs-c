@@ -15,7 +15,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static ex_hashmap_t* __classid_to_creator = NULL;
+static ex_hashmap_t *__classid_to_creator = NULL;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -57,11 +57,11 @@ void ex_factory_unregister ( strid_t _classID ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_factory_create ( strid_t _classID ) {
-    void* pfn = ex_hashmap_get( __classid_to_creator, &_classID, NULL );
+void *ex_factory_create ( strid_t _classID ) {
+    void *pfn = ex_hashmap_get( __classid_to_creator, &_classID, NULL );
     if ( pfn == NULL ) {
         ex_error ("can't find creator for classID %s", ex_strid_to_cstr(_classID) );
         return NULL;
     }
-    return (*(ex_create_pfn_t*)pfn)();
+    return (*(ex_create_pfn_t *)pfn)();
 }

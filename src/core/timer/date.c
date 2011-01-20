@@ -19,7 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static const char* __month_name[12] = {
+static const char *__month_name[12] = {
     "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 };
@@ -28,7 +28,7 @@ static const char* __month_name[12] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static const char* __week_name[7] = {
+static const char *__week_name[7] = {
     "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", "Sun",
 };
 
@@ -48,7 +48,7 @@ static const uint8 __month_days[12] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-const char* ex_week_day_name ( uint _wday ) {
+const char *ex_week_day_name ( uint _wday ) {
     ex_assert_return ( _wday >= 1 && _wday <= 7, "invalid", "invalid weekday input" );
     return __week_name[_wday-1];
 }
@@ -57,7 +57,7 @@ const char* ex_week_day_name ( uint _wday ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-const char* ex_month_name ( uint _month ) {
+const char *ex_month_name ( uint _month ) {
     ex_assert_return ( _month >= 1 && _month <= 12, "invalid", "invalid month input" );
     return __month_name[_month];
 }
@@ -85,7 +85,7 @@ bool ex_is_leap_year ( uint _year ) {
 // NOTE: the input y,m,d must be int
 // ------------------------------------------------------------------ 
 
-static void __greg2jul ( uint* _out_jul, int _year, int _month, int _day ) {
+static void __greg2jul ( uint *_out_jul, int _year, int _month, int _day ) {
     if( !ex_is_valid_date ( _year, _month, _day ) ) {
         ex_warning ( "can't set date (%dy,%dm,%dd). the value is invalid!", _year, _month, _day );
         *_out_jul = 0;
@@ -100,7 +100,7 @@ static void __greg2jul ( uint* _out_jul, int _year, int _month, int _day ) {
 // NOTE: the input y,m,d must be int
 // ------------------------------------------------------------------ 
 
-static void __jul2greg ( uint _jul, int* _out_year, int* _out_month, int* _out_day ) {
+static void __jul2greg ( uint _jul, int *_out_year, int *_out_month, int *_out_day ) {
     register int l,n,i,j;
     l=_jul+68569;
     n=(4*l)/146097;
@@ -131,7 +131,7 @@ date_t ex_date_from ( uint _year, uint _month, uint _day ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_date_to ( date_t _date, int* _year, int* _month, int* _day ) {
+void ex_date_to ( date_t _date, int *_year, int *_month, int *_day ) {
     __jul2greg ( _date, _year, _month, _day );
 }
 

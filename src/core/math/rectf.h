@@ -34,7 +34,7 @@ typedef struct ex_rectf_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline void ex_rectf_set ( ex_rectf_t* _r, 
+static inline void ex_rectf_set ( ex_rectf_t *_r, 
                                   ex_vec2f_t _center, 
                                   float _width, 
                                   float _height ) 

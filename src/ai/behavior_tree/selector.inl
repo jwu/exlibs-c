@@ -13,9 +13,9 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _selector_exec ( bt_node_t* _node )
+static bool _selector_exec ( bt_node_t *_node )
 {
-    ex_array_each ( _node->children, bt_node_t*, child ) {
+    ex_array_each ( _node->children, bt_node_t *, child ) {
         if ( (*(child->exec))(child) == true )
             return true;
     } ex_array_each_end
@@ -26,9 +26,9 @@ static bool _selector_exec ( bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bt_node_t* bt_selector()
+bt_node_t *bt_selector()
 {
-    bt_node_t* node = __bt_node_alloc ();
+    bt_node_t *node = __bt_node_alloc ();
     node->type = "selector";
     node->exec = _selector_exec;
     return node;
@@ -38,11 +38,11 @@ bt_node_t* bt_selector()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _random_selector_exec ( bt_node_t* _node )
+static bool _random_selector_exec ( bt_node_t *_node )
 {
     static uint last_idx_len = 0;
     uint count = ex_array_count(_node->children);
-    uint* indices = NULL;
+    uint *indices = NULL;
     uint i = 0; 
 
     // if the indices len less than the children count, realloc it.
@@ -69,7 +69,7 @@ static bool _random_selector_exec ( bt_node_t* _node )
     // execute the children
     for ( i = 0; i < count; ++i ) {
         uint idx = indices[i];
-        bt_node_t* child = *( (bt_node_t**) (ex_array_get(_node->children,idx)) );
+        bt_node_t *child = *( (bt_node_t **) (ex_array_get(_node->children,idx)) );
         if ( (*(child->exec))(child) == true )
             return true;
     }
@@ -80,7 +80,7 @@ static bool _random_selector_exec ( bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void _random_selector_free ( bt_node_t* _node )
+void _random_selector_free ( bt_node_t *_node )
 {
     ex_free ( _node->user_data );
     _node->free = NULL;
@@ -90,9 +90,9 @@ void _random_selector_free ( bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bt_node_t* bt_random_selector()
+bt_node_t *bt_random_selector()
 {
-    bt_node_t* node = __bt_node_alloc ();
+    bt_node_t *node = __bt_node_alloc ();
     node->type = "random.selector";
     node->exec = _random_selector_exec;
     node->free = _random_selector_free;

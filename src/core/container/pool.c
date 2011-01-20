@@ -21,9 +21,9 @@
 // ------------------------------------------------------------------ 
 
 // managed
-static ex_pool_node_t* __request_free_node( ex_pool_t* _pool ) 
+static ex_pool_node_t *__request_free_node( ex_pool_t *_pool ) 
 {
-    ex_pool_node_t* node = NULL;
+    ex_pool_node_t *node = NULL;
 
     if ( _pool->free_nodes == NULL ) {
         ex_pool_reserve( _pool, _pool->capacity * 2 );
@@ -37,9 +37,9 @@ static ex_pool_node_t* __request_free_node( ex_pool_t* _pool )
 }
 
 // no managed
-static ex_pool_node_t* __request_free_node_nomng( ex_pool_t* _pool ) 
+static ex_pool_node_t *__request_free_node_nomng( ex_pool_t *_pool ) 
 {
-    ex_pool_node_t* node = NULL;
+    ex_pool_node_t *node = NULL;
 
     if ( _pool->free_nodes == NULL ) {
         ex_pool_reserve_nomng( _pool, _pool->capacity * 2 );
@@ -56,7 +56,7 @@ static ex_pool_node_t* __request_free_node_nomng( ex_pool_t* _pool )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __push_to_used ( ex_pool_t* _pool, ex_pool_node_t* _node )
+static void __push_to_used ( ex_pool_t *_pool, ex_pool_node_t *_node )
 {
     if ( _pool->used_nodes_end ) { // if we have used nodes
         _pool->used_nodes_end->next = _node;
@@ -76,7 +76,7 @@ static void __push_to_used ( ex_pool_t* _pool, ex_pool_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __push_to_used_reverse ( ex_pool_t* _pool, ex_pool_node_t* _node )
+static void __push_to_used_reverse ( ex_pool_t *_pool, ex_pool_node_t *_node )
 {
     if ( _pool->used_nodes_begin ) { // if we have used nodes
         _pool->used_nodes_begin->prev = _node;
@@ -96,7 +96,7 @@ static void __push_to_used_reverse ( ex_pool_t* _pool, ex_pool_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __push_to_free ( ex_pool_t* _pool, ex_pool_node_t* _node )
+static void __push_to_free ( ex_pool_t *_pool, ex_pool_node_t *_node )
 {
     if ( _pool->free_nodes ) { // if we have used nodes
         _pool->free_nodes->next = _node;
@@ -116,8 +116,8 @@ static void __push_to_free ( ex_pool_t* _pool, ex_pool_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void* __remove_at ( ex_pool_t* _pool, int _idx ) {
-    ex_pool_node_t* node = NULL;
+static void *__remove_at ( ex_pool_t *_pool, int _idx ) {
+    ex_pool_node_t *node = NULL;
 
     // get current node.
     node = _pool->nodes + _idx;
@@ -140,7 +140,7 @@ static void* __remove_at ( ex_pool_t* _pool, int _idx ) {
     __push_to_free( _pool, node );
     --_pool->count;
 
-    return (char*)(_pool->data) + _idx * _pool->element_bytes;
+    return (char *)(_pool->data) + _idx * _pool->element_bytes;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -152,9 +152,9 @@ static void* __remove_at ( ex_pool_t* _pool, int _idx ) {
 // ------------------------------------------------------------------ 
 
 // managed
-ex_pool_t* ex_pool_alloc ( size_t _element_bytes, size_t _count )
+ex_pool_t *ex_pool_alloc ( size_t _element_bytes, size_t _count )
 {
-    ex_pool_t* pool = ex_malloc ( sizeof(ex_pool_t) );
+    ex_pool_t *pool = ex_malloc ( sizeof(ex_pool_t) );
     int size = _element_bytes * _count;
     size_t i = 1;
 
@@ -197,9 +197,9 @@ ex_pool_t* ex_pool_alloc ( size_t _element_bytes, size_t _count )
 }
 
 // no managed
-ex_pool_t* ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count )
+ex_pool_t *ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 {
-    ex_pool_t* pool = ex_malloc_nomng ( sizeof(ex_pool_t) );
+    ex_pool_t *pool = ex_malloc_nomng ( sizeof(ex_pool_t) );
     int size = _element_bytes * _count;
     size_t i = 1;
 
@@ -246,7 +246,7 @@ ex_pool_t* ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_pool_free ( ex_pool_t* _pool )
+void ex_pool_free ( ex_pool_t *_pool )
 {
     ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
 
@@ -261,7 +261,7 @@ void ex_pool_free ( ex_pool_t* _pool )
 }
 
 // no managed
-void ex_pool_free_nomng ( ex_pool_t* _pool )
+void ex_pool_free_nomng ( ex_pool_t *_pool )
 {
     ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
 
@@ -280,7 +280,7 @@ void ex_pool_free_nomng ( ex_pool_t* _pool )
 // ------------------------------------------------------------------ 
 
 // managed
-void ex_pool_reserve ( ex_pool_t* _pool, size_t _count ) 
+void ex_pool_reserve ( ex_pool_t *_pool, size_t _count ) 
 {
     size_t size = _count * _pool->element_bytes;
     int i = _count - 1;
@@ -312,7 +312,7 @@ void ex_pool_reserve ( ex_pool_t* _pool, size_t _count )
 }
 
 // no managed
-void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count ) 
+void ex_pool_reserve_nomng ( ex_pool_t *_pool, size_t _count ) 
 {
     size_t size = _count * _pool->element_bytes;
     int i = _count - 1;
@@ -348,9 +348,9 @@ void ex_pool_reserve_nomng ( ex_pool_t* _pool, size_t _count )
 // ------------------------------------------------------------------ 
 
 // managed
-int ex_pool_insert ( ex_pool_t* _pool, const void* _value )
+int ex_pool_insert ( ex_pool_t *_pool, const void *_value )
 {
-    ex_pool_node_t* node = NULL;
+    ex_pool_node_t *node = NULL;
     int idx = -1;
 
     node = __request_free_node(_pool);
@@ -361,7 +361,7 @@ int ex_pool_insert ( ex_pool_t* _pool, const void* _value )
 
     // if _value is NULL, that means insert an empty node.
     if ( _value )
-        memcpy ( (char*)(_pool->data) + idx * _pool->element_bytes, _value, _pool->element_bytes );
+        memcpy ( (char *)(_pool->data) + idx * _pool->element_bytes, _value, _pool->element_bytes );
 
     ++_pool->count;
     
@@ -369,9 +369,9 @@ int ex_pool_insert ( ex_pool_t* _pool, const void* _value )
 }
 
 // no managed
-int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value )
+int ex_pool_insert_nomng ( ex_pool_t *_pool, const void *_value )
 {
-    ex_pool_node_t* node = NULL;
+    ex_pool_node_t *node = NULL;
     int idx = -1;
 
     node = __request_free_node_nomng(_pool);
@@ -382,7 +382,7 @@ int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value )
 
     // if _value is NULL, that means insert an empty node.
     if ( _value )
-        memcpy ( (char*)(_pool->data) + idx * _pool->element_bytes, _value, _pool->element_bytes );
+        memcpy ( (char *)(_pool->data) + idx * _pool->element_bytes, _value, _pool->element_bytes );
 
     ++_pool->count;
     
@@ -393,7 +393,7 @@ int ex_pool_insert_nomng ( ex_pool_t* _pool, const void* _value )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_pool_isvalid ( const ex_pool_t* _pool, int _idx ) {
+bool ex_pool_isvalid ( const ex_pool_t *_pool, int _idx ) {
     return ex_bitarray_get(_pool->used_bits, _idx) == 1;
 }
 
@@ -401,7 +401,7 @@ bool ex_pool_isvalid ( const ex_pool_t* _pool, int _idx ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx ) {
+void *ex_pool_remove_at ( ex_pool_t *_pool, int _idx ) {
     ex_assert_return( _idx >= 0 && _idx < (int)_pool->capacity, NULL, "error: _idx out of range" );
     ex_assert_return( ex_bitarray_get(_pool->used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
@@ -412,7 +412,7 @@ void* ex_pool_remove_at ( ex_pool_t* _pool, int _idx ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_remove_at_safe ( ex_pool_t* _pool, int _idx ) {
+void *ex_pool_remove_at_safe ( ex_pool_t *_pool, int _idx ) {
     if ( _idx < 0 || _idx >= (int)_pool->capacity )
         return NULL;
     if ( ex_bitarray_get(_pool->used_bits, _idx) != 1 )
@@ -425,10 +425,10 @@ void* ex_pool_remove_at_safe ( ex_pool_t* _pool, int _idx ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void* ex_pool_get ( const ex_pool_t* _pool, int _idx )
+void *ex_pool_get ( const ex_pool_t *_pool, int _idx )
 {
     ex_assert_return( _idx >= 0 && (size_t)_idx < _pool->capacity, NULL, "error: _idx out of range" );
     ex_assert_return( ex_bitarray_get(_pool->used_bits, _idx) == 1, NULL, "error: the node is not in used." );
 
-    return (char*)(_pool->data) + _idx * _pool->element_bytes;
+    return (char *)(_pool->data) + _idx * _pool->element_bytes;
 }

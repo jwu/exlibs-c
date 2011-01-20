@@ -13,9 +13,9 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _sequence_exec ( bt_node_t* _node )
+static bool _sequence_exec ( bt_node_t *_node )
 {
-    ex_array_each ( _node->children, bt_node_t*, child ) {
+    ex_array_each ( _node->children, bt_node_t *, child ) {
         if ( (*(child->exec))(child) == false )
             return false;
     } ex_array_each_end
@@ -26,9 +26,9 @@ static bool _sequence_exec ( bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bt_node_t* bt_sequence ()
+bt_node_t *bt_sequence ()
 {
-    bt_node_t* node = __bt_node_alloc ();
+    bt_node_t *node = __bt_node_alloc ();
     node->type = "sequence";
     node->exec = _sequence_exec;
     return node;

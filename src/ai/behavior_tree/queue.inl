@@ -13,7 +13,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static bool _queue_exec ( bt_node_t* _node )
+static bool _queue_exec ( bt_node_t *_node )
 {
     // TODO:
     ex_assert( false, "pls implement this");
@@ -24,9 +24,9 @@ static bool _queue_exec ( bt_node_t* _node )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bt_node_t* bt_queue()
+bt_node_t *bt_queue()
 {
-    bt_node_t* node = __bt_node_alloc ();
+    bt_node_t *node = __bt_node_alloc ();
     node->type = "queue";
     node->exec = _queue_exec;
     return node;

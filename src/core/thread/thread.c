@@ -22,9 +22,9 @@
 typedef int (*user_pfn_t) (void *);
 typedef struct thread_args_t {
     user_pfn_t user_pfn;
-    void* data;
-    ex_thread_t* info;
-    ex_semaphore_t* wait;
+    void *data;
+    ex_thread_t *info;
+    ex_semaphore_t *wait;
 } thread_args_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -33,16 +33,16 @@ typedef struct thread_args_t {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern int ex_sys_create_thread ( ex_thread_t* _thread, void* _args );
+extern int ex_sys_create_thread ( ex_thread_t *_thread, void *_args );
 // ------------------------------------------------------------------ 
 
-ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
-    ex_thread_t* thread;
-    thread_args_t* args;
+ex_thread_t *ex_create_thread ( ex_thread_pfn_t _fn, void *_data ) {
+    ex_thread_t *thread;
+    thread_args_t *args;
     int ret;
 
     // Allocate memory for the thread info structure
-    thread = (ex_thread_t*) ex_malloc_nomng(sizeof(ex_thread_t));
+    thread = (ex_thread_t *) ex_malloc_nomng(sizeof(ex_thread_t));
     if ( thread == NULL ) {
         ex_error ("out of memory!");
         return NULL;
@@ -51,7 +51,7 @@ ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
     thread->status = -1;
 
     // Set up the arguments for the thread
-    args = (thread_args_t*) ex_malloc_nomng(sizeof(thread_args_t));
+    args = (thread_args_t *) ex_malloc_nomng(sizeof(thread_args_t));
     if ( args == NULL ) {
         ex_error ("out of memory!");
         ex_free_nomng(thread);
@@ -94,10 +94,10 @@ ex_thread_t* ex_create_thread ( ex_thread_pfn_t _fn, void* _data ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void ex_sys_wait_thread ( ex_thread_t* _thread );
+extern void ex_sys_wait_thread ( ex_thread_t *_thread );
 // ------------------------------------------------------------------ 
 
-void ex_wait_thread ( ex_thread_t* _thread, int* _status ) {
+void ex_wait_thread ( ex_thread_t *_thread, int *_status ) {
     if ( _thread ) {
         ex_sys_wait_thread(_thread);
         if ( _status ) {
@@ -115,18 +115,18 @@ void ex_wait_thread ( ex_thread_t* _thread, int* _status ) {
 extern void ex_sys_setup_thread ();
 // ------------------------------------------------------------------ 
 
-void ex_run_thread ( void* _data ) {
-    thread_args_t* args;
+void ex_run_thread ( void *_data ) {
+    thread_args_t *args;
     user_pfn_t user_pfn;
-    void* user_data;
-    int* status_loc;
+    void *user_data;
+    int *status_loc;
 
     // Perform any system-dependent setup
     // this function cannot fail
     ex_sys_setup_thread();
 
     // Get the thread id
-    args = (thread_args_t*)_data;
+    args = (thread_args_t *)_data;
     args->info->threadID = ex_current_threadID();
 
     // Figure out what function to run
