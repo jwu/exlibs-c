@@ -17,13 +17,11 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static ex_hashmap_t *__id_to_serialize = NULL;
-static ex_hashmap_t *__classid_to_rtti = NULL;
+static ex_hashmap_t *__typeid_to_rtti = NULL;
 static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __factory_init ();
 // ------------------------------------------------------------------ 
 
 int ex_rtti_init () 
@@ -41,40 +39,28 @@ int ex_rtti_init ()
         return -1;
     }
 
-    __id_to_serialize = ex_hashmap_alloc ( sizeof(strid_t), 
-                                           sizeof(void *), 
-                                           256,
-                                           ex_hashkey_strid, 
-                                           ex_keycmp_strid );
-
-    __classid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
-                                           sizeof(ex_rtti_t *), 
-                                           256,
-                                           ex_hashkey_strid, 
-                                           ex_keycmp_strid );
-    __factory_init();
-
+    __typeid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
+                                          sizeof(ex_rtti_t *), 
+                                          256,
+                                          ex_hashkey_strid, 
+                                          ex_keycmp_strid );
     __initialized = true;
     return 0;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __factory_deinit ();
 // ------------------------------------------------------------------ 
 
 void ex_rtti_deinit ()
 {
     if ( __initialized ) {
-        __factory_deinit();
-
         // free all allocated string
-        ex_hashmap_each ( __classid_to_rtti, ex_rtti_t *, _info ) {
+        ex_hashmap_each ( __typeid_to_rtti, ex_rtti_t *, _info ) {
             ex_free(_info->props);
             ex_free(_info);
         } ex_hashmap_each_end;
-        ex_hashmap_free(__classid_to_rtti);
-        ex_hashmap_free(__id_to_serialize);
+        ex_hashmap_free(__typeid_to_rtti);
         __initialized = false;
     }
 }
@@ -89,30 +75,31 @@ bool ex_rtti_initialized () { return __initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_rtti_register_serialize ( strid_t _typeID, void *_pfn ) {
-    ex_hashmap_insert ( __id_to_serialize, &_typeID, &_pfn, NULL );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_rtti_t *ex_rtti_register_class ( strid_t _classID, ex_rtti_t *_super )
+ex_rtti_t *ex_rtti_register_class ( strid_t _typeID, 
+                                    ex_rtti_t *_super, 
+                                    size_t _typeSize,
+                                    ex_create_pfn _pfn_create,
+                                    ex_serialize_pfn _pfn_serialize
+                                  )
 {
-    ex_rtti_t *my_rtti = ex_rtti_get(_classID);
+    ex_rtti_t *my_rtti = ex_rtti_get(_typeID);
     bool result = false;
 
     // check if my class already exists.
-    ex_assert_return ( my_rtti == NULL, NULL, "the class %s already registered.", ex_strid_to_cstr(_classID) );
+    ex_assert_return ( my_rtti == NULL, NULL, "the class %s already registered.", ex_strid_to_cstr(_typeID) );
 
     // we got everything we want, now we can create rtti info.
     my_rtti = (ex_rtti_t *)ex_malloc ( sizeof(ex_rtti_t) );
     my_rtti->super = _super;
-    my_rtti->classid = _classID;
+    my_rtti->typeID = _typeID;
+    my_rtti->size = _typeSize;
     my_rtti->props = NULL;
+    my_rtti->prop_count = 0;
+    my_rtti->create = _pfn_create;
+    my_rtti->serialize = _pfn_serialize;
 
     // insert the new rtti to the hashmap
-    result = ex_hashmap_insert( __classid_to_rtti, &_classID, &my_rtti, NULL );
+    result = ex_hashmap_insert( __typeid_to_rtti, &_typeID, &my_rtti, NULL );
     if ( result == false ) {
         ex_warning( "failed to insert new rtti info in to hashmap" );
         ex_free (my_rtti);
@@ -144,20 +131,9 @@ void ex_rtti_register_properties ( ex_rtti_t *_info, const ex_prop_t *_props, ui
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_rtti_t *ex_rtti_get ( strid_t _classID )
+ex_rtti_t *ex_rtti_get ( strid_t _typeID )
 {
-    ex_rtti_t **result = (ex_rtti_t **)ex_hashmap_get( __classid_to_rtti, &_classID, NULL );
-    if ( result != NULL )
-        return *result;
-    return NULL;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void *ex_rtti_get_serialize_pfn ( strid_t _typeID ) {
-    void **result = (void **)ex_hashmap_get( __id_to_serialize, &_typeID, NULL );
+    ex_rtti_t **result = (ex_rtti_t **)ex_hashmap_get( __typeid_to_rtti, &_typeID, NULL );
     if ( result != NULL )
         return *result;
     return NULL;

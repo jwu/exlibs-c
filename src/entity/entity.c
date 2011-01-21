@@ -53,7 +53,7 @@ EX_SERIALIZE_END
 
 ex_entity_t *ex_entity_alloc () {
     ex_entity_t *ent = (ex_entity_t *)ex_malloc(sizeof(ex_entity_t));
-    ent->name = EX_STRID_INVALID;
+    ent->name = EX_STRID_NULL;
     ent->comps = ex_array_alloc( sizeof(ex_component_t *), 1 );
     return ent;
 }
@@ -105,7 +105,7 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
     }
 
     // create a component and added to the component list, then return it.
-    comp = (ex_component_t *)ex_factory_create(_typeID);
+    comp = (ex_component_t *)ex_create(_typeID);
     if ( comp ) {
         comp->owner = _ent; // set the owner of the component before init.
         if ( comp->init )
@@ -113,10 +113,10 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
         ex_array_append( _ent->comps, &comp );
 
         // cache internal component
-        if ( _typeID == EX_CLASSID(ex_trans2d_t) ) {
+        if ( _typeID == EX_TYPEID(ex_trans2d_t) ) {
             _ent->trans2d = (ex_trans2d_t *)comp; 
         }
-        else if ( _typeID == EX_CLASSID(ex_camera_t) ) {
+        else if ( _typeID == EX_TYPEID(ex_camera_t) ) {
             _ent->camera = (ex_camera_t *)comp; 
         }
     }

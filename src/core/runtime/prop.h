@@ -72,31 +72,32 @@ typedef struct ex_prop_t {
 // };
 
 // ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_BEGIN(_name)
+// Desc: EX_DEF_PROPS_BEGIN(_typename)
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_PROPS_BEGIN(_name) \
-    ex_rtti_t *__RTTI_##_name##__ = NULL; \
-    void __ex_register_properties_##_name () { \
-        static const ex_prop_t __PROPS_##_name##__[] = { \
+#define EX_DEF_PROPS_BEGIN(_typename) \
+    strid_t __TYPEID_##_typename##__; \
+    ex_rtti_t *__RTTI_##_typename##__ = NULL; \
+    void __ex_register_properties_##_typename () { \
+        static const ex_prop_t __PROPS_##_typename##__[] = {
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_PROP( _name, _member, _propName, _attrs, _set_func, _get_func ) \
-    { _propName, _attrs, offsetof(struct _name, _member), _set_func, _get_func },
+#define EX_PROP( _typename, _member, _propName, _attrs, _set_func, _get_func ) \
+    { _propName, _attrs, offsetof(struct _typename, _member), _set_func, _get_func },
 
 // ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_END(_name)
+// Desc: EX_DEF_PROPS_END(_typename)
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_PROPS_END(_name) \
+#define EX_DEF_PROPS_END(_typename) \
             { "", 0, -1, NULL, NULL } \
-        }; /*end of __PROPS_##_name##__*/ \
-        ex_rtti_t *rtti = EX_RTTI(_name); \
-        ex_assert_return( rtti, /**/, "failed to register class %s", #_name ); \
-        ex_rtti_register_properties ( rtti, __PROPS_##_name##__, EX_ARRAY_COUNT(__PROPS_##_name##__)-1 ); \
+        }; /*end of __PROPS_##_typename##__*/ \
+        ex_rtti_t *rtti = EX_RTTI(_typename); \
+        ex_assert_return( rtti, /**/, "failed to register class %s", #_typename ); \
+        ex_rtti_register_properties ( rtti, __PROPS_##_typename##__, EX_ARRAY_COUNT(__PROPS_##_typename##__)-1 ); \
     }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -40,7 +40,7 @@ EX_DEF_CLASS_SUPER_BEGIN(ex_camera_t,ex_component_t)
     ex_color3f_t bgColor; // background color
     ex_mat44f_t matWorldToView;
     ex_mat44f_t matProjection;
-EX_DEF_CLASS_END(ex_camera_t)
+EX_DEF_CLASS_SUPER_END(ex_camera_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

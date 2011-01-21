@@ -147,10 +147,12 @@ typedef struct ex_hashmap_t {
 
     // private
     size_t hashsize;
-    void *values;
-    size_t value_bytes;
     void *keys;
+    strid_t key_typeid;
     size_t key_bytes;
+    void *values;
+    strid_t value_typeid;
+    size_t value_bytes;
     size_t *indices;
     ex_pool_t *nodes;
     hashkey_t hashkey;
@@ -163,6 +165,43 @@ typedef struct ex_hashmap_t {
 
 extern ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
 extern ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// ex_hashset
+#define ex_hashset(_type,_count) \
+    ex_hashmap_alloc_2(EX_TYPEID(_type), EX_RTTI(_type)->size, \
+                       EX_TYPEID(_type), EX_RTTI(_type)->size, \
+                       _count, \
+                       ex_hashkey_##_type, ex_keycmp_##_type \
+                      )
+
+// ex_hashmap
+#define ex_hashmap(_key_type,_val_type,_count) \
+    ex_hashmap_alloc_2(EX_TYPEID(_key_type), EX_RTTI(_key_type)->size, \
+                       EX_TYPEID(_val_type), EX_RTTI(_val_type)->size, \
+                       _count, \
+                       ex_hashkey_##_key_type, ex_keycmp_##_key_type \
+                      )
+extern ex_hashmap_t *ex_hashmap_alloc_2 ( strid_t _key_typeid, size_t _key_bytes, strid_t _value_typeid, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
+
+// ex_hashset_nomng
+#define ex_hashset_nomng(_type,_count) \
+    ex_hashmap_alloc_nomng_2(EX_TYPEID(_type), EX_RTTI(_type)->size, \
+                             EX_TYPEID(_type), EX_RTTI(_type)->size, \
+                             _count, \
+                             ex_hashkey_##_type, ex_keycmp_##_type \
+                            )
+
+#define ex_hashmap_nomng(_key_type,_val_type,_count) \
+    ex_hashmap_alloc_nomng_2(EX_TYPEID(_key_type), EX_RTTI(_key_type)->size, \
+                             EX_TYPEID(_val_type), EX_RTTI(_val_type)->size, \
+                             _count, \
+                             ex_hashkey_##_key_type, ex_keycmp_##_key_type \
+                             )
+extern ex_hashmap_t *ex_hashmap_alloc_nomng_2 ( strid_t _key_typeid, size_t _key_bytes, strid_t _value_typeid, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
 
 // ------------------------------------------------------------------ 
 // Desc: 

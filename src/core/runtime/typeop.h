@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : debug2d.h
+// File         : typeop.h
 // Author       : Wu Jie 
-// Last Change  : 01/08/2011 | 16:42:18 PM | Saturday,January
+// Last Change  : 01/21/2011 | 10:18:09 AM | Friday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef DEBUG2D_H_1294476144
-#define DEBUG2D_H_1294476144
+#ifndef TYPEOP_H_1295576290
+#define TYPEOP_H_1295576290
 // #################################################################################
 
 // ######################### 
@@ -16,50 +16,51 @@ extern "C" {
 #endif
 // ######################### 
 
-#include "component.h"
-
 ///////////////////////////////////////////////////////////////////////////////
-// struct
+// macros
 ///////////////////////////////////////////////////////////////////////////////
 
-#define EX_DEBUG_SHAPE_RECT     0
-#define EX_DEBUG_SHAPE_CIRCLE   1
-
-// ------------------------------------------------------------------ 
-/*! 
- @struct ex_debug2d_t
- @details
-*/// ------------------------------------------------------------------ 
-
-EX_DEF_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
-    int shapeType;
-    ex_rectf_t rect;
-    ex_circlef_t circle;
-EX_DEF_CLASS_SUPER_END(ex_debug2d_t,ex_component_t)
+#define EX_TYPEID(_typename) \
+    (__TYPEID_##_typename##__)
 
 ///////////////////////////////////////////////////////////////////////////////
-// functions
+// defines
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_init ( void *_self ); 
-extern void ex_debug2d_deinit ( void *_self ); 
+static inline ex_create_pfn ex_create_func ( strid_t _typeID ) {
+    ex_rtti_t *rtti = ex_rtti_get(_typeID);
+    if ( rtti ) return rtti->create; 
+    return NULL;
+}
+static inline ex_serialize_pfn ex_serialize_func ( strid_t _typeID ) {
+    ex_rtti_t *rtti = ex_rtti_get(_typeID);
+    if ( rtti ) return rtti->serialize; 
+    return NULL;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_set_rect ( ex_debug2d_t *_self, 
-                                  float _x, float _y, float _width, float _height ); 
+extern void *ex_create ( strid_t _typeID );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// NOTE: this is good for generic progromming in lua-level, in c-level
+// we still use EX_SERIALIZE that will call those static function for performance.
+// ------------------------------------------------------------------ 
+
+extern void ex_serialize ( strid_t _typeID, struct ex_stream_t *_stream, strid_t _name, void *_val );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_draw ( ex_debug2d_t *_self ); 
+extern size_t ex_sizeof ( strid_t _typeID );
 
 // ######################### 
 #ifdef __cplusplus
@@ -68,5 +69,7 @@ extern void ex_debug2d_draw ( ex_debug2d_t *_self );
 // ######################### 
 
 // #################################################################################
-#endif // END DEBUG2D_H_1294476144
+#endif // END TYPEOP_H_1295576290
 // #################################################################################
+
+

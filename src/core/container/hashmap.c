@@ -44,10 +44,10 @@ static inline void *__getvalue ( const ex_hashmap_t *_hashmap, size_t _idx ) {
 
 // managed
 ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes, 
-                           size_t _value_bytes, 
-                           size_t _count, 
-                           hashkey_t _hashkey, 
-                           keycmp_t _keycmp )
+                                 size_t _value_bytes, 
+                                 size_t _count, 
+                                 hashkey_t _hashkey, 
+                                 keycmp_t _keycmp )
 {
     ex_hashmap_t *hashmap = ex_malloc( sizeof(ex_hashmap_t) );
 
@@ -59,18 +59,20 @@ ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes,
     // init length, _capacity, element bytes, hash and keycmp callbacks.
     hashmap->capacity = _count;
     hashmap->hashsize = _count;
+    hashmap->key_typeid = EX_STRID_NULL;
     hashmap->key_bytes = _key_bytes;
+    hashmap->value_typeid = EX_STRID_NULL;
     hashmap->value_bytes = _value_bytes;
     hashmap->hashkey = _hashkey;
     hashmap->keycmp = _keycmp;
 
-    // init data
-    hashmap->values = ex_malloc ( _count * _value_bytes  );
-    ex_memzero ( hashmap->values, _count * _value_bytes  );
-
     // init keys
     hashmap->keys = ex_malloc ( _count * _key_bytes );
     ex_memzero ( hashmap->keys, _count * _key_bytes );
+
+    // init data
+    hashmap->values = ex_malloc ( _count * _value_bytes  );
+    ex_memzero ( hashmap->values, _count * _value_bytes  );
 
     // init hash indices
     hashmap->indices = ex_malloc ( _count * sizeof(size_t) );
@@ -84,7 +86,11 @@ ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes,
 }
 
 // no managed
-ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp )
+ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes, 
+                                       size_t _value_bytes, 
+                                       size_t _count, 
+                                       hashkey_t _hashkey, 
+                                       keycmp_t _keycmp )
 {
     ex_hashmap_t *hashmap = ex_malloc_nomng( sizeof(ex_hashmap_t) );
 
@@ -96,18 +102,114 @@ ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, s
     // init length, _capacity, element bytes, hash and keycmp callbacks.
     hashmap->capacity = _count;
     hashmap->hashsize = _count;
+    hashmap->key_typeid = EX_STRID_NULL;
     hashmap->key_bytes = _key_bytes;
+    hashmap->value_typeid = EX_STRID_NULL;
     hashmap->value_bytes = _value_bytes;
     hashmap->hashkey = _hashkey;
     hashmap->keycmp = _keycmp;
+
+    // init keys
+    hashmap->keys = ex_malloc_nomng ( _count * _key_bytes );
+    ex_memzero ( hashmap->keys, _count * _key_bytes );
 
     // init data
     hashmap->values = ex_malloc_nomng ( _count * _value_bytes  );
     ex_memzero ( hashmap->values, _count * _value_bytes  );
 
+    // init hash indices
+    hashmap->indices = ex_malloc_nomng ( _count * sizeof(size_t) );
+    memset ( hashmap->indices, -1, _count * sizeof(size_t) );
+
+    // init hash nodes
+    hashmap->nodes = ex_pool_alloc_nomng ( sizeof(ex_hashmap_node_t), _count );
+
+    //
+    return hashmap;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// managed
+ex_hashmap_t *ex_hashmap_alloc_2 ( strid_t _key_typeid,
+                                   size_t _key_bytes, 
+                                   strid_t _value_typeid, 
+                                   size_t _value_bytes, 
+                                   size_t _count, 
+                                   hashkey_t _hashkey, 
+                                   keycmp_t _keycmp )
+{
+    ex_hashmap_t *hashmap = ex_malloc( sizeof(ex_hashmap_t) );
+
+    // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
+    ex_assert_exec( ex_is_pow_of_2(_count), 
+                    _count = ex_ceilpow2u(_count), 
+                    "hash count must be power of 2, for bit operation & instead of %" );
+
+    // init length, _capacity, element bytes, hash and keycmp callbacks.
+    hashmap->capacity = _count;
+    hashmap->hashsize = _count;
+    hashmap->key_typeid = _key_typeid;
+    hashmap->key_bytes = _key_bytes;
+    hashmap->value_typeid = _value_typeid;
+    hashmap->value_bytes = _value_bytes;
+    hashmap->hashkey = _hashkey;
+    hashmap->keycmp = _keycmp;
+
+    // init keys
+    hashmap->keys = ex_malloc ( _count * _key_bytes );
+    ex_memzero ( hashmap->keys, _count * _key_bytes );
+
+    // init data
+    hashmap->values = ex_malloc ( _count * _value_bytes  );
+    ex_memzero ( hashmap->values, _count * _value_bytes  );
+
+    // init hash indices
+    hashmap->indices = ex_malloc ( _count * sizeof(size_t) );
+    memset ( hashmap->indices, -1, _count * sizeof(size_t) );
+
+    // init hash nodes
+    hashmap->nodes = ex_pool_alloc ( sizeof(ex_hashmap_node_t), _count );
+
+    //
+    return hashmap;
+}
+
+// no managed
+ex_hashmap_t *ex_hashmap_alloc_nomng_2 ( strid_t _key_typeid,
+                                         size_t _key_bytes, 
+                                         strid_t _value_typeid, 
+                                         size_t _value_bytes, 
+                                         size_t _count, 
+                                         hashkey_t _hashkey, 
+                                         keycmp_t _keycmp )
+{
+    ex_hashmap_t *hashmap = ex_malloc_nomng( sizeof(ex_hashmap_t) );
+
+    // check if the count is pow of 2, if not, calc the nearest pow of 2 of the count.
+    ex_assert_exec( ex_is_pow_of_2(_count), 
+                    _count = ex_ceilpow2u(_count), 
+                    "hash count must be power of 2, for bit operation & instead of %" );
+
+    // init length, _capacity, element bytes, hash and keycmp callbacks.
+    hashmap->capacity = _count;
+    hashmap->hashsize = _count;
+    hashmap->key_typeid = _key_typeid;
+    hashmap->key_bytes = _key_bytes;
+    hashmap->value_typeid = _value_typeid;
+    hashmap->value_bytes = _value_bytes;
+    hashmap->hashkey = _hashkey;
+    hashmap->keycmp = _keycmp;
+
     // init keys
     hashmap->keys = ex_malloc_nomng ( _count * _key_bytes );
     ex_memzero ( hashmap->keys, _count * _key_bytes );
+
+    // init data
+    hashmap->values = ex_malloc_nomng ( _count * _value_bytes  );
+    ex_memzero ( hashmap->values, _count * _value_bytes  );
 
     // init hash indices
     hashmap->indices = ex_malloc_nomng ( _count * sizeof(size_t) );

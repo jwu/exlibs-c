@@ -130,6 +130,7 @@ extern "C" {
 
 typedef struct ex_array_t {
     char *data;
+    strid_t element_typeid;
     size_t element_bytes;
     size_t count;
     size_t capacity;
@@ -170,6 +171,16 @@ typedef struct ex_array_t {
 
 extern ex_array_t *ex_array_alloc ( size_t _element_bytes, size_t _count );
 extern ex_array_t *ex_array_alloc_nomng ( size_t _element_bytes, size_t _count );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define ex_array(_type,_count) ex_array_alloc_2(EX_TYPEID(_type),EX_RTTI(_type)->size,_count)
+extern ex_array_t *ex_array_alloc_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count );
+
+#define ex_array_nomng(_type,_count) ex_array_alloc_nomng_2(EX_TYPEID(_type),EX_RTTI(_type)->size,_count)
+extern ex_array_t *ex_array_alloc_nomng_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count );
 
 // ------------------------------------------------------------------ 
 /*! 

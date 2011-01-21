@@ -25,7 +25,8 @@ static void normal () {
         float val;
         int i;
 
-        ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 256, ex_hashkey_uint32, ex_keycmp_uint32 );
+        // ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 256, ex_hashkey_uint32, ex_keycmp_uint32 );
+        ex_hashmap_t *hashmap = ex_hashmap ( uint32, float, 256 );
 
         for ( i = 0; i < 512; ++i ) {
             key = 10 + i * 10;
@@ -61,7 +62,8 @@ static void normal () {
         char *key; 
         float val;
 
-        ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(char *), sizeof(float), 256, ex_hashkey_string, ex_keycmp_string );
+        // ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(char *), sizeof(float), 256, ex_hashkey_string, ex_keycmp_string );
+        ex_hashmap_t *hashmap = ex_hashmap ( string, float, 256 );
 
 	    key = "foo"; val = 1.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
         key = "bar"; val = 2.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
@@ -84,7 +86,8 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 static void invalid () {
-    ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 10, ex_hashkey_uint32, ex_keycmp_uint32 );
+    // ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(uint32), sizeof(float), 10, ex_hashkey_uint32, ex_keycmp_uint32 );
+    ex_hashmap_t *hashmap = ex_hashmap ( uint32, float, 10 );
     ex_hashmap_free ( hashmap );
 }
 

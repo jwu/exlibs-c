@@ -27,7 +27,7 @@
 
 static void __debug_draw ( ex_world_t *_world ) {
     ex_array_each ( _world->entities, ex_entity_t *, ent ) {
-        ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_get_comp( ent, EX_CLASSID(ex_debug2d_t) );
+        ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_get_comp( ent, EX_TYPEID(ex_debug2d_t) );
         if ( dbg2d ) {
             ex_debug2d_draw(dbg2d);
         }
@@ -83,8 +83,8 @@ ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name ) {
 ex_entity_t *ex_world_create_camera2d ( ex_world_t *_world, strid_t _name ) {
     ex_entity_t *ent = ex_world_create_entity( _world, _name );
 
-    ex_entity_add_comp( ent, EX_CLASSID(ex_trans2d_t) );
-    ex_camera_t *cam2d = (ex_camera_t *)ex_entity_add_comp( ent, EX_CLASSID(ex_camera_t) );
+    ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
+    ex_camera_t *cam2d = (ex_camera_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_camera_t) );
     ex_camera_set_ortho( cam2d, true );
 
     return ent;

@@ -28,10 +28,22 @@ extern "C" {
     void __ex_serialize_##_class( ex_stream_t *_stream, strid_t _name, void *_val ) { \
         _class *self = (_class *)_val; \
         if ( _stream->next ) { \
-            int ret = _stream->next( _stream, _name, EX_CLASSID(_class) ); \
+            int ret = _stream->next( _stream, _name, EX_TYPEID(_class) ); \
             if ( ret != 0 ) return; \
         } \
         if ( _stream->push ) _stream->push(_stream);
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_BEGIN_SUPER(_class,_super) \
+    void __ex_serialize_##_class( ex_stream_t *_stream, strid_t _name, void *_val ) { \
+        void (*tmp_pop) ( ex_stream_t *_stream ); \
+        tmp_pop = _stream->pop; \
+        _stream->pop = NULL; /*this make the super serialize no pop*/ \
+        __ex_serialize_##_super(_stream,_name,_val); \
+        _stream->pop = tmp_pop;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -45,21 +57,21 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_ARRAY(_el_type,_member) \
-        __ex_serialize_array(_stream, \
-                             ex_strid(#_member), \
-                             &(self->_member), \
-                             __ex_serialize_##_el_type);
+        __ex_serialize_array_2(_stream, \
+                               ex_strid(#_member), \
+                               self->_member, /*NOTE: array always appear as pointer*/ \
+                               __ex_serialize_##_el_type);
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_MAP(_key_type,_val_type,_member) \
-        __ex_serialize_map(_stream, \
-                           ex_strid(#_member), \
-                           &(self->_member), \
-                           __ex_serialize_##_key_type, \
-                           __ex_serialize_##_val_type);
+        __ex_serialize_map_2(_stream, \
+                             ex_strid(#_member), \
+                             self->_member, /*NOTE: map always appear as pointer*/ \
+                             __ex_serialize_##_key_type, \
+                             __ex_serialize_##_val_type);
 
 // ------------------------------------------------------------------ 
 // Desc: 

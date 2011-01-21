@@ -19,7 +19,6 @@
 
 #include "external.h"
 #include "types.h" // depends external
-#include "builtin_type.h" // depends external
 
 // #################################################################################
 #endif // END GLOBAL_INC_H_1277512309

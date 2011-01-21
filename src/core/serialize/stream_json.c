@@ -32,8 +32,8 @@ typedef struct __json_node_t {
 static __json_node_t *__create_node () {
     __json_node_t *node = (__json_node_t*)ex_malloc( sizeof(__json_node_t) );
 
-    node->typeid = EX_STRID_INVALID;
-    node->name = EX_STRID_INVALID;
+    node->typeid = EX_STRID_NULL;
+    node->name = EX_STRID_NULL;
     node->used = false;
     node->val = NULL;
     node->parent = NULL;
@@ -129,7 +129,7 @@ static int __yajl_string ( void *_ctx, const unsigned char *_text, unsigned int 
     __context *ctx = (__context*)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
         char *buf = ex_malloc ( sizeof(char) * (_len+1) ); 
-        strncpy ( buf, (const char *)_text, sizeof(_len) );
+        strncpy ( buf, (const char *)_text, _len );
         buf[_len] = 0;
         ctx->current->val = buf; 
     }
@@ -142,11 +142,11 @@ static int __yajl_map_key ( void *_ctx, const unsigned char *_text, unsigned int
     char *my_buf = NULL;
 
     my_buf = buf;
-    if ( _len >= 128 ) {
-        my_buf = ex_malloc(sizeof(char)*_len); 
+    if ( _len+1 >= 128 ) {
+        my_buf = ex_malloc(sizeof(char)*_len+1); 
     } 
     strncpy( my_buf, (const char *)_text, _len );
-    my_buf[_len] = 0; 
+    my_buf[_len] = 0;
 
     // the childrent of array or map doesn't have name
     if ( ctx->parent->typeid == EX_TYPEID(array) ||
@@ -173,7 +173,7 @@ static int __yajl_map_key ( void *_ctx, const unsigned char *_text, unsigned int
             ctx->next = __create_node();
             ctx->next->name = ex_strid(my_buf);
         }
-        else if ( ctx->next->typeid == EX_STRID_INVALID ) {
+        else if ( ctx->next->typeid == EX_STRID_NULL ) {
             ctx->next->typeid = ex_strid(my_buf); 
             __add_child( ctx->parent, ctx->next );
             ctx->current = ctx->next;
@@ -581,70 +581,6 @@ static void __read_strid ( ex_stream_t *_stream, strid_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el ) {
-    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-    void *buf;
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    // it is possible our array have zero element in it.
-    if ( node->children && node->children->count > 0 ) {
-        buf = ex_malloc ( _val->element_bytes );
-        ex_list_each ( node->children, __json_node_t *, _child ) {
-            ((pfn)_pfn_serialize_el) ( _stream, _child->name /*must be EX_STRID_INVALID*/, &buf );
-            ex_array_append ( _val, buf );
-        } ex_list_each_end 
-        ex_free(buf);
-    }
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val ) {
-    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-    void *key_buf, *val_buf;
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    // it is possible our map have zero element in it.
-    if ( node->children && node->children->count > 0 ) {
-        key_buf = ex_malloc ( _val->key_bytes );
-        val_buf = ex_malloc ( _val->value_bytes );
-        ex_list_each ( node->children, __json_node_t *, _child ) {
-            // get key
-            ((pfn)_pfn_serialize_key) ( _stream, _child->name /*must be EX_STRID_INVALID*/, &key_buf );
-
-            // doing a next jump manually 
-            ++__idx__;
-            __node__ = __node__->next;
-            ex_assert_return( __node__, /*dummy*/, "value can't not be NULL if we have key!" );
-            _child = (__json_node_t *) ( __node__->value );
-
-            // get value
-            ((pfn)_pfn_serialize_val) ( _stream, _child->name /*must be EX_STRID_INVALID*/, &val_buf );
-
-            // now insert the item 
-            ex_hashmap_insert ( _val, key_buf, val_buf, NULL );
-        } ex_list_each_end 
-        ex_free(key_buf);
-        ex_free(val_buf);
-    }
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 static void __read_vec2f ( ex_stream_t *_stream, ex_vec2f_t *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -852,6 +788,70 @@ static void __read_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
     ex_color4f_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]), (float)(buf[3]) );
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el ) {
+    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    void *buf;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    // it is possible our array have zero element in it.
+    if ( node->children && node->children->count > 0 ) {
+        buf = ex_malloc ( _val->element_bytes );
+        ex_list_each ( node->children, __json_node_t *, _child ) {
+            ((pfn)_pfn_serialize_el) ( _stream, _child->name /*must be EX_STRID_NULL*/, buf );
+            ex_array_append ( _val, buf );
+        } ex_list_each_end 
+        ex_free(buf);
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val ) {
+    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    void *key_buf, *val_buf;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    // it is possible our map have zero element in it.
+    if ( node->children && node->children->count > 0 ) {
+        key_buf = ex_malloc ( _val->key_bytes );
+        val_buf = ex_malloc ( _val->value_bytes );
+        ex_list_each ( node->children, __json_node_t *, _child ) {
+            // get key
+            ((pfn)_pfn_serialize_key) ( _stream, _child->name /*must be EX_STRID_NULL*/, key_buf );
+
+            // doing a next jump manually 
+            ++__idx__;
+            __node__ = __node__->next;
+            ex_assert_return( __node__, /*dummy*/, "value can't not be NULL if we have key!" );
+            _child = *((__json_node_t **) ( __node__->value ));
+
+            // get value
+            ((pfn)_pfn_serialize_val) ( _stream, _child->name /*must be EX_STRID_NULL*/, val_buf );
+
+            // now insert the item 
+            ex_hashmap_insert ( _val, key_buf, val_buf, NULL );
+        } ex_list_each_end 
+        ex_free(key_buf);
+        ex_free(val_buf);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // write functions
 ///////////////////////////////////////////////////////////////////////////////
@@ -995,20 +995,6 @@ static void __write_strid ( ex_stream_t *_stream, strid_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el ) {
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val ) {
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 static void __write_vec2f ( ex_stream_t *_stream, ex_vec2f_t *_val ) {
 }
 
@@ -1089,6 +1075,20 @@ static void __write_color4u ( ex_stream_t *_stream, ex_color4u_t *_val ) {
 static void __write_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val ) {
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // func
 ///////////////////////////////////////////////////////////////////////////////
@@ -1121,8 +1121,6 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_boolean,
         __read_string,
         __read_strid,
-        __read_array,
-        __read_map,
         __read_vec2f,
         __read_vec3f,
         __read_vec4f,
@@ -1135,6 +1133,8 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_color3f,
         __read_color4u,
         __read_color4f,
+        __read_array,
+        __read_map,
 
         // nodes
         NULL,
@@ -1246,8 +1246,6 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_boolean,
         __write_string,
         __write_strid,
-        __write_array,
-        __write_map,
         __write_vec2f,
         __write_vec3f,
         __write_vec4f,
@@ -1260,6 +1258,8 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_color3f,
         __write_color4u,
         __write_color4f,
+        __write_array,
+        __write_map,
 
         // nodes
         NULL,

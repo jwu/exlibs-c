@@ -26,11 +26,21 @@ extern "C" {
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
+// ------------------------------------------------------------------ 
+// Desc: 
+typedef struct ex_stream_t * ex_stream_ptr_t;
+typedef void *(*ex_create_pfn) ();
+typedef void (*ex_serialize_pfn) ( ex_stream_ptr_t, strid_t, void * );
+// ------------------------------------------------------------------ 
+
 typedef struct ex_rtti_t {
     struct ex_rtti_t *super;
-    strid_t classid;
+    strid_t typeID;
+    size_t size; // the sizeof(type)
     ex_prop_t *props;
     uint32 prop_count;
+    ex_create_pfn create; // the creator 
+    ex_serialize_pfn serialize; // the serializer
 } ex_rtti_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,13 +62,12 @@ extern bool ex_rtti_initialized ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_rtti_register_serialize ( strid_t _typeID, void *_pfn );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern ex_rtti_t *ex_rtti_register_class ( strid_t _classID, ex_rtti_t *_super );
+extern ex_rtti_t *ex_rtti_register_class ( strid_t _typeID, 
+                                           ex_rtti_t *_super, 
+                                           size_t _typeSize,
+                                           ex_create_pfn _pfn_create,
+                                           ex_serialize_pfn _pfn_serialize
+                                           );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -70,29 +79,22 @@ extern void ex_rtti_register_properties ( ex_rtti_t *_info, const ex_prop_t* _pr
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_rtti_t *ex_rtti_get ( strid_t _classID );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// can be EX_TYPEID or EX_CLASSID
-// ------------------------------------------------------------------ 
-
-extern void *ex_rtti_get_serialize_pfn ( strid_t _typeID );
+extern ex_rtti_t *ex_rtti_get ( strid_t _typeID );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 static inline const char *ex_rtti_classname ( const ex_rtti_t *_info ) { 
-    return ex_strid_to_cstr(_info->classid); 
+    return ex_strid_to_cstr(_info->typeID); 
 } 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline strid_t ex_rtti_classid ( const ex_rtti_t *_info ) { 
-    return _info->classid; 
+static inline strid_t ex_rtti_typeid ( const ex_rtti_t *_info ) { 
+    return _info->typeID; 
 }
 
 // ------------------------------------------------------------------ 
@@ -108,7 +110,7 @@ static inline ex_rtti_t *ex_rtti_super ( const ex_rtti_t *_info ) {
 // ------------------------------------------------------------------ 
 
 static inline bool ex_rtti_classof ( const ex_rtti_t *_myclass, const ex_rtti_t *_yourclass ) { 
-    return _myclass->classid == _yourclass->classid;
+    return _myclass->typeID == _yourclass->typeID;
 }
 
 // ------------------------------------------------------------------ 

@@ -55,7 +55,7 @@ void ex_trans2d_init ( void *_self ) {
     ex_angf_zero(&trans2d->ang);
     ex_vec2f_one(&trans2d->scale);
     trans2d->parent = NULL;
-    trans2d->children = ex_array_alloc( sizeof(ex_trans2d_t), 8 );
+    trans2d->children = ex_array_alloc( sizeof(ex_trans2d_t*), 8 );
 }
 
 // ------------------------------------------------------------------ 

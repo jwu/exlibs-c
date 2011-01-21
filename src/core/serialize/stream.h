@@ -55,9 +55,6 @@ typedef struct ex_stream_t {
     void (*serialize_string)    ( struct ex_stream_t *_stream, char **_val );
     void (*serialize_strid)     ( struct ex_stream_t *_stream, strid_t *_val );
 
-    void (*serialize_array)     ( struct ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el );
-    void (*serialize_map)       ( struct ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val );
-
     void (*serialize_vec2f)     ( struct ex_stream_t *_stream, ex_vec2f_t *_val );
     void (*serialize_vec3f)     ( struct ex_stream_t *_stream, ex_vec3f_t *_val );
     void (*serialize_vec4f)     ( struct ex_stream_t *_stream, ex_vec4f_t *_val );
@@ -73,6 +70,9 @@ typedef struct ex_stream_t {
     void (*serialize_color3f)   ( struct ex_stream_t *_stream, ex_color3f_t *_val );
     void (*serialize_color4u)   ( struct ex_stream_t *_stream, ex_color4u_t *_val );
     void (*serialize_color4f)   ( struct ex_stream_t *_stream, ex_color4f_t *_val );
+
+    void (*serialize_array)     ( struct ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el );
+    void (*serialize_map)       ( struct ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val );
 
 } ex_stream_t;
 

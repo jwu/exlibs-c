@@ -43,10 +43,10 @@ static void normal () {
 
     {
         uint cur = 0,prev = 0;
-        size_t sid;
+        strid_t sid;
 
-        words = ex_array_alloc ( sizeof(char *), 256 );
-        word_IDs = ex_array_alloc ( sizeof(size_t), 256 );
+        words = ex_array ( string, 256 );
+        word_IDs = ex_array ( strid, 256 );
 
         // dump string and string ID
         while ( cur < fsize ) {
@@ -59,7 +59,7 @@ static void normal () {
                 word[word_len] = '\0';
 
                 sid = ex_strid( word );
-                ex_assert(sid != -1, "can't get string ID of %s", word);
+                ex_assert(sid != EX_STRID_NULL, "can't get string ID of %s", word);
 
                 ex_array_append ( words, &word );
                 ex_array_append ( word_IDs, &sid );
@@ -72,7 +72,7 @@ static void normal () {
         cur = 0;
         while ( cur < ex_array_count(words) ) {
             char *word = *((char **)ex_array_get( words, cur ));
-            size_t sid = *((size_t *)ex_array_get( word_IDs, cur )); 
+            strid_t sid = *((size_t *)ex_array_get( word_IDs, cur )); 
             // EX_TEST ( wcscmp(ex_strid_to_cstr(sid), word) == 0 );
             ex_assert ( strcmp(ex_strid_to_cstr(sid), word) == 0, "%s(%d) is not equal to %s", ex_strid_to_cstr(sid), sid, word );
             ++cur;

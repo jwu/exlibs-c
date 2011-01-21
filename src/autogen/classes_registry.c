@@ -25,7 +25,7 @@
 
 void ex_register_classes () {
     // ex core
-    EX_REGISTER_CLASS(ex_class_t);
+    EX_REGISTER_CLASS(ex_class_t); // the very base class for any other classes
 
     // ex engine
     EX_REGISTER_CLASS(ex_entity_t);

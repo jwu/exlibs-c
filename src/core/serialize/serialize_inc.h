@@ -26,7 +26,7 @@ extern "C" {
 #include "stream_xml.h"
 
 #include "serialize_macro.h"
-#include "serialize_builtin.h"
+// #include "serialize_builtin.h" // NOTE: defined in runtime/builtin_type.h
 
 // ######################### 
 #ifdef __cplusplus

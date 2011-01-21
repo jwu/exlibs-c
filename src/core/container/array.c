@@ -28,6 +28,7 @@ ex_array_t *ex_array_alloc ( size_t _element_bytes, size_t _count )
     ex_array_t *array = ex_malloc ( sizeof(ex_array_t) );
 
     // init members
+    array->element_typeid = EX_STRID_NULL;
     array->element_bytes = _element_bytes;
     array->count = 0;
     array->capacity = _count;
@@ -48,6 +49,53 @@ ex_array_t *ex_array_alloc_nomng ( size_t _element_bytes, size_t _count )
     ex_array_t *array = ex_malloc_nomng ( sizeof(ex_array_t) );
 
     // init members
+    array->element_typeid = EX_STRID_NULL;
+    array->element_bytes = _element_bytes;
+    array->count = 0;
+    array->capacity = _count;
+
+    // init data
+    array->data = ex_malloc_nomng( bytes );
+    ex_memzero ( array->data, bytes );
+
+    //
+    return array;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// managed
+ex_array_t *ex_array_alloc_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count )
+{
+    size_t bytes = _element_bytes * _count; 
+
+    ex_array_t *array = ex_malloc ( sizeof(ex_array_t) );
+
+    // init members
+    array->element_typeid = _element_typeid;
+    array->element_bytes = _element_bytes;
+    array->count = 0;
+    array->capacity = _count;
+
+    // init data
+    array->data = ex_malloc( bytes );
+    ex_memzero ( array->data, bytes );
+
+    //
+    return array;
+}
+
+// no managed
+ex_array_t *ex_array_alloc_nomng_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count )
+{
+    size_t bytes = _element_bytes * _count; 
+
+    ex_array_t *array = ex_malloc_nomng ( sizeof(ex_array_t) );
+
+    // init members
+    array->element_typeid = _element_typeid;
     array->element_bytes = _element_bytes;
     array->count = 0;
     array->capacity = _count;

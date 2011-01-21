@@ -35,6 +35,7 @@ int ex_strid_init ( size_t _size )
         return 1;
     }
 
+    // NOTE: do not use ex_hashset here, cause EX_TYPEID not established.
     __string_set = ex_hashmap_alloc ( sizeof(char *), sizeof(char *), _size, ex_hashkey_string, ex_keycmp_string );
     ex_assert_return ( __string_set, -1, "string table alloc failed" );
 
@@ -120,6 +121,7 @@ strid_t ex_strid_from_wcs ( const wchar_t *_string )
 
 char *ex_strid_to_cstr ( strid_t _id )
 {
+    if ( _id == EX_STRID_NULL ) return NULL;
     char *addr = (char *)__string_set->keys + _id * __string_set->key_bytes;
     return *((char **)addr);
 }

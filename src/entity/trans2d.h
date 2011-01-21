@@ -34,7 +34,7 @@ EX_DEF_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_vec2f_t  scale; // local scale
     struct ex_trans2d_t *parent;
     ex_array_t *children;
-EX_DEF_CLASS_END(ex_trans2d_t)
+EX_DEF_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

@@ -20,7 +20,7 @@
 // ------------------------------------------------------------------ 
 
 static void normal () {
-    ex_array_t *array = ex_array_alloc ( sizeof(uint32), 20 ); 
+    ex_array_t *array = ex_array(uint32,20); 
     {
         size_t i = 0;
         while ( i != 100 ) {
@@ -36,7 +36,7 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 static void invalid() {
-    ex_array_t *array = ex_array_alloc ( sizeof(uint32), 20 ); 
+    ex_array_t *array = ex_array(uint32,20); 
     {
         void *pval = ex_array_get( array, 40 );
 		(void *)pval;
