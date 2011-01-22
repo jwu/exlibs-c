@@ -35,9 +35,9 @@ extern "C" {
       EX_SERIALIZE(int,val1);
   EX_SERIALIZE_END
 
-  EX_DEF_TOSTRING(foo) {
-      EX_TOSTRING(int,_string,&(foo->val));
-  }
+  EX_DEF_TOSTRING_BEGIN(foo)
+      EX_MEMBER_TOSTRING(int,"val",&(self->val));
+  EX_DEF_TOSTRING_END
 
   finally register in classes_registry
   EX_REGISTER_CLASS(foo);
@@ -232,6 +232,7 @@ extern "C" {
 #define EX_SERIALIZE_BEGIN_SUPER(_class,_super) \
     void __ex_serialize_##_class( ex_stream_t *_stream, strid_t _name, void *_val ) { \
         void (*tmp_pop) ( ex_stream_t *_stream ); \
+        _class *self = (_class *)_val; \
         tmp_pop = _stream->pop; \
         _stream->pop = NULL; /*this make the super serialize no pop*/ \
         __ex_serialize_##_super(_stream,_name,_val); \
@@ -243,6 +244,16 @@ extern "C" {
 
 #define EX_SERIALIZE(_type,_member) \
         __ex_serialize_##_type(_stream,ex_strid(#_member),&(self->_member));
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_STRING(_member) \
+        __ex_serialize_string(_stream, \
+                               ex_strid(#_member), \
+                               self->_member /*NOTE: string always appear as pointer*/ \
+                               );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -278,14 +289,29 @@ extern "C" {
 // tostring help macros
 ///////////////////////////////////////////////////////////////////////////////
 
-#define EX_DEF_TOSTRING(_type) \
-    void __ex_tostring_##_type ( ex_string_t *_string, void *_val )
+#define EX_DEF_TOSTRING_BEGIN(_type) \
+    void __ex_tostring_##_type ( ex_string_t *_string, void *_val ) { \
+        _type *self = (_type *)_val; \
+        ex_string_cat( _string, #_type": {\n" ); \
+
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_TOSTRING(_type,_ostr,_val) __ex_tostring_##_type(_ostr,&(_val))
+#define EX_MEMBER_TOSTRING(_type,_name,_val) \
+        ex_string_cat( _string, _name" " ); \
+        __ex_tostring_##_type(_string,&(_val)); \
+        ex_string_cat( _string, ",\n" );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_DEF_TOSTRING_END \
+        ex_string_cat( _string, "}\n" ); \
+        (void *)self; \
+    }
 
 // ######################### 
 #ifdef __cplusplus

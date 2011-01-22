@@ -70,8 +70,8 @@ int main( int argc, char *argv[] )
         // test_memmng ();
         // test_pool ();
         // test_rtti ();
-        // test_stream ();
-        test_string ();
+        test_stream ();
+        // test_string ();
         // test_stringID ();
         // test_thread();
         // test_timer();

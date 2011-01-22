@@ -39,8 +39,8 @@ EX_SERIALIZE_BEGIN(ex_trans2d_t)
     // EX_SERIALIZE_MAP( strid, float, children_map );
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING(ex_trans2d_t) {
-}
+EX_DEF_TOSTRING_BEGIN(ex_trans2d_t)
+EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

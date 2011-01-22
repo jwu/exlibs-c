@@ -63,8 +63,8 @@ EX_DEF_PROPS_END(test_cls_t)
 EX_SERIALIZE_BEGIN(test_cls_t)
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING(test_cls_t) {
-}
+EX_DEF_TOSTRING_BEGIN(test_cls_t)
+EX_DEF_TOSTRING_END
 
 #endif
 

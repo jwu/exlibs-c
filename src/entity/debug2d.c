@@ -35,8 +35,8 @@ EX_DEF_PROPS_END(ex_debug2d_t)
 EX_SERIALIZE_BEGIN(ex_debug2d_t)
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING(ex_debug2d_t) {
-}
+EX_DEF_TOSTRING_BEGIN(ex_debug2d_t)
+EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines

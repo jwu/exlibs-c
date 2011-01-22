@@ -56,6 +56,15 @@ static inline bool ex_string_is_empty( ex_string_t *_string ) { return _string->
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_string_clear( ex_string_t *_string ) { 
+    _string->text[0] = '\0'; 
+    _string->len = 0; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // NOTE: you can cat a ex_string_t by ex_string_ncat ( my_string, your_string->text, your_string->len );
 // ------------------------------------------------------------------ 
 

@@ -244,16 +244,17 @@ static inline void __ex_tostring_array_2 ( ex_string_t *_string, void *_val, voi
     ex_array_t *val = (ex_array_t *)_val;
     size_t idx = 0;
 
-    ex_string_cat( _string, "[ " );
+    ex_string_cat( _string, "[\n" );
     while ( idx < val->count ) {
         void *_el = ex_array_get(val,idx);
 
+        ex_string_cat( _string, "\t" );
         ((pfn)_tostring_pfn)( _string, _el );
-        ex_string_cat( _string, ", " );
+        ex_string_cat( _string, ",\n" );
 
         ++idx;
     }
-    ex_string_cat( _string, " ]" );
+    ex_string_cat( _string, "]" );
 }
 static inline void __ex_tostring_array ( ex_string_t *_string, void *_val ) {
     ex_array_t *val = (ex_array_t *)_val;
@@ -271,12 +272,12 @@ static inline void __ex_tostring_map_2 ( ex_string_t *_string, void *_val,
     size_t count = ex_hashmap_count(val);
 	size_t idx = 0;
 
-    ex_string_cat( _string, "{\n " );
+    ex_string_cat( _string, "{\n" );
     while ( idx < count ) {
         void *key = (char *)val->keys + idx * val->key_bytes;
         void *value = (char *)val->values + idx * val->value_bytes;
 
-        ex_string_cat( _string, "( key: " );
+        ex_string_cat( _string, "\t( key: " );
         ((pfn)_key_tostring_pfn)( _string, key );
         ex_string_cat( _string, ", value: " );
         ((pfn)_value_tostring_pfn)( _string, value );
@@ -284,14 +285,14 @@ static inline void __ex_tostring_map_2 ( ex_string_t *_string, void *_val,
 
         ++idx;
     }
-    ex_string_cat( _string, " }" );
+    ex_string_cat( _string, "}" );
 }
 static inline void __ex_tostring_map ( ex_string_t *_string, void *_val ) {
     ex_hashmap_t *val = (ex_hashmap_t *)_val;
     void *key_tostring_pfn = ex_tostring_func(val->key_typeid);
     void *value_tostring_pfn = ex_tostring_func(val->value_typeid);
 
-    if ( key_tostring_pfn == NULL || value_tostring_pfn ) return; // the map not support generic to string
+    if ( key_tostring_pfn == NULL || value_tostring_pfn == NULL ) return; // the map not support generic to string
     __ex_tostring_map_2( _string, _val, key_tostring_pfn, value_tostring_pfn );
 }
 

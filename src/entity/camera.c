@@ -36,8 +36,8 @@ EX_DEF_PROPS_END(ex_camera_t)
 EX_SERIALIZE_BEGIN(ex_camera_t)
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING(ex_camera_t) {
-}
+EX_DEF_TOSTRING_BEGIN(ex_camera_t)
+EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
