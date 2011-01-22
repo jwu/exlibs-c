@@ -42,6 +42,7 @@ extern void test_pool();
 extern void test_rapid();
 extern void test_rtti();
 extern void test_stream();
+extern void test_string();
 extern void test_stringID();
 extern void test_thread();
 extern void test_timer();
@@ -69,7 +70,8 @@ int main( int argc, char *argv[] )
         // test_memmng ();
         // test_pool ();
         // test_rtti ();
-        test_stream ();
+        // test_stream ();
+        test_string ();
         // test_stringID ();
         // test_thread();
         // test_timer();

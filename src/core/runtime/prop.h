@@ -38,68 +38,6 @@ typedef struct ex_prop_t {
     void (*get_property) ( void *_pObj, size_t _offset, void *_value ); // if not use, set it to NULL
 } ex_prop_t;
 
-// ------------------------------------------------------------------ 
-// Desc: flags
-// ------------------------------------------------------------------ 
-
-#define EX_PROP_ATTR_NONE           0x00000000
-#define EX_PROP_ATTR_READ_ONLY      0x00000001
-#define EX_PROP_ATTR_HIDE           0x00000002
-#define EX_PROP_ATTR_NO_SERIALIZE   0x00000004
-#define EX_PROP_ATTR_EDITOR_ONLY    0x00000008
-
-// EXAMPLE { 
-// ex_prop_t[] props = {
-//     { "value1", EX_PROP_ATTR_NONE,      offsetof(struct foobar, value1), ex_prop_set_raw_int8,  ex_prop_get_raw_int8 }
-//   , { "value2", EX_PROP_ATTR_READ_ONLY, offsetof(struct foobar, value2), ex_prop_set_raw_float, ex_prop_get_raw_float }
-// }
-//
-// just show u how to set empty value for each item.
-// { "unknown", 0, -1, NULL, NULL }
-// } EXAMPLE end 
-
-///////////////////////////////////////////////////////////////////////////////
-// macros
-///////////////////////////////////////////////////////////////////////////////
-
-// // why not use strid_t ???
-// // because if use strid_t for the property name, we can't define it in
-// // compile-time, but the array below is store in compile time.
-// static const ex_prop_t __PROPS_test_cls_t__[] = {
-//     { "id",     EX_PROP_ATTR_READ_ONLY, offsetof(struct test_cls_t, id),    ex_prop_set_raw_int32, ex_prop_get_raw_int32 }
-//   , { "data1",  EX_PROP_ATTR_NONE,      offsetof(struct test_cls_t, data1), ex_prop_set_raw_float, ex_prop_get_raw_float }
-//   , { "data2",  EX_PROP_ATTR_NONE,      offsetof(struct test_cls_t, data2), ex_prop_set_raw_float, ex_prop_get_raw_float }
-// };
-
-// ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_BEGIN(_typename)
-// ------------------------------------------------------------------ 
-
-#define EX_DEF_PROPS_BEGIN(_typename) \
-    strid_t __TYPEID_##_typename##__; \
-    ex_rtti_t *__RTTI_##_typename##__ = NULL; \
-    void __ex_register_properties_##_typename () { \
-        static const ex_prop_t __PROPS_##_typename##__[] = {
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-#define EX_PROP( _typename, _member, _propName, _attrs, _set_func, _get_func ) \
-    { _propName, _attrs, offsetof(struct _typename, _member), _set_func, _get_func },
-
-// ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_END(_typename)
-// ------------------------------------------------------------------ 
-
-#define EX_DEF_PROPS_END(_typename) \
-            { "", 0, -1, NULL, NULL } \
-        }; /*end of __PROPS_##_typename##__*/ \
-        ex_rtti_t *rtti = EX_RTTI(_typename); \
-        ex_assert_return( rtti, /**/, "failed to register class %s", #_typename ); \
-        ex_rtti_register_properties ( rtti, __PROPS_##_typename##__, EX_ARRAY_COUNT(__PROPS_##_typename##__)-1 ); \
-    }
-
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

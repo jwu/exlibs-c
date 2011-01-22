@@ -36,7 +36,7 @@ int ex_strid_init ( size_t _size )
     }
 
     // NOTE: do not use ex_hashset here, cause EX_TYPEID not established.
-    __string_set = ex_hashmap_alloc ( sizeof(char *), sizeof(char *), _size, ex_hashkey_string, ex_keycmp_string );
+    __string_set = ex_hashmap_alloc ( sizeof(char *), sizeof(char *), _size, ex_hashkey_cstr, ex_keycmp_cstr );
     ex_assert_return ( __string_set, -1, "string table alloc failed" );
 
     __initialized = true;

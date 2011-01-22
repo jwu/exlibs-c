@@ -31,6 +31,7 @@ extern "C" {
 typedef struct ex_stream_t * ex_stream_ptr_t;
 typedef void *(*ex_create_pfn) ();
 typedef void (*ex_serialize_pfn) ( ex_stream_ptr_t, strid_t, void * );
+typedef void (*ex_tostring_pfn) ( ex_string_t *, void * );
 // ------------------------------------------------------------------ 
 
 typedef struct ex_rtti_t {
@@ -41,6 +42,7 @@ typedef struct ex_rtti_t {
     uint32 prop_count;
     ex_create_pfn create; // the creator 
     ex_serialize_pfn serialize; // the serializer
+    ex_tostring_pfn tostring; // the tostring method
 } ex_rtti_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -66,7 +68,8 @@ extern ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
                                            ex_rtti_t *_super, 
                                            size_t _typeSize,
                                            ex_create_pfn _pfn_create,
-                                           ex_serialize_pfn _pfn_serialize
+                                           ex_serialize_pfn _pfn_serialize,
+                                           ex_tostring_pfn _pfn_tostring
                                            );
 
 // ------------------------------------------------------------------ 

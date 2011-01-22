@@ -15,7 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "rtti.h"
-#include "../serialize/serialize_builtin.h"
+#include "builtin_serialize.h"
+#include "builtin_tostring.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defiens
@@ -36,7 +37,8 @@
                                                           NULL, \
                                                           sizeof(_typename), \
                                                           NULL, \
-                                                          __ex_serialize_##_typename \
+                                                          __ex_serialize_##_typename, \
+                                                          __ex_tostring_##_typename \
                                                           ); \
     }
 
@@ -48,7 +50,8 @@
                                                           NULL, \
                                                           sizeof(_type), \
                                                           NULL, \
-                                                          __ex_serialize_##_typename \
+                                                          __ex_serialize_##_typename, \
+                                                          __ex_tostring_##_typename \
                                                           ); \
     }
 
@@ -56,6 +59,9 @@
 // declares
 ///////////////////////////////////////////////////////////////////////////////
 
+EX_DECL_BUILTIN_TYPE(bool);
+EX_DECL_BUILTIN_TYPE(int);
+EX_DECL_BUILTIN_TYPE(size_t);
 EX_DECL_BUILTIN_TYPE(int8);
 EX_DECL_BUILTIN_TYPE(int16);
 EX_DECL_BUILTIN_TYPE(int32);
@@ -66,8 +72,8 @@ EX_DECL_BUILTIN_TYPE(uint32);
 EX_DECL_BUILTIN_TYPE(uint64);
 EX_DECL_BUILTIN_TYPE(float);
 EX_DECL_BUILTIN_TYPE(double);
-EX_DECL_BUILTIN_TYPE_2(boolean, bool);
-EX_DECL_BUILTIN_TYPE_2(string, char *);
+EX_DECL_BUILTIN_TYPE_2(cstr, char *);
+EX_DECL_BUILTIN_TYPE_2(string, ex_string_t);
 EX_DECL_BUILTIN_TYPE_2(strid, strid_t);
 EX_DECL_BUILTIN_TYPE_2(vec2f, ex_vec2f_t);
 EX_DECL_BUILTIN_TYPE_2(vec3f, ex_vec3f_t);

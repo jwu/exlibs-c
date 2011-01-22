@@ -79,7 +79,8 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
                                     ex_rtti_t *_super, 
                                     size_t _typeSize,
                                     ex_create_pfn _pfn_create,
-                                    ex_serialize_pfn _pfn_serialize
+                                    ex_serialize_pfn _pfn_serialize,
+                                    ex_tostring_pfn _pfn_tostring
                                   )
 {
     ex_rtti_t *my_rtti = ex_rtti_get(_typeID);
@@ -97,6 +98,7 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
     my_rtti->prop_count = 0;
     my_rtti->create = _pfn_create;
     my_rtti->serialize = _pfn_serialize;
+    my_rtti->tostring = _pfn_tostring;
 
     // insert the new rtti to the hashmap
     result = ex_hashmap_insert( __typeid_to_rtti, &_typeID, &my_rtti, NULL );

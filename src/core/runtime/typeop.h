@@ -17,13 +17,6 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// macros
-///////////////////////////////////////////////////////////////////////////////
-
-#define EX_TYPEID(_typename) \
-    (__TYPEID_##_typename##__)
-
-///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -41,6 +34,11 @@ static inline ex_serialize_pfn ex_serialize_func ( strid_t _typeID ) {
     if ( rtti ) return rtti->serialize; 
     return NULL;
 }
+static inline ex_tostring_pfn ex_tostring_func ( strid_t _typeID ) {
+    ex_rtti_t *rtti = ex_rtti_get(_typeID);
+    if ( rtti ) return rtti->tostring; 
+    return NULL;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -55,6 +53,14 @@ extern void *ex_create ( strid_t _typeID );
 // ------------------------------------------------------------------ 
 
 extern void ex_serialize ( strid_t _typeID, struct ex_stream_t *_stream, strid_t _name, void *_val );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// NOTE: this is good for generic progromming in lua-level, in c-level
+// we still use EX_TOSTRING that will call those static function for performance.
+// ------------------------------------------------------------------ 
+
+extern void ex_tostring ( strid_t _typeID, struct ex_string_t *_string, void *_val );
 
 // ------------------------------------------------------------------ 
 // Desc: 

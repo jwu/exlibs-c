@@ -36,7 +36,7 @@ EX_DEF_CLASS_BEGIN(simple_t)
     float           m_float;
     double          m_double;
     bool            m_bool;
-    char*           m_string;
+    char*           m_cstr;
     strid_t         m_strid;
     ex_vec2f_t      m_vec2f;
     ex_vec3f_t      m_vec3f;
@@ -68,8 +68,8 @@ EX_SERIALIZE_BEGIN(simple_t)
     EX_SERIALIZE ( uint64, m_uint64);
     EX_SERIALIZE ( float, m_float);
     EX_SERIALIZE ( double, m_double);
-    EX_SERIALIZE ( boolean, m_bool);
-    EX_SERIALIZE ( string, m_string);
+    EX_SERIALIZE ( bool, m_bool);
+    EX_SERIALIZE ( cstr, m_cstr);
     EX_SERIALIZE ( strid, m_strid);
     EX_SERIALIZE ( vec2f, m_vec2f);
     EX_SERIALIZE ( vec3f, m_vec3f);
@@ -84,6 +84,9 @@ EX_SERIALIZE_BEGIN(simple_t)
     EX_SERIALIZE ( color4f, m_color4f);
     EX_SERIALIZE ( color4u, m_color4u);
 EX_SERIALIZE_END
+
+EX_DEF_TOSTRING(simple_t) {
+}
 
 // complex
 EX_DEF_CLASS_BEGIN(complex_t)
@@ -105,6 +108,9 @@ EX_SERIALIZE_BEGIN(complex_t)
     EX_SERIALIZE_ARRAY ( vec3f, m_vec3f_list);
     EX_SERIALIZE_MAP ( strid, float, m_strid_to_float);
 EX_SERIALIZE_END
+
+EX_DEF_TOSTRING(complex_t) {
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 

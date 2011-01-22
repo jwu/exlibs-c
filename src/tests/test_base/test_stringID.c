@@ -45,7 +45,7 @@ static void normal () {
         uint cur = 0,prev = 0;
         strid_t sid;
 
-        words = ex_array ( string, 256 );
+        words = ex_array ( cstr, 256 );
         word_IDs = ex_array ( strid, 256 );
 
         // dump string and string ID

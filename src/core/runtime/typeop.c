@@ -54,6 +54,24 @@ void ex_serialize ( strid_t _typeID,
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_tostring ( strid_t _typeID, 
+                   ex_string_t *_string, void *_val ) {
+	ex_rtti_t *rtti = ex_rtti_get(_typeID);
+    if ( rtti ) {
+        if ( rtti->tostring ) 
+            rtti->tostring(_string,_val);
+        else 
+            ex_warning ( "can't find tostring function for type %s", ex_strid_to_cstr(_typeID) );
+    }
+    else {
+        ex_warning ( "can't find rtti for type %s", ex_strid_to_cstr(_typeID) );
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 size_t ex_sizeof ( strid_t _typeID ) {
     ex_rtti_t *rtti = ex_rtti_get(_typeID);
     if ( rtti ) 

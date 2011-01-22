@@ -11,6 +11,7 @@
 // #################################################################################
 
 #include "strid.h"
+#include "string.h"
 #include "str_op.h"
 #include "encoding.h"
 

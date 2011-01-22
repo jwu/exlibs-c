@@ -383,6 +383,51 @@ static void __read_pop ( ex_stream_t *_stream ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __read_bool ( ex_stream_t *_stream, bool *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    *_val = *(int *)node->val;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_int ( ex_stream_t *_stream, int *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    *_val = *(int *)node->val;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_size_t ( ex_stream_t *_stream, size_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    *_val = *(size_t *)node->val;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __read_int8 ( ex_stream_t *_stream, int8 *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -533,22 +578,7 @@ static void __read_double ( ex_stream_t *_stream, double *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_boolean ( ex_stream_t *_stream, bool *_val ) {
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    *_val = *(int *)node->val;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __read_string ( ex_stream_t *_stream, char **_val ) {
+static void __read_cstr ( ex_stream_t *_stream, char **_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
 
@@ -560,6 +590,21 @@ static void __read_string ( ex_stream_t *_stream, char **_val ) {
     *_val = (char *)ex_malloc ( strlen((const char *)node->val)+1 );
     strcpy ( *_val, (const char *)node->val );
     // } TODO end 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_string ( ex_stream_t *_stream, ex_string_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    ex_string_ncpy( _val, (const char *)node->val, strlen((const char *)node->val) );
 }
 
 // ------------------------------------------------------------------ 
@@ -792,8 +837,7 @@ static void __read_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el ) {
-    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
+static void __read_array ( ex_stream_t *_stream, ex_array_t *_val, ex_serialize_pfn _pfn_serialize_el ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
     void *buf;
@@ -806,7 +850,7 @@ static void __read_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_se
     if ( node->children && node->children->count > 0 ) {
         buf = ex_malloc ( _val->element_bytes );
         ex_list_each ( node->children, __json_node_t *, _child ) {
-            ((pfn)_pfn_serialize_el) ( _stream, _child->name /*must be EX_STRID_NULL*/, buf );
+            _pfn_serialize_el ( _stream, _child->name /*must be EX_STRID_NULL*/, buf );
             ex_array_append ( _val, buf );
         } ex_list_each_end 
         ex_free(buf);
@@ -817,8 +861,7 @@ static void __read_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_se
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val ) {
-    typedef void (*pfn) ( ex_stream_t *, strid_t, void * );
+static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_pfn _pfn_serialize_key, ex_serialize_pfn _pfn_serialize_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
     void *key_buf, *val_buf;
@@ -833,7 +876,7 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_se
         val_buf = ex_malloc ( _val->value_bytes );
         ex_list_each ( node->children, __json_node_t *, _child ) {
             // get key
-            ((pfn)_pfn_serialize_key) ( _stream, _child->name /*must be EX_STRID_NULL*/, key_buf );
+            _pfn_serialize_key ( _stream, _child->name /*must be EX_STRID_NULL*/, key_buf );
 
             // doing a next jump manually 
             ++__idx__;
@@ -842,7 +885,7 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_se
             _child = *((__json_node_t **) ( __node__->value ));
 
             // get value
-            ((pfn)_pfn_serialize_val) ( _stream, _child->name /*must be EX_STRID_NULL*/, val_buf );
+            _pfn_serialize_val ( _stream, _child->name /*must be EX_STRID_NULL*/, val_buf );
 
             // now insert the item 
             ex_hashmap_insert ( _val, key_buf, val_buf, NULL );
@@ -898,6 +941,27 @@ static void __write_push ( ex_stream_t *_stream ) {
 static void __write_pop ( ex_stream_t *_stream ) {
     // ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
     // stream->anchor = stream->anchor->parent;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_bool ( ex_stream_t *_stream, bool *_val ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_int ( ex_stream_t *_stream, int *_val ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __write_size_t ( ex_stream_t *_stream, size_t *_val ) {
 }
 
 // ------------------------------------------------------------------ 
@@ -974,14 +1038,14 @@ static void __write_double ( ex_stream_t *_stream, double *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_boolean ( ex_stream_t *_stream, bool *_val ) {
+static void __write_cstr ( ex_stream_t *_stream, char **_val ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_string ( ex_stream_t *_stream, char **_val ) {
+static void __write_string ( ex_stream_t *_stream, ex_string_t *_val ) {
 }
 
 // ------------------------------------------------------------------ 
@@ -1079,14 +1143,14 @@ static void __write_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, void *_pfn_serialize_el ) {
+static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, ex_serialize_pfn _pfn_serialize_el ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, void *_pfn_serialize_key, void *_pfn_serialize_val ) {
+static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_pfn _pfn_serialize_key, ex_serialize_pfn _pfn_serialize_val ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1108,6 +1172,9 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_pop,
 
         // methods
+        __read_bool,
+        __read_int,
+        __read_size_t,
         __read_int8,
         __read_int16,
         __read_int32,
@@ -1118,7 +1185,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_uint64,
         __read_float,
         __read_double,
-        __read_boolean,
+        __read_cstr,
         __read_string,
         __read_strid,
         __read_vec2f,
@@ -1233,6 +1300,9 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_pop,
 
         // methods
+        __write_bool,
+        __write_int,
+        __write_size_t,
         __write_int8,
         __write_int16,
         __write_int32,
@@ -1243,7 +1313,7 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_uint64,
         __write_float,
         __write_double,
-        __write_boolean,
+        __write_cstr,
         __write_string,
         __write_strid,
         __write_vec2f,

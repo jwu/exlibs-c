@@ -19,6 +19,9 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
+EX_DEF_BUILTIN_TYPE(bool)
+EX_DEF_BUILTIN_TYPE(int)
+EX_DEF_BUILTIN_TYPE(size_t)
 EX_DEF_BUILTIN_TYPE(int8)
 EX_DEF_BUILTIN_TYPE(int16)
 EX_DEF_BUILTIN_TYPE(int32)
@@ -29,7 +32,7 @@ EX_DEF_BUILTIN_TYPE(uint32)
 EX_DEF_BUILTIN_TYPE(uint64)
 EX_DEF_BUILTIN_TYPE(float)
 EX_DEF_BUILTIN_TYPE(double)
-EX_DEF_BUILTIN_TYPE(boolean)
+EX_DEF_BUILTIN_TYPE(cstr)
 EX_DEF_BUILTIN_TYPE(string)
 EX_DEF_BUILTIN_TYPE(strid)
 EX_DEF_BUILTIN_TYPE(vec2f)
@@ -52,6 +55,9 @@ EX_DEF_BUILTIN_TYPE(map)
 // ------------------------------------------------------------------ 
 
 void ex_register_builtin_types () {
+    EX_REGISTER_BUILTIN_TYPE(bool);
+    EX_REGISTER_BUILTIN_TYPE(int);
+    EX_REGISTER_BUILTIN_TYPE(size_t);
     EX_REGISTER_BUILTIN_TYPE(int8);
     EX_REGISTER_BUILTIN_TYPE(int16);
     EX_REGISTER_BUILTIN_TYPE(int32);
@@ -62,7 +68,7 @@ void ex_register_builtin_types () {
     EX_REGISTER_BUILTIN_TYPE(uint64);
     EX_REGISTER_BUILTIN_TYPE(float);
     EX_REGISTER_BUILTIN_TYPE(double);
-    EX_REGISTER_BUILTIN_TYPE(boolean);
+    EX_REGISTER_BUILTIN_TYPE(cstr);
     EX_REGISTER_BUILTIN_TYPE(string);
     EX_REGISTER_BUILTIN_TYPE(strid);
     EX_REGISTER_BUILTIN_TYPE(vec2f);

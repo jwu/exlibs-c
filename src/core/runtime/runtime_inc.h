@@ -14,6 +14,7 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "runtime_macro.h"
 #include "rtti.h"
 #include "typeop.h"
 #include "prop.h"

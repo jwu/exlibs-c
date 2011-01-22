@@ -21,12 +21,18 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef __cplusplus
-    // C doesn't have bool keyword
-    #define bool int
+    // NOTE: C doesn't have bool keyword
+    // NOTE: do not use define, that will replace bool to int in some macro ( such as EX_SERIALIZE )
+
+    #ifdef bool
+    #undef bool
+    #endif
+
+    typedef int bool;
     #define true 1
     #define false 0
 
-    // C doesn't have inline in some compiler
+    // NOTE: C doesn't have inline in some compiler
     #define inline __inline
 #endif
 

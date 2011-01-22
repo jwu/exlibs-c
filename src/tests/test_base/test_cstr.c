@@ -63,11 +63,19 @@ static void normal () {
     }
 }
 
+static void test_snprintf () {
+    char buf[128];
+    memset ( buf, 128, 0x01 );
+    snprintf( buf, 128, "%f", 2.0f ); // it will automatically add null terminal
+    printf( "%s", buf );
+}
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 void test_cstr () {
-    normal();
+    // normal();
+    test_snprintf();
 }
 

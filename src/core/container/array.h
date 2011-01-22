@@ -35,7 +35,6 @@ extern "C" {
  @details macro for easy iterates the array container.
 
  when use the macro, it will define the local variable below:
- - __count__: the count of the element in the array.
  - __idx__: the current index.
 
  to finish the code, you must write ex_array_each_end.
@@ -54,9 +53,8 @@ extern "C" {
 #define ex_array_each( _array, _type, _el ) \
     { \
         _type _el; \
-        size_t __count__ = (_array)->count; \
         size_t __idx__ = 0; \
-        while ( __idx__ < __count__ ) { \
+        while ( __idx__ < (_array)->count ) { \
             _el = *( (_type *) ((_array)->data) + __idx__ );
 
 // ------------------------------------------------------------------ 
@@ -68,7 +66,6 @@ extern "C" {
  @details macro for easy iterates the array container.
 
  when use the macro, it will define the local variable below:
- - __count__: the count of the element in the array.
  - __idx__: the current index.
 
  to finish the code, you must write ex_array_each_end.
@@ -87,9 +84,8 @@ extern "C" {
 #define ex_array_raw_each( _array, _type, _el ) \
     { \
         _type _el; \
-        size_t __count__ = (_array)->count; \
         size_t __idx__ = 0; \
-        while ( __idx__ < __count__ ) { \
+        while ( __idx__ < (_array)->count ) { \
             _el = (_type) ((_array)->data) + __idx__;
 
 // ------------------------------------------------------------------ 

@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : serialize_builtin.h
+// File         : builtin_serialize.h
 // Author       : Wu Jie 
-// Last Change  : 01/17/2011 | 15:30:14 PM | Monday,January
+// Last Change  : 01/21/2011 | 21:00:18 PM | Friday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef SERIALIZE_BUILTIN_H_1295082972
-#define SERIALIZE_BUILTIN_H_1295082972
+#ifndef BUILTIN_SERIALIZE_H_1295614820
+#define BUILTIN_SERIALIZE_H_1295614820
 // #################################################################################
 
 // ######################### 
@@ -20,7 +20,7 @@ extern "C" {
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "stream.h"
+#include "../serialize/stream.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -48,6 +48,14 @@ extern "C" {
         _stream->serialize_##_typename(_stream,(_type *)_val); \
     }
 
+// TODO: can we think about use NESTED macro ???
+/** example: 
+    EX_SERIALIZE_ARRAY_BEGIN( array, el )
+        EX_SERIALIZE_ARRAY_BEGIN( el )
+            EX_SERIALIZE( foo, bar );
+        EX_SERIALIZE_ARRAY_END()
+    EX_SERIALIZE_ARRAY_END()
+*/
 // DEF_BUILTIN_SERIALIZE_ARRAY
 #define DEF_BUILTIN_SERIALIZE_ARRAY( _typename, _type ) \
     extern strid_t __TYPEID_##_typename##__; \
@@ -62,7 +70,9 @@ extern "C" {
     } \
     static inline void __ex_serialize_##_typename ( ex_stream_t *_stream, strid_t _name, void *_val ) { \
         ex_array_t *_array = (ex_array_t *)_val; \
-        __ex_serialize_##_typename##_2(_stream,_name,_val,ex_serialize_func(_array->element_typeid)); \
+        ex_serialize_pfn element_serialize_pfn = ex_serialize_func(_array->element_typeid); \
+        if ( element_serialize_pfn == NULL ) return;  /*the array not support generic serailize*/ \
+        __ex_serialize_##_typename##_2(_stream,_name,_val,element_serialize_pfn); \
     }
 
 // DEF_BUILTIN_SERIALIZE_MAP
@@ -79,8 +89,15 @@ extern "C" {
     } \
     static inline void __ex_serialize_##_typename ( ex_stream_t *_stream, strid_t _name, void *_val ) { \
         ex_hashmap_t *_map = (ex_hashmap_t *)_val; \
-        __ex_serialize_##_typename##_2(_stream,_name,_val,ex_serialize_func(_map->key_typeid),ex_serialize_func(_map->value_typeid)); \
+        ex_serialize_pfn key_serialize_pfn = ex_serialize_func(_map->key_typeid); \
+        ex_serialize_pfn value_serialize_pfn = ex_serialize_func(_map->value_typeid); \
+        if ( key_serialize_pfn == NULL || value_serialize_pfn == NULL ) return;  /*the map not support generic serailize*/ \
+        __ex_serialize_##_typename##_2(_stream,_name,_val,key_serialize_pfn,value_serialize_pfn); \
     }
+
+DEF_BUILTIN_SERIALIZE(bool)
+DEF_BUILTIN_SERIALIZE(int);
+DEF_BUILTIN_SERIALIZE(size_t);
 
 DEF_BUILTIN_SERIALIZE(int8)
 DEF_BUILTIN_SERIALIZE(int16)
@@ -95,9 +112,8 @@ DEF_BUILTIN_SERIALIZE(uint64)
 DEF_BUILTIN_SERIALIZE(float)
 DEF_BUILTIN_SERIALIZE(double)
 
-DEF_BUILTIN_SERIALIZE_2(boolean, bool) // NOTE: bool will be replaced to "int"
-
-DEF_BUILTIN_SERIALIZE_2(string, char *)
+DEF_BUILTIN_SERIALIZE_2(cstr, char *)
+DEF_BUILTIN_SERIALIZE_2(string, ex_string_t)
 DEF_BUILTIN_SERIALIZE_2(strid, strid_t)
 
 DEF_BUILTIN_SERIALIZE_2(vec2f, ex_vec2f_t)
@@ -131,7 +147,5 @@ DEF_BUILTIN_SERIALIZE_MAP(map, ex_hashmap_t *)
 // ######################### 
 
 // #################################################################################
-#endif // END SERIALIZE_BUILTIN_H_1295082972
+#endif // END BUILTIN_SERIALIZE_H_1295614820
 // #################################################################################
-
-
