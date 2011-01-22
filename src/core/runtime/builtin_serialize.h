@@ -48,14 +48,6 @@ extern "C" {
         _stream->serialize_##_typename(_stream,(_type *)_val); \
     }
 
-// TODO: can we think about use NESTED macro ???
-/** example: 
-    EX_SERIALIZE_ARRAY_BEGIN( array, el )
-        EX_SERIALIZE_ARRAY_BEGIN( el )
-            EX_SERIALIZE( foo, bar );
-        EX_SERIALIZE_ARRAY_END()
-    EX_SERIALIZE_ARRAY_END()
-*/
 // DEF_BUILTIN_SERIALIZE_ARRAY
 #define DEF_BUILTIN_SERIALIZE_ARRAY( _typename, _type ) \
     extern strid_t __TYPEID_##_typename##__; \

@@ -33,6 +33,8 @@
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
 		B245485112B920D200EF7261 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
+		B24EC45712EB4D140070C3F8 /* text_file.c in Sources */ = {isa = PBXBuildFile; fileRef = B24EC45512EB4D140070C3F8 /* text_file.c */; };
+		B24EC45812EB4D140070C3F8 /* text_file.h in Headers */ = {isa = PBXBuildFile; fileRef = B24EC45612EB4D140070C3F8 /* text_file.h */; };
 		B25923D512E941E400B49C04 /* typeop.c in Sources */ = {isa = PBXBuildFile; fileRef = B25923D312E941E400B49C04 /* typeop.c */; };
 		B25923D612E941E400B49C04 /* typeop.h in Headers */ = {isa = PBXBuildFile; fileRef = B25923D412E941E400B49C04 /* typeop.h */; };
 		B259244612E9BB2600B49C04 /* builtin_serialize.h in Headers */ = {isa = PBXBuildFile; fileRef = B259244512E9BB2600B49C04 /* builtin_serialize.h */; };
@@ -218,6 +220,8 @@
 		B245482F12B91EF300EF7261 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		B24EC45512EB4D140070C3F8 /* text_file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = text_file.c; path = file/text_file.c; sourceTree = "<group>"; };
+		B24EC45612EB4D140070C3F8 /* text_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = text_file.h; path = file/text_file.h; sourceTree = "<group>"; };
 		B25923D312E941E400B49C04 /* typeop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = typeop.c; sourceTree = "<group>"; };
 		B25923D412E941E400B49C04 /* typeop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typeop.h; sourceTree = "<group>"; };
 		B259244512E9BB2600B49C04 /* builtin_serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = builtin_serialize.h; sourceTree = "<group>"; };
@@ -424,6 +428,8 @@
 		B200D2B812E17375003B4944 /* file */ = {
 			isa = PBXGroup;
 			children = (
+				B24EC45512EB4D140070C3F8 /* text_file.c */,
+				B24EC45612EB4D140070C3F8 /* text_file.h */,
 				B200D2B912E17384003B4944 /* file_inc.h */,
 				B200D2BA12E17384003B4944 /* file_mac.c */,
 				B200D2BB12E17384003B4944 /* file.h */,
@@ -884,6 +890,7 @@
 				B25923D612E941E400B49C04 /* typeop.h in Headers */,
 				B259244612E9BB2600B49C04 /* builtin_serialize.h in Headers */,
 				B259245E12EA6F7700B49C04 /* string.h in Headers */,
+				B24EC45812EB4D140070C3F8 /* text_file.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1076,7 @@
 				B200D30212E4335E003B4944 /* builtin_type_registry.c in Sources */,
 				B25923D512E941E400B49C04 /* typeop.c in Sources */,
 				B259245D12EA6F7700B49C04 /* string.c in Sources */,
+				B24EC45712EB4D140070C3F8 /* text_file.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,16 +19,18 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define TIMER_RESOLUTION 10
-#define ROUND_RESOLUTION(X)	\
-	(((X+TIMER_RESOLUTION-1)/TIMER_RESOLUTION)*TIMER_RESOLUTION)
-
 void test_rapid () {
-    int x = ROUND_RESOLUTION(0);
-    int x1 = ROUND_RESOLUTION(1);
-    int x2 = ROUND_RESOLUTION(2);
+    static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
+    ex_text_file_t *txtFile;
+    char path[1024];
+                   
+    strncpy ( path, media_file, 1024 );
+    strcat ( path, "foobar.txt" );
 
-    printf("round 0 is : %d\n", x );
-    printf("round 1 is : %d\n", x1 );
-    printf("round 2 is : %d\n", x2 );
+    txtFile = ex_create_text_file(path,false);
+    for ( int i = 0; i < 5000; ++i ) {
+        ex_text_file_write_line ( txtFile, "hello world!\n" );
+        ex_text_file_write_line ( txtFile, "vector = %f, %f, %f\n", 1.0f, 2.0f, 3.0f );
+    }
+    ex_destroy_text_file(txtFile);
 }

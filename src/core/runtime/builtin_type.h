@@ -109,7 +109,7 @@ static inline bool ex_is_builtin_type ( strid_t _typeID ) {
 // ------------------------------------------------------------------ 
 
 static inline bool ex_is_integer ( strid_t _typeID ) {
-    if ( _typeID >= EX_TYPEID(int8) && _typeID <= EX_TYPEID(uint64) )
+    if ( _typeID >= EX_TYPEID(int) && _typeID <= EX_TYPEID(uint64) )
         return true;
     return false;
 }
@@ -120,6 +120,16 @@ static inline bool ex_is_integer ( strid_t _typeID ) {
 
 static inline bool ex_is_fp ( strid_t _typeID ) {
     if ( _typeID >= EX_TYPEID(float) && _typeID <= EX_TYPEID(double) )
+        return true;
+    return false;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline bool ex_is_string ( strid_t _typeID ) {
+    if ( _typeID >= EX_TYPEID(cstr) && _typeID <= EX_TYPEID(strid) )
         return true;
     return false;
 }

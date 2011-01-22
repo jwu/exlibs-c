@@ -27,6 +27,7 @@ ex_file_t *ex_open_file ( const char *_filename, const char *_mode ) {
 	fp = fopen(_filename, _mode);
     if ( fp == NULL ) {
         ex_error ( "failed to open file %s", _filename );
+        return NULL;
     }
 
     // now create ex_file_t

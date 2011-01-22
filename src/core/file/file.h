@@ -38,6 +38,17 @@ typedef struct ex_file_t {
 // functions
 ///////////////////////////////////////////////////////////////////////////////
 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+/* "r" = reading, file must exist */
+/* "w" = writing, truncate existing, file may not exist */
+/* "r+"= reading or writing, file must exist            */
+/* "a" = writing, append file may not exist             */
+/* "a+"= append + read, file may not exist              */
+/* "w+" = read, write, truncate. file may not exist    */
+// ------------------------------------------------------------------ 
+
 extern ex_file_t *ex_open_file ( const char *_filename, const char *_mode ); 
 
 // success: 0

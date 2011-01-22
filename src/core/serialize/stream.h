@@ -32,6 +32,7 @@ typedef struct ex_stream_t {
     int type; // read or write
 
     // common functions
+    int (*save_to_file) ( struct ex_stream_t *_stream, const char *_filename );
     int (*next) ( struct ex_stream_t *_stream, strid_t _name, strid_t _typeID );
     void (*push) ( struct ex_stream_t *_stream );
     void (*pop) ( struct ex_stream_t *_stream );

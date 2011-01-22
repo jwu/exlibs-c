@@ -99,6 +99,7 @@ static int __yajl_boolean ( void *_ctx, int _bool ) {
     return 1;
 }
 
+// FIXME: it seems that uin64 will exceed the range.
 static int __yajl_integer ( void *_ctx, long _integer ) {
     __context *ctx = (__context *)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
@@ -906,23 +907,16 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
 // ------------------------------------------------------------------ 
 
 static int __write_next ( ex_stream_t *_stream, strid_t _name, strid_t _typeID ) {
-    // ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
-    // __json_node_t *parent = stream->anchor;
+    ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
+    __json_node_t *parent = stream->anchor;
+    __json_node_t *jnode = __create_node();
 
-    // ex_list_each( parent->children, __json_node_t *, jnode ) {
-    //     // if we found the node with the same name and type
-    //     if ( jnode->used == false && 
-    //          jnode->name == _name && 
-    //          jnode->typeid == _typeID ) 
-    //     {
-    //         stream->current = jnode;
-    //         jnode->used = true;
-    //         return 0;
-    //     }
-    // } ex_list_each_end
+    jnode->name = _name;
+    jnode->typeid = _typeID;
+    __add_child( parent, jnode );
 
-    // return -1;
-    return -1;
+    stream->current = jnode;
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -930,8 +924,8 @@ static int __write_next ( ex_stream_t *_stream, strid_t _name, strid_t _typeID )
 // ------------------------------------------------------------------ 
 
 static void __write_push ( ex_stream_t *_stream ) {
-    // ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
-    // stream->anchor = stream->current;
+    ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
+    stream->anchor = stream->current;
 }
 
 // ------------------------------------------------------------------ 
@@ -939,8 +933,8 @@ static void __write_push ( ex_stream_t *_stream ) {
 // ------------------------------------------------------------------ 
 
 static void __write_pop ( ex_stream_t *_stream ) {
-    // ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
-    // stream->anchor = stream->anchor->parent;
+    ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
+    stream->anchor = stream->anchor->parent;
 }
 
 // ------------------------------------------------------------------ 
@@ -948,6 +942,15 @@ static void __write_pop ( ex_stream_t *_stream ) {
 // ------------------------------------------------------------------ 
 
 static void __write_bool ( ex_stream_t *_stream, bool *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(int) ); 
+    *(int *)node->val = (int)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -955,6 +958,15 @@ static void __write_bool ( ex_stream_t *_stream, bool *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_int ( ex_stream_t *_stream, int *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -962,6 +974,15 @@ static void __write_int ( ex_stream_t *_stream, int *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_size_t ( ex_stream_t *_stream, size_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -969,6 +990,15 @@ static void __write_size_t ( ex_stream_t *_stream, size_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_int8 ( ex_stream_t *_stream, int8 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -976,6 +1006,15 @@ static void __write_int8 ( ex_stream_t *_stream, int8 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_int16 ( ex_stream_t *_stream, int16 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -983,6 +1022,15 @@ static void __write_int16 ( ex_stream_t *_stream, int16 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_int32 ( ex_stream_t *_stream, int32 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -990,6 +1038,15 @@ static void __write_int32 ( ex_stream_t *_stream, int32 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_int64 ( ex_stream_t *_stream, int64 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -997,6 +1054,15 @@ static void __write_int64 ( ex_stream_t *_stream, int64 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_uint8 ( ex_stream_t *_stream, uint8 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1004,6 +1070,15 @@ static void __write_uint8 ( ex_stream_t *_stream, uint8 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_uint16 ( ex_stream_t *_stream, uint16 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1011,13 +1086,32 @@ static void __write_uint16 ( ex_stream_t *_stream, uint16 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_uint32 ( ex_stream_t *_stream, uint32 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// FIXME: it seems that uin64 will exceed the range.
 // ------------------------------------------------------------------ 
 
 static void __write_uint64 ( ex_stream_t *_stream, uint64 *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1025,6 +1119,15 @@ static void __write_uint64 ( ex_stream_t *_stream, uint64 *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_float ( ex_stream_t *_stream, float *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) ); 
+    *(double *)node->val = (double)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1032,6 +1135,15 @@ static void __write_float ( ex_stream_t *_stream, float *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_double ( ex_stream_t *_stream, double *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) ); 
+    *(double *)node->val = (double)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1039,6 +1151,18 @@ static void __write_double ( ex_stream_t *_stream, double *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_cstr ( ex_stream_t *_stream, char **_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    int len = 0;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    len = strlen(*_val);
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( len+1 ); 
+    strncpy( (char *)node->val, *_val, len );
+    ((char *)node->val)[len] = '\0';
 }
 
 // ------------------------------------------------------------------ 
@@ -1046,6 +1170,16 @@ static void __write_cstr ( ex_stream_t *_stream, char **_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_string ( ex_stream_t *_stream, ex_string_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( _val->len+1 ); 
+    strncpy( (char *)node->val, _val->text, _val->len );
+    ((char *)node->val)[_val->len] = '\0';
 }
 
 // ------------------------------------------------------------------ 
@@ -1053,6 +1187,20 @@ static void __write_string ( ex_stream_t *_stream, ex_string_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_strid ( ex_stream_t *_stream, strid_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    char *str;
+    int len = 0;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    str = ex_strid_to_cstr(*_val);
+    len = strlen(str);
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( len+1 ); 
+    strncpy( (char *)node->val, str, len );
+    ((char *)node->val)[len] = '\0';
 }
 
 // ------------------------------------------------------------------ 
@@ -1060,6 +1208,18 @@ static void __write_strid ( ex_stream_t *_stream, strid_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_vec2f ( ex_stream_t *_stream, ex_vec2f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 2 ); 
+    *p = (double)_val->x; ++p;
+    *p = (double)_val->y;
 }
 
 // ------------------------------------------------------------------ 
@@ -1067,6 +1227,19 @@ static void __write_vec2f ( ex_stream_t *_stream, ex_vec2f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_vec3f ( ex_stream_t *_stream, ex_vec3f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 3 ); 
+    *p = (double)_val->x; ++p;
+    *p = (double)_val->y; ++p;
+    *p = (double)_val->z;
 }
 
 // ------------------------------------------------------------------ 
@@ -1074,6 +1247,20 @@ static void __write_vec3f ( ex_stream_t *_stream, ex_vec3f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_vec4f ( ex_stream_t *_stream, ex_vec4f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 4 ); 
+    *p = (double)_val->x; ++p;
+    *p = (double)_val->y; ++p;
+    *p = (double)_val->z; ++p;
+    *p = (double)_val->w;
 }
 
 // ------------------------------------------------------------------ 
@@ -1081,6 +1268,22 @@ static void __write_vec4f ( ex_stream_t *_stream, ex_vec4f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_mat22f ( ex_stream_t *_stream, ex_mat22f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+    float *m;
+    int i = 0;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    m = _val->m;
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 4 ); 
+    while ( i < 2 ) {
+        *p = (double)*m; ++p; ++m; ++i;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -1088,6 +1291,22 @@ static void __write_mat22f ( ex_stream_t *_stream, ex_mat22f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_mat33f ( ex_stream_t *_stream, ex_mat33f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+    float *m;
+    int i = 0;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    m = _val->m;
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 9 ); 
+    while ( i < 9 ) {
+        *p = (double)*m; ++p; ++m; ++i;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -1095,6 +1314,22 @@ static void __write_mat33f ( ex_stream_t *_stream, ex_mat33f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_mat44f ( ex_stream_t *_stream, ex_mat44f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+    float *m;
+    int i = 0;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    m = _val->m;
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 16 ); 
+    while ( i < 16 ) {
+        *p = (double)*m; ++p; ++m; ++i;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -1102,6 +1337,20 @@ static void __write_mat44f ( ex_stream_t *_stream, ex_mat44f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_quatf ( ex_stream_t *_stream, ex_quatf_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 4 ); 
+    *p = (double)_val->x; ++p;
+    *p = (double)_val->y; ++p;
+    *p = (double)_val->z; ++p;
+    *p = (double)_val->w;
 }
 
 // ------------------------------------------------------------------ 
@@ -1109,6 +1358,15 @@ static void __write_quatf ( ex_stream_t *_stream, ex_quatf_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_angf ( ex_stream_t *_stream, ex_angf_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) ); 
+    *(double *)node->val = (double)(_val->rad);
 }
 
 // ------------------------------------------------------------------ 
@@ -1116,6 +1374,19 @@ static void __write_angf ( ex_stream_t *_stream, ex_angf_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_color3u ( ex_stream_t *_stream, ex_color3u_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    long *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (long *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) * 3 ); 
+    *p = (long)_val->r; ++p;
+    *p = (long)_val->g; ++p;
+    *p = (long)_val->b;
 }
 
 // ------------------------------------------------------------------ 
@@ -1123,6 +1394,19 @@ static void __write_color3u ( ex_stream_t *_stream, ex_color3u_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_color3f ( ex_stream_t *_stream, ex_color3f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 3 ); 
+    *p = (double)_val->r; ++p;
+    *p = (double)_val->g; ++p;
+    *p = (double)_val->b;
 }
 
 // ------------------------------------------------------------------ 
@@ -1130,6 +1414,20 @@ static void __write_color3f ( ex_stream_t *_stream, ex_color3f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_color4u ( ex_stream_t *_stream, ex_color4u_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    long *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (long *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) * 4 ); 
+    *p = (long)_val->r; ++p;
+    *p = (long)_val->g; ++p;
+    *p = (long)_val->b; ++p;
+    *p = (long)_val->a;
 }
 
 // ------------------------------------------------------------------ 
@@ -1137,6 +1435,20 @@ static void __write_color4u ( ex_stream_t *_stream, ex_color4u_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+    double *p;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    p = (double *)node->val; 
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) * 4 ); 
+    *p = (double)_val->r; ++p;
+    *p = (double)_val->g; ++p;
+    *p = (double)_val->b; ++p;
+    *p = (double)_val->a;
 }
 
 // ------------------------------------------------------------------ 
@@ -1144,6 +1456,25 @@ static void __write_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
 // ------------------------------------------------------------------ 
 
 static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, ex_serialize_pfn _pfn_serialize_el ) {
+    ex_stream_json_t *stream;
+    size_t idx = 0;
+    __json_node_t *parent, *jnode;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    parent = stream->anchor;
+
+    while ( idx < _val->count ) {
+        void *el = ex_array_get(_val,idx);
+
+        // add element node
+        jnode = __create_node();
+        stream->current = jnode;
+        _pfn_serialize_el ( _stream, EX_STRID_NULL, el );
+        __add_child( parent, jnode );
+
+        ++idx;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -1151,6 +1482,97 @@ static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, ex_serialize
 // ------------------------------------------------------------------ 
 
 static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_pfn _pfn_serialize_key, ex_serialize_pfn _pfn_serialize_val ) {
+    ex_stream_json_t *stream;
+    size_t idx = 0, count = 0;
+    __json_node_t *parent, *jnode;
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    count = ex_hashmap_count(_val);
+    stream = (ex_stream_json_t *)_stream; 
+    parent = stream->anchor;
+
+    while ( idx < count ) {
+        void *key = (char *)_val->keys + idx * _val->key_bytes;
+        void *value = (char *)_val->values + idx * _val->value_bytes;
+
+        // add key node
+        jnode = __create_node();
+        stream->current = jnode;
+        _pfn_serialize_key ( _stream, EX_STRID_NULL, key );
+        __add_child( parent, jnode );
+
+        // add value node
+        jnode = __create_node();
+        stream->current = jnode;
+        _pfn_serialize_val ( _stream, EX_STRID_NULL, value );
+        __add_child( parent, jnode );
+
+        ++idx;
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __save_nodes ( ex_file_t *_file, __json_node_t *_node, int _level ) {
+    ex_assert_return ( _node, /*dummy*/, "node can't be NULL" );
+    char buf[2048];
+
+    // TODO: should use buffer that write text
+    // TODO: for safety, we need to do while realloc protection. { 
+    snprintf ( buf, 2048, "%*s%s: { %s: ",
+               _level, "\t", 
+               ex_strid_to_cstr(_node->name), 
+               ex_strid_to_cstr(_node->typeid) );
+    // } TODO end 
+    ex_file_write ( _file, buf, 1, strlen(buf) );
+
+    // write value
+    // TODO: for safety, we need to do while realloc protection. { 
+    if ( _node->typeid == EX_TYPEID(bool) ) {
+        snprintf ( buf, 2048, "%s }", *((bool *)_node->val) == true ? "true" : "false" );
+    }
+    else if ( ex_is_integer(_node->typeid) ) {
+        snprintf ( buf, 2048, "%ld }", *((long *)_node->val) );
+    }
+    else if ( ex_is_fp(_node->typeid) ) {
+        snprintf ( buf, 2048, "%f }", *((double *)_node->val) );
+    }
+    else if ( ex_is_string(_node->typeid) ) {
+        snprintf ( buf, 2048, "%s }", (char *)_node->val );
+    }
+    else if ( _node->typeid >= EX_TYPEID(vec2f) && _node->typeid < EX_TYPEID(mat44f) ) {
+        snprintf ( buf, 2048, "%s }", (char *)_node->val );
+    }
+
+    ex_file_write ( _file, buf, 1, strlen(buf) );
+    // } TODO end 
+
+    // save child nodes
+    if ( _node->children ) {
+        ex_file_write ( _file, ",\n", 1, 2 );
+        ex_list_each ( _node->children, __json_node_t *, _child ) {
+            __save_nodes ( _file, _child, ++_level );
+        } ex_list_each_end 
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __save_to_file ( ex_stream_t *_stream, const char *_filename ) {
+    ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
+    ex_file_t *file;
+    
+    file = ex_open_file ( _filename, "w" );
+    if ( file == NULL )
+        return -1;
+
+    __save_nodes ( file, stream->root, 0 );
+    ex_close_file(file);
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1167,6 +1589,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         EX_STREAM_READ,
 
         //
+        __save_to_file,
         __read_next,
         __read_push,
         __read_pop,
@@ -1210,7 +1633,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
 
     // load node
     yajl_handle hand;
-    ex_file_t *file_hand;
+    ex_file_t *file;
     static unsigned char *fileData = NULL;
     unsigned int bufSize = 2048;
     yajl_status stat;
@@ -1241,14 +1664,16 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     allocFuncs.ctx = (void *) &memCtx;
 
     //
-    file_hand = ex_open_file(_fileName,"r");
+    file = ex_open_file(_fileName,"r");
+    if ( file == NULL ) // failed to open the file.
+        return NULL;
     fileData = (unsigned char *) ex_malloc(bufSize);
     hand = yajl_alloc(&__callbacks, &cfg, &allocFuncs, &context);
 
     //
     done = 0;
 	while (!done) {
-        rd = ex_file_read( file_hand, fileData, 1, bufSize );
+        rd = ex_file_read( file, fileData, 1, bufSize );
         if (rd == -1) // read error.
             break;
 
@@ -1272,7 +1697,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     } 
     yajl_free(hand);
     ex_free(fileData);
-    ex_close_file(file_hand);
+    ex_close_file(file);
 
     // copy the read methods
     ex_stream_json_t *r_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );
@@ -1295,6 +1720,7 @@ ex_stream_t *ex_create_json_write_stream () {
         EX_STREAM_WRITE,
 
         //
+        __save_to_file,
         __write_next,
         __write_push,
         __write_pop,
