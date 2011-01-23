@@ -19,7 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_file_t *ex_open_file ( const char *_filename, const char *_mode ) {
+ex_file_t *ex_fopen ( const char *_filename, const char *_mode ) {
     ex_assert_return ( _filename && *_filename, NULL, "file name can't be null" );
     ex_assert_return ( _mode && *_mode, NULL, "file mode can't be null" );
 
@@ -40,7 +40,7 @@ ex_file_t *ex_open_file ( const char *_filename, const char *_mode ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_close_file ( ex_file_t *_file ) {
+int ex_fclose ( ex_file_t *_file ) {
     ex_assert_return( _file != NULL, -1, "the file can't be null" );
     if ( fclose (_file->fp) != 0 ) {
         ex_error ( "failed to close file." );
@@ -56,7 +56,7 @@ int ex_close_file ( ex_file_t *_file ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_file_seek ( ex_file_t *_file, size_t _offset, int _whence ) {
+int ex_fseek ( ex_file_t *_file, size_t _offset, int _whence ) {
     if ( fseek(_file->fp, _offset, _whence) == 0 ) {
         return ftell (_file->fp);
     } else {
@@ -69,7 +69,7 @@ int ex_file_seek ( ex_file_t *_file, size_t _offset, int _whence ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_file_read ( ex_file_t *_file, void *_buf, size_t _size, size_t _count ) {
+int ex_fread ( ex_file_t *_file, void *_buf, size_t _size, size_t _count ) {
     size_t nread;
 
     nread = fread( _buf, _size, _count, _file->fp );
@@ -84,7 +84,7 @@ int ex_file_read ( ex_file_t *_file, void *_buf, size_t _size, size_t _count ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_file_write ( ex_file_t *_file, const void *_buf, size_t _size, size_t _count ) {
+int ex_fwrite ( ex_file_t *_file, const void *_buf, size_t _size, size_t _count ) {
     size_t nwrote;
     nwrote = fwrite( _buf, _size, _count, _file->fp );
     if ( nwrote == 0 && ferror(_file->fp) ) {
@@ -97,7 +97,7 @@ int ex_file_write ( ex_file_t *_file, const void *_buf, size_t _size, size_t _co
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_file_size ( ex_file_t *_file ) {
+size_t ex_fsize ( ex_file_t *_file ) {
     size_t cur,size; 
 
     cur = ftell(_file->fp);
@@ -111,7 +111,7 @@ size_t ex_file_size ( ex_file_t *_file ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-size_t ex_file_tell ( ex_file_t *_file ) {
+size_t ex_ftell ( ex_file_t *_file ) {
     return ftell (_file->fp);
 } 
 

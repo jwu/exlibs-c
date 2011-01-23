@@ -1526,7 +1526,7 @@ static void __save_nodes ( ex_file_t *_file, __json_node_t *_node, int _level ) 
                ex_strid_to_cstr(_node->name), 
                ex_strid_to_cstr(_node->typeid) );
     // } TODO end 
-    ex_file_write ( _file, buf, 1, strlen(buf) );
+    ex_fwrite ( _file, buf, 1, strlen(buf) );
 
     // write value
     // TODO: for safety, we need to do while realloc protection. { 
@@ -1546,12 +1546,12 @@ static void __save_nodes ( ex_file_t *_file, __json_node_t *_node, int _level ) 
         snprintf ( buf, 2048, "%s }", (char *)_node->val );
     }
 
-    ex_file_write ( _file, buf, 1, strlen(buf) );
+    ex_fwrite ( _file, buf, 1, strlen(buf) );
     // } TODO end 
 
     // save child nodes
     if ( _node->children ) {
-        ex_file_write ( _file, ",\n", 1, 2 );
+        ex_fwrite ( _file, ",\n", 1, 2 );
         ex_list_each ( _node->children, __json_node_t *, _child ) {
             __save_nodes ( _file, _child, ++_level );
         } ex_list_each_end 
@@ -1566,12 +1566,12 @@ static int __save_to_file ( ex_stream_t *_stream, const char *_filename ) {
     ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
     ex_file_t *file;
     
-    file = ex_open_file ( _filename, "w" );
+    file = ex_fopen ( _filename, "w" );
     if ( file == NULL )
         return -1;
 
     __save_nodes ( file, stream->root, 0 );
-    ex_close_file(file);
+    ex_fclose(file);
     return 0;
 }
 
@@ -1664,7 +1664,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     allocFuncs.ctx = (void *) &memCtx;
 
     //
-    file = ex_open_file(_fileName,"r");
+    file = ex_fopen(_fileName,"r");
     if ( file == NULL ) // failed to open the file.
         return NULL;
     fileData = (unsigned char *) ex_malloc(bufSize);
@@ -1673,7 +1673,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     //
     done = 0;
 	while (!done) {
-        rd = ex_file_read( file, fileData, 1, bufSize );
+        rd = ex_fread( file, fileData, 1, bufSize );
         if (rd == -1) // read error.
             break;
 
@@ -1697,7 +1697,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     } 
     yajl_free(hand);
     ex_free(fileData);
-    ex_close_file(file);
+    ex_fclose(file);
 
     // copy the read methods
     ex_stream_json_t *r_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );

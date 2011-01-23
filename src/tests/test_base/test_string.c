@@ -23,7 +23,7 @@ static void normal () {
     ex_string_t *s1, *s2, *s3, *s4;
 
     s1 = ex_string( "hello world" ); 
-    s2 = ex_string_printf( "vector %f, %f, %f", 1.0f, 2.0f, 3.0f ); 
+    s2 = ex_string_fmt( "vector %f, %f, %f", 1.0f, 2.0f, 3.0f ); 
     s3 = ex_string_copy(s1); 
     s4 = ex_string_copy(s1);
     ex_string_cat( s4, " -- " );

@@ -15,6 +15,8 @@
     #include <windows.h>
 #endif
  
+#define BUF_SIZE 1024
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,22 +28,32 @@
 int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ... )
 {
     //
-    int     result = -1;
-    int     buffer_count = 1024;
-    char   *pBuffer = NULL;
+    int result = -1;
     int ret;
+    char *buffer = NULL;
+    char buf[BUF_SIZE];
 
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
     uint type = MB_OK;
 #endif
 
     // keep get va string until success 
-    while ( result == -1 ) {
-        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
-        EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
-        buffer_count *= 2;
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    buffer = buf;
+    if ( result == -1 ) {
+        char *dyn_buf = NULL;
+        int buffer_count = BUF_SIZE * 2;
+
+        // keep get va string until success 
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
     }
-    pBuffer[result] = 0;
+    buffer[result-1] = '\0';
+
 
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
     if ( _msgType == EX_MSG_BOX_FAILED )
@@ -51,19 +63,20 @@ int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ...
     else if ( _msgType == EX_MSG_BOX_WARNING )
         type = MB_ICONWARNING;
 
-    ret = MessageBox( NULL, pBuffer, _caption, type );
+    ret = MessageBox( NULL, buffer, _caption, type );
 #elif (EX_PLATFORM == EX_MACOSX)
     // TODO: use mac osx message box { 
     ret = 1;
-    printf ( "%s", pBuffer );
+    printf ( "%s", buffer );
     // } TODO end 
 #else
     ret = 1;
-    printf ( "%s", pBuffer );
+    printf ( "%s", buffer );
 #endif
 
     // release buffer we allocate
-    ex_free_nomng ( pBuffer );
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 
     //
     return ret;

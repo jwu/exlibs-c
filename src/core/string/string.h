@@ -40,7 +40,7 @@ typedef struct ex_string_t {
 
 // NOTE: the len doesn't include the null terminal
 extern ex_string_t *ex_string_alloc ( const char *_cstr, int _len );
-extern ex_string_t *ex_string_printf ( const char *_fmt, ... );
+extern ex_string_t *ex_string_fmt ( const char *_fmt, ... );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -65,11 +65,18 @@ static inline void ex_string_clear( ex_string_t *_string ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_string_printf ( ex_string_t *_string, const char *_fmt, ... );
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // NOTE: you can cat a ex_string_t by ex_string_ncat ( my_string, your_string->text, your_string->len );
 // ------------------------------------------------------------------ 
 
 #define ex_string_cat(_inout,_const_str) ex_string_ncat(_inout,_const_str,EX_ARRAY_COUNT(_const_str)-1)
 extern void ex_string_ncat ( ex_string_t *_inout, const char *_cat, int _len );
+extern void ex_string_cat_printf ( ex_string_t *_inout, const char *_fmt, ... );
 
 // ------------------------------------------------------------------ 
 // Desc: 

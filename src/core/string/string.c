@@ -15,6 +15,8 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+#define BUF_SIZE 1024
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -37,7 +39,7 @@ ex_string_t *ex_string_alloc ( const char *_cstr, int _len ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_string_t *ex_string_printf ( const char *_fmt, ... ) {
+ex_string_t *ex_string_fmt ( const char *_fmt, ... ) {
     ex_string_t *string;
     int result = -1;
     int buffer_count = 1024;
@@ -50,13 +52,13 @@ ex_string_t *ex_string_printf ( const char *_fmt, ... ) {
     string->capacity = 0;
 
     // keep get va string until success 
-    while ( result == -1 ) {
+    do {
         string->text = (char *)ex_realloc( string->text, buffer_count * sizeof(char) );
         string->capacity = buffer_count;
-        EX_GET_VA_STRING_WITH_RESULT( string->text, buffer_count, _fmt, &result );
+        EX_GET_VA_STRING_WITH_RESULT( string->text, buffer_count-1, _fmt, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
         buffer_count *= 2;
-    }
-    string->text[result] = '\0';
+    } while ( result == -1 );
+    string->text[result-1] = '\0';
     string->len = result;
     return string;
 }
@@ -71,6 +73,66 @@ void ex_string_free ( ex_string_t *_string ) {
     _string->capacity = 0;
     _string->text = NULL;
     ex_free (_string);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_string_printf ( ex_string_t *_string, const char *_fmt, ... ) {
+    int result = -1;
+
+    ex_assert_return ( _fmt, /*dummy*/, "can't create a NULL string." );
+
+    ex_string_clear(_string);
+    // NOTE: the string->capacity-1 will leave 1 character for null terminal
+    EX_GET_VA_STRING_WITH_RESULT( _string->text, _string->capacity-1, _fmt, &result );
+
+    if ( result == -1 ) {
+        int buffer_count = EX_MAX ( _string->capacity * 2, BUF_SIZE );
+
+        // keep get va string until success 
+        do {
+            _string->text = (char *)ex_realloc( _string->text, buffer_count * sizeof(char) );
+            _string->capacity = buffer_count;
+            EX_GET_VA_STRING_WITH_RESULT( _string->text, buffer_count-1, _fmt, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            buffer_count *= 2;
+        } while ( result == -1 );
+    }
+    _string->text[result-1] = '\0';
+    _string->len = result;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_string_cat_printf ( ex_string_t *_inout, const char *_fmt, ... ) {
+    int result = -1;
+    char buf[BUF_SIZE];
+    char *buffer;
+
+    ex_assert_return ( _fmt, /*dummy*/, "can't create a NULL string." );
+
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE, _fmt, &result );
+    buffer = buf;
+
+    if ( result == -1 ) {
+        int buffer_count = BUF_SIZE * 2;
+        char *dyn_buf = NULL;
+
+        // keep get va string until success 
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count, _fmt, &result );
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
+    }
+
+    ex_string_ncat ( _inout, buffer, result );
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 }
 
 // ------------------------------------------------------------------ 

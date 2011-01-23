@@ -30,14 +30,15 @@ typedef struct ex_text_file_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_text_file_t *ex_create_text_file ( const char *_filename, bool _readonly );
-extern void ex_destroy_text_file ( ex_text_file_t *_txtFile );
+extern ex_text_file_t *ex_text_fopen ( const char *_filename, bool _readonly );
+extern void ex_text_fclose ( ex_text_file_t *_txtFile );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_text_file_write_line ( ex_text_file_t *_txtFile, const char *_fmt, ... ); 
+extern int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_fmt, ... ); 
+extern int ex_text_fwrite_line ( ex_text_file_t *_txtFile, const char *_fmt, ... ); 
 
 // ######################### 
 #ifdef __cplusplus

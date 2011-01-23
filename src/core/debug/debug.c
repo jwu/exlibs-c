@@ -15,6 +15,8 @@
     #include <windows.h>
 #endif
 
+#define BUF_SIZE 1024
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,36 +48,45 @@ static void __short_funcname ( char _short_name[], const char *_function_name, i
 
 bool assert_failed( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
 {
-    //
     int     result = -1;
-    int     buffer_count = 1024;
-    char   *pBuffer = NULL;
     char    short_name[64];
     int     mbResult = -1;
+    char    buf[BUF_SIZE];
+    char   *buffer = NULL;
 
-    // keep get va string until success 
-    while ( result == -1 ) {
-        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
-        EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
-        buffer_count *= 2;
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    buffer = buf;
+    if ( result == -1 ) {
+        char *dyn_buf = NULL;
+        int buffer_count = BUF_SIZE * 2;
+
+        // keep get va string until success 
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
     }
-    pBuffer[result] = 0;
+    buffer[result-1] = '\0';
+
 
     // short the function name
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Assert Failed: %s(%zd)::%s, %s", _file_name, _line_nr, short_name, pBuffer );
+    ex_log ( "Assert Failed: %s(%zd)::%s, %s", _file_name, _line_nr, short_name, buffer );
     mbResult = ex_message_box( EX_MSG_BOX_FAILED, "Assert Failed", 
                             "|ASSERT_FAILED|\n"
                             "FileName: %s\n"
                             "Line: %d\n"
                             "FunctionName: %s\n" 
                             "Expr: %s\n", 
-                            _file_name, _line_nr, short_name, pBuffer );
+                            _file_name, _line_nr, short_name, buffer );
 
-    // release buffer we allocate
-    ex_free_nomng ( pBuffer );
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 
     //
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
@@ -92,30 +103,38 @@ bool assert_failed( bool *_pDoAssert, const char *_file_name, const char *_funct
 
 bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
 {
-    //
     int     result = -1;
-    int     buffer_count = 1024;
-    char   *pBuffer = NULL;
     char    short_name[64];
-    int     mbResult;
+    int     mbResult = -1;
+    char    buf[BUF_SIZE];
+    char   *buffer = NULL;
 
-    // keep get va string until success 
-    while ( result == -1 ) {
-        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
-        EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
-        buffer_count *= 2;
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    buffer = buf;
+    if ( result == -1 ) {
+        char *dyn_buf = NULL;
+        int buffer_count = BUF_SIZE * 2;
+
+        // keep get va string until success 
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
     }
-    pBuffer[result] = 0;
+    buffer[result-1] = '\0';
 
     // short the function name
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Error: %s(%zd)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
-    mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, pBuffer );
+    ex_log ( "Error: %s(%zd)[%s], %s", _file_name, _line_nr, short_name, buffer );
+    mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, buffer );
 
-    // release buffer we allocate
-    ex_free_nomng ( pBuffer );
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 
     //
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
@@ -132,30 +151,38 @@ bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_
 
 bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
 {
-    //
     int     result = -1;
-    int     buffer_count = 1024;
-    char   *pBuffer = NULL;
     char    short_name[64];
-    int     mbResult;
+    int     mbResult = -1;
+    char    buf[BUF_SIZE];
+    char   *buffer = NULL;
 
-    // keep get va string until success 
-    while ( result == -1 ) {
-        pBuffer = (char *)ex_realloc_nomng( pBuffer, buffer_count * sizeof(char) );
-        EX_GET_VA_STRING_WITH_RESULT( pBuffer, buffer_count, _expr, &result );
-        buffer_count *= 2;
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    buffer = buf;
+    if ( result == -1 ) {
+        char *dyn_buf = NULL;
+        int buffer_count = BUF_SIZE * 2;
+
+        // keep get va string until success 
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
     }
-    pBuffer[result] = 0;
+    buffer[result-1] = '\0';
 
     // short the function name
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Warning: %s(%zd)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
-    mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, pBuffer );
+    ex_log ( "Warning: %s(%zd)[%s], %s", _file_name, _line_nr, _function_name, buffer );
+    mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, buffer );
 
-    // release buffer we allocate
-    ex_free_nomng ( pBuffer );
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 
     //
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
