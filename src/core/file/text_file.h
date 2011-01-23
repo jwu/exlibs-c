@@ -37,7 +37,8 @@ extern void ex_text_fclose ( ex_text_file_t *_txtFile );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_fmt, ... ); 
+extern int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_text, int _len ); 
+extern int ex_text_fwrite_fmt ( ex_text_file_t *_txtFile, const char *_fmt, ... ); 
 extern int ex_text_fwrite_line ( ex_text_file_t *_txtFile, const char *_fmt, ... ); 
 
 // ######################### 

@@ -21,40 +21,6 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int __text_fwrite ( ex_text_file_t *_txtFile, const char *_text, size_t _len ) {
-    int wroteBytes = 0;
-
-    if ( _len > BUF_SIZE ) {
-        if ( _txtFile->index != 0 ) {
-            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, _txtFile->index );
-            _txtFile->index = 0;
-        }
-        wroteBytes += ex_fwrite ( _txtFile->file, _text, 1, _len );
-    }
-    else {
-        int rest_size = BUF_SIZE - _txtFile->index;
-
-        // if the in text count more than the reset space of our buffer
-        // fill the text-buffer, then write it to the sys-file, and store the rest to the buffer. 
-        if ( _len >= rest_size ) {
-            memcpy ( _txtFile->buffer + _txtFile->index, _text, rest_size ); 
-            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, BUF_SIZE );
-            memcpy ( _txtFile->buffer, _text + rest_size, _len - rest_size ); 
-            _txtFile->index = _len - rest_size;
-        }
-        // just fill the buffer.
-        else {
-            memcpy ( _txtFile->buffer + _txtFile->index, _text, _len );
-            _txtFile->index += _len;
-        }
-    }
-    return wroteBytes;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 ex_text_file_t *ex_text_fopen ( const char *_filename, bool _readonly ) {
     ex_text_file_t *txtFile;
     ex_file_t *file;
@@ -90,7 +56,41 @@ void ex_text_fclose ( ex_text_file_t *_txtFile ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_fmt, ... ) {
+int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_text, int _len ) {
+    int wroteBytes = 0;
+
+    if ( _len > BUF_SIZE ) {
+        if ( _txtFile->index != 0 ) {
+            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, _txtFile->index );
+            _txtFile->index = 0;
+        }
+        wroteBytes += ex_fwrite ( _txtFile->file, _text, 1, _len );
+    }
+    else {
+        int rest_size = BUF_SIZE - _txtFile->index;
+
+        // if the in text count more than the reset space of our buffer
+        // fill the text-buffer, then write it to the sys-file, and store the rest to the buffer. 
+        if ( _len >= rest_size ) {
+            memcpy ( _txtFile->buffer + _txtFile->index, _text, rest_size ); 
+            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, BUF_SIZE );
+            memcpy ( _txtFile->buffer, _text + rest_size, _len - rest_size ); 
+            _txtFile->index = _len - rest_size;
+        }
+        // just fill the buffer.
+        else {
+            memcpy ( _txtFile->buffer + _txtFile->index, _text, _len );
+            _txtFile->index += _len;
+        }
+    }
+    return wroteBytes;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_text_fwrite_fmt ( ex_text_file_t *_txtFile, const char *_fmt, ... ) {
     int result = -1;
     char buf[BUF_SIZE];
 
@@ -107,11 +107,11 @@ int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_fmt, ... ) {
             EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count, _fmt, &result );
             buffer_count *= 2;
         } while ( result == -1 );
-        __text_fwrite( _txtFile, dyn_buf, result );
+        ex_text_fwrite( _txtFile, dyn_buf, result );
         ex_free_nomng (dyn_buf);
     }
     else {
-        __text_fwrite( _txtFile, buf, result );
+        ex_text_fwrite( _txtFile, buf, result );
     }
 
     return result;
@@ -146,7 +146,7 @@ int ex_text_fwrite_line ( ex_text_file_t *_txtFile, const char *_fmt, ... ) {
     }
 
     buffer[result-1] = '\n';
-    __text_fwrite( _txtFile, buffer, result );
+    ex_text_fwrite( _txtFile, buffer, result );
 
     // if we use dynamic buffer, release it
     if ( buffer != buf )
