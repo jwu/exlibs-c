@@ -108,6 +108,8 @@ DEF_BUILTIN_SERIALIZE_2(cstr, char *)
 DEF_BUILTIN_SERIALIZE_2(string, ex_string_t)
 DEF_BUILTIN_SERIALIZE_2(strid, strid_t)
 
+DEF_BUILTIN_SERIALIZE_2(angf, ex_angf_t)
+
 DEF_BUILTIN_SERIALIZE_2(vec2f, ex_vec2f_t)
 DEF_BUILTIN_SERIALIZE_2(vec3f, ex_vec3f_t)
 DEF_BUILTIN_SERIALIZE_2(vec4f, ex_vec4f_t)
@@ -117,7 +119,6 @@ DEF_BUILTIN_SERIALIZE_2(mat33f, ex_mat33f_t)
 DEF_BUILTIN_SERIALIZE_2(mat44f, ex_mat44f_t)
 
 DEF_BUILTIN_SERIALIZE_2(quatf, ex_quatf_t)
-DEF_BUILTIN_SERIALIZE_2(angf, ex_angf_t)
 
 DEF_BUILTIN_SERIALIZE_2(color3u, ex_color3u_t)
 DEF_BUILTIN_SERIALIZE_2(color3f, ex_color3f_t)

@@ -141,6 +141,15 @@ DEF_BUILTIN_TOSTRING(strid) {
     ex_string_ncat( _string, text, strlen(text) );
 }
 
+DEF_BUILTIN_TOSTRING(angf) {
+    // NOTE: degrees symbol is alt-shift-8
+    char buf[1024];
+    ex_angf_t *val = (ex_angf_t *)_val;
+
+    snprintf ( buf, 1024, "(r:%.3f, d:%.3f°)", val->rad, ex_angf_to_degrees_360(val) );
+    ex_string_ncat( _string, buf, strlen(buf) );
+}
+
 DEF_BUILTIN_TOSTRING(vec2f) {
     char buf[1024];
     ex_vec2f_t *val = (ex_vec2f_t *)_val;
@@ -199,14 +208,6 @@ DEF_BUILTIN_TOSTRING(quatf) {
     ex_quatf_t *val = (ex_quatf_t *)_val;
 
     snprintf ( buf, 1024, "(%.3f, %.3f, %.3f, %.3f)", val->x, val->y, val->z, val->w );
-    ex_string_ncat( _string, buf, strlen(buf) );
-}
-DEF_BUILTIN_TOSTRING(angf) {
-    // NOTE: degrees symbol is alt-shift-8
-    char buf[1024];
-    ex_angf_t *val = (ex_angf_t *)_val;
-
-    snprintf ( buf, 1024, "(r:%.3f, d:%.3f°)", val->rad, ex_angf_to_degrees_360(val) );
     ex_string_ncat( _string, buf, strlen(buf) );
 }
 

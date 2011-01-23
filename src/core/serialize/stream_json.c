@@ -627,6 +627,21 @@ static void __read_strid ( ex_stream_t *_stream, strid_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __read_angf ( ex_stream_t *_stream, ex_angf_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    ex_angf_set_by_radians( _val, (float)(*((double *)node->val)) );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __read_vec2f ( ex_stream_t *_stream, ex_vec2f_t *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -749,21 +764,6 @@ static void __read_quatf ( ex_stream_t *_stream, ex_quatf_t *_val ) {
 
     buf = (double *)(node->val);
     ex_quatf_set( _val, (float)(buf[0]), (float)(buf[1]), (float)(buf[2]), (float)(buf[3]) );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __read_angf ( ex_stream_t *_stream, ex_angf_t *_val ) {
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    ex_angf_set_by_radians( _val, (float)(*((double *)node->val)) );
 }
 
 // ------------------------------------------------------------------ 
@@ -1207,6 +1207,22 @@ static void __write_strid ( ex_stream_t *_stream, strid_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __write_angf ( ex_stream_t *_stream, ex_angf_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(double) ); 
+    *(double *)node->val = (double)(_val->rad);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __write_vec2f ( ex_stream_t *_stream, ex_vec2f_t *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -1357,22 +1373,6 @@ static void __write_quatf ( ex_stream_t *_stream, ex_quatf_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_angf ( ex_stream_t *_stream, ex_angf_t *_val ) {
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    node->val = ex_malloc ( sizeof(double) ); 
-    *(double *)node->val = (double)(_val->rad);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 static void __write_color3u ( ex_stream_t *_stream, ex_color3u_t *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -1515,48 +1515,82 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __save_nodes ( ex_file_t *_file, __json_node_t *_node, int _level ) {
-    ex_assert_return ( _node, /*dummy*/, "node can't be NULL" );
-    char buf[2048];
+#define WRITE_DOUBLE_ARRAY( _file, _array, _count ) \
+    { \
+        double *a = (double *)(_array); \
+        ex_text_fwrite_fmt ( _file, "%f", *a++ ); \
+        for ( int i = 1; i < _count; ++i ) \
+            ex_text_fwrite_fmt ( _file, ",%f", *a++ ); \
+    }
 
-    // TODO: should use buffer that write text
-    // TODO: for safety, we need to do while realloc protection. { 
-    snprintf ( buf, 2048, "%*s%s: { %s: ",
-               _level, "\t", 
-               ex_strid_to_cstr(_node->name), 
-               ex_strid_to_cstr(_node->typeid) );
-    // } TODO end 
-    ex_fwrite ( _file, buf, 1, strlen(buf) );
+#define WRITE_LONG_ARRAY( _file, _array, _count ) \
+    { \
+        long *a = (long *)(_array); \
+        ex_text_fwrite_fmt ( _file, "%ld", *a++ ); \
+        for ( int i = 1; i < _count; ++i ) \
+            ex_text_fwrite_fmt ( _file, ",%ld", *a++ ); \
+    }
+
+static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _level ) {
+    ex_assert_return ( _node, /*dummy*/, "node can't be NULL" );
+
+    ex_text_fwrite_fmt ( _txtFile, "%*s%s: { %s: ",
+                         _level, "\t", 
+                         ex_strid_to_cstr(_node->name), 
+                         ex_strid_to_cstr(_node->typeid) );
 
     // write value
-    // TODO: for safety, we need to do while realloc protection. { 
     if ( _node->typeid == EX_TYPEID(bool) ) {
-        snprintf ( buf, 2048, "%s }", *((bool *)_node->val) == true ? "true" : "false" );
+        ex_text_fwrite_fmt ( _txtFile, "%s }", *((bool *)_node->val) == true ? "true" : "false" );
     }
     else if ( ex_is_integer(_node->typeid) ) {
-        snprintf ( buf, 2048, "%ld }", *((long *)_node->val) );
+        ex_text_fwrite_fmt ( _txtFile, "%ld }", *((long *)_node->val) );
     }
     else if ( ex_is_fp(_node->typeid) ) {
-        snprintf ( buf, 2048, "%f }", *((double *)_node->val) );
+        ex_text_fwrite_fmt ( _txtFile, "%f }", *((double *)_node->val) );
     }
     else if ( ex_is_string(_node->typeid) ) {
-        snprintf ( buf, 2048, "%s }", (char *)_node->val );
+        ex_text_fwrite_fmt ( _txtFile, "%s }", (char *)_node->val );
     }
-    else if ( _node->typeid >= EX_TYPEID(vec2f) && _node->typeid < EX_TYPEID(mat44f) ) {
-        snprintf ( buf, 2048, "%s }", (char *)_node->val );
-    }
+    else if ( _node->typeid >= EX_TYPEID(vec2f) && _node->typeid < EX_TYPEID(color4f) ) {
+        ex_text_fwrite_fmt ( _txtFile, "[" );
 
-    ex_fwrite ( _file, buf, 1, strlen(buf) );
-    // } TODO end 
+        if ( _node->typeid == EX_TYPEID(vec2f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 2 )
+        else if ( _node->typeid == EX_TYPEID(vec3f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 3 )
+        else if ( _node->typeid == EX_TYPEID(vec4f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
+        else if ( _node->typeid == EX_TYPEID(mat22f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
+        else if ( _node->typeid == EX_TYPEID(mat33f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 9 )
+        else if ( _node->typeid == EX_TYPEID(mat44f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 16 )
+        else if ( _node->typeid == EX_TYPEID(quatf) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
+        else if ( _node->typeid == EX_TYPEID(color3u) )
+            WRITE_LONG_ARRAY( _txtFile, _node->val, 3 )
+        else if ( _node->typeid == EX_TYPEID(color3f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 3 )
+        else if ( _node->typeid == EX_TYPEID(color4u) )
+            WRITE_LONG_ARRAY( _txtFile, _node->val, 4 )
+        else if ( _node->typeid == EX_TYPEID(color4f) )
+            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
+                
+        ex_text_fwrite_fmt ( _txtFile, "] }" );
+    }
 
     // save child nodes
     if ( _node->children ) {
-        ex_fwrite ( _file, ",\n", 1, 2 );
+        ex_text_fwrite_fmt ( _txtFile, ",\n" );
         ex_list_each ( _node->children, __json_node_t *, _child ) {
-            __save_nodes ( _file, _child, ++_level );
+            __save_nodes ( _txtFile, _child, ++_level );
         } ex_list_each_end 
     }
 }
+
+#undef WRITE_DOUBLE_ARRAY
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -1564,14 +1598,14 @@ static void __save_nodes ( ex_file_t *_file, __json_node_t *_node, int _level ) 
 
 static int __save_to_file ( ex_stream_t *_stream, const char *_filename ) {
     ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
-    ex_file_t *file;
+    ex_text_file_t *txtFile;
     
-    file = ex_fopen ( _filename, "w" );
-    if ( file == NULL )
+    txtFile = ex_text_fopen ( _filename, false );
+    if ( txtFile == NULL )
         return -1;
 
-    __save_nodes ( file, stream->root, 0 );
-    ex_fclose(file);
+    __save_nodes ( txtFile, stream->root, 0 );
+    ex_text_fclose(txtFile);
     return 0;
 }
 
@@ -1611,6 +1645,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_cstr,
         __read_string,
         __read_strid,
+        __read_angf,
         __read_vec2f,
         __read_vec3f,
         __read_vec4f,
@@ -1618,7 +1653,6 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_mat33f,
         __read_mat44f,
         __read_quatf,
-        __read_angf,
         __read_color3u,
         __read_color3f,
         __read_color4u,
@@ -1742,6 +1776,7 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_cstr,
         __write_string,
         __write_strid,
+        __write_angf,
         __write_vec2f,
         __write_vec3f,
         __write_vec4f,
@@ -1749,7 +1784,6 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_mat33f,
         __write_mat44f,
         __write_quatf,
-        __write_angf,
         __write_color3u,
         __write_color3f,
         __write_color4u,
@@ -1781,3 +1815,4 @@ void ex_destroy_json_stream ( ex_stream_json_t *_stream ) {
     __destroy_node(_stream->root);
     ex_free(_stream);
 }
+

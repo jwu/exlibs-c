@@ -59,6 +59,8 @@ typedef struct ex_stream_t {
     void (*serialize_string)    ( struct ex_stream_t *_stream, ex_string_t *_val );
     void (*serialize_strid)     ( struct ex_stream_t *_stream, strid_t *_val );
 
+    void (*serialize_angf)      ( struct ex_stream_t *_stream, ex_angf_t *_val );
+
     void (*serialize_vec2f)     ( struct ex_stream_t *_stream, ex_vec2f_t *_val );
     void (*serialize_vec3f)     ( struct ex_stream_t *_stream, ex_vec3f_t *_val );
     void (*serialize_vec4f)     ( struct ex_stream_t *_stream, ex_vec4f_t *_val );
@@ -68,7 +70,6 @@ typedef struct ex_stream_t {
     void (*serialize_mat44f)    ( struct ex_stream_t *_stream, ex_mat44f_t *_val );
 
     void (*serialize_quatf)     ( struct ex_stream_t *_stream, ex_quatf_t *_val );
-    void (*serialize_angf)      ( struct ex_stream_t *_stream, ex_angf_t *_val );
 
     void (*serialize_color3u)   ( struct ex_stream_t *_stream, ex_color3u_t *_val );
     void (*serialize_color3f)   ( struct ex_stream_t *_stream, ex_color3f_t *_val );
