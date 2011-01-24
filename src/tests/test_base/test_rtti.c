@@ -44,21 +44,23 @@ void __ex_register_test_cls_t () {
 } 
 #else
 
-EX_DEF_CLASS_BEGIN(test_cls_t)
+EX_DECL_CLASS_BEGIN(test_cls_t)
     uint32  id;
     float   data1;
     float   data2;
-EX_DEF_CLASS_END(test_cls_t)
+EX_DECL_CLASS_END(test_cls_t)
 
-EX_DEF_CLASS_CREATOR(test_cls_t) {
-    return __alloc_test_cls_t();
-}
+EX_DEF_CLASS_BEGIN(test_cls_t)
+    -1,
+    1.0f,
+    1.0f,
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(test_cls_t)
     EX_PROP( test_cls_t, id,    "id",    EX_PROP_ATTR_READ_ONLY, ex_prop_set_raw_int32, ex_prop_get_raw_int32 )
     EX_PROP( test_cls_t, data1, "data1", EX_PROP_ATTR_NONE,      ex_prop_set_raw_float, ex_prop_get_raw_float )
     EX_PROP( test_cls_t, data2, "data2", EX_PROP_ATTR_NONE,      ex_prop_set_raw_float, ex_prop_get_raw_float )
-EX_DEF_PROPS_END(test_cls_t)
+EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(test_cls_t)
 EX_SERIALIZE_END

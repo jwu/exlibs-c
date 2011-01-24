@@ -40,15 +40,15 @@ typedef struct ex_color3u_t {
     };
 } ex_color3u_t;
 
-extern ex_color3u_t ex_color3u_red;
-extern ex_color3u_t ex_color3u_green;
-extern ex_color3u_t ex_color3u_blue;
-extern ex_color3u_t ex_color3u_black;
-extern ex_color3u_t ex_color3u_white;
-extern ex_color3u_t ex_color3u_yellow;
-extern ex_color3u_t ex_color3u_cyan;
-extern ex_color3u_t ex_color3u_magenta;
-extern ex_color3u_t ex_color3u_gray;
+extern const ex_color3u_t ex_color3u_red;
+extern const ex_color3u_t ex_color3u_green;
+extern const ex_color3u_t ex_color3u_blue;
+extern const ex_color3u_t ex_color3u_black;
+extern const ex_color3u_t ex_color3u_white;
+extern const ex_color3u_t ex_color3u_yellow;
+extern const ex_color3u_t ex_color3u_cyan;
+extern const ex_color3u_t ex_color3u_magenta;
+extern const ex_color3u_t ex_color3u_gray;
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -68,15 +68,15 @@ typedef struct ex_color4u_t {
     };
 } ex_color4u_t;
 
-extern ex_color4u_t ex_color4u_red;
-extern ex_color4u_t ex_color4u_green;
-extern ex_color4u_t ex_color4u_blue;
-extern ex_color4u_t ex_color4u_black;
-extern ex_color4u_t ex_color4u_white;
-extern ex_color4u_t ex_color4u_yellow;
-extern ex_color4u_t ex_color4u_cyan;
-extern ex_color4u_t ex_color4u_magenta;
-extern ex_color4u_t ex_color4u_gray;
+extern const ex_color4u_t ex_color4u_red;
+extern const ex_color4u_t ex_color4u_green;
+extern const ex_color4u_t ex_color4u_blue;
+extern const ex_color4u_t ex_color4u_black;
+extern const ex_color4u_t ex_color4u_white;
+extern const ex_color4u_t ex_color4u_yellow;
+extern const ex_color4u_t ex_color4u_cyan;
+extern const ex_color4u_t ex_color4u_magenta;
+extern const ex_color4u_t ex_color4u_gray;
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -96,15 +96,15 @@ typedef struct ex_color3f_t {
     };
 } ex_color3f_t;
 
-extern ex_color3f_t ex_color3f_red;
-extern ex_color3f_t ex_color3f_green;
-extern ex_color3f_t ex_color3f_blue;
-extern ex_color3f_t ex_color3f_black;
-extern ex_color3f_t ex_color3f_white;
-extern ex_color3f_t ex_color3f_yellow;
-extern ex_color3f_t ex_color3f_cyan;
-extern ex_color3f_t ex_color3f_magenta;
-extern ex_color3f_t ex_color3f_gray;
+extern const ex_color3f_t ex_color3f_red;
+extern const ex_color3f_t ex_color3f_green;
+extern const ex_color3f_t ex_color3f_blue;
+extern const ex_color3f_t ex_color3f_black;
+extern const ex_color3f_t ex_color3f_white;
+extern const ex_color3f_t ex_color3f_yellow;
+extern const ex_color3f_t ex_color3f_cyan;
+extern const ex_color3f_t ex_color3f_magenta;
+extern const ex_color3f_t ex_color3f_gray;
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -124,15 +124,15 @@ typedef struct ex_color4f_t {
     };
 } ex_color4f_t;
 
-extern ex_color4f_t ex_color4f_red;
-extern ex_color4f_t ex_color4f_green;
-extern ex_color4f_t ex_color4f_blue;
-extern ex_color4f_t ex_color4f_black;
-extern ex_color4f_t ex_color4f_white;
-extern ex_color4f_t ex_color4f_yellow;
-extern ex_color4f_t ex_color4f_cyan;
-extern ex_color4f_t ex_color4f_magenta;
-extern ex_color4f_t ex_color4f_gray;
+extern const ex_color4f_t ex_color4f_red;
+extern const ex_color4f_t ex_color4f_green;
+extern const ex_color4f_t ex_color4f_blue;
+extern const ex_color4f_t ex_color4f_black;
+extern const ex_color4f_t ex_color4f_white;
+extern const ex_color4f_t ex_color4f_yellow;
+extern const ex_color4f_t ex_color4f_cyan;
+extern const ex_color4f_t ex_color4f_magenta;
+extern const ex_color4f_t ex_color4f_gray;
 
 ///////////////////////////////////////////////////////////////////////////////
 // color3u function defines

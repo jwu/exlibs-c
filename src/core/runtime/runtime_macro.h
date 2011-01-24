@@ -19,17 +19,17 @@ extern "C" {
 // NOTE: to define a rtti class you need:
 /**
   suppose you want to define a foo class
-  EX_DEF_CLASS_BEGIN(foo)
+  EX_DECL_CLASS_BEGIN(foo)
       int val1;
-  EX_DEF_CLASS_END(foo)
+  EX_DECL_CLASS_END(foo)
 
-  EX_DEF_CLASS_CREATOR(foo) {
-      return __alloc_foo();
-  }
+  EX_DEF_CLASS_BEGIN(foo)
+    10,
+  EX_DEF_CLASS_END
 
   EX_DEF_PROPS_BEGIN(foo)
       EX_PROP( foo, val1, "value_01",  EX_PROP_ATTR_NONE, ex_prop_set_raw_int32, ex_prop_get_raw_int32 )
-  EX_DEF_PROPS_END(foo)
+  EX_DEF_PROPS_END
 
   EX_SERIALIZE_BEGIN(foo)
       EX_SERIALIZE(int,val1);
@@ -74,7 +74,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_CLASS_BEGIN(_typename) \
+#define EX_DECL_CLASS_BEGIN(_typename) \
     typedef struct _typename { \
         const struct ex_class_t _;
 
@@ -82,7 +82,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_CLASS_END(_typename) \
+#define EX_DECL_CLASS_END(_typename) \
     } _typename; \
     extern strid_t __TYPEID_##_typename##__; /*for EX_TYPEID*/ \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
@@ -106,7 +106,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_CLASS_SUPER_BEGIN(_typename,_super) \
+#define EX_DECL_CLASS_SUPER_BEGIN(_typename,_super) \
     typedef struct _typename { \
         const struct _super _;
 
@@ -114,7 +114,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_CLASS_SUPER_END(_typename,_super) \
+#define EX_DECL_CLASS_SUPER_END(_typename,_super) \
     } _typename; \
     extern strid_t __TYPEID_##_typename##__; /*for EX_TYPEID*/ \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
@@ -138,15 +138,22 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_CLASS_CREATOR(_typename) \
+#define EX_DEF_CLASS_BEGIN(_typename) \
     strid_t __TYPEID_##_typename##__; \
     ex_rtti_t *__RTTI_##_typename##__ = NULL; \
-    static inline _typename *__alloc_##_typename() { \
-        ex_class_t *obj = (ex_class_t *)ex_malloc(sizeof(_typename)); \
-        obj->rtti = EX_RTTI(_typename); \
-        return (_typename *)obj; \
-    } \
-    void *ex_create_##_typename()
+    void *ex_create_##_typename() { \
+        ex_rtti_t *__rtti__ = EX_RTTI(_typename); \
+        void *__obj__ = ex_malloc(sizeof(_typename)); \
+        static const int __size__ = sizeof(_typename); \
+        static const _typename __class_def__ = { \
+            NULL,
+
+#define EX_DEF_CLASS_END \
+        }; /*end of __class_def__*/ \
+        memcpy ( __obj__, &__class_def__, __size__ ); \
+        ((ex_class_t *)__obj__)->rtti = __rtti__; \
+        return __obj__; \
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 // property help macros
@@ -187,18 +194,19 @@ extern "C" {
 
 #define EX_DEF_PROPS_BEGIN(_typename) \
     void __ex_register_properties_##_typename () { \
-        static const ex_prop_t __PROPS_##_typename##__[] = {
+        ex_rtti_t *__rtti__ = EX_RTTI(_typename); \
+        const char *__typename__ = #_typename; \
+        static const ex_prop_t __props__[] = {
 
 // ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_END(_typename)
+// Desc: EX_DEF_PROPS_END
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_PROPS_END(_typename) \
+#define EX_DEF_PROPS_END \
             { "", 0, -1, NULL, NULL } \
-        }; /*end of __PROPS_##_typename##__*/ \
-        ex_rtti_t *rtti = EX_RTTI(_typename); \
-        ex_assert_return( rtti, /**/, "failed to register class %s", #_typename ); \
-        ex_rtti_register_properties ( rtti, __PROPS_##_typename##__, EX_ARRAY_COUNT(__PROPS_##_typename##__)-1 ); \
+        }; /*end of __props__*/ \
+        ex_assert_return( __rtti__, /**/, "failed to register class %s", __typename__ ); \
+        ex_rtti_register_properties ( __rtti__, __props__, EX_ARRAY_COUNT(__props__)-1 ); \
     }
 
 // ------------------------------------------------------------------ 

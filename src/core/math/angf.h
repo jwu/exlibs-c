@@ -37,18 +37,6 @@ typedef struct ex_angf_t {
 
 // ------------------------------------------------------------------ 
 /*!
- @fn static inline void ex_angf_zero ( ex_angf_t *_a ) 
- @param _a the in angle
- @details
- set the angle to zero radians.
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_angf_zero ( ex_angf_t *_a ) { 
-    _a->rad = 0.0f;
-}
-
-// ------------------------------------------------------------------ 
-/*!
  @fn static inline void ex_angf_set_by_radians_nosafe ( ex_angf_t *_a, float _radians ) 
  @param _a the in angle
  @param _radians the in radians must in range [0,2pi]

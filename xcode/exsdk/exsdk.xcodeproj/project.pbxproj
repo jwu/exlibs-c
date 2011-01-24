@@ -47,6 +47,8 @@
 		B261C0EC12CD637B0018BCDA /* timespan.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C0E612CD637B0018BCDA /* timespan.h */; };
 		B261C13512CDACAF0018BCDA /* dtime.c in Sources */ = {isa = PBXBuildFile; fileRef = B261C13312CDACAF0018BCDA /* dtime.c */; };
 		B261C13612CDACAF0018BCDA /* dtime.h in Headers */ = {isa = PBXBuildFile; fileRef = B261C13412CDACAF0018BCDA /* dtime.h */; };
+		B29D83A312EDF83400AF7E1B /* mathdef.c in Sources */ = {isa = PBXBuildFile; fileRef = B29D83A112EDF83400AF7E1B /* mathdef.c */; };
+		B29D83A412EDF83400AF7E1B /* mathdef2.h in Headers */ = {isa = PBXBuildFile; fileRef = B29D83A212EDF83400AF7E1B /* mathdef2.h */; };
 		B2B113FF12DAAE66002E6C1A /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B113FE12DAAE66002E6C1A /* color.c */; };
 		B2BD881B12E6F86A001F9D38 /* test_cstr.c in Sources */ = {isa = PBXBuildFile; fileRef = B2BD881A12E6F86A001F9D38 /* test_cstr.c */; };
 		B2C9220E12D8B4AA000FB811 /* circlef.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220B12D8B4AA000FB811 /* circlef.h */; };
@@ -122,9 +124,7 @@
 		B2E0B7AC12A6B144009FE3E8 /* quatf.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B73D12A6B144009FE3E8 /* quatf.c */; };
 		B2E0B7AD12A6B144009FE3E8 /* quatf.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B73E12A6B144009FE3E8 /* quatf.h */; };
 		B2E0B7AE12A6B144009FE3E8 /* random.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B73F12A6B144009FE3E8 /* random.h */; };
-		B2E0B7AF12A6B144009FE3E8 /* vec2f.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B74012A6B144009FE3E8 /* vec2f.c */; };
 		B2E0B7B012A6B144009FE3E8 /* vec2f.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B74112A6B144009FE3E8 /* vec2f.h */; };
-		B2E0B7B112A6B144009FE3E8 /* vec3f.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B74212A6B144009FE3E8 /* vec3f.c */; };
 		B2E0B7B212A6B144009FE3E8 /* vec3f.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B74312A6B144009FE3E8 /* vec3f.h */; };
 		B2E0B7B312A6B144009FE3E8 /* vec4f.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B74412A6B144009FE3E8 /* vec4f.h */; };
 		B2E0B7B412A6B144009FE3E8 /* dlmalloc-2.8.4.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B74612A6B144009FE3E8 /* dlmalloc-2.8.4.c */; };
@@ -234,6 +234,8 @@
 		B261C0E612CD637B0018BCDA /* timespan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timespan.h; sourceTree = "<group>"; };
 		B261C13312CDACAF0018BCDA /* dtime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dtime.c; sourceTree = "<group>"; };
 		B261C13412CDACAF0018BCDA /* dtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtime.h; sourceTree = "<group>"; };
+		B29D83A112EDF83400AF7E1B /* mathdef.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mathdef.c; sourceTree = "<group>"; };
+		B29D83A212EDF83400AF7E1B /* mathdef2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mathdef2.h; sourceTree = "<group>"; };
 		B2B113FE12DAAE66002E6C1A /* color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = color.c; sourceTree = "<group>"; };
 		B2BD881A12E6F86A001F9D38 /* test_cstr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_cstr.c; sourceTree = "<group>"; };
 		B2C9220B12D8B4AA000FB811 /* circlef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circlef.h; sourceTree = "<group>"; };
@@ -313,9 +315,7 @@
 		B2E0B73D12A6B144009FE3E8 /* quatf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quatf.c; sourceTree = "<group>"; };
 		B2E0B73E12A6B144009FE3E8 /* quatf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quatf.h; sourceTree = "<group>"; };
 		B2E0B73F12A6B144009FE3E8 /* random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = random.h; sourceTree = "<group>"; };
-		B2E0B74012A6B144009FE3E8 /* vec2f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2f.c; sourceTree = "<group>"; };
 		B2E0B74112A6B144009FE3E8 /* vec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2f.h; sourceTree = "<group>"; };
-		B2E0B74212A6B144009FE3E8 /* vec3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3f.c; sourceTree = "<group>"; };
 		B2E0B74312A6B144009FE3E8 /* vec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3f.h; sourceTree = "<group>"; };
 		B2E0B74412A6B144009FE3E8 /* vec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4f.h; sourceTree = "<group>"; };
 		B2E0B74612A6B144009FE3E8 /* dlmalloc-2.8.4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "dlmalloc-2.8.4.c"; sourceTree = "<group>"; };
@@ -643,6 +643,8 @@
 		B2E0B72F12A6B144009FE3E8 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B29D83A112EDF83400AF7E1B /* mathdef.c */,
+				B29D83A212EDF83400AF7E1B /* mathdef2.h */,
 				B2B113FE12DAAE66002E6C1A /* color.c */,
 				B2C9226412D96539000FB811 /* color.h */,
 				B2C9220B12D8B4AA000FB811 /* circlef.h */,
@@ -664,9 +666,7 @@
 				B2E0B73D12A6B144009FE3E8 /* quatf.c */,
 				B2E0B73E12A6B144009FE3E8 /* quatf.h */,
 				B2E0B73F12A6B144009FE3E8 /* random.h */,
-				B2E0B74012A6B144009FE3E8 /* vec2f.c */,
 				B2E0B74112A6B144009FE3E8 /* vec2f.h */,
-				B2E0B74212A6B144009FE3E8 /* vec3f.c */,
 				B2E0B74312A6B144009FE3E8 /* vec3f.h */,
 				B2E0B74412A6B144009FE3E8 /* vec4f.h */,
 			);
@@ -891,6 +891,7 @@
 				B259244612E9BB2600B49C04 /* builtin_serialize.h in Headers */,
 				B259245E12EA6F7700B49C04 /* string.h in Headers */,
 				B24EC45812EB4D140070C3F8 /* text_file.h in Headers */,
+				B29D83A412EDF83400AF7E1B /* mathdef2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1039,8 +1040,6 @@
 				B2E0B7A512A6B144009FE3E8 /* mat33f.c in Sources */,
 				B2E0B7A712A6B144009FE3E8 /* mat44f.c in Sources */,
 				B2E0B7AC12A6B144009FE3E8 /* quatf.c in Sources */,
-				B2E0B7AF12A6B144009FE3E8 /* vec2f.c in Sources */,
-				B2E0B7B112A6B144009FE3E8 /* vec3f.c in Sources */,
 				B2E0B7B412A6B144009FE3E8 /* dlmalloc-2.8.4.c in Sources */,
 				B2E0B7B612A6B144009FE3E8 /* memmng.c in Sources */,
 				B2E0B7B912A6B144009FE3E8 /* core.c in Sources */,
@@ -1077,6 +1076,7 @@
 				B25923D512E941E400B49C04 /* typeop.c in Sources */,
 				B259245D12EA6F7700B49C04 /* string.c in Sources */,
 				B24EC45712EB4D140070C3F8 /* text_file.c in Sources */,
+				B29D83A312EDF83400AF7E1B /* mathdef.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1184,7 +1184,10 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					"../../ext/yajl-1.0.11/include",
+				);
 				INFOPLIST_FILE = "test_gl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -1211,7 +1214,10 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					"../../ext/yajl-1.0.11/include",
+				);
 				INFOPLIST_FILE = "test_gl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (

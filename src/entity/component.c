@@ -19,13 +19,18 @@
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_CREATOR(ex_component_t) {
-    return __alloc_ex_component_t();
-}
+EX_DEF_CLASS_BEGIN(ex_component_t)
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_component_t)
     // EX_PROP( ex_trans2d_t, _pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-EX_DEF_PROPS_END(ex_component_t)
+EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_component_t)
 EX_SERIALIZE_END

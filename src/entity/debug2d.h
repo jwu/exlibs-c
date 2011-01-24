@@ -31,11 +31,11 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
+EX_DECL_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
     int shapeType;
     ex_rectf_t rect;
     ex_circlef_t circle;
-EX_DEF_CLASS_SUPER_END(ex_debug2d_t,ex_component_t)
+EX_DECL_CLASS_SUPER_END(ex_debug2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

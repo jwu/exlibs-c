@@ -28,7 +28,7 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_BEGIN(ex_entity_t)
+EX_DECL_CLASS_BEGIN(ex_entity_t)
     strid_t name;
     // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
     ex_array_t *comps;
@@ -36,7 +36,7 @@ EX_DEF_CLASS_BEGIN(ex_entity_t)
     // cached components 
     struct ex_trans2d_t *trans2d;
     struct ex_camera_t *camera;
-EX_DEF_CLASS_END(ex_entity_t)
+EX_DECL_CLASS_END(ex_entity_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

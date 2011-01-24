@@ -32,13 +32,18 @@ static EX_RESULT __entity_add_comp ( ex_entity_t *_ent, ex_component_t *_comp ) 
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_CREATOR(ex_entity_t) {
-    return __alloc_ex_entity_t();
-}
+EX_DEF_CLASS_BEGIN(ex_entity_t)
+    EX_STRID_NULL, // name
+    NULL, // comps
+    NULL, // world
+
+    NULL, // trans2d
+    NULL, // camera
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_entity_t)
     EX_PROP( ex_entity_t, name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
-EX_DEF_PROPS_END(ex_entity_t)
+EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_entity_t)
 EX_SERIALIZE_END

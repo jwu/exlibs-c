@@ -18,19 +18,26 @@
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_CREATOR(ex_debug2d_t) {
-    ex_debug2d_t *obj = __alloc_ex_debug2d_t();
-    ex_component_t *comp = (ex_component_t *)obj;
-    comp->init = ex_debug2d_init;
-    comp->deinit = NULL;
-    return comp;
-}
+EX_DEF_CLASS_BEGIN(ex_debug2d_t)
+    // ex_component_t
+    NULL,
+    ex_debug2d_init,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+
+    // ex_debug2d_t
+    EX_DEBUG_SHAPE_RECT,
+    EX_VEC2F_ZERO, 1.0f, 1.0f,
+    EX_VEC2F_ZERO, 1.0f,
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_debug2d_t)
+    // TODO { 
     // EX_PROP( ex_trans2d_t, _pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-    // EX_PROP( ex_trans2d_t, _ang, "angle",  EX_PROP_ATTR_NONE, ex_prop_set_raw_angf, ex_prop_get_raw_angf )
-    // EX_PROP( ex_trans2d_t, _scale, "scale",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-EX_DEF_PROPS_END(ex_debug2d_t)
+    // } TODO end 
+EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_debug2d_t)
 EX_SERIALIZE_END
@@ -53,7 +60,7 @@ void ex_debug2d_init ( void *_self ) {
     ex_debug2d_t *dbg2d = (ex_debug2d_t *)_self; 
 
     ex_component_init(_self); // parent init
-    ex_vec2f_zero(&center);
+    center = ex_vec2f_zero;
     ex_rectf_set ( &r, center, 1.0f, 1.0f );
     ex_circlef_set ( &c, center, 1.0f );
 

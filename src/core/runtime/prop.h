@@ -123,8 +123,53 @@ static inline void ex_prop_get_raw_strid ( void *_pObj, size_t _offset, void *_v
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// static inline void ex_prop_set_raw_vec2f ( void *_pObj, size_t _offset, const void *_value ) { ex_vec2f_set ( (vec2f_t *)_value, (const vec2f_t *)ex_ptr_add(_pObj,_offset) ); }
-// static inline void ex_prop_get_raw_vec2f ( void *_pObj, size_t _offset, void *_value ) { *(char **)_value = ex_strid_to_cstr(*(strid_t *)ex_ptr_add(_pObj,_offset)); }
+static inline void ex_prop_set_raw_angf ( void *_pObj, size_t _offset, const void *_value ) { 
+    const ex_angf_t *a = (const ex_angf_t *)_value;
+    ex_angf_set_by_radians_nosafe( (ex_angf_t *)ex_ptr_add(_pObj,_offset), a->rad );
+}
+static inline void ex_prop_get_raw_angf ( void *_pObj, size_t _offset, void *_value ) { 
+    ex_angf_t *a = (ex_angf_t *)ex_ptr_add(_pObj,_offset);
+    ex_angf_set_by_radians_nosafe ( (ex_angf_t *)_value, a->rad ); 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_prop_set_raw_vec2f ( void *_pObj, size_t _offset, const void *_value ) { 
+    const ex_vec2f_t *v = (const ex_vec2f_t *)_value;
+    ex_vec2f_set ( (ex_vec2f_t *)ex_ptr_add(_pObj,_offset), v->x, v->y ); 
+}
+static inline void ex_prop_get_raw_vec2f ( void *_pObj, size_t _offset, void *_value ) { 
+    ex_vec2f_t *v = (ex_vec2f_t *)ex_ptr_add(_pObj,_offset);
+    ex_vec2f_set ( (ex_vec2f_t *)_value, v->x, v->y ); 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_prop_set_raw_vec3f ( void *_pObj, size_t _offset, const void *_value ) { 
+    const ex_vec3f_t *v = (const ex_vec3f_t *)_value;
+    ex_vec3f_set ( (ex_vec3f_t *)ex_ptr_add(_pObj,_offset), v->x, v->y, v->z ); 
+}
+static inline void ex_prop_get_raw_vec3f ( void *_pObj, size_t _offset, void *_value ) { 
+    ex_vec3f_t *v = (ex_vec3f_t *)ex_ptr_add(_pObj,_offset);
+    ex_vec3f_set ( (ex_vec3f_t *)_value, v->x, v->y, v->z ); 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_prop_set_raw_vec4f ( void *_pObj, size_t _offset, const void *_value ) { 
+    const ex_vec4f_t *v = (const ex_vec4f_t *)_value;
+    ex_vec4f_set ( (ex_vec4f_t *)ex_ptr_add(_pObj,_offset), v->x, v->y, v->z, v->w ); 
+}
+static inline void ex_prop_get_raw_vec4f ( void *_pObj, size_t _offset, void *_value ) { 
+    ex_vec4f_t *v = (ex_vec4f_t *)ex_ptr_add(_pObj,_offset);
+    ex_vec4f_set ( (ex_vec4f_t *)_value, v->x, v->y, v->z, v->w ); 
+}
 
 // ######################### 
 #ifdef __cplusplus

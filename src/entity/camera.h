@@ -32,15 +32,15 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_SUPER_BEGIN(ex_camera_t,ex_component_t)
+EX_DECL_CLASS_SUPER_BEGIN(ex_camera_t,ex_component_t)
     bool isOrtho;
     float orthoSize; // camera's half-height when in orthographic mode.
-    uint32 clearFlags;
     float aspect; // width/height
+    uint32 clearFlags;
     ex_color3f_t bgColor; // background color
     ex_mat44f_t matWorldToView;
     ex_mat44f_t matProjection;
-EX_DEF_CLASS_SUPER_END(ex_camera_t,ex_component_t)
+EX_DECL_CLASS_SUPER_END(ex_camera_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

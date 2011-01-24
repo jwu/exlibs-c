@@ -64,36 +64,6 @@ typedef struct ex_vec4f_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec4f_zero ( ex_vec4f_t *_r )
- @retval _r the result vector4
- @details make a zero vector4:
-
- \f[
-   q = \left[\begin{array}{ c c c c }
-   0.0 & 0.0 & 0.0 & 0.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_vec4f_zero ( ex_vec4f_t *_r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; _r->w = 0.0f; }
-
-// ------------------------------------------------------------------ 
-/*! 
- @fn static inline void ex_vec4f_one ( ex_vec4f_t *_r )
- @retval _r the result vector4
- @details make an one vector4:
-
- \f[
-   q = \left[\begin{array}{ c c c c }
-   1.0 & 1.0 & 1.0 & 1.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_vec4f_one ( ex_vec4f_t *_r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; _r->w = 1.0f; }
-
-// ------------------------------------------------------------------ 
-/*! 
  @fn static inline void ex_vec4f_set ( ex_vec4f_t *_r, float _x, float _y, float _z, float _w )
  @retval _r the result vector4
  @param x

@@ -24,7 +24,7 @@
 #define maxPATH 256
 
 // simple
-EX_DEF_CLASS_BEGIN(simple_t)
+EX_DECL_CLASS_BEGIN(simple_t)
     int8            m_int8;
     int16           m_int16;
     int32           m_int32;
@@ -51,18 +51,13 @@ EX_DEF_CLASS_BEGIN(simple_t)
     ex_color3u_t    m_color3u;
     ex_color4f_t    m_color4f;
     ex_color4u_t    m_color4u;
-EX_DEF_CLASS_END(simple_t)
+EX_DECL_CLASS_END(simple_t)
 
-EX_DEF_CLASS_CREATOR(simple_t) { 
-    simple_t *obj = (simple_t *)__alloc_simple_t(); 
-    obj->m_cstr = NULL; 
-    obj->m_string = ex_string(""); 
-    obj->m_strid = EX_STRID_NULL; 
-	return obj;
-}
+EX_DEF_CLASS_BEGIN(simple_t)
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(simple_t)
-EX_DEF_PROPS_END(simple_t)
+EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(simple_t)
     EX_SERIALIZE ( int8, m_int8 );
@@ -122,21 +117,23 @@ EX_DEF_TOSTRING_BEGIN(simple_t)
     EX_MEMBER_TOSTRING ( color4u,   "m_color4u",    (self->m_color4u) );
 EX_DEF_TOSTRING_END
 
-// complex
-EX_DEF_CLASS_BEGIN(complex_t)
-    ex_array_t *m_vec3f_list;
-    ex_hashmap_t *m_strid_to_float;
-EX_DEF_CLASS_END(complex_t)
-
-EX_DEF_CLASS_CREATOR(complex_t) { 
-    complex_t* obj = __alloc_complex_t(); 
-    obj->m_vec3f_list = ex_array(vec3f,8);
-    obj->m_strid_to_float = ex_hashmap( strid, float, 8 );
-	return obj;
+void init_simple_t ( simple_t *_self ) {
+    _self->m_cstr = NULL; 
+    _self->m_string = ex_string(""); 
+    _self->m_strid = EX_STRID_NULL; 
 }
 
+// complex
+EX_DECL_CLASS_BEGIN(complex_t)
+    ex_array_t *m_vec3f_list;
+    ex_hashmap_t *m_strid_to_float;
+EX_DECL_CLASS_END(complex_t)
+
+EX_DEF_CLASS_BEGIN(complex_t)
+EX_DEF_CLASS_END
+
 EX_DEF_PROPS_BEGIN(complex_t)
-EX_DEF_PROPS_END(complex_t)
+EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(complex_t)
     EX_SERIALIZE_ARRAY ( vec3f, m_vec3f_list);
@@ -147,6 +144,11 @@ EX_DEF_TOSTRING_BEGIN(complex_t)
     EX_MEMBER_TOSTRING( array, "m_vec3f_list", *(self->m_vec3f_list) );
     EX_MEMBER_TOSTRING( map, "m_strid_to_float", *(self->m_strid_to_float) );
 EX_DEF_TOSTRING_END
+
+void init_complex_t ( complex_t *_self ) {
+    _self->m_vec3f_list = ex_array(vec3f,8);
+    _self->m_strid_to_float = ex_hashmap( strid, float, 8 );
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -186,9 +188,11 @@ static void simple_read_write () {
     stream_read = ex_create_json_read_stream( strcat(path, "simple_read.json") );
 
     s1 = ex_create_simple_t();
+    init_simple_t(s1);
     serialize_func(stream_read, ex_strid("simple_01"), s1 );
 
     s2 = ex_create_simple_t();
+    init_simple_t(s2);
     serialize_func(stream_read, ex_strid("simple_02"), s2 );
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
 
@@ -214,9 +218,11 @@ static void simple_read_write () {
     stream_read = ex_create_json_read_stream( strcat(path, "simple_write.json") );
 
     s1 = ex_create_simple_t();
+    init_simple_t(s1);
     serialize_func(stream_read, ex_strid("simple_01"), s1 );
 
     s2 = ex_create_simple_t();
+    init_simple_t(s2);
     serialize_func(stream_read, ex_strid("simple_02"), s2 );
 
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
@@ -257,9 +263,11 @@ static void complex_read_write () {
     stream_read = ex_create_json_read_stream( strcat(path, "complex_read.json") );
 
     c1 = ex_create_complex_t();
+    init_complex_t(c1);
     serialize_func(stream_read, ex_strid("complex_01"), c1 );
 
     c2 = ex_create_complex_t();
+    init_complex_t(c2);
     serialize_func(stream_read, ex_strid("complex_02"), c2 );
 
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
@@ -288,9 +296,11 @@ static void complex_read_write () {
     stream_read = ex_create_json_read_stream( strcat(path, "complex_write.json") );
 
     c1 = ex_create_complex_t();
+    init_complex_t(c1);
     serialize_func(stream_read, ex_strid("complex_01"), c1 );
 
     c2 = ex_create_complex_t();
+    init_complex_t(c2);
     serialize_func(stream_read, ex_strid("complex_02"), c2 );
 
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
@@ -317,6 +327,6 @@ static void complex_read_write () {
 
 void test_stream () {
     // json_read_write();
-    // simple_read_write();
-    complex_read_write();
+    simple_read_write();
+    // complex_read_write();
 }

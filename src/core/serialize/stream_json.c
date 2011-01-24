@@ -1462,7 +1462,7 @@ static void __write_color4f ( ex_stream_t *_stream, ex_color4f_t *_val ) {
 static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, ex_serialize_pfn _pfn_serialize_el ) {
     ex_stream_json_t *stream;
     size_t idx = 0;
-    __json_node_t *parent, *jnode;
+    __json_node_t *parent;
 
     ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
     stream = (ex_stream_json_t *)_stream; 
@@ -1485,7 +1485,7 @@ static void __write_array ( ex_stream_t *_stream, ex_array_t *_val, ex_serialize
 static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_pfn _pfn_serialize_key, ex_serialize_pfn _pfn_serialize_val ) {
     ex_stream_json_t *stream;
     size_t idx = 0, count = 0;
-    __json_node_t *parent, *jnode;
+    __json_node_t *parent;
 
     ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
     count = ex_hashmap_count(_val);
@@ -1515,7 +1515,7 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
         double *a = (double *)(_array); \
         ex_text_fwrite_fmt ( _file, "%f", *a++ ); \
         for ( int i = 1; i < _count; ++i ) \
-            ex_text_fwrite_fmt ( _file, ",%f", *a++ ); \
+            ex_text_fwrite_fmt ( _file, ", %f", *a++ ); \
     }
 
 #define WRITE_LONG_ARRAY( _file, _array, _count ) \
@@ -1523,7 +1523,21 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
         long *a = (long *)(_array); \
         ex_text_fwrite_fmt ( _file, "%ld", *a++ ); \
         for ( int i = 1; i < _count; ++i ) \
-            ex_text_fwrite_fmt ( _file, ",%ld", *a++ ); \
+            ex_text_fwrite_fmt ( _file, ", %ld", *a++ ); \
+    }
+
+#define WRITE_DOUBLE_ARRAY_2D( _file, _array, _row, _col, _level ) \
+    { \
+        double *a = (double *)(_array); \
+        for ( int i = 0; i < _col; ++i ) { \
+            ex_text_fwrite_fmt ( _file, "\n%*s", (_level)*4, "" ); \
+            for ( int j = 0; j < _row; ++j ) { \
+                if ( i == _col - 1 && j == _row - 1 ) \
+                    ex_text_fwrite_fmt ( _file, "%f", *a++ ); \
+                else \
+                    ex_text_fwrite_fmt ( _file, "%f, ", *a++ ); \
+            } \
+        } \
     }
 
 static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _level ) {
@@ -1571,12 +1585,6 @@ static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _
             WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 3 )
         else if ( _node->typeid == EX_TYPEID(vec4f) )
             WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
-        else if ( _node->typeid == EX_TYPEID(mat22f) )
-            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
-        else if ( _node->typeid == EX_TYPEID(mat33f) )
-            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 9 )
-        else if ( _node->typeid == EX_TYPEID(mat44f) )
-            WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 16 )
         else if ( _node->typeid == EX_TYPEID(quatf) )
             WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
         else if ( _node->typeid == EX_TYPEID(color3u) )
@@ -1587,8 +1595,17 @@ static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _
             WRITE_LONG_ARRAY( _txtFile, _node->val, 4 )
         else if ( _node->typeid == EX_TYPEID(color4f) )
             WRITE_DOUBLE_ARRAY( _txtFile, _node->val, 4 )
+        else if ( _node->typeid == EX_TYPEID(mat22f) )
+            WRITE_DOUBLE_ARRAY_2D( _txtFile, _node->val, 2, 2, _level+1 )
+        else if ( _node->typeid == EX_TYPEID(mat33f) )
+            WRITE_DOUBLE_ARRAY_2D( _txtFile, _node->val, 3, 3, _level+1 )
+        else if ( _node->typeid == EX_TYPEID(mat44f) )
+            WRITE_DOUBLE_ARRAY_2D( _txtFile, _node->val, 4, 4, _level+1 )
                 
-        ex_text_fwrite_fmt ( _txtFile, "] }" );
+        if ( _node->typeid >= EX_TYPEID(mat22f) && _node->typeid <= EX_TYPEID(mat44f) ) 
+            ex_text_fwrite_fmt ( _txtFile, "\n%*s] }", _level*4, "" );
+        else
+            ex_text_fwrite_fmt ( _txtFile, "] }" );
     }
 
     // save child nodes

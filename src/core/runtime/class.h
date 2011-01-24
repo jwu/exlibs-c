@@ -34,15 +34,10 @@ extern strid_t __TYPEID_ex_class_t__;
 extern ex_rtti_t *__RTTI_ex_class_t__;
 
 //
-static inline ex_class_t *__alloc_ex_class_t() {
+static inline void *ex_create_ex_class_t() {
     ex_class_t *obj = (ex_class_t *)ex_malloc(sizeof(ex_class_t));
     obj->rtti = __RTTI_ex_class_t__;
     return obj;
-}
-
-//
-static inline void *ex_create_ex_class_t() {
-    return __alloc_ex_class_t();
 }
 
 //

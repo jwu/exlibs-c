@@ -67,52 +67,6 @@ typedef struct ex_mat44f_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat44f_zero ( ex_mat44f_t *_m )
- @retval _m the result matrix
- @details make a zero matrix:
-
- \f[
-   m = \left[\begin{array}{ c c c c }
-   0.0 & 0.0 & 0.0 & 0.0 \\
-   0.0 & 0.0 & 0.0 & 0.0 \\
-   0.0 & 0.0 & 0.0 & 0.0 \\
-   0.0 & 0.0 & 0.0 & 0.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_mat44f_zero ( ex_mat44f_t *_m ) { 
-    _m->m00 = 0.0f, _m->m01 = 0.0f, _m->m02 = 0.0f; _m->m03 = 0.0f;
-    _m->m10 = 0.0f, _m->m11 = 0.0f, _m->m12 = 0.0f; _m->m13 = 0.0f;
-    _m->m20 = 0.0f, _m->m21 = 0.0f, _m->m22 = 0.0f; _m->m23 = 0.0f;
-    _m->m30 = 0.0f, _m->m31 = 0.0f, _m->m32 = 0.0f; _m->m33 = 0.0f;
-}
-
-// ------------------------------------------------------------------ 
-/*! 
- @fn static inline void ex_mat44f_identity ( ex_mat44f_t *_m )
- @retval _m the result matrix
- @details make an identity matrix:
-
- \f[
-   m = \left[\begin{array}{ c c c c }
-   1.0 & 0.0 & 0.0 & 0.0 \\
-   0.0 & 1.0 & 0.0 & 0.0 \\
-   0.0 & 0.0 & 1.0 & 0.0 \\
-   0.0 & 0.0 & 0.0 & 1.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_mat44f_identity ( ex_mat44f_t *_m ) { 
-    _m->m00 = 1.0f, _m->m01 = 0.0f, _m->m02 = 0.0f; _m->m03 = 0.0f;
-    _m->m10 = 0.0f, _m->m11 = 1.0f, _m->m12 = 0.0f; _m->m13 = 0.0f;
-    _m->m20 = 0.0f, _m->m21 = 0.0f, _m->m22 = 1.0f; _m->m23 = 0.0f;
-    _m->m30 = 0.0f, _m->m31 = 0.0f, _m->m32 = 0.0f; _m->m33 = 1.0f;
-}
-
-// ------------------------------------------------------------------ 
-/*! 
  @fn static inline void ex_mat44f_set ( ex_mat44f_t *_m, 
                          float _m00, float _m01, float _m02, float _m03,
                          float _m10, float _m11, float _m12, float _m13,
@@ -183,8 +137,7 @@ static inline float ex_mat44f_get ( ex_mat44f_t *_m, uint _row, uint _col ) {
  @details get the matrix by _row and return it in vector4, for example: 
  @code
  ex_vec4f_t r;
- ex_mat44f_t m;
- mat44f_zero(&m);
+ ex_mat44f_t m = ex_mat44f_zero;
  mat44f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01, m.m02, m.m03)
  @endcode
  the r is equal to vector4 (m.m00, m.m01, m.m02, m.m03) 
@@ -207,8 +160,7 @@ static inline void ex_mat44f_row ( ex_vec4f_t *_r, const ex_mat44f_t *_m, uint _
  @details get the matrix by _row and return it in vector3, for example: 
  @code
  ex_vec4f_t r;
- ex_mat44f_t m;
- mat44f_zero(&m);
+ ex_mat44f_t m = ex_mat44f_zero;
  mat44f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10, m.m20, m.m30)
  @endcode
  the r is equal to vector4 (m.m00, m.m10, m.m20, m.m30) 

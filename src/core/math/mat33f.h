@@ -64,48 +64,6 @@ typedef struct ex_mat33f_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat33f_zero ( ex_mat33f_t *_m )
- @retval _m the result matrix
- @details make a zero matrix:
-
- \f[
-   m = \left[\begin{array}{ c c c }
-   0.0 & 0.0 & 0.0 \\
-   0.0 & 0.0 & 0.0 \\
-   0.0 & 0.0 & 0.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_mat33f_zero ( ex_mat33f_t *_m ) { 
-    _m->m00 = 0.0f, _m->m01 = 0.0f, _m->m02 = 0.0f; 
-    _m->m10 = 0.0f, _m->m11 = 0.0f, _m->m12 = 0.0f; 
-    _m->m20 = 0.0f, _m->m21 = 0.0f, _m->m22 = 0.0f; 
-}
-
-// ------------------------------------------------------------------ 
-/*! 
- @fn static inline void ex_mat33f_identity ( ex_mat33f_t *_m )
- @retval _m the result matrix
- @details make an identity matrix:
-
- \f[
-   m = \left[\begin{array}{ c c c }
-   1.0 & 0.0 & 0.0 \\
-   0.0 & 1.0 & 0.0 \\
-   0.0 & 0.0 & 1.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_mat33f_identity ( ex_mat33f_t *_m ) { 
-    _m->m00 = 1.0f, _m->m01 = 0.0f, _m->m02 = 0.0f; 
-    _m->m10 = 0.0f, _m->m11 = 1.0f, _m->m12 = 0.0f; 
-    _m->m20 = 0.0f, _m->m21 = 0.0f, _m->m22 = 1.0f; 
-}
-
-// ------------------------------------------------------------------ 
-/*! 
  @fn static inline void ex_mat33f_set ( ex_mat33f_t *_m, 
                          float _m00, float _m01, float _m02,
                          float _m10, float _m11, float _m12,
@@ -165,8 +123,7 @@ static inline float ex_mat33f_get ( ex_mat33f_t *_m, uint _row, uint _col ) {
  @details get the matrix by _row and return it in vector3, for example: 
  @code
  ex_vec3f_t r;
- ex_mat33f_t m;
- ex_mat33f_zero(&m);
+ ex_mat33f_t m = ex_mat33f_zero;
  ex_mat33f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01, m.m02)
  @endcode
  the r is equal to vector3 (m.m00, m.m01, m.m02) 
@@ -188,8 +145,7 @@ static inline void ex_mat33f_row ( ex_vec3f_t *_r, const ex_mat33f_t *_m, uint _
  @details get the matrix by _row and return it in vector3, for example: 
  @code
  ex_vec3f_t r;
- ex_mat33f_t m;
- ex_mat33f_zero(&m);
+ ex_mat33f_t m = ex_mat33f_zero;
  ex_mat33f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10, m.m20)
  @endcode
  the r is equal to vector3 (m.m00, m.m10, m.m20) 

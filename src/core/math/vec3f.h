@@ -64,36 +64,6 @@ typedef struct ex_vec3f_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec3f_zero ( ex_vec3f_t *_r )
- @retval _r the result vector3
- @details make a zero vector3:
-
- \f[
-   q = \left[\begin{array}{ c c c }
-   0.0 & 0.0 & 0.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_vec3f_zero ( ex_vec3f_t *_r ) { _r->x = 0.0f, _r->y = 0.0f; _r->z = 0.0f; }
-
-// ------------------------------------------------------------------ 
-/*! 
- @fn static inline void ex_vec3f_one ( ex_vec3f_t *_r )
- @retval _r the result vector3
- @details make an one vector3:
-
- \f[
-   q = \left[\begin{array}{ c c c }
-   1.0 & 1.0 & 1.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_vec3f_one ( ex_vec3f_t *_r ) { _r->x = 1.0f, _r->y = 1.0f; _r->z = 1.0f; }
-
-// ------------------------------------------------------------------ 
-/*! 
  @fn static inline void ex_vec3f_set ( ex_vec3f_t *_r, float _x, float _y, float _z )
  @retval _r the result vector3
  @param x

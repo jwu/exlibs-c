@@ -67,36 +67,6 @@ typedef struct ex_quatf_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_quatf_zero ( ex_quatf_t *_r )
- @retval _r the result quaternion
- @details make a zero quaternion:
-
- \f[
-   q = \left[\begin{array}{ c c c c }
-   0.0 & 0.0 & 0.0 & 0.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_quatf_zero ( ex_quatf_t *_r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z = 0.0f, _r->w = 0.0f; }
-
-// ------------------------------------------------------------------ 
-/*! 
- @fn static inline void ex_quatf_identity ( ex_quatf_t *_r )
- @retval _r the result quaternion
- @details make a identity quaternion:
-
- \f[
-   q = \left[\begin{array}{ c c c c }
-   0.0 & 0.0 & 0.0 & 1.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_quatf_identity ( ex_quatf_t *_r ) { _r->x = 0.0f, _r->y = 0.0f, _r->z = 0.0f, _r->w = 1.0f; }
-
-// ------------------------------------------------------------------ 
-/*! 
  @fn static inline void ex_quatf_set ( ex_quatf_t *_r, float _x, float _y, float _z, float _w )
  @retval _r the result quaternion
  @param x

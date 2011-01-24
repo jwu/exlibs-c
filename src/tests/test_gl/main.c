@@ -74,7 +74,7 @@ static void initGame () {
     }
 
     // TEMP: instead of serialize the world, I hardcoded the entities.
-    for ( int i = 0; i < 200; ++i ) {
+    for ( int i = 0; i < 10; ++i ) {
         entity1 = ex_world_create_entity ( world, ex_strid("ent1") ); {
             ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_trans2d_t) );
             ex_vec2f_set ( &trans2d->pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );

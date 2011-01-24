@@ -26,7 +26,7 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DEF_CLASS_BEGIN(ex_component_t)
+EX_DECL_CLASS_BEGIN(ex_component_t)
     struct ex_entity_t *owner;
 
     // override functions
@@ -35,7 +35,7 @@ EX_DEF_CLASS_BEGIN(ex_component_t)
     void (*start) ( void *_self ); // invoked when all the component in the entity been added.
     void (*update) ( void *_self );
     void (*post_update) ( void *_self );
-EX_DEF_CLASS_END(ex_component_t)
+EX_DECL_CLASS_END(ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

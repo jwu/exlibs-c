@@ -62,44 +62,6 @@ typedef struct ex_mat22f_t {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat22f_zero ( ex_mat22f_t *_m )
- @retval _m the result matrix
- @details make a zero matrix:
-
- \f[
-   m = \left[\begin{array}{ c c }
-   0.0 & 0.0 \\
-   0.0 & 0.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_mat22f_zero ( ex_mat22f_t *_m ) { 
-    _m->m00 = 0.0f, _m->m01 = 0.0f; 
-    _m->m10 = 0.0f, _m->m11 = 0.0f; 
-}
-
-// ------------------------------------------------------------------ 
-/*! 
- @fn static inline void ex_mat22f_identity ( ex_mat22f_t *_m )
- @retval _m the result matrix
- @details make an identity matrix:
-
- \f[
-   m = \left[\begin{array}{ c c }
-   1.0 & 0.0 \\
-   0.0 & 1.0
-   \end{array} \right]
- \f]
-*/// ------------------------------------------------------------------ 
-
-static inline void ex_mat22f_identity ( ex_mat22f_t *_m ) { 
-    _m->m00 = 1.0f, _m->m01 = 0.0f; 
-    _m->m10 = 0.0f, _m->m11 = 1.0f; 
-}
-
-// ------------------------------------------------------------------ 
-/*! 
  @fn static inline void ex_mat22f_set ( ex_mat22f_t *_m, 
                       float _m00, float _m01,
                       float _m10, float _m11 )
@@ -150,8 +112,7 @@ static inline float ex_mat22f_get ( ex_mat22f_t *_m, uint _row, uint _col ) {
  @details get the matrix by _row and return it in vector2, for example: 
  @code
  ex_vec2f_t r;
- ex_mat22f_t m;
- ex_mat22f_zero(&m);
+ ex_mat22f_t m = ex_mat22f_zero;
  ex_mat22f_row( &r, &m, 0 ); // set r to row 0 as -- (m.m00, m.m01)
  @endcode
  the r is equal to vector2 (m.m00, m.m01) 
@@ -172,8 +133,7 @@ static inline void ex_mat22f_row ( ex_vec2f_t *_r, const ex_mat22f_t *_m, uint _
  @details get the matrix by _row and return it in vector2, for example: 
  @code
  ex_vec2f_t r;
- ex_mat22f_t m;
- ex_mat22f_zero(&m);
+ ex_mat22f_t m = ex_mat22f_zero;
  ex_mat22f_col( &r, &m, 0 ); // set r to column 0 as -- (m.m00, m.m10)
  @endcode
  the r is equal to vector2 (m.m00, m.m10) 
