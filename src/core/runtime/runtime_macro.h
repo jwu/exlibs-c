@@ -190,13 +190,6 @@ extern "C" {
         static const ex_prop_t __PROPS_##_typename##__[] = {
 
 // ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-#define EX_PROP( _typename, _member, _propName, _attrs, _set_func, _get_func ) \
-    { _propName, _attrs, offsetof(struct _typename, _member), _set_func, _get_func },
-
-// ------------------------------------------------------------------ 
 // Desc: EX_DEF_PROPS_END(_typename)
 // ------------------------------------------------------------------ 
 
@@ -207,6 +200,13 @@ extern "C" {
         ex_assert_return( rtti, /**/, "failed to register class %s", #_typename ); \
         ex_rtti_register_properties ( rtti, __PROPS_##_typename##__, EX_ARRAY_COUNT(__PROPS_##_typename##__)-1 ); \
     }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_PROP( _typename, _member, _propName, _attrs, _set_func, _get_func ) \
+    { _propName, _attrs, offsetof(struct _typename, _member), _set_func, _get_func },
 
 ///////////////////////////////////////////////////////////////////////////////
 // serialize help macros
@@ -237,6 +237,15 @@ extern "C" {
         _stream->pop = NULL; /*this make the super serialize no pop*/ \
         __ex_serialize_##_super(_stream,_name,_val); \
         _stream->pop = tmp_pop;
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_END \
+        if ( _stream->pop ) _stream->pop(_stream); \
+        (void *)self; /*to avoid unused compile warning*/ \
+    }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -276,15 +285,6 @@ extern "C" {
                              __ex_serialize_##_key_type, \
                              __ex_serialize_##_val_type);
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-#define EX_SERIALIZE_END \
-        if ( _stream->pop ) _stream->pop(_stream); \
-        (void *)self; /*to avoid unused compile warning*/ \
-    }
-
 ///////////////////////////////////////////////////////////////////////////////
 // tostring help macros
 ///////////////////////////////////////////////////////////////////////////////
@@ -292,17 +292,7 @@ extern "C" {
 #define EX_DEF_TOSTRING_BEGIN(_type) \
     void __ex_tostring_##_type ( ex_string_t *_string, void *_val ) { \
         _type *self = (_type *)_val; \
-        ex_string_cat( _string, #_type": {\n" ); \
-
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-#define EX_MEMBER_TOSTRING(_type,_name,_val) \
-        ex_string_cat( _string, _name" " ); \
-        __ex_tostring_##_type(_string,&(_val)); \
-        ex_string_cat( _string, ",\n" );
+        ex_string_cat( _string, #_type": {\n" );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -312,6 +302,15 @@ extern "C" {
         ex_string_cat( _string, "}\n" ); \
         (void *)self; \
     }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_MEMBER_TOSTRING(_type,_name,_val) \
+        ex_string_cat( _string, _name" " ); \
+        __ex_tostring_##_type(_string,&(_val)); \
+        ex_string_cat( _string, ",\n" );
 
 // ######################### 
 #ifdef __cplusplus

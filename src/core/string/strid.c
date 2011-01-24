@@ -75,8 +75,8 @@ strid_t ex_strid ( const char *_string )
     size_t hash_idx = -1;
     char *str_new = NULL;
 
-    if ( _string == NULL )
-        return -1;
+    if ( _string == NULL || _string[0] == '\0' )
+        return EX_STRID_NULL;
 
     hash_idx = ex_hashmap_get_hashidx ( __string_set, &_string, &idx ); 
     if ( idx == -1 ) {
@@ -100,8 +100,8 @@ strid_t ex_strid_from_wcs ( const wchar_t *_string )
     char *str_utf8 = NULL;
     char *str_new = NULL;
 
-    if ( _string == NULL )
-        return -1;
+    if ( _string == NULL || _string[0] == '\0' )
+        return EX_STRID_NULL;
 
     str_utf8 = ex_stack_malloc( str_size );
     ex_ucs2_to_utf8 ( _string, str_size, str_utf8 );

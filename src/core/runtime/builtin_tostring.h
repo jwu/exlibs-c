@@ -127,18 +127,34 @@ DEF_BUILTIN_TOSTRING(double) {
 DEF_BUILTIN_TOSTRING(cstr) {
     char **val = (char **)_val;
 
-    ex_string_ncat( _string, *val, strlen(*val) );
+    if ( *val != NULL ) {
+        ex_string_cat( _string, "\"" );
+        ex_string_ncat( _string, *val, strlen(*val) );
+        ex_string_cat( _string, "\"" );
+    }
+    else {
+        ex_string_cat( _string, "\"\"" );
+    }
 }
 DEF_BUILTIN_TOSTRING(string) {
     ex_string_t *val = (ex_string_t *)_val;
 
+    ex_string_cat( _string, "\"" );
     ex_string_ncat( _string, val->text, val->len );
+    ex_string_cat( _string, "\"" );
 }
 DEF_BUILTIN_TOSTRING(strid) {
     strid_t *val = (strid_t *)_val;
     const char *text = ex_strid_to_cstr(*val);
 
-    ex_string_ncat( _string, text, strlen(text) );
+    if ( *val != EX_STRID_NULL ) {
+        ex_string_cat( _string, "\"" );
+        ex_string_ncat( _string, text, strlen(text) );
+        ex_string_cat( _string, "\"" );
+    }
+    else {
+        ex_string_cat( _string, "\"\"" );
+    }
 }
 
 DEF_BUILTIN_TOSTRING(angf) {
