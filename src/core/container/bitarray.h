@@ -28,24 +28,52 @@ USAGE:
 // ------------------------------------------------------------------ 
 
 typedef struct ex_bitarray_t {
-    // private
-    size_t count;
     char *data;
+    size_t count;
+
+    // alloc methods
+    void *(*alloc)      ( size_t );
+    void *(*realloc)    ( void *, size_t );
+    void  (*dealloc)    ( void * );
 } ex_bitarray_t; // end struct _bitarray
+
+// NOTE: in this way, we can still trace the memory leak.
+static inline void *__ex_bitarray_alloc( size_t _size ) { return ex_malloc_tag ( _size, "ex_bitarray_t" ); }
+static inline void *__ex_bitarray_realloc( void *_ptr, size_t _size ) { return ex_realloc_tag ( _ptr, _size, "ex_bitarray_t" ); }
+static inline void __ex_bitarray_dealloc( void *_ptr ) { ex_free ( _ptr ); }
+
+static inline void *__ex_bitarray_alloc_nomng( size_t _size ) { return ex_malloc_nomng ( _size ); }
+static inline void *__ex_bitarray_realloc_nomng( void *_ptr, size_t _size ) { return ex_realloc_nomng ( _ptr, _size ); }
+static inline void __ex_bitarray_dealloc_nomng( void *_ptr ) { ex_free_nomng ( _ptr ); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern ex_bitarray_t *ex_bitarray_alloc ( size_t _bitcount );
-extern ex_bitarray_t *ex_bitarray_alloc_nomng ( size_t _bitcount );
+#define ex_bitarray(_count) ex_bitarray_alloc(_bitcount);
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_bitarray_free ( ex_bitarray_t *_bitarray );
-extern void ex_bitarray_free_nomng ( ex_bitarray_t *_bitarray );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_bitarray_init ( ex_bitarray_t *_bitarray, 
+                               size_t _bitcount,
+                               void *(*_alloc) ( size_t ),
+                               void *(*_realloc) ( void *, size_t ),
+                               void  (*_dealloc) ( void * ) );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_bitarray_deinit ( ex_bitarray_t *_bitarray );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -64,7 +92,6 @@ extern void ex_bitarray_set ( ex_bitarray_t *_bitarray, size_t _idx, int _value 
 // ------------------------------------------------------------------ 
 
 extern void ex_bitarray_resize ( ex_bitarray_t *_bitarray, size_t _bitcount ); 
-extern void ex_bitarray_resize_nomng ( ex_bitarray_t *_bitarray, size_t _bitcount ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 

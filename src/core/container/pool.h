@@ -139,6 +139,7 @@ typedef struct ex_pool_t {
     // private
     size_t count;
     size_t capacity;
+    strid_t element_typeid;
     size_t element_bytes;
     void *data;
     ex_pool_node_t *nodes;
@@ -147,28 +148,60 @@ typedef struct ex_pool_t {
     ex_pool_node_t *used_nodes_begin;
     ex_pool_node_t *used_nodes_end;
     ex_pool_node_t *free_nodes;
+
+    // alloc methods
+    void *(*alloc)      ( size_t );
+    void *(*realloc)    ( void *, size_t );
+    void  (*dealloc)    ( void * );
 } ex_pool_t;
+
+// NOTE: in this way, we can still trace the memory leak.
+static inline void *__ex_pool_alloc( size_t _size ) { return ex_malloc_tag ( _size, "ex_pool_t" ); }
+static inline void *__ex_pool_realloc( void *_ptr, size_t _size ) { return ex_realloc_tag ( _ptr, _size, "ex_pool_t" ); }
+static inline void __ex_pool_dealloc( void *_ptr ) { ex_free ( _ptr ); }
+
+static inline void *__ex_pool_alloc_nomng( size_t _size ) { return ex_malloc_nomng ( _size ); }
+static inline void *__ex_pool_realloc_nomng( void *_ptr, size_t _size ) { return ex_realloc_nomng ( _ptr, _size ); }
+static inline void __ex_pool_dealloc_nomng( void *_ptr ) { ex_free_nomng ( _ptr ); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_pool_t *ex_pool_alloc ( size_t _element_bytes, size_t _count );
-extern ex_pool_t *ex_pool_alloc_nomng ( size_t _element_bytes, size_t _count );
+extern ex_pool_t *ex_pool_alloc ( size_t _element_typeid, size_t _element_bytes, size_t _count );
+#define ex_pool(_type,_count) ex_pool_alloc( EX_TYPEID(_type), EX_RTTI(_type)->size, _count )
+#define ex_pool_notype(_element_bytes,_count) ex_pool_alloc( EX_STRID_NULL, _element_bytes, _count )
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_pool_free ( ex_pool_t *_pool );
-extern void ex_pool_free_nomng ( ex_pool_t *_pool );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_pool_init ( ex_pool_t *_pool, 
+                           strid_t _element_typeid,
+                           size_t _element_bytes, 
+                           size_t _count,
+                           void *(*_alloc) ( size_t ),
+                           void *(*_realloc) ( void *, size_t ),
+                           void  (*_dealloc) ( void * )
+                         );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_pool_deinit ( ex_pool_t *_pool ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_pool_reserve ( ex_pool_t *_pool, size_t _count ); 
-extern void ex_pool_reserve_nomng ( ex_pool_t *_pool, size_t _count ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -183,7 +216,6 @@ static inline size_t ex_pool_capacity ( const ex_pool_t *_pool ) { return _pool-
 // ------------------------------------------------------------------ 
 
 extern int ex_pool_insert ( ex_pool_t *_pool, const void *_value );
-extern int ex_pool_insert_nomng ( ex_pool_t *_pool, const void *_value );
 
 static inline int ex_pool_insert_int8 ( ex_pool_t *_pool, int8 _value ) { return ex_pool_insert ( _pool, &_value ); }
 static inline int ex_pool_insert_int16 ( ex_pool_t *_pool, int16 _value ) { return ex_pool_insert ( _pool, &_value ); }

@@ -22,14 +22,11 @@
 
 ex_array_t *ex_array_alloc ( strid_t _element_typeid, size_t _element_bytes, size_t _count ) {
     ex_array_t *arr = ex_malloc ( sizeof(ex_array_t) );
-    ex_array_init_allocator ( arr,
-                              _element_typeid,
-                              _element_bytes,
-                              _count,
-                              __ex_array_alloc,
-                              __ex_array_realloc,
-                              __ex_array_dealloc
-                            );
+    ex_array_init ( arr, _element_typeid, _element_bytes, _count,
+                    __ex_array_alloc,
+                    __ex_array_realloc,
+                    __ex_array_dealloc
+                  );
     return arr;
 }
 
@@ -46,13 +43,13 @@ void ex_array_free ( ex_array_t *_array ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_init_allocator ( ex_array_t *_array, 
-                               strid_t _element_typeid,
-                               size_t _element_bytes, 
-                               size_t _count,
-                               void *(*_alloc) ( size_t ),
-                               void *(*_realloc) ( void *, size_t ),
-                               void  (*_dealloc) ( void * ) )
+void ex_array_init ( ex_array_t *_array, 
+                     strid_t _element_typeid,
+                     size_t _element_bytes, 
+                     size_t _count,
+                     void *(*_alloc) ( size_t ),
+                     void *(*_realloc) ( void *, size_t ),
+                     void  (*_dealloc) ( void * ) )
 {
     size_t bytes = _element_bytes * _count; 
 

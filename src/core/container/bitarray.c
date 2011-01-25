@@ -20,30 +20,13 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// managed
 ex_bitarray_t *ex_bitarray_alloc ( size_t _bitcount )
 {
     ex_bitarray_t *bitArray = ex_malloc ( sizeof(ex_bitarray_t) );
-    size_t bytes = (_bitcount + 7)/8;
-
-    bitArray->data = ex_malloc(bytes);
-    ex_memzero ( bitArray->data, bytes );
-
-    bitArray->count = _bitcount;
-
-    return bitArray;
-}
-
-// no managed
-ex_bitarray_t *ex_bitarray_alloc_nomng ( size_t _bitcount )
-{
-    ex_bitarray_t *bitArray = ex_malloc_nomng ( sizeof(ex_bitarray_t) );
-    size_t bytes = (_bitcount + 7)/8;
-
-    bitArray->data = ex_malloc_nomng(bytes);
-    bitArray->count = _bitcount;
-    ex_memzero ( bitArray->data, bytes );
-
+    ex_bitarray_init ( bitArray, _bitcount, 
+                       __ex_bitarray_alloc,
+                       __ex_bitarray_realloc,
+                       __ex_bitarray_dealloc );
     return bitArray;
 }
 
@@ -51,24 +34,43 @@ ex_bitarray_t *ex_bitarray_alloc_nomng ( size_t _bitcount )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// managed
 void ex_bitarray_free ( ex_bitarray_t *_bitarray )
 {
     ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
 
-    ex_free(_bitarray->data);
+    ex_bitarray_deinit(_bitarray);
     _bitarray->count = 0;
     ex_free(_bitarray);
 }
 
-// no managed
-void ex_bitarray_free_nomng ( ex_bitarray_t *_bitarray )
-{
-    ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    ex_free_nomng(_bitarray->data);
-    _bitarray->count = 0;
-    ex_free_nomng(_bitarray);
+void ex_bitarray_init ( ex_bitarray_t *_bitarray, 
+                        size_t _bitcount,
+                        void *(*_alloc) ( size_t ),
+                        void *(*_realloc) ( void *, size_t ),
+                        void  (*_dealloc) ( void * ) ) 
+{
+    size_t bytes = (_bitcount + 7)/8;
+
+    _bitarray->alloc = _alloc;
+    _bitarray->realloc = _realloc;
+    _bitarray->dealloc = _dealloc;
+
+    _bitarray->data = _bitarray->alloc(bytes);
+    ex_memzero ( _bitarray->data, bytes );
+    _bitarray->count = _bitcount;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_bitarray_deinit ( ex_bitarray_t *_bitarray ) {
+    ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
+    _bitarray->dealloc(_bitarray->data);
 }
 
 // ------------------------------------------------------------------ 
@@ -117,25 +119,7 @@ void ex_bitarray_resize ( ex_bitarray_t *_bitarray, size_t _bitcount )
     old_bytes = (_bitarray->count + 7)/8;
     new_bytes = (_bitcount + 7)/8;
 
-    _bitarray->data = ex_realloc(_bitarray->data, new_bytes);
-    // if new size is more than the old one, we need to set clear the memory to zero.
-    if ( new_bytes > old_bytes )
-        ex_memzero ( _bitarray->data + old_bytes, new_bytes - old_bytes );
-    _bitarray->count = _bitcount;
-}
-
-// no managed
-void ex_bitarray_resize_nomng ( ex_bitarray_t *_bitarray, size_t _bitcount ) 
-{
-    size_t old_bytes, new_bytes;
-
-    if ( _bitarray->count == _bitcount )
-        return;
-
-    old_bytes = (_bitarray->count + 7)/8;
-    new_bytes = (_bitcount + 7)/8;
-
-    _bitarray->data = ex_realloc_nomng(_bitarray->data, new_bytes);
+    _bitarray->data = _bitarray->realloc(_bitarray->data, new_bytes);
     // if new size is more than the old one, we need to set clear the memory to zero.
     if ( new_bytes > old_bytes )
         ex_memzero ( _bitarray->data + old_bytes, new_bytes - old_bytes );

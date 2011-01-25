@@ -131,6 +131,7 @@ typedef struct ex_array_t {
     size_t count;
     size_t capacity;
 
+    // alloc methods
     void *(*alloc)      ( size_t );
     void *(*realloc)    ( void *, size_t );
     void  (*dealloc)    ( void * );
@@ -155,47 +156,32 @@ extern ex_array_t *ex_array_alloc ( strid_t _element_typeid, size_t _element_byt
 #define ex_array(_type,_count) ex_array_alloc( EX_TYPEID(_type), EX_RTTI(_type)->size, _count )
 #define ex_array_notype(_element_bytes,_count) ex_array_alloc( EX_STRID_NULL, _element_bytes, _count )
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern void ex_array_free ( ex_array_t *_array );
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// ex_array_init
-// ex_array_init_notype
-// ex_array_init_nomng
-// ex_array_init_notype_nomng
+// NOTE: if you want to create a no-manager array, do it like this:
+// ex_array_t *arr = ex_malloc_nomng ( sizeof(ex_array_t) );
+// ex_array_init ( arr, _element_typeid, _element_bytes, _count,
+//                 __ex_array_alloc_nomng,
+//                 __ex_array_realloc_nomng,
+//                 __ex_array_dealloc_nomng
+//               );
+// ex_array_deinit(arr);
+// ex_free_nomng(arr)
 // ------------------------------------------------------------------ 
 
-extern void ex_array_init_allocator ( ex_array_t *_array, 
-                                      strid_t _element_typeid,
-                                      size_t _element_bytes, 
-                                      size_t _count,
-                                      void *(*_alloc) ( size_t ),
-                                      void *(*_realloc) ( void *, size_t ),
-                                      void  (*_dealloc) ( void * ) );
-
-#define ex_array_init(_array,_type,_count) \
-    ex_array_init_allocator ( _array, EX_TYPEID(_type), EX_RTTI(_type)->size, _count, \
-                              __ex_array_alloc, \
-                              __ex_array_realloc, \
-                              __ex_array_dealloc )
-
-#define ex_array_init_notype( _array, _element_bytes, _count ) \
-    ex_array_init_allocator ( _array, EX_STRID_NULL, _element_bytes, _count, \
-                              __ex_array_alloc, \
-                              __ex_array_realloc, \
-                              __ex_array_dealloc )
-
-#define ex_array_init_nomng(_array,_type,_count) \
-    ex_array_init_allocator ( _array, EX_TYPEID(_type), EX_RTTI(_type)->size, _count, \
-                              __ex_array_alloc_nomng, \
-                              __ex_array_realloc_nomng, \
-                              __ex_array_dealloc_nomng )
-
-#define ex_array_init_notype_nomng( _array, _element_bytes, _count ) \
-    ex_array_init_allocator ( _array, EX_STRID_NULL, _element_bytes, _count, \
-                              __ex_array_alloc_nomng, \
-                              __ex_array_realloc_nomng, \
-                              __ex_array_dealloc_nomng )
+extern void ex_array_init ( ex_array_t *_array, 
+                            strid_t _element_typeid,
+                            size_t _element_bytes, 
+                            size_t _count,
+                            void *(*_alloc) ( size_t ),
+                            void *(*_realloc) ( void *, size_t ),
+                            void  (*_dealloc) ( void * ) );
 
 // ------------------------------------------------------------------ 
 /*! 

@@ -79,7 +79,7 @@ ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes,
     memset ( hashmap->indices, -1, _count * sizeof(size_t) );
 
     // init hash nodes
-    hashmap->nodes = ex_pool_alloc ( sizeof(ex_hashmap_node_t), _count );
+    hashmap->nodes = ex_pool_alloc ( EX_STRID_NULL, sizeof(ex_hashmap_node_t), _count );
 
     //
     return hashmap;
@@ -122,8 +122,11 @@ ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes,
     memset ( hashmap->indices, -1, _count * sizeof(size_t) );
 
     // init hash nodes
-    hashmap->nodes = ex_pool_alloc_nomng ( sizeof(ex_hashmap_node_t), _count );
-
+    hashmap->nodes = ex_malloc_nomng ( sizeof(ex_pool_t) );
+    ex_pool_init( hashmap->nodes, EX_STRID_NULL, sizeof(ex_hashmap_node_t), _count,
+                  __ex_pool_alloc_nomng,
+                  __ex_pool_realloc_nomng,
+                  __ex_pool_dealloc_nomng );
     //
     return hashmap;
 }
@@ -171,7 +174,7 @@ ex_hashmap_t *ex_hashmap_alloc_2 ( strid_t _key_typeid,
     memset ( hashmap->indices, -1, _count * sizeof(size_t) );
 
     // init hash nodes
-    hashmap->nodes = ex_pool_alloc ( sizeof(ex_hashmap_node_t), _count );
+    hashmap->nodes = ex_pool_alloc ( EX_STRID_NULL, sizeof(ex_hashmap_node_t), _count );
 
     //
     return hashmap;
@@ -216,7 +219,11 @@ ex_hashmap_t *ex_hashmap_alloc_nomng_2 ( strid_t _key_typeid,
     memset ( hashmap->indices, -1, _count * sizeof(size_t) );
 
     // init hash nodes
-    hashmap->nodes = ex_pool_alloc_nomng ( sizeof(ex_hashmap_node_t), _count );
+    hashmap->nodes = ex_malloc_nomng ( sizeof(ex_pool_t) );
+    ex_pool_init( hashmap->nodes, EX_STRID_NULL, sizeof(ex_hashmap_node_t), _count,
+                  __ex_pool_alloc_nomng,
+                  __ex_pool_realloc_nomng,
+                  __ex_pool_dealloc_nomng );
 
     //
     return hashmap;
@@ -252,7 +259,9 @@ void ex_hashmap_free_nomng ( ex_hashmap_t *_hashmap )
     ex_free_nomng (_hashmap->values);
     ex_free_nomng (_hashmap->keys);
     ex_free_nomng (_hashmap->indices);
-    ex_pool_free_nomng(_hashmap->nodes);
+
+    ex_pool_deinit(_hashmap->nodes);
+    ex_free_nomng (_hashmap->nodes);
 
     _hashmap->capacity = 0;
     _hashmap->hashsize = 0;
@@ -303,7 +312,7 @@ void ex_hashmap_insert_new_nomng ( ex_hashmap_t *_hashmap, const void *_key, con
     size_t cur_idx, next_idx;
     ex_hashmap_node_t *node;
 
-    cur_idx = ex_pool_insert_nomng ( _hashmap->nodes, NULL );
+    cur_idx = ex_pool_insert ( _hashmap->nodes, NULL );
     if ( cur_idx > _hashmap->capacity-1 ) {
         _hashmap->capacity *= 2;
         _hashmap->values = ex_realloc_nomng ( _hashmap->values, _hashmap->capacity * _hashmap->value_bytes  );
