@@ -141,3 +141,11 @@ void ex_bitarray_resize_nomng ( ex_bitarray_t *_bitarray, size_t _bitcount )
         ex_memzero ( _bitarray->data + old_bytes, new_bytes - old_bytes );
     _bitarray->count = _bitcount;
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_bitarray_ncpy ( ex_bitarray_t *_to, const void *_buf, size_t _count ) {
+    // TODO:
+}

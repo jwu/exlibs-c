@@ -328,5 +328,5 @@ static void complex_read_write () {
 void test_stream () {
     // json_read_write();
     simple_read_write();
-    // complex_read_write();
+    complex_read_write();
 }

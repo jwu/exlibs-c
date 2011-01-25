@@ -44,8 +44,9 @@ static void __debug_draw ( ex_world_t *_world ) {
 
 ex_world_t *ex_world_alloc () {
     ex_world_t *world = (ex_world_t *)ex_malloc(sizeof(ex_world_t));
-    world->entities = ex_array_alloc( sizeof(ex_entity_t *), 8 );
-    world->cameras = ex_array_alloc( sizeof(ex_camera_t *), 8 );
+    world->entities = ex_array_notype( sizeof(void *), 8 );
+    world->cameras = ex_array_notype( sizeof(void *), 8 );
+    
     world->mainCamera = NULL;
     return world;
 }

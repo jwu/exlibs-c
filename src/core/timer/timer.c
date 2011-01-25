@@ -44,8 +44,8 @@ typedef struct timer_t {
 // when finish ex_timer_init, this will set to 1. in ex_timer_deinit, it will set to 0
 int __timer_running = 0;
 ex_pool_t *__timers = NULL; 
-ex_array_t *__unused_timers = NULL; 
 
+static ex_array_t __unused_timers; // NOTE: we don't use pointer array, because we known we only use it in this file.
 static bool __initialized = false;
 static ex_mutex_t *__timer_mutex = NULL;
 
@@ -85,7 +85,7 @@ void __threaded_timer_tick () {
                 if ( ms > 0 )
                     t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
                 else
-                    ex_array_append_int32(__unused_timers, __id__);
+                    ex_array_append_int32(&__unused_timers, __id__);
             }
             else {
                 t->interval_counter = t->interval;
@@ -99,7 +99,7 @@ void __threaded_timer_tick () {
 
             // if we exceed the lifetime, remove the timer
             if ( time_since_start > ms ) {
-                ex_array_append_int32(__unused_timers, __id__);
+                ex_array_append_int32(&__unused_timers, __id__);
                 ex_pool_continue;
             }
         }
@@ -107,12 +107,12 @@ void __threaded_timer_tick () {
     } ex_pool_each_end
 
     // remove all timer here
-    ex_array_each ( __unused_timers, int, id ) {
+    ex_array_each ( &__unused_timers, int, id ) {
         timer_t *t = (timer_t *)ex_pool_get ( __timers, id );
         if (t) ex_free_nomng (t->params);
         ex_pool_remove_at_safe ( __timers, id ); // this can work around if we got several same id to remove.
     } ex_array_each_end
-    ex_array_remove_all(__unused_timers);
+    ex_array_remove_all(&__unused_timers);
     ex_mutex_unlock(__timer_mutex);
 }
 
@@ -142,7 +142,7 @@ int ex_timer_init () {
 
     //
     __timers = ex_pool_alloc_nomng( sizeof(timer_t), 8 ); 
-    __unused_timers = ex_array_alloc_nomng ( sizeof(int), 32 ); 
+    ex_array_init_notype_nomng ( &__unused_timers, sizeof(int), 32 );
 
     // now start the timer
     __timer_running = 1;
@@ -170,7 +170,7 @@ void ex_timer_deinit () {
 
         // clear all timers
         ex_pool_free_nomng(__timers);
-        ex_array_free_nomng(__unused_timers);
+        ex_array_deinit(&__unused_timers);
 
         //
         ex_sys_timer_deinit();
@@ -238,7 +238,7 @@ bool ex_remove_timer ( int _id ) {
         return false;
 
     ex_stop_timer(_id); // mark timer as stopped
-    ex_array_append_int32(__unused_timers, _id);
+    ex_array_append_int32(&__unused_timers, _id);
     return true;
 }
 

@@ -62,7 +62,7 @@ EX_DEF_TOSTRING_END
 ex_entity_t *ex_entity_alloc () {
     ex_entity_t *ent = (ex_entity_t *)ex_malloc(sizeof(ex_entity_t));
     ent->name = EX_STRID_NULL;
-    ent->comps = ex_array_alloc( sizeof(ex_component_t *), 1 );
+    ent->comps = ex_array_notype(sizeof(void *),8);
     return ent;
 }
 

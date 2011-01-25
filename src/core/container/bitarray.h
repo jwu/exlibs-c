@@ -72,6 +72,15 @@ extern void ex_bitarray_resize_nomng ( ex_bitarray_t *_bitarray, size_t _bitcoun
 
 static inline size_t ex_bitarray_count ( const ex_bitarray_t *_bitarray ) { return _bitarray->count; } 
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_bitarray_ncpy ( ex_bitarray_t *_to, const void *_buf, size_t _count );
+static inline void ex_bitarray_cpy ( ex_bitarray_t *_to, const ex_bitarray_t *_from ) {
+    ex_bitarray_ncpy ( _to, _from->data, _from->count );
+}
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern "C"

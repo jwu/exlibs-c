@@ -240,6 +240,12 @@ extern bool ex_hashmap_insert_nomng ( ex_hashmap_t *_hashmap, const void *_key, 
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_hashmap_cpy ( ex_hashmap_t *_to, const ex_hashmap_t *_from );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key );
 
 // ------------------------------------------------------------------ 

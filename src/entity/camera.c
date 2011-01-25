@@ -21,31 +21,29 @@
 
 EX_DEF_CLASS_BEGIN(ex_camera_t)
     // ex_component_t
-    NULL,
-    ex_camera_init,
-    ex_camera_deinit,
-    NULL,
-    NULL,
-    NULL,
+    NULL,               // owner
+    ex_camera_init,     // init
+    ex_camera_deinit,   // deinit
+    NULL,               // start
+    NULL,               // update
+    NULL,               // post_update
 
     // ex_camera_t
-    false,
-    600/2,
-    4.0f/3.0f,
-    EX_CLEAR_COLOR,
-    0.0f, 0.5f, 1.0f,
-    EX_MAT44F_IDENTITY,
-    EX_MAT44F_IDENTITY,
+    false, // isOrtho
+    600/2, // orthoSize
+    4.0f/3.0f, // aspect
+    EX_CLEAR_COLOR, // clearFlags
+    0.0f, 0.5f, 1.0f, // bgColor
+    EX_MAT44F_IDENTITY, // matWorldToView
+    EX_MAT44F_IDENTITY, // matProjection
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_camera_t)
-    // TODO { 
-    // EX_PROP( ex_camera_t, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE, ex_prop_set_raw_bool, ex_prop_get_raw_bool )
-    // EX_PROP( ex_camera_t, orthoSize, "ortho-graphic size",  EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
-    // EX_PROP( ex_camera_t, aspect, "aspect",  EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
-    // EX_PROP( ex_camera_t, clearFlags, "clear flags",  EX_PROP_ATTR_NONE, ex_prop_set_raw_uint32, ex_prop_get_raw_uint32 )
-    // EX_PROP( ex_camera_t, bgColor, "background color",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-    // } TODO end 
+    EX_PROP( ex_camera_t, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE, ex_prop_set_raw_bool, ex_prop_get_raw_bool )
+    EX_PROP( ex_camera_t, orthoSize, "ortho-graphic size",  EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
+    EX_PROP( ex_camera_t, aspect, "aspect",  EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
+    EX_PROP( ex_camera_t, clearFlags, "clear flags",  EX_PROP_ATTR_NONE, ex_prop_set_raw_uint32, ex_prop_get_raw_uint32 )
+    EX_PROP( ex_camera_t, bgColor, "background color",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_camera_t)

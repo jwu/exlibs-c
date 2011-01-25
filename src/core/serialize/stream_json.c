@@ -1197,7 +1197,7 @@ static void __write_string ( ex_stream_t *_stream, ex_string_t *_val ) {
 static void __write_strid ( ex_stream_t *_stream, strid_t *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
-    char *str;
+    const char *str;
     int len = 0;
 
     ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );

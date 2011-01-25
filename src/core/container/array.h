@@ -41,7 +41,7 @@ extern "C" {
 
  Usage:
  @code
- ex_array_t* my_array = ex_array_alloc( sizeof(float), 10 );
+ ex_array_t* my_array = ex_array_notype( sizeof(float), 10 );
  ex_array_each ( my_array, float, item ) {
     printf( "item_%d is %f", __idx__, item );
  } ex_array_each_end;
@@ -72,7 +72,7 @@ extern "C" {
 
  Usage:
  @code
- ex_array_t* my_array = ex_array_alloc( sizeof(float), 10 );
+ ex_array_t* my_array = ex_array_notype( sizeof(float), 10 );
  ex_array_raw_each ( my_array, float*, item ) {
     printf( "item_%d is %f", __idx__, *item );
  } ex_array_each_end;
@@ -130,69 +130,82 @@ typedef struct ex_array_t {
     size_t element_bytes;
     size_t count;
     size_t capacity;
+
+    void *(*alloc)      ( size_t );
+    void *(*realloc)    ( void *, size_t );
+    void  (*dealloc)    ( void * );
 } ex_array_t;
 
-// ------------------------------------------------------------------ 
-/*! 
- @fn ex_array_t *ex_array_alloc ( size_t _element_bytes, size_t _count )
- @param _element_bytes the bytes of the element in the array
- @param _count the default count of the element in the array
- @details create and return an array by given size and count of the element in it.
- the array is alloc by exsdk's memory manage method, and you must use same memory
- operation command on it (those function \b without \em _nomng suffix)
+// NOTE: in this way, we can still trace the memory leak.
+static inline void *__ex_array_alloc( size_t _size ) { return ex_malloc_tag ( _size, "ex_array_t" ); }
+static inline void *__ex_array_realloc( void *_ptr, size_t _size ) { return ex_realloc_tag ( _ptr, _size, "ex_array_t" ); }
+static inline void __ex_array_dealloc( void *_ptr ) { ex_free ( _ptr ); }
 
- Example:
- @code
- // create an array to store float, the default size is 10.
- ex_array_t *my_array = ex_array_alloc ( sizeof(float), 10 );
- @endcode
-
- @note you need to use \ref ex_array_free to release the memeory, other wise it will
- lead to memory leak.
-
- @sa ex_array_alloc_nomng
-
- @fn ex_array_t *ex_array_alloc_nomng ( size_t _element_bytes, size_t _count )
- @param _element_bytes the bytes of the element in the array
- @param _count the default count of the element in the array
- @details create and return an array by given size and count of the element in it.
- the array is alloc by system memory, and you must use same memory operation 
- command on it (those function \b with \em _nomng suffix)
-
- @note you need to use \ref ex_array_free_nomng to release the memeory, other wise it will
- lead to memory leak.
-
- @sa ex_array_alloc
-*/// ------------------------------------------------------------------ 
-
-extern ex_array_t *ex_array_alloc ( size_t _element_bytes, size_t _count );
-extern ex_array_t *ex_array_alloc_nomng ( size_t _element_bytes, size_t _count );
+static inline void *__ex_array_alloc_nomng( size_t _size ) { return ex_malloc_nomng ( _size ); }
+static inline void *__ex_array_realloc_nomng( void *_ptr, size_t _size ) { return ex_realloc_nomng ( _ptr, _size ); }
+static inline void __ex_array_dealloc_nomng( void *_ptr ) { ex_free_nomng ( _ptr ); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ex_array
+// ex_array_notype
 // ------------------------------------------------------------------ 
 
-#define ex_array(_type,_count) ex_array_alloc_2(EX_TYPEID(_type),EX_RTTI(_type)->size,_count)
-extern ex_array_t *ex_array_alloc_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count );
+extern ex_array_t *ex_array_alloc ( strid_t _element_typeid, size_t _element_bytes, size_t _count );
+#define ex_array(_type,_count) ex_array_alloc( EX_TYPEID(_type), EX_RTTI(_type)->size, _count )
+#define ex_array_notype(_element_bytes,_count) ex_array_alloc( EX_STRID_NULL, _element_bytes, _count )
 
-#define ex_array_nomng(_type,_count) ex_array_alloc_nomng_2(EX_TYPEID(_type),EX_RTTI(_type)->size,_count)
-extern ex_array_t *ex_array_alloc_nomng_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count );
+extern void ex_array_free ( ex_array_t *_array );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ex_array_init
+// ex_array_init_notype
+// ex_array_init_nomng
+// ex_array_init_notype_nomng
+// ------------------------------------------------------------------ 
+
+extern void ex_array_init_allocator ( ex_array_t *_array, 
+                                      strid_t _element_typeid,
+                                      size_t _element_bytes, 
+                                      size_t _count,
+                                      void *(*_alloc) ( size_t ),
+                                      void *(*_realloc) ( void *, size_t ),
+                                      void  (*_dealloc) ( void * ) );
+
+#define ex_array_init(_array,_type,_count) \
+    ex_array_init_allocator ( _array, EX_TYPEID(_type), EX_RTTI(_type)->size, _count, \
+                              __ex_array_alloc, \
+                              __ex_array_realloc, \
+                              __ex_array_dealloc )
+
+#define ex_array_init_notype( _array, _element_bytes, _count ) \
+    ex_array_init_allocator ( _array, EX_STRID_NULL, _element_bytes, _count, \
+                              __ex_array_alloc, \
+                              __ex_array_realloc, \
+                              __ex_array_dealloc )
+
+#define ex_array_init_nomng(_array,_type,_count) \
+    ex_array_init_allocator ( _array, EX_TYPEID(_type), EX_RTTI(_type)->size, _count, \
+                              __ex_array_alloc_nomng, \
+                              __ex_array_realloc_nomng, \
+                              __ex_array_dealloc_nomng )
+
+#define ex_array_init_notype_nomng( _array, _element_bytes, _count ) \
+    ex_array_init_allocator ( _array, EX_STRID_NULL, _element_bytes, _count, \
+                              __ex_array_alloc_nomng, \
+                              __ex_array_realloc_nomng, \
+                              __ex_array_dealloc_nomng )
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn void ex_array_free ( ex_array_t *_array )
- @param _array the allocated array.
- @details destroy the allocated array, release the memory by exsdk's memory manager.
- @sa ex_array_free_nomng
-
- @fn void ex_array_free_nomng ( ex_array_t *_array )
- @param _array the allocated array.
- @details destroy the allocated array, release the memory by system memory operation.
- @sa ex_array_free
+ @fn void ex_array_deinit ( ex_array_t *_array )
+ @param _array the in array.
+ @details destroy the data in the array, release the memory ( not including the array )
+ @note you need to free the array by your self
 */// ------------------------------------------------------------------ 
 
-extern void ex_array_free ( ex_array_t *_array );
-extern void ex_array_free_nomng ( ex_array_t *_array );
+extern void ex_array_deinit ( ex_array_t *_array );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -206,7 +219,7 @@ extern void ex_array_free_nomng ( ex_array_t *_array );
  @code
  float *result = NULL;
  // create an array to store float, the default size is 10.
- ex_array_t *my_array = ex_array_alloc ( sizeof(float), 10 );
+ ex_array_t *my_array = ex_array_notype ( sizeof(float), 10 );
  ex_array_append_float ( my_array, 10.0f ); // push at index 0
  ex_array_append_float ( my_array, 20.0f ); // push at index 1
  ex_array_append_float ( my_array, 30.0f ); // push at index 2
@@ -244,28 +257,16 @@ static inline size_t ex_array_count ( const ex_array_t *_array ) { return _array
  float *result;
  float val = 10.0f;
  // create an array to store float, the default size is 10.
- ex_array_t *my_array = ex_array_alloc ( sizeof(float), 10 );
+ ex_array_t *my_array = ex_array_notype ( sizeof(float), 10 );
  {
      float val = 10.0f;
      result = (float *)ex_array_append ( my_array, &val );
  }
  printf( "the result is %f", *result ); // the result is 10.0f
  @endcode
-
- @sa ex_array_append_nomng
-
- @fn void *ex_array_append_nomng ( ex_array_t *_array, void *_value )
- @param _array the in array.
- @param _value the value add to the array
- @return the pointer address of the appended element in the array
- @details append the value to the array, the array will copy the value through
- the parameter _value by allocating it in the passing array use system memory 
- operation method. 
- @sa ex_array_append
 */// ------------------------------------------------------------------ 
 
 extern void *ex_array_append ( ex_array_t *_array, const void *_value );
-extern void *ex_array_append_nomng ( ex_array_t *_array, const void *_value );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -324,6 +325,19 @@ static inline char **ex_array_append_string ( ex_array_t *_array, char *_value )
 static inline wchar_t **ex_array_append_wstring ( ex_array_t *_array, wchar_t *_value ) { return (wchar_t **)ex_array_append ( _array, &_value ); }
 
 // ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_array_ncpy ( ex_array_t *_to, const void *_buf, size_t _count );
+static inline void ex_array_cpy ( ex_array_t *_to, const ex_array_t *_from ) {
+    ex_assert_return ( _to->element_typeid == _from->element_typeid &&
+                       _to->element_bytes == _from->element_bytes,
+                       /*dummy*/,
+                       "failed to copy array, the element type and bytes are not the same." );
+    ex_array_ncpy ( _to, _from->data, _from->count );
+}
+
+// ------------------------------------------------------------------ 
 /*! 
  @fn void ex_array_remove_at ( ex_array_t *_array, size_t _idx )
  @param _array the in array
@@ -375,7 +389,6 @@ extern void ex_array_remove_all ( ex_array_t *_array );
 // ------------------------------------------------------------------ 
 
 extern void ex_array_shrink ( ex_array_t *_array );
-extern void ex_array_shrink_nomng ( ex_array_t *_array );
 // } TODO end 
 
 //! @}

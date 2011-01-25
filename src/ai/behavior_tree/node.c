@@ -32,7 +32,7 @@ void bt_node_add ( bt_node_t *_self, bt_node_t *_node )
 static bt_node_t *__bt_node_alloc ()
 {
     bt_node_t *node = ex_malloc( sizeof(bt_node_t) );
-    node->children = ex_array_alloc ( sizeof(bt_node_t *), 8 );
+    node->children = ex_array_notype ( sizeof(bt_node_t *), 8 );
     node->user_data = NULL;
     node->exec = NULL;
     node->free = NULL;

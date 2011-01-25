@@ -37,14 +37,14 @@ extern bool ex_strid_initialized ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern strid_t ex_strid ( const char *_string );
-extern strid_t ex_strid_from_wcs ( const wchar_t *_string );
+extern strid_t ex_strid ( const char *_cstr );
+extern strid_t ex_strid_from_wcs ( const wchar_t *_wcs );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern char *ex_strid_to_cstr ( strid_t _id );
+extern const char *ex_strid_to_cstr ( strid_t _id );
 
 // ######################### 
 #ifdef __cplusplus

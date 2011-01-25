@@ -69,20 +69,20 @@ bool ex_strid_initialized () { return __initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-strid_t ex_strid ( const char *_string )
+strid_t ex_strid ( const char *_cstr )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
     char *str_new = NULL;
 
-    if ( _string == NULL || _string[0] == '\0' )
+    if ( _cstr == NULL || _cstr[0] == '\0' )
         return EX_STRID_NULL;
 
-    hash_idx = ex_hashmap_get_hashidx ( __string_set, &_string, &idx ); 
+    hash_idx = ex_hashmap_get_hashidx ( __string_set, &_cstr, &idx ); 
     if ( idx == -1 ) {
-        size_t len = strlen(_string);
+        size_t len = strlen(_cstr);
         str_new = ex_malloc(len+1);
-        strncpy( str_new, _string, len+1 );
+        strncpy( str_new, _cstr, len+1 );
         ex_hashmap_insert_new ( __string_set, &str_new, &str_new, hash_idx, &idx );
     }
     return idx;
@@ -92,19 +92,19 @@ strid_t ex_strid ( const char *_string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-strid_t ex_strid_from_wcs ( const wchar_t *_string )
+strid_t ex_strid_from_wcs ( const wchar_t *_wcs )
 {
     size_t idx = -1;
     size_t hash_idx = -1;
-    size_t str_size = wcslen(_string)+1;
+    size_t str_size = wcslen(_wcs)+1;
     char *str_utf8 = NULL;
     char *str_new = NULL;
 
-    if ( _string == NULL || _string[0] == '\0' )
+    if ( _wcs == NULL || _wcs[0] == '\0' )
         return EX_STRID_NULL;
 
     str_utf8 = ex_stack_malloc( str_size );
-    ex_ucs2_to_utf8 ( _string, str_size, str_utf8 );
+    ex_ucs2_to_utf8 ( _wcs, str_size, str_utf8 );
     hash_idx = ex_hashmap_get_hashidx ( __string_set, &str_utf8, &idx ); 
     if ( idx == -1 ) {
         str_new = ex_malloc(str_size);
@@ -119,7 +119,7 @@ strid_t ex_strid_from_wcs ( const wchar_t *_string )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-char *ex_strid_to_cstr ( strid_t _id )
+const char *ex_strid_to_cstr ( strid_t _id )
 {
     if ( _id == EX_STRID_NULL ) return NULL;
     char *addr = (char *)__string_set->keys + _id * __string_set->key_bytes;

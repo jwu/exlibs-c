@@ -17,6 +17,7 @@
 #include "rtti.h"
 #include "builtin_serialize.h"
 #include "builtin_tostring.h"
+#include "builtin_prop_getset.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defiens
@@ -29,7 +30,11 @@
 #define EX_REGISTER_BUILTIN_TYPE(_typename) \
     __ex_register_builtin_type_##_typename()
 
-#define EX_DECL_BUILTIN_TYPE(_typename) \
+///////////////////////////////////////////////////////////////////////////////
+// declares
+///////////////////////////////////////////////////////////////////////////////
+
+#define DECL_BUILTIN_TYPE(_typename) \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
     static inline void __ex_register_builtin_type_##_typename () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
         __TYPEID_##_typename##__ = ex_strid(#_typename); \
@@ -42,7 +47,7 @@
                                                           ); \
     }
 
-#define EX_DECL_BUILTIN_TYPE_2(_typename,_type) \
+#define DECL_BUILTIN_TYPE_2(_typename,_type) \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
     static inline void __ex_register_builtin_type_##_typename () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
         __TYPEID_##_typename##__ = ex_strid(#_typename); \
@@ -55,40 +60,39 @@
                                                           ); \
     }
 
-///////////////////////////////////////////////////////////////////////////////
-// declares
-///////////////////////////////////////////////////////////////////////////////
+DECL_BUILTIN_TYPE(bool);
+DECL_BUILTIN_TYPE(int);
+DECL_BUILTIN_TYPE(size_t);
+DECL_BUILTIN_TYPE(int8);
+DECL_BUILTIN_TYPE(int16);
+DECL_BUILTIN_TYPE(int32);
+DECL_BUILTIN_TYPE(int64);
+DECL_BUILTIN_TYPE(uint8);
+DECL_BUILTIN_TYPE(uint16);
+DECL_BUILTIN_TYPE(uint32);
+DECL_BUILTIN_TYPE(uint64);
+DECL_BUILTIN_TYPE(float);
+DECL_BUILTIN_TYPE(double);
+DECL_BUILTIN_TYPE_2(cstr, char *);
+DECL_BUILTIN_TYPE_2(string, ex_string_t);
+DECL_BUILTIN_TYPE_2(strid, strid_t);
+DECL_BUILTIN_TYPE_2(angf, ex_angf_t);
+DECL_BUILTIN_TYPE_2(vec2f, ex_vec2f_t);
+DECL_BUILTIN_TYPE_2(vec3f, ex_vec3f_t);
+DECL_BUILTIN_TYPE_2(vec4f, ex_vec4f_t);
+DECL_BUILTIN_TYPE_2(mat22f, ex_mat22f_t);
+DECL_BUILTIN_TYPE_2(mat33f, ex_mat33f_t);
+DECL_BUILTIN_TYPE_2(mat44f, ex_mat44f_t);
+DECL_BUILTIN_TYPE_2(quatf, ex_quatf_t);
+DECL_BUILTIN_TYPE_2(color3u, ex_color3u_t);
+DECL_BUILTIN_TYPE_2(color3f, ex_color3f_t);
+DECL_BUILTIN_TYPE_2(color4u, ex_color4u_t);
+DECL_BUILTIN_TYPE_2(color4f, ex_color4f_t);
+DECL_BUILTIN_TYPE_2(array, ex_array_t *);
+DECL_BUILTIN_TYPE_2(map, ex_hashmap_t *);
 
-EX_DECL_BUILTIN_TYPE(bool);
-EX_DECL_BUILTIN_TYPE(int);
-EX_DECL_BUILTIN_TYPE(size_t);
-EX_DECL_BUILTIN_TYPE(int8);
-EX_DECL_BUILTIN_TYPE(int16);
-EX_DECL_BUILTIN_TYPE(int32);
-EX_DECL_BUILTIN_TYPE(int64);
-EX_DECL_BUILTIN_TYPE(uint8);
-EX_DECL_BUILTIN_TYPE(uint16);
-EX_DECL_BUILTIN_TYPE(uint32);
-EX_DECL_BUILTIN_TYPE(uint64);
-EX_DECL_BUILTIN_TYPE(float);
-EX_DECL_BUILTIN_TYPE(double);
-EX_DECL_BUILTIN_TYPE_2(cstr, char *);
-EX_DECL_BUILTIN_TYPE_2(string, ex_string_t);
-EX_DECL_BUILTIN_TYPE_2(strid, strid_t);
-EX_DECL_BUILTIN_TYPE_2(angf, ex_angf_t);
-EX_DECL_BUILTIN_TYPE_2(vec2f, ex_vec2f_t);
-EX_DECL_BUILTIN_TYPE_2(vec3f, ex_vec3f_t);
-EX_DECL_BUILTIN_TYPE_2(vec4f, ex_vec4f_t);
-EX_DECL_BUILTIN_TYPE_2(mat22f, ex_mat22f_t);
-EX_DECL_BUILTIN_TYPE_2(mat33f, ex_mat33f_t);
-EX_DECL_BUILTIN_TYPE_2(mat44f, ex_mat44f_t);
-EX_DECL_BUILTIN_TYPE_2(quatf, ex_quatf_t);
-EX_DECL_BUILTIN_TYPE_2(color3u, ex_color3u_t);
-EX_DECL_BUILTIN_TYPE_2(color3f, ex_color3f_t);
-EX_DECL_BUILTIN_TYPE_2(color4u, ex_color4u_t);
-EX_DECL_BUILTIN_TYPE_2(color4f, ex_color4f_t);
-EX_DECL_BUILTIN_TYPE_2(array, ex_array_t *);
-EX_DECL_BUILTIN_TYPE_2(map, ex_hashmap_t *);
+#undef DECL_BUILTIN_TYPE
+#undef DECL_BUILTIN_TYPE_2
 
 ///////////////////////////////////////////////////////////////////////////////
 // func

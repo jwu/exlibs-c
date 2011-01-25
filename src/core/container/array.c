@@ -20,114 +20,64 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// managed
-ex_array_t *ex_array_alloc ( size_t _element_bytes, size_t _count )
-{
-    size_t bytes = _element_bytes * _count; 
-
-    ex_array_t *array = ex_malloc ( sizeof(ex_array_t) );
-
-    // init members
-    array->element_typeid = EX_STRID_NULL;
-    array->element_bytes = _element_bytes;
-    array->count = 0;
-    array->capacity = _count;
-
-    // init data
-    array->data = ex_malloc( bytes );
-    ex_memzero ( array->data, bytes );
-
-    //
-    return array;
-}
-
-// no managed
-ex_array_t *ex_array_alloc_nomng ( size_t _element_bytes, size_t _count )
-{
-    size_t bytes = _element_bytes * _count; 
-
-    ex_array_t *array = ex_malloc_nomng ( sizeof(ex_array_t) );
-
-    // init members
-    array->element_typeid = EX_STRID_NULL;
-    array->element_bytes = _element_bytes;
-    array->count = 0;
-    array->capacity = _count;
-
-    // init data
-    array->data = ex_malloc_nomng( bytes );
-    ex_memzero ( array->data, bytes );
-
-    //
-    return array;
+ex_array_t *ex_array_alloc ( strid_t _element_typeid, size_t _element_bytes, size_t _count ) {
+    ex_array_t *arr = ex_malloc ( sizeof(ex_array_t) );
+    ex_array_init_allocator ( arr,
+                              _element_typeid,
+                              _element_bytes,
+                              _count,
+                              __ex_array_alloc,
+                              __ex_array_realloc,
+                              __ex_array_dealloc
+                            );
+    return arr;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// managed
-ex_array_t *ex_array_alloc_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count )
-{
-    size_t bytes = _element_bytes * _count; 
-
-    ex_array_t *array = ex_malloc ( sizeof(ex_array_t) );
-
-    // init members
-    array->element_typeid = _element_typeid;
-    array->element_bytes = _element_bytes;
-    array->count = 0;
-    array->capacity = _count;
-
-    // init data
-    array->data = ex_malloc( bytes );
-    ex_memzero ( array->data, bytes );
-
-    //
-    return array;
-}
-
-// no managed
-ex_array_t *ex_array_alloc_nomng_2 ( strid_t _element_typeid, size_t _element_bytes, size_t _count )
-{
-    size_t bytes = _element_bytes * _count; 
-
-    ex_array_t *array = ex_malloc_nomng ( sizeof(ex_array_t) );
-
-    // init members
-    array->element_typeid = _element_typeid;
-    array->element_bytes = _element_bytes;
-    array->count = 0;
-    array->capacity = _count;
-
-    // init data
-    array->data = ex_malloc_nomng( bytes );
-    ex_memzero ( array->data, bytes );
-
-    //
-    return array;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-// managed
-void ex_array_free ( ex_array_t *_array )
-{
-    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
-
-    ex_free(_array->data);
+void ex_array_free ( ex_array_t *_array ) {
+    ex_array_deinit(_array);
     ex_free(_array);
 }
 
-// no managed
-void ex_array_free_nomng ( ex_array_t *_array )
-{
-    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    ex_free_nomng(_array->data);
-    ex_free_nomng(_array);
+void ex_array_init_allocator ( ex_array_t *_array, 
+                               strid_t _element_typeid,
+                               size_t _element_bytes, 
+                               size_t _count,
+                               void *(*_alloc) ( size_t ),
+                               void *(*_realloc) ( void *, size_t ),
+                               void  (*_dealloc) ( void * ) )
+{
+    size_t bytes = _element_bytes * _count; 
+
+    // init members
+    _array->alloc = _alloc;
+    _array->realloc = _realloc;
+    _array->dealloc = _dealloc;
+
+    _array->element_typeid = _element_typeid;
+    _array->element_bytes = _element_bytes;
+    _array->count = 0;
+    _array->capacity = _count;
+
+    // init data
+    _array->data = _array->alloc( bytes );
+    ex_memzero ( _array->data, bytes );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_array_deinit ( ex_array_t *_array ) {
+    ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+    _array->dealloc(_array->data);
 }
 
 // ------------------------------------------------------------------ 
@@ -146,15 +96,14 @@ void *ex_array_get ( const ex_array_t *_array, size_t _idx )
 // ------------------------------------------------------------------ 
 
 // managed
-void *ex_array_append ( ex_array_t *_array, const void *_value )
-{
+void *ex_array_append ( ex_array_t *_array, const void *_value ) {
     void *val_addr;
 
     ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
 
     if ( _array->count >= _array->capacity ) {
         _array->capacity *= 2;
-        _array->data = ex_realloc ( _array->data, _array->capacity * _array->element_bytes );
+        _array->data = _array->realloc ( _array->data, _array->capacity * _array->element_bytes );
     }
 
     //
@@ -168,27 +117,17 @@ void *ex_array_append ( ex_array_t *_array, const void *_value )
     return val_addr;
 }
 
-// no managed
-void *ex_array_append_nomng ( ex_array_t *_array, const void *_value )
-{
-    void *val_addr;
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
-
-    if ( _array->count >= _array->capacity ) {
-        _array->capacity *= 2;
-        _array->data = ex_realloc_nomng ( _array->data, _array->capacity * _array->element_bytes );
+void ex_array_ncpy ( ex_array_t *_to, const void *_buf, size_t _count ) {
+    if ( _to->capacity < _count ) {
+        _to->capacity *= 2;
+        _to->data = _to->realloc ( _to->data, _to->capacity * _to->element_bytes );
     }
-
-    //
-    val_addr = (char *)(_array->data) + _array->count * _array->element_bytes;
-
-    // if _value is NULL, that means insert an empty node.
-    if ( _value )
-        memcpy ( val_addr, _value, _array->element_bytes );
-
-    ++_array->count;
-    return val_addr;
+    memcpy ( _to->data, _buf, _count * _to->element_bytes );
+    _to->count = _count;
 }
 
 // ------------------------------------------------------------------ 
