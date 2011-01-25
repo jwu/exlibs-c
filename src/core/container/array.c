@@ -74,7 +74,18 @@ void ex_array_init ( ex_array_t *_array,
 
 void ex_array_deinit ( ex_array_t *_array ) {
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
+
     _array->dealloc(_array->data);
+    _array->data = NULL;
+
+    _array->element_typeid = EX_STRID_NULL;
+    _array->element_bytes = EX_STRID_NULL;
+    _array->count = 0;
+    _array->capacity = 0;
+
+    _array->alloc = NULL;
+    _array->realloc = NULL;
+    _array->dealloc = NULL;
 }
 
 // ------------------------------------------------------------------ 

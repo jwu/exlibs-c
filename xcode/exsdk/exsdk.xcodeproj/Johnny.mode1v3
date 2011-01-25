@@ -330,7 +330,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B29D841B12EEA9C500AF7E1B</string>
+										<string>B29D843E12EEEAA400AF7E1B</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -671,7 +671,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>timer.c</string>
+								<string>test_list.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

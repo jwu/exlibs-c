@@ -20,7 +20,7 @@
 // ------------------------------------------------------------------ 
 
 static void normal () {
-    ex_list_t *list = ex_list_alloc ( sizeof(uint32) );
+    ex_list_t *list = ex_list ( uint32 );
     {
         int i; 
         ex_list_node_t *node = NULL;

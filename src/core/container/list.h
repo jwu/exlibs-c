@@ -128,24 +128,57 @@ typedef struct ex_list_node_t {
 typedef struct ex_list_t {
     // private
     size_t count;
+    size_t element_typeid;
     size_t element_bytes;
     ex_list_node_t *head;
     ex_list_node_t *tail;
+
+    // alloc methods
+    void *(*alloc)      ( size_t );
+    void *(*realloc)    ( void *, size_t );
+    void  (*dealloc)    ( void * );
 } ex_list_t;
+
+// NOTE: in this way, we can still trace the memory leak.
+static inline void *__ex_list_alloc( size_t _size ) { return ex_malloc_tag ( _size, "ex_list_t" ); }
+static inline void *__ex_list_realloc( void *_ptr, size_t _size ) { return ex_realloc_tag ( _ptr, _size, "ex_list_t" ); }
+static inline void  __ex_list_dealloc( void *_ptr ) { ex_free ( _ptr ); }
+
+static inline void *__ex_list_alloc_nomng( size_t _size ) { return ex_malloc_nomng ( _size ); }
+static inline void *__ex_list_realloc_nomng( void *_ptr, size_t _size ) { return ex_realloc_nomng ( _ptr, _size ); }
+static inline void  __ex_list_dealloc_nomng( void *_ptr ) { ex_free_nomng ( _ptr ); }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_list_t *ex_list_alloc ( size_t _element_bytes );
-extern ex_list_t *ex_list_alloc_nomng ( size_t _element_bytes );
+extern ex_list_t *ex_list_alloc ( strid_t _element_typeid, size_t _element_bytes );
+#define ex_list(_type) ex_list_alloc( EX_TYPEID(_type), EX_RTTI(_type)->size )
+#define ex_list_notype(_element_bytes) ex_list_alloc( EX_STRID_NULL, _element_bytes )
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_list_free ( ex_list_t *_list );
-extern void ex_list_free_nomng ( ex_list_t *_list );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_list_init ( ex_list_t *_list, 
+                           strid_t _element_typeid, 
+                           size_t _element_bytes, 
+                           void *(*_alloc) ( size_t ),
+                           void *(*_realloc) ( void *, size_t ),
+                           void  (*_dealloc) ( void * )
+                         );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_list_deinit ( ex_list_t *_list ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 

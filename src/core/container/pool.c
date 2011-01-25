@@ -223,13 +223,23 @@ void ex_pool_deinit ( ex_pool_t *_pool ) {
     ex_assert_return( _pool != NULL, /*void*/, "NULL input" );
 
     _pool->dealloc(_pool->data);
+    _pool->data = NULL;
+
     _pool->dealloc(_pool->nodes);
+    _pool->nodes = NULL;
+
     ex_bitarray_deinit( _pool->used_bits );
     _pool->dealloc(_pool->used_bits);
+    _pool->used_bits = NULL;
 
-    _pool->count = 0;
     _pool->element_bytes = 0;
+    _pool->element_typeid = EX_STRID_NULL;
+    _pool->count = 0;
     _pool->capacity = 0;
+
+    _pool->alloc = NULL;
+    _pool->realloc = NULL;
+    _pool->dealloc = NULL;
 }
 
 // ------------------------------------------------------------------ 

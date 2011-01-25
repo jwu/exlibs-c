@@ -16,7 +16,7 @@
 // private variables
 ///////////////////////////////////////////////////////////////////////////////
 
-static ex_hashmap_t *__string_set = NULL;
+static ex_hashmap_t __string_set;
 static bool __initialized = false;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,8 +36,15 @@ int ex_strid_init ( size_t _size )
     }
 
     // NOTE: do not use ex_hashset here, cause EX_TYPEID not established.
-    __string_set = ex_hashmap_alloc ( sizeof(char *), sizeof(char *), _size, ex_hashkey_cstr, ex_keycmp_cstr );
-    ex_assert_return ( __string_set, -1, "string table alloc failed" );
+    ex_hashmap_init ( &__string_set,
+                      EX_STRID_NULL, sizeof(char *), 
+                      EX_STRID_NULL, sizeof(char *),
+                      _size,
+                      ex_hashkey_cstr, ex_keycmp_cstr,
+                      __ex_hashmap_alloc,
+                      __ex_hashmap_realloc,
+                      __ex_hashmap_dealloc
+                    );
 
     __initialized = true;
     return 0;
@@ -51,10 +58,10 @@ void ex_strid_deinit ()
 {
     if ( __initialized ) {
         // free all allocated string
-        ex_hashmap_each ( __string_set, char *, str ) {
+        ex_hashmap_each ( &__string_set, char *, str ) {
             ex_free(str);
         } ex_hashmap_each_end;
-        ex_hashmap_free(__string_set);
+        ex_hashmap_deinit(&__string_set);
         __initialized = false;
     }
 }
@@ -78,12 +85,12 @@ strid_t ex_strid ( const char *_cstr )
     if ( _cstr == NULL || _cstr[0] == '\0' )
         return EX_STRID_NULL;
 
-    hash_idx = ex_hashmap_get_hashidx ( __string_set, &_cstr, &idx ); 
+    hash_idx = ex_hashmap_get_hashidx ( &__string_set, &_cstr, &idx ); 
     if ( idx == -1 ) {
         size_t len = strlen(_cstr);
         str_new = ex_malloc(len+1);
         strncpy( str_new, _cstr, len+1 );
-        ex_hashmap_insert_new ( __string_set, &str_new, &str_new, hash_idx, &idx );
+        ex_hashmap_insert_new ( &__string_set, &str_new, &str_new, hash_idx, &idx );
     }
     return idx;
 }
@@ -105,11 +112,11 @@ strid_t ex_strid_from_wcs ( const wchar_t *_wcs )
 
     str_utf8 = ex_stack_malloc( str_size );
     ex_ucs2_to_utf8 ( _wcs, str_size, str_utf8 );
-    hash_idx = ex_hashmap_get_hashidx ( __string_set, &str_utf8, &idx ); 
+    hash_idx = ex_hashmap_get_hashidx ( &__string_set, &str_utf8, &idx ); 
     if ( idx == -1 ) {
         str_new = ex_malloc(str_size);
         strncpy( str_new, str_utf8, str_size );
-        ex_hashmap_insert_new ( __string_set, &str_new, &str_new, hash_idx, &idx );
+        ex_hashmap_insert_new ( &__string_set, &str_new, &str_new, hash_idx, &idx );
     }
     ex_stack_free(str_utf8);
     return idx;
@@ -122,7 +129,7 @@ strid_t ex_strid_from_wcs ( const wchar_t *_wcs )
 const char *ex_strid_to_cstr ( strid_t _id )
 {
     if ( _id == EX_STRID_NULL ) return NULL;
-    char *addr = (char *)__string_set->keys + _id * __string_set->key_bytes;
+    char *addr = (char *)__string_set.keys + _id * __string_set.key_bytes;
     return *((char **)addr);
 }
 

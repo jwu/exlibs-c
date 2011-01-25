@@ -157,58 +157,91 @@ typedef struct ex_hashmap_t {
     ex_pool_t *nodes;
     hashkey_t hashkey;
     keycmp_t keycmp;
+
+    // alloc methods
+    void *(*alloc)      ( size_t );
+    void *(*realloc)    ( void *, size_t );
+    void  (*dealloc)    ( void * );
 } ex_hashmap_t;
 
+// NOTE: in this way, we can still trace the memory leak.
+static inline void *__ex_hashmap_alloc( size_t _size ) { return ex_malloc_tag ( _size, "ex_hashmap_t" ); }
+static inline void *__ex_hashmap_realloc( void *_ptr, size_t _size ) { return ex_realloc_tag ( _ptr, _size, "ex_hashmap_t" ); }
+static inline void  __ex_hashmap_dealloc( void *_ptr ) { ex_free ( _ptr ); }
+
+static inline void *__ex_hashmap_alloc_nomng( size_t _size ) { return ex_malloc_nomng ( _size ); }
+static inline void *__ex_hashmap_realloc_nomng( void *_ptr, size_t _size ) { return ex_realloc_nomng ( _ptr, _size ); }
+static inline void  __ex_hashmap_dealloc_nomng( void *_ptr ) { ex_free_nomng ( _ptr ); }
+
 // ------------------------------------------------------------------ 
 // Desc: 
+// ex_hashmap
+// ex_hashmap_notype
 // ------------------------------------------------------------------ 
 
-extern ex_hashmap_t *ex_hashmap_alloc ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
-extern ex_hashmap_t *ex_hashmap_alloc_nomng ( size_t _key_bytes, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+extern ex_hashmap_t *ex_hashmap_alloc ( strid_t _key_typeid, size_t _key_bytes, 
+                                        strid_t _value_typeid, size_t _value_bytes, 
+                                        size_t _count, 
+                                        hashkey_t _hashkey, keycmp_t _keycmp );
 
 // ex_hashset
 #define ex_hashset(_type,_count) \
-    ex_hashmap_alloc_2(EX_TYPEID(_type), EX_RTTI(_type)->size, \
-                       EX_TYPEID(_type), EX_RTTI(_type)->size, \
-                       _count, \
-                       ex_hashkey_##_type, ex_keycmp_##_type \
-                      )
+    ex_hashmap_alloc(EX_TYPEID(_type), EX_RTTI(_type)->size, \
+                     EX_TYPEID(_type), EX_RTTI(_type)->size, \
+                     _count, \
+                     ex_hashkey_##_type, ex_keycmp_##_type \
+                    )
 
 // ex_hashmap
 #define ex_hashmap(_key_type,_val_type,_count) \
-    ex_hashmap_alloc_2(EX_TYPEID(_key_type), EX_RTTI(_key_type)->size, \
-                       EX_TYPEID(_val_type), EX_RTTI(_val_type)->size, \
-                       _count, \
-                       ex_hashkey_##_key_type, ex_keycmp_##_key_type \
-                      )
-extern ex_hashmap_t *ex_hashmap_alloc_2 ( strid_t _key_typeid, size_t _key_bytes, strid_t _value_typeid, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
+    ex_hashmap_alloc(EX_TYPEID(_key_type), EX_RTTI(_key_type)->size, \
+                     EX_TYPEID(_val_type), EX_RTTI(_val_type)->size, \
+                     _count, \
+                     ex_hashkey_##_key_type, ex_keycmp_##_key_type \
+                    )
 
-// ex_hashset_nomng
-#define ex_hashset_nomng(_type,_count) \
-    ex_hashmap_alloc_nomng_2(EX_TYPEID(_type), EX_RTTI(_type)->size, \
-                             EX_TYPEID(_type), EX_RTTI(_type)->size, \
-                             _count, \
-                             ex_hashkey_##_type, ex_keycmp_##_type \
-                            )
+// ex_hashset_notype
+#define ex_hashset_notype(_element_bytes,_count,_hashkey,_keycmp) \
+    ex_hashmap_alloc(EX_STRID_NULL, _element_bytes, \
+                     EX_STRID_NULL, _element_bytes, \
+                     _count, \
+                     _hashkey, _keycmp \
+                    )
 
-#define ex_hashmap_nomng(_key_type,_val_type,_count) \
-    ex_hashmap_alloc_nomng_2(EX_TYPEID(_key_type), EX_RTTI(_key_type)->size, \
-                             EX_TYPEID(_val_type), EX_RTTI(_val_type)->size, \
-                             _count, \
-                             ex_hashkey_##_key_type, ex_keycmp_##_key_type \
-                             )
-extern ex_hashmap_t *ex_hashmap_alloc_nomng_2 ( strid_t _key_typeid, size_t _key_bytes, strid_t _value_typeid, size_t _value_bytes, size_t _count, hashkey_t _hashkey, keycmp_t _keycmp );
+// ex_hashmap_notype
+#define ex_hashmap_notype(_key_bytes,_val_bytes,_count,_hashkey,_keycmp) \
+    ex_hashmap_alloc(EX_STRID_NULL, _key_bytes, \
+                     EX_STRID_NULL, _val_bytes, \
+                     _count, \
+                     _hashkey, _keycmp \
+                    )
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_hashmap_free ( ex_hashmap_t *_hashmap );
-extern void ex_hashmap_free_nomng ( ex_hashmap_t *_hashmap );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_hashmap_init ( ex_hashmap_t *_hashmap, 
+                              strid_t _key_typeid, size_t _key_bytes, 
+                              strid_t _value_typeid, size_t _value_bytes, 
+                              size_t _count, 
+                              hashkey_t _hashkey, keycmp_t _keycmp, 
+                              void *(*_alloc) ( size_t ),
+                              void *(*_realloc) ( void *, size_t ),
+                              void  (*_dealloc) ( void * )
+                            );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_hashmap_deinit ( ex_hashmap_t *_hashmap ); 
+
 
 // ------------------------------------------------------------------ 
 // Desc: 

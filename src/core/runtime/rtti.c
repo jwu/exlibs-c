@@ -39,11 +39,11 @@ int ex_rtti_init ()
         return -1;
     }
 
-    __typeid_to_rtti = ex_hashmap_alloc ( sizeof(strid_t), 
-                                          sizeof(ex_rtti_t *), 
-                                          256,
-                                          ex_hashkey_strid, 
-                                          ex_keycmp_strid );
+    __typeid_to_rtti = ex_hashmap_notype ( sizeof(strid_t), 
+                                           sizeof(ex_rtti_t *), 
+                                           256,
+                                           ex_hashkey_strid, 
+                                           ex_keycmp_strid );
     __initialized = true;
     return 0;
 }

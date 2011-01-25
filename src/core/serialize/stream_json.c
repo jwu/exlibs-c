@@ -59,7 +59,7 @@ static void __destroy_node ( __json_node_t *_node ) {
 //
 static void __add_child ( __json_node_t *_parent, __json_node_t *_child ) {
     if ( _parent->children == NULL ) {
-        _parent->children = ex_list_alloc( sizeof(__json_node_t*) );
+        _parent->children = ex_list_notype( sizeof(__json_node_t*) );
     }
     ex_list_append( _parent->children, &_child );
     _child->parent = _parent;

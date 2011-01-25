@@ -67,8 +67,8 @@ static const size_t __suffix_size = sizeof(uint32) * SUFFIX_COUNT;
 static const size_t __pattern_size = sizeof(uint32) * PREFIX_COUNT + sizeof(uint32) * SUFFIX_COUNT;
 
 static alloc_unit_t *__reserved_au_list = NULL;
-static ex_hashmap_t *__au_map = NULL;
-static ex_list_t *__au_bucket = NULL;
+static ex_hashmap_t __au_map;
+static ex_list_t __au_bucket;
 static ex_mutex_t *__access_mutex = NULL;
 
 static size_t __au_count = 0;
@@ -117,7 +117,7 @@ static alloc_unit_t *__request_au () {
         }
 
         // Add this address to our __reserved_au_list so we can free it later
-        ex_list_append_nomng ( __au_bucket, __reserved_au_list );
+        ex_list_append ( &__au_bucket, __reserved_au_list );
     }
 
     // this is the standard use of go next and unlink
@@ -191,7 +191,7 @@ static void __verify_pattern ( alloc_unit_t *_au,
 // ------------------------------------------------------------------ 
 
 static void __reclaim_au ( alloc_unit_t *_au ) {
-    if ( ex_hashmap_remove_at ( __au_map, &_au->org_addr ) == NULL )
+    if ( ex_hashmap_remove_at ( &__au_map, &_au->org_addr ) == NULL )
         ex_error ( "failed to reclaim alloc unit" );
 
     // append to reserve alloc info
@@ -212,18 +212,18 @@ static void __reclaim_au ( alloc_unit_t *_au ) {
 //
 static inline int __push_au ( alloc_unit_t *_au ) { 
     size_t idx = -1;
-    ex_hashmap_insert_nomng ( __au_map, &_au->org_addr, &_au, &idx ); 
+    ex_hashmap_insert ( &__au_map, &_au->org_addr, &_au, &idx ); 
     return idx;
 }
 
 //
 static inline alloc_unit_t *__get_au ( void *_ptr ) { 
-    return *((alloc_unit_t **)ex_hashmap_get ( __au_map, &_ptr, NULL )); 
+    return *((alloc_unit_t **)ex_hashmap_get ( &__au_map, &_ptr, NULL )); 
 }
 
 //
 static inline int __rearrange_au ( void *_ptr, alloc_unit_t *au ) {
-    if ( ex_hashmap_remove_at ( __au_map, &_ptr ) == NULL )
+    if ( ex_hashmap_remove_at ( &__au_map, &_ptr ) == NULL )
         return -1;
     return __push_au ( au );
 }
@@ -258,11 +258,11 @@ static void __log ( const char *_file_name, const char *_format, ... ) {
 
 static void __dump () {
     //
-    ex_assert ( ex_hashmap_count(__au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_count(__au_map) );
+    ex_assert ( ex_hashmap_count(&__au_map) == 0, "There are %d place(s) exsits memory leak.",  ex_hashmap_count(&__au_map) );
     
     //
-    if ( ex_hashmap_count(__au_map) ) {
-        ex_hashmap_each ( __au_map, alloc_unit_t *, au ) {
+    if ( ex_hashmap_count(&__au_map) ) {
+        ex_hashmap_each ( &__au_map, alloc_unit_t *, au ) {
             char text[2048];
             ex_memzero ( text, 2048 );
             snprintf ( text, 2048, 
@@ -313,8 +313,22 @@ int ex_mem_init ()
     //
     __access_mutex = ex_create_mutex();
 
-    __au_map = ex_hashmap_alloc_nomng ( sizeof(void *), sizeof(alloc_unit_t *), 256, ex_hashkey_ptr, ex_keycmp_ptr );
-    __au_bucket = ex_list_alloc_nomng ( sizeof(alloc_unit_t *) );
+    ex_hashmap_init( &__au_map, 
+                     EX_STRID_NULL, sizeof(void *), 
+                     EX_STRID_NULL, sizeof(alloc_unit_t *), 
+                     256,
+                     ex_hashkey_ptr, ex_keycmp_ptr,
+                     __ex_hashmap_alloc_nomng,
+                     __ex_hashmap_realloc_nomng,
+                     __ex_hashmap_dealloc_nomng
+                   );
+    ex_list_init ( &__au_bucket,
+                   EX_STRID_NULL,
+                   sizeof(alloc_unit_t *),
+                   __ex_list_alloc_nomng,
+                   __ex_list_realloc_nomng,
+                   __ex_list_dealloc_nomng
+                 );
 
     // remove log file if it exists
     unlink ( MEM_LOG );
@@ -336,10 +350,10 @@ void ex_mem_deinit ()
         __dump ();
 
         //
-        ex_hashmap_free_nomng ( __au_map );
+        ex_hashmap_deinit ( &__au_map );
 
         // free the reserve alloc info buffer
-        ex_list_free_nomng ( __au_bucket );
+        ex_list_deinit ( &__au_bucket );
 
         __initialized = false;
     }

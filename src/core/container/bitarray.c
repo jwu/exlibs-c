@@ -70,7 +70,13 @@ void ex_bitarray_init ( ex_bitarray_t *_bitarray,
 
 void ex_bitarray_deinit ( ex_bitarray_t *_bitarray ) {
     ex_assert_return( _bitarray != NULL, /*void*/, "NULL input" );
+
     _bitarray->dealloc(_bitarray->data);
+    _bitarray->data = NULL;
+
+    _bitarray->alloc = NULL;
+    _bitarray->realloc = NULL;
+    _bitarray->dealloc = NULL;
 }
 
 // ------------------------------------------------------------------ 
