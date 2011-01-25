@@ -136,6 +136,7 @@ void ex_bitarray_resize ( ex_bitarray_t *_bitarray, size_t _bitcount )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_bitarray_ncpy ( ex_bitarray_t *_to, const void *_buf, size_t _count ) {
-    // TODO:
+void ex_bitarray_ncpy ( ex_bitarray_t *_to, const void *_buf, size_t _bitcount ) {
+    ex_bitarray_resize ( _to, _bitcount );
+    memcpy( _to->data, _buf, (_bitcount+7)/8 );
 }

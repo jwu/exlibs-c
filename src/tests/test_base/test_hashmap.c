@@ -61,9 +61,11 @@ static void normal () {
     {
         char *key; 
         float val;
+        ex_hashmap_t *hashmap,*hashmap_clone;
+        ex_string_t *str;
 
         // ex_hashmap_t *hashmap = ex_hashmap_alloc ( sizeof(char *), sizeof(float), 256, ex_hashkey_string, ex_keycmp_string );
-        ex_hashmap_t *hashmap = ex_hashmap ( cstr, float, 256 );
+        hashmap = ex_hashmap ( cstr, float, 256 );
 
 	    key = "foo"; val = 1.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
         key = "bar"; val = 2.0f; ex_hashmap_insert ( hashmap, &key, &val, NULL );
@@ -77,7 +79,20 @@ static void normal () {
 
         EX_TEST ( ex_hashmap_count(hashmap) == 4 );
 
+        hashmap_clone = ex_hashmap ( cstr, float, 256 );
+        ex_hashmap_cpy ( hashmap_clone, hashmap );
+
+        str = ex_string("");
+        ex_tostring ( EX_TYPEID(map), str, hashmap );
+        printf ( "the hashmap is:\n%s", str->text );
+
+        ex_string_clear(str);
+        ex_tostring ( EX_TYPEID(map), str, hashmap_clone );
+        printf ( "the hashmap_clone is:\n%s", str->text );
+
+        ex_string_free (str);
         ex_hashmap_free ( hashmap );
+        ex_hashmap_free ( hashmap_clone );
     }
 }
 
@@ -97,5 +112,5 @@ static void invalid () {
 
 void test_hashmap () {
     normal();
-    invalid();
+    // invalid();
 }

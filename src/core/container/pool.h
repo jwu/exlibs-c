@@ -259,6 +259,12 @@ static inline wchar_t *ex_pool_get_wstring ( const ex_pool_t *_pool, int _idx ) 
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_pool_cpy ( ex_pool_t *_to, const ex_pool_t *_from );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern bool ex_pool_isvalid ( const ex_pool_t *_pool, int _idx );
 extern void *ex_pool_remove_at ( ex_pool_t *_pool, int _idx );
 extern void *ex_pool_remove_at_safe ( ex_pool_t *_pool, int _idx );

@@ -46,9 +46,11 @@ EX_DEF_PROPS_BEGIN(ex_entity_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_entity_t)
+    EX_SERIALIZE( strid, name )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_entity_t)
+    EX_MEMBER_TOSTRING( strid, "name", self->name )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

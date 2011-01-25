@@ -40,20 +40,19 @@ EX_DEF_PROPS_BEGIN(ex_trans2d_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_trans2d_t)
-    EX_SERIALIZE( vec2f, pos );
-    EX_SERIALIZE( angf, ang );
-    EX_SERIALIZE( vec2f, scale );
+    EX_SERIALIZE( vec2f, pos )
+    EX_SERIALIZE( angf, ang )
+    EX_SERIALIZE( vec2f, scale )
     // TODO { 
-    // EX_SERIALIZE( reference, parent );
-    // EX_SERIALIZE_ARRAY( float, children );
-    // EX_SERIALIZE_MAP( strid, float, children_map );
+    // EX_SERIALIZE( reference, parent )
+    // EX_SERIALIZE_ARRAY( reference, children )
     // } TODO end 
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_trans2d_t)
-    EX_MEMBER_TOSTRING ( vec2f, "position", self->pos );
-    EX_MEMBER_TOSTRING ( angf, "angle", self->ang );
-    EX_MEMBER_TOSTRING ( vec2f, "scale", self->scale );
+    EX_MEMBER_TOSTRING ( vec2f, "position", self->pos )
+    EX_MEMBER_TOSTRING ( angf, "angle", self->ang )
+    EX_MEMBER_TOSTRING ( vec2f, "scale", self->scale )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

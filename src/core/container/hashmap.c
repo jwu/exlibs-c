@@ -268,7 +268,30 @@ bool ex_hashmap_insert ( ex_hashmap_t *_hashmap, const void *_key, const void *_
 // ------------------------------------------------------------------ 
 
 void ex_hashmap_cpy ( ex_hashmap_t *_to, const ex_hashmap_t *_from ) {
-    // TODO:
+    ex_assert_return ( _to->key_typeid == _from->key_typeid &&
+                       _to->key_bytes == _from->key_bytes,
+                       /*dummy*/,
+                       "failed to copy hashmap, the key type and bytes are not the same." );
+    ex_assert_return ( _to->value_typeid == _from->value_typeid &&
+                       _to->value_bytes == _from->value_bytes,
+                       /*dummy*/,
+                       "failed to copy hashmap, the value type and bytes are not the same." );
+    ex_assert_return ( _to->hashkey == _from->hashkey &&
+                       _to->keycmp == _from->keycmp,
+                       /*dummy*/,
+                       "failed to copy hashmap, the hashkey, keycmp function are not the same." );
+
+    //
+    if ( _to->capacity < _from->capacity ) {
+        _to->capacity = _from->capacity;
+        _to->values = _to->realloc ( _to->values, _to->capacity * _to->value_bytes  );
+        _to->keys = _to->realloc ( _to->keys, _to->capacity * _to->key_bytes );
+    }
+    _to->hashsize = _from->hashsize;
+    memcpy( _to->values, _from->values, _from->capacity * _from->value_bytes );
+    memcpy( _to->keys, _from->keys, _from->capacity * _from->value_bytes );
+    memcpy( _to->indices, _from->indices, _from->hashsize * sizeof(size_t) );
+    ex_pool_cpy ( _to->nodes, _from->nodes );
 }
 
 // ------------------------------------------------------------------ 

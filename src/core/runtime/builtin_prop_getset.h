@@ -160,22 +160,17 @@ static inline void ex_prop_get_raw_array ( void *_obj, size_t _offset, void *_va
     ex_array_cpy ( val, prop );
 }
 
-// TODO { 
-// // map - ex_hashmap_t
-// static inline void ex_prop_set_raw_array ( void *_obj, size_t _offset, const void *_value ) {
-//     ex_hashmap_t *prop = (ex_hashmap_t *)ex_ptr_add(_obj,_offset);
-//     const ex_hashmap_t *val = (const ex_hashmap_t *)_value;
-//     // ex_array_cpy ( prop, val );
-// }
-// static inline void ex_prop_get_raw_array ( void *_obj, size_t _offset, void *_value ) {
-//     ex_hashmap_t *prop = (ex_hashmap_t *)ex_ptr_add(_obj,_offset);
-//     ex_hashmap_t *val = (ex_hashmap_t *)_value;
-//     // ex_array_cpy ( val, prop );
-// }
-
-// DEF_BUILTIN_PROP_SET_RAW_2(map, ex_hashmap_t *);
-// DEF_BUILTIN_PROP_GET_RAW_2(map, ex_hashmap_t *);
-// } TODO end 
+// map - ex_hashmap_t
+static inline void ex_prop_set_raw_map ( void *_obj, size_t _offset, const void *_value ) {
+    ex_hashmap_t *prop = (ex_hashmap_t *)ex_ptr_add(_obj,_offset);
+    const ex_hashmap_t *val = (const ex_hashmap_t *)_value;
+    ex_hashmap_cpy ( prop, val );
+}
+static inline void ex_prop_get_raw_map ( void *_obj, size_t _offset, void *_value ) {
+    ex_hashmap_t *prop = (ex_hashmap_t *)ex_ptr_add(_obj,_offset);
+    ex_hashmap_t *val = (ex_hashmap_t *)_value;
+    ex_hashmap_cpy ( val, prop );
+}
 
 #undef DEF_BUILTIN_PROP_SET_RAW
 #undef DEF_BUILTIN_PROP_GET_RAW

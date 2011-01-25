@@ -51,7 +51,7 @@ static inline void  __ex_bitarray_dealloc_nomng( void *_ptr ) { ex_free_nomng ( 
 // ------------------------------------------------------------------ 
 
 extern ex_bitarray_t *ex_bitarray_alloc ( size_t _bitcount );
-#define ex_bitarray(_count) ex_bitarray_alloc(_bitcount);
+#define ex_bitarray(_bitcount) ex_bitarray_alloc(_bitcount);
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -103,7 +103,7 @@ static inline size_t ex_bitarray_count ( const ex_bitarray_t *_bitarray ) { retu
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_bitarray_ncpy ( ex_bitarray_t *_to, const void *_buf, size_t _count );
+extern void ex_bitarray_ncpy ( ex_bitarray_t *_to, const void *_buf, size_t _bitcount );
 static inline void ex_bitarray_cpy ( ex_bitarray_t *_to, const ex_bitarray_t *_from ) {
     ex_bitarray_ncpy ( _to, _from->data, _from->count );
 }

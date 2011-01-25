@@ -250,7 +250,6 @@ extern void ex_hashmap_deinit ( ex_hashmap_t *_hashmap );
 // ------------------------------------------------------------------ 
 
 extern void ex_hashmap_insert_new ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t _hash_idx, size_t *_index );
-extern void ex_hashmap_insert_new_nomng ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t _hash_idx, size_t *_index );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -265,7 +264,6 @@ extern size_t ex_hashmap_get_hashidx ( const ex_hashmap_t *_hashmap, const void 
 // ------------------------------------------------------------------ 
 
 extern bool ex_hashmap_insert ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t *_index );
-extern bool ex_hashmap_insert_nomng ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t *_index );
 
 // TODO: void ex_hashmap_set ( ex_hashmap_t *_hashmap, const void *_key, const void *_val );
 

@@ -47,9 +47,21 @@ EX_DEF_PROPS_BEGIN(ex_camera_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_camera_t)
+    EX_SERIALIZE( bool, isOrtho )
+    EX_SERIALIZE( float, orthoSize )
+    EX_SERIALIZE( float, aspect )
+    EX_SERIALIZE( uint32, clearFlags )
+    EX_SERIALIZE( color3f, bgColor )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_camera_t)
+    EX_MEMBER_TOSTRING ( bool, "is ortho-graphic", self->isOrtho )
+    EX_MEMBER_TOSTRING ( float, "ortho-graphic size", self->orthoSize )
+    EX_MEMBER_TOSTRING ( float, "aspect", self->aspect )
+    EX_MEMBER_TOSTRING ( uint32, "clear flags", self->clearFlags )
+    EX_MEMBER_TOSTRING ( color3f, "background color", self->bgColor )
+    EX_MEMBER_TOSTRING ( mat44f, "world to view matrix", self->matWorldToView )
+    EX_MEMBER_TOSTRING ( mat44f, "projection matrix", self->matProjection )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

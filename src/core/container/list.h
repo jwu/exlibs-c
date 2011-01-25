@@ -185,27 +185,28 @@ extern void ex_list_deinit ( ex_list_t *_list );
 // ------------------------------------------------------------------ 
 
 extern void ex_list_append ( ex_list_t *_list, const void *_value );
-extern void ex_list_append_nomng ( ex_list_t *_list, const void *_value );
-
 extern void ex_list_prepend ( ex_list_t *_list, const void *_value );
-extern void ex_list_prepend_nomng ( ex_list_t *_list, const void *_value );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_list_insert_back ( ex_list_t *_list, ex_list_node_t *_at, const void *_value );
-extern void ex_list_insert_back_nomng ( ex_list_t *_list, ex_list_node_t *_at, const void *_value );
-
 extern void ex_list_insert_front ( ex_list_t *_list, ex_list_node_t *_at, const void *_value );
-extern void ex_list_insert_front_nomng ( ex_list_t *_list, ex_list_node_t *_at, const void *_value );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern ex_list_node_t *ex_list_remove_at ( ex_list_t *_list, ex_list_node_t *_at );
-extern ex_list_node_t *ex_list_remove_at_nomng ( ex_list_t *_list, ex_list_node_t *_at );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// TODO { 
+extern void ex_list_cpy ( ex_list_t *_to, ex_list_t *_from );
+// } TODO end 
 
 // ------------------------------------------------------------------ 
 // Desc: 

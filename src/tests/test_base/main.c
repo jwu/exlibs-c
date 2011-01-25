@@ -65,12 +65,12 @@ int main( int argc, char *argv[] )
         // test_btree ();
         // test_cstr ();
         // test_encoding ();
-        // test_hashmap ();
+        test_hashmap ();
         // test_list ();
         // test_memmng ();
         // test_pool ();
         // test_rtti ();
-        test_stream ();
+        // test_stream ();
         // test_string ();
         // test_stringID ();
         // test_thread();

@@ -318,7 +318,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>timer.c</string>
+								<string>hashmap.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,11 +326,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>timer.c</string>
+										<string>hashmap.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B29D843E12EEEAA400AF7E1B</string>
+										<string>B29D847D12EF275800AF7E1B</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -361,9 +361,7 @@
 											<string>B261C14312CDBBD20018BCDA</string>
 											<string>B2D838DD12CF0AE000CC6B35</string>
 											<string>B2D838DE12CF0AE000CC6B35</string>
-											<string>B27BBE4512D4D22F00C2139F</string>
 											<string>B27BBE4612D4D22F00C2139F</string>
-											<string>B27BBE4712D4D22F00C2139F</string>
 											<string>B27BBE5012D4D22F00C2139F</string>
 											<string>B27BBE5112D4D22F00C2139F</string>
 											<string>B21CB6E812D576AF00CDD369</string>
@@ -444,7 +442,9 @@
 											<string>B29D83F312EE9CF000AF7E1B</string>
 											<string>B29D83F412EE9CF000AF7E1B</string>
 											<string>B29D83F512EE9CF000AF7E1B</string>
-											<string>B29D83F612EE9CF000AF7E1B</string>
+											<string>B29D846E12EF24DD00AF7E1B</string>
+											<string>B29D846F12EF24DD00AF7E1B</string>
+											<string>B29D845412EF21CE00AF7E1B</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -645,9 +645,10 @@
 		<string>B29D833312EDC34E00AF7E1B</string>
 		<string>B29D833412EDC34E00AF7E1B</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>B29D847112EF24DD00AF7E1B</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>1C78EAAD065D492600B07095</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 	</array>
 	<key>WindowString</key>
 	<string>1405 -253 1252 723 1280 -400 1920 1200 </string>
@@ -671,7 +672,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>test_list.c</string>
+								<string>test_hashmap.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -1282,8 +1283,8 @@
 			<true/>
 			<key>TableOfContents</key>
 			<array>
-				<string>B29D82DF12ED44DE00AF7E1B</string>
-				<string>B29D82E012ED44DE00AF7E1B</string>
+				<string>B29D847112EF24DD00AF7E1B</string>
+				<string>B29D847212EF24DD00AF7E1B</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
 				<string>1CA1AED706398EBD00589147</string>
 			</array>
@@ -1292,9 +1293,9 @@
 			<key>WindowString</key>
 			<string>1754 324 744 409 1280 -400 1920 1200 </string>
 			<key>WindowToolGUID</key>
-			<string>B29D82DF12ED44DE00AF7E1B</string>
+			<string>B29D847112EF24DD00AF7E1B</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

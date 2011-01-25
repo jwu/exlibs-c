@@ -307,6 +307,47 @@ int ex_pool_insert ( ex_pool_t *_pool, const void *_value )
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_pool_cpy ( ex_pool_t *_to, const ex_pool_t *_from ) {
+    int i;
+    ex_assert_return ( _to->element_typeid == _from->element_typeid &&
+                       _to->element_bytes == _from->element_bytes,
+                       /*dummy*/,
+                       "failed to copy pool, the element type and bytes are not the same." );
+
+    if ( _to->capacity < _from->capacity ) {
+        _to->capacity = _from->capacity;
+        _to->data = _to->realloc( _to->data, _to->capacity * _to->element_bytes );
+        _to->nodes = _to->realloc( _to->nodes,  _to->capacity * sizeof(ex_pool_node_t) );
+    }
+
+    //
+    memcpy ( _to->data, _from->data, _from->capacity * _from->element_bytes );
+    memcpy ( _to->nodes, _from->nodes,  _from->capacity * sizeof(ex_pool_node_t) );
+    ex_bitarray_cpy ( _to->used_bits, _from->used_bits );
+
+    //
+    _to->used_nodes_begin = NULL;
+    _to->used_nodes_end = NULL;
+    _to->free_nodes = NULL;
+
+    i = _to->capacity - 1;
+    while ( i >= 0 ) {
+        // if curren index is in used.
+        if ( ex_bitarray_get ( _to->used_bits, i ) ) {
+            __push_to_used_reverse ( _to, _to->nodes + i );
+        }
+        else {
+            __push_to_free ( _to, _to->nodes + i );
+        }
+        --i;
+    }
+    _to->count = _from->count;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 bool ex_pool_isvalid ( const ex_pool_t *_pool, int _idx ) {
     return ex_bitarray_get(_pool->used_bits, _idx) == 1;
 }

@@ -28,21 +28,21 @@ EX_DEF_CLASS_BEGIN(ex_debug2d_t)
     NULL,
 
     // ex_debug2d_t
-    EX_DEBUG_SHAPE_RECT,
-    EX_VEC2F_ZERO, 1.0f, 1.0f,
-    EX_VEC2F_ZERO, 1.0f,
+    EX_DEBUG_SHAPE_RECT, // shapeType
+    EX_VEC2F_ZERO, 1.0f, 1.0f, // rect
+    EX_VEC2F_ZERO, 1.0f, // circle
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_debug2d_t)
-    // TODO { 
-    // EX_PROP( ex_trans2d_t, _pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-    // } TODO end 
+    EX_PROP( ex_debug2d_t, shapeType, "shape type",  EX_PROP_ATTR_NONE, ex_prop_set_raw_int, ex_prop_get_raw_int )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_debug2d_t)
+    EX_SERIALIZE( int, shapeType )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_debug2d_t)
+    EX_MEMBER_TOSTRING( int, "shape type", self->shapeType )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
