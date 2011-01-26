@@ -328,7 +328,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2A42D7A12EFEFDE00DF54B6</string>
+										<string>B2A42D8812F083B800DF54B6</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -640,9 +640,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>B2A42D8A12F083B800DF54B6</string>
+		<string>B2A42D8B12F083B800DF54B6</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
-		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>1405 -253 1252 723 1280 -400 1920 1200 </string>
@@ -977,8 +980,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1014,7 +1015,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>B29D833212EDC34E00AF7E1B</string>
+				<string>B2A42D8912F083B800DF54B6</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -1024,7 +1025,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

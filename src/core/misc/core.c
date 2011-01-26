@@ -22,6 +22,7 @@ static bool __initialized = false;
 // Desc: 
 extern void ex_register_builtin_types ();
 extern void ex_register_classes ();
+extern void ex_uid_init ();
 // ------------------------------------------------------------------ 
 
 // success: 0
@@ -44,6 +45,7 @@ int ex_core_init ()
         ex_log ("failed to init timer");
         return -1;
     }
+    ex_uid_init (); // init uid variables after tierm
 
     //
     ex_log ("init memory");

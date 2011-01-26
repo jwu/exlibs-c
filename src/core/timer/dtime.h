@@ -29,7 +29,7 @@ extern bool ex_is_valid_dtime2 ( uint _ms );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern uint ex_dtime_from ( uint _hour, uint _min, uint _secs, uint _ms );
+extern dtime_t ex_dtime_from ( uint _hour, uint _min, uint _secs, uint _ms );
 
 // ------------------------------------------------------------------ 
 // Desc: 

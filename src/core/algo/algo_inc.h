@@ -13,6 +13,7 @@
 #include "bit.h"
 #include "CRC.h"
 #include "hash.h"
+#include "uid.h"
 
 // #################################################################################
 #endif // END ALGO_INC_H_1277694808

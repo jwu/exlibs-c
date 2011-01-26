@@ -63,6 +63,8 @@
 		B2C9226512D96539000FB811 /* color.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9226412D96539000FB811 /* color.h */; };
 		B2C922FC12DA0332000FB811 /* camera.c in Sources */ = {isa = PBXBuildFile; fileRef = B2C922FA12DA0332000FB811 /* camera.c */; };
 		B2C922FD12DA0332000FB811 /* camera.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C922FB12DA0332000FB811 /* camera.h */; };
+		B2D8C9C112F098C800584C38 /* uid.c in Sources */ = {isa = PBXBuildFile; fileRef = B2D8C9BF12F098C700584C38 /* uid.c */; };
+		B2D8C9C212F098C800584C38 /* uid.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D8C9C012F098C800584C38 /* uid.h */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
 		B2DD23FF12A7C86E0053CA3F /* test_array.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F312A7C86E0053CA3F /* test_array.c */; };
 		B2DD240012A7C86E0053CA3F /* test_bitarry.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F412A7C86E0053CA3F /* test_bitarry.c */; };
@@ -253,6 +255,8 @@
 		B2C9226412D96539000FB811 /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = color.h; sourceTree = "<group>"; };
 		B2C922FA12DA0332000FB811 /* camera.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = camera.c; sourceTree = "<group>"; };
 		B2C922FB12DA0332000FB811 /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
+		B2D8C9BF12F098C700584C38 /* uid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = uid.c; sourceTree = "<group>"; };
+		B2D8C9C012F098C800584C38 /* uid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uid.h; sourceTree = "<group>"; };
 		B2DD23EA12A7C7CE0053CA3F /* test.base */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test.base; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DD23F212A7C86E0053CA3F /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2DD23F312A7C86E0053CA3F /* test_array.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_array.c; sourceTree = "<group>"; };
@@ -593,6 +597,8 @@
 		B2E0B70C12A6B144009FE3E8 /* algo */ = {
 			isa = PBXGroup;
 			children = (
+				B2D8C9BF12F098C700584C38 /* uid.c */,
+				B2D8C9C012F098C800584C38 /* uid.h */,
 				B2E0B70D12A6B144009FE3E8 /* algo_inc.h */,
 				B2E0B70E12A6B144009FE3E8 /* bit.h */,
 				B2E0B70F12A6B144009FE3E8 /* CRC.c */,
@@ -906,6 +912,7 @@
 				B29D83C912EE733F00AF7E1B /* builtin_prop_getset.h in Headers */,
 				B29D83CA12EE733F00AF7E1B /* builtin_tostring.h in Headers */,
 				B29D83CB12EE733F00AF7E1B /* runtime_macro.h in Headers */,
+				B2D8C9C212F098C800584C38 /* uid.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1098,7 @@
 				B259245D12EA6F7700B49C04 /* string.c in Sources */,
 				B24EC45712EB4D140070C3F8 /* text_file.c in Sources */,
 				B29D83A312EDF83400AF7E1B /* mathdef.c in Sources */,
+				B2D8C9C112F098C800584C38 /* uid.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
