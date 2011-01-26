@@ -343,8 +343,16 @@ static void *__yajl_realloc( void *_ctx, void *_ptr, unsigned int _sz ) {
 // ------------------------------------------------------------------ 
 
 static int __read_next ( ex_stream_t *_stream, strid_t _name, strid_t _typeID ) {
-    ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
-    __json_node_t *parent = stream->anchor;
+    ex_stream_json_t *stream;
+    __json_node_t *parent;
+
+    ex_assert_return ( _typeID != EX_STRID_NULL, -1, 
+                       "Faield to serialize node \"%s\".\n"
+                       "The typeid can't be NULL, you must register the class/builtin-type first.", 
+                       ex_strid_to_cstr(_name) );
+
+    stream = (ex_stream_json_t *)_stream; 
+    parent = stream->anchor;
 
     ex_list_each( parent->children, __json_node_t *, jnode ) {
         // if we found the node with the same name and type
@@ -907,9 +915,17 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
 // ------------------------------------------------------------------ 
 
 static int __write_next ( ex_stream_t *_stream, strid_t _name, strid_t _typeID ) {
-    ex_stream_json_t *stream = (ex_stream_json_t *)_stream; 
-    __json_node_t *parent = stream->anchor;
-    __json_node_t *jnode = __create_node();
+    ex_stream_json_t *stream;
+    __json_node_t *parent, *jnode;
+
+    ex_assert_return ( _typeID != EX_STRID_NULL, -1, 
+                       "Faield to serialize node \"%s\".\n"
+                       "The typeid can't be NULL, you must register the class/builtin-type first.", 
+                       ex_strid_to_cstr(_name) );
+
+    stream = (ex_stream_json_t *)_stream; 
+    parent = stream->anchor;
+    jnode = __create_node();
 
     jnode->name = _name;
     jnode->typeid = _typeID;
@@ -1542,6 +1558,7 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
 
 static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _level ) {
     ex_assert_return ( _node, /*dummy*/, "node can't be NULL" );
+    ex_assert_return ( _node->typeid != EX_STRID_NULL, /*dummy*/, "typeid can't be NULL, please register the class/builtin-type first." );
 
     //
     if ( _node->name != EX_STRID_NULL ) {

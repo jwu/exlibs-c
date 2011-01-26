@@ -22,7 +22,7 @@ extern "C" {
 
 #ifndef __cplusplus
     // NOTE: C doesn't have bool keyword
-    // NOTE: do not use define, that will replace bool to int in some macro ( such as EX_SERIALIZE )
+    // NOTE: do not use define, that will replace bool to int in some macro ( such as EX_MEMBER_SERIALIZE )
 
     #ifdef bool
     #undef bool

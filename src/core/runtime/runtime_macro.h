@@ -32,11 +32,11 @@ extern "C" {
   EX_DEF_PROPS_END
 
   EX_SERIALIZE_BEGIN(foo)
-      EX_SERIALIZE(int,val1);
+      EX_MEMBER_SERIALIZE(int,val1);
   EX_SERIALIZE_END
 
   EX_DEF_TOSTRING_BEGIN(foo)
-      EX_MEMBER_TOSTRING(int,"val",&(self->val));
+      EX_MEMBER_TOSTRING(int,"val",self->val);
   EX_DEF_TOSTRING_END
 
   finally register in classes_registry
@@ -54,11 +54,11 @@ extern "C" {
 #define EX_RTTI(_typename) (__RTTI_##_typename##__)
 #define EX_TYPEID(_typename) (__TYPEID_##_typename##__)
 
-#define ex_classof(_type,_objPtr) __ex_classof((ex_class_t *)_objPtr,EX_RTTI(_type))
-#define ex_childof(_type,_objPtr) __ex_childof((ex_class_t *)_objPtr,EX_RTTI(_type))
-#define ex_superof(_type,_objPtr) __ex_superof((ex_class_t *)_objPtr,EX_RTTI(_type))
-#define ex_isa(_type,_objPtr) __ex_isa((ex_class_t *)_objPtr,EX_RTTI(_type))
-#define ex_as(_type,_objPtr) (_type *)__ex_as((ex_class_t *)_objPtr,EX_RTTI(_type))
+#define ex_classof(_type,_obj_ptr) __ex_classof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+#define ex_childof(_type,_obj_ptr) __ex_childof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+#define ex_superof(_type,_obj_ptr) __ex_superof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+#define ex_isa(_type,_obj_ptr) __ex_isa((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+#define ex_as(_type,_obj_ptr) (_type *)__ex_as((ex_class_t *)_obj_ptr,EX_RTTI(_type))
 
 ///////////////////////////////////////////////////////////////////////////////
 // class help macros
@@ -139,7 +139,7 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_CLASS_BEGIN(_typename) \
-    strid_t __TYPEID_##_typename##__; \
+    strid_t __TYPEID_##_typename##__ = EX_STRID_NULL; \
     ex_rtti_t *__RTTI_##_typename##__ = NULL; \
     void *ex_create_##_typename() { \
         ex_rtti_t *__rtti__ = EX_RTTI(_typename); \
@@ -231,7 +231,8 @@ extern "C" {
             int ret = _stream->next( _stream, _name, EX_TYPEID(_class) ); \
             if ( ret != 0 ) return; \
         } \
-        if ( _stream->push ) _stream->push(_stream);
+        if ( _stream->push ) _stream->push(_stream); \
+        { /*NOTE: without this you can't declare variable*/
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -244,13 +245,15 @@ extern "C" {
         tmp_pop = _stream->pop; \
         _stream->pop = NULL; /*this make the super serialize no pop*/ \
         __ex_serialize_##_super(_stream,_name,_val); \
-        _stream->pop = tmp_pop;
+        _stream->pop = tmp_pop; \
+        { /*NOTE: without this you can't declare variable*/
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 #define EX_SERIALIZE_END \
+        } \
         if ( _stream->pop ) _stream->pop(_stream); \
         (void *)self; /*to avoid unused compile warning*/ \
     }
@@ -259,14 +262,42 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_SERIALIZE(_type,_member) \
+#define EX_SERIALIZE(_stream,_type,_name,_val_ptr) \
+        __ex_serialize_##_type(_stream,ex_strid(_name),_val_ptr);
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_STRING(_stream,_type,_name,_string_ptr) \
+        __ex_serialize_string(_stream,ex_strid(_name),_string_ptr);
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_ARRAY(_stream,_el_type,_name,_array_ptr) \
+        __ex_serialize_array_2(_stream, ex_strid(_name), _array_ptr, __ex_serialize_##_el_type);
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SERIALIZE_MAP(_stream,_key_type,_val_type,_name,_map_ptr) \
+        __ex_serialize_map_2(_stream, ex_strid(_name), _map_ptr, __ex_serialize_##_key_type, __ex_serialize_##_val_type );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_MEMBER_SERIALIZE(_type,_member) \
         __ex_serialize_##_type(_stream,ex_strid(#_member),&(self->_member));
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_SERIALIZE_STRING(_member) \
+#define EX_MEMBER_SERIALIZE_STRING(_member) \
         __ex_serialize_string(_stream, \
                                ex_strid(#_member), \
                                self->_member /*NOTE: string always appear as pointer*/ \
@@ -276,7 +307,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_SERIALIZE_ARRAY(_el_type,_member) \
+#define EX_MEMBER_SERIALIZE_ARRAY(_el_type,_member) \
         __ex_serialize_array_2(_stream, \
                                ex_strid(#_member), \
                                self->_member, /*NOTE: array always appear as pointer*/ \
@@ -286,7 +317,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_SERIALIZE_MAP(_key_type,_val_type,_member) \
+#define EX_MEMBER_SERIALIZE_MAP(_key_type,_val_type,_member) \
         __ex_serialize_map_2(_stream, \
                              ex_strid(#_member), \
                              self->_member, /*NOTE: map always appear as pointer*/ \

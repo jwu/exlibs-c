@@ -17,6 +17,7 @@
 #include "../entity/trans2d.h"
 #include "../entity/debug2d.h"
 #include "../entity/camera.h"
+#include "../entity/world.h"
 // } TEMP end 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -28,6 +29,7 @@ void ex_register_classes () {
     EX_REGISTER_CLASS(ex_class_t); // the very base class for any other classes
 
     // ex engine
+    EX_REGISTER_CLASS(ex_world_t);
     EX_REGISTER_CLASS(ex_entity_t);
     EX_REGISTER_CLASS(ex_component_t);
     EX_REGISTER_CLASS(ex_trans2d_t);

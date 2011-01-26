@@ -46,7 +46,28 @@ EX_DEF_PROPS_BEGIN(ex_entity_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_entity_t)
-    EX_SERIALIZE( strid, name )
+    int num_comps = 0;
+
+    EX_MEMBER_SERIALIZE( strid, name )
+    num_comps = self->comps->count;
+    EX_SERIALIZE( _stream, int, "num_comps", &num_comps  )
+
+    if ( _stream->type == EX_STREAM_READ ) {
+        for ( int i = 0; i < num_comps; ++i ) {
+            strid_t typeID;
+            void *comp;
+
+            EX_SERIALIZE( _stream, strid, "comp_type", &typeID )
+            comp = ex_entity_add_comp( self, typeID );
+            ex_rtti_info(comp)->serialize( _stream, ex_strid("component"), comp );
+        }
+    }
+    else if ( _stream->type == EX_STREAM_WRITE ) {
+        ex_array_each ( self->comps, ex_component_t *, comp ) {
+            EX_SERIALIZE( _stream, strid, "comp_type", &(ex_rtti_info(comp)->typeID) )
+            ex_rtti_info(comp)->serialize( _stream, ex_strid("component"), comp );
+        } ex_array_each_end
+    }
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_entity_t)
@@ -61,25 +82,21 @@ EX_DEF_TOSTRING_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_entity_t *ex_entity_alloc () {
-    ex_entity_t *ent = (ex_entity_t *)ex_malloc(sizeof(ex_entity_t));
-    ent->name = EX_STRID_NULL;
-    ent->comps = ex_array_notype(sizeof(void *),8);
-    return ent;
+void ex_entity_init ( ex_entity_t *_ent ) {
+    _ent->comps = ex_array_notype(sizeof(void *),8);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_free ( ex_entity_t *_ent ) {
+void ex_entity_deinit ( ex_entity_t *_ent ) {
     ex_array_each ( _ent->comps, ex_component_t *, comp ) {
         if ( comp->deinit )
             comp->deinit(comp);
         ex_free(comp);
     } ex_array_each_end;
     ex_array_free ( _ent->comps );
-    ex_free ( _ent );
 }
 
 // ------------------------------------------------------------------ 
@@ -123,12 +140,10 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
         ex_array_append( _ent->comps, &comp );
 
         // cache internal component
-        if ( _typeID == EX_TYPEID(ex_trans2d_t) ) {
+        if ( _typeID == EX_TYPEID(ex_trans2d_t) )
             _ent->trans2d = (ex_trans2d_t *)comp; 
-        }
-        else if ( _typeID == EX_TYPEID(ex_camera_t) ) {
+        else if ( _typeID == EX_TYPEID(ex_camera_t) )
             _ent->camera = (ex_camera_t *)comp; 
-        }
     }
 
     return comp;

@@ -34,6 +34,13 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+#if (EX_PLATFORM == EX_WIN32)
+    static const char *media_file = "e:/project/dev/exsdk/res/";
+#else
+    static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
+#endif
+#define maxPATH 256
+
 // system
 // DISABLE { 
 // static int paused = 0;
@@ -56,13 +63,12 @@ ex_entity_t *entity1 = NULL;
 // ------------------------------------------------------------------ 
 
 static void initGame () {
-    world = ex_world_alloc();
+    char path[maxPATH];
+    ex_stream_t *stream;
+    world = ex_create_ex_world_t();
+    ex_world_init (world);
 
-    // TODO { 
-    // init the world
-    // serialize the world
-    // } TODO end 
-
+#if 0
     {
         ex_camera_t *mainCam;
         ex_world_create_camera2d ( world, ex_strid("main_camera") );
@@ -84,6 +90,18 @@ static void initGame () {
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
         }
     }
+
+    stream = ex_create_json_write_stream();
+    EX_SERIALIZE( stream, ex_world_t, "world", world );
+    strncpy ( path, media_file, maxPATH );
+    stream->save_to_file( stream, strcat(path, "simple_world.json") );
+    ex_destroy_json_stream((ex_stream_json_t *)stream);
+#else
+    strncpy ( path, media_file, maxPATH );
+    stream = ex_create_json_read_stream( strcat(path, "simple_world.json") );
+    EX_SERIALIZE( stream, ex_world_t, "world", world );
+    ex_destroy_json_stream((ex_stream_json_t *)stream);
+#endif
 }
 
 // ------------------------------------------------------------------ 
@@ -91,7 +109,8 @@ static void initGame () {
 // ------------------------------------------------------------------ 
 
 static void quitGame () {
-    ex_world_free(world);
+    ex_world_deinit(world);
+    ex_free(world);
 }
 
 // ------------------------------------------------------------------ 
@@ -99,6 +118,7 @@ static void quitGame () {
 // ------------------------------------------------------------------ 
 
 static void updateGame () {
+#if 0
     {
         // ex_vec2f_t d_pos = { 1.0f, 1.0f };
         ex_angf_t d_ang;
@@ -112,6 +132,7 @@ static void updateGame () {
         ex_angf_mul_scalar ( &d_ang, &d_ang, ex_dt() * 10.0f );
         ex_angf_add ( &trans2d->ang, &trans2d->ang, &d_ang );
     }
+#endif
 
     ex_world_update(world);
 }

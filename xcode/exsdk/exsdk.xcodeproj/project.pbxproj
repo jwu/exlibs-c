@@ -52,6 +52,7 @@
 		B29D83C912EE733F00AF7E1B /* builtin_prop_getset.h in Headers */ = {isa = PBXBuildFile; fileRef = B29D83C612EE733F00AF7E1B /* builtin_prop_getset.h */; };
 		B29D83CA12EE733F00AF7E1B /* builtin_tostring.h in Headers */ = {isa = PBXBuildFile; fileRef = B29D83C712EE733F00AF7E1B /* builtin_tostring.h */; };
 		B29D83CB12EE733F00AF7E1B /* runtime_macro.h in Headers */ = {isa = PBXBuildFile; fileRef = B29D83C812EE733F00AF7E1B /* runtime_macro.h */; };
+		B29D84BD12EFC8ED00AF7E1B /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
 		B2B113FF12DAAE66002E6C1A /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B113FE12DAAE66002E6C1A /* color.c */; };
 		B2BD881B12E6F86A001F9D38 /* test_cstr.c in Sources */ = {isa = PBXBuildFile; fileRef = B2BD881A12E6F86A001F9D38 /* test_cstr.c */; };
 		B2C9220E12D8B4AA000FB811 /* circlef.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9220B12D8B4AA000FB811 /* circlef.h */; };
@@ -383,6 +384,7 @@
 				B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */,
 				B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */,
 				B245485112B920D200EF7261 /* libexsdk.a in Frameworks */,
+				B29D84BD12EFC8ED00AF7E1B /* libyajl_s.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1202,6 +1204,10 @@
 				);
 				INFOPLIST_FILE = "test_gl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -1232,6 +1238,10 @@
 				);
 				INFOPLIST_FILE = "test_gl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,

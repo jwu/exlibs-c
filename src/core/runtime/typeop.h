@@ -49,7 +49,7 @@ extern void *ex_create ( strid_t _typeID );
 // ------------------------------------------------------------------ 
 // Desc: 
 // NOTE: this is good for generic progromming in lua-level, in c-level
-// we still use EX_SERIALIZE that will call those static function for performance.
+// we still use EX_MEMBER_SERIALIZE that will call those static function for performance.
 // ------------------------------------------------------------------ 
 
 extern void ex_serialize ( strid_t _typeID, struct ex_stream_t *_stream, strid_t _name, void *_val );

@@ -20,11 +20,12 @@ extern "C" {
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef struct ex_world_t {
+EX_DECL_CLASS_BEGIN(ex_world_t)
+    strid_t name;
     ex_array_t *entities;
     ex_array_t *cameras;
     struct ex_camera_t *mainCamera;
-} ex_world_t;
+EX_DECL_CLASS_END(ex_world_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -34,8 +35,8 @@ typedef struct ex_world_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_world_t *ex_world_alloc ();
-extern void ex_world_free ( ex_world_t *_world );
+extern void ex_world_init ( ex_world_t *_world );
+extern void ex_world_deinit ( ex_world_t *_world );
 
 // ------------------------------------------------------------------ 
 // Desc: 

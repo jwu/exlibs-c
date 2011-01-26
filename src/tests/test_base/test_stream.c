@@ -60,32 +60,32 @@ EX_DEF_PROPS_BEGIN(simple_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(simple_t)
-    EX_SERIALIZE ( int8, m_int8 );
-    EX_SERIALIZE ( int16, m_int16 );
-    EX_SERIALIZE ( int32, m_int32 );
-    EX_SERIALIZE ( int64, m_int64 );
-    EX_SERIALIZE ( uint8, m_uint8 );
-    EX_SERIALIZE ( uint16, m_uint16 );
-    EX_SERIALIZE ( uint32, m_uint32 );
-    EX_SERIALIZE ( uint64, m_uint64 );
-    EX_SERIALIZE ( float, m_float );
-    EX_SERIALIZE ( double, m_double );
-    EX_SERIALIZE ( bool, m_bool );
-    EX_SERIALIZE ( cstr, m_cstr );
-    EX_SERIALIZE_STRING ( m_string );
-    EX_SERIALIZE ( strid, m_strid );
-    EX_SERIALIZE ( vec2f, m_vec2f );
-    EX_SERIALIZE ( vec3f, m_vec3f );
-    EX_SERIALIZE ( vec4f, m_vec4f );
-    EX_SERIALIZE ( mat22f, m_mat22f );
-    EX_SERIALIZE ( mat33f, m_mat33f );
-    EX_SERIALIZE ( mat44f, m_mat44f );
-    EX_SERIALIZE ( quatf, m_quatf );
-    EX_SERIALIZE ( angf, m_angf );
-    EX_SERIALIZE ( color3f, m_color3f );
-    EX_SERIALIZE ( color3u, m_color3u );
-    EX_SERIALIZE ( color4f, m_color4f );
-    EX_SERIALIZE ( color4u, m_color4u );
+    EX_MEMBER_SERIALIZE ( int8, m_int8 );
+    EX_MEMBER_SERIALIZE ( int16, m_int16 );
+    EX_MEMBER_SERIALIZE ( int32, m_int32 );
+    EX_MEMBER_SERIALIZE ( int64, m_int64 );
+    EX_MEMBER_SERIALIZE ( uint8, m_uint8 );
+    EX_MEMBER_SERIALIZE ( uint16, m_uint16 );
+    EX_MEMBER_SERIALIZE ( uint32, m_uint32 );
+    EX_MEMBER_SERIALIZE ( uint64, m_uint64 );
+    EX_MEMBER_SERIALIZE ( float, m_float );
+    EX_MEMBER_SERIALIZE ( double, m_double );
+    EX_MEMBER_SERIALIZE ( bool, m_bool );
+    EX_MEMBER_SERIALIZE ( cstr, m_cstr );
+    EX_MEMBER_SERIALIZE_STRING ( m_string );
+    EX_MEMBER_SERIALIZE ( strid, m_strid );
+    EX_MEMBER_SERIALIZE ( vec2f, m_vec2f );
+    EX_MEMBER_SERIALIZE ( vec3f, m_vec3f );
+    EX_MEMBER_SERIALIZE ( vec4f, m_vec4f );
+    EX_MEMBER_SERIALIZE ( mat22f, m_mat22f );
+    EX_MEMBER_SERIALIZE ( mat33f, m_mat33f );
+    EX_MEMBER_SERIALIZE ( mat44f, m_mat44f );
+    EX_MEMBER_SERIALIZE ( quatf, m_quatf );
+    EX_MEMBER_SERIALIZE ( angf, m_angf );
+    EX_MEMBER_SERIALIZE ( color3f, m_color3f );
+    EX_MEMBER_SERIALIZE ( color3u, m_color3u );
+    EX_MEMBER_SERIALIZE ( color4f, m_color4f );
+    EX_MEMBER_SERIALIZE ( color4u, m_color4u );
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(simple_t)
@@ -136,8 +136,8 @@ EX_DEF_PROPS_BEGIN(complex_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(complex_t)
-    EX_SERIALIZE_ARRAY ( vec3f, m_vec3f_list);
-    EX_SERIALIZE_MAP ( strid, float, m_strid_to_float);
+    EX_MEMBER_SERIALIZE_ARRAY ( vec3f, m_vec3f_list);
+    EX_MEMBER_SERIALIZE_MAP ( strid, float, m_strid_to_float);
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(complex_t)

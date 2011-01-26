@@ -40,12 +40,12 @@ EX_DEF_PROPS_BEGIN(ex_trans2d_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_trans2d_t)
-    EX_SERIALIZE( vec2f, pos )
-    EX_SERIALIZE( angf, ang )
-    EX_SERIALIZE( vec2f, scale )
+    EX_MEMBER_SERIALIZE( vec2f, pos )
+    EX_MEMBER_SERIALIZE( angf, ang )
+    EX_MEMBER_SERIALIZE( vec2f, scale )
     // TODO { 
-    // EX_SERIALIZE( reference, parent )
-    // EX_SERIALIZE_ARRAY( reference, children )
+    // EX_MEMBER_SERIALIZE( reference, parent )
+    // EX_MEMBER_SERIALIZE_ARRAY( reference, children )
     // } TODO end 
 EX_SERIALIZE_END
 
@@ -81,7 +81,8 @@ void ex_trans2d_init ( void *_self ) {
 void ex_trans2d_deinit ( void *_self ) {
     ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
 
-    ex_array_free(trans2d->children);
+    if ( trans2d->children )
+        ex_array_free(trans2d->children);
     ex_component_deinit(_self); // parent deinint
 }
 

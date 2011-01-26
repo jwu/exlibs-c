@@ -47,11 +47,11 @@ EX_DEF_PROPS_BEGIN(ex_camera_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_camera_t)
-    EX_SERIALIZE( bool, isOrtho )
-    EX_SERIALIZE( float, orthoSize )
-    EX_SERIALIZE( float, aspect )
-    EX_SERIALIZE( uint32, clearFlags )
-    EX_SERIALIZE( color3f, bgColor )
+    EX_MEMBER_SERIALIZE( bool, isOrtho )
+    EX_MEMBER_SERIALIZE( float, orthoSize )
+    EX_MEMBER_SERIALIZE( float, aspect )
+    EX_MEMBER_SERIALIZE( uint32, clearFlags )
+    EX_MEMBER_SERIALIZE( color3f, bgColor )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_camera_t)

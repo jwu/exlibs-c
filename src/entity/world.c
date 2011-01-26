@@ -18,6 +18,49 @@
 #include "camera.h"
 
 ///////////////////////////////////////////////////////////////////////////////
+// class define
+///////////////////////////////////////////////////////////////////////////////
+
+EX_DEF_CLASS_BEGIN(ex_world_t)
+    EX_STRID_NULL, // name
+    NULL, // entities
+    NULL, // cameras
+    NULL, // mainCamera
+EX_DEF_CLASS_END
+
+EX_DEF_PROPS_BEGIN(ex_world_t)
+    EX_PROP( ex_world_t, name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
+EX_DEF_PROPS_END
+
+EX_SERIALIZE_BEGIN(ex_world_t)
+    int num_entities = 0;
+
+    EX_MEMBER_SERIALIZE( strid, name )
+    num_entities = self->entities->count;
+    EX_SERIALIZE( _stream, int, "num_entities", &num_entities  )
+
+    if ( _stream->type == EX_STREAM_READ ) {
+        ex_entity_t *ent = NULL;
+        for ( int i = 0; i < num_entities; ++i ) {
+            ent = ex_create_ex_entity_t();
+            ex_entity_init(ent);
+            ent->world = self;
+            ex_array_append( self->entities, &ent );
+            EX_SERIALIZE( _stream, ex_entity_t, "entity", ent );
+        }
+    }
+    else if ( _stream->type == EX_STREAM_WRITE ) {
+        ex_array_each ( self->entities, ex_entity_t *, ent ) {
+            EX_SERIALIZE( _stream, ex_entity_t, "entity", ent );
+        } ex_array_each_end
+    }  
+EX_SERIALIZE_END
+
+EX_DEF_TOSTRING_BEGIN(ex_world_t)
+    EX_MEMBER_TOSTRING ( strid, "name", self->name )
+EX_DEF_TOSTRING_END
+
+///////////////////////////////////////////////////////////////////////////////
 // internal defines
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -42,26 +85,22 @@ static void __debug_draw ( ex_world_t *_world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_world_t *ex_world_alloc () {
-    ex_world_t *world = (ex_world_t *)ex_malloc(sizeof(ex_world_t));
-    world->entities = ex_array_notype( sizeof(void *), 8 );
-    world->cameras = ex_array_notype( sizeof(void *), 8 );
-    
-    world->mainCamera = NULL;
-    return world;
+void ex_world_init ( ex_world_t *_world ) {
+    _world->entities = ex_array_notype( sizeof(void *), 8 );
+    _world->cameras = ex_array_notype( sizeof(void *), 8 );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_free ( ex_world_t *_world ) {
+void ex_world_deinit ( ex_world_t *_world ) {
     ex_array_each ( _world->entities, ex_entity_t *, ent ) {
-        ex_entity_free(ent);
+        ex_entity_deinit(ent);
+        ex_free(ent);
     } ex_array_each_end;
     ex_array_free ( _world->entities );
     ex_array_free ( _world->cameras );
-    ex_free ( _world );
 }
 
 // ------------------------------------------------------------------ 
@@ -69,9 +108,12 @@ void ex_world_free ( ex_world_t *_world ) {
 // ------------------------------------------------------------------ 
 
 ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name ) {
-    ex_entity_t *ent = ex_entity_alloc();
+    ex_entity_t *ent = ex_create_ex_entity_t();
+    ex_entity_init(ent);
+
     ent->name = _name;
     ent->world = _world;
+
     ex_array_append( _world->entities, &ent );
 
     return ent;
