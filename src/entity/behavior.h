@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : component.h
+// File         : behavior.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:25:33 PM | Thursday,November
+// Last Change  : 01/27/2011 | 11:48:41 AM | Thursday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef COMPONENT_H_1290677135
-#define COMPONENT_H_1290677135
+#ifndef BEHAVIOR_H_1296100122
+#define BEHAVIOR_H_1296100122
 // #################################################################################
 
 // ######################### 
@@ -16,35 +16,37 @@ extern "C" {
 #endif
 // ######################### 
 
+#include "component.h"
+
 ///////////////////////////////////////////////////////////////////////////////
-// struct
+// macros
 ///////////////////////////////////////////////////////////////////////////////
+
+#define EX_BEHAVIOR_STATE_NEW      1
+#define EX_BEHAVIOR_STATE_STARTED  2
+#define EX_BEHAVIOR_STATE_DEAD     3
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct ex_component_t
+ @struct ex_behavior_t
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_BEGIN(ex_component_t)
-    struct ex_entity_t *owner;
-    bool active;
+EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
+    int state;
 
-    // override functions
-    void (*init) ( void *_self ); // invoked after the component created
-    void (*deinit) ( void *_self ); // invoked before the component destroyed
-EX_DECL_CLASS_END(ex_component_t)
+    // invoked in ex_world_start start
+    void (*level_start) ( void *_self );
 
-///////////////////////////////////////////////////////////////////////////////
-// functions
-///////////////////////////////////////////////////////////////////////////////
+    // invoked at the next frame's update after the component added to the entity. 
+    void (*start) ( void *_self );
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+    // invoked in ex_world_update if the behavior is stated.
+    void (*update) ( void *_self );
 
-extern void ex_component_init ( void *_self ); 
-extern void ex_component_deinit ( void *_self ); 
+    // invoked in ex_world_update after animation, phsyics update if the behavior is started.
+    void (*post_update) ( void *_self );
+EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
 
 // ######################### 
 #ifdef __cplusplus
@@ -54,7 +56,7 @@ extern void ex_component_deinit ( void *_self );
 
 
 // #################################################################################
-#endif // END COMPONENT_H_1290677135
+#endif // END BEHAVIOR_H_1296100122
 // #################################################################################
 
 

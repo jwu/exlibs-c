@@ -20,12 +20,10 @@
 
 EX_DEF_CLASS_BEGIN(ex_debug2d_t)
     // ex_component_t
-    NULL,
-    ex_debug2d_init,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    NULL, // owner
+    true, // active
+    ex_debug2d_init, // init
+    NULL, // deinit
 
     // ex_debug2d_t
     EX_DEBUG_SHAPE_RECT, // shapeType
@@ -101,7 +99,7 @@ void ex_debug2d_set_rect ( ex_debug2d_t *_self,
 // ------------------------------------------------------------------ 
 
 void ex_debug2d_draw ( ex_debug2d_t *_self ) {
-    ex_entity_t *ent = ex_component_owner( (ex_component_t *)_self );
+    ex_entity_t *ent = ((ex_component_t *)_self)->owner;
     ex_trans2d_t *trans2d = ent->trans2d;
     ex_vec2f_t worldPos;
     ex_vec2f_t worldScale;

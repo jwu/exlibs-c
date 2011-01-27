@@ -22,11 +22,9 @@
 EX_DEF_CLASS_BEGIN(ex_camera_t)
     // ex_component_t
     NULL,               // owner
+    true,               // active
     ex_camera_init,     // init
     ex_camera_deinit,   // deinit
-    NULL,               // start
-    NULL,               // update
-    NULL,               // post_update
 
     // ex_camera_t
     false, // isOrtho

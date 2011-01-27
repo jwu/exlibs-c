@@ -102,6 +102,7 @@ static void initGame () {
     EX_SERIALIZE( stream, ex_world_t, "world", world );
     ex_destroy_json_stream((ex_stream_json_t *)stream);
 #endif
+    ex_world_start(world);
 }
 
 // ------------------------------------------------------------------ 

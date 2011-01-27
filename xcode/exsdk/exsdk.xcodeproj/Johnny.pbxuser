@@ -5,7 +5,7 @@
 		activeExecutable = B245482912B91E9900EF7261 /* test_gl */;
 		activeTarget = B245482712B91E9900EF7261 /* test_gl */;
 		addToTargets = (
-			B2DD23E912A7C7CE0053CA3F /* test_base */,
+			D2AAC045055464E500DB518D /* exsdk */,
 		);
 		breakpoints = (
 		);

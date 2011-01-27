@@ -20,22 +20,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_component_t)
-    NULL,   // owner
+    NULL, // owner
+    true, // active
 
-    NULL,   // init
-    NULL,   // deinit
-    NULL,   // start
-    NULL,   // update
-    NULL,   // post_update
+    NULL, // init
+    NULL, // deinit
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_component_t)
+    EX_PROP( ex_component_t, active, "active",  EX_PROP_ATTR_HIDE, ex_prop_set_raw_bool, ex_prop_get_raw_bool )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_component_t)
+    EX_MEMBER_SERIALIZE( bool, active )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_component_t)
+    EX_MEMBER_TOSTRING ( bool, "active", self->active )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -55,11 +56,3 @@ void ex_component_init ( void *_self ) {
 
 void ex_component_deinit ( void *_self ) {
 }
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_entity_t *ex_component_owner ( const ex_component_t *_self ) {
-    return _self->owner; 
-} 

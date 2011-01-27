@@ -3,7 +3,7 @@
         "name": { "strid": "" },
         "num_entities": { "int": 11 },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 16810543960692 },
+            "uid": { "uid": 16814845047667 },
             "name": { "strid": "main_camera" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
@@ -22,14 +22,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 16810543960693 },
+            "uid": { "uid": 298289821758323 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [184.275513, 203.021606] },
-                "ang": { "angf": 3.711036 },
-                "scale": { "vec2f": [0.555875, 0.897457] }
+                "pos": { "vec2f": [193.286255, 241.339539] },
+                "ang": { "angf": 0.792453 },
+                "scale": { "vec2f": [0.494682, 0.202029] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -40,14 +40,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 298285520671349 },
+            "uid": { "uid": 579764798468979 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [13.678558, 171.738770] },
-                "ang": { "angf": 6.082822 },
-                "scale": { "vec2f": [0.752304, 0.869147] }
+                "pos": { "vec2f": [-55.880463, 195.915039] },
+                "ang": { "angf": 1.813543 },
+                "scale": { "vec2f": [0.046307, 0.521214] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -58,14 +58,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 579760497382005 },
+            "uid": { "uid": 861239775179635 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [281.857056, -364.640808] },
-                "ang": { "angf": 5.142628 },
-                "scale": { "vec2f": [0.346630, 0.964381] }
+                "pos": { "vec2f": [144.414734, -338.469421] },
+                "ang": { "angf": 0.023129 },
+                "scale": { "vec2f": [0.927947, 0.472299] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -76,14 +76,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 861235474092661 },
+            "uid": { "uid": 1142714751890291 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-71.813690, -317.824219] },
-                "ang": { "angf": 5.263735 },
-                "scale": { "vec2f": [0.390780, 0.784161] }
+                "pos": { "vec2f": [275.570801, 294.322327] },
+                "ang": { "angf": 5.731791 },
+                "scale": { "vec2f": [0.894563, 0.897060] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -94,14 +94,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1142710450803317 },
+            "uid": { "uid": 1424189728600947 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-103.389130, -357.285858] },
-                "ang": { "angf": 0.083128 },
-                "scale": { "vec2f": [0.215982, 0.423943] }
+                "pos": { "vec2f": [-64.189392, -345.954926] },
+                "ang": { "angf": 3.484656 },
+                "scale": { "vec2f": [0.487330, 0.960998] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -112,14 +112,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1424185427513973 },
+            "uid": { "uid": 1705664705311603 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [177.772217, -110.752808] },
-                "ang": { "angf": 0.247330 },
-                "scale": { "vec2f": [0.622838, 0.272959] }
+                "pos": { "vec2f": [37.877411, -267.457733] },
+                "ang": { "angf": 2.047073 },
+                "scale": { "vec2f": [0.538902, 0.257008] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -130,14 +130,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1705660404224629 },
+            "uid": { "uid": 1987139682022259 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-275.366394, 69.954437] },
-                "ang": { "angf": 5.926931 },
-                "scale": { "vec2f": [0.474501, 0.396173] }
+                "pos": { "vec2f": [246.235901, 200.740540] },
+                "ang": { "angf": 4.803081 },
+                "scale": { "vec2f": [0.957325, 0.608494] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -148,14 +148,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1987135380935285 },
+            "uid": { "uid": 2268614658732915 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-99.206757, -360.950745] },
-                "ang": { "angf": 2.981278 },
-                "scale": { "vec2f": [0.307341, 0.290255] }
+                "pos": { "vec2f": [-300.778381, 273.820374] },
+                "ang": { "angf": 2.181207 },
+                "scale": { "vec2f": [0.456140, 0.522429] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -166,14 +166,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2268610357645941 },
+            "uid": { "uid": 2550089635443571 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [70.120422, 136.566284] },
-                "ang": { "angf": 0.153697 },
-                "scale": { "vec2f": [0.506160, 0.642619] }
+                "pos": { "vec2f": [236.321716, 38.950195] },
+                "ang": { "angf": 1.998927 },
+                "scale": { "vec2f": [0.043870, 0.324272] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -184,14 +184,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2550085334356597 },
+            "uid": { "uid": 2831564612154227 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-314.619873, -299.179779] },
-                "ang": { "angf": 0.958776 },
-                "scale": { "vec2f": [0.748804, 0.729562] }
+                "pos": { "vec2f": [168.959961, 370.903137] },
+                "ang": { "angf": 6.222845 },
+                "scale": { "vec2f": [0.733801, 0.137189] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {

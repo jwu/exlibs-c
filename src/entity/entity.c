@@ -14,6 +14,7 @@
 
 #include "trans2d.h"
 #include "camera.h"
+#include "behavior.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
@@ -140,4 +141,56 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
     }
 
     return comp;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_entity_level_start ( ex_entity_t *_ent ) {
+    ex_behavior_t *be;
+    ex_array_each ( _ent->comps, ex_component_t *, comp ) {
+        if ( ex_childof(ex_behavior_t,comp) ) {
+            be = (ex_behavior_t *)comp; 
+            if ( be->level_start )
+                be->level_start(be);
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_entity_update ( ex_entity_t *_ent ) {
+    ex_behavior_t *be;
+    ex_array_each ( _ent->comps, ex_component_t *, comp ) {
+        if ( ex_childof(ex_behavior_t,comp) ) {
+            be = (ex_behavior_t *)comp; 
+            if ( be->state == EX_BEHAVIOR_STATE_NEW ) {
+                if ( be->start )
+                    be->start(be);
+                be->state = EX_BEHAVIOR_STATE_STARTED;
+            }
+            else {
+                if ( be->update ) 
+                    be->update(be);
+            }
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_entity_post_update ( ex_entity_t *_ent ) {
+    ex_behavior_t *be;
+    ex_array_each ( _ent->comps, ex_component_t *, comp ) {
+        if ( ex_childof(ex_behavior_t,comp) ) {
+            be = (ex_behavior_t *)comp; 
+            if ( be->post_update )
+                be->post_update(be);
+        }
+    } ex_array_each_end
 }

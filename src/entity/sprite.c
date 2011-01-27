@@ -19,11 +19,9 @@
 EX_DEF_CLASS_BEGIN(ex_sprite_t)
     // ex_component_t
     NULL,               // owner
+    true,               // active
     ex_sprite_init,     // init
     ex_sprite_deinit,   // deinit
-    NULL,               // start
-    NULL,               // update
-    NULL,               // post_update
 
     // ex_sprite_t
 EX_DEF_CLASS_END

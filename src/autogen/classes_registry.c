@@ -13,11 +13,13 @@
 
 // TEMP: should be in one header file { 
 #include "../entity/entity.h"
-#include "../entity/component.h"
-#include "../entity/trans2d.h"
-#include "../entity/debug2d.h"
-#include "../entity/camera.h"
 #include "../entity/world.h"
+
+#include "../entity/component.h"
+    #include "../entity/trans2d.h"
+    #include "../entity/camera.h"
+    #include "../entity/behavior.h"
+    #include "../entity/debug2d.h"
 // } TEMP end 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -28,12 +30,13 @@ void ex_register_classes () {
     // ex core
     EX_REGISTER_CLASS(ex_class_t); // the very base class for any other classes
 
-    // ex engine
-    EX_REGISTER_CLASS(ex_world_t);
-    EX_REGISTER_CLASS(ex_entity_t);
-    EX_REGISTER_CLASS(ex_component_t);
-    EX_REGISTER_CLASS(ex_trans2d_t);
-    EX_REGISTER_CLASS(ex_debug2d_t);
-    EX_REGISTER_CLASS(ex_camera_t);
+        // ex engine
+        EX_REGISTER_CLASS(ex_world_t);
+        EX_REGISTER_CLASS(ex_entity_t);
+        EX_REGISTER_CLASS(ex_component_t);
+            EX_REGISTER_CLASS(ex_trans2d_t);
+            EX_REGISTER_CLASS(ex_camera_t);
+            EX_REGISTER_CLASS(ex_behavior_t);
+            EX_REGISTER_CLASS(ex_debug2d_t);
 }
 

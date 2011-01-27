@@ -19,11 +19,9 @@
 EX_DEF_CLASS_BEGIN(ex_trans2d_t)
     // ex_component_t
     NULL,               // owner
+    true,               // active
     ex_trans2d_init,    // init
     ex_trans2d_deinit,  // deinit
-    NULL,               // start
-    NULL,               // update
-    NULL,               // post_update
 
     // ex_trans2d_t
     0.0f, 0.0f, // pos 

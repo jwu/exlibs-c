@@ -62,6 +62,14 @@ extern ex_component_t *ex_entity_get_comp ( const ex_entity_t *_ent, strid_t _ty
 
 extern ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID );
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_entity_level_start ( ex_entity_t *_ent );
+extern void ex_entity_update ( ex_entity_t *_ent );
+extern void ex_entity_post_update ( ex_entity_t *_ent );
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

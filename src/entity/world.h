@@ -16,12 +16,17 @@ extern "C" {
 #endif
 // ######################### 
 
+#define EX_WORLD_STATE_STOPPED 1
+#define EX_WORLD_STATE_RUNNING 2
+#define EX_WORLD_STATE_PAUSED  3
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DECL_CLASS_BEGIN(ex_world_t)
     strid_t name;
+    int state;
     ex_array_t *entities;
     ex_array_t *cameras;
     struct ex_camera_t *mainCamera;
@@ -61,6 +66,15 @@ extern struct ex_camera_t *ex_world_main_camera ( ex_world_t *_world );
 
 extern void ex_world_update ( ex_world_t *_world );
 extern void ex_world_render ( ex_world_t *_world );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_world_start ( ex_world_t *_world );
+extern void ex_world_stop ( ex_world_t *_world );
+extern void ex_world_pause ( ex_world_t *_world );
+extern void ex_world_resume ( ex_world_t *_world );
 
 // ######################### 
 #ifdef __cplusplus

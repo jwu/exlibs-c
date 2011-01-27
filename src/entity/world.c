@@ -23,6 +23,7 @@
 
 EX_DEF_CLASS_BEGIN(ex_world_t)
     EX_STRID_NULL, // name
+    EX_WORLD_STATE_STOPPED, // state
     NULL, // entities
     NULL, // cameras
     NULL, // mainCamera
@@ -193,14 +194,30 @@ extern void __eng_time_tick ();
 // ------------------------------------------------------------------ 
 
 void ex_world_update ( ex_world_t *_world ) {
+    // the world is stopped, don't do anything, even the timer tick
+    if ( _world->state == EX_WORLD_STATE_STOPPED )
+        return;
+
     __eng_time_tick ();
 
-    // TODO { 
-    // __handle_input();
-    // __update_ai(_world); // including scripts (or we call behaviors)
-    // __update_animation(_world);
-    // __update_physics(_world);
-    // } TODO end 
+    // the world is paused, only timer ticks 
+    if ( _world->state == EX_WORLD_STATE_PAUSED )
+        return;
+
+    // TODO: __handle_input();
+
+    // update behavior
+    ex_array_each ( _world->entities, ex_entity_t *, ent ) {
+        ex_entity_update( ent );
+    } ex_array_each_end
+
+    // TODO: __update_animation(_world);
+    // TODO: __update_physics(_world);
+
+    // post-update behavior
+    ex_array_each ( _world->entities, ex_entity_t *, ent ) {
+        ex_entity_post_update( ent );
+    } ex_array_each_end
 }
 
 // ------------------------------------------------------------------ 
@@ -210,10 +227,54 @@ void ex_world_update ( ex_world_t *_world ) {
 void ex_world_render ( ex_world_t *_world ) {
     ex_array_each ( _world->cameras, ex_camera_t *, cam ) {
         ex_camera_apply (cam);
-
-        // TODO { 
-        // __render_scene(_world);
-        // } TODO end 
+        // TODO: __render_scene(_world);
         __debug_draw(_world);
     } ex_array_each_end;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_start ( ex_world_t *_world ) {
+    if ( _world->state != EX_WORLD_STATE_STOPPED )
+        return;
+
+    // start all behavior
+    ex_array_each ( _world->entities, ex_entity_t *, ent ) {
+        ex_entity_level_start( ent );
+    } ex_array_each_end
+
+    //
+    _world->state = EX_WORLD_STATE_RUNNING;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_stop ( ex_world_t *_world ) {
+    if ( _world->state == EX_WORLD_STATE_STOPPED )
+        return;
+    _world->state = EX_WORLD_STATE_STOPPED;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_pause ( ex_world_t *_world ) {
+    if ( _world->state != EX_WORLD_STATE_RUNNING )
+        return;
+    _world->state = EX_WORLD_STATE_PAUSED;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_resume ( ex_world_t *_world ) {
+    if ( _world->state != EX_WORLD_STATE_PAUSED )
+        return;
+    _world->state = EX_WORLD_STATE_RUNNING;
 }
