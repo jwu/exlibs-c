@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -267,6 +265,7 @@
 							<array>
 								<string>08FB7794FE84155DC02AAC07</string>
 								<string>B2DD23F012A7C81B0053CA3F</string>
+								<string>B245482E12B91EF300EF7261</string>
 								<string>B2DD23F112A7C86E0053CA3F</string>
 								<string>B245483712B91F9E00EF7261</string>
 								<string>1C37FBAC04509CD000000102</string>
@@ -274,7 +273,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
+									<integer>4</integer>
+									<integer>2</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -310,12 +310,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>exsdk.c</string>
+								<string>simple_behavior.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -323,11 +325,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>exsdk.c</string>
+										<string>simple_behavior.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2D8CA8112F11F3500584C38</string>
+										<string>B2D8CB0912F14FF300584C38</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -411,19 +413,13 @@
 											<string>B259250F12EA8C7600B49C04</string>
 											<string>B259251112EA8C7600B49C04</string>
 											<string>B259251212EA8C7600B49C04</string>
-											<string>B259251512EA8C7600B49C04</string>
 											<string>B259251612EA8C7600B49C04</string>
 											<string>B259251712EA8C7600B49C04</string>
-											<string>B259256512EAB1E000B49C04</string>
 											<string>B259256812EAB1E000B49C04</string>
-											<string>B259258F12EADE4E00B49C04</string>
-											<string>B259259012EADE4E00B49C04</string>
-											<string>B25925A312EAE25400B49C04</string>
 											<string>B24EC48212EBD4DD0070C3F8</string>
 											<string>B24EC48312EBD4DD0070C3F8</string>
 											<string>B29D821212ED0F6500AF7E1B</string>
 											<string>B29D82DD12ED44DE00AF7E1B</string>
-											<string>B29D835912EDD1A000AF7E1B</string>
 											<string>B29D839312EDF7D500AF7E1B</string>
 											<string>B29D839412EDF7D500AF7E1B</string>
 											<string>B29D839512EDF7D500AF7E1B</string>
@@ -442,7 +438,16 @@
 											<string>B2D8CA0012F0FDDA00584C38</string>
 											<string>B2D8CA7F12F11F3500584C38</string>
 											<string>B2D8CA8012F11F3500584C38</string>
-											<string>B24EC48012EBD4DD0070C3F8</string>
+											<string>B2D8CAEB12F14E8400584C38</string>
+											<string>B2D8CAEC12F14E8400584C38</string>
+											<string>B2D8CAED12F14E8400584C38</string>
+											<string>B2D8CAEE12F14E8400584C38</string>
+											<string>B2D8CAEF12F14E8400584C38</string>
+											<string>B2D8CAF012F14E8400584C38</string>
+											<string>B2D8CAF112F14E8400584C38</string>
+											<string>B2D8CAF212F14E8400584C38</string>
+											<string>B2D8CAF312F14E8400584C38</string>
+											<string>B2D8CAF412F14E8400584C38</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -640,12 +645,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>B2D8CB0A12F14FF300584C38</string>
 		<string>B2D8CA0D12F0FDDA00584C38</string>
 		<string>B2D8CA0E12F0FDDA00584C38</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>1613 -212 1252 723 1280 -400 1920 1200 </string>
@@ -671,7 +677,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>hashmap.h</string>
+								<string>simple_behavior.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

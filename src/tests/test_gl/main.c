@@ -20,6 +20,8 @@
 #include "../../entity/debug2d.h"
 #include "../../entity/camera.h"
 
+#include "simple_behavior.h"
+
 #if (EX_PLATFORM == EX_MACOSX)
 	#include "OpenGL/gl.h"
 	#include "OpenGL/glu.h"
@@ -65,10 +67,14 @@ ex_entity_t *entity1 = NULL;
 static void initGame () {
     char path[maxPATH];
     ex_stream_t *stream;
+
+    // register game classes
+    EX_REGISTER_CLASS(ex_simple_t);
+
+    // load/setup the world
     world = ex_create_ex_world_t();
     ex_world_init (world);
-
-#if 1
+#if 0
     {
         ex_camera_t *mainCam;
         ex_world_create_camera2d ( world, ex_strid("main_camera") );
@@ -80,14 +86,24 @@ static void initGame () {
     }
 
     // TEMP: instead of serialize the world, I hardcoded the entities.
-    for ( int i = 0; i < 10; ++i ) {
+    for ( int i = 0; i < 1000; ++i ) {
         entity1 = ex_world_create_entity ( world, ex_strid("ent1") ); {
+            // trans2d
             ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_trans2d_t) );
             ex_vec2f_set ( &trans2d->pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
             ex_vec2f_set ( &trans2d->scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
             ex_angf_set_by_radians ( &trans2d->ang, ex_range_randf(0.0f,EX_TWO_PI) );
+
+            // dbg2d
             ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_debug2d_t) );
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
+
+            // simple
+            ex_simple_t *simple = (ex_simple_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_simple_t) );
+            ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
+            ex_vec2f_normalize(&simple->move_dir);
+            simple->move_speed = ex_range_randf(1.0f,10.0f);
+            simple->rot_speed = ex_range_randf(10.0f,100.0f);
         }
     }
 
@@ -102,7 +118,9 @@ static void initGame () {
     EX_SERIALIZE( stream, ex_world_t, "world", world );
     ex_destroy_json_stream((ex_stream_json_t *)stream);
 #endif
-    ex_world_start(world);
+
+    // run the world
+    ex_world_run(world);
 }
 
 // ------------------------------------------------------------------ 
@@ -110,6 +128,7 @@ static void initGame () {
 // ------------------------------------------------------------------ 
 
 static void quitGame () {
+    ex_world_stop(world);
     ex_world_deinit(world);
     ex_free(world);
 }
@@ -142,7 +161,7 @@ static void updateGame () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _reshape ( int _width, int _height ) {
+static void __reshape ( int _width, int _height ) {
     win_width = _width;
     win_height = _height;
     ex_camera_t *mainCam = ex_world_main_camera (world);
@@ -161,7 +180,7 @@ static void _reshape ( int _width, int _height ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _idle() {
+static void __idle() {
     updateGame();
 	glutPostRedisplay();
 }
@@ -170,7 +189,7 @@ static void _idle() {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _display() {
+static void __display() {
     // DISABLE { 
     // cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
 
@@ -215,7 +234,7 @@ static void _display() {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _keyboard ( unsigned char _key, int _x, int _y ) {
+static void __keyboard ( unsigned char _key, int _x, int _y ) {
     if ( _key == EX_KEY_ESC ) {
         exit(0);
     }
@@ -226,7 +245,7 @@ static void _keyboard ( unsigned char _key, int _x, int _y ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _mouse ( int _x, int _y ) {
+static void __mouse ( int _x, int _y ) {
     // TODO:
     // mousePoint = mouseToSpace(x, y);
 }
@@ -235,7 +254,7 @@ static void _mouse ( int _x, int _y ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void _click ( int _button, int _state, int _x, int _y ) {
+static void __click ( int _button, int _state, int _x, int _y ) {
     // if(button == GLUT_LEFT_BUTTON){
     //     if(state == GLUT_DOWN){
     //         cpVect point = mouseToSpace(x, y);
@@ -291,22 +310,22 @@ static void initGL () {
 // ------------------------------------------------------------------ 
 
 static void registerFuncs () {
-	glutReshapeFunc(_reshape);
-	glutDisplayFunc(_display);
-    glutIdleFunc(_idle);
+	glutReshapeFunc(__reshape);
+	glutDisplayFunc(__display);
+    glutIdleFunc(__idle);
 
     // DISABLE { 
     // glutTimerFunc(SLEEP_TICKS, timercall, 0);
     // } DISABLE end 
 
 	glutIgnoreKeyRepeat(1);
-	glutKeyboardFunc(_keyboard);
+	glutKeyboardFunc(__keyboard);
     // glutSpecialFunc(arrowKeyDownFunc);
     // glutSpecialUpFunc(arrowKeyUpFunc);
 
-	glutMotionFunc(_mouse);
-	glutPassiveMotionFunc(_mouse);
-	glutMouseFunc(_click);
+	glutMotionFunc(__mouse);
+	glutPassiveMotionFunc(__mouse);
+	glutMouseFunc(__click);
 }
 
 // ------------------------------------------------------------------ 

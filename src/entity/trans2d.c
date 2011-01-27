@@ -24,9 +24,9 @@ EX_DEF_CLASS_BEGIN(ex_trans2d_t)
     ex_trans2d_deinit,  // deinit
 
     // ex_trans2d_t
-    0.0f, 0.0f, // pos 
-    1.0f, // ang
-    1.0f, 1.0f, // scale 
+    EX_VEC2F_ZERO, // pos 
+    EX_ANGF_ZERO,  // ang
+    EX_VEC2F_ONE,  // scale 
     NULL, // parent
     NULL, // children
 EX_DEF_CLASS_END
@@ -62,14 +62,8 @@ EX_DEF_TOSTRING_END
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_init ( void *_self ) {
-    ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
-
+    // ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
     ex_component_init(_self); // parent init
-    trans2d->pos = ex_vec2f_zero;
-    trans2d->ang = ex_angf_zero;
-    trans2d->scale = ex_vec2f_one;
-    trans2d->parent = NULL;
-    trans2d->children = NULL;
 }
 
 // ------------------------------------------------------------------ 

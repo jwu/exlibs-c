@@ -71,7 +71,7 @@ extern void ex_world_render ( ex_world_t *_world );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_world_start ( ex_world_t *_world );
+extern void ex_world_run ( ex_world_t *_world );
 extern void ex_world_stop ( ex_world_t *_world );
 extern void ex_world_pause ( ex_world_t *_world );
 extern void ex_world_resume ( ex_world_t *_world );

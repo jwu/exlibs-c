@@ -236,7 +236,7 @@ void ex_world_render ( ex_world_t *_world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_start ( ex_world_t *_world ) {
+void ex_world_run ( ex_world_t *_world ) {
     if ( _world->state != EX_WORLD_STATE_STOPPED )
         return;
 

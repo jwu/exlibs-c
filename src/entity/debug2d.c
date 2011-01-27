@@ -37,9 +37,9 @@ EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_debug2d_t)
     EX_MEMBER_SERIALIZE( int, shapeType )
-    EX_SERIALIZE( _stream, int, "rect_center", &(self->rect.center) )
-    EX_SERIALIZE( _stream, int, "rect_width", &(self->rect.width) )
-    EX_SERIALIZE( _stream, int, "rect_height", &(self->rect.height) )
+    EX_SERIALIZE( _stream, vec2f, "rect_center", &(self->rect.center) )
+    EX_SERIALIZE( _stream, float, "rect_width", &(self->rect.width) )
+    EX_SERIALIZE( _stream, float, "rect_height", &(self->rect.height) )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_debug2d_t)
