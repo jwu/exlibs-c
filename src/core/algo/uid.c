@@ -59,7 +59,7 @@ ex_uid_t ex_generate_uid () {
     struct timeval now_ms;
     gettimeofday(&now_ms, NULL);
 
-    cur_date = ex_date_from( now_ts->tm_year, now_ts->tm_mon, now_ts->tm_mday );
+    cur_date = ex_date_from( 1900+now_ts->tm_year, now_ts->tm_mon+1, now_ts->tm_mday );
     cur_dtime = ex_dtime_from( now_ts->tm_hour, now_ts->tm_min, now_ts->tm_sec, now_ms.tv_usec/1000 );
 #endif
 

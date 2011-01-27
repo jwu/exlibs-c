@@ -46,6 +46,7 @@ extern void test_string();
 extern void test_stringID();
 extern void test_thread();
 extern void test_timer();
+extern void test_uid();
 // ------------------------------------------------------------------ 
 
 int main( int argc, char *argv[] )
@@ -65,7 +66,7 @@ int main( int argc, char *argv[] )
         // test_btree ();
         // test_cstr ();
         // test_encoding ();
-        test_hashmap ();
+        // test_hashmap ();
         // test_list ();
         // test_memmng ();
         // test_pool ();
@@ -75,6 +76,7 @@ int main( int argc, char *argv[] )
         // test_stringID ();
         // test_thread();
         // test_timer();
+        test_uid();
 
         // special
         // test_rapid ();

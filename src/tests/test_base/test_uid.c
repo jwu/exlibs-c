@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : test_rapid.c
+// File         : test_uid.c
 // Author       : Wu Jie 
-// Last Change  : 07/01/2010 | 09:56:53 AM | Thursday,July
+// Last Change  : 01/27/2011 | 10:01:13 AM | Thursday,January
 // Description  : 
 // ======================================================================================
 
@@ -19,7 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_rapid () {
+void test_uid () {
     static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
     ex_text_file_t *txtFile;
     char path[1024];

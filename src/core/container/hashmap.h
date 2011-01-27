@@ -298,6 +298,7 @@ static inline uint32 ex_hashkey_cstr ( const void *_val ) { return ex_hashstr( *
 // DISABLE can use ex_hashkey_string instead: static inline uint32 hashkey_wstring ( void *_val ) { return ex_hashstr_w( *((wchar_t **)_val) ); }
 static inline uint32 ex_hashkey_strid ( const void *_val ) { return *((const strid_t *)_val); }
 static inline uint32 ex_hashkey_uint32 ( const void *_val ) { return *((const uint32 *)_val); }
+static inline uint32 ex_hashkey_uint64 ( const void *_val ) { return (uint32)(*((const uint64 *)_val)); }
 static inline uint32 ex_hashkey_ptr ( const void *_val ) { return (uint32)((size_t)(*(const void **)_val) >> 4); }
 
 // ------------------------------------------------------------------ 
@@ -308,6 +309,7 @@ static inline int ex_keycmp_cstr ( const void *_lhs, const void *_rhs ) { return
 // DISABLE can use ex_keycmp_string instead: static inline int keycmp_wstring ( void *_lhs, void *_rhs ) { return wcscmp ( *((wchar_t **)_lhs), *((wchar_t **)_rhs) ); }
 static inline int ex_keycmp_strid ( const void *_lhs, const void *_rhs ) { return *((const strid_t *)_lhs) - *((const strid_t *)_rhs); }
 static inline int ex_keycmp_uint32 ( const void *_lhs, const void *_rhs ) { return *((const uint32 *)_lhs) - *((const uint32 *)_rhs); }
+static inline int ex_keycmp_uint64 ( const void *_lhs, const void *_rhs ) { uint64 re = *((const uint64 *)_lhs) - *((const uint64 *)_rhs); return re > 0 ? 1 : (re == 0 ? 0 : -1); }
 static inline int ex_keycmp_ptr ( const void *_lhs, const void *_rhs ) { return (size_t)*((const void **)_lhs) - (size_t)*((const void **)_rhs); }
 
 // ######################### 
