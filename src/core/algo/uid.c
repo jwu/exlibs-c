@@ -82,7 +82,7 @@ ex_uid_t ex_generate_uid () {
     delta_ms = (int64)(cur_dtime - 0/*start_dtime*/);
     ts = (delta_day * __MSECS_PER_DAY + delta_ms) * 1000;
 
-    // TODO: 1byte for server ID. (0~255). which means we support maximum 255 nums of server.
+    // TODO: 1byte for server ID. (0~255). which means we support maximum 255 servers.
     serverID = 0;
     offset = __offset;
     days = (uint64)ex_timespan_total_days(ts); // get how many days.

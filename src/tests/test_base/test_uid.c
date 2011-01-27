@@ -37,12 +37,16 @@ void test_uid () {
 
     for ( int i = 0; i < 2000; ++i ) {
         uid = ex_generate_uid();
-        ex_string_cat_printf ( tmp, "%.16llX\n", uid );
+
+        // __ex_tostring_uid( tmp, &uid );
+        // ex_string_cat_printf ( tmp, "\n" );
+        ex_string_cat_printf ( tmp, "0x%.16llX\n", uid );
+
         ex_hashmap_insert ( map, &uid, &uid, &idx );
         ex_assert ( idx == i, 
                     "idx = %d, i = %d are not the same."
-                    "the uid is %.16llX," 
-                    "the last uid is %.16llX.", 
+                    "the uid is 0x%.16llX," 
+                    "the last uid is 0x%.16llX.", 
                     idx, i, uid, last_uid );
         last_uid = uid;
     }

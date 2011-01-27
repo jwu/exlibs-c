@@ -50,6 +50,13 @@ DEF_BUILTIN_TOSTRING(size_t) {
     snprintf ( buf, 1024, "%lu", *val );
     ex_string_ncat( _string, buf, strlen(buf) );
 }
+DEF_BUILTIN_TOSTRING(uid) {
+    char buf[1024];
+    ex_uid_t *val = (ex_uid_t *)_val;
+
+    snprintf ( buf, 1024, "0x%.16llX", *val );
+    ex_string_ncat( _string, buf, strlen(buf) );
+}
 
 DEF_BUILTIN_TOSTRING(int8) {
     char buf[1024];

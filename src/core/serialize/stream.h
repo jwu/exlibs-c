@@ -41,6 +41,7 @@ typedef struct ex_stream_t {
     void (*serialize_bool)      ( struct ex_stream_t *_stream, bool *_val );
     void (*serialize_int)       ( struct ex_stream_t *_stream, int *_val );
     void (*serialize_size_t)    ( struct ex_stream_t *_stream, size_t *_val );
+    void (*serialize_uid)       ( struct ex_stream_t *_stream, ex_uid_t *_val );
 
     void (*serialize_int8)      ( struct ex_stream_t *_stream, int8 *_val );
     void (*serialize_int16)     ( struct ex_stream_t *_stream, int16 *_val );

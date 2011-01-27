@@ -99,7 +99,7 @@ static int __yajl_boolean ( void *_ctx, int _bool ) {
     return 1;
 }
 
-// FIXME: it seems that uin64 will exceed the range.
+// NOTE: we use long, so for uint64, it will appear minus value in the file.
 static int __yajl_integer ( void *_ctx, long _integer ) {
     __context *ctx = (__context *)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
@@ -431,6 +431,21 @@ static void __read_size_t ( ex_stream_t *_stream, size_t *_val ) {
     node = stream->current;
 
     *_val = *(size_t *)node->val;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_uid ( ex_stream_t *_stream, ex_uid_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    *_val = *(ex_uid_t *)node->val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1005,6 +1020,22 @@ static void __write_size_t ( ex_stream_t *_stream, size_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __write_uid ( ex_stream_t *_stream, ex_uid_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)*_val;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __write_int8 ( ex_stream_t *_stream, int8 *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -1115,7 +1146,7 @@ static void __write_uint32 ( ex_stream_t *_stream, uint32 *_val ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// FIXME: it seems that uin64 will exceed the range.
+// NOTE: we use long, so for uint64, it will appear minus value in the file.
 // ------------------------------------------------------------------ 
 
 static void __write_uint64 ( ex_stream_t *_stream, uint64 *_val ) {
@@ -1699,6 +1730,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_bool,
         __read_int,
         __read_size_t,
+        __read_uid,
         __read_int8,
         __read_int16,
         __read_int32,
@@ -1831,6 +1863,7 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_bool,
         __write_int,
         __write_size_t,
+        __write_uid,
         __write_int8,
         __write_int16,
         __write_int32,

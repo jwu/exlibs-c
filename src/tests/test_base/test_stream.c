@@ -197,6 +197,16 @@ static void simple_read_write () {
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
 
     // serialize write s1, s2 to simple_write.json
+    s1->m_int8 = EX_INT8_MAX;
+    s1->m_int16 = EX_INT16_MAX;
+    s1->m_int32 = EX_INT32_MAX;
+    s1->m_int64 = EX_INT64_MAX;
+    s1->m_uint8 = EX_UINT8_MAX;
+    s1->m_uint16 = EX_UINT16_MAX;
+    s1->m_uint32 = EX_UINT32_MAX;
+    s1->m_uint64 = EX_UINT64_MAX;
+    s1->m_float = EX_FLOAT_MAX;
+    s1->m_double = EX_DOUBLE_MAX;
     stream_write = ex_create_json_write_stream();
     serialize_func(stream_write, ex_strid("simple_01"), s1 );
     serialize_func(stream_write, ex_strid("simple_02"), s2 );
