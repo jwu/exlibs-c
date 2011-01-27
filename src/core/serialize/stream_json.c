@@ -144,7 +144,7 @@ static int __yajl_map_key ( void *_ctx, const unsigned char *_text, unsigned int
 
     my_buf = buf;
     if ( _len+1 >= 128 ) {
-        my_buf = ex_malloc(sizeof(char)*_len+1); 
+        my_buf = ex_malloc (sizeof(char)*_len+1); 
     } 
     strncpy( my_buf, (const char *)_text, _len );
     my_buf[_len] = 0;

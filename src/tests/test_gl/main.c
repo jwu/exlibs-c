@@ -37,9 +37,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #if (EX_PLATFORM == EX_WIN32)
-    static const char *media_file = "e:/project/dev/exsdk/res/";
+    static const char *__media_file = "e:/project/dev/exsdk/res/";
 #else
-    static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
+    static const char *__media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
 #endif
 #define maxPATH 256
 
@@ -53,8 +53,7 @@ static int win_width = 640;
 static int win_height = 480; 
 
 // game
-ex_world_t *world = NULL;
-ex_entity_t *entity1 = NULL;
+ex_world_t *g_world = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -64,63 +63,95 @@ ex_entity_t *entity1 = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void initGame () {
+static void save_world () {
     char path[maxPATH];
     ex_stream_t *stream;
 
+    if ( g_world == NULL )
+        return;
+
+    ex_log ("save world simple_world.json...");
+    stream = ex_create_json_write_stream();
+    EX_SERIALIZE( stream, ex_world_t, "world", g_world );
+    strncpy ( path, __media_file, maxPATH );
+    stream->save_to_file( stream, strcat(path, "simple_world.json") );
+    ex_destroy_json_stream((ex_stream_json_t *)stream);
+    ex_log ("simple_world.json saved!");
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void load_world () {
+    char path[maxPATH];
+    ex_stream_t *stream;
+
+    if ( g_world == NULL )
+        return;
+
+    ex_world_stop ( g_world );
+    ex_world_deinit(g_world);
+    ex_world_init(g_world);
+
+    ex_log ("loading world simple_world.json...");
+    strncpy ( path, __media_file, maxPATH );
+    stream = ex_create_json_read_stream( strcat(path, "simple_world.json") );
+    EX_SERIALIZE( stream, ex_world_t, "world", g_world );
+    ex_destroy_json_stream((ex_stream_json_t *)stream);
+    ex_log ("simple_world.json loaded!");
+
+    ex_world_run ( g_world );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void initGame () {
     // register game classes
     EX_REGISTER_CLASS(ex_simple_t);
 
     // load/setup the world
-    world = ex_create_ex_world_t();
-    ex_world_init (world);
-#if 0
+    g_world = ex_create_ex_world_t();
+    ex_world_init (g_world);
+
     {
         ex_camera_t *mainCam;
-        ex_world_create_camera2d ( world, ex_strid("main_camera") );
-        mainCam = ex_world_main_camera (world);
+        ex_world_create_camera2d ( g_world, ex_strid("main_camera") );
+        mainCam = ex_world_main_camera (g_world);
         ex_assert ( mainCam, "can't find main camera" );
         ex_camera_set_ortho( mainCam, true );
         ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
         ex_camera_set_ortho_size( mainCam, (float)win_width/2.0f );
     }
 
-    // TEMP: instead of serialize the world, I hardcoded the entities.
-    for ( int i = 0; i < 1000; ++i ) {
-        entity1 = ex_world_create_entity ( world, ex_strid("ent1") ); {
+    ex_log ("create simple entities...");
+    // TEMP: instead of serialize the g_world, I hardcoded the entities.
+    for ( int i = 0; i < 100; ++i ) {
+        ex_entity_t *ent = ex_world_create_entity ( g_world, ex_strid("ent1") ); {
             // trans2d
-            ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_trans2d_t) );
+            ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
             ex_vec2f_set ( &trans2d->pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
             ex_vec2f_set ( &trans2d->scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
             ex_angf_set_by_radians ( &trans2d->ang, ex_range_randf(0.0f,EX_TWO_PI) );
 
             // dbg2d
-            ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_debug2d_t) );
+            ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
 
             // simple
-            ex_simple_t *simple = (ex_simple_t *)ex_entity_add_comp( entity1, EX_TYPEID(ex_simple_t) );
+            ex_simple_t *simple = (ex_simple_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
             ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
             ex_vec2f_normalize(&simple->move_dir);
-            simple->move_speed = ex_range_randf(1.0f,10.0f);
-            simple->rot_speed = ex_range_randf(10.0f,100.0f);
+            simple->move_speed = ex_range_randf(1.0f,100.0f);
+            simple->rot_speed = ex_range_randf(-100.0f,100.0f);
         }
     }
-
-    stream = ex_create_json_write_stream();
-    EX_SERIALIZE( stream, ex_world_t, "world", world );
-    strncpy ( path, media_file, maxPATH );
-    stream->save_to_file( stream, strcat(path, "simple_world.json") );
-    ex_destroy_json_stream((ex_stream_json_t *)stream);
-#else
-    strncpy ( path, media_file, maxPATH );
-    stream = ex_create_json_read_stream( strcat(path, "simple_world.json") );
-    EX_SERIALIZE( stream, ex_world_t, "world", world );
-    ex_destroy_json_stream((ex_stream_json_t *)stream);
-#endif
+    ex_log ("done!");
 
     // run the world
-    ex_world_run(world);
+    ex_world_run(g_world);
 }
 
 // ------------------------------------------------------------------ 
@@ -128,9 +159,9 @@ static void initGame () {
 // ------------------------------------------------------------------ 
 
 static void quitGame () {
-    ex_world_stop(world);
-    ex_world_deinit(world);
-    ex_free(world);
+    ex_world_stop(g_world);
+    ex_world_deinit(g_world);
+    ex_free(g_world);
 }
 
 // ------------------------------------------------------------------ 
@@ -138,23 +169,7 @@ static void quitGame () {
 // ------------------------------------------------------------------ 
 
 static void updateGame () {
-#if 0
-    {
-        // ex_vec2f_t d_pos = { 1.0f, 1.0f };
-        ex_angf_t d_ang;
-        ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_get_comp( entity1, EX_TYPEID(ex_trans2d_t) );
-
-        // ex_vec2f_set ( &d_pos, 100.0f, 0.0f );
-        // ex_vec2f_mul_scalar ( &d_pos, &d_pos, ex_dt() );
-        // ex_vec2f_add ( &trans2d->pos, &trans2d->pos, &d_pos );
-
-        ex_angf_set_by_degrees( &d_ang, 1.0f );
-        ex_angf_mul_scalar ( &d_ang, &d_ang, ex_dt() * 10.0f );
-        ex_angf_add ( &trans2d->ang, &trans2d->ang, &d_ang );
-    }
-#endif
-
-    ex_world_update(world);
+    ex_world_update(g_world);
 }
 
 // ------------------------------------------------------------------ 
@@ -164,7 +179,7 @@ static void updateGame () {
 static void __reshape ( int _width, int _height ) {
     win_width = _width;
     win_height = _height;
-    ex_camera_t *mainCam = ex_world_main_camera (world);
+    ex_camera_t *mainCam = ex_world_main_camera (g_world);
 
     // setup viewport
     glViewport(0, 0, win_width, win_height);
@@ -205,9 +220,9 @@ static void __display() {
     // }
     // } TODO end 
 
-    // render 2D/3D objects in world space 
+    // render 2D/3D objects in g_world space 
     {
-        ex_world_render(world);
+        ex_world_render(g_world);
     }
 
     // draw 2D objects in screen space
@@ -235,10 +250,29 @@ static void __display() {
 // ------------------------------------------------------------------ 
 
 static void __keyboard ( unsigned char _key, int _x, int _y ) {
-    if ( _key == EX_KEY_ESC ) {
-        exit(0);
+    int mod = 0;
+
+    mod = glutGetModifiers();
+
+    //
+    if ( mod == GLUT_ACTIVE_CTRL ) {
+        switch (_key) {
+        case 19: // ^S
+            save_world ();
+            break;
+
+        case 12: // ^L
+            load_world ();
+            break;
+        }
     }
-    printf ( "key is %c \n", _key );
+    else {
+        if ( _key == EX_KEY_ESC ) {
+            exit(0);
+        }
+    }
+
+    // printf ( "key is %c \n", _key );
 }
 
 // ------------------------------------------------------------------ 

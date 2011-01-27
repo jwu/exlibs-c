@@ -104,6 +104,9 @@ EX_DEF_CLASS_BEGIN(ex_simple_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_simple_t)
+    EX_PROP ( ex_simple_t, move_dir, "move direction", EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
+    EX_PROP ( ex_simple_t, move_speed, "move speed", EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
+    EX_PROP ( ex_simple_t, rot_speed, "rot spee", EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_simple_t)
