@@ -111,6 +111,7 @@ ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name ) {
     ex_entity_t *ent = ex_create_ex_entity_t();
     ex_entity_init(ent);
 
+    ent->uid = ex_generate_uid(); // generate the unique id here.
     ent->name = _name;
     ent->world = _world;
 

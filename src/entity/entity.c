@@ -16,23 +16,11 @@
 #include "camera.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// private
-///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static EX_RESULT __entity_add_comp ( ex_entity_t *_ent, ex_component_t *_comp ) {
-    // TODO:
-    return EX_RESULT_OK;
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_entity_t)
+    EX_UID_INVALID, // uid, NOTE: only generated in ex_world_create_entity
     EX_STRID_NULL, // name
     NULL, // comps
     NULL, // world
@@ -48,7 +36,11 @@ EX_DEF_PROPS_END
 EX_SERIALIZE_BEGIN(ex_entity_t)
     int num_comps = 0;
 
+    // serialize members
+    EX_MEMBER_SERIALIZE( uid, uid )
     EX_MEMBER_SERIALIZE( strid, name )
+
+    // serialize components
     num_comps = self->comps->count;
     EX_SERIALIZE( _stream, int, "num_comps", &num_comps  )
 
@@ -71,6 +63,7 @@ EX_SERIALIZE_BEGIN(ex_entity_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_entity_t)
+    EX_MEMBER_TOSTRING( uid, "uid", self->uid )
     EX_MEMBER_TOSTRING( strid, "name", self->name )
 EX_DEF_TOSTRING_END
 

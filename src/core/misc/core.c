@@ -39,6 +39,9 @@ int ex_core_init ()
     // NOTE: we don't allowed already-initialized in these sub-system.
     //       they are strongly initialized by order.
 
+    // before we start, we need to change the rand seed 
+    ex_srand(time(0));
+
     //
     ex_log ("init timer");
     if ( ex_timer_init() != 0 ) {

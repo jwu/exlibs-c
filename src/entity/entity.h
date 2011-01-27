@@ -29,6 +29,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DECL_CLASS_BEGIN(ex_entity_t)
+    ex_uid_t uid;
     strid_t name;
     // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
     ex_array_t *comps;

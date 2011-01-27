@@ -3,6 +3,7 @@
         "name": { "strid": "" },
         "num_entities": { "int": 11 },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 16810543960692 },
             "name": { "strid": "main_camera" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
@@ -21,13 +22,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 16810543960693 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-294.769775, -399.993744] },
-                "ang": { "angf": 3.347475 },
-                "scale": { "vec2f": [0.458650, 0.755605] }
+                "pos": { "vec2f": [184.275513, 203.021606] },
+                "ang": { "angf": 3.711036 },
+                "scale": { "vec2f": [0.555875, 0.897457] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -38,13 +40,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 298285520671349 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-362.364319, -224.832657] },
-                "ang": { "angf": 5.872849 },
-                "scale": { "vec2f": [0.679296, 0.678865] }
+                "pos": { "vec2f": [13.678558, 171.738770] },
+                "ang": { "angf": 6.082822 },
+                "scale": { "vec2f": [0.752304, 0.869147] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -55,13 +58,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 579760497382005 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [15.533112, -93.198334] },
-                "ang": { "angf": 0.335909 },
-                "scale": { "vec2f": [0.034572, 0.830965] }
+                "pos": { "vec2f": [281.857056, -364.640808] },
+                "ang": { "angf": 5.142628 },
+                "scale": { "vec2f": [0.346630, 0.964381] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -72,13 +76,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 861235474092661 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [136.919495, 23.760162] },
-                "ang": { "angf": 0.419982 },
-                "scale": { "vec2f": [0.383416, 0.007698] }
+                "pos": { "vec2f": [-71.813690, -317.824219] },
+                "ang": { "angf": 5.263735 },
+                "scale": { "vec2f": [0.390780, 0.784161] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -89,13 +94,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 1142710450803317 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [149.418152, -66.011200] },
-                "ang": { "angf": 5.316624 },
-                "scale": { "vec2f": [0.930436, 0.588977] }
+                "pos": { "vec2f": [-103.389130, -357.285858] },
+                "ang": { "angf": 0.083128 },
+                "scale": { "vec2f": [0.215982, 0.423943] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -106,13 +112,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 1424185427513973 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-326.428101, 21.543030] },
-                "ang": { "angf": 4.405711 },
-                "scale": { "vec2f": [0.415999, 0.653919] }
+                "pos": { "vec2f": [177.772217, -110.752808] },
+                "ang": { "angf": 0.247330 },
+                "scale": { "vec2f": [0.622838, 0.272959] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -123,13 +130,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 1705660404224629 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [209.758423, 328.256653] },
-                "ang": { "angf": 4.624939 },
-                "scale": { "vec2f": [0.047465, 0.262453] }
+                "pos": { "vec2f": [-275.366394, 69.954437] },
+                "ang": { "angf": 5.926931 },
+                "scale": { "vec2f": [0.474501, 0.396173] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -140,13 +148,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 1987135380935285 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [106.110870, -137.412628] },
-                "ang": { "angf": 2.295491 },
-                "scale": { "vec2f": [0.991037, 0.756410] }
+                "pos": { "vec2f": [-99.206757, -360.950745] },
+                "ang": { "angf": 2.981278 },
+                "scale": { "vec2f": [0.307341, 0.290255] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -157,13 +166,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 2268610357645941 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [386.040222, -202.368896] },
-                "ang": { "angf": 4.093612 },
-                "scale": { "vec2f": [0.753356, 0.722660] }
+                "pos": { "vec2f": [70.120422, 136.566284] },
+                "ang": { "angf": 0.153697 },
+                "scale": { "vec2f": [0.506160, 0.642619] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {
@@ -174,13 +184,14 @@
             } }
         } },
         "entity": { "ex_entity_t": {
+            "uid": { "uid": 2550085334356597 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
             "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [105.307770, -341.851288] },
-                "ang": { "angf": 2.742054 },
-                "scale": { "vec2f": [0.272710, 0.884707] }
+                "pos": { "vec2f": [-314.619873, -299.179779] },
+                "ang": { "angf": 0.958776 },
+                "scale": { "vec2f": [0.748804, 0.729562] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
             "component": { "ex_debug2d_t": {

@@ -68,7 +68,7 @@ static void initGame () {
     world = ex_create_ex_world_t();
     ex_world_init (world);
 
-#if 0
+#if 1
     {
         ex_camera_t *mainCam;
         ex_world_create_camera2d ( world, ex_strid("main_camera") );
