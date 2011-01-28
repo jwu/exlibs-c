@@ -69,9 +69,9 @@ ex_uid_t ex_generate_uid () {
     else // else, we need reset the offset.
         __offset = 0;
 
-    // if the offset over 255, we will have same uid fatal error!!
-    if ( __offset >= 255 ) {
-        ex_error ("uid generate error, generate over 255 uid in 1-ms.");
+    // if the offset over 1024, we will have same uid fatal error!!
+    if ( __offset >= 1024 ) {
+        ex_error ("uid generate error, generate over 1024 uid in 1-ms.");
         return EX_UID_INVALID;
     }
     __last_date = cur_date;
@@ -82,15 +82,15 @@ ex_uid_t ex_generate_uid () {
     delta_ms = (int64)(cur_dtime - 0/*start_dtime*/);
     ts = (delta_day * __MSECS_PER_DAY + delta_ms) * 1000;
 
-    // TODO: 1byte for server ID. (0~255). which means we support maximum 255 servers.
+    // TODO: 6-bits for server ID. (0~63). which means we support maximum 63 servers.
     serverID = 0;
     offset = __offset;
     days = (uint64)ex_timespan_total_days(ts); // get how many days.
     msecs = cur_dtime;
 
     //
-    return ( serverID   & 0xff )       << 56 
-         | ( offset     & 0xff )       << 48 
+    return ( serverID   & 0xff )       << 58 
+         | ( offset     & 0xffff )     << 48 
          | ( days       & 0x0fffffff ) << 32 
          | ( msecs      & 0xffffffff ); 
 }

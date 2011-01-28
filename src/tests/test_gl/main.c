@@ -9,16 +9,11 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "../../core/core_inc.h"
-#include "../../graphics/graphics_inc.h"
+#include "exsdk.h"
 
-#include "../../entity/engine.h"
-#include "../../entity/world.h"
-#include "../../entity/entity.h"
-#include "../../entity/eng_time.h"
-#include "../../entity/trans2d.h"
-#include "../../entity/debug2d.h"
-#include "../../entity/camera.h"
+#include "../../graphics/graphics_inc.h"
+#include "../../engine/engine_inc.h"
+#include "../../app/app.h"
 
 #include "simple_behavior.h"
 
@@ -90,7 +85,7 @@ static void load_world () {
     if ( g_world == NULL )
         return;
 
-    ex_world_stop ( g_world );
+    ex_world_stop( g_world );
     ex_world_deinit(g_world);
     ex_world_init(g_world);
 
@@ -369,7 +364,7 @@ static void registerFuncs () {
 static void exit_fn () {
     // deinit
     quitGame ();
-    ex_engine_deinit();
+    ex_app_deinit();
     ex_core_deinit();
 
     printf ("================\n");
@@ -397,7 +392,7 @@ int main( int argc, const char *argv[] ) {
         registerFuncs();
 
         // init game
-        ex_engine_init();
+        ex_app_init();
         initGame();
 
         //

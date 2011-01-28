@@ -13,9 +13,11 @@
 #include "world.h"
 #include "entity.h"
 
-#include "trans2d.h"
-#include "debug2d.h"
-#include "camera.h"
+#include "component/trans2d.h"
+#include "component/camera.h"
+// TEMP { 
+#include "component/debug2d.h"
+// } TEMP end 
 
 ///////////////////////////////////////////////////////////////////////////////
 // class define
@@ -30,7 +32,7 @@ EX_DEF_CLASS_BEGIN(ex_world_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_world_t)
-    EX_PROP( ex_world_t, name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
+    EX_PROP( ex_world_t, strid, name, "name",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_world_t)
@@ -190,7 +192,7 @@ ex_camera_t *ex_world_main_camera ( ex_world_t *_world ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __eng_time_tick ();
+extern void __tick_engine_time ();
 // ------------------------------------------------------------------ 
 
 void ex_world_update ( ex_world_t *_world ) {
@@ -198,7 +200,7 @@ void ex_world_update ( ex_world_t *_world ) {
     if ( _world->state == EX_WORLD_STATE_STOPPED )
         return;
 
-    __eng_time_tick ();
+    __tick_engine_time ();
 
     // the world is paused, only timer ticks 
     if ( _world->state == EX_WORLD_STATE_PAUSED )

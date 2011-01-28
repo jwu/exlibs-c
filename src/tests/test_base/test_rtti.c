@@ -57,9 +57,9 @@ EX_DEF_CLASS_BEGIN(test_cls_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(test_cls_t)
-    EX_PROP( test_cls_t, id,    "id",    EX_PROP_ATTR_READ_ONLY, ex_prop_set_raw_int32, ex_prop_get_raw_int32 )
-    EX_PROP( test_cls_t, data1, "data1", EX_PROP_ATTR_NONE,      ex_prop_set_raw_float, ex_prop_get_raw_float )
-    EX_PROP( test_cls_t, data2, "data2", EX_PROP_ATTR_NONE,      ex_prop_set_raw_float, ex_prop_get_raw_float )
+    EX_PROP( test_cls_t, int32, id,    "id",    EX_PROP_ATTR_READ_ONLY )
+    EX_PROP( test_cls_t, float, data1, "data1", EX_PROP_ATTR_NONE )
+    EX_PROP( test_cls_t, float, data2, "data2", EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(test_cls_t)

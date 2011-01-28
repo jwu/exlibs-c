@@ -12,9 +12,9 @@
 #include "exsdk.h"
 #include "entity.h"
 
-#include "trans2d.h"
-#include "camera.h"
-#include "behavior.h"
+#include "component/trans2d.h"
+#include "component/camera.h"
+#include "component/behavior.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
@@ -31,7 +31,7 @@ EX_DEF_CLASS_BEGIN(ex_entity_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_entity_t)
-    EX_PROP( ex_entity_t, name, "name",  EX_PROP_ATTR_NONE, ex_prop_set_raw_strid, ex_prop_get_raw_strid )
+    EX_PROP( ex_entity_t, strid, name, "name",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_entity_t)
@@ -128,6 +128,7 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
     // create a component and added to the component list, then return it.
     comp = (ex_component_t *)ex_create(_typeID);
     if ( comp ) {
+        comp->id = rand(); // NOTE: I think this is rand enough for component reference  
         comp->owner = _ent; // set the owner of the component before init.
         if ( comp->init )
             comp->init(comp);

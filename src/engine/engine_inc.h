@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : simple_behavior.h
+// File         : engine_inc.h
 // Author       : Wu Jie 
-// Last Change  : 01/27/2011 | 14:50:04 PM | Thursday,January
+// Last Change  : 01/28/2011 | 13:53:16 PM | Friday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef SIMPLE_BEHAVIOR_H_1296111006
-#define SIMPLE_BEHAVIOR_H_1296111006
+#ifndef ENGINE_INC_H_1296193998
+#define ENGINE_INC_H_1296193998
 // #################################################################################
 
 // ######################### 
@@ -16,17 +16,16 @@ extern "C" {
 #endif
 // ######################### 
 
-#include "../../engine/engine_inc.h"
-
-///////////////////////////////////////////////////////////////////////////////
-// defines
-///////////////////////////////////////////////////////////////////////////////
-
-EX_DECL_CLASS_SUPER_BEGIN(ex_simple_t,ex_behavior_t)
-    ex_vec2f_t move_dir;
-    float move_speed;
-    float rot_speed;
-EX_DECL_CLASS_SUPER_END(ex_simple_t,ex_behavior_t)
+#include "time.h"
+#include "world.h"
+#include "object.h"
+    #include "entity.h"
+    #include "component/component.h"
+        #include "component/trans2d.h"
+        #include "component/sprite.h"
+        #include "component/camera.h"
+        #include "component/behavior.h"
+        #include "component/debug2d.h"
 
 // ######################### 
 #ifdef __cplusplus
@@ -34,8 +33,6 @@ EX_DECL_CLASS_SUPER_END(ex_simple_t,ex_behavior_t)
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END SIMPLE_BEHAVIOR_H_1296111006
+#endif // END ENGINE_INC_H_1296193998
 // #################################################################################
-

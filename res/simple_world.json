@@ -3,17 +3,21 @@
         "name": { "strid": "" },
         "num_entities": { "int": 101 },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 16827753112133 },
+            "uid": { "uid": 16827758476837 },
             "name": { "strid": "main_camera" },
             "num_comps": { "int": 2 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 53535495 },
+                "active": { "bool": true },
                 "pos": { "vec2f": [0.000000, 0.000000] },
                 "ang": { "angf": 0.000000 },
                 "scale": { "vec2f": [1.000000, 1.000000] }
             } },
             "comp_type": { "strid": "ex_camera_t" },
-            "component": { "ex_camera_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2122900019 },
+                "active": { "bool": true },
                 "isOrtho": { "bool": true },
                 "orthoSize": { "float": 240.000000 },
                 "aspect": { "float": 1.333333 },
@@ -22,2403 +26,3003 @@
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 16827753112153 },
+            "uid": { "uid": 298302735187493 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-601.367737, 103.456642] },
-                "ang": { "angf": 3.815307 },
-                "scale": { "vec2f": [0.749038, 0.532501] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1287308075 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [315.437317, 633.550537] },
+                "ang": { "angf": 5.402913 },
+                "scale": { "vec2f": [0.424872, 0.774643] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1407847984 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.884840, -0.465895] },
-                "move_speed": { "float": 39.192841 },
-                "rot_speed": { "float": 81.931885 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 726244442 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.143927, 0.989588] },
+                "move_speed": { "float": 59.386448 },
+                "rot_speed": { "float": -73.605637 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 298302729822809 },
+            "uid": { "uid": 579777711898149 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [221.770248, 100.904945] },
-                "ang": { "angf": 0.792560 },
-                "scale": { "vec2f": [0.291646, 0.402528] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 107980545 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-462.433655, -430.119171] },
+                "ang": { "angf": 1.431666 },
+                "scale": { "vec2f": [0.209416, 0.495520] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 585111436 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.793117, -0.609070] },
-                "move_speed": { "float": 1.643246 },
-                "rot_speed": { "float": -59.510113 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 640285239 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.697833, -0.716260] },
+                "move_speed": { "float": 31.820566 },
+                "rot_speed": { "float": -32.802544 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 579777706533465 },
+            "uid": { "uid": 861252688608805 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-467.835480, -1317.210083] },
-                "ang": { "angf": 0.170325 },
-                "scale": { "vec2f": [0.449327, 0.877697] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2013954211 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-442.777618, 175.860596] },
+                "ang": { "angf": 1.741119 },
+                "scale": { "vec2f": [0.562936, 0.488699] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 735708967 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.114187, -0.993459] },
-                "move_speed": { "float": 89.112404 },
-                "rot_speed": { "float": 27.629295 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1997252590 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.861863, -0.507142] },
+                "move_speed": { "float": 77.409645 },
+                "rot_speed": { "float": 77.590149 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 861252683244121 },
+            "uid": { "uid": 1142727665319461 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1006.645020, 215.696533] },
-                "ang": { "angf": 0.045807 },
-                "scale": { "vec2f": [0.602001, 0.302350] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1693505332 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [42.396683, 421.681885] },
+                "ang": { "angf": 0.847097 },
+                "scale": { "vec2f": [0.934865, 0.024867] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1153204101 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.966935, 0.255023] },
-                "move_speed": { "float": 89.411430 },
-                "rot_speed": { "float": -19.315781 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 861411332 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.680510, 0.732739] },
+                "move_speed": { "float": 6.772961 },
+                "rot_speed": { "float": -87.569168 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1142727659954777 },
+            "uid": { "uid": 1424202642030117 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [243.545914, 197.101410] },
-                "ang": { "angf": 6.103757 },
-                "scale": { "vec2f": [0.321441, 0.864064] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1342557215 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [122.909073, -66.138840] },
+                "ang": { "angf": 2.940278 },
+                "scale": { "vec2f": [0.774529, 0.005341] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 848915435 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.559524, 0.828814] },
-                "move_speed": { "float": 27.900240 },
-                "rot_speed": { "float": 58.273499 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1987849024 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.893482, 0.449100] },
+                "move_speed": { "float": 26.205631 },
+                "rot_speed": { "float": -79.700020 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1424202636665433 },
+            "uid": { "uid": 1705677618740773 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [210.773743, -112.017952] },
-                "ang": { "angf": 2.098116 },
-                "scale": { "vec2f": [0.242051, 0.723701] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1951970016 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-79.021538, 255.087341] },
+                "ang": { "angf": 3.167447 },
+                "scale": { "vec2f": [0.349017, 0.854724] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 945299750 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.641875, -0.766809] },
-                "move_speed": { "float": 10.374017 },
-                "rot_speed": { "float": -18.989983 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 568877744 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.794266, -0.607571] },
+                "move_speed": { "float": 5.425659 },
+                "rot_speed": { "float": -33.217155 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1705677613376089 },
+            "uid": { "uid": 1987152595451429 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [445.729523, 1321.161255] },
-                "ang": { "angf": 5.092601 },
-                "scale": { "vec2f": [0.897343, 0.716065] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 206474592 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-443.738098, 320.140411] },
+                "ang": { "angf": 1.414399 },
+                "scale": { "vec2f": [0.859640, 0.613248] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1421085348 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.428158, 0.903704] },
-                "move_speed": { "float": 84.228561 },
-                "rot_speed": { "float": 3.772781 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2015805549 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.972778, -0.231738] },
+                "move_speed": { "float": 34.133400 },
+                "rot_speed": { "float": 96.174225 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1987152590086745 },
+            "uid": { "uid": 2268627572162085 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [230.054367, 467.145935] },
-                "ang": { "angf": 2.345601 },
-                "scale": { "vec2f": [0.749881, 0.163786] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1075569579 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-275.821442, 421.414886] },
+                "ang": { "angf": 0.193794 },
+                "scale": { "vec2f": [0.301199, 0.283471] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1840579655 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.796479, 0.604666] },
-                "move_speed": { "float": 45.988724 },
-                "rot_speed": { "float": 26.230476 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 120326550 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.761029, 0.648718] },
+                "move_speed": { "float": 58.555309 },
+                "rot_speed": { "float": -93.721298 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2268627566797401 },
+            "uid": { "uid": 2550102548872741 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-519.196350, 926.234314] },
-                "ang": { "angf": 3.573903 },
-                "scale": { "vec2f": [0.658995, 0.531127] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1354712679 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-67.513100, -47.507393] },
+                "ang": { "angf": 1.591378 },
+                "scale": { "vec2f": [0.941719, 0.297492] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1937432793 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.656608, 0.754232] },
-                "move_speed": { "float": 60.247139 },
-                "rot_speed": { "float": -50.050823 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 138412490 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.775612, -0.631210] },
+                "move_speed": { "float": 11.124415 },
+                "rot_speed": { "float": 59.670609 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2550102543508057 },
+            "uid": { "uid": 2831577525583397 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [307.642975, -264.265289] },
-                "ang": { "angf": 1.633026 },
-                "scale": { "vec2f": [0.057066, 0.367945] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1977058267 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-7.387488, -243.425797] },
+                "ang": { "angf": 4.184225 },
+                "scale": { "vec2f": [0.979896, 0.834889] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 999748981 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.875565, -0.483100] },
-                "move_speed": { "float": 33.043686 },
-                "rot_speed": { "float": 96.423431 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 869069539 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.930014, 0.367524] },
+                "move_speed": { "float": 3.572416 },
+                "rot_speed": { "float": 42.600250 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2831577520218713 },
+            "uid": { "uid": 3113052502294053 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-550.011475, -128.945251] },
-                "ang": { "angf": 4.995261 },
-                "scale": { "vec2f": [0.855893, 0.011296] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 884972551 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [136.032806, -439.737305] },
+                "ang": { "angf": 0.247233 },
+                "scale": { "vec2f": [0.264781, 0.532115] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1481021629 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.951708, -0.307006] },
-                "move_speed": { "float": 17.664026 },
-                "rot_speed": { "float": -97.402214 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 47566226 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.830488, -0.557037] },
+                "move_speed": { "float": 52.710846 },
+                "rot_speed": { "float": 66.000122 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3113052496929369 },
+            "uid": { "uid": 3394527479004709 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [27.743139, -312.517639] },
-                "ang": { "angf": 5.058360 },
-                "scale": { "vec2f": [0.334559, 0.388727] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1761243458 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [380.564575, -302.219269] },
+                "ang": { "angf": 3.212986 },
+                "scale": { "vec2f": [0.361012, 0.545984] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1050875778 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.807882, -0.589344] },
-                "move_speed": { "float": 17.130783 },
-                "rot_speed": { "float": -2.870079 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1163687918 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.988822, -0.149102] },
+                "move_speed": { "float": 22.270882 },
+                "rot_speed": { "float": -78.315193 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3394527473640025 },
+            "uid": { "uid": 3676002455715365 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [68.864731, 428.525024] },
-                "ang": { "angf": 2.811778 },
-                "scale": { "vec2f": [0.346265, 0.365523] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 607263081 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-356.010773, 225.720184] },
+                "ang": { "angf": 0.804528 },
+                "scale": { "vec2f": [0.212890, 0.976154] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 220867022 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.450930, 0.892559] },
-                "move_speed": { "float": 41.787933 },
-                "rot_speed": { "float": -5.489311 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1260296738 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.966503, 0.256653] },
+                "move_speed": { "float": 78.006096 },
+                "rot_speed": { "float": -70.721436 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3676002450350681 },
+            "uid": { "uid": 3957477432426021 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [1421.128296, -767.967224] },
-                "ang": { "angf": 0.209518 },
-                "scale": { "vec2f": [0.953818, 0.290828] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 910164623 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-199.184616, -262.141571] },
+                "ang": { "angf": 3.198355 },
+                "scale": { "vec2f": [0.411006, 0.212436] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 594193921 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.893097, -0.449864] },
-                "move_speed": { "float": 76.391617 },
-                "rot_speed": { "float": -88.036133 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 818271697 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.682147, -0.731215] },
+                "move_speed": { "float": 26.221399 },
+                "rot_speed": { "float": 55.654938 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3957477427061337 },
+            "uid": { "uid": 4238952409136677 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-311.527863, -86.777420] },
-                "ang": { "angf": 5.141386 },
-                "scale": { "vec2f": [0.740076, 0.364000] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 994838113 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [402.841095, 763.510925] },
+                "ang": { "angf": 0.629473 },
+                "scale": { "vec2f": [0.769925, 0.905264] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1612014615 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.999139, 0.041483] },
-                "move_speed": { "float": 9.802089 },
-                "rot_speed": { "float": -37.985565 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 475943753 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.121025, 0.992649] },
+                "move_speed": { "float": 83.395554 },
+                "rot_speed": { "float": -79.681686 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4238952403771993 },
+            "uid": { "uid": 4520427385847333 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [33.757095, -471.467194] },
-                "ang": { "angf": 4.665965 },
-                "scale": { "vec2f": [0.691965, 0.178955] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 965057304 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-348.202515, 302.393188] },
+                "ang": { "angf": 0.287021 },
+                "scale": { "vec2f": [0.793288, 0.125590] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 94103874 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.543883, -0.839161] },
-                "move_speed": { "float": 29.062689 },
-                "rot_speed": { "float": -72.466637 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1055846126 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.992269, -0.124104] },
+                "move_speed": { "float": 23.236156 },
+                "rot_speed": { "float": 96.152573 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4520427380482649 },
+            "uid": { "uid": 4801902362557989 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1119.645996, 481.516205] },
-                "ang": { "angf": 2.638680 },
-                "scale": { "vec2f": [0.548586, 0.561525] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1463211899 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [344.143341, 117.818703] },
+                "ang": { "angf": 0.457990 },
+                "scale": { "vec2f": [0.508311, 0.383501] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1783742686 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.971836, 0.235659] },
-                "move_speed": { "float": 73.511292 },
-                "rot_speed": { "float": -85.278885 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 491611482 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.997525, 0.070308] },
+                "move_speed": { "float": 25.887390 },
+                "rot_speed": { "float": -85.123520 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4801902357193305 },
+            "uid": { "uid": 5083377339268645 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-28.141806, 1086.106934] },
-                "ang": { "angf": 6.029219 },
-                "scale": { "vec2f": [0.093819, 0.920812] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 311905583 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-13.268626, -627.597778] },
+                "ang": { "angf": 4.072926 },
+                "scale": { "vec2f": [0.790610, 0.537145] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1427794552 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.206113, 0.978528] },
-                "move_speed": { "float": 93.306335 },
-                "rot_speed": { "float": 26.448860 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 960763886 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.037292, -0.999304] },
+                "move_speed": { "float": 63.803837 },
+                "rot_speed": { "float": -87.762840 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5083377333903961 },
+            "uid": { "uid": 5364852315979301 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [1276.014282, -798.622375] },
-                "ang": { "angf": 4.216030 },
-                "scale": { "vec2f": [0.804389, 0.072220] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 750760893 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-223.815155, 85.376129] },
+                "ang": { "angf": 0.293691 },
+                "scale": { "vec2f": [0.617417, 0.446696] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 554545778 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.926252, -0.376904] },
-                "move_speed": { "float": 86.056053 },
-                "rot_speed": { "float": 53.594955 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 171862866 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.484453, -0.874817] },
+                "move_speed": { "float": 24.491892 },
+                "rot_speed": { "float": -67.271576 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5364852310614617 },
+            "uid": { "uid": 5646327292689957 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [15.601179, -252.945511] },
-                "ang": { "angf": 3.643115 },
-                "scale": { "vec2f": [0.584962, 0.872231] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 714162492 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [349.186066, 90.214691] },
+                "ang": { "angf": 3.327004 },
+                "scale": { "vec2f": [0.170579, 0.867268] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 331488438 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.033682, -0.999433] },
-                "move_speed": { "float": 8.718088 },
-                "rot_speed": { "float": -43.618912 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 753597148 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.757822, 0.652461] },
+                "move_speed": { "float": 82.160011 },
+                "rot_speed": { "float": -30.532974 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5646327287325273 },
+            "uid": { "uid": 5927802269400613 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-42.321735, 729.895569] },
-                "ang": { "angf": 4.095225 },
-                "scale": { "vec2f": [0.393334, 0.270625] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1420881750 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [311.153412, 114.242935] },
+                "ang": { "angf": 5.757857 },
+                "scale": { "vec2f": [0.085121, 0.509793] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1821996183 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.770279, 0.637707] },
-                "move_speed": { "float": 34.612820 },
-                "rot_speed": { "float": -25.973228 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1320525108 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.686529, 0.727103] },
+                "move_speed": { "float": 70.000137 },
+                "rot_speed": { "float": 98.485428 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5927802264035929 },
+            "uid": { "uid": 6209277246111269 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-834.843140, -157.427658] },
-                "ang": { "angf": 3.071291 },
-                "scale": { "vec2f": [0.712595, 0.086256] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1551699529 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [509.222198, -291.501007] },
+                "ang": { "angf": 0.564506 },
+                "scale": { "vec2f": [0.681404, 0.559926] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 634626586 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.904027, -0.427476] },
-                "move_speed": { "float": 64.777588 },
-                "rot_speed": { "float": -25.377045 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1765239900 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.986601, -0.163154] },
+                "move_speed": { "float": 39.711796 },
+                "rot_speed": { "float": -97.692719 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6209277240746585 },
+            "uid": { "uid": 6490752222821925 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-293.333618, 343.771698] },
-                "ang": { "angf": 3.570942 },
-                "scale": { "vec2f": [0.592461, 0.137002] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1917131352 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [240.853088, -266.078827] },
+                "ang": { "angf": 4.243248 },
+                "scale": { "vec2f": [0.509381, 0.918160] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1971372304 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.999570, -0.029335] },
-                "move_speed": { "float": 19.044621 },
-                "rot_speed": { "float": -21.286835 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1476607412 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.998297, -0.058333] },
+                "move_speed": { "float": 30.683582 },
+                "rot_speed": { "float": -37.411392 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 16827753112160 },
+            "uid": { "uid": 6772227199532581 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-648.364380, -253.317047] },
-                "ang": { "angf": 2.251802 },
-                "scale": { "vec2f": [0.282554, 0.688361] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1360587163 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [513.927307, -273.179382] },
+                "ang": { "angf": 2.467776 },
+                "scale": { "vec2f": [0.803302, 0.673041] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 298338810 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.900431, -0.434999] },
-                "move_speed": { "float": 56.663052 },
-                "rot_speed": { "float": 57.357895 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1953547572 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.437296, -0.899318] },
+                "move_speed": { "float": 56.874104 },
+                "rot_speed": { "float": 23.306808 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 298302729822816 },
+            "uid": { "uid": 7053702176243237 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-541.186829, -123.137093] },
-                "ang": { "angf": 1.774258 },
-                "scale": { "vec2f": [0.320320, 0.785525] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 188314439 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [288.435425, 107.234848] },
+                "ang": { "angf": 3.978005 },
+                "scale": { "vec2f": [0.290440, 0.354572] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 724283536 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.861874, -0.507123] },
-                "move_speed": { "float": 22.856110 },
-                "rot_speed": { "float": -7.819489 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1096078356 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.394348, -0.918961] },
+                "move_speed": { "float": 34.301849 },
+                "rot_speed": { "float": 15.567482 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 579777706533472 },
+            "uid": { "uid": 7335177152953893 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-850.938904, 783.426331] },
-                "ang": { "angf": 6.123692 },
-                "scale": { "vec2f": [0.825629, 0.746107] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1531997941 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [52.125538, 382.717468] },
+                "ang": { "angf": 4.183899 },
+                "scale": { "vec2f": [0.746103, 0.811432] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1326435718 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.738799, 0.673926] },
-                "move_speed": { "float": 83.543541 },
-                "rot_speed": { "float": -54.941311 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 377372919 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.995653, -0.093137] },
+                "move_speed": { "float": 5.818842 },
+                "rot_speed": { "float": -83.262573 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 861252683244128 },
+            "uid": { "uid": 7616652129664549 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-76.602486, -909.952698] },
-                "ang": { "angf": 0.662332 },
-                "scale": { "vec2f": [0.881260, 0.040809] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1137728901 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-373.831116, -265.814331] },
+                "ang": { "angf": 3.832909 },
+                "scale": { "vec2f": [0.536771, 0.810706] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 912492554 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.452984, -0.891519] },
-                "move_speed": { "float": 66.282280 },
-                "rot_speed": { "float": 64.234848 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1081631851 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.684156, -0.729336] },
+                "move_speed": { "float": 27.855253 },
+                "rot_speed": { "float": -69.249069 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1142727659954784 },
+            "uid": { "uid": 7898127106375205 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [351.899811, 1107.574219] },
-                "ang": { "angf": 5.893040 },
-                "scale": { "vec2f": [0.823389, 0.922105] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 331316019 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-19.252438, -420.336029] },
+                "ang": { "angf": 2.466217 },
+                "scale": { "vec2f": [0.822702, 0.284871] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2013699973 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.028219, 0.999602] },
-                "move_speed": { "float": 72.805061 },
-                "rot_speed": { "float": -64.223991 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2060653138 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.986197, -0.165576] },
+                "move_speed": { "float": 27.798931 },
+                "rot_speed": { "float": 18.433952 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1424202636665440 },
+            "uid": { "uid": 8179602083085861 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [445.033386, -1234.641357] },
-                "ang": { "angf": 1.631239 },
-                "scale": { "vec2f": [0.503481, 0.653984] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1281999427 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-386.104858, -88.277298] },
+                "ang": { "angf": 2.101231 },
+                "scale": { "vec2f": [0.319336, 0.092183] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 878316647 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.313514, -0.949584] },
-                "move_speed": { "float": 80.483009 },
-                "rot_speed": { "float": 29.072800 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 65296651 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.699372, -0.714758] },
+                "move_speed": { "float": 2.694052 },
+                "rot_speed": { "float": 19.061890 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1705677613376096 },
+            "uid": { "uid": 8461077059796517 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [554.203918, 1121.971802] },
-                "ang": { "angf": 0.073404 },
-                "scale": { "vec2f": [0.268994, 0.547526] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 784983778 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [23.526972, -127.200577] },
+                "ang": { "angf": 1.452505 },
+                "scale": { "vec2f": [0.337468, 0.493564] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 669220993 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.592148, 0.805829] },
-                "move_speed": { "float": 81.376137 },
-                "rot_speed": { "float": -45.937706 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1225370012 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.838571, -0.544793] },
+                "move_speed": { "float": 72.813782 },
+                "rot_speed": { "float": 31.767731 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1987152590086752 },
+            "uid": { "uid": 8742552036507173 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-919.431030, -708.653503] },
-                "ang": { "angf": 1.189580 },
-                "scale": { "vec2f": [0.619723, 0.743358] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 216802748 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [344.228882, 43.938557] },
+                "ang": { "angf": 3.146966 },
+                "scale": { "vec2f": [0.971566, 0.255309] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 635169865 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.917557, -0.397604] },
-                "move_speed": { "float": 66.339645 },
-                "rot_speed": { "float": 11.822144 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 158711818 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.022324, -0.999751] },
+                "move_speed": { "float": 38.228897 },
+                "rot_speed": { "float": -47.297905 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2268627566797408 },
+            "uid": { "uid": 9024027013217829 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [293.583496, 86.311089] },
-                "ang": { "angf": 5.025786 },
-                "scale": { "vec2f": [0.860238, 0.972801] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1762059708 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [60.221626, 163.261414] },
+                "ang": { "angf": 1.583567 },
+                "scale": { "vec2f": [0.531195, 0.390226] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1986835703 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.648666, -0.761073] },
-                "move_speed": { "float": 24.797291 },
-                "rot_speed": { "float": -97.884857 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1524433118 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.050246, 0.998737] },
+                "move_speed": { "float": 29.825741 },
+                "rot_speed": { "float": 35.835022 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2550102543508064 },
+            "uid": { "uid": 9305501989928485 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [63.957119, 538.338074] },
-                "ang": { "angf": 4.942297 },
-                "scale": { "vec2f": [0.748289, 0.792988] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1925174800 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [378.105377, -296.288452] },
+                "ang": { "angf": 1.839678 },
+                "scale": { "vec2f": [0.995700, 0.035759] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1604909171 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.505773, 0.862667] },
-                "move_speed": { "float": 25.547775 },
-                "rot_speed": { "float": -16.286240 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1313830677 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.995515, 0.094607] },
+                "move_speed": { "float": 1.426059 },
+                "rot_speed": { "float": -33.775063 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2831577520218720 },
+            "uid": { "uid": 9586976966639141 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-880.888245, -185.273392] },
-                "ang": { "angf": 5.747566 },
-                "scale": { "vec2f": [0.689939, 0.434562] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 456662430 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [341.650421, -465.792480] },
+                "ang": { "angf": 3.543207 },
+                "scale": { "vec2f": [0.763983, 0.554517] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 213478162 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.927445, -0.373960] },
-                "move_speed": { "float": 85.279747 },
-                "rot_speed": { "float": 95.478989 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1629778244 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.428772, -0.903413] },
+                "move_speed": { "float": 17.243473 },
+                "rot_speed": { "float": 23.313499 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3113052496929376 },
+            "uid": { "uid": 9868451943349797 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [377.110535, -195.378830] },
-                "ang": { "angf": 2.780554 },
-                "scale": { "vec2f": [0.244007, 0.705732] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1396586476 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-199.928329, 15.151816] },
+                "ang": { "angf": 4.835849 },
+                "scale": { "vec2f": [0.459905, 0.171206] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 905755086 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.637393, 0.770539] },
-                "move_speed": { "float": 12.004446 },
-                "rot_speed": { "float": -60.142185 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1661640466 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.613127, 0.789984] },
+                "move_speed": { "float": 68.739281 },
+                "rot_speed": { "float": 88.048355 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3394527473640032 },
+            "uid": { "uid": 10149926920060453 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [409.959991, -452.238251] },
-                "ang": { "angf": 4.378487 },
-                "scale": { "vec2f": [0.252529, 0.517835] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1381024180 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-341.498230, -10.722313] },
+                "ang": { "angf": 0.769069 },
+                "scale": { "vec2f": [0.346473, 0.488032] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1615376250 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.301128, -0.953584] },
-                "move_speed": { "float": 27.973347 },
-                "rot_speed": { "float": -59.524612 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1140368376 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.616280, 0.787527] },
+                "move_speed": { "float": 17.682173 },
+                "rot_speed": { "float": -81.254074 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3676002450350688 },
+            "uid": { "uid": 10431401896771109 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-533.086426, -505.811737] },
-                "ang": { "angf": 5.168327 },
-                "scale": { "vec2f": [0.330536, 0.351004] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 673712557 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [139.993179, -253.495499] },
+                "ang": { "angf": 0.807018 },
+                "scale": { "vec2f": [0.146534, 0.698825] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 643680713 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.362205, -0.932098] },
-                "move_speed": { "float": 26.669147 },
-                "rot_speed": { "float": 58.255142 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1466613452 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.151778, -0.988415] },
+                "move_speed": { "float": 93.468956 },
+                "rot_speed": { "float": -51.898930 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3957477427061344 },
+            "uid": { "uid": 10712876873481765 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-334.447205, -364.848785] },
-                "ang": { "angf": 0.022175 },
-                "scale": { "vec2f": [0.142785, 0.576137] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 372728101 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [358.502716, -259.832520] },
+                "ang": { "angf": 3.546086 },
+                "scale": { "vec2f": [0.695227, 0.847248] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1538831545 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.570151, -0.821540] },
-                "move_speed": { "float": 58.241505 },
-                "rot_speed": { "float": 51.467422 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 996215994 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.472757, 0.881193] },
+                "move_speed": { "float": 13.099314 },
+                "rot_speed": { "float": -85.529968 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4238952403772000 },
+            "uid": { "uid": 10994351850192421 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-454.038025, -1010.920105] },
-                "ang": { "angf": 6.143442 },
-                "scale": { "vec2f": [0.376263, 0.210411] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2124286846 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-394.825684, -449.881775] },
+                "ang": { "angf": 4.651009 },
+                "scale": { "vec2f": [0.161148, 0.706501] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 703570119 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.560574, -0.828104] },
-                "move_speed": { "float": 82.814148 },
-                "rot_speed": { "float": -20.389572 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 858029651 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.186720, -0.982413] },
+                "move_speed": { "float": 89.777946 },
+                "rot_speed": { "float": 25.076233 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4520427380482656 },
+            "uid": { "uid": 11275826826903077 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-314.334930, 322.956482] },
-                "ang": { "angf": 4.920158 },
-                "scale": { "vec2f": [0.737140, 0.842193] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1677179788 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [128.559509, -194.993927] },
+                "ang": { "angf": 0.341276 },
+                "scale": { "vec2f": [0.025543, 0.090738] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1516980449 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.381734, 0.924272] },
-                "move_speed": { "float": 47.019920 },
-                "rot_speed": { "float": 38.974106 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 964549159 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.717306, 0.696758] },
+                "move_speed": { "float": 6.855190 },
+                "rot_speed": { "float": -95.599586 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4801902357193312 },
+            "uid": { "uid": 11557301803613733 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [548.467468, 829.220581] },
-                "ang": { "angf": 1.294943 },
-                "scale": { "vec2f": [0.839618, 0.239950] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1693636940 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-445.932587, -343.236664] },
+                "ang": { "angf": 2.595776 },
+                "scale": { "vec2f": [0.961427, 0.730110] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 682033878 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.648269, 0.761411] },
-                "move_speed": { "float": 57.470226 },
-                "rot_speed": { "float": 63.836380 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1823163507 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.824796, 0.565430] },
+                "move_speed": { "float": 12.975210 },
+                "rot_speed": { "float": -99.286308 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5083377333903968 },
+            "uid": { "uid": 11838776780324389 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-837.377441, 1353.972412] },
-                "ang": { "angf": 4.742455 },
-                "scale": { "vec2f": [0.444506, 0.840331] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2093951262 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-33.334621, -361.417603] },
+                "ang": { "angf": 1.223679 },
+                "scale": { "vec2f": [0.557573, 0.984206] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1155771256 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.616434, 0.787406] },
-                "move_speed": { "float": 78.837318 },
-                "rot_speed": { "float": -47.683411 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1057912477 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.893623, 0.448818] },
+                "move_speed": { "float": 4.735337 },
+                "rot_speed": { "float": -72.097397 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5364852310614624 },
+            "uid": { "uid": 12120251757035045 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-997.410217, 715.196594] },
-                "ang": { "angf": 1.595684 },
-                "scale": { "vec2f": [0.086897, 0.342006] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1707582381 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-367.706848, -175.856003] },
+                "ang": { "angf": 0.221349 },
+                "scale": { "vec2f": [0.315808, 0.170067] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1571835976 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.814273, 0.580482] },
-                "move_speed": { "float": 86.251862 },
-                "rot_speed": { "float": -98.090622 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1650906885 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.968647, 0.248439] },
+                "move_speed": { "float": 75.687943 },
+                "rot_speed": { "float": 19.716141 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5646327287325280 },
+            "uid": { "uid": 12401726733745701 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [158.451050, 1023.620422] },
-                "ang": { "angf": 2.205052 },
-                "scale": { "vec2f": [0.026569, 0.728210] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 743415350 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [168.762665, -366.762329] },
+                "ang": { "angf": 2.471154 },
+                "scale": { "vec2f": [0.351417, 0.061483] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 300245060 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.343091, 0.939302] },
-                "move_speed": { "float": 72.822441 },
-                "rot_speed": { "float": -74.208099 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1779636617 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.443488, -0.896280] },
+                "move_speed": { "float": 38.458031 },
+                "rot_speed": { "float": -67.429802 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5927802264035936 },
+            "uid": { "uid": 12683201710456357 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-75.678673, -777.889771] },
-                "ang": { "angf": 3.762910 },
-                "scale": { "vec2f": [0.318719, 0.693361] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 78659462 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [268.704559, 47.505737] },
+                "ang": { "angf": 1.281928 },
+                "scale": { "vec2f": [0.623328, 0.128198] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1710525147 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.230697, -0.973026] },
-                "move_speed": { "float": 47.467739 },
-                "rot_speed": { "float": 44.050568 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 432563240 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.954613, -0.297850] },
+                "move_speed": { "float": 33.662819 },
+                "rot_speed": { "float": -81.753067 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6209277240746592 },
+            "uid": { "uid": 12964676687167013 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-816.549011, -33.831272] },
-                "ang": { "angf": 3.594935 },
-                "scale": { "vec2f": [0.914909, 0.456055] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 817884466 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [54.574585, -353.318665] },
+                "ang": { "angf": 2.529129 },
+                "scale": { "vec2f": [0.229040, 0.450243] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 398883653 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.988601, 0.150561] },
-                "move_speed": { "float": 57.814987 },
-                "rot_speed": { "float": -30.175468 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1741093684 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.987068, -0.160304] },
+                "move_speed": { "float": 7.985180 },
+                "rot_speed": { "float": 71.536865 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6490752217457248 },
+            "uid": { "uid": 16827758476838 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1658.583130, -595.156433] },
-                "ang": { "angf": 4.476792 },
-                "scale": { "vec2f": [0.064458, 0.536328] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 215728336 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-312.416809, -62.416378] },
+                "ang": { "angf": 2.384659 },
+                "scale": { "vec2f": [0.766026, 0.829878] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1972405492 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.871227, -0.490881] },
-                "move_speed": { "float": 99.790459 },
-                "rot_speed": { "float": -14.664284 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1661528952 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.673875, 0.738846] },
+                "move_speed": { "float": 12.121254 },
+                "rot_speed": { "float": -94.113914 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6772227194167904 },
+            "uid": { "uid": 298302735187494 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-580.431274, -445.721344] },
-                "ang": { "angf": 4.157305 },
-                "scale": { "vec2f": [0.551515, 0.216966] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1368756077 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [382.841858, 107.889069] },
+                "ang": { "angf": 5.099225 },
+                "scale": { "vec2f": [0.287073, 0.567995] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1936061692 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.735632, -0.677381] },
-                "move_speed": { "float": 18.603027 },
-                "rot_speed": { "float": -15.001236 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 716638100 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.386670, 0.922218] },
+                "move_speed": { "float": 45.325909 },
+                "rot_speed": { "float": -78.725990 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7053702170878560 },
+            "uid": { "uid": 579777711898150 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [391.382690, 54.196255] },
-                "ang": { "angf": 4.806456 },
-                "scale": { "vec2f": [0.832866, 0.916870] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1634891900 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-12.914598, 65.087898] },
+                "ang": { "angf": 0.293039 },
+                "scale": { "vec2f": [0.615579, 0.853550] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 340130600 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.870174, -0.492744] },
-                "move_speed": { "float": 31.793306 },
-                "rot_speed": { "float": 41.594666 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2121009533 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.316567, 0.948570] },
+                "move_speed": { "float": 56.558990 },
+                "rot_speed": { "float": -75.731285 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7335177147589216 },
+            "uid": { "uid": 861252688608806 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-621.802307, -313.037781] },
-                "ang": { "angf": 4.054682 },
-                "scale": { "vec2f": [0.041597, 0.002144] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 904703007 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-279.748871, 132.671265] },
+                "ang": { "angf": 1.424541 },
+                "scale": { "vec2f": [0.512091, 0.095050] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 604079906 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.598799, -0.800900] },
-                "move_speed": { "float": 51.549538 },
-                "rot_speed": { "float": 35.591919 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1615780773 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.929224, 0.369517] },
+                "move_speed": { "float": 58.341282 },
+                "rot_speed": { "float": 39.164581 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7616652124299872 },
+            "uid": { "uid": 1142727665319462 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1026.735107, 792.810974] },
-                "ang": { "angf": 4.708159 },
-                "scale": { "vec2f": [0.055049, 0.164042] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1492306364 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-175.685989, -590.734131] },
+                "ang": { "angf": 5.140751 },
+                "scale": { "vec2f": [0.718803, 0.983919] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 458855019 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.682315, 0.731058] },
-                "move_speed": { "float": 72.302116 },
-                "rot_speed": { "float": 59.032730 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 362527956 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.123609, -0.992331] },
+                "move_speed": { "float": 99.810593 },
+                "rot_speed": { "float": 69.067688 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7898127101010528 },
+            "uid": { "uid": 1424202642030118 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [461.407196, -439.107910] },
-                "ang": { "angf": 0.796628 },
-                "scale": { "vec2f": [0.200658, 0.294532] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1294504081 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [137.551346, -282.548157] },
+                "ang": { "angf": 4.699944 },
+                "scale": { "vec2f": [0.526093, 0.206790] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 588737712 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.405504, -0.914093] },
-                "move_speed": { "float": 20.589672 },
-                "rot_speed": { "float": 38.651871 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1457563855 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.691168, -0.722694] },
+                "move_speed": { "float": 28.433859 },
+                "rot_speed": { "float": -23.479736 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 8179602077721184 },
+            "uid": { "uid": 1705677618740774 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-643.821899, -425.449982] },
-                "ang": { "angf": 5.872455 },
-                "scale": { "vec2f": [0.255312, 0.024707] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 816433754 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-14.767479, -150.708450] },
+                "ang": { "angf": 2.556688 },
+                "scale": { "vec2f": [0.978857, 0.742070] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1002076598 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.794006, -0.607911] },
-                "move_speed": { "float": 54.485687 },
-                "rot_speed": { "float": -71.736084 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1334622812 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.618231, -0.785997] },
+                "move_speed": { "float": 87.140022 },
+                "rot_speed": { "float": 58.368973 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 8461077054431840 },
+            "uid": { "uid": 1987152595451430 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-927.258911, 482.795624] },
-                "ang": { "angf": 4.510075 },
-                "scale": { "vec2f": [0.868269, 0.518229] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1152126884 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [284.011871, 687.786743] },
+                "ang": { "angf": 1.610321 },
+                "scale": { "vec2f": [0.339153, 0.394380] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 144650493 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.831215, 0.555952] },
-                "move_speed": { "float": 87.821404 },
-                "rot_speed": { "float": -6.398262 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 189347447 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.309251, 0.950981] },
+                "move_speed": { "float": 70.026955 },
+                "rot_speed": { "float": 9.183670 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 8742552031142496 },
+            "uid": { "uid": 2268627572162086 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-389.469543, -255.986832] },
-                "ang": { "angf": 2.301123 },
-                "scale": { "vec2f": [0.321175, 0.113008] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 535232658 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [420.783691, 379.524963] },
+                "ang": { "angf": 0.080338 },
+                "scale": { "vec2f": [0.201438, 0.997394] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 626852747 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.800328, -0.599562] },
-                "move_speed": { "float": 55.283951 },
-                "rot_speed": { "float": 31.968338 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2106830294 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.740621, 0.671923] },
+                "move_speed": { "float": 11.704532 },
+                "rot_speed": { "float": -43.316109 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 9024027007853152 },
+            "uid": { "uid": 2550102548872742 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [1004.348816, -498.326813] },
-                "ang": { "angf": 4.024148 },
-                "scale": { "vec2f": [0.760187, 0.960716] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 924810135 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [220.181854, 303.210724] },
+                "ang": { "angf": 3.779730 },
+                "scale": { "vec2f": [0.421893, 0.025907] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1433598642 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.699476, -0.714656] },
-                "move_speed": { "float": 78.227615 },
-                "rot_speed": { "float": 50.488297 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1873340401 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.987231, -0.159298] },
+                "move_speed": { "float": 28.579197 },
+                "rot_speed": { "float": -88.764526 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 9305501984563808 },
+            "uid": { "uid": 2831577525583398 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-964.668213, -611.965637] },
-                "ang": { "angf": 4.350545 },
-                "scale": { "vec2f": [0.229960, 0.420077] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 372320600 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-410.393890, 684.108154] },
+                "ang": { "angf": 4.607926 },
+                "scale": { "vec2f": [0.307818, 0.922848] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1351167495 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.828106, -0.560571] },
-                "move_speed": { "float": 50.512299 },
-                "rot_speed": { "float": 17.587677 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1580005087 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.445266, 0.895398] },
+                "move_speed": { "float": 83.410225 },
+                "rot_speed": { "float": 18.454193 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 9586976961274464 },
+            "uid": { "uid": 3113052502294054 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-935.759460, 746.478638] },
-                "ang": { "angf": 6.043080 },
-                "scale": { "vec2f": [0.975515, 0.828820] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 640302495 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [348.449829, -47.655251] },
+                "ang": { "angf": 1.329144 },
+                "scale": { "vec2f": [0.802664, 0.036759] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 663671529 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.835028, 0.550208] },
-                "move_speed": { "float": 89.445625 },
-                "rot_speed": { "float": -58.497734 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 297325385 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.003587, 0.999994] },
+                "move_speed": { "float": 33.639042 },
+                "rot_speed": { "float": -89.111931 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 9868451937985120 },
+            "uid": { "uid": 3394527479004710 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [32.372711, -250.082474] },
-                "ang": { "angf": 5.451034 },
-                "scale": { "vec2f": [0.234077, 0.012449] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2102299769 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-4.502793, -111.963493] },
+                "ang": { "angf": 1.434697 },
+                "scale": { "vec2f": [0.394487, 0.305789] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1799531806 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.327357, -0.944901] },
-                "move_speed": { "float": 24.894924 },
-                "rot_speed": { "float": 17.169502 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1718862741 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.994379, -0.105878] },
+                "move_speed": { "float": 23.011951 },
+                "rot_speed": { "float": 83.590332 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 10149926914695776 },
+            "uid": { "uid": 3676002455715366 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [166.227524, -118.572578] },
-                "ang": { "angf": 3.373951 },
-                "scale": { "vec2f": [0.161223, 0.441135] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 28516292 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [640.236206, -265.190308] },
+                "ang": { "angf": 2.474105 },
+                "scale": { "vec2f": [0.087768, 0.004468] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 200605536 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.998800, 0.048977] },
-                "move_speed": { "float": 13.223384 },
-                "rot_speed": { "float": -72.888100 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 27917762 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.999477, -0.032334] },
+                "move_speed": { "float": 55.546452 },
+                "rot_speed": { "float": -55.138508 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 10431401891406432 },
+            "uid": { "uid": 3957477432426022 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [974.252808, -874.957397] },
-                "ang": { "angf": 6.248955 },
-                "scale": { "vec2f": [0.098522, 0.166960] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2008907464 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [4.565408, 10.866418] },
+                "ang": { "angf": 5.820614 },
+                "scale": { "vec2f": [0.385602, 0.595727] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1558788487 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.664581, -0.747217] },
-                "move_speed": { "float": 65.095825 },
-                "rot_speed": { "float": -20.252510 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1405091256 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.865066, 0.501657] },
+                "move_speed": { "float": 21.127089 },
+                "rot_speed": { "float": 85.777008 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 10712876868117088 },
+            "uid": { "uid": 4238952409136678 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-27.688536, 223.733276] },
-                "ang": { "angf": 6.218451 },
-                "scale": { "vec2f": [0.151498, 0.463923] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1655956938 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [31.143705, 41.889854] },
+                "ang": { "angf": 2.001494 },
+                "scale": { "vec2f": [0.073251, 0.678591] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1586638135 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.919456, 0.393193] },
-                "move_speed": { "float": 26.162750 },
-                "rot_speed": { "float": 64.313553 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1322690146 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.634041, 0.773300] },
+                "move_speed": { "float": 93.320023 },
+                "rot_speed": { "float": 91.349274 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 10994351844827744 },
+            "uid": { "uid": 4520427385847334 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-56.269810, 57.661915] },
-                "ang": { "angf": 5.241488 },
-                "scale": { "vec2f": [0.425828, 0.246708] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 78852955 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [100.899498, 6.869284] },
+                "ang": { "angf": 5.344304 },
+                "scale": { "vec2f": [0.213304, 0.468805] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1860505794 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.681650, 0.731678] },
-                "move_speed": { "float": 34.078201 },
-                "rot_speed": { "float": 21.868362 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 11495791 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.667056, 0.745008] },
+                "move_speed": { "float": 86.381737 },
+                "rot_speed": { "float": -88.257118 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 11275826821538400 },
+            "uid": { "uid": 4801902362557990 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [110.075150, -159.058548] },
-                "ang": { "angf": 1.193615 },
-                "scale": { "vec2f": [0.810377, 0.988267] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1745770370 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-156.437195, -46.781906] },
+                "ang": { "angf": 4.650796 },
+                "scale": { "vec2f": [0.508549, 0.902392] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1569572667 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.957926, 0.287014] },
-                "move_speed": { "float": 16.918259 },
-                "rot_speed": { "float": -18.874886 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 118694521 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.498385, 0.866956] },
+                "move_speed": { "float": 78.516029 },
+                "rot_speed": { "float": 43.048126 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 11557301798249056 },
+            "uid": { "uid": 5083377339268646 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [1661.751831, -253.891235] },
-                "ang": { "angf": 1.642258 },
-                "scale": { "vec2f": [0.948528, 0.196998] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 105507386 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-320.357269, 231.061188] },
+                "ang": { "angf": 0.888468 },
+                "scale": { "vec2f": [0.507798, 0.392486] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 837870275 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.995459, -0.095188] },
-                "move_speed": { "float": 90.357857 },
-                "rot_speed": { "float": -84.922928 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1035438546 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.872640, 0.488364] },
+                "move_speed": { "float": 17.185186 },
+                "rot_speed": { "float": 44.304901 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 11838776774959712 },
+            "uid": { "uid": 5364852315979302 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [561.010559, -1397.838745] },
-                "ang": { "angf": 4.448722 },
-                "scale": { "vec2f": [0.484532, 0.018295] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1422693529 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-140.403702, 199.618683] },
+                "ang": { "angf": 5.264185 },
+                "scale": { "vec2f": [0.762488, 0.364834] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1082502289 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.282112, -0.959382] },
-                "move_speed": { "float": 67.221611 },
-                "rot_speed": { "float": -42.336823 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 134513839 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.813534, 0.581517] },
+                "move_speed": { "float": 66.071297 },
+                "rot_speed": { "float": -99.424080 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 16827753112161 },
+            "uid": { "uid": 5646327292689958 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-482.170349, -551.322693] },
-                "ang": { "angf": 4.420720 },
-                "scale": { "vec2f": [0.666884, 0.640428] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 854130068 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [142.778473, 488.581696] },
+                "ang": { "angf": 4.918999 },
+                "scale": { "vec2f": [0.367985, 0.227606] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1519637768 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.424931, -0.905226] },
-                "move_speed": { "float": 52.142323 },
-                "rot_speed": { "float": -37.468864 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 528953005 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.560646, 0.828056] },
+                "move_speed": { "float": 77.136543 },
+                "rot_speed": { "float": 4.910980 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 298302729822817 },
+            "uid": { "uid": 5927802269400614 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-90.352463, 424.685730] },
-                "ang": { "angf": 5.605291 },
-                "scale": { "vec2f": [0.759331, 0.441468] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 418147993 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-173.591507, 264.139496] },
+                "ang": { "angf": 5.004458 },
+                "scale": { "vec2f": [0.152976, 0.975972] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 670023528 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.580243, 0.814444] },
-                "move_speed": { "float": 14.383078 },
-                "rot_speed": { "float": -97.194054 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1828673875 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.556771, 0.830666] },
+                "move_speed": { "float": 51.392475 },
+                "rot_speed": { "float": -97.256958 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 579777706533473 },
+            "uid": { "uid": 6209277246111270 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-900.472046, 235.973648] },
-                "ang": { "angf": 2.760549 },
-                "scale": { "vec2f": [0.710674, 0.734498] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1098559134 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-45.690250, 154.309937] },
+                "ang": { "angf": 0.033100 },
+                "scale": { "vec2f": [0.734810, 0.396367] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 244666190 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.999998, -0.002205] },
-                "move_speed": { "float": 66.659523 },
-                "rot_speed": { "float": 72.949036 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1820954972 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.981624, -0.190825] },
+                "move_speed": { "float": 32.750061 },
+                "rot_speed": { "float": -73.107819 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 861252683244129 },
+            "uid": { "uid": 6490752222821926 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-496.918701, -45.159836] },
-                "ang": { "angf": 5.979614 },
-                "scale": { "vec2f": [0.765495, 0.884141] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1899221557 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [289.860474, -339.392670] },
+                "ang": { "angf": 4.624644 },
+                "scale": { "vec2f": [0.669909, 0.496738] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1669644622 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.422400, -0.906410] },
-                "move_speed": { "float": 18.729412 },
-                "rot_speed": { "float": 76.201721 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 548346605 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.674148, 0.738596] },
+                "move_speed": { "float": 15.412185 },
+                "rot_speed": { "float": 44.605118 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1142727659954785 },
+            "uid": { "uid": 6772227199532582 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [430.273560, -958.471619] },
-                "ang": { "angf": 4.274121 },
-                "scale": { "vec2f": [0.812533, 0.629488] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1911672715 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [44.404850, -66.120316] },
+                "ang": { "angf": 4.289811 },
+                "scale": { "vec2f": [0.929208, 0.749029] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 433816086 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.374142, -0.927371] },
-                "move_speed": { "float": 45.107845 },
-                "rot_speed": { "float": -82.745232 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 439975837 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.597663, -0.801747] },
+                "move_speed": { "float": 8.367028 },
+                "rot_speed": { "float": 36.636002 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1424202636665441 },
+            "uid": { "uid": 7053702176243238 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [161.114807, -262.758667] },
-                "ang": { "angf": 1.432333 },
-                "scale": { "vec2f": [0.586324, 0.991408] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 443663393 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-320.173279, -5.455025] },
+                "ang": { "angf": 2.043475 },
+                "scale": { "vec2f": [0.729055, 0.013907] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1148559671 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.694264, 0.719720] },
-                "move_speed": { "float": 12.008190 },
-                "rot_speed": { "float": 66.950226 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 111887614 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.802604, 0.596512] },
+                "move_speed": { "float": 62.984249 },
+                "rot_speed": { "float": 84.339996 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1705677613376097 },
+            "uid": { "uid": 7335177152953894 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1123.464355, 853.659546] },
-                "ang": { "angf": 2.781997 },
-                "scale": { "vec2f": [0.288371, 0.615296] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 24522435 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [567.332275, 577.372498] },
+                "ang": { "angf": 4.052052 },
+                "scale": { "vec2f": [0.047834, 0.399182] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 889881756 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.779991, 0.625791] },
-                "move_speed": { "float": 74.668869 },
-                "rot_speed": { "float": 18.412567 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1166555384 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.758647, 0.651501] },
+                "move_speed": { "float": 78.781403 },
+                "rot_speed": { "float": 53.522003 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 1987152590086753 },
+            "uid": { "uid": 7616652129664550 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-592.790283, -205.035675] },
-                "ang": { "angf": 4.812630 },
-                "scale": { "vec2f": [0.413050, 0.582282] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 476681737 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-44.858719, 111.132179] },
+                "ang": { "angf": 6.239082 },
+                "scale": { "vec2f": [0.560549, 0.470373] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 581926749 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.441643, -0.897191] },
-                "move_speed": { "float": 32.037857 },
-                "rot_speed": { "float": -54.992252 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 802342005 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.916307, -0.400476] },
+                "move_speed": { "float": 20.664761 },
+                "rot_speed": { "float": -11.805038 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2268627566797409 },
+            "uid": { "uid": 7898127106375206 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-454.960754, 715.902832] },
-                "ang": { "angf": 2.296721 },
-                "scale": { "vec2f": [0.101302, 0.086518] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 995553799 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [146.022064, 271.011902] },
+                "ang": { "angf": 2.070070 },
+                "scale": { "vec2f": [0.248241, 0.055884] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1664040425 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.436784, 0.899566] },
-                "move_speed": { "float": 67.082710 },
-                "rot_speed": { "float": 41.496201 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 847888094 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.057817, 0.998327] },
+                "move_speed": { "float": 45.768059 },
+                "rot_speed": { "float": -66.115601 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2550102543508065 },
+            "uid": { "uid": 8179602083085862 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-877.280762, 1259.854370] },
-                "ang": { "angf": 3.836181 },
-                "scale": { "vec2f": [0.046095, 0.710243] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1020161361 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [773.667847, -277.056915] },
+                "ang": { "angf": 3.409531 },
+                "scale": { "vec2f": [0.805856, 0.869329] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1133693645 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.383203, 0.923664] },
-                "move_speed": { "float": 80.635216 },
-                "rot_speed": { "float": -2.685646 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1514175331 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.999930, -0.011819] },
+                "move_speed": { "float": 84.162582 },
+                "rot_speed": { "float": -36.323502 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 2831577520218721 },
+            "uid": { "uid": 8461077059796518 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-555.090515, -63.410606] },
-                "ang": { "angf": 3.969236 },
-                "scale": { "vec2f": [0.059456, 0.515563] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 117095654 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [138.094131, 289.703522] },
+                "ang": { "angf": 1.802788 },
+                "scale": { "vec2f": [0.154763, 0.368308] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 262842545 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.921794, -0.387680] },
-                "move_speed": { "float": 52.036957 },
-                "rot_speed": { "float": -14.972694 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 220791936 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.626513, 0.779411] },
+                "move_speed": { "float": 93.995171 },
+                "rot_speed": { "float": 14.806763 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3113052496929377 },
+            "uid": { "uid": 8742552036507174 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [741.846497, -491.899292] },
-                "ang": { "angf": 3.884322 },
-                "scale": { "vec2f": [0.263700, 0.925701] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1687072757 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-108.231529, 148.754532] },
+                "ang": { "angf": 1.536074 },
+                "scale": { "vec2f": [0.562507, 0.119448] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 319992438 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.949782, -0.312913] },
-                "move_speed": { "float": 63.499168 },
-                "rot_speed": { "float": -32.164673 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 813853378 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.998214, 0.059743] },
+                "move_speed": { "float": 90.417412 },
+                "rot_speed": { "float": -62.791031 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3394527473640033 },
+            "uid": { "uid": 9024027013217830 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-382.431885, 177.148895] },
-                "ang": { "angf": 1.502323 },
-                "scale": { "vec2f": [0.596319, 0.042518] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1837434035 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [351.751740, 42.633904] },
+                "ang": { "angf": 1.280231 },
+                "scale": { "vec2f": [0.553386, 0.028295] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 504959053 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.644835, 0.764322] },
-                "move_speed": { "float": 12.110131 },
-                "rot_speed": { "float": -71.751877 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2138914474 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.709436, 0.704770] },
+                "move_speed": { "float": 28.164612 },
+                "rot_speed": { "float": 34.615021 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3676002450350689 },
+            "uid": { "uid": 9305501989928486 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [8.367826, 522.286316] },
-                "ang": { "angf": 3.929965 },
-                "scale": { "vec2f": [0.144297, 0.945269] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 802907735 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [37.509312, 277.324158] },
+                "ang": { "angf": 3.936213 },
+                "scale": { "vec2f": [0.580108, 0.797559] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 756193392 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.818978, 0.573825] },
-                "move_speed": { "float": 29.001011 },
-                "rot_speed": { "float": 33.264252 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 534116398 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.319830, -0.947475] },
+                "move_speed": { "float": 1.043620 },
+                "rot_speed": { "float": -18.964493 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 3957477427061345 },
+            "uid": { "uid": 9586976966639142 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-543.596252, 811.485107] },
-                "ang": { "angf": 1.749424 },
-                "scale": { "vec2f": [0.893920, 0.406967] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1758786241 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-72.828918, 363.668732] },
+                "ang": { "angf": 1.603440 },
+                "scale": { "vec2f": [0.459797, 0.302996] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 546321164 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.336810, 0.941573] },
-                "move_speed": { "float": 35.766163 },
-                "rot_speed": { "float": -65.873741 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1527212423 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.996803, 0.079899] },
+                "move_speed": { "float": 94.176064 },
+                "rot_speed": { "float": -43.183876 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4238952403772001 },
+            "uid": { "uid": 9868451943349798 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-110.830444, 390.606384] },
-                "ang": { "angf": 3.584148 },
-                "scale": { "vec2f": [0.096534, 0.019224] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1166631669 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-74.828094, 54.766071] },
+                "ang": { "angf": 6.034262 },
+                "scale": { "vec2f": [0.892924, 0.137674] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2123479128 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.207788, 0.978174] },
-                "move_speed": { "float": 9.935614 },
-                "rot_speed": { "float": 95.681442 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 282974803 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.749011, 0.662558] },
+                "move_speed": { "float": 20.195213 },
+                "rot_speed": { "float": 45.392426 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4520427380482657 },
+            "uid": { "uid": 10149926920060454 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [1009.802185, -608.997803] },
-                "ang": { "angf": 4.710602 },
-                "scale": { "vec2f": [0.382242, 0.714308] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 110730302 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-594.656006, -135.751526] },
+                "ang": { "angf": 0.155606 },
+                "scale": { "vec2f": [0.620223, 0.519463] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1777651992 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.973401, -0.229108] },
-                "move_speed": { "float": 79.191063 },
-                "rot_speed": { "float": -37.013138 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1204532480 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.656471, -0.754351] },
+                "move_speed": { "float": 64.833466 },
+                "rot_speed": { "float": 71.615906 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 4801902357193313 },
+            "uid": { "uid": 10431401896771110 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [404.034668, 888.579590] },
-                "ang": { "angf": 0.215192 },
-                "scale": { "vec2f": [0.382379, 0.744831] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1595213073 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-524.325012, -57.432293] },
+                "ang": { "angf": 0.474863 },
+                "scale": { "vec2f": [0.377461, 0.993894] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1039409124 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.222227, 0.974995] },
-                "move_speed": { "float": 79.949554 },
-                "rot_speed": { "float": -83.693939 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1717162370 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.797888, -0.602805] },
+                "move_speed": { "float": 84.658653 },
+                "rot_speed": { "float": 6.896568 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5083377333903969 },
+            "uid": { "uid": 10712876873481766 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [397.563477, 525.822021] },
-                "ang": { "angf": 1.153934 },
-                "scale": { "vec2f": [0.987073, 0.838757] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 113887856 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-101.077621, -503.852753] },
+                "ang": { "angf": 0.603518 },
+                "scale": { "vec2f": [0.178879, 0.126982] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 606472408 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.448976, 0.893544] },
-                "move_speed": { "float": 50.678391 },
-                "rot_speed": { "float": 56.848297 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1024372594 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.548952, -0.835854] },
+                "move_speed": { "float": 93.776062 },
+                "rot_speed": { "float": -24.626808 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5364852310614625 },
+            "uid": { "uid": 10994351850192422 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-145.317902, 322.724518] },
-                "ang": { "angf": 3.940592 },
-                "scale": { "vec2f": [0.017524, 0.877255] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2117671488 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [75.234947, -215.887512] },
+                "ang": { "angf": 2.139723 },
+                "scale": { "vec2f": [0.341727, 0.993475] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1981432361 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.748639, 0.662978] },
-                "move_speed": { "float": 12.175738 },
-                "rot_speed": { "float": -44.160576 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 904777298 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.107800, -0.994173] },
+                "move_speed": { "float": 77.234116 },
+                "rot_speed": { "float": -82.191605 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5646327287325281 },
+            "uid": { "uid": 11275826826903078 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1403.780029, 112.891693] },
-                "ang": { "angf": 0.189387 },
-                "scale": { "vec2f": [0.248410, 0.624814] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1135389593 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [506.503723, 491.474274] },
+                "ang": { "angf": 1.923171 },
+                "scale": { "vec2f": [0.613961, 0.235653] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 963493589 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.992480, 0.122410] },
-                "move_speed": { "float": 73.811485 },
-                "rot_speed": { "float": -92.658531 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1410051943 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.943902, 0.330226] },
+                "move_speed": { "float": 70.522514 },
+                "rot_speed": { "float": 35.173203 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 5927802264035937 },
+            "uid": { "uid": 11557301803613734 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-222.586792, -1019.908752] },
-                "ang": { "angf": 5.948199 },
-                "scale": { "vec2f": [0.570719, 0.781911] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 600804724 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [58.898064, -137.958160] },
+                "ang": { "angf": 5.406215 },
+                "scale": { "vec2f": [0.922832, 0.054318] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1093311617 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.062507, -0.998045] },
-                "move_speed": { "float": 88.744926 },
-                "rot_speed": { "float": -49.495720 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1418263187 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.330027, 0.943972] },
+                "move_speed": { "float": 37.678474 },
+                "rot_speed": { "float": 63.944321 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6209277240746593 },
+            "uid": { "uid": 11838776780324390 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [618.822510, -651.818481] },
-                "ang": { "angf": 3.303767 },
-                "scale": { "vec2f": [0.604236, 0.242911] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 131788390 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [2.449517, -456.724396] },
+                "ang": { "angf": 0.528707 },
+                "scale": { "vec2f": [0.459479, 0.887515] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1378446214 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.564403, -0.825500] },
-                "move_speed": { "float": 27.648058 },
-                "rot_speed": { "float": 95.812302 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 491934862 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.340610, -0.940205] },
+                "move_speed": { "float": 90.147438 },
+                "rot_speed": { "float": -29.191238 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6490752217457249 },
+            "uid": { "uid": 12120251757035046 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-111.718018, 279.050262] },
-                "ang": { "angf": 4.038792 },
-                "scale": { "vec2f": [0.802856, 0.418445] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 890081941 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [221.637161, -281.230652] },
+                "ang": { "angf": 5.040607 },
+                "scale": { "vec2f": [0.662330, 0.809286] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1216951753 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.385248, 0.922813] },
-                "move_speed": { "float": 42.630455 },
-                "rot_speed": { "float": 1.065849 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 673858643 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.209718, 0.977762] },
+                "move_speed": { "float": 6.734364 },
+                "rot_speed": { "float": 1.941299 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 6772227194167905 },
+            "uid": { "uid": 12401726733745702 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-127.731186, -1447.498657] },
-                "ang": { "angf": 0.029576 },
-                "scale": { "vec2f": [0.325721, 0.897979] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1368855861 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-516.090210, -17.909449] },
+                "ang": { "angf": 2.653368 },
+                "scale": { "vec2f": [0.231837, 0.889465] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1127423637 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.237718, -0.971334] },
-                "move_speed": { "float": 73.249840 },
-                "rot_speed": { "float": 37.500565 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1360849578 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.784893, 0.619632] },
+                "move_speed": { "float": 84.522835 },
+                "rot_speed": { "float": -4.465942 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7053702170878561 },
+            "uid": { "uid": 12683201710456358 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-264.650787, 149.034866] },
-                "ang": { "angf": 0.167990 },
-                "scale": { "vec2f": [0.023620, 0.119178] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 439324250 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-529.255371, -106.329590] },
+                "ang": { "angf": 1.092735 },
+                "scale": { "vec2f": [0.219670, 0.469341] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 674736240 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.921658, -0.388003] },
-                "move_speed": { "float": 23.102398 },
-                "rot_speed": { "float": -45.445679 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1578329520 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.982877, 0.184261] },
+                "move_speed": { "float": 49.463680 },
+                "rot_speed": { "float": 13.334885 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7335177147589217 },
+            "uid": { "uid": 12964676687167014 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [1485.023804, 108.282715] },
-                "ang": { "angf": 3.472411 },
-                "scale": { "vec2f": [0.161633, 0.263650] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 207178674 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [131.393585, 313.907410] },
+                "ang": { "angf": 5.105571 },
+                "scale": { "vec2f": [0.161825, 0.719710] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1897457897 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.993321, 0.115383] },
-                "move_speed": { "float": 73.041199 },
-                "rot_speed": { "float": -46.636181 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 442716929 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.297726, 0.954651] },
+                "move_speed": { "float": 78.045822 },
+                "rot_speed": { "float": 78.118866 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7616652124299873 },
+            "uid": { "uid": 13246151663877670 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-648.647827, -1100.793213] },
-                "ang": { "angf": 2.899176 },
-                "scale": { "vec2f": [0.134566, 0.389667] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 470147445 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-275.029022, -361.658051] },
+                "ang": { "angf": 2.808087 },
+                "scale": { "vec2f": [0.672723, 0.658397] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 24547046 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.359264, -0.933236] },
-                "move_speed": { "float": 72.167931 },
-                "rot_speed": { "float": -97.337013 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 245341898 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.269451, -0.963014] },
+                "move_speed": { "float": 88.736870 },
+                "rot_speed": { "float": 76.809875 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 7898127101010529 },
+            "uid": { "uid": 13527626640588326 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-219.432373, 252.016968] },
-                "ang": { "angf": 1.124021 },
-                "scale": { "vec2f": [0.254370, 0.497665] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 470123265 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-60.708286, -120.948097] },
+                "ang": { "angf": 5.822257 },
+                "scale": { "vec2f": [0.512533, 0.121706] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1241900951 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.996317, 0.085748] },
-                "move_speed": { "float": 18.469345 },
-                "rot_speed": { "float": 46.045822 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1235718264 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.674194, -0.738555] },
+                "move_speed": { "float": 2.188706 },
+                "rot_speed": { "float": 60.763138 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 8179602077721185 },
+            "uid": { "uid": 13809101617298982 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-427.571747, -744.580872] },
-                "ang": { "angf": 2.449269 },
-                "scale": { "vec2f": [0.987628, 0.520021] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1569899885 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-101.158218, 481.129913] },
+                "ang": { "angf": 2.210530 },
+                "scale": { "vec2f": [0.361858, 0.419371] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 936652073 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.486748, -0.873542] },
-                "move_speed": { "float": 82.252647 },
-                "rot_speed": { "float": -85.440742 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1256258401 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.212585, 0.977143] },
+                "move_speed": { "float": 84.934402 },
+                "rot_speed": { "float": -30.281708 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 8461077054431841 },
+            "uid": { "uid": 14090576594009638 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-613.288086, -659.186829] },
-                "ang": { "angf": 1.619665 },
-                "scale": { "vec2f": [0.457787, 0.648864] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1667733831 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-157.028152, -88.639122] },
+                "ang": { "angf": 5.594975 },
+                "scale": { "vec2f": [0.601349, 0.708312] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1390686658 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.387530, -0.921857] },
-                "move_speed": { "float": 45.430573 },
-                "rot_speed": { "float": 75.076462 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 58647058 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [-0.390864, 0.920448] },
+                "move_speed": { "float": 16.432198 },
+                "rot_speed": { "float": 77.724426 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 8742552031142497 },
+            "uid": { "uid": 14372051570720294 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [778.454224, -729.412109] },
-                "ang": { "angf": 6.248423 },
-                "scale": { "vec2f": [0.187672, 0.014648] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 156790483 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [-73.914780, -37.936474] },
+                "ang": { "angf": 4.263844 },
+                "scale": { "vec2f": [0.712291, 0.424330] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1249123124 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.538750, -0.842466] },
-                "move_speed": { "float": 58.951897 },
-                "rot_speed": { "float": -28.233849 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 212211996 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.199884, 0.979820] },
+                "move_speed": { "float": 61.511879 },
+                "rot_speed": { "float": 92.227692 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 9024027007853153 },
+            "uid": { "uid": 14653526547430950 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [267.988861, -165.146133] },
-                "ang": { "angf": 1.559186 },
-                "scale": { "vec2f": [0.044743, 0.336053] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1835330374 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [376.008606, 504.476776] },
+                "ang": { "angf": 3.764058 },
+                "scale": { "vec2f": [0.158214, 0.580601] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 717838813 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [0.806508, -0.591223] },
-                "move_speed": { "float": 50.218800 },
-                "rot_speed": { "float": 52.318649 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 153801245 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.366820, 0.930292] },
+                "move_speed": { "float": 28.940002 },
+                "rot_speed": { "float": -38.151848 }
             } }
         } },
         "entity": { "ex_entity_t": {
-            "uid": { "uid": 9305501984563809 },
+            "uid": { "uid": 14935001524141606 },
             "name": { "strid": "ent1" },
             "num_comps": { "int": 3 },
             "comp_type": { "strid": "ex_trans2d_t" },
-            "component": { "ex_trans2d_t": {
-                "pos": { "vec2f": [-1311.043335, 24.760193] },
-                "ang": { "angf": 0.362069 },
-                "scale": { "vec2f": [0.341547, 0.523433] }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 878755042 },
+                "active": { "bool": true },
+                "pos": { "vec2f": [43.657810, -14.393271] },
+                "ang": { "angf": 2.130715 },
+                "scale": { "vec2f": [0.941696, 0.640920] }
             } },
             "comp_type": { "strid": "ex_debug2d_t" },
-            "component": { "ex_debug2d_t": {
+            "component": { "ex_component_t": {
+                "id": { "uint32": 2100296688 },
+                "active": { "bool": true },
                 "shapeType": { "int": 0 },
                 "rect_center": { "vec2f": [0.000000, 0.000000] },
                 "rect_width": { "float": 100.000000 },
                 "rect_height": { "float": 100.000000 }
             } },
             "comp_type": { "strid": "ex_simple_t" },
-            "component": { "ex_simple_t": {
-                "move_dir": { "vec2f": [-0.948735, 0.316071] },
-                "move_speed": { "float": 70.747826 },
-                "rot_speed": { "float": 85.258179 }
+            "component": { "ex_component_t": {
+                "id": { "uint32": 1497729477 },
+                "active": { "bool": true },
+                "move_dir": { "vec2f": [0.445781, 0.895142] },
+                "move_speed": { "float": 3.928777 },
+                "rot_speed": { "float": -57.662262 }
             } }
         } }
     } }

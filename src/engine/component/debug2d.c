@@ -11,8 +11,9 @@
 
 #include "exsdk.h"
 #include "debug2d.h"
-#include "entity.h"
 #include "trans2d.h"
+
+#include "../entity.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
@@ -20,6 +21,7 @@
 
 EX_DEF_CLASS_BEGIN(ex_debug2d_t)
     // ex_component_t
+    -1, // id
     NULL, // owner
     true, // active
     ex_debug2d_init, // init
@@ -32,10 +34,10 @@ EX_DEF_CLASS_BEGIN(ex_debug2d_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_debug2d_t)
-    EX_PROP( ex_debug2d_t, shapeType, "shape type",  EX_PROP_ATTR_NONE, ex_prop_set_raw_int, ex_prop_get_raw_int )
+    EX_PROP( ex_debug2d_t, int, shapeType, "shape type",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_debug2d_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_debug2d_t,ex_component_t)
     EX_MEMBER_SERIALIZE( int, shapeType )
     EX_SERIALIZE( _stream, vec2f, "rect_center", &(self->rect.center) )
     EX_SERIALIZE( _stream, float, "rect_width", &(self->rect.width) )

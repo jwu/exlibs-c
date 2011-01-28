@@ -18,10 +18,11 @@
 
 EX_DEF_CLASS_BEGIN(ex_sprite_t)
     // ex_component_t
-    NULL,               // owner
-    true,               // active
-    ex_sprite_init,     // init
-    ex_sprite_deinit,   // deinit
+    -1, // id
+    NULL, // owner
+    true, // active
+    ex_sprite_init, // init
+    ex_sprite_deinit, // deinit
 
     // ex_sprite_t
 EX_DEF_CLASS_END
@@ -30,7 +31,7 @@ EX_DEF_PROPS_BEGIN(ex_sprite_t)
     // EX_PROP( ex_sprite_t, pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_sprite_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_sprite_t,ex_component_t)
     // EX_MEMBER_SERIALIZE( vec2f, pos )
 EX_SERIALIZE_END
 

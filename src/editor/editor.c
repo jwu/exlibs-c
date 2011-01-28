@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : engine.c
+// File         : editor.c
 // Author       : Wu Jie 
-// Last Change  : 12/27/2010 | 09:56:51 AM | Monday,December
+// Last Change  : 01/28/2011 | 13:36:40 PM | Friday,January
 // Description  : 
 // ======================================================================================
 
@@ -10,8 +10,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "engine.h"
-#include "trans2d.h"
+#include "editor.h"
+#include "../engine/component/trans2d.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -24,8 +24,8 @@ static bool __initialized = false;
 extern void __eng_time_start ();
 // ------------------------------------------------------------------ 
 
-int ex_engine_init () {
-    // we can't init ex_engine before ex_core initialized.
+int ex_editor_init () {
+    // we can't init ex_editor before ex_core initialized.
     if ( ex_core_initialized () == false ) {
         ex_warning ( "ex_core haven't initialed." );
         return -1;
@@ -33,15 +33,15 @@ int ex_engine_init () {
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
-        ex_warning ( "ex_engine already inited" );
+        ex_warning ( "ex_editor already inited" );
         return 1;
     }
 
-    // start engine timer
+    // start editor timer
     __eng_time_start ();
 
     //
-    ex_log ("ex_engine inited");
+    ex_log ("ex_editor inited");
     __initialized = true;
     return 0;
 }
@@ -50,9 +50,9 @@ int ex_engine_init () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_engine_deinit () {
+void ex_editor_deinit () {
     if ( __initialized ) {
-        ex_log ( "ex_engine deinitied" );
+        ex_log ( "ex_editor deinitied" );
         __initialized = false;
     }
 }
@@ -61,5 +61,5 @@ void ex_engine_deinit () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_engine_initialized () { return __initialized; }
+bool ex_editor_initialized () { return __initialized; }
 

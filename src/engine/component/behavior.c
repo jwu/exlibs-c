@@ -18,6 +18,7 @@
 
 EX_DEF_CLASS_BEGIN(ex_behavior_t)
     // ex_component_t
+    -1, // id
     NULL, // owner
     true, // active
     NULL, // init
@@ -35,7 +36,7 @@ EX_DEF_CLASS_END
 EX_DEF_PROPS_BEGIN(ex_behavior_t)
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_behavior_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_behavior_t,ex_component_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_behavior_t)

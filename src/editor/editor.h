@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : prop.h
+// File         : editor.h
 // Author       : Wu Jie 
-// Last Change  : 11/26/2010 | 17:34:31 PM | Friday,November
+// Last Change  : 01/28/2011 | 13:36:29 PM | Friday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef PROP_H_1290764072
-#define PROP_H_1290764072
+#ifndef EDITOR_H_1296192990
+#define EDITOR_H_1296192990
 // #################################################################################
 
 // ######################### 
@@ -17,25 +17,35 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// includes
+// defines
 ///////////////////////////////////////////////////////////////////////////////
 
+typedef struct ex_editor_t {
+} ex_editor_t;
+
 ///////////////////////////////////////////////////////////////////////////////
-// struct
+// functions
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
-// Desc: ex_prop_t
+// Desc: 
 // ------------------------------------------------------------------ 
 
-typedef struct ex_prop_t {
-    const char *name;  // NOTE: do not use strid_t
-    const char *type;  // NOTE: do not use strid_t
-    uint32 attrs;      // attribute flags, default is EX_PROP_ATTR_NONE
-    size_t offset;     // use function: size_t offsetof (type, member), if not use, set it to -1
-    void (*set_property) ( void *_obj, size_t _offset, const void *_value ); // if not use, set it to NULL
-    void (*get_property) ( void *_obj, size_t _offset, void *_value ); // if not use, set it to NULL
-} ex_prop_t;
+// success: 0
+// already initied: 1
+// faild: -1
+extern int ex_editor_init ();
+extern void ex_editor_deinit ();
+extern bool ex_editor_initialized ();
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// TODO { 
+// extern ex_world_t *ex_editor_loadworld ( const char *_name );
+// extern void ex_editor_save_current_world ( const char *_name );
+// } TODO end 
 
 // ######################### 
 #ifdef __cplusplus
@@ -44,7 +54,5 @@ typedef struct ex_prop_t {
 // ######################### 
 
 // #################################################################################
-#endif // END PROP_H_1290764072
+#endif // END EDITOR_H_1296192990
 // #################################################################################
-
-

@@ -12,8 +12,8 @@
 #include "exsdk.h"
 #include "camera.h"
 
-#include "world.h"
-#include "entity.h"
+#include "../world.h"
+#include "../entity.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
@@ -21,10 +21,11 @@
 
 EX_DEF_CLASS_BEGIN(ex_camera_t)
     // ex_component_t
-    NULL,               // owner
-    true,               // active
-    ex_camera_init,     // init
-    ex_camera_deinit,   // deinit
+    -1, // id
+    NULL, // owner
+    true, // active
+    ex_camera_init, // init
+    ex_camera_deinit, // deinit
 
     // ex_camera_t
     false, // isOrtho
@@ -37,14 +38,14 @@ EX_DEF_CLASS_BEGIN(ex_camera_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_camera_t)
-    EX_PROP( ex_camera_t, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE, ex_prop_set_raw_bool, ex_prop_get_raw_bool )
-    EX_PROP( ex_camera_t, orthoSize, "ortho-graphic size",  EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
-    EX_PROP( ex_camera_t, aspect, "aspect",  EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
-    EX_PROP( ex_camera_t, clearFlags, "clear flags",  EX_PROP_ATTR_NONE, ex_prop_set_raw_uint32, ex_prop_get_raw_uint32 )
-    EX_PROP( ex_camera_t, bgColor, "background color",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
+    EX_PROP( ex_camera_t, bool, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, float, orthoSize, "ortho-graphic size",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, float, aspect, "aspect",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, uint32, clearFlags, "clear flags",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, color3f, bgColor, "background color",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_camera_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_camera_t,ex_component_t)
     EX_MEMBER_SERIALIZE( bool, isOrtho )
     EX_MEMBER_SERIALIZE( float, orthoSize )
     EX_MEMBER_SERIALIZE( float, aspect )

@@ -16,8 +16,6 @@ extern "C" {
 #endif
 // ######################### 
 
-#include "component.h"
-
 ///////////////////////////////////////////////////////////////////////////////
 // struct
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,6 +37,12 @@ EX_DECL_CLASS_BEGIN(ex_entity_t)
     struct ex_camera_t *camera;
 EX_DECL_CLASS_END(ex_entity_t)
 
+//
+typedef struct ex_entity_ref_t {
+    int *refcount;
+    ex_entity_t *entity;
+} ex_entity_ref_t;
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////
@@ -54,13 +58,13 @@ extern void ex_entity_deinit ( ex_entity_t *_ent );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_component_t *ex_entity_get_comp ( const ex_entity_t *_ent, strid_t _typeID );
+extern struct ex_component_t *ex_entity_get_comp ( const ex_entity_t *_ent, strid_t _typeID );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID );
+extern struct ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID );
 
 // ------------------------------------------------------------------ 
 // Desc: 

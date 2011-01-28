@@ -307,7 +307,7 @@ int w__gc ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void dump_stack (lua_State *_l) {
+void ex_lua_dump_stack ( lua_State *_l ) {
     int i;
     int top = lua_gettop(_l);
     ex_log("-- stack: top --\n");

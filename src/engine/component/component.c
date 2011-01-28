@@ -11,15 +11,16 @@
 
 #include "exsdk.h"
 #include "component.h"
-#include "entity.h"
-
 #include "trans2d.h"
+
+#include "../entity.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_component_t)
+    -1, // id
     NULL, // owner
     true, // active
 
@@ -28,14 +29,16 @@ EX_DEF_CLASS_BEGIN(ex_component_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_component_t)
-    EX_PROP( ex_component_t, active, "active",  EX_PROP_ATTR_HIDE, ex_prop_set_raw_bool, ex_prop_get_raw_bool )
+    EX_PROP( ex_component_t, bool, active, "active",  EX_PROP_ATTR_HIDE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_component_t)
+    EX_MEMBER_SERIALIZE( uint32, id )
     EX_MEMBER_SERIALIZE( bool, active )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_component_t)
+    EX_MEMBER_TOSTRING ( uint32, "id", self->id )
     EX_MEMBER_TOSTRING ( bool, "active", self->active )
 EX_DEF_TOSTRING_END
 

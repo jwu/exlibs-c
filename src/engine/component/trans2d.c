@@ -18,10 +18,11 @@
 
 EX_DEF_CLASS_BEGIN(ex_trans2d_t)
     // ex_component_t
-    NULL,               // owner
-    true,               // active
-    ex_trans2d_init,    // init
-    ex_trans2d_deinit,  // deinit
+    -1, // id
+    NULL, // owner
+    true, // active
+    ex_trans2d_init, // init
+    ex_trans2d_deinit, // deinit
 
     // ex_trans2d_t
     EX_VEC2F_ZERO, // pos 
@@ -32,12 +33,12 @@ EX_DEF_CLASS_BEGIN(ex_trans2d_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_trans2d_t)
-    EX_PROP( ex_trans2d_t, pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-    EX_PROP( ex_trans2d_t, ang, "angle",  EX_PROP_ATTR_NONE, ex_prop_set_raw_angf, ex_prop_get_raw_angf )
-    EX_PROP( ex_trans2d_t, scale, "scale",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
+    EX_PROP( ex_trans2d_t, vec2f, pos, "position",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, angf, ang, "angle",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, vec2f, scale, "scale",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_trans2d_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_trans2d_t,ex_component_t)
     EX_MEMBER_SERIALIZE( vec2f, pos )
     EX_MEMBER_SERIALIZE( angf, ang )
     EX_MEMBER_SERIALIZE( vec2f, scale )

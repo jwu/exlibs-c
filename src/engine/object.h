@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : component.h
+// File         : object.h
 // Author       : Wu Jie 
-// Last Change  : 11/25/2010 | 17:25:33 PM | Thursday,November
+// Last Change  : 01/28/2011 | 14:06:07 PM | Friday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef COMPONENT_H_1290677135
-#define COMPONENT_H_1290677135
+#ifndef OBJECT_H_1296194768
+#define OBJECT_H_1296194768
 // #################################################################################
 
 // ######################### 
@@ -22,29 +22,24 @@ extern "C" {
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct ex_component_t
+ @struct ex_object_t
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_BEGIN(ex_component_t)
-    struct ex_entity_t *owner;
-    bool active;
+EX_DECL_CLASS_BEGIN(ex_object_t)
+    ex_uid_t uid;
+    int *refcount;
 
-    // override functions
-    void (*init) ( void *_self ); // invoked after the component created
-    void (*deinit) ( void *_self ); // invoked before the component destroyed
-EX_DECL_CLASS_END(ex_component_t)
-
-///////////////////////////////////////////////////////////////////////////////
-// functions
-///////////////////////////////////////////////////////////////////////////////
+    void (*init) ( void *_self );
+    void (*deinit) ( void *_self );
+    void (*reset) ( void *_self );
+    // ???? ex_object_t *(*clone) ( const ex_object_t * );
+EX_DECL_CLASS_END(ex_object_t)
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_component_init ( void *_self ); 
-extern void ex_component_deinit ( void *_self ); 
 
 // ######################### 
 #ifdef __cplusplus
@@ -54,7 +49,7 @@ extern void ex_component_deinit ( void *_self );
 
 
 // #################################################################################
-#endif // END COMPONENT_H_1290677135
+#endif // END OBJECT_H_1296194768
 // #################################################################################
 
 

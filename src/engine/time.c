@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : eng_time.c
+// File         : time.c
 // Author       : Wu Jie 
-// Last Change  : 01/06/2011 | 23:40:02 PM | Thursday,January
+// Last Change  : 01/28/2011 | 13:39:26 PM | Friday,January
 // Description  : 
 // ======================================================================================
 
@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "eng_time.h"
+#include "time.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // private
@@ -46,7 +46,7 @@ static int32 __calc_fps ( uint32 _interval, void *_param ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __eng_time_start () {
+void __start_engine_time () {
     int id; 
     uint32 now = ex_timer_get_ticks();
 
@@ -72,7 +72,7 @@ void __world_time_start () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __eng_time_tick () {
+void __tick_engine_time () {
     uint32 now = ex_timer_get_ticks();
 
     ++__frame_count;

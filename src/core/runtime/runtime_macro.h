@@ -28,7 +28,7 @@ extern "C" {
   EX_DEF_CLASS_END
 
   EX_DEF_PROPS_BEGIN(foo)
-      EX_PROP( foo, val1, "value_01",  EX_PROP_ATTR_NONE, ex_prop_set_raw_int32, ex_prop_get_raw_int32 )
+      EX_PROP( foo, int32, val1, "value_01",  EX_PROP_ATTR_NONE )
   EX_DEF_PROPS_END
 
   EX_SERIALIZE_BEGIN(foo)
@@ -41,7 +41,7 @@ extern "C" {
 
   finally register in classes_registry
   EX_REGISTER_CLASS(foo);
- */
+*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // rtti help macros
@@ -54,10 +54,22 @@ extern "C" {
 #define EX_RTTI(_typename) (__RTTI_##_typename##__)
 #define EX_TYPEID(_typename) (__TYPEID_##_typename##__)
 
+// ex_classof is strong compare, it must be the class, can't be its child or parent
+// _obj_ptr->type == _type
 #define ex_classof(_type,_obj_ptr) __ex_classof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+
+// ex_childof gets the _obj_ptr's parent, parent's parent ... for compare ( *not* including itself )
+// _obj_ptr->parent->...->parent->type == _type
 #define ex_childof(_type,_obj_ptr) __ex_childof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+
+// ex_superof gets the _type's parent, parent's parent ... for compare ( *not* including _type itself )
+// _type->parent->...->parent->type == _type
 #define ex_superof(_type,_obj_ptr) __ex_superof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+
+// ex_isa equals to ex_classof || ex_childof
 #define ex_isa(_type,_obj_ptr) __ex_isa((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+
+// ex_as use ex_isa compare the type, if it is, then return the casted type.
 #define ex_as(_type,_obj_ptr) (_type *)__ex_as((ex_class_t *)_obj_ptr,EX_RTTI(_type))
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -203,7 +215,7 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_PROPS_END \
-            { "", 0, -1, NULL, NULL } \
+            { "", "", 0, -1, NULL, NULL } \
         }; /*end of __props__*/ \
         ex_assert_return( __rtti__, /**/, "failed to register class %s", __typename__ ); \
         ex_rtti_register_properties ( __rtti__, __props__, EX_ARRAY_COUNT(__props__)-1 ); \
@@ -213,8 +225,11 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_PROP( _typename, _member, _propName, _attrs, _set_func, _get_func ) \
-    { _propName, _attrs, offsetof(struct _typename, _member), _set_func, _get_func },
+#define EX_PROP( _class_type, _member_type, _member, _prop_name, _attrs ) \
+    { _prop_name, #_member_type, _attrs, offsetof(struct _class_type, _member), ex_prop_set_raw_##_member_type, ex_prop_get_raw_##_member_type },
+
+#define EX_PROP_SET_GET( _class_type, _member_type, _member, _prop_name, _attrs, _set_func, _get_func ) \
+    { _prop_name, #_member_type, _attrs, offsetof(struct _class_type, _member), _set_func, _get_func },
 
 ///////////////////////////////////////////////////////////////////////////////
 // serialize help macros

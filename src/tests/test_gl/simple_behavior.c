@@ -10,9 +10,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../entity/eng_time.h"
-#include "../../entity/entity.h"
-#include "../../entity/trans2d.h"
 #include "simple_behavior.h"
 
 // ------------------------------------------------------------------ 
@@ -85,6 +82,7 @@ static void post_update ( void *_self ) {
 
 EX_DEF_CLASS_BEGIN(ex_simple_t)
     // ex_component_t
+    -1, // id
     NULL, // owner
     true, // active
     init, // init
@@ -104,12 +102,12 @@ EX_DEF_CLASS_BEGIN(ex_simple_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_simple_t)
-    EX_PROP ( ex_simple_t, move_dir, "move direction", EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
-    EX_PROP ( ex_simple_t, move_speed, "move speed", EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
-    EX_PROP ( ex_simple_t, rot_speed, "rot spee", EX_PROP_ATTR_NONE, ex_prop_set_raw_float, ex_prop_get_raw_float )
+    EX_PROP ( ex_simple_t, vec2f, move_dir, "move direction", EX_PROP_ATTR_NONE )
+    EX_PROP ( ex_simple_t, float, move_speed, "move speed", EX_PROP_ATTR_NONE )
+    EX_PROP ( ex_simple_t, float, rot_speed, "rot spee", EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_simple_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_simple_t,ex_component_t)
     EX_MEMBER_SERIALIZE( vec2f, move_dir )
     EX_MEMBER_SERIALIZE( float, move_speed )
     EX_MEMBER_SERIALIZE( float, rot_speed )

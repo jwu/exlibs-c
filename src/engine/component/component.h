@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : engine.h
+// File         : component.h
 // Author       : Wu Jie 
-// Last Change  : 12/27/2010 | 09:53:49 AM | Monday,December
+// Last Change  : 11/25/2010 | 17:25:33 PM | Thursday,November
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef ENGINE_H_1293414834
-#define ENGINE_H_1293414834
+#ifndef COMPONENT_H_1290677135
+#define COMPONENT_H_1290677135
 // #################################################################################
 
 // ######################### 
@@ -17,11 +17,31 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// defines
+// struct
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef struct ex_engine_t {
-} ex_engine_t;
+// ------------------------------------------------------------------ 
+/*! 
+ @struct ex_component_t
+ @details
+*/// ------------------------------------------------------------------ 
+
+EX_DECL_CLASS_BEGIN(ex_component_t)
+    uint32 id; // a random value to identity component when reference.
+    struct ex_entity_t *owner;
+    bool active;
+
+    // override functions
+    void (*init) ( void *_self ); // invoked after the component created
+    void (*deinit) ( void *_self ); // invoked before the component destroyed
+EX_DECL_CLASS_END(ex_component_t)
+
+// TODO { 
+// EX_DECL_CLASS_BEGIN(ex_component_ref_t)
+    // entity_id
+    // component_id
+// EX_DECL_CLASS_END(ex_component_ref_t)
+// } TODO end 
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -31,12 +51,8 @@ typedef struct ex_engine_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-// success: 0
-// already initied: 1
-// faild: -1
-extern int ex_engine_init ();
-extern void ex_engine_deinit ();
-extern bool ex_engine_initialized ();
+extern void ex_component_init ( void *_self ); 
+extern void ex_component_deinit ( void *_self ); 
 
 // ######################### 
 #ifdef __cplusplus
@@ -44,7 +60,9 @@ extern bool ex_engine_initialized ();
 #endif
 // ######################### 
 
+
 // #################################################################################
-#endif // END ENGINE_H_1293414834
+#endif // END COMPONENT_H_1290677135
 // #################################################################################
+
 
