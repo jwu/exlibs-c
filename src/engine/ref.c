@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : object.c
+// File         : ref.c
 // Author       : Wu Jie 
-// Last Change  : 01/28/2011 | 14:10:24 PM | Friday,January
+// Last Change  : 01/29/2011 | 09:59:50 AM | Saturday,January
 // Description  : 
 // ======================================================================================
 
@@ -10,30 +10,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "object.h"
+#include "ref.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_object_t)
+EX_DEF_CLASS_BEGIN(ex_ref_t)
     EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+    NULL, // ptr
+    NULL, // refcount
 EX_DEF_CLASS_END
 
-EX_DEF_PROPS_BEGIN(ex_object_t)
-    EX_PROP( ex_object_t, uid, uid, "uid",  EX_PROP_ATTR_HIDE )
-    EX_PROP( ex_object_t, strid, name, "name",  EX_PROP_ATTR_HIDE )
+EX_DEF_PROPS_BEGIN(ex_ref_t)
+    EX_PROP( ex_ref_t, uid, uid, "uid",  EX_PROP_ATTR_HIDE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_object_t)
+EX_SERIALIZE_BEGIN(ex_ref_t)
     EX_MEMBER_SERIALIZE(uid,uid)
-    EX_MEMBER_SERIALIZE(strid,name)
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_object_t)
+EX_DEF_TOSTRING_BEGIN(ex_ref_t)
     EX_MEMBER_TOSTRING( uid, "uid", self->uid )
-    EX_MEMBER_TOSTRING( strid, "name", self->name )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,36 +42,46 @@ EX_DEF_TOSTRING_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_object_init ( void *_obj ) {
-    ex_object_t *obj = (ex_object_t *)_obj; 
-    obj->uid = ex_generate_uid();
-    obj->name = ex_strid("New Object");
+ex_ref_t *ex_newref ( ex_uid_t _uid ) {
+    void *ptr = NULL;
+    ex_ref_t *ref = ex_create_ex_ref_t();
+
+    // TODO: use uid get the ptr { 
+    // } TODO end 
+
+    ex_assert_return( ptr != NULL, NULL, "can't find the pointer by uid %.16llX", _uid );
+
+    ref->ptr = ptr;
+    ref->uid = _uid;
+    ref->refcount = ex_malloc(sizeof(int));
+    ex_incref(ref);
+    return ref;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_object_deinit ( void *_obj ) {
-    ex_object_t *obj = (ex_object_t *)_obj; 
-    obj->name = EX_STRID_NULL;
-    obj->uid = EX_UID_INVALID;
+void ex_incref ( ex_ref_t *_ref ) {
+    ex_assert_return ( _ref, /*dummy*/, "the ref can't not be NULL" );
+    *(_ref->refcount) += 1;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_uid_t ex_object_uid ( void *_obj ) {
-    ex_object_t *obj = (ex_object_t *)_obj; 
-    return obj->uid;
-}
+int ex_decref ( ex_ref_t *_ref ) {
+    int ret;
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+    ex_assert_return ( _ref, -1, "the ref can't not be NULL" );
+    *(_ref->refcount) -= 1;
+    ret = *(_ref->refcount); 
+    if ( *(_ref->refcount) == 0 ) {
+        // TODO: send message to the world to return the reference.
+        ex_free(_ref->refcount);
+        ex_free(_ref);
+    }
 
-strid_t ex_object_name ( void *_obj ) {
-    ex_object_t *obj = (ex_object_t *)_obj; 
-    return obj->name;
+    return ret;
 }

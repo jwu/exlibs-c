@@ -18,6 +18,7 @@
 
 static void init ( void *_self ) {
     ex_component_init(_self); // parent init
+    ((ex_object_t *)_self)->name = ex_strid("Simple Behavior");
 }
 
 // ------------------------------------------------------------------ 
@@ -81,21 +82,37 @@ static void post_update ( void *_self ) {
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_simple_t)
+
+    // ======================================================== 
+    // ex_object_t 
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
+    EX_STRID_NULL, // name
+
+    // ======================================================== 
     // ex_component_t
-    -1, // id
+    // ======================================================== 
+
     NULL, // owner
     true, // active
     init, // init
     deinit, // deinit
 
+    // ======================================================== 
     // ex_behavior_t
+    // ======================================================== 
+
     EX_BEHAVIOR_STATE_NEW, // state
     level_start, // level_start
     start, // start
     update, // update
     post_update, // post_update
 
+    // ======================================================== 
     // ex_simple_t
+    // ======================================================== 
+
     EX_VEC2F_ZERO, // move_dir
     1.0f, // move_speed
     1.0f, // rot_speed
@@ -113,7 +130,7 @@ EX_SERIALIZE_BEGIN_SUPER(ex_simple_t,ex_component_t)
     EX_MEMBER_SERIALIZE( float, rot_speed )
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_simple_t)
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_simple_t,ex_component_t)
     EX_MEMBER_TOSTRING( vec2f, "move direction", self->move_dir )
     EX_MEMBER_TOSTRING( float, "move speed", self->move_speed )
     EX_MEMBER_TOSTRING( float, "rotate speed", self->rot_speed )

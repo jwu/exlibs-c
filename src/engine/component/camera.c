@@ -20,14 +20,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_camera_t)
+
+    // ======================================================== 
+    // ex_object_t 
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
+    EX_STRID_NULL, // name
+
+    // ======================================================== 
     // ex_component_t
-    -1, // id
+    // ======================================================== 
+
     NULL, // owner
     true, // active
     ex_camera_init, // init
     ex_camera_deinit, // deinit
 
+    // ======================================================== 
     // ex_camera_t
+    // ======================================================== 
+
     false, // isOrtho
     600/2, // orthoSize
     4.0f/3.0f, // aspect
@@ -53,7 +66,7 @@ EX_SERIALIZE_BEGIN_SUPER(ex_camera_t,ex_component_t)
     EX_MEMBER_SERIALIZE( color3f, bgColor )
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_camera_t)
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_camera_t,ex_component_t)
     EX_MEMBER_TOSTRING ( bool, "is ortho-graphic", self->isOrtho )
     EX_MEMBER_TOSTRING ( float, "ortho-graphic size", self->orthoSize )
     EX_MEMBER_TOSTRING ( float, "aspect", self->aspect )
@@ -76,6 +89,8 @@ void ex_camera_init ( void *_self ) {
     ex_camera_t *cam = (ex_camera_t *)_self; 
 
     ex_component_init(_self); // parent init
+    ((ex_object_t *)_self)->name = ex_strid("Camera");
+
     cam->isOrtho = true;       // default is 2D
     cam->orthoSize = 600/2;    // default is 800 x 600
     cam->aspect = 4.0f/3.0f;   // default is 4:3 
@@ -95,6 +110,7 @@ void ex_camera_deinit ( void *_self ) {
     ex_camera_t *cam = (ex_camera_t *)_self; 
 
     ex_world_remove_camera( comp->owner->world, cam );
+    ex_component_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 

@@ -47,6 +47,10 @@
 		B215EA0F12F2933A00F0C84B /* app.h in Headers */ = {isa = PBXBuildFile; fileRef = B215EA0C12F2933A00F0C84B /* app.h */; };
 		B215EA1012F2933A00F0C84B /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B215EA0D12F2933A00F0C84B /* editor.c */; };
 		B215EA1212F2935500F0C84B /* editor.h in Headers */ = {isa = PBXBuildFile; fileRef = B215EA1112F2935500F0C84B /* editor.h */; };
+		B215EA3B12F3C2FE00F0C84B /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = B215EA3712F3C2FE00F0C84B /* object.c */; };
+		B215EA3C12F3C2FE00F0C84B /* object.h in Headers */ = {isa = PBXBuildFile; fileRef = B215EA3812F3C2FE00F0C84B /* object.h */; };
+		B215EA3D12F3C2FE00F0C84B /* ref.c in Sources */ = {isa = PBXBuildFile; fileRef = B215EA3912F3C2FE00F0C84B /* ref.c */; };
+		B215EA3E12F3C2FE00F0C84B /* ref.h in Headers */ = {isa = PBXBuildFile; fileRef = B215EA3A12F3C2FE00F0C84B /* ref.h */; };
 		B21CB6D112D574EB00CDD369 /* test_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = B21CB6D012D574EB00CDD369 /* test_timer.c */; };
 		B23B2D2D12CAF7140011E237 /* timer_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B23B2D2B12CAF7140011E237 /* timer_mac.c */; };
 		B23B2D2E12CAF7140011E237 /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = B23B2D2C12CAF7140011E237 /* timer.c */; };
@@ -248,6 +252,10 @@
 		B215EA0C12F2933A00F0C84B /* app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = app.h; path = app/app.h; sourceTree = "<group>"; };
 		B215EA0D12F2933A00F0C84B /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = editor.c; path = app/editor.c; sourceTree = "<group>"; };
 		B215EA1112F2935500F0C84B /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = editor.h; path = app/editor.h; sourceTree = "<group>"; };
+		B215EA3712F3C2FE00F0C84B /* object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = object.c; path = engine/object.c; sourceTree = "<group>"; };
+		B215EA3812F3C2FE00F0C84B /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = object.h; path = engine/object.h; sourceTree = "<group>"; };
+		B215EA3912F3C2FE00F0C84B /* ref.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ref.c; path = engine/ref.c; sourceTree = "<group>"; };
+		B215EA3A12F3C2FE00F0C84B /* ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ref.h; path = engine/ref.h; sourceTree = "<group>"; };
 		B21CB6D012D574EB00CDD369 /* test_timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_timer.c; sourceTree = "<group>"; };
 		B23B2D2B12CAF7140011E237 /* timer_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer_mac.c; sourceTree = "<group>"; };
 		B23B2D2C12CAF7140011E237 /* timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer.c; sourceTree = "<group>"; };
@@ -495,6 +503,10 @@
 			isa = PBXGroup;
 			children = (
 				B215E9E312F2931600F0C84B /* component */,
+				B215EA3712F3C2FE00F0C84B /* object.c */,
+				B215EA3812F3C2FE00F0C84B /* object.h */,
+				B215EA3912F3C2FE00F0C84B /* ref.c */,
+				B215EA3A12F3C2FE00F0C84B /* ref.h */,
 				B215E9F012F2931600F0C84B /* engine_inc.h */,
 				B215E9F112F2931600F0C84B /* entity.c */,
 				B215E9F212F2931600F0C84B /* entity.h */,
@@ -962,6 +974,8 @@
 				B215EA0912F2931600F0C84B /* world.h in Headers */,
 				B215EA0F12F2933A00F0C84B /* app.h in Headers */,
 				B215EA1212F2935500F0C84B /* editor.h in Headers */,
+				B215EA3C12F3C2FE00F0C84B /* object.h in Headers */,
+				B215EA3E12F3C2FE00F0C84B /* ref.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +1167,8 @@
 				B215EA0812F2931600F0C84B /* world.c in Sources */,
 				B215EA0E12F2933A00F0C84B /* app.c in Sources */,
 				B215EA1012F2933A00F0C84B /* editor.c in Sources */,
+				B215EA3B12F3C2FE00F0C84B /* object.c in Sources */,
+				B215EA3D12F3C2FE00F0C84B /* ref.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

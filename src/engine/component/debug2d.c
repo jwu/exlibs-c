@@ -20,14 +20,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_debug2d_t)
+
+    // ======================================================== 
+    // ex_object_t 
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
+    EX_STRID_NULL, // name
+
+    // ======================================================== 
     // ex_component_t
-    -1, // id
+    // ======================================================== 
+
     NULL, // owner
     true, // active
     ex_debug2d_init, // init
     NULL, // deinit
 
+    // ======================================================== 
     // ex_debug2d_t
+    // ======================================================== 
+
     EX_DEBUG_SHAPE_RECT, // shapeType
     EX_VEC2F_ZERO, 1.0f, 1.0f, // rect
     EX_VEC2F_ZERO, 1.0f, // circle
@@ -44,7 +57,7 @@ EX_SERIALIZE_BEGIN_SUPER(ex_debug2d_t,ex_component_t)
     EX_SERIALIZE( _stream, float, "rect_height", &(self->rect.height) )
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_debug2d_t)
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
     EX_MEMBER_TOSTRING( int, "shape type", self->shapeType )
 EX_DEF_TOSTRING_END
 
@@ -63,6 +76,8 @@ void ex_debug2d_init ( void *_self ) {
     ex_debug2d_t *dbg2d = (ex_debug2d_t *)_self; 
 
     ex_component_init(_self); // parent init
+    ((ex_object_t *)_self)->name = ex_strid("Debug 2D");
+
     center = ex_vec2f_zero;
     ex_rectf_set ( &r, center, 1.0f, 1.0f );
     ex_circlef_set ( &c, center, 1.0f );

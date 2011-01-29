@@ -17,6 +17,12 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
+// includes
+///////////////////////////////////////////////////////////////////////////////
+
+#include "object.h"
+
+///////////////////////////////////////////////////////////////////////////////
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -26,22 +32,14 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_BEGIN(ex_entity_t)
-    ex_uid_t uid;
-    strid_t name;
+EX_DECL_CLASS_SUPER_BEGIN(ex_entity_t,ex_object_t)
     // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
     ex_array_t *comps;
     struct ex_world_t *world; // the world it belongs
     // cached components 
     struct ex_trans2d_t *trans2d;
     struct ex_camera_t *camera;
-EX_DECL_CLASS_END(ex_entity_t)
-
-//
-typedef struct ex_entity_ref_t {
-    int *refcount;
-    ex_entity_t *entity;
-} ex_entity_ref_t;
+EX_DECL_CLASS_SUPER_END(ex_entity_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

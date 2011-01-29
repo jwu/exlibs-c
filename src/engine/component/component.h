@@ -17,6 +17,12 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
+// includes
+///////////////////////////////////////////////////////////////////////////////
+
+#include "../object.h"
+
+///////////////////////////////////////////////////////////////////////////////
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -26,22 +32,14 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_BEGIN(ex_component_t)
-    uint32 id; // a random value to identity component when reference.
+EX_DECL_CLASS_SUPER_BEGIN(ex_component_t,ex_object_t)
     struct ex_entity_t *owner;
     bool active;
 
     // override functions
     void (*init) ( void *_self ); // invoked after the component created
     void (*deinit) ( void *_self ); // invoked before the component destroyed
-EX_DECL_CLASS_END(ex_component_t)
-
-// TODO { 
-// EX_DECL_CLASS_BEGIN(ex_component_ref_t)
-    // entity_id
-    // component_id
-// EX_DECL_CLASS_END(ex_component_ref_t)
-// } TODO end 
+EX_DECL_CLASS_SUPER_END(ex_component_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

@@ -21,8 +21,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_entity_t)
-    EX_UID_INVALID, // uid, NOTE: only generated in ex_world_create_entity
+    // ======================================================== 
+    // ex_object_t
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
     EX_STRID_NULL, // name
+
+    // ======================================================== 
+    // ex_entity_t
+    // ======================================================== 
+
     NULL, // comps
     NULL, // world
 
@@ -31,15 +40,10 @@ EX_DEF_CLASS_BEGIN(ex_entity_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_entity_t)
-    EX_PROP( ex_entity_t, strid, name, "name",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN(ex_entity_t)
+EX_SERIALIZE_BEGIN_SUPER(ex_entity_t,ex_object_t)
     int num_comps = 0;
-
-    // serialize members
-    EX_MEMBER_SERIALIZE( uid, uid )
-    EX_MEMBER_SERIALIZE( strid, name )
 
     // serialize components
     num_comps = self->comps->count;
@@ -63,9 +67,7 @@ EX_SERIALIZE_BEGIN(ex_entity_t)
     }
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_entity_t)
-    EX_MEMBER_TOSTRING( uid, "uid", self->uid )
-    EX_MEMBER_TOSTRING( strid, "name", self->name )
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_entity_t,ex_object_t)
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -77,6 +79,9 @@ EX_DEF_TOSTRING_END
 // ------------------------------------------------------------------ 
 
 void ex_entity_init ( ex_entity_t *_ent ) {
+    ex_object_init(_ent);
+    ((ex_object_t *)_ent)->name = ex_strid("New Entity");
+
     _ent->comps = ex_array_notype(sizeof(void *),8);
 }
 
@@ -86,11 +91,30 @@ void ex_entity_init ( ex_entity_t *_ent ) {
 
 void ex_entity_deinit ( ex_entity_t *_ent ) {
     ex_array_each ( _ent->comps, ex_component_t *, comp ) {
-        if ( comp->deinit )
-            comp->deinit(comp);
+        if ( comp->deinit ) comp->deinit(comp);
         ex_free(comp);
     } ex_array_each_end;
     ex_array_free ( _ent->comps );
+
+    _ent->comps = NULL;
+    _ent->world = NULL;
+    _ent->trans2d = NULL;
+    _ent->camera = NULL;
+    
+    ex_object_deinit(_ent);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_entity_reset ( ex_entity_t *_ent ) {
+    // TODO: { 
+    // ex_array_each ( _ent->comps, ex_component_t *, comp ) {
+    //     if ( comp->reset )
+    //         comp->reset(comp);
+    // } ex_array_each_end;
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 
@@ -128,7 +152,6 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
     // create a component and added to the component list, then return it.
     comp = (ex_component_t *)ex_create(_typeID);
     if ( comp ) {
-        comp->id = rand(); // NOTE: I think this is rand enough for component reference  
         comp->owner = _ent; // set the owner of the component before init.
         if ( comp->init )
             comp->init(comp);

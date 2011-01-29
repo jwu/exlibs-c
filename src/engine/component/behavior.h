@@ -16,6 +16,10 @@ extern "C" {
 #endif
 // ######################### 
 
+///////////////////////////////////////////////////////////////////////////////
+// includes
+///////////////////////////////////////////////////////////////////////////////
+
 #include "component.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,6 +51,17 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
     // invoked in ex_world_update after animation, phsyics update if the behavior is started.
     void (*post_update) ( void *_self );
 EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
+
+///////////////////////////////////////////////////////////////////////////////
+// functions
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_behavior_init ( void *_self ); 
+extern void ex_behavior_deinit ( void *_self ); 
 
 // ######################### 
 #ifdef __cplusplus

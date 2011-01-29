@@ -17,14 +17,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_behavior_t)
+
+    // ======================================================== 
+    // ex_object_t 
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
+    EX_STRID_NULL, // name
+
+    // ======================================================== 
     // ex_component_t
-    -1, // id
+    // ======================================================== 
+
     NULL, // owner
     true, // active
+
     NULL, // init
     NULL, // deinit
 
+    // ======================================================== 
     // ex_behavior_t
+    // ======================================================== 
+
     EX_BEHAVIOR_STATE_NEW, // state
 
     NULL, // level_start
@@ -39,5 +53,26 @@ EX_DEF_PROPS_END
 EX_SERIALIZE_BEGIN_SUPER(ex_behavior_t,ex_component_t)
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_behavior_t)
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_behavior_t,ex_component_t)
 EX_DEF_TOSTRING_END
+
+///////////////////////////////////////////////////////////////////////////////
+// functions
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_behavior_init ( void *_self ) {
+    ex_component_init(_self);
+    ((ex_object_t *)_self)->name = ex_strid("Behavior");
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_behavior_deinit ( void *_self ) {
+    ex_component_deinit(_self);
+}

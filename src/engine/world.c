@@ -24,7 +24,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_world_t)
+    // ======================================================== 
+    // ex_object_t
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
     EX_STRID_NULL, // name
+
+    // ======================================================== 
+    // ex_world_t 
+    // ======================================================== 
+
     EX_WORLD_STATE_STOPPED, // state
     NULL, // entities
     NULL, // cameras
@@ -32,13 +42,11 @@ EX_DEF_CLASS_BEGIN(ex_world_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_world_t)
-    EX_PROP( ex_world_t, strid, name, "name",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN(ex_world_t)
     int num_entities = 0;
 
-    EX_MEMBER_SERIALIZE( strid, name )
     num_entities = self->entities->count;
     EX_SERIALIZE( _stream, int, "num_entities", &num_entities  )
 
@@ -60,7 +68,6 @@ EX_SERIALIZE_BEGIN(ex_world_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_BEGIN(ex_world_t)
-    EX_MEMBER_TOSTRING ( strid, "name", self->name )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,6 +96,9 @@ static void __debug_draw ( ex_world_t *_world ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_init ( ex_world_t *_world ) {
+    ex_object_init(_world);
+    ((ex_object_t *)_world)->name = ex_strid("New World");
+
     _world->entities = ex_array_notype( sizeof(void *), 8 );
     _world->cameras = ex_array_notype( sizeof(void *), 8 );
 }
@@ -104,6 +114,16 @@ void ex_world_deinit ( ex_world_t *_world ) {
     } ex_array_each_end;
     ex_array_free ( _world->entities );
     ex_array_free ( _world->cameras );
+
+    ex_object_deinit(_world);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_reset ( ex_world_t *_world, ex_stream_t *_stream ) {
+    // TODO:
 }
 
 // ------------------------------------------------------------------ 
@@ -113,9 +133,7 @@ void ex_world_deinit ( ex_world_t *_world ) {
 ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name ) {
     ex_entity_t *ent = ex_create_ex_entity_t();
     ex_entity_init(ent);
-
-    ent->uid = ex_generate_uid(); // generate the unique id here.
-    ent->name = _name;
+    ((ex_object_t *)ent)->name = _name;
     ent->world = _world;
 
     ex_array_append( _world->entities, &ent );
@@ -173,7 +191,7 @@ void ex_world_remove_camera ( ex_world_t *_world, ex_camera_t *_cam ) {
     if ( result_idx != -1 )
         ex_array_remove_at_fast( _world->cameras, result_idx );
     else {
-        ex_warning ( "can't find camera %s", ((ex_component_t *)_cam)->owner->name );
+        ex_warning ( "can't find camera %s", ex_strid_to_cstr( ex_object_name( ((ex_component_t *)_cam)->owner ) ) );
         return;
     }
 

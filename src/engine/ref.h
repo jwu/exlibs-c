@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : object.h
+// File         : ref.h
 // Author       : Wu Jie 
-// Last Change  : 01/28/2011 | 14:06:07 PM | Friday,January
+// Last Change  : 01/29/2011 | 09:32:47 AM | Saturday,January
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef OBJECT_H_1296194768
-#define OBJECT_H_1296194768
+#ifndef REF_H_1296264775
+#define REF_H_1296264775
 // #################################################################################
 
 // ######################### 
@@ -17,37 +17,26 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// struct
+// class define
+// NOTE: the Resource/Asset can benefit in using refcount
+// NOTE: the AI usually would like to immediatly invalid an ref
+// please learn Py_INCREF, Py_DECREF, Py_XDECREF for more details.
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-/*! 
- @struct ex_object_t
- @details
-*/// ------------------------------------------------------------------ 
-
-EX_DECL_CLASS_BEGIN(ex_object_t)
+EX_DECL_CLASS_BEGIN(ex_ref_t)
     ex_uid_t uid;
-    strid_t name;
-EX_DECL_CLASS_END(ex_object_t)
+    void *ptr;
+    int *refcount;
+EX_DECL_CLASS_END(ex_ref_t)
 
 ///////////////////////////////////////////////////////////////////////////////
-// function defines
+// function define
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+extern ex_ref_t *ex_newref ( ex_uid_t _uid );
 
-extern void ex_object_init ( void *_obj );
-extern void ex_object_deinit ( void *_obj );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern ex_uid_t ex_object_uid ( void *_obj );
-extern strid_t ex_object_name ( void *_obj );
+extern void ex_incref ( ex_ref_t *_ref );
+extern int ex_decref ( ex_ref_t *_ref );
 
 // ######################### 
 #ifdef __cplusplus
@@ -55,9 +44,6 @@ extern strid_t ex_object_name ( void *_obj );
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END OBJECT_H_1296194768
+#endif // END REF_H_1296264775
 // #################################################################################
-
-

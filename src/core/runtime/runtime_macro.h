@@ -348,6 +348,12 @@ extern "C" {
         _type *self = (_type *)_val; \
         ex_string_cat( _string, #_type": {\n" );
 
+#define EX_DEF_TOSTRING_SUPER_BEGIN(_type,_super) \
+    void __ex_tostring_##_type ( ex_string_t *_string, void *_val ) { \
+        _type *self = (_type *)_val; \
+        ex_string_cat( _string, #_type": {\n" ); \
+        __ex_tostring_##_super(_string,_val);
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 

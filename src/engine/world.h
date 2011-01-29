@@ -16,21 +16,26 @@ extern "C" {
 #endif
 // ######################### 
 
-#define EX_WORLD_STATE_STOPPED 1
-#define EX_WORLD_STATE_RUNNING 2
-#define EX_WORLD_STATE_PAUSED  3
+///////////////////////////////////////////////////////////////////////////////
+// includes
+///////////////////////////////////////////////////////////////////////////////
+
+#include "object.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DECL_CLASS_BEGIN(ex_world_t)
-    strid_t name;
+#define EX_WORLD_STATE_STOPPED 1
+#define EX_WORLD_STATE_RUNNING 2
+#define EX_WORLD_STATE_PAUSED  3
+
+EX_DECL_CLASS_SUPER_BEGIN(ex_world_t,ex_object_t)
     int state;
     ex_array_t *entities;
     ex_array_t *cameras;
     struct ex_camera_t *mainCamera;
-EX_DECL_CLASS_END(ex_world_t)
+EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -42,6 +47,7 @@ EX_DECL_CLASS_END(ex_world_t)
 
 extern void ex_world_init ( ex_world_t *_world );
 extern void ex_world_deinit ( ex_world_t *_world );
+extern void ex_world_reset ( ex_world_t *_world, ex_stream_t *_stream );
 
 // ------------------------------------------------------------------ 
 // Desc: 

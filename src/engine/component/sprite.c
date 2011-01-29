@@ -17,14 +17,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_sprite_t)
+
+    // ======================================================== 
+    // ex_object_t 
+    // ======================================================== 
+
+    EX_UID_INVALID, // uid
+    EX_STRID_NULL, // name
+
+    // ======================================================== 
     // ex_component_t
-    -1, // id
+    // ======================================================== 
+
     NULL, // owner
     true, // active
     ex_sprite_init, // init
     ex_sprite_deinit, // deinit
 
+    // ======================================================== 
     // ex_sprite_t
+    // ======================================================== 
+
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_sprite_t)
@@ -35,7 +48,7 @@ EX_SERIALIZE_BEGIN_SUPER(ex_sprite_t,ex_component_t)
     // EX_MEMBER_SERIALIZE( vec2f, pos )
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_BEGIN(ex_sprite_t)
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_sprite_t,ex_component_t)
     // EX_MEMBER_TOSTRING ( vec2f, "position", self->pos )
 EX_DEF_TOSTRING_END
 
@@ -48,9 +61,11 @@ EX_DEF_TOSTRING_END
 // ------------------------------------------------------------------ 
 
 void ex_sprite_init ( void *_self ) {
-    ex_sprite_t *sprite = (ex_sprite_t *)_self; 
+    // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
 
     ex_component_init(_self); // parent init
+    ((ex_object_t *)_self)->name = ex_strid("Sprite");
+
     // TODO: sprite->pos = ex_vec2f_zero;
 }
 
@@ -59,7 +74,7 @@ void ex_sprite_init ( void *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_sprite_deinit ( void *_self ) {
-    ex_sprite_t *sprite = (ex_sprite_t *)_self; 
+    // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
 
     ex_component_deinit(_self); // parent deinint
 }
