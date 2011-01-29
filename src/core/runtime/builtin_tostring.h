@@ -320,6 +320,17 @@ static inline void __ex_tostring_map ( ex_string_t *_string, void *_val ) {
     __ex_tostring_map_2( _string, _val, key_tostring_pfn, value_tostring_pfn );
 }
 
+DEF_BUILTIN_TOSTRING(ref) {
+    char buf[1024];
+    ex_ref_t *val = (ex_ref_t *)_val;
+
+    snprintf ( buf, 1024, "uid: 0x%.16llX, valid: %s, refcount: %d", 
+               val->uid, 
+               *(val->isvalid) ? "true" : "false", 
+               *(val->refcount) );
+    ex_string_ncat( _string, buf, strlen(buf) );
+}
+
 #undef DEF_BUILTIN_TOSTRING
 
 // ######################### 

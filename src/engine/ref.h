@@ -34,8 +34,10 @@ typedef struct ex_ref_t {
 extern ex_ref_t ex_invalidref ();
 extern ex_ref_t ex_newref ( void *_obj );
 extern void ex_delref ( ex_ref_t _ref );
-extern void ex_incref ( ex_ref_t _ref );
+
+extern int ex_incref ( ex_ref_t _ref );
 extern int ex_decref ( ex_ref_t _ref );
+
 extern bool ex_ref_isvalid ( ex_ref_t _ref );
 
 // ######################### 

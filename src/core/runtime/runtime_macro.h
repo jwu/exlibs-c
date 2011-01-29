@@ -240,7 +240,7 @@ extern "C" {
     void __ex_serialize_##_class( ex_stream_t *_stream, strid_t _name, void *_val ) { \
         _class *self = (_class *)_val; \
         if ( _stream->next ) { \
-            int ret = _stream->next( _stream, _name, EX_TYPEID(_class) ); \
+            int ret = _stream->next( _stream, _name, ex_rtti_info(_val)->typeID /*NOTE: this can avoid use base class' type when use SUPER*/ ); \
             if ( ret != 0 ) return; \
         } \
         if ( _stream->push ) _stream->push(_stream); \

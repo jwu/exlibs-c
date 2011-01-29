@@ -23,6 +23,7 @@ extern void __component_init ( void * );
 
 void __trans2d_init ( void *_self ) {
     // ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
+
     __component_init(_self); // parent init
 }
 
@@ -34,8 +35,7 @@ extern void __component_deinit ( void * );
 void __trans2d_deinit ( void *_self ) {
     ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
 
-    if ( trans2d->children )
-        ex_array_free(trans2d->children);
+    ex_array_free(trans2d->children);
     __component_deinit(_self); // parent deinint
 }
 
@@ -54,10 +54,8 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, pos, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
     EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_zero )
-    // TODO { 
-    EX_MEMBER( ex_trans2d_t, parent, NULL )
-    EX_MEMBER( ex_trans2d_t, children, NULL )
-    // } TODO end 
+    EX_MEMBER( ex_trans2d_t, parent, ex_invalidref() )
+    ((ex_trans2d_t *)__obj__)->children = ex_array( ref, 8 );
 
 EX_DEF_OBJECT_END
 
@@ -71,16 +69,16 @@ EX_SERIALIZE_BEGIN_SUPER(ex_trans2d_t,ex_component_t)
     EX_MEMBER_SERIALIZE( vec2f, pos )
     EX_MEMBER_SERIALIZE( angf, ang )
     EX_MEMBER_SERIALIZE( vec2f, scale )
-    // TODO { 
-    // EX_MEMBER_SERIALIZE( reference, parent )
-    // EX_MEMBER_SERIALIZE_ARRAY( reference, children )
-    // } TODO end 
+    EX_MEMBER_SERIALIZE( ref, parent )
+    EX_MEMBER_SERIALIZE_ARRAY( ref, children )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     EX_MEMBER_TOSTRING ( vec2f, "position", self->pos )
     EX_MEMBER_TOSTRING ( angf, "angle", self->ang )
     EX_MEMBER_TOSTRING ( vec2f, "scale", self->scale )
+    EX_MEMBER_TOSTRING ( ref, "parent", self->parent )
+    EX_MEMBER_TOSTRING ( array, "childrent", self->children )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,11 +90,11 @@ EX_DEF_TOSTRING_END
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_world_position ( ex_trans2d_t *_self, ex_vec2f_t *_pos ) {
-    ex_trans2d_t *parent = _self->parent;
+    ex_trans2d_t *parent = (ex_trans2d_t *)_self->parent.ptr;
     *_pos = _self->pos;
     while ( parent ) {
         ex_vec2f_add( _pos, _pos, &(parent->pos) );
-        parent = parent->parent;
+        parent = (ex_trans2d_t *)parent->parent.ptr;
     }
 }
 
@@ -105,11 +103,11 @@ void ex_trans2d_world_position ( ex_trans2d_t *_self, ex_vec2f_t *_pos ) {
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_world_rotation ( ex_trans2d_t *_self, ex_angf_t *_ang ) {
-    ex_trans2d_t *parent = _self->parent;
+    ex_trans2d_t *parent = (ex_trans2d_t *)_self->parent.ptr;
     *_ang = _self->ang;
     while ( parent ) {
         ex_angf_add( _ang, _ang, &(parent->ang) );
-        parent = parent->parent;
+        parent = (ex_trans2d_t *)parent->parent.ptr;
     }
 }
 
@@ -118,10 +116,10 @@ void ex_trans2d_world_rotation ( ex_trans2d_t *_self, ex_angf_t *_ang ) {
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_world_scale ( ex_trans2d_t *_self, ex_vec2f_t *_scale ) {
-    ex_trans2d_t *parent = _self->parent;
+    ex_trans2d_t *parent = (ex_trans2d_t *)_self->parent.ptr;
     *_scale = _self->scale;
     while ( parent ) {
         ex_vec2f_mul( _scale, _scale, &(parent->scale) );
-        parent = parent->parent;
+        parent = (ex_trans2d_t *)parent->parent.ptr;
     }
 }

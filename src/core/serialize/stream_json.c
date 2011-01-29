@@ -919,6 +919,21 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
     }
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __read_ref ( ex_stream_t *_stream, ex_ref_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    _val->uid = *(ex_uid_t *)node->val;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // write functions
 ///////////////////////////////////////////////////////////////////////////////
@@ -1557,6 +1572,22 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __write_ref ( ex_stream_t *_stream, ex_ref_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(long) ); 
+    *(long *)node->val = (long)(_val->uid);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 #define WRITE_DOUBLE_ARRAY( _file, _array, _count ) \
     { \
         double *a = (double *)(_array); \
@@ -1624,6 +1655,9 @@ static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _
     else if ( _node->typeid == EX_TYPEID(angf) ) {
         ex_text_fwrite_fmt ( _txtFile, "%f }", *((double *)_node->val) );
     }
+    else if ( _node->typeid == EX_TYPEID(ref) ) {
+        ex_text_fwrite_fmt ( _txtFile, "%ld }", *((long *)_node->val) );
+    }
     else if ( _node->typeid >= EX_TYPEID(vec2f) && _node->typeid <= EX_TYPEID(color4f) ) {
         ex_text_fwrite_fmt ( _txtFile, "[" );
 
@@ -1675,6 +1709,11 @@ static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _
             ex_text_fwrite_fmt ( _txtFile, "\n%*s] }", _level*4, "" );
         else
             ex_text_fwrite_fmt ( _txtFile, "\n%*s} }", _level*4, "" );
+    }
+    else { // it could be empty array or map
+        if ( _node->typeid == EX_TYPEID(array) || _node->typeid == EX_TYPEID(map) ) {
+            ex_text_fwrite_fmt ( _txtFile, "[ ] }", _level*4, "" );
+        }
     }
 }
 
@@ -1758,6 +1797,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_color4f,
         __read_array,
         __read_map,
+        __read_ref,
 
         // nodes
         NULL,
@@ -1891,6 +1931,7 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_color4f,
         __write_array,
         __write_map,
+        __write_ref,
 
         // nodes
         NULL,

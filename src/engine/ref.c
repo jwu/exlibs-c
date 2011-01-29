@@ -67,9 +67,10 @@ void ex_delref ( ex_ref_t _ref ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_incref ( ex_ref_t _ref ) {
+int ex_incref ( ex_ref_t _ref ) {
     ex_assert_return ( ex_ref_isvalid(_ref), /*dummy*/, "the ref is invalid" );
     *(_ref.refcount) += 1;
+    return *(_ref.refcount); 
 }
 
 // ------------------------------------------------------------------ 

@@ -14,6 +14,9 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "../algo/uid.h"
+#include "../../engine/ref.h"
+
 #include "rtti.h"
 #include "builtin_serialize.h"
 #include "builtin_tostring.h"
@@ -91,6 +94,7 @@ DECL_BUILTIN_TYPE_2(color4u, ex_color4u_t);
 DECL_BUILTIN_TYPE_2(color4f, ex_color4f_t);
 DECL_BUILTIN_TYPE_2(array, ex_array_t *);
 DECL_BUILTIN_TYPE_2(map, ex_hashmap_t *);
+DECL_BUILTIN_TYPE_2(ref, ex_ref_t);
 
 #undef DECL_BUILTIN_TYPE
 #undef DECL_BUILTIN_TYPE_2
