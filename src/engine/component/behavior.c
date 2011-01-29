@@ -16,36 +16,43 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_behavior_t)
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_init ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+void __behavior_init ( void *_self ) {
+    __component_init(_self);
+}
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_deinit ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+void __behavior_deinit ( void *_self ) {
+    __component_deinit(_self);
+}
 
-    NULL, // owner
-    true, // active
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    NULL, // init
-    NULL, // deinit
+EX_DEF_OBJECT_BEGIN( ex_behavior_t,
+                     "Behavior",
+                     __behavior_init,
+                     __behavior_deinit )
 
-    // ======================================================== 
-    // ex_behavior_t
-    // ======================================================== 
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
 
-    EX_BEHAVIOR_STATE_NEW, // state
+    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, level_start, NULL )
+    EX_MEMBER( ex_behavior_t, start, NULL )
+    EX_MEMBER( ex_behavior_t, update, NULL )
+    EX_MEMBER( ex_behavior_t, post_update, NULL )
 
-    NULL, // level_start
-    NULL, // start
-    NULL, // update
-    NULL, // post_update
-EX_DEF_CLASS_END
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_behavior_t)
 EX_DEF_PROPS_END
@@ -55,24 +62,3 @@ EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_behavior_t,ex_component_t)
 EX_DEF_TOSTRING_END
-
-///////////////////////////////////////////////////////////////////////////////
-// functions
-///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_behavior_init ( void *_self ) {
-    ex_component_init(_self);
-    ((ex_object_t *)_self)->name = ex_strid("Behavior");
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_behavior_deinit ( void *_self ) {
-    ex_component_deinit(_self);
-}

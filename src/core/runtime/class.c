@@ -22,6 +22,16 @@ strid_t __TYPEID_ex_class_t__ = EX_STRID_NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void *__ex_create_ex_class_t() {
+    ex_class_t *obj = (ex_class_t *)ex_malloc(sizeof(ex_class_t));
+    obj->rtti = __RTTI_ex_class_t__;
+    return obj;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void *__ex_as ( ex_class_t *_obj, const ex_rtti_t *_rtti ) {
     if ( ex_rtti_isa ( _obj->rtti, _rtti ) )
         return _obj;

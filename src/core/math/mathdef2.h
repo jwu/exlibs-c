@@ -47,28 +47,30 @@ extern const ex_angf_t ex_angf_zero;
 // macro
 ///////////////////////////////////////////////////////////////////////////////
 
-#define EX_VEC2F_ZERO       0.0f,0.0f
-#define EX_VEC2F_ONE        1.0f,1.0f
+// UNUSED { 
+// #define EX_VEC2F_ZERO       0.0f,0.0f
+// #define EX_VEC2F_ONE        1.0f,1.0f
 
-#define EX_VEC3F_ZERO       0.0f,0.0f,0.0f
-#define EX_VEC3F_ONE        1.0f,1.0f,1.0f
+// #define EX_VEC3F_ZERO       0.0f,0.0f,0.0f
+// #define EX_VEC3F_ONE        1.0f,1.0f,1.0f
 
-#define EX_VEC4F_ZERO       0.0f,0.0f,0.0f,0.0f
-#define EX_VEC4F_ONE        1.0f,1.0f,1.0f,1.0f
+// #define EX_VEC4F_ZERO       0.0f,0.0f,0.0f,0.0f
+// #define EX_VEC4F_ONE        1.0f,1.0f,1.0f,1.0f
 
-#define EX_MAT22F_ZERO      0.0f,0.0f,0.0f,0.0f
-#define EX_MAT22F_IDENTITY  1.0f,0.0f,1.0f,0.0f
+// #define EX_MAT22F_ZERO      0.0f,0.0f,0.0f,0.0f
+// #define EX_MAT22F_IDENTITY  1.0f,0.0f,1.0f,0.0f
 
-#define EX_MAT33F_ZERO      0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f
-#define EX_MAT33F_IDENTITY  1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f
+// #define EX_MAT33F_ZERO      0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f
+// #define EX_MAT33F_IDENTITY  1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f
 
-#define EX_MAT44F_ZERO      0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f
-#define EX_MAT44F_IDENTITY  1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f
+// #define EX_MAT44F_ZERO      0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f
+// #define EX_MAT44F_IDENTITY  1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f
 
-#define EX_QUATF_ZERO       0.0f,0.0f,0.0f,0.0f
-#define EX_QUATF_IDENTITY   0.0f,0.0f,0.0f,1.0f
+// #define EX_QUATF_ZERO       0.0f,0.0f,0.0f,0.0f
+// #define EX_QUATF_IDENTITY   0.0f,0.0f,0.0f,1.0f
 
-#define EX_ANGF_ZERO        0.0f
+// #define EX_ANGF_ZERO        0.0f
+// } UNUSED end 
 
 // ######################### 
 #ifdef __cplusplus

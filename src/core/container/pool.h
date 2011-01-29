@@ -57,9 +57,11 @@ extern "C" {
 #define ex_pool_each( _pool, _type, _el ) \
     { \
         ex_pool_node_t *__node__ = (_pool)->used_nodes_begin; \
+        ex_pool_node_t *__node_next__; \
         _type _el; \
         int __id__; \
         while ( __node__ ) { \
+            __node_next__ = __node__->next; \
             __id__ = __node__ - (_pool)->nodes; \
             _el = *( (_type *) ex_pool_get( _pool, __id__ ) );
 
@@ -91,9 +93,11 @@ extern "C" {
 #define ex_pool_raw_each( _pool, _type, _el ) \
     { \
         ex_pool_node_t *__node__ = (_pool)->used_nodes_begin; \
+        ex_pool_node_t *__node_next__; \
         _type _el; \
         int __id__; \
         while ( __node__ ) { \
+            __node_next__ = __node__->next; \
             __id__ = __node__ - (_pool)->nodes; \
             _el = (_type) ex_pool_get( _pool, __id__ );
 
@@ -106,7 +110,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 #define ex_pool_each_end \
-            __node__ = __node__->next; \
+            __node__ = __node_next__; \
         } \
     }
 
@@ -120,7 +124,7 @@ extern "C" {
 
 #define ex_pool_continue \
     { \
-        __node__ = __node__->next; \
+        __node__ = __node_next__; \
         continue; \
     }
 

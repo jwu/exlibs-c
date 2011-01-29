@@ -36,20 +36,15 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_vec2f_t  pos;   // local position
     ex_angf_t   ang;   // local angle
     ex_vec2f_t  scale; // local scale
-    struct ex_trans2d_t *parent;
-    ex_array_t *children;
+    // TODO: use ex_ref_t instead { 
+    struct ex_trans2d_t *parent; // ex_trans2d_t *
+    ex_array_t *children; // ex_trans2d_t * [] 
+    // } TODO end 
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_trans2d_init ( void *_self ); 
-extern void ex_trans2d_deinit ( void *_self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 

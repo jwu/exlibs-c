@@ -19,25 +19,35 @@
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_component_t)
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+void __component_init ( void *_self ) {
+}
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+void __component_deinit ( void *_self ) {
+    ex_component_t *self = (ex_component_t *)_self;
+    self->owner = NULL;
+}
 
-    NULL, // owner
-    true, // active
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    NULL, // init
-    NULL, // deinit
-EX_DEF_CLASS_END
+EX_DEF_OBJECT_BEGIN( ex_component_t,
+                     "Component",
+                     __component_init,
+                     __component_deinit )
+
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_component_t)
     EX_PROP( ex_component_t, bool, active, "active",  EX_PROP_ATTR_HIDE )
@@ -54,22 +64,3 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_component_init ( void *_self ) {
-    ex_object_init(_self);
-    ((ex_object_t *)_self)->name = ex_strid("Component"); 
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_component_deinit ( void *_self ) {
-    ex_component_t *self = (ex_component_t *)_self;
-    self->owner = NULL;
-    ex_object_deinit(_self);
-}

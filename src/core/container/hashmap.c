@@ -298,12 +298,9 @@ void ex_hashmap_cpy ( ex_hashmap_t *_to, const ex_hashmap_t *_from ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key )
-{
+void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key ) {
     size_t hash_next;
     uint32 hash_idx = __hash_index ( _hashmap, _key ); 
-    size_t prev_idx, next_idx;
-    ex_hashmap_node_t *node;
 
     // check if the key exists. if yes, don't do any thing.
     for ( hash_next = _hashmap->indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
@@ -319,9 +316,19 @@ void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key )
         NULL;
     }
 
-    //
-    prev_idx = __getnode(_hashmap,hash_next)->prev;
-    next_idx = __getnode(_hashmap,hash_next)->next;
+    return ex_hashmap_remove_by_idx(_hashmap,hash_idx,hash_next);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void *ex_hashmap_remove_by_idx ( ex_hashmap_t *_hashmap, uint32 _hash_idx, size_t _idx ) {
+    size_t prev_idx, next_idx;
+    ex_hashmap_node_t *node;
+
+    prev_idx = __getnode(_hashmap,_idx)->prev;
+    next_idx = __getnode(_hashmap,_idx)->next;
 
     // if the erase node is not the tail
     if ( next_idx != -1 ) {
@@ -330,14 +337,14 @@ void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key )
 
     // if the erase node is the header, change the index
     if ( prev_idx == -1 )
-        _hashmap->indices[hash_idx] = next_idx;
+        _hashmap->indices[_hash_idx] = next_idx;
     // if not header
     else 
         __getnode(_hashmap,prev_idx)->next = next_idx;
 
     // now erase node
-    node = ex_pool_remove_at ( _hashmap->nodes, hash_next );
+    node = ex_pool_remove_at ( _hashmap->nodes, _idx );
     node->next = -1;
     node->prev = -1;
-    return __getvalue ( _hashmap, hash_next );
+    return __getvalue ( _hashmap, _idx );
 }

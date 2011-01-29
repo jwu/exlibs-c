@@ -49,13 +49,6 @@ EX_DECL_CLASS_SUPER_END(ex_debug2d_t,ex_component_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_debug2d_init ( void *_self ); 
-extern void ex_debug2d_deinit ( void *_self ); 
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 extern void ex_debug2d_set_rect ( ex_debug2d_t *_self, 
                                   float _x, float _y, float _width, float _height ); 
 

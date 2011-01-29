@@ -22,6 +22,7 @@ static bool __initialized = false;
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void __start_engine_time ();
+extern void __init_object_table ();
 // ------------------------------------------------------------------ 
 
 int ex_app_init () {
@@ -38,6 +39,7 @@ int ex_app_init () {
     }
 
     // start engine time
+    __init_object_table ();
     __start_engine_time ();
 
     //
@@ -48,10 +50,13 @@ int ex_app_init () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __deinit_object_table ();
 // ------------------------------------------------------------------ 
 
 void ex_app_deinit () {
     if ( __initialized ) {
+        __deinit_object_table();
+
         ex_log ( "ex_engine deinitied" );
         __initialized = false;
     }

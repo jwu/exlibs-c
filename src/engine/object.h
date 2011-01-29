@@ -17,6 +17,12 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
+// includes
+///////////////////////////////////////////////////////////////////////////////
+
+#include "ref.h"
+
+///////////////////////////////////////////////////////////////////////////////
 // struct
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +35,30 @@ extern "C" {
 EX_DECL_CLASS_BEGIN(ex_object_t)
     ex_uid_t uid;
     strid_t name;
+
+    // override functions
+    void (*init) ( void *_self ); // invoked when object created.
+    void (*deinit) ( void *_self ); // invoked when ex_destroy_object called.
 EX_DECL_CLASS_END(ex_object_t)
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_DEF_OBJECT_BEGIN(_typename,_default_name,_init,_deinit) \
+    strid_t __TYPEID_##_typename##__ = EX_STRID_NULL; \
+    ex_rtti_t *__RTTI_##_typename##__ = NULL; \
+    void *__ex_create_##_typename() { \
+        void *__obj__ = ex_malloc(sizeof(_typename)); \
+        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_typename); \
+        ((ex_object_t *)__obj__)->uid = EX_UID_INVALID; \
+        ((ex_object_t *)__obj__)->name = ex_strid(_default_name); \
+        ((ex_object_t *)__obj__)->init = _init; \
+        ((ex_object_t *)__obj__)->deinit = _deinit;
+
+#define EX_DEF_OBJECT_END \
+        return __obj__; \
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 // function defines
@@ -39,15 +68,17 @@ EX_DECL_CLASS_END(ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_object_init ( void *_obj );
-extern void ex_object_deinit ( void *_obj );
+extern void ex_init_object ( void *_obj );
+extern void ex_destroy_object ( void *_obj );
+extern ex_ref_t ex_get_objref ( ex_uid_t _uid );
+extern void ex_object_gc ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern ex_uid_t ex_object_uid ( void *_obj );
-extern strid_t ex_object_name ( void *_obj );
+static inline ex_uid_t ex_object_uid ( void *_obj ) { return ((ex_object_t *)_obj)->uid; }
+static inline strid_t ex_object_name ( void *_obj ) { return ((ex_object_t *)_obj)->name; }
 
 // ######################### 
 #ifdef __cplusplus

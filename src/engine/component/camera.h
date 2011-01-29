@@ -54,13 +54,6 @@ EX_DECL_CLASS_SUPER_END(ex_camera_t,ex_component_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_camera_init ( void *_self ); 
-extern void ex_camera_deinit ( void *_self ); 
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 extern void ex_camera_set_ortho ( ex_camera_t *_self, bool _isOrtho ); 
 extern bool ex_camera_is_ortho ( ex_camera_t *_self ); 
 

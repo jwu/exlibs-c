@@ -44,13 +44,6 @@ EX_DECL_CLASS_SUPER_END(ex_sprite_t,ex_component_t)
 // functions
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_sprite_init ( void *_self ); 
-extern void ex_sprite_deinit ( void *_self ); 
-
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

@@ -14,19 +14,20 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __component_init ( void * );
 // ------------------------------------------------------------------ 
 
 static void init ( void *_self ) {
-    ex_component_init(_self); // parent init
-    ((ex_object_t *)_self)->name = ex_strid("Simple Behavior");
+    __component_init(_self); // parent init
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __component_deinit ( void * );
 // ------------------------------------------------------------------ 
 
 static void deinit ( void *_self ) {
-    ex_component_deinit(_self); // parent deinint
+    __component_deinit(_self); // parent deinint
 }
 
 // ------------------------------------------------------------------ 
@@ -81,42 +82,25 @@ static void post_update ( void *_self ) {
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_simple_t)
+EX_DEF_OBJECT_BEGIN( ex_simple_t,
+                     "Simple Behavior",
+                     init,
+                     deinit )
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, level_start, level_start )
+    EX_MEMBER( ex_behavior_t, start, start )
+    EX_MEMBER( ex_behavior_t, update, update )
+    EX_MEMBER( ex_behavior_t, post_update, post_update )
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+    EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_zero )
+    EX_MEMBER( ex_simple_t, move_speed, 1.0f )
+    EX_MEMBER( ex_simple_t, rot_speed, 1.0f )
 
-    NULL, // owner
-    true, // active
-    init, // init
-    deinit, // deinit
-
-    // ======================================================== 
-    // ex_behavior_t
-    // ======================================================== 
-
-    EX_BEHAVIOR_STATE_NEW, // state
-    level_start, // level_start
-    start, // start
-    update, // update
-    post_update, // post_update
-
-    // ======================================================== 
-    // ex_simple_t
-    // ======================================================== 
-
-    EX_VEC2F_ZERO, // move_dir
-    1.0f, // move_speed
-    1.0f, // rot_speed
-EX_DEF_CLASS_END
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_simple_t)
     EX_PROP ( ex_simple_t, vec2f, move_dir, "move direction", EX_PROP_ATTR_NONE )

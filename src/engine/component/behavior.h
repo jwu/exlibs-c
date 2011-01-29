@@ -56,13 +56,6 @@ EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
 // functions
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_behavior_init ( void *_self ); 
-extern void ex_behavior_deinit ( void *_self ); 
-
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

@@ -86,8 +86,11 @@ static void load_world () {
         return;
 
     ex_world_stop( g_world );
-    ex_world_deinit(g_world);
-    ex_world_init(g_world);
+    ex_destroy_object(g_world);
+    ex_object_gc();
+
+    g_world = EX_RTTI(ex_world_t)->create();
+    ex_init_object(g_world);
 
     ex_log ("loading world simple_world.json...");
     strncpy ( path, __media_file, maxPATH );
@@ -108,8 +111,8 @@ static void initGame () {
     EX_REGISTER_CLASS(ex_simple_t);
 
     // load/setup the world
-    g_world = ex_create_ex_world_t();
-    ex_world_init (g_world);
+    g_world = EX_RTTI(ex_world_t)->create();
+    ex_init_object(g_world);
 
     {
         ex_camera_t *mainCam;
@@ -155,8 +158,7 @@ static void initGame () {
 
 static void quitGame () {
     ex_world_stop(g_world);
-    ex_world_deinit(g_world);
-    ex_free(g_world);
+    ex_destroy_object(g_world);
 }
 
 // ------------------------------------------------------------------ 

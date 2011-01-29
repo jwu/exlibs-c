@@ -44,9 +44,11 @@ extern "C" {
 #define ex_list_each( _list, _type, _el ) \
     { \
         ex_list_node_t *__node__ = (_list)->head; \
+        ex_list_node_t *__node_next__; \
         int __idx__ = 0; \
         _type _el; \
         while ( __node__ ) { \
+            __node_next__ = __node__->next; \
             _el = *( (_type *) ( __node__->value ) );
 
 // ------------------------------------------------------------------ 
@@ -77,9 +79,11 @@ extern "C" {
 #define ex_list_raw_each( _list, _type, _el ) \
     { \
         ex_list_node_t *__node__ = (_list)->head; \
+        ex_list_node_t *__node_next__; \
         int __idx__ = 0; \
         _type _el; \
         while ( __node__ ) { \
+            __node_next__ = __node__->next; \
             _el = (_type) ( __node__->value );
 
 // ------------------------------------------------------------------ 
@@ -92,7 +96,7 @@ extern "C" {
 
 #define ex_list_each_end \
             ++__idx__; \
-            __node__ = __node__->next; \
+            __node__ = __node_next__; \
         } \
     }
 
@@ -106,7 +110,7 @@ extern "C" {
 
 #define ex_list_continue \
     { \
-        __node__ = __node__->next; \
+        __node__ = __node_next__; \
         continue; \
     }
 

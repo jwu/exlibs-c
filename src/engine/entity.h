@@ -49,13 +49,6 @@ EX_DECL_CLASS_SUPER_END(ex_entity_t,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_entity_init ( ex_entity_t *_ent );
-extern void ex_entity_deinit ( ex_entity_t *_ent );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 extern struct ex_component_t *ex_entity_get_comp ( const ex_entity_t *_ent, strid_t _typeID );
 
 // ------------------------------------------------------------------ 

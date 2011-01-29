@@ -45,8 +45,6 @@ EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_world_init ( ex_world_t *_world );
-extern void ex_world_deinit ( ex_world_t *_world );
 extern void ex_world_reset ( ex_world_t *_world, ex_stream_t *_stream );
 
 // ------------------------------------------------------------------ 

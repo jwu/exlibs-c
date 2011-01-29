@@ -19,32 +19,41 @@
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_debug2d_t)
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_init ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+void __debug2d_init ( void *_self ) {
+    __component_init(_self); // parent init
+}
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_deinit ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+void __debug2d_deinit ( void *_self ) {
+    __component_deinit(_self); // parent deinint
+}
 
-    NULL, // owner
-    true, // active
-    ex_debug2d_init, // init
-    NULL, // deinit
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_debug2d_t
-    // ======================================================== 
+EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
+                     "Debug 2D",
+                     __debug2d_init,
+                     __debug2d_deinit )
 
-    EX_DEBUG_SHAPE_RECT, // shapeType
-    EX_VEC2F_ZERO, 1.0f, 1.0f, // rect
-    EX_VEC2F_ZERO, 1.0f, // circle
-EX_DEF_CLASS_END
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
+
+    EX_MEMBER( ex_debug2d_t, shapeType, EX_DEBUG_SHAPE_RECT )
+    ex_rectf_set( &(((ex_debug2d_t *)__obj__)->rect), ex_vec2f_zero, 1.0f, 1.0f );
+    ex_circlef_set( &(((ex_debug2d_t *)__obj__)->circle), ex_vec2f_zero, 1.0f );
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_debug2d_t)
     EX_PROP( ex_debug2d_t, int, shapeType, "shape type",  EX_PROP_ATTR_NONE )
@@ -64,36 +73,6 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_debug2d_init ( void *_self ) {
-    ex_rectf_t r;
-    ex_circlef_t c;
-    ex_vec2f_t center;
-    ex_debug2d_t *dbg2d = (ex_debug2d_t *)_self; 
-
-    ex_component_init(_self); // parent init
-    ((ex_object_t *)_self)->name = ex_strid("Debug 2D");
-
-    center = ex_vec2f_zero;
-    ex_rectf_set ( &r, center, 1.0f, 1.0f );
-    ex_circlef_set ( &c, center, 1.0f );
-
-    dbg2d->shapeType = EX_DEBUG_SHAPE_RECT;
-    dbg2d->rect = r;
-    dbg2d->circle = c;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_debug2d_deinit ( void *_self ) {
-    ex_component_deinit(_self); // parent deinint
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 

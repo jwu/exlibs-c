@@ -56,9 +56,13 @@ extern "C" {
     { \
         ex_pool_node_t *__node__ = (_hashmap)->nodes->used_nodes_begin; \
         ex_pool_node_t *__node_begin__ = (_hashmap)->nodes->nodes; \
+        ex_pool_node_t *__node_next__; \
+        size_t __idx__; \
         _type _el; \
         while ( __node__ ) { \
-            _el = *( (_type *) ( (char *)(_hashmap)->values + (__node__ - __node_begin__) * (_hashmap)->value_bytes ) );
+            __node_next__ = __node__->next; \
+            __idx__ = __node__ - __node_begin__; \
+            _el = *( (_type *) ( (char *)(_hashmap)->values + __idx__ * (_hashmap)->value_bytes ) );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -89,9 +93,13 @@ extern "C" {
     { \
         ex_pool_node_t *__node__ = (_hashmap)->nodes->used_nodes_begin; \
         ex_pool_node_t *__node_begin__ = (_hashmap)->nodes->nodes; \
+        ex_pool_node_t *__node_next__; \
+        size_t __idx__; \
         _type _el; \
         while ( __node__ ) { \
-            _el = (_type)( (char *)(_hashmap)->values + (__node__ - __node_begin__) * (_hashmap)->value_bytes );
+            __node_next__ = __node__->next; \
+            __idx__ = __node__ - __node_begin__; \
+            _el = (_type)( (char *)(_hashmap)->values + __idx__ * (_hashmap)->value_bytes );
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -102,7 +110,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 #define ex_hashmap_each_end \
-            __node__ = __node__->next; \
+            __node__ = __node_next__; \
         } \
     }
 
@@ -116,7 +124,7 @@ extern "C" {
 
 #define ex_hashmap_continue \
     { \
-        __node__ = __node__->next; \
+        __node__ = __node_next__; \
         continue; \
     }
 
@@ -278,6 +286,7 @@ extern void ex_hashmap_cpy ( ex_hashmap_t *_to, const ex_hashmap_t *_from );
 // ------------------------------------------------------------------ 
 
 extern void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key );
+extern void *ex_hashmap_remove_by_idx ( ex_hashmap_t *_hashmap, uint32 _hash_idx, size_t _idx );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -299,6 +308,7 @@ static inline uint32 ex_hashkey_cstr ( const void *_val ) { return ex_hashstr( *
 static inline uint32 ex_hashkey_strid ( const void *_val ) { return *((const strid_t *)_val); }
 static inline uint32 ex_hashkey_uint32 ( const void *_val ) { return *((const uint32 *)_val); }
 static inline uint32 ex_hashkey_uint64 ( const void *_val ) { return (uint32)(*((const uint64 *)_val)); }
+static inline uint32 ex_hashkey_uid ( const void *_val ) { return (uint32)(*((const ex_uid_t *)_val)); }
 static inline uint32 ex_hashkey_ptr ( const void *_val ) { return (uint32)((size_t)(*(const void **)_val) >> 4); }
 
 // ------------------------------------------------------------------ 
@@ -310,6 +320,7 @@ static inline int ex_keycmp_cstr ( const void *_lhs, const void *_rhs ) { return
 static inline int ex_keycmp_strid ( const void *_lhs, const void *_rhs ) { return *((const strid_t *)_lhs) - *((const strid_t *)_rhs); }
 static inline int ex_keycmp_uint32 ( const void *_lhs, const void *_rhs ) { return *((const uint32 *)_lhs) - *((const uint32 *)_rhs); }
 static inline int ex_keycmp_uint64 ( const void *_lhs, const void *_rhs ) { uint64 re = *((const uint64 *)_lhs) - *((const uint64 *)_rhs); return re > 0 ? 1 : (re == 0 ? 0 : -1); }
+static inline int ex_keycmp_uid ( const void *_lhs, const void *_rhs ) { ex_uid_t re = *((const ex_uid_t *)_lhs) - *((const ex_uid_t *)_rhs); return re > 0 ? 1 : (re == 0 ? 0 : -1); }
 static inline int ex_keycmp_ptr ( const void *_lhs, const void *_rhs ) { return (size_t)*((const void **)_lhs) - (size_t)*((const void **)_rhs); }
 
 // ######################### 

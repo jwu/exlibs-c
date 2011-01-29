@@ -35,22 +35,11 @@ extern "C" {
 EX_DECL_CLASS_SUPER_BEGIN(ex_component_t,ex_object_t)
     struct ex_entity_t *owner;
     bool active;
-
-    // override functions
-    void (*init) ( void *_self ); // invoked after the component created
-    void (*deinit) ( void *_self ); // invoked before the component destroyed
 EX_DECL_CLASS_SUPER_END(ex_component_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_component_init ( void *_self ); 
-extern void ex_component_deinit ( void *_self ); 
 
 // ######################### 
 #ifdef __cplusplus

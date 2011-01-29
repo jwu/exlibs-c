@@ -16,35 +16,50 @@
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_trans2d_t)
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_init ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+void __trans2d_init ( void *_self ) {
+    // ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
+    __component_init(_self); // parent init
+}
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_deinit ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+void __trans2d_deinit ( void *_self ) {
+    ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
 
-    NULL, // owner
-    true, // active
-    ex_trans2d_init, // init
-    ex_trans2d_deinit, // deinit
+    if ( trans2d->children )
+        ex_array_free(trans2d->children);
+    __component_deinit(_self); // parent deinint
+}
 
-    // ======================================================== 
-    // ex_trans2d_t
-    // ======================================================== 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    EX_VEC2F_ZERO, // pos 
-    EX_ANGF_ZERO,  // ang
-    EX_VEC2F_ONE,  // scale 
-    NULL, // parent
-    NULL, // children
+EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
+                     "Transform 2D",
+                     __trans2d_init,
+                     __trans2d_deinit )
 
-EX_DEF_CLASS_END
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
+
+    EX_MEMBER( ex_trans2d_t, pos, ex_vec2f_zero )
+    EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
+    EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_zero )
+    // TODO { 
+    EX_MEMBER( ex_trans2d_t, parent, NULL )
+    EX_MEMBER( ex_trans2d_t, children, NULL )
+    // } TODO end 
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_trans2d_t)
     EX_PROP( ex_trans2d_t, vec2f, pos, "position",  EX_PROP_ATTR_NONE )
@@ -71,28 +86,6 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_trans2d_init ( void *_self ) {
-    // ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
-    ex_component_init(_self); // parent init
-    ((ex_object_t *)_self)->name = ex_strid("Transform 2D");
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_trans2d_deinit ( void *_self ) {
-    ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
-
-    if ( trans2d->children )
-        ex_array_free(trans2d->children);
-    ex_component_deinit(_self); // parent deinint
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 

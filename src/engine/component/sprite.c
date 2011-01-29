@@ -16,29 +16,43 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_sprite_t)
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_init ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+void __sprite_init ( void *_self ) {
+    // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+    __component_init(_self);
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+    // TODO: sprite->pos = ex_vec2f_zero;
+}
 
-    NULL, // owner
-    true, // active
-    ex_sprite_init, // init
-    ex_sprite_deinit, // deinit
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_deinit ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_sprite_t
-    // ======================================================== 
+void __sprite_deinit ( void *_self ) {
+    // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
 
-EX_DEF_CLASS_END
+    __component_deinit(_self);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+EX_DEF_OBJECT_BEGIN( ex_sprite_t,
+                     "Sprite",
+                     __sprite_init,
+                     __sprite_deinit )
+
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_sprite_t)
     // EX_PROP( ex_sprite_t, pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
@@ -55,29 +69,6 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_sprite_init ( void *_self ) {
-    // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
-
-    ex_component_init(_self); // parent init
-    ((ex_object_t *)_self)->name = ex_strid("Sprite");
-
-    // TODO: sprite->pos = ex_vec2f_zero;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_sprite_deinit ( void *_self ) {
-    // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
-
-    ex_component_deinit(_self); // parent deinint
-}
 
 // NOTE: I think if the material, textures are the same, they can batch into one draw call
 // glDrawArrays should count one draw call.

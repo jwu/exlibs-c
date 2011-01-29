@@ -17,27 +17,70 @@
 #include "component/behavior.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// properties
+//
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_entity_t)
-    // ======================================================== 
-    // ex_object_t
-    // ======================================================== 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+static void __add_comp ( ex_entity_t *_ent, strid_t _typeID, ex_component_t *_comp ) {
+    _comp->owner = _ent; // set the owner of the component before init.
+    ex_init_object(_comp);
+    ex_array_append( _ent->comps, &_comp );
 
-    // ======================================================== 
-    // ex_entity_t
-    // ======================================================== 
+    // cache internal component
+    if ( _typeID == EX_TYPEID(ex_trans2d_t) )
+        _ent->trans2d = (ex_trans2d_t *)_comp; 
+    else if ( _typeID == EX_TYPEID(ex_camera_t) )
+        _ent->camera = (ex_camera_t *)_comp; 
+}
 
-    NULL, // comps
-    NULL, // world
+///////////////////////////////////////////////////////////////////////////////
+// 
+///////////////////////////////////////////////////////////////////////////////
 
-    NULL, // trans2d
-    NULL, // camera
-EX_DEF_CLASS_END
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __entity_init ( void *_self ) {
+    // ex_entity_t *self = (ex_entity_t *)_self;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __entity_deinit ( void *_self ) {
+    ex_entity_t *self = (ex_entity_t *)_self;
+
+    ex_array_each ( self->comps, ex_component_t *, comp ) {
+        ex_destroy_object(comp);
+    } ex_array_each_end;
+    ex_array_free ( self->comps );
+
+    self->comps = NULL;
+    self->world = NULL;
+    self->trans2d = NULL;
+    self->camera = NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+EX_DEF_OBJECT_BEGIN( ex_entity_t, 
+                     "Entity", 
+                     __entity_init, 
+                     __entity_deinit )
+
+    ((ex_entity_t *)__obj__)->comps = ex_array_notype(sizeof(void *),8);
+    EX_MEMBER( ex_entity_t, world, NULL )
+    EX_MEMBER( ex_entity_t, trans2d, NULL )
+    EX_MEMBER( ex_entity_t, camera, NULL )
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_entity_t)
 EX_DEF_PROPS_END
@@ -54,9 +97,22 @@ EX_SERIALIZE_BEGIN_SUPER(ex_entity_t,ex_object_t)
             strid_t typeID;
             void *comp;
 
+            // get the component type first.
             EX_SERIALIZE( _stream, strid, "comp_type", &typeID )
-            comp = ex_entity_add_comp( self, typeID );
-            ex_rtti_info(comp)->serialize( _stream, ex_strid("component"), comp );
+
+            // check if we have the component
+            comp = ex_entity_get_comp(self,typeID);
+            if ( comp ) {
+                ex_warning("the component %s already added in this entity", ex_strid_to_cstr(typeID));
+                continue;
+            }
+
+            // create a component serialize, and finially add it.
+            comp = (ex_component_t *)ex_create(typeID);
+            if ( comp ) {
+                ex_rtti_info(comp)->serialize( _stream, ex_strid("component"), comp );
+                __add_comp( self, typeID, comp );
+            }
         }
     }
     else if ( _stream->type == EX_STREAM_WRITE ) {
@@ -73,49 +129,6 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_entity_init ( ex_entity_t *_ent ) {
-    ex_object_init(_ent);
-    ((ex_object_t *)_ent)->name = ex_strid("New Entity");
-
-    _ent->comps = ex_array_notype(sizeof(void *),8);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_entity_deinit ( ex_entity_t *_ent ) {
-    ex_array_each ( _ent->comps, ex_component_t *, comp ) {
-        if ( comp->deinit ) comp->deinit(comp);
-        ex_free(comp);
-    } ex_array_each_end;
-    ex_array_free ( _ent->comps );
-
-    _ent->comps = NULL;
-    _ent->world = NULL;
-    _ent->trans2d = NULL;
-    _ent->camera = NULL;
-    
-    ex_object_deinit(_ent);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_entity_reset ( ex_entity_t *_ent ) {
-    // TODO: { 
-    // ex_array_each ( _ent->comps, ex_component_t *, comp ) {
-    //     if ( comp->reset )
-    //         comp->reset(comp);
-    // } ex_array_each_end;
-    // } TODO end 
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -152,19 +165,11 @@ ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID ) {
     // create a component and added to the component list, then return it.
     comp = (ex_component_t *)ex_create(_typeID);
     if ( comp ) {
-        comp->owner = _ent; // set the owner of the component before init.
-        if ( comp->init )
-            comp->init(comp);
-        ex_array_append( _ent->comps, &comp );
-
-        // cache internal component
-        if ( _typeID == EX_TYPEID(ex_trans2d_t) )
-            _ent->trans2d = (ex_trans2d_t *)comp; 
-        else if ( _typeID == EX_TYPEID(ex_camera_t) )
-            _ent->camera = (ex_camera_t *)comp; 
+        __add_comp( _ent, _typeID, comp );
+        return comp;
     }
 
-    return comp;
+    return NULL;
 }
 
 // ------------------------------------------------------------------ 

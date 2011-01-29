@@ -24,7 +24,7 @@ extern "C" {
   EX_DECL_CLASS_END(foo)
 
   EX_DEF_CLASS_BEGIN(foo)
-    10,
+    EX_MEMBER(foo,val1,10)
   EX_DEF_CLASS_END
 
   EX_DEF_PROPS_BEGIN(foo)
@@ -98,7 +98,7 @@ extern "C" {
     } _typename; \
     extern strid_t __TYPEID_##_typename##__; /*for EX_TYPEID*/ \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
-    extern void *ex_create_##_typename(); \
+    extern void *__ex_create_##_typename(); \
     extern void __ex_register_properties_##_typename (); \
     extern void __ex_serialize_##_typename( struct ex_stream_t *, strid_t, void * ); \
     extern void __ex_tostring_##_typename( struct ex_string_t *, void * ); \
@@ -107,7 +107,7 @@ extern "C" {
         __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
                                                           EX_RTTI(ex_class_t), \
                                                           sizeof(_typename), \
-                                                          ex_create_##_typename, \
+                                                          __ex_create_##_typename, \
                                                           __ex_serialize_##_typename, \
                                                           __ex_tostring_##_typename \
                                                           ); \
@@ -130,7 +130,7 @@ extern "C" {
     } _typename; \
     extern strid_t __TYPEID_##_typename##__; /*for EX_TYPEID*/ \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
-    extern void *ex_create_##_typename(); \
+    extern void *__ex_create_##_typename(); \
     extern void __ex_register_properties_##_typename (); \
     extern void __ex_serialize_##_typename( struct ex_stream_t *, strid_t, void * ); \
     extern void __ex_tostring_##_typename( struct ex_string_t *, void * ); \
@@ -139,7 +139,7 @@ extern "C" {
         __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
                                                           EX_RTTI(_super), \
                                                           sizeof(_typename), \
-                                                          ex_create_##_typename, \
+                                                          __ex_create_##_typename, \
                                                           __ex_serialize_##_typename, \
                                                           __ex_tostring_##_typename \
                                                           ); \
@@ -153,19 +153,16 @@ extern "C" {
 #define EX_DEF_CLASS_BEGIN(_typename) \
     strid_t __TYPEID_##_typename##__ = EX_STRID_NULL; \
     ex_rtti_t *__RTTI_##_typename##__ = NULL; \
-    void *ex_create_##_typename() { \
-        ex_rtti_t *__rtti__ = EX_RTTI(_typename); \
+    void *__ex_create_##_typename() { \
         void *__obj__ = ex_malloc(sizeof(_typename)); \
-        static const int __size__ = sizeof(_typename); \
-        static const _typename __class_def__ = { \
-            NULL,
+        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_typename); \
 
 #define EX_DEF_CLASS_END \
-        }; /*end of __class_def__*/ \
-        memcpy ( __obj__, &__class_def__, __size__ ); \
-        ((ex_class_t *)__obj__)->rtti = __rtti__; \
         return __obj__; \
     }
+
+#define EX_MEMBER(_class_type,_member_type,_expr) \
+    ((_class_type *)__obj__)->_member_type = _expr;
 
 ///////////////////////////////////////////////////////////////////////////////
 // property help macros

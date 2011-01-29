@@ -23,23 +23,46 @@
 // class define
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_world_t)
-    // ======================================================== 
-    // ex_object_t
-    // ======================================================== 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+void __world_init ( void *_self ) {
+    ex_world_t *self = (ex_world_t *)_self;
 
-    // ======================================================== 
-    // ex_world_t 
-    // ======================================================== 
+    self->entities = ex_array_notype( sizeof(void *), 8 );
+    self->cameras = ex_array_notype( sizeof(void *), 8 );
+}
 
-    EX_WORLD_STATE_STOPPED, // state
-    NULL, // entities
-    NULL, // cameras
-    NULL, // mainCamera
-EX_DEF_CLASS_END
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __world_deinit ( void *_self ) {
+    ex_world_t *self = (ex_world_t *)_self;
+
+    ex_array_each ( self->entities, ex_entity_t *, ent ) {
+        ex_destroy_object(ent);
+    } ex_array_each_end;
+    ex_array_free ( self->entities );
+    ex_array_free ( self->cameras );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+EX_DEF_OBJECT_BEGIN( ex_world_t, 
+                     "World", 
+                     __world_init, 
+                     __world_deinit )
+
+    EX_MEMBER( ex_world_t, state, EX_WORLD_STATE_STOPPED )
+    EX_MEMBER( ex_world_t, entities, NULL )
+    EX_MEMBER( ex_world_t, cameras, NULL )
+    EX_MEMBER( ex_world_t, mainCamera, NULL )
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_world_t)
 EX_DEF_PROPS_END
@@ -53,11 +76,11 @@ EX_SERIALIZE_BEGIN(ex_world_t)
     if ( _stream->type == EX_STREAM_READ ) {
         ex_entity_t *ent = NULL;
         for ( int i = 0; i < num_entities; ++i ) {
-            ent = ex_create_ex_entity_t();
-            ex_entity_init(ent);
+            ent = EX_RTTI(ex_entity_t)->create();
             ent->world = self;
             ex_array_append( self->entities, &ent );
             EX_SERIALIZE( _stream, ex_entity_t, "entity", ent );
+            ex_init_object(ent);
         }
     }
     else if ( _stream->type == EX_STREAM_WRITE ) {
@@ -95,33 +118,6 @@ static void __debug_draw ( ex_world_t *_world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_init ( ex_world_t *_world ) {
-    ex_object_init(_world);
-    ((ex_object_t *)_world)->name = ex_strid("New World");
-
-    _world->entities = ex_array_notype( sizeof(void *), 8 );
-    _world->cameras = ex_array_notype( sizeof(void *), 8 );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_world_deinit ( ex_world_t *_world ) {
-    ex_array_each ( _world->entities, ex_entity_t *, ent ) {
-        ex_entity_deinit(ent);
-        ex_free(ent);
-    } ex_array_each_end;
-    ex_array_free ( _world->entities );
-    ex_array_free ( _world->cameras );
-
-    ex_object_deinit(_world);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 void ex_world_reset ( ex_world_t *_world, ex_stream_t *_stream ) {
     // TODO:
 }
@@ -131,8 +127,8 @@ void ex_world_reset ( ex_world_t *_world, ex_stream_t *_stream ) {
 // ------------------------------------------------------------------ 
 
 ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name ) {
-    ex_entity_t *ent = ex_create_ex_entity_t();
-    ex_entity_init(ent);
+    ex_entity_t *ent = EX_RTTI(ex_entity_t)->create();
+    ex_init_object(ent);
     ((ex_object_t *)ent)->name = _name;
     ent->world = _world;
 

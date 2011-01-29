@@ -51,9 +51,9 @@ EX_DECL_CLASS_BEGIN(test_cls_t)
 EX_DECL_CLASS_END(test_cls_t)
 
 EX_DEF_CLASS_BEGIN(test_cls_t)
-    -1,
-    1.0f,
-    1.0f,
+    EX_MEMBER(test_cls_t, id, -1)
+    EX_MEMBER(test_cls_t, data1, 1.0f)
+    EX_MEMBER(test_cls_t, data2, 1.0f)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(test_cls_t)

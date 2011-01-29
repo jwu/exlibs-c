@@ -11,28 +11,7 @@
 
 #include "exsdk.h"
 #include "ref.h"
-
-///////////////////////////////////////////////////////////////////////////////
-// properties
-///////////////////////////////////////////////////////////////////////////////
-
-EX_DEF_CLASS_BEGIN(ex_ref_t)
-    EX_UID_INVALID, // uid
-    NULL, // ptr
-    NULL, // refcount
-EX_DEF_CLASS_END
-
-EX_DEF_PROPS_BEGIN(ex_ref_t)
-    EX_PROP( ex_ref_t, uid, uid, "uid",  EX_PROP_ATTR_HIDE )
-EX_DEF_PROPS_END
-
-EX_SERIALIZE_BEGIN(ex_ref_t)
-    EX_MEMBER_SERIALIZE(uid,uid)
-EX_SERIALIZE_END
-
-EX_DEF_TOSTRING_BEGIN(ex_ref_t)
-    EX_MEMBER_TOSTRING( uid, "uid", self->uid )
-EX_DEF_TOSTRING_END
+#include "object.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -42,19 +21,13 @@ EX_DEF_TOSTRING_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_ref_t *ex_newref ( ex_uid_t _uid ) {
-    void *ptr = NULL;
-    ex_ref_t *ref = ex_create_ex_ref_t();
-
-    // TODO: use uid get the ptr { 
-    // } TODO end 
-
-    ex_assert_return( ptr != NULL, NULL, "can't find the pointer by uid %.16llX", _uid );
-
-    ref->ptr = ptr;
-    ref->uid = _uid;
-    ref->refcount = ex_malloc(sizeof(int));
-    ex_incref(ref);
+ex_ref_t ex_invalidref () {
+    static const ex_ref_t ref = {
+        EX_UID_INVALID, // uid
+        NULL, // ptr
+        NULL, // refcount
+        NULL, // valid
+    };
     return ref;
 }
 
@@ -62,26 +35,65 @@ ex_ref_t *ex_newref ( ex_uid_t _uid ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_incref ( ex_ref_t *_ref ) {
-    ex_assert_return ( _ref, /*dummy*/, "the ref can't not be NULL" );
-    *(_ref->refcount) += 1;
+ex_ref_t ex_newref ( void *_obj ) {
+    ex_object_t *obj = (ex_object_t *)_obj;
+    ex_ref_t ref = ex_invalidref();
+    ex_assert_return( _obj != NULL, ref, "object can't be NULL" );
+
+    ref.ptr = obj;
+    ref.uid = obj->uid;
+    ref.refcount = ex_malloc(sizeof(int)+sizeof(bool));
+    ref.isvalid = (bool *)((char *)ref.refcount + sizeof(int));
+    *(ref.refcount) = 0;
+    *(ref.isvalid) = false;
+
+    return ref;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_decref ( ex_ref_t *_ref ) {
+void ex_delref ( ex_ref_t _ref ) {
+    ex_assert ( ex_ref_isvalid(_ref) == false, "the object still valid!" );
+
+    if ( _ref.refcount )
+        ex_free(_ref.refcount);
+    _ref.ptr = NULL;
+    _ref.uid = EX_UID_INVALID;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_incref ( ex_ref_t _ref ) {
+    ex_assert_return ( ex_ref_isvalid(_ref), /*dummy*/, "the ref is invalid" );
+    *(_ref.refcount) += 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_decref ( ex_ref_t _ref ) {
     int ret;
 
-    ex_assert_return ( _ref, -1, "the ref can't not be NULL" );
-    *(_ref->refcount) -= 1;
-    ret = *(_ref->refcount); 
-    if ( *(_ref->refcount) == 0 ) {
-        // TODO: send message to the world to return the reference.
-        ex_free(_ref->refcount);
-        ex_free(_ref);
+    ex_assert_return ( ex_ref_isvalid(_ref), -1, "the ref is invalid" );
+    *(_ref.refcount) -= 1;
+    ret = *(_ref.refcount); 
+    if ( *(_ref.refcount) == 0 ) {
+        ex_destroy_object(_ref.ptr);
     }
-
     return ret;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_ref_isvalid ( ex_ref_t _ref ) {
+    if ( _ref.isvalid )
+        return *_ref.isvalid; 
+    return false;
 }

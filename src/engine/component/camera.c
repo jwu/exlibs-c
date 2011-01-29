@@ -19,36 +19,55 @@
 // properties
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_CLASS_BEGIN(ex_camera_t)
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_init ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_object_t 
-    // ======================================================== 
+void __camera_init ( void *_self ) {
+    ex_component_t *comp = (ex_component_t *)_self; 
+    ex_camera_t *cam = (ex_camera_t *)_self; 
 
-    EX_UID_INVALID, // uid
-    EX_STRID_NULL, // name
+    __component_init(_self); // parent init
 
-    // ======================================================== 
-    // ex_component_t
-    // ======================================================== 
+    // add camera to the world.
+    ex_world_add_camera( comp->owner->world, cam );
+}
 
-    NULL, // owner
-    true, // active
-    ex_camera_init, // init
-    ex_camera_deinit, // deinit
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void __component_deinit ( void * );
+// ------------------------------------------------------------------ 
 
-    // ======================================================== 
-    // ex_camera_t
-    // ======================================================== 
+void __camera_deinit ( void *_self ) {
+	ex_component_t *comp = (ex_component_t *)_self; 
+    ex_camera_t *cam = (ex_camera_t *)_self; 
 
-    false, // isOrtho
-    600/2, // orthoSize
-    4.0f/3.0f, // aspect
-    EX_CLEAR_COLOR, // clearFlags
-    0.0f, 0.5f, 1.0f, // bgColor
-    EX_MAT44F_IDENTITY, // matWorldToView
-    EX_MAT44F_IDENTITY, // matProjection
-EX_DEF_CLASS_END
+    ex_world_remove_camera( comp->owner->world, cam );
+    __component_deinit(_self);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+EX_DEF_OBJECT_BEGIN( ex_camera_t,
+                     "Camera",
+                     __camera_init,
+                     __camera_deinit )
+
+    EX_MEMBER( ex_component_t, owner, NULL )
+    EX_MEMBER( ex_component_t, active, true )
+
+    EX_MEMBER( ex_camera_t, isOrtho, false )
+    EX_MEMBER( ex_camera_t, orthoSize, 600/2 )
+    EX_MEMBER( ex_camera_t, aspect, 4.0f/3.0f )
+    EX_MEMBER( ex_camera_t, clearFlags, EX_CLEAR_COLOR )
+    ex_color3f_set( &(((ex_camera_t *)__obj__)->bgColor), 0.0f, 0.5f, 1.0f );
+    EX_MEMBER( ex_camera_t, matWorldToView, ex_mat44f_identity )
+    EX_MEMBER( ex_camera_t, matProjection, ex_mat44f_identity )
+
+EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_camera_t)
     EX_PROP( ex_camera_t, bool, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE )
@@ -79,39 +98,6 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_camera_init ( void *_self ) {
-    ex_component_t *comp = (ex_component_t *)_self; 
-    ex_camera_t *cam = (ex_camera_t *)_self; 
-
-    ex_component_init(_self); // parent init
-    ((ex_object_t *)_self)->name = ex_strid("Camera");
-
-    cam->isOrtho = true;       // default is 2D
-    cam->orthoSize = 600/2;    // default is 800 x 600
-    cam->aspect = 4.0f/3.0f;   // default is 4:3 
-    cam->clearFlags = EX_CLEAR_COLOR;
-    ex_color3f_set( &cam->bgColor, 0.0f, 0.5f, 1.0f );
-
-    // add camera to the world.
-    ex_world_add_camera( comp->owner->world, cam );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_camera_deinit ( void *_self ) {
-	ex_component_t *comp = (ex_component_t *)_self; 
-    ex_camera_t *cam = (ex_camera_t *)_self; 
-
-    ex_world_remove_camera( comp->owner->world, cam );
-    ex_component_deinit(_self);
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 

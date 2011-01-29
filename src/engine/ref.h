@@ -16,27 +16,27 @@ extern "C" {
 #endif
 // ######################### 
 
-///////////////////////////////////////////////////////////////////////////////
-// class define
-// NOTE: the Resource/Asset can benefit in using refcount
-// NOTE: the AI usually would like to immediatly invalid an ref
-// please learn Py_INCREF, Py_DECREF, Py_XDECREF for more details.
-///////////////////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_BEGIN(ex_ref_t)
+typedef struct ex_ref_t {
     ex_uid_t uid;
     void *ptr;
     int *refcount;
-EX_DECL_CLASS_END(ex_ref_t)
+    bool *isvalid;
+} ex_ref_t; 
 
 ///////////////////////////////////////////////////////////////////////////////
 // function define
 ///////////////////////////////////////////////////////////////////////////////
 
-extern ex_ref_t *ex_newref ( ex_uid_t _uid );
-
-extern void ex_incref ( ex_ref_t *_ref );
-extern int ex_decref ( ex_ref_t *_ref );
+extern ex_ref_t ex_invalidref ();
+extern ex_ref_t ex_newref ( void *_obj );
+extern void ex_delref ( ex_ref_t _ref );
+extern void ex_incref ( ex_ref_t _ref );
+extern int ex_decref ( ex_ref_t _ref );
+extern bool ex_ref_isvalid ( ex_ref_t _ref );
 
 // ######################### 
 #ifdef __cplusplus
