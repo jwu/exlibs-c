@@ -33,7 +33,7 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_component_t,ex_object_t)
-    struct ex_entity_t *owner;
+    ex_ref_t *owner;
     bool active;
 EX_DECL_CLASS_SUPER_END(ex_component_t,ex_object_t)
 

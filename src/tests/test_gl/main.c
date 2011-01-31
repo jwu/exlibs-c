@@ -48,7 +48,7 @@ static int win_width = 640;
 static int win_height = 480; 
 
 // game
-ex_world_t *g_world = NULL;
+ex_ref_t *g_world = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -67,7 +67,7 @@ static void save_world () {
 
     ex_log ("save world simple_world.json...");
     stream = ex_create_json_write_stream();
-    EX_SERIALIZE( stream, ex_world_t, "world", g_world );
+    ex_world_save( g_world, stream );
     strncpy ( path, __media_file, maxPATH );
     stream->save_to_file( stream, strcat(path, "simple_world.json") );
     ex_destroy_json_stream((ex_stream_json_t *)stream);
@@ -86,16 +86,18 @@ static void load_world () {
         return;
 
     ex_world_stop( g_world );
-    ex_destroy_object(g_world);
-    ex_object_gc();
 
-    g_world = EX_RTTI(ex_world_t)->create();
-    ex_init_object(g_world);
+    ex_world_clear(g_world);
+    ex_decref(g_world);
+    ex_destroy_object_immediately(g_world);
 
     ex_log ("loading world simple_world.json...");
     strncpy ( path, __media_file, maxPATH );
     stream = ex_create_json_read_stream( strcat(path, "simple_world.json") );
-    EX_SERIALIZE( stream, ex_world_t, "world", g_world );
+
+    g_world = ex_world_load(stream);
+    EX_REF_PTR(ex_object_t,g_world)->init(g_world);
+    
     ex_destroy_json_stream((ex_stream_json_t *)stream);
     ex_log ("simple_world.json loaded!");
 
@@ -111,11 +113,12 @@ static void initGame () {
     EX_REGISTER_CLASS(ex_simple_t);
 
     // load/setup the world
-    g_world = EX_RTTI(ex_world_t)->create();
-    ex_init_object(g_world);
+    g_world = ex_create_object( EX_TYPEID(ex_world_t), ex_generate_uid() );
+    ex_incref(g_world);
+    EX_REF_PTR(ex_object_t,g_world)->init(g_world);
 
     {
-        ex_camera_t *mainCam;
+        ex_ref_t *mainCam;
         ex_world_create_camera2d ( g_world, ex_strid("main_camera") );
         mainCam = ex_world_main_camera (g_world);
         ex_assert ( mainCam, "can't find main camera" );
@@ -127,19 +130,22 @@ static void initGame () {
     ex_log ("create simple entities...");
     // TEMP: instead of serialize the g_world, I hardcoded the entities.
     for ( int i = 0; i < 100; ++i ) {
-        ex_entity_t *ent = ex_world_create_entity ( g_world, ex_strid("ent1") ); {
+        ex_ref_t *ent = ex_world_create_entity ( g_world, ex_strid("ent1") ); 
+        {
             // trans2d
-            ex_trans2d_t *trans2d = (ex_trans2d_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
-            ex_vec2f_set ( &trans2d->pos, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
-            ex_vec2f_set ( &trans2d->scale, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
-            ex_angf_set_by_radians ( &trans2d->ang, ex_range_randf(0.0f,EX_TWO_PI) );
+            ex_ref_t *trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
+            ex_trans2d_set_world_position( trans2d, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
+            ex_trans2d_set_world_scale ( trans2d, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
+            ex_trans2d_set_world_rotation ( trans2d, ex_range_randf(0.0f,EX_TWO_PI) );
 
             // dbg2d
-            ex_debug2d_t *dbg2d = (ex_debug2d_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
+            ex_ref_t *dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
 
             // simple
-            ex_simple_t *simple = (ex_simple_t *)ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
+            ex_ref_t *simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
+            ex_simple_t *simple = EX_REF_PTR(ex_simple_t,simple_ref);
+
             ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
             ex_vec2f_normalize(&simple->move_dir);
             simple->move_speed = ex_range_randf(1.0f,100.0f);
@@ -158,7 +164,10 @@ static void initGame () {
 
 static void quitGame () {
     ex_world_stop(g_world);
-    ex_destroy_object(g_world);
+
+    ex_world_clear(g_world);
+    ex_decref(g_world);
+    ex_destroy_object_immediately(g_world);
 }
 
 // ------------------------------------------------------------------ 
@@ -176,7 +185,7 @@ static void updateGame () {
 static void __reshape ( int _width, int _height ) {
     win_width = _width;
     win_height = _height;
-    ex_camera_t *mainCam = ex_world_main_camera (g_world);
+    ex_ref_t *mainCam = ex_world_main_camera (g_world);
 
     // setup viewport
     glViewport(0, 0, win_width, win_height);

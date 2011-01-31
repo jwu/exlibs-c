@@ -57,7 +57,7 @@ extern "C" {
             if ( ret != 0 ) return; \
         } \
         if ( _stream->push ) _stream->push(_stream); \
-        _stream->serialize_##_typename(_stream,(_type)_val,_pfn_serialize_el); \
+        _stream->serialize_##_typename(_stream,(_type *)_val,_pfn_serialize_el); \
         if ( _stream->pop ) _stream->pop(_stream); \
     } \
     static inline void __ex_serialize_##_typename ( ex_stream_t *_stream, strid_t _name, void *_val ) { \
@@ -76,7 +76,7 @@ extern "C" {
             if ( ret != 0 ) return; \
         } \
         if ( _stream->push ) _stream->push(_stream); \
-        _stream->serialize_##_typename(_stream,(_type)_val,_pfn_serialize_key,_pfn_serialize_val); \
+        _stream->serialize_##_typename(_stream,(_type *)_val,_pfn_serialize_key,_pfn_serialize_val); \
         if ( _stream->pop ) _stream->pop(_stream); \
     } \
     static inline void __ex_serialize_##_typename ( ex_stream_t *_stream, strid_t _name, void *_val ) { \
@@ -126,10 +126,10 @@ DEF_BUILTIN_SERIALIZE_2(color3f, ex_color3f_t)
 DEF_BUILTIN_SERIALIZE_2(color4u, ex_color4u_t)
 DEF_BUILTIN_SERIALIZE_2(color4f, ex_color4f_t)
 
-DEF_BUILTIN_SERIALIZE_ARRAY(array, ex_array_t *)
-DEF_BUILTIN_SERIALIZE_MAP(map, ex_hashmap_t *)
+DEF_BUILTIN_SERIALIZE_ARRAY(array, ex_array_t)
+DEF_BUILTIN_SERIALIZE_MAP(map, ex_hashmap_t)
 
-DEF_BUILTIN_SERIALIZE_2(ref, ex_ref_t)
+DEF_BUILTIN_SERIALIZE_2(ref, ex_ref_t *)
 
 #undef DEF_BUILTIN_SERIALIZE
 #undef DEF_BUILTIN_SERIALIZE_2

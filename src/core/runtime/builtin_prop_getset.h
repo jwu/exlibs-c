@@ -175,8 +175,15 @@ static inline void ex_prop_get_raw_map ( void *_obj, size_t _offset, void *_valu
     ex_hashmap_cpy ( val, prop );
 }
 
-DEF_BUILTIN_PROP_SET_RAW_2(ref, ex_ref_t);
-DEF_BUILTIN_PROP_GET_RAW_2(ref, ex_ref_t);
+// map - ex_ref_t
+static inline void ex_prop_set_raw_ref ( void *_obj, size_t _offset, const void *_value ) {
+    ex_ref_t **prop = (ex_ref_t **)ex_ptr_add(_obj,_offset);
+    *prop = *(ex_ref_t **)_value;
+}
+static inline void ex_prop_get_raw_ref ( void *_obj, size_t _offset, void *_value ) {
+    ex_ref_t **prop = (ex_ref_t **)ex_ptr_add(_obj,_offset);
+    *((ex_ref_t **)_value) = *prop; 
+}
 
 #undef DEF_BUILTIN_PROP_SET_RAW
 #undef DEF_BUILTIN_PROP_GET_RAW

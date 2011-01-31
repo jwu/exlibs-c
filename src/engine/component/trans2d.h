@@ -36,7 +36,7 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_vec2f_t  pos;   // local position
     ex_angf_t   ang;   // local angle
     ex_vec2f_t  scale; // local scale
-    ex_ref_t    parent; // ex_trans2d_t *
+    ex_ref_t   *parent; // ex_trans2d_t *
     ex_array_t *children; // ex_trans2d_t * [] 
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
@@ -48,9 +48,18 @@ EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_trans2d_world_position ( ex_trans2d_t *_self, ex_vec2f_t *_pos ); 
-extern void ex_trans2d_world_rotation ( ex_trans2d_t *_self, ex_angf_t *_ang ); 
-extern void ex_trans2d_world_scale ( ex_trans2d_t *_self, ex_vec2f_t *_scale ); 
+extern void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ); 
+extern void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ); 
+extern void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ); 
+extern void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ); 
+extern void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ); 
+
 
 // ######################### 
 #ifdef __cplusplus

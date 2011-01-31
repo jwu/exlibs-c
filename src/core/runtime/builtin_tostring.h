@@ -324,10 +324,9 @@ DEF_BUILTIN_TOSTRING(ref) {
     char buf[1024];
     ex_ref_t *val = (ex_ref_t *)_val;
 
-    snprintf ( buf, 1024, "uid: 0x%.16llX, valid: %s, refcount: %d", 
-               val->uid, 
-               *(val->isvalid) ? "true" : "false", 
-               *(val->refcount) );
+    snprintf ( buf, 1024, "uid: 0x%.16llX, refcount: %d", 
+               val->ptr ? ex_object_uid(val->ptr) : EX_UID_INVALID, 
+               val->refcount );
     ex_string_ncat( _string, buf, strlen(buf) );
 }
 

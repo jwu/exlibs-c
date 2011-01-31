@@ -14,19 +14,19 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( void * );
+extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-static void init ( void *_self ) {
+static void init ( ex_ref_t *_self ) {
     __component_init(_self); // parent init
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( void * );
+extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-static void deinit ( void *_self ) {
+static void deinit ( ex_ref_t *_self ) {
     __component_deinit(_self); // parent deinint
 }
 
@@ -34,24 +34,24 @@ static void deinit ( void *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void level_start ( void *_self ) {
+static void level_start ( ex_ref_t *_self ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void start ( void *_self ) {
+static void start ( ex_ref_t *_self ) {
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void update ( void *_self ) {
-    ex_simple_t *self = (ex_simple_t *)_self;
-    ex_component_t *comp = (ex_component_t *)_self;
-    ex_trans2d_t *trans2d = comp->owner->trans2d;
+static void update ( ex_ref_t *_self ) {
+    ex_simple_t *self = EX_REF_PTR(ex_simple_t, _self);
+    ex_component_t *comp = (ex_component_t *)self;
+    ex_trans2d_t *trans2d = EX_REF_PTR( ex_trans2d_t, EX_REF_PTR(ex_entity_t,comp->owner)->trans2d );
 
     if ( trans2d ) {
         ex_vec2f_t new_pos;
@@ -75,7 +75,7 @@ static void update ( void *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void post_update ( void *_self ) {
+static void post_update ( ex_ref_t *_self ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////

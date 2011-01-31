@@ -32,9 +32,9 @@ extern "C" {
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_world_t,ex_object_t)
     int state;
-    ex_array_t *entities;
-    ex_array_t *cameras;
-    struct ex_camera_t *mainCamera;
+    ex_array_t *entities; // array<entity_ref>
+    ex_array_t *cameras; // array<camera_ref>
+    ex_ref_t *mainCamera; // camera_ref
 EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,47 +45,54 @@ EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_world_reset ( ex_world_t *_world, ex_stream_t *_stream );
+extern void ex_world_reset ( ex_ref_t *_self, ex_stream_t *_stream );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern struct ex_entity_t *ex_world_create_entity ( ex_world_t *_world, strid_t _name );
-extern struct ex_entity_t *ex_world_create_camera2d ( ex_world_t *_world, strid_t _name );
-extern struct ex_entity_t *ex_world_create_rect ( ex_world_t *_world, strid_t _name );
+extern ex_ref_t *ex_world_create_entity ( ex_ref_t *_self, strid_t _name );
+extern ex_ref_t *ex_world_create_camera2d ( ex_ref_t *_self, strid_t _name );
+extern ex_ref_t *ex_world_create_rect ( ex_ref_t *_self, strid_t _name );
 
-// ------------------------------------------------------------------ 
-// Desc: 
-typedef struct ex_camera_t *ex_camera_ptr_t; // forward declaration
-// ------------------------------------------------------------------ 
-
-extern void ex_world_add_camera ( ex_world_t *_world, ex_camera_ptr_t _cam );
-extern void ex_world_remove_camera ( ex_world_t *_world, ex_camera_ptr_t _cam );
-extern struct ex_camera_t *ex_world_main_camera ( ex_world_t *_world );
+extern void ex_world_clear ( ex_ref_t *_self );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_world_update ( ex_world_t *_world );
-extern void ex_world_render ( ex_world_t *_world );
+extern void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam );
+extern void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam );
+extern ex_ref_t *ex_world_main_camera ( ex_ref_t *_self );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_world_run ( ex_world_t *_world );
-extern void ex_world_stop ( ex_world_t *_world );
-extern void ex_world_pause ( ex_world_t *_world );
-extern void ex_world_resume ( ex_world_t *_world );
+extern void ex_world_update ( ex_ref_t *_self );
+extern void ex_world_render ( ex_ref_t *_self );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_world_save ( ex_ref_t *_self, ex_stream_t *_stream );
+extern ex_ref_t *ex_world_load ( ex_stream_t *_stream );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_world_run ( ex_ref_t *_self );
+extern void ex_world_stop ( ex_ref_t *_self );
+extern void ex_world_pause ( ex_ref_t *_self );
+extern void ex_world_resume ( ex_ref_t *_self );
 
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 
 #endif
 // ######################### 
-
 
 // #################################################################################
 #endif // END WORLD_H_1291195601

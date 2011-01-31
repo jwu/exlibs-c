@@ -21,24 +21,25 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 typedef struct ex_ref_t {
-    ex_uid_t uid;
+    int refcount;
     void *ptr;
-    int *refcount;
-    bool *isvalid;
 } ex_ref_t; 
 
 ///////////////////////////////////////////////////////////////////////////////
 // function define
 ///////////////////////////////////////////////////////////////////////////////
 
-extern ex_ref_t ex_invalidref ();
-extern ex_ref_t ex_newref ( void *_obj );
-extern void ex_delref ( ex_ref_t _ref );
+extern ex_ref_t *ex_newref ( void *_obj );
+extern void ex_delref ( ex_ref_t *_ref );
 
-extern int ex_incref ( ex_ref_t _ref );
-extern int ex_decref ( ex_ref_t _ref );
+extern int ex_incref ( ex_ref_t *_ref );
+extern int ex_decref ( ex_ref_t *_ref );
 
-extern bool ex_ref_isvalid ( ex_ref_t _ref );
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_REF_PTR(_type,_ref) ((_type *)((_ref)->ptr))
 
 // ######################### 
 #ifdef __cplusplus

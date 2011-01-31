@@ -18,10 +18,10 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( void * );
+extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __sprite_init ( void *_self ) {
+void __sprite_init ( ex_ref_t *_self ) {
     // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
 
     __component_init(_self);
@@ -31,10 +31,10 @@ void __sprite_init ( void *_self ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( void * );
+extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __sprite_deinit ( void *_self ) {
+void __sprite_deinit ( ex_ref_t *_self ) {
     // ex_sprite_t *sprite = (ex_sprite_t *)_self; 
 
     __component_deinit(_self);

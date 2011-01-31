@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../algo/uid.h"
-#include "../../engine/ref.h"
+#include "../../engine/object.h"
 
 #include "rtti.h"
 #include "builtin_serialize.h"
@@ -94,7 +94,7 @@ DECL_BUILTIN_TYPE_2(color4u, ex_color4u_t);
 DECL_BUILTIN_TYPE_2(color4f, ex_color4f_t);
 DECL_BUILTIN_TYPE_2(array, ex_array_t *);
 DECL_BUILTIN_TYPE_2(map, ex_hashmap_t *);
-DECL_BUILTIN_TYPE_2(ref, ex_ref_t);
+DECL_BUILTIN_TYPE_2(ref, ex_ref_t *);
 
 #undef DECL_BUILTIN_TYPE
 #undef DECL_BUILTIN_TYPE_2
@@ -108,7 +108,7 @@ DECL_BUILTIN_TYPE_2(ref, ex_ref_t);
 // ------------------------------------------------------------------ 
 
 static inline bool ex_is_builtin_type ( strid_t _typeID ) {
-    if ( _typeID >= EX_TYPEID(int8) && _typeID <= EX_TYPEID(map) )
+    if ( _typeID >= EX_TYPEID(int8) && _typeID <= EX_TYPEID(ref) )
         return true;
     return false;
 }

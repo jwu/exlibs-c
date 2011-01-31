@@ -34,11 +34,12 @@ extern "C" {
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_entity_t,ex_object_t)
     // NOTE: we don't use "ex_hashmap_t* _type_to_comp" because we may get base_type of the component 
-    ex_array_t *comps;
-    struct ex_world_t *world; // the world it belongs
+    ex_array_t *comps; // array<component_ref>
+    ex_ref_t *world; // the world it belongs
+
     // cached components 
-    struct ex_trans2d_t *trans2d;
-    struct ex_camera_t *camera;
+    ex_ref_t *trans2d;
+    ex_ref_t *camera;
 EX_DECL_CLASS_SUPER_END(ex_entity_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -49,21 +50,22 @@ EX_DECL_CLASS_SUPER_END(ex_entity_t,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern struct ex_component_t *ex_entity_get_comp ( const ex_entity_t *_ent, strid_t _typeID );
+extern ex_ref_t *ex_entity_get_comp ( const ex_ref_t *_self, strid_t _typeID );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern struct ex_component_t *ex_entity_add_comp ( ex_entity_t *_ent, strid_t _typeID );
+extern ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID );
+// TODO: extern int ex_entity_remove_comp ( ex_ref_t *_self, ex_ref_t *_comp );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_entity_level_start ( ex_entity_t *_ent );
-extern void ex_entity_update ( ex_entity_t *_ent );
-extern void ex_entity_post_update ( ex_entity_t *_ent );
+extern void ex_entity_level_start ( ex_ref_t *_self );
+extern void ex_entity_update ( ex_ref_t *_self );
+extern void ex_entity_post_update ( ex_ref_t *_self );
 
 // ######################### 
 #ifdef __cplusplus

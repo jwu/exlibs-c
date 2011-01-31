@@ -79,7 +79,7 @@ typedef struct ex_stream_t {
 
     void (*serialize_array)     ( struct ex_stream_t *_stream, ex_array_t *_val, ex_serialize_pfn _pfn_serialize_el );
     void (*serialize_map)       ( struct ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_pfn _pfn_serialize_key, ex_serialize_pfn _pfn_serialize_val );
-    void (*serialize_ref)       ( struct ex_stream_t *_stream, ex_ref_t *_val );
+    void (*serialize_ref)       ( struct ex_stream_t *_stream, ex_ref_t **_val );
 
 } ex_stream_t;
 

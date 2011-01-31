@@ -54,28 +54,28 @@ EX_DECL_CLASS_SUPER_END(ex_camera_t,ex_component_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_camera_set_ortho ( ex_camera_t *_self, bool _isOrtho ); 
-extern bool ex_camera_is_ortho ( ex_camera_t *_self ); 
+extern void ex_camera_set_ortho ( ex_ref_t *_self, bool _isOrtho ); 
+extern bool ex_camera_is_ortho ( ex_ref_t *_self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_camera_set_ortho_size ( ex_camera_t *_self, float _orthoSize ); 
-extern float ex_camera_ortho_size ( ex_camera_t *_self ); 
+extern void ex_camera_set_ortho_size ( ex_ref_t *_self, float _orthoSize ); 
+extern float ex_camera_ortho_size ( ex_ref_t *_self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_camera_set_aspect ( ex_camera_t *_self, float _aspect ); 
-extern float ex_camera_aspect ( ex_camera_t *_self ); 
+extern void ex_camera_set_aspect ( ex_ref_t *_self, float _aspect ); 
+extern float ex_camera_aspect ( ex_ref_t *_self ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_camera_apply ( ex_camera_t *_self );
+extern void ex_camera_apply ( ex_ref_t *_self );
 
 // ######################### 
 #ifdef __cplusplus

@@ -22,7 +22,7 @@ static bool __initialized = false;
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void __start_engine_time ();
-extern void __init_object_table ();
+extern void __init_ref_table ();
 // ------------------------------------------------------------------ 
 
 int ex_editor_init () {
@@ -39,7 +39,7 @@ int ex_editor_init () {
     }
 
     // start editor timer
-    __init_object_table ();
+    __init_ref_table ();
     __start_engine_time ();
 
     //
@@ -50,12 +50,12 @@ int ex_editor_init () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __deinit_object_table ();
+extern void __deinit_ref_table ();
 // ------------------------------------------------------------------ 
 
 void ex_editor_deinit () {
     if ( __initialized ) {
-        __deinit_object_table();
+        __deinit_ref_table();
 
         ex_log ( "ex_editor deinitied" );
         __initialized = false;

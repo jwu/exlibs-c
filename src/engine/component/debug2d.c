@@ -21,19 +21,19 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( void * );
+extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __debug2d_init ( void *_self ) {
+void __debug2d_init ( ex_ref_t *_self ) {
     __component_init(_self); // parent init
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( void * );
+extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __debug2d_deinit ( void *_self ) {
+void __debug2d_deinit ( ex_ref_t *_self ) {
     __component_deinit(_self); // parent deinint
 }
 
@@ -78,34 +78,35 @@ EX_DEF_TOSTRING_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_debug2d_set_rect ( ex_debug2d_t *_self, 
+void ex_debug2d_set_rect ( ex_ref_t *_self, 
                            float _x, float _y, float _width, float _height ) 
 {
+    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
     ex_rectf_t r;
     ex_vec2f_t v;
 
     ex_vec2f_set ( &v, _x, _y );
     ex_rectf_set ( &r, v, _width, _height );
-    _self->rect = r;
-    _self->shapeType = EX_DEBUG_SHAPE_RECT;
+    self->rect = r;
+    self->shapeType = EX_DEBUG_SHAPE_RECT;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_debug2d_draw ( ex_debug2d_t *_self ) {
-    ex_entity_t *ent = ((ex_component_t *)_self)->owner;
-    ex_trans2d_t *trans2d = ent->trans2d;
+void ex_debug2d_draw ( ex_ref_t *_self ) {
+    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
+    ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
     ex_vec2f_t worldPos;
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;
 
-    if ( _self->shapeType == EX_DEBUG_SHAPE_RECT ) {
-        float cx = _self->rect.center.x;
-        float cy = _self->rect.center.y;
-        float half_width = _self->rect.width * 0.5f; 
-        float half_height = _self->rect.height * 0.5f; 
+    if ( self->shapeType == EX_DEBUG_SHAPE_RECT ) {
+        float cx = self->rect.center.x;
+        float cy = self->rect.center.y;
+        float half_width = self->rect.width * 0.5f; 
+        float half_height = self->rect.height * 0.5f; 
         float verts[8];
 
         verts[0] = cx - half_width; verts[1] = cy + half_height;  
@@ -113,13 +114,13 @@ void ex_debug2d_draw ( ex_debug2d_t *_self ) {
         verts[4] = cx + half_width; verts[5] = cy - half_height;  
         verts[6] = cx - half_width; verts[7] = cy - half_height;  
 
-        ex_trans2d_world_position( trans2d, &worldPos );
-        ex_trans2d_world_scale( trans2d, &worldScale );
-        ex_trans2d_world_rotation( trans2d, &worldRot );
+        ex_trans2d_world_position( ent->trans2d, &worldPos );
+        ex_trans2d_world_scale( ent->trans2d, &worldScale );
+        ex_trans2d_world_rotation( ent->trans2d, &worldRot );
 
         glMatrixMode( GL_MODELVIEW );
         glLoadIdentity();
-        glTranslatef(_self->rect.center.x + worldPos.x, _self->rect.center.y + worldPos.y, 0.0f);
+        glTranslatef(self->rect.center.x + worldPos.x, self->rect.center.y + worldPos.y, 0.0f);
         glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
         glScalef(worldScale.x, worldScale.y, 1.0f);
 

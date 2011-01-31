@@ -21,31 +21,11 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_ref_t ex_invalidref () {
-    static const ex_ref_t ref = {
-        EX_UID_INVALID, // uid
-        NULL, // ptr
-        NULL, // refcount
-        NULL, // valid
-    };
-    return ref;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_ref_t ex_newref ( void *_obj ) {
-    ex_object_t *obj = (ex_object_t *)_obj;
-    ex_ref_t ref = ex_invalidref();
-    ex_assert_return( _obj != NULL, ref, "object can't be NULL" );
-
-    ref.ptr = obj;
-    ref.uid = obj->uid;
-    ref.refcount = ex_malloc(sizeof(int)+sizeof(bool));
-    ref.isvalid = (bool *)((char *)ref.refcount + sizeof(int));
-    *(ref.refcount) = 0;
-    *(ref.isvalid) = false;
+ex_ref_t *ex_newref ( void *_obj ) {
+    ex_ref_t *ref;
+    ref = ex_malloc(sizeof(ex_ref_t));
+    ref->ptr = _obj;
+    ref->refcount = 0;
 
     return ref;
 }
@@ -54,47 +34,36 @@ ex_ref_t ex_newref ( void *_obj ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_delref ( ex_ref_t _ref ) {
-    ex_assert ( ex_ref_isvalid(_ref) == false, "the object still valid!" );
+void ex_delref ( ex_ref_t *_ref ) {
+    ex_assert_return ( _ref != NULL, /**/, "can't delete NULL ref" );
+    ex_assert_return ( _ref->ptr == NULL, /**/, "can't delete the ref, the object still valid!" );
 
-    if ( _ref.refcount )
-        ex_free(_ref.refcount);
-    _ref.ptr = NULL;
-    _ref.uid = EX_UID_INVALID;
+    _ref->refcount = 0;
+    ex_free(_ref);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_incref ( ex_ref_t _ref ) {
-    ex_assert_return ( ex_ref_isvalid(_ref), /*dummy*/, "the ref is invalid" );
-    *(_ref.refcount) += 1;
-    return *(_ref.refcount); 
+int ex_incref ( ex_ref_t *_ref ) {
+    _ref->refcount += 1;
+    return _ref->refcount; 
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __reftable_remove ( ex_ref_t );
 // ------------------------------------------------------------------ 
 
-int ex_decref ( ex_ref_t _ref ) {
+int ex_decref ( ex_ref_t *_ref ) {
     int ret;
 
-    ex_assert_return ( ex_ref_isvalid(_ref), -1, "the ref is invalid" );
-    *(_ref.refcount) -= 1;
-    ret = *(_ref.refcount); 
-    if ( *(_ref.refcount) == 0 ) {
-        ex_destroy_object(_ref.ptr);
+    _ref->refcount -= 1;
+    if ( _ref->refcount == 0 ) {
+        if ( _ref->ptr )
+            ex_destroy_object(_ref);
     }
+
     return ret;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-bool ex_ref_isvalid ( ex_ref_t _ref ) {
-    if ( _ref.isvalid )
-        return *_ref.isvalid; 
-    return false;
 }

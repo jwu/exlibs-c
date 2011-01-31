@@ -244,6 +244,14 @@ size_t ex_hashmap_get_hashidx ( const ex_hashmap_t *_hashmap, const void *_key, 
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void *ex_hashmap_get_by_idx ( const ex_hashmap_t *_hashmap, size_t _index ) {
+    return __getvalue ( _hashmap, _index );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 bool ex_hashmap_insert ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t *_index )
 {
     size_t hash_next;

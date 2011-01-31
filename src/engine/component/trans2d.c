@@ -18,10 +18,10 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( void * );
+extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __trans2d_init ( void *_self ) {
+void __trans2d_init ( ex_ref_t *_self ) {
     // ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
 
     __component_init(_self); // parent init
@@ -29,14 +29,16 @@ void __trans2d_init ( void *_self ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( void * );
+extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __trans2d_deinit ( void *_self ) {
-    ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
+void __trans2d_deinit ( ex_ref_t *_self ) {
+    ex_trans2d_t *trans2d = EX_REF_PTR(ex_trans2d_t,_self);
 
+    // TODO { 
     ex_array_free(trans2d->children);
     __component_deinit(_self); // parent deinint
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 
@@ -54,7 +56,7 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, pos, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
     EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_zero )
-    EX_MEMBER( ex_trans2d_t, parent, ex_invalidref() )
+    EX_MEMBER( ex_trans2d_t, parent, NULL )
     ((ex_trans2d_t *)__obj__)->children = ex_array( ref, 8 );
 
 EX_DEF_OBJECT_END
@@ -89,12 +91,14 @@ EX_DEF_TOSTRING_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_world_position ( ex_trans2d_t *_self, ex_vec2f_t *_pos ) {
-    ex_trans2d_t *parent = (ex_trans2d_t *)_self->parent.ptr;
-    *_pos = _self->pos;
+void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+
+    *_pos = self->pos;
     while ( parent ) {
         ex_vec2f_add( _pos, _pos, &(parent->pos) );
-        parent = (ex_trans2d_t *)parent->parent.ptr;
+        parent = EX_REF_PTR(ex_trans2d_t, parent->parent);
     }
 }
 
@@ -102,12 +106,14 @@ void ex_trans2d_world_position ( ex_trans2d_t *_self, ex_vec2f_t *_pos ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_world_rotation ( ex_trans2d_t *_self, ex_angf_t *_ang ) {
-    ex_trans2d_t *parent = (ex_trans2d_t *)_self->parent.ptr;
-    *_ang = _self->ang;
+void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+
+    *_ang = self->ang;
     while ( parent ) {
         ex_angf_add( _ang, _ang, &(parent->ang) );
-        parent = (ex_trans2d_t *)parent->parent.ptr;
+        parent = EX_REF_PTR(ex_trans2d_t, parent->parent);
     }
 }
 
@@ -115,11 +121,43 @@ void ex_trans2d_world_rotation ( ex_trans2d_t *_self, ex_angf_t *_ang ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_world_scale ( ex_trans2d_t *_self, ex_vec2f_t *_scale ) {
-    ex_trans2d_t *parent = (ex_trans2d_t *)_self->parent.ptr;
-    *_scale = _self->scale;
+void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+
+    *_scale = self->scale;
     while ( parent ) {
         ex_vec2f_mul( _scale, _scale, &(parent->scale) );
-        parent = (ex_trans2d_t *)parent->parent.ptr;
+        parent = EX_REF_PTR(ex_trans2d_t, parent->parent);
     }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    ex_vec2f_set ( &self->pos, _x, _y );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
+	ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+	
+    ex_angf_set_by_radians ( &self->ang, _radians );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    ex_vec2f_set ( &self->scale, _x, _y );
 }

@@ -59,9 +59,11 @@ extern "C" {
         ex_pool_node_t *__node_next__; \
         size_t __idx__; \
         _type _el; \
+        void *__key__; \
         while ( __node__ ) { \
             __node_next__ = __node__->next; \
             __idx__ = __node__ - __node_begin__; \
+            __key__ = ( (char *)(_hashmap)->keys + __idx__ * (_hashmap)->key_bytes ); \
             _el = *( (_type *) ( (char *)(_hashmap)->values + __idx__ * (_hashmap)->value_bytes ) );
 
 // ------------------------------------------------------------------ 
@@ -99,6 +101,7 @@ extern "C" {
         while ( __node__ ) { \
             __node_next__ = __node__->next; \
             __idx__ = __node__ - __node_begin__; \
+            __key__ = ( (char *)(_hashmap)->keys + __idx__ * (_hashmap)->key_bytes ); \
             _el = (_type)( (char *)(_hashmap)->values + __idx__ * (_hashmap)->value_bytes );
 
 // ------------------------------------------------------------------ 
@@ -265,6 +268,7 @@ extern void ex_hashmap_insert_new ( ex_hashmap_t *_hashmap, const void *_key, co
 
 extern void *ex_hashmap_get ( const ex_hashmap_t *_hashmap, const void *_key, size_t *_index );
 extern size_t ex_hashmap_get_hashidx ( const ex_hashmap_t *_hashmap, const void *_key, size_t *_index );
+extern void *ex_hashmap_get_by_idx ( const ex_hashmap_t *_hashmap, size_t _index );
 
 // ------------------------------------------------------------------ 
 // Desc: 

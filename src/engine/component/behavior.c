@@ -18,19 +18,19 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( void * );
+extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __behavior_init ( void *_self ) {
+void __behavior_init ( ex_ref_t *_self ) {
     __component_init(_self);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( void * );
+extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-void __behavior_deinit ( void *_self ) {
+void __behavior_deinit ( ex_ref_t *_self ) {
     __component_deinit(_self);
 }
 

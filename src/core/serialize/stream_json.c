@@ -923,7 +923,7 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_ref ( ex_stream_t *_stream, ex_ref_t *_val ) {
+static void __read_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
 
@@ -931,7 +931,11 @@ static void __read_ref ( ex_stream_t *_stream, ex_ref_t *_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    _val->uid = *(ex_uid_t *)node->val;
+    ex_uid_t uid = *(ex_uid_t *)node->val;
+    if ( uid == EX_UID_INVALID )
+        *_val = NULL;
+    else
+        *_val = ex_getref(uid);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1572,7 +1576,7 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_ref ( ex_stream_t *_stream, ex_ref_t *_val ) {
+static void __write_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
 
@@ -1581,7 +1585,10 @@ static void __write_ref ( ex_stream_t *_stream, ex_ref_t *_val ) {
     node = stream->current;
 
     node->val = ex_malloc ( sizeof(long) ); 
-    *(long *)node->val = (long)(_val->uid);
+    if (*_val)
+        *(long *)node->val = (long)( ex_object_uid(*_val) );
+    else
+        *(long *)node->val = EX_UID_INVALID;
 }
 
 // ------------------------------------------------------------------ 
