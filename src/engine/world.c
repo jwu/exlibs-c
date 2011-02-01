@@ -69,10 +69,8 @@ EX_DEF_OBJECT_BEGIN( ex_world_t,
                      __world_deinit )
 
     EX_MEMBER( ex_world_t, state, EX_WORLD_STATE_STOPPED )
-
-    ((ex_world_t *)__obj__)->entities = ex_array_notype( sizeof(ex_ref_t *), 8 );
-    ((ex_world_t *)__obj__)->cameras = ex_array_notype( sizeof(ex_ref_t *), 8 );
-
+    EX_MEMBER( ex_world_t, entities, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
+    EX_MEMBER( ex_world_t, cameras, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
     EX_MEMBER( ex_world_t, mainCamera, NULL )
 
 EX_DEF_OBJECT_END
@@ -190,6 +188,9 @@ void ex_world_clear ( ex_ref_t *_self ) {
 	
     // decrease reference count and destroy all entities
     ex_array_each ( world->entities, ex_ref_t *, ref ) {
+        if ( ref->ptr == NULL || ex_object_is_dead(ref) )
+            ex_array_continue;
+
         ex_destroy_object_immediately( ref, true );
         ex_decref(ref);
     } ex_array_each_end;
@@ -251,6 +252,39 @@ ex_ref_t *ex_world_main_camera ( ex_ref_t *_self ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_world_find_entity_byname ( ex_ref_t *_self, strid_t _name ) {
+    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+
+    ex_array_each ( world->entities, ex_ref_t *, ent ) {
+        if ( ent->ptr == NULL || ex_object_is_dead(ent) )
+            ex_array_continue;
+
+        if ( EX_REF_PTR(ex_object_t,ent)->name == _name )
+            return ent;
+    } ex_array_each_end
+    return NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_find_entities_byname ( ex_ref_t *_self, strid_t _name, ex_array_t *_result ) {
+    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+
+    ex_array_each ( world->entities, ex_ref_t *, ent ) {
+        if ( ent->ptr == NULL || ex_object_is_dead(ent) )
+            ex_array_continue;
+
+        if ( EX_REF_PTR(ex_object_t,ent)->name == _name )
+            ex_array_append( _result, &ent );
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
 extern void __tick_engine_time ();
 // ------------------------------------------------------------------ 
 
@@ -271,7 +305,7 @@ void ex_world_update ( ex_ref_t *_self ) {
 
     // update behavior
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
-        if ( ex_object_is_dead(ent) )
+        if ( ent->ptr == NULL || ex_object_is_dead(ent) )
             ex_array_continue;
 
         ex_entity_update(ent);
@@ -282,7 +316,7 @@ void ex_world_update ( ex_ref_t *_self ) {
 
     // post-update behavior
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
-        if ( ex_object_is_dead(ent) )
+        if ( ent->ptr == NULL || ex_object_is_dead(ent) )
             ex_array_continue;
 
         ex_entity_post_update(ent);

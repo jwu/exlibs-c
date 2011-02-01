@@ -22,9 +22,8 @@ extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __trans2d_init ( ex_ref_t *_self ) {
-    // ex_trans2d_t *trans2d = (ex_trans2d_t *)_self; 
-
-    __component_init(_self); // parent init
+    // parent init
+    __component_init(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -33,12 +32,12 @@ extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __trans2d_deinit ( ex_ref_t *_self ) {
-    ex_trans2d_t *trans2d = EX_REF_PTR(ex_trans2d_t,_self);
+    // NOTE: we do those childrent deinit in ex_entity_t instead of here. 
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_array_free(self->children);
 
-    // TODO { 
-    ex_array_free(trans2d->children);
-    __component_deinit(_self); // parent deinint
-    // } TODO end 
+    // parent deinint
+    __component_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -57,7 +56,7 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
     EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, parent, NULL )
-    ((ex_trans2d_t *)__obj__)->children = ex_array( ref, 8 );
+    EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
 
 EX_DEF_OBJECT_END
 
@@ -84,8 +83,76 @@ EX_DEF_TOSTRING_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
+// internal defines
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __remove_child ( ex_ref_t *_self, ex_ref_t *_child ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    ex_array_each ( self->children, ex_ref_t *, ref ) {
+        if ( ref == _child ) {
+            ex_array_remove_at_fast( self->children, __idx__ );
+            break;
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __add_child ( ex_ref_t *_self, ex_ref_t *_child ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    ex_array_append( self->children, &_child );
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
+    ex_trans2d_t *self;
+    ex_assert_return ( _self != _parent, /*dummy*/, "can't not add self as parent." );
+
+    self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    // we got the same parent, nothing need to be changed.
+    if ( self->parent == _parent )
+        return;
+
+    // remove self from old parent
+    if ( self->parent ) {
+        __remove_child( self->parent, _self );
+    }
+
+    // add self to new parent
+    if ( _parent ) {
+        __add_child( _parent, _self );
+    }
+    self->parent = _parent;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_detach_children ( ex_ref_t *_self ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    ex_array_each ( self->children, ex_ref_t *, ref ) {
+        EX_REF_PTR( ex_trans2d_t, ref )->parent = NULL;
+    } ex_array_each_end
+    ex_array_remove_all(self->children);
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -94,11 +161,13 @@ EX_DEF_TOSTRING_END
 void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
     ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+    ex_ref_t *parent_parent = NULL;
 
     *_pos = self->pos;
     while ( parent ) {
+        parent_parent = parent->parent;
         ex_vec2f_add( _pos, _pos, &(parent->pos) );
-        parent = EX_REF_PTR(ex_trans2d_t, parent->parent);
+        parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
     }
 }
 
@@ -109,11 +178,13 @@ void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
 void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
     ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+    ex_ref_t *parent_parent = NULL;
 
     *_ang = self->ang;
     while ( parent ) {
+        parent_parent = parent->parent;
         ex_angf_add( _ang, _ang, &(parent->ang) );
-        parent = EX_REF_PTR(ex_trans2d_t, parent->parent);
+        parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
     }
 }
 
@@ -124,11 +195,13 @@ void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
 void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
     ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+    ex_ref_t *parent_parent = NULL;
 
     *_scale = self->scale;
     while ( parent ) {
+        parent_parent = parent->parent;
         ex_vec2f_mul( _scale, _scale, &(parent->scale) );
-        parent = EX_REF_PTR(ex_trans2d_t, parent->parent);
+        parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
     }
 }
 

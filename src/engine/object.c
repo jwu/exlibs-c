@@ -114,36 +114,6 @@ static ex_ref_t *__reftable_add ( void *_obj ) {
     return newref;
 }
 
-// DELME { 
-// ------------------------------------------------------------------ 
-// Desc: invoked when ex_decref refcount to zero 
-// ------------------------------------------------------------------ 
-
-// void __reftable_remove ( ex_ref_t *_ref ) {
-//     void *ret;
-
-//     ex_assert_return ( _ref->refcount == 0, 
-//                        /*dummy*/,
-//                        "Failed to remove reference(uid: 0x%.16llX) from reference table," 
-//                        "The reference count is not zero!",
-//                        _ref.uid ); 
-//     ex_assert_return ( _ref->ptr == NULL, 
-//                        /*dummy*/,
-//                        "Failed to remove reference(uid: 0x%.16llX) from reference table," 
-//                        "The reference ptr is not NULL, the object still alived!" 
-//                        "Please destroy the object first",
-//                        _ref->uid ); 
-
-//     ret = ex_hashmap_remove_at ( &__uid_to_refptr, &_ref->uid );
-
-//     ex_assert_return ( ret != NULL, 
-//                        /*dummy*/,
-//                        "Failed to remove reference(uid: 0x%.16llX) from reference table," 
-//                        "can't find the uid key", 
-//                        _ref->uid );
-// }
-// } DELME end 
-
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////

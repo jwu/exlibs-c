@@ -106,6 +106,8 @@ static void load_world () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void simple_world ();
+extern void test_transform ();
 // ------------------------------------------------------------------ 
 
 static void initGame () {
@@ -117,7 +119,9 @@ static void initGame () {
     ex_incref(g_world);
     EX_REF_PTR(ex_object_t,g_world)->init(g_world);
 
+    // create main camera
     {
+        ex_log ("create main camera...");
         ex_ref_t *mainCam;
         ex_world_create_camera2d ( g_world, ex_strid("main_camera") );
         mainCam = ex_world_main_camera (g_world);
@@ -127,32 +131,9 @@ static void initGame () {
         ex_camera_set_ortho_size( mainCam, (float)win_width/2.0f );
     }
 
-    ex_log ("create simple entities...");
-    // TEMP: instead of serialize the g_world, I hardcoded the entities.
-    for ( int i = 0; i < 100; ++i ) {
-        ex_ref_t *ent = ex_world_create_entity ( g_world, ex_strid("ent1") ); 
-        {
-            // trans2d
-            ex_ref_t *trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
-            ex_trans2d_set_world_position( trans2d, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
-            ex_trans2d_set_world_scale ( trans2d, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
-            ex_trans2d_set_world_rotation ( trans2d, ex_range_randf(0.0f,EX_TWO_PI) );
-
-            // dbg2d
-            ex_ref_t *dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
-            ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
-
-            // simple
-            ex_ref_t *simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
-            ex_simple_t *simple = EX_REF_PTR(ex_simple_t,simple_ref);
-
-            ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
-            ex_vec2f_normalize(&simple->move_dir);
-            simple->move_speed = ex_range_randf(1.0f,100.0f);
-            simple->rot_speed = ex_range_randf(-100.0f,100.0f);
-        }
-    }
-    ex_log ("done!");
+    // create test world
+    // simple_world();
+    test_transform();
 
     // run the world
     ex_world_run(g_world);
@@ -275,6 +256,17 @@ static void __keyboard ( unsigned char _key, int _x, int _y ) {
     else {
         if ( _key == EX_KEY_ESC ) {
             exit(0);
+        }
+        else if ( _key == EX_KEY_d ) {
+            ex_ref_t *ref = ex_world_find_entity_byname (g_world, ex_strid("my_entity") );
+            if ( ref ) {
+                void *ptr = ref->ptr;
+                ex_destroy_object(ref);
+                ex_log( "entity %s destroyed. uid: %llu", 
+                        ex_strid_to_cstr( ((ex_object_t *)ptr)->name ),
+                        ((ex_object_t *)ptr)->uid
+                        );
+            }
         }
     }
 

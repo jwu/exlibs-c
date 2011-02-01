@@ -48,6 +48,13 @@ EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ); 
+extern void ex_trans2d_detach_children ( ex_ref_t *_self ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ); 
 extern void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ); 
 extern void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ); 

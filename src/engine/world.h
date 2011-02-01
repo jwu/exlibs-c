@@ -69,6 +69,14 @@ extern ex_ref_t *ex_world_main_camera ( ex_ref_t *_self );
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern ex_ref_t *ex_world_find_entity_byname ( ex_ref_t *_self, strid_t _name );
+extern void ex_world_find_entities_byname ( ex_ref_t *_self, strid_t _name, ex_array_t *_result );
+// extern ex_ref_t *ex_world_find_entity_bytag ( ex_ref_t *_self, strid_t _name );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern void ex_world_update ( ex_ref_t *_self );
 extern void ex_world_render ( ex_ref_t *_self );
 

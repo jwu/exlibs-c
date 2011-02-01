@@ -101,7 +101,23 @@ void __entity_init ( ex_ref_t *_self ) {
 
 void __entity_deinit ( ex_ref_t *_self ) {
     ex_entity_t *self = EX_REF_PTR(ex_entity_t,_self);
+    ex_trans2d_t *trans2d = EX_REF_PTR(ex_trans2d_t,self->trans2d);
     ex_ref_t *comp;
+
+    // do children-parent deinit.
+    if ( trans2d ) {
+        // detach from parent
+        ex_trans2d_set_parent( self->trans2d, NULL );
+
+        //
+        ex_array_each ( trans2d->children, ex_ref_t *, ref ) {
+            ex_trans2d_t *child = EX_REF_PTR( ex_trans2d_t, ref );
+            // NOTE: this will prevent child remove from parent, which we will do it by ourself
+            child->parent = NULL;
+            ex_destroy_object_immediately( ((ex_component_t *)child)->owner, true );
+        } ex_array_each_end
+        ex_array_remove_all(trans2d->children);
+    }
 
     // NOTE: the destroy will invoke __entity_remove_comp, so we remove the component inversed.
     // NOTE: you don't need to call ex_decref, cause the component->deinit will do it.
@@ -126,7 +142,7 @@ EX_DEF_OBJECT_BEGIN( ex_entity_t,
                      __entity_init, 
                      __entity_deinit )
 
-    ((ex_entity_t *)__obj__)->comps = ex_array_notype(sizeof(ex_ref_t *),8);
+    EX_MEMBER( ex_entity_t, comps, ex_array_notype(sizeof(ex_ref_t *),8) )
     EX_MEMBER( ex_entity_t, world, NULL )
     EX_MEMBER( ex_entity_t, trans2d, NULL )
     EX_MEMBER( ex_entity_t, camera, NULL )

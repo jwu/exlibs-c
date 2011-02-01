@@ -102,6 +102,10 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;
 
+    static const bool show_cood = false;
+    static const bool show_parentlink = true;
+
+    //
     if ( self->shapeType == EX_DEBUG_SHAPE_RECT ) {
         float cx = self->rect.center.x;
         float cy = self->rect.center.y;
@@ -122,10 +126,47 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         glLoadIdentity();
         glTranslatef(self->rect.center.x + worldPos.x, self->rect.center.y + worldPos.y, 0.0f);
         glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
-        glScalef(worldScale.x, worldScale.y, 1.0f);
 
+        // draw non-scale geometry first
+        if ( show_cood ) {
+            glBegin(GL_LINES); {
+                glScalef( 1.0f, 1.0f, 1.0f );
+                glColor4f( 1.0f, 0.0f, 0.0f, 1.0f );
+                glVertex3f(0.0f, 0.0f, 0.0f);
+                glVertex3f(20.0f, 0.0f, 0.0f);
+
+                glColor4f( 0.0f, 1.0f, 0.0f, 1.0f );
+                glVertex3f(0.0f, 0.0f, 0.0f);
+                glVertex3f(0.0f, 20.0f, 0.0f);
+            } glEnd();
+        }
+
+        //
+        if ( show_parentlink ) {
+            ex_ref_t *parent = EX_REF_PTR(ex_trans2d_t,ent->trans2d)->parent;
+            if ( parent ) {
+                ex_vec2f_t my_worldpos,parent_worldpos;
+
+                ex_trans2d_world_position( ent->trans2d, &my_worldpos );
+                ex_trans2d_world_position( parent, &parent_worldpos );
+
+                glPushMatrix();
+                glMatrixMode( GL_MODELVIEW );
+                glLoadIdentity();
+                glBegin(GL_LINES); {
+                    glColor4f( 1.0f, 1.0f, 0.0f, 1.0f );
+                    glVertex3f( my_worldpos.x, my_worldpos.y, 0.0f );
+                    glVertex3f( parent_worldpos.x, parent_worldpos.y, 0.0f );
+                } glEnd();
+                glPopMatrix();
+            }
+        }
+
+        // draw scaled geometry
+        glScalef(worldScale.x, worldScale.y, 1.0f);
         glVertexPointer ( 2, GL_FLOAT, 0, verts );
         glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
         glDrawArrays(GL_LINE_LOOP, 0, 4);
+
     }
 }
