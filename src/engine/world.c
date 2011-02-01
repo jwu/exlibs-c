@@ -53,8 +53,8 @@ void __world_deinit ( ex_ref_t *_self ) {
 
     // decrease reference count and destroy all entities
     ex_array_each ( self->entities, ex_ref_t *, ref ) {
+        ex_destroy_object_immediately( ref, true );
         ex_decref(ref);
-        ex_destroy_object_immediately( ref );
     } ex_array_each_end;
     ex_array_free ( self->entities );
 }
@@ -81,33 +81,7 @@ EX_DEF_PROPS_BEGIN(ex_world_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN_SUPER(ex_world_t,ex_object_t)
-#if 0
-    int num_entities = 0;
-
-    num_entities = self->entities->count;
-    EX_SERIALIZE( _stream, int, "num_entities", &num_entities  )
-
-    if ( _stream->type == EX_STREAM_READ ) {
-        ex_entity_t *ent = NULL;
-        for ( int i = 0; i < num_entities; ++i ) {
-
-            ent = EX_RTTI(ex_entity_t)->create();
-            EX_SERIALIZE( _stream, ex_entity_t, "entity", ent );
-            ent->world = self->ref;
-            ex_init_object(ent);
-
-            ex_array_append( self->entities, ex_object_ref(ent) );
-            ex_incref( ex_object_ref(ent) );
-        }
-    }
-    else if ( _stream->type == EX_STREAM_WRITE ) {
-        ex_array_each ( self->entities, ex_ref_t *, ref ) {
-            EX_SERIALIZE( _stream, ex_entity_t, "entity", EX_REF_PTR(ex_entity_t,ref) );
-        } ex_array_each_end
-    }  
-#else
     EX_SERIALIZE_ARRAY( _stream, ref, "entities", self->entities );
-#endif
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_world_t,ex_object_t)
@@ -216,8 +190,8 @@ void ex_world_clear ( ex_ref_t *_self ) {
 	
     // decrease reference count and destroy all entities
     ex_array_each ( world->entities, ex_ref_t *, ref ) {
+        ex_destroy_object_immediately( ref, true );
         ex_decref(ref);
-        ex_destroy_object_immediately( ref );
     } ex_array_each_end;
     ex_array_remove_all ( world->entities );
     ex_object_gc();
@@ -231,10 +205,10 @@ void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
     ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
 
     ex_array_append( world->cameras, &_cam );
+    ex_incref(_cam);
     if ( ex_array_count(world->cameras) == 1 ) {
         world->mainCamera = _cam;
     }
-    ex_incref(_cam);
 }
 
 // ------------------------------------------------------------------ 

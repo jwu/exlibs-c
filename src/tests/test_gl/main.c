@@ -89,7 +89,7 @@ static void load_world () {
 
     ex_world_clear(g_world);
     ex_decref(g_world);
-    ex_destroy_object_immediately(g_world);
+    ex_destroy_object_immediately(g_world, true);
 
     ex_log ("loading world simple_world.json...");
     strncpy ( path, __media_file, maxPATH );
@@ -167,7 +167,7 @@ static void quitGame () {
 
     ex_world_clear(g_world);
     ex_decref(g_world);
-    ex_destroy_object_immediately(g_world);
+    ex_destroy_object_immediately(g_world, true);
 }
 
 // ------------------------------------------------------------------ 

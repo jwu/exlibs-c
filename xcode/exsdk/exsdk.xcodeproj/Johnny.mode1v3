@@ -329,7 +329,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2B7AACC12F7174A00FA2EC0</string>
+										<string>B2B7AB1712F7AB9100FA2EC0</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -643,14 +643,14 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2B7AACD12F7174A00FA2EC0</string>
+		<string>B2B7AB1812F7AB9100FA2EC0</string>
 		<string>B2B7A98512F6E44D00FA2EC0</string>
 		<string>B2B7A98612F6E44D00FA2EC0</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>B2B7A9A312F6E82F00FA2EC0</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>1CD10A99069EF8BA00B06720</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>1683 -124 1231 723 1280 -400 1920 1200 </string>

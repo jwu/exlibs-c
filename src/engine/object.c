@@ -174,14 +174,19 @@ void ex_destroy_object ( ex_ref_t *_ref ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_destroy_object_immediately ( ex_ref_t *_ref ) {
+void ex_destroy_object_immediately ( ex_ref_t *_ref, bool _no_error ) {
     ex_object_t *obj = (ex_object_t *)(_ref->ptr);
     ex_assert_return ( obj != NULL, /*dummy*/, "the object already been destroyed!" );
 
-    if ( _ref->refcount != 0 )
-        ex_warning ( "warning: the refcount is not zero" );
+    if ( _no_error == false ) {
+        if ( _ref->refcount != 0 )
+            ex_warning ( "warning: the refcount is not zero" );
+    }
 
     obj->deinit(_ref);
+    obj->uid = EX_UID_INVALID;
+    obj->name = EX_STRID_NULL;
+    obj->flags = EX_OBJECT_NONE;
     ex_free(obj);
     _ref->ptr = NULL;
 }

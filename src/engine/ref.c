@@ -58,6 +58,7 @@ extern void __reftable_remove ( ex_ref_t );
 
 int ex_decref ( ex_ref_t *_ref ) {
     int ret;
+    ex_assert_return( _ref->refcount > 0, -1, "the reference count already zero, you dereference it twice." );
 
     _ref->refcount -= 1;
     if ( _ref->refcount == 0 ) {

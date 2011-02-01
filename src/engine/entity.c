@@ -36,6 +36,18 @@ static void __add_to_cache ( ex_entity_t *_ent, strid_t _typeID, ex_ref_t *_comp
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __rm_from_cache ( ex_entity_t *_ent, strid_t _typeID ) {
+    // cache internal component
+    if ( _typeID == EX_TYPEID(ex_trans2d_t) )
+        _ent->trans2d = NULL;
+    else if ( _typeID == EX_TYPEID(ex_camera_t) )
+        _ent->camera = NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref ) {
     ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
     ex_component_t *comp = EX_REF_PTR(ex_component_t,_comp_ref);
@@ -57,8 +69,9 @@ void __entity_remove_comp( ex_ref_t *_self, ex_ref_t *_comp ) {
 
     ex_array_each ( ent->comps, ex_ref_t *, comp ) {
         if ( comp == _comp ) {
-            ex_decref(_comp);
             ex_array_remove_at_fast( ent->comps, __idx__ );
+            ex_decref(_comp);
+            __rm_from_cache ( ent, ex_rtti_info(comp->ptr)->typeID );
             break;
         }
     } ex_array_each_end
@@ -88,11 +101,14 @@ void __entity_init ( ex_ref_t *_self ) {
 
 void __entity_deinit ( ex_ref_t *_self ) {
     ex_entity_t *self = EX_REF_PTR(ex_entity_t,_self);
+    ex_ref_t *comp;
 
-    ex_array_each ( self->comps, ex_ref_t *, comp ) {
-        ex_decref(comp);
-        ex_destroy_object(comp);
-    } ex_array_each_end;
+    // NOTE: the destroy will invoke __entity_remove_comp, so we remove the component inversed.
+    // NOTE: you don't need to call ex_decref, cause the component->deinit will do it.
+    for ( int i = ex_array_count(self->comps)-1; i >= 0; --i ) {
+        comp = *((ex_ref_t **)ex_array_get(self->comps, i));
+        ex_destroy_object_immediately(comp,true);
+    }
     ex_array_free ( self->comps );
 
     self->comps = NULL;
@@ -121,47 +137,7 @@ EX_DEF_PROPS_BEGIN(ex_entity_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN_SUPER(ex_entity_t,ex_object_t)
-#if 0
-    int num_comps = 0;
-
-    // serialize components
-    num_comps = self->comps->count;
-    EX_SERIALIZE( _stream, int, "num_comps", &num_comps  )
-
-    if ( _stream->type == EX_STREAM_READ ) {
-        for ( int i = 0; i < num_comps; ++i ) {
-            strid_t typeID;
-            void *comp;
-            ex_ref_t *compref;
-
-            // get the component type first.
-            EX_SERIALIZE( _stream, strid, "comp_type", &typeID )
-
-            // check if we have the component
-            compref = ex_entity_get_comp(self,typeID);
-            if ( compref ) {
-                ex_warning("the component %s already added in this entity", ex_strid_to_cstr(typeID));
-                continue;
-            }
-
-            // create a component serialize, and finially add it.
-            comp = ex_create(typeID);
-            if ( comp ) {
-                ex_rtti_info(comp)->serialize( _stream, ex_strid("component"), comp );
-                __add_comp( self, typeID, comp );
-            }
-        }
-    }
-    else if ( _stream->type == EX_STREAM_WRITE ) {
-        ex_array_each ( self->comps, ex_ref_t *, compref ) {
-            void *comp = compref->ptr;
-            EX_SERIALIZE( _stream, strid, "comp_type", &(ex_rtti_info(comp)->typeID) )
-            ex_rtti_info(comp)->serialize( _stream, ex_strid("component"), comp );
-        } ex_array_each_end
-    }
-#else
     EX_SERIALIZE_ARRAY( _stream, ref, "components", self->comps );
-#endif
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_entity_t,ex_object_t)
@@ -215,36 +191,6 @@ ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
 
     return NULL;
 }
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-// TODO { 
-// int ex_entity_remove_comp ( ex_entity_t *_ent, ex_ref_t *_comp ) {
-//     ex_array_each ( self->comps, ex_ref_t *, compref ) {
-//         if ( _comp == compref ) {
-//             strid_t typeID;
-
-//             ex_array_remove_at_fast( self->comps, __idx__ );
-
-//             // cache internal component
-//             typeID = ex_rtti_info(_comp->ptr)->typeID;
-//             if ( _typeID == EX_TYPEID(ex_trans2d_t) ) {
-//                 _ent->trans2d = NULL;
-//             }
-//             else if ( _typeID == EX_TYPEID(ex_camera_t) ) {
-//                 _ent->camera = NULL;
-//             }
-
-//             //
-//             ex_decref(_comp);
-//             return 0;
-//         }
-//     } ex_array_each_end
-//     return -1;
-// }
-// } TODO end 
 
 // ------------------------------------------------------------------ 
 // Desc: 

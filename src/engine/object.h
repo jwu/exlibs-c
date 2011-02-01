@@ -76,7 +76,7 @@ EX_DECL_CLASS_END(ex_object_t)
 
 extern ex_ref_t *ex_create_object ( strid_t _typeID, ex_uid_t _uid );
 extern void ex_destroy_object ( ex_ref_t *_ref );
-extern void ex_destroy_object_immediately ( ex_ref_t *_ref );
+extern void ex_destroy_object_immediately ( ex_ref_t *_ref, bool _no_error );
 
 extern ex_ref_t *ex_getref ( ex_uid_t _uid );
 
