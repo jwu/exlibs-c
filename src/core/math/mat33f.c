@@ -107,7 +107,7 @@ bool ex_mat33f_get_inverse ( ex_mat33f_t *_r, const ex_mat33f_t *_m ) {
         return false;
 
     inv = 1.0f/det;
-    ex_mat33f_mul_scalar( _r, _m, inv );
+    ex_mat33f_mul_scalar( _r, _r, inv );
 
     return true;
 }

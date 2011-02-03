@@ -178,8 +178,22 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         }
 
         // draw scaled geometry
-        glScalef(worldScale.x, worldScale.y, 1.0f);
         {
+#if 0
+            glScalef(worldScale.x, worldScale.y, 1.0f);
+#else
+            glMatrixMode( GL_MODELVIEW );
+            ex_mat33f_t r;
+            ex_trans2d_local_to_world_mat33f(ent->trans2d,&r);
+            float m[16] = {
+                r.m00, r.m01, r.m02, 0.0f,
+                r.m10, r.m11, r.m12, 0.0f,
+                0.0f,  0.0f,  1.0f,  0.0f,
+                r.m20, r.m21, r.m22, 1.0f,
+            };
+            glLoadMatrixf(m);
+#endif
+
             glVertexPointer ( 2, GL_FLOAT, 0, verts );
             glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
             glDrawArrays(GL_LINE_LOOP, 0, 4);

@@ -40,7 +40,8 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_array_t *children; // ex_trans2d_t * [] 
 
     bool dirty;
-    ex_mat33f_t localToWorld; // not including the scale.
+    ex_mat33f_t localToWorld;
+    ex_mat33f_t worldToLocal; // TODO: I do remember Unreal have an easy worldToLocal algorithm 
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,6 +68,7 @@ extern void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale );
 // ------------------------------------------------------------------ 
 
 extern void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ); 
+extern void ex_trans2d_world_to_local_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 
