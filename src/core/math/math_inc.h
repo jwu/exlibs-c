@@ -21,11 +21,11 @@
 #include "ease_curve.h"
 
 // algebelar
-#include "angf.h"
 #include "vec2f.h"
 #include "vec3f.h"
 #include "vec4f.h"
 #include "mat22f.h"
+#include "angf.h" // dep mat22f
 #include "mat33f.h"
 #include "mat44f.h"
 #include "quatf.h"

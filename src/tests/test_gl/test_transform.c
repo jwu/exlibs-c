@@ -15,7 +15,7 @@
 #include "../../engine/engine_inc.h"
 #include "simple_behavior.h"
 
-extern ex_ref_t *g_world;
+#include "main.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // world
@@ -30,13 +30,13 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
 
     // trans2d
     ex_ref_t *trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
-    ex_trans2d_set_world_position( trans2d, 0.0f, 0.0f );
-    ex_trans2d_set_world_scale ( trans2d, 1.0f, 1.0f );
-    ex_trans2d_set_world_rotation ( trans2d, 0.0f );
+    ex_trans2d_set_local_position( trans2d, 0.0f, 0.0f );
+    ex_trans2d_set_local_scale ( trans2d, 1.0f, 1.0f );
+    ex_trans2d_set_local_rotation ( trans2d, 0.0f );
 
     // dbg2d
     ex_ref_t *dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
-    ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
+    ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 20.0f, 20.0f );
 
     // simple
     ex_ref_t *simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
@@ -44,8 +44,8 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
 
     ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
     ex_vec2f_normalize(&simple->move_dir);
-    simple->move_speed = ex_range_randf(1.0f,100.0f);
-    simple->rot_speed = ex_range_randf(-100.0f,100.0f);
+    // simple->move_speed = ex_range_randf(1.0f,100.0f);
+    // simple->rot_speed = ex_range_randf(-100.0f,100.0f);
 
     return ent;
 }
@@ -54,25 +54,85 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_transform () {
+static void init () {
     ex_log ("create test transform...");
 
-    ex_ref_t *ent1, *ent2;
+    ex_ref_t *ent1, *ent2, *ent3;
     ex_ref_t *simple_ref;
+    ex_ref_t *trans2d_ref;
 
     ent1 = create_simple_entity("entity_01");
     ent2 = create_simple_entity("entity_02");
+    ent3 = create_simple_entity("entity_03");
 
     ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent2)->trans2d, 
                             EX_REF_PTR(ex_entity_t,ent1)->trans2d );
 
+    ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent3)->trans2d, 
+                            EX_REF_PTR(ex_entity_t,ent2)->trans2d );
+
     simple_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_simple_t) );
     EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 0.0f;
+    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 1.0f;
+    trans2d_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_trans2d_t) );
+    ex_trans2d_set_local_scale( trans2d_ref, 4.0f, 1.0f );
 
     simple_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_simple_t) );
-    EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 10.0f;
-    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = -10.0f;
+    EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
+    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 2.0f;
+    trans2d_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_trans2d_t) );
+    ex_trans2d_set_local_position( trans2d_ref, 160.0f, 0.0f );
+    ex_trans2d_set_local_scale( trans2d_ref, 1.0f, 1.0f );
+
+    simple_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_simple_t) );
+    EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
+    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 3.0f;
+    trans2d_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_trans2d_t) );
+    ex_trans2d_set_local_position( trans2d_ref, 0.0f, 80.0f );
+    ex_trans2d_set_local_scale( trans2d_ref, 1.0f, 1.0f );
 
     ex_log ("done!");
+} 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void keyboard ( uint8 _key ) {
+    if ( _key == EX_KEY_d ) {
+        ex_ref_t *ref = ex_world_find_entity_byname (g_world, ex_strid("entity_03") );
+        ex_ref_t *trans2d_ref = NULL;
+
+        if ( ref ) {
+            trans2d_ref = ex_entity_get_comp( ref, EX_TYPEID(ex_trans2d_t) );
+            ex_trans2d_set_parent( trans2d_ref, NULL );
+        }
+    }
+    else if ( _key == EX_KEY_a ) {
+        ex_ref_t *ref = ex_world_find_entity_byname (g_world, ex_strid("entity_03") );
+        ex_ref_t *ref2 = ex_world_find_entity_byname (g_world, ex_strid("entity_02") );
+        ex_ref_t *trans2d_ref = NULL;
+        ex_ref_t *trans2d_ref2 = NULL;
+
+        if ( ref ) {
+            trans2d_ref = ex_entity_get_comp( ref, EX_TYPEID(ex_trans2d_t) );
+            trans2d_ref2 = ex_entity_get_comp( ref2, EX_TYPEID(ex_trans2d_t) );
+            ex_trans2d_set_parent( trans2d_ref, trans2d_ref2 );
+        }
+    }
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void test_transform () {
+    // register game classes
+    EX_REGISTER_CLASS(ex_simple_t);
+
+    g_game.init = init;
+    g_game.update = NULL;
+    g_game.keyboard = keyboard;
+    g_game.mouse = NULL;
+}
+

@@ -102,7 +102,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;
 
-    static const bool show_cood = false;
+    static const bool show_cood = true;
     static const bool show_parentlink = true;
 
     //
@@ -122,10 +122,25 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         ex_trans2d_world_scale( ent->trans2d, &worldScale );
         ex_trans2d_world_rotation( ent->trans2d, &worldRot );
 
-        glMatrixMode( GL_MODELVIEW );
-        glLoadIdentity();
-        glTranslatef(self->rect.center.x + worldPos.x, self->rect.center.y + worldPos.y, 0.0f);
-        glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
+        {
+#if 1
+            glMatrixMode( GL_MODELVIEW );
+            glLoadIdentity();
+            glTranslatef(self->rect.center.x + worldPos.x, self->rect.center.y + worldPos.y, 0.0f);
+            glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
+#else
+            glMatrixMode( GL_MODELVIEW );
+            ex_mat33f_t r;
+            ex_trans2d_local_to_world_mat33f(ent->trans2d,&r);
+            float m[16] = {
+                r.m00, r.m01, r.m02, 0.0f,
+                r.m10, r.m11, r.m12, 0.0f,
+                0.0f,  0.0f,  1.0f,  0.0f,
+                r.m20, r.m21, r.m22, 1.0f,
+            };
+            glLoadMatrixf(m);
+#endif
+        }
 
         // draw non-scale geometry first
         if ( show_cood ) {
@@ -164,9 +179,11 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 
         // draw scaled geometry
         glScalef(worldScale.x, worldScale.y, 1.0f);
-        glVertexPointer ( 2, GL_FLOAT, 0, verts );
-        glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-        glDrawArrays(GL_LINE_LOOP, 0, 4);
+        {
+            glVertexPointer ( 2, GL_FLOAT, 0, verts );
+            glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+            glDrawArrays(GL_LINE_LOOP, 0, 4);
+        }
 
     }
 }

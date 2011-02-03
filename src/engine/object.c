@@ -248,7 +248,8 @@ void ex_serialize_objects ( ex_stream_t *_stream ) {
             ex_rtti_t *rtti = NULL;
             obj = EX_REF_PTR(ex_object_t,ref);
 
-            if ( obj && ex_flags_has(obj->flags,EX_OBJECT_DEAD) ) {
+            // do NOT save NULL objects
+            if ( obj == NULL || ex_flags_has(obj->flags,EX_OBJECT_DEAD) ) {
                 ex_hashmap_continue;
             }
 

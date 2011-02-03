@@ -57,6 +57,8 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, parent, NULL )
     EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
+    EX_MEMBER( ex_trans2d_t, dirty, true )
+    EX_MEMBER( ex_trans2d_t, localToWorld, ex_mat33f_identity )
 
 EX_DEF_OBJECT_END
 
@@ -111,6 +113,30 @@ static void __add_child ( ex_ref_t *_self, ex_ref_t *_child ) {
     ex_array_append( self->children, &_child );
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __update_local_to_world ( ex_ref_t *_self ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+
+    if ( !self->dirty ) {
+        return;
+    }
+
+    // calculate the local to world matrix.
+    ex_mat33f_from_TRS( &(self->localToWorld), &self->pos, &self->ang, &ex_vec2f_one );
+
+    if ( parent ) {
+        ex_mat33f_t matParent;
+        ex_trans2d_local_to_world_mat33f ( self->parent, &matParent );
+        ex_mat33f_mul( &(self->localToWorld), &(self->localToWorld), &matParent );
+    }
+
+    self->dirty = false;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -128,6 +154,10 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
     // we got the same parent, nothing need to be changed.
     if ( self->parent == _parent )
         return;
+
+    // TODO: reset the position and rotation, and scale ??? { 
+    //
+    // } TODO end 
 
     // remove self from old parent
     if ( self->parent ) {
@@ -160,15 +190,21 @@ void ex_trans2d_detach_children ( ex_ref_t *_self ) {
 
 void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
-    ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
-    ex_ref_t *parent_parent = NULL;
 
-    *_pos = self->pos;
-    while ( parent ) {
-        parent_parent = parent->parent;
-        ex_vec2f_add( _pos, _pos, &(parent->pos) );
-        parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
-    }
+    __update_local_to_world(_self);
+    ex_mat33f_get_translate( _pos, &self->localToWorld );
+
+    // KEEPME: the old method { 
+    // ex_mat22f_t rot;
+    // *_pos = self->pos;
+    // ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+    // while ( parent ) {
+    //     ex_angf_to_rot22 ( &(parent->ang), &rot );
+    //     ex_vec2f_mul_mat22f ( _pos, _pos, &rot );
+    //     ex_vec2f_add( _pos, _pos, &(parent->pos) );
+    //     parent = parent->parent ? EX_REF_PTR(ex_trans2d_t, parent->parent) : NULL;
+    // }
+    // } KEEPME end 
 }
 
 // ------------------------------------------------------------------ 
@@ -177,15 +213,21 @@ void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
 
 void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
-    ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
-    ex_ref_t *parent_parent = NULL;
 
-    *_ang = self->ang;
-    while ( parent ) {
-        parent_parent = parent->parent;
-        ex_angf_add( _ang, _ang, &(parent->ang) );
-        parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
-    }
+    __update_local_to_world(_self);
+    ex_mat33f_get_rotation( _ang, &self->localToWorld );
+
+    // KEEPME { 
+    // ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
+    // ex_ref_t *parent_parent = NULL;
+    // *_ang = self->ang;
+    // while ( parent ) {
+    //     ex_angf_add( _ang, _ang, &(parent->ang) );
+
+    //     parent_parent = parent->parent;
+    //     parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
+    // }
+    // } KEEPME end 
 }
 
 // ------------------------------------------------------------------ 
@@ -199,38 +241,55 @@ void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
 
     *_scale = self->scale;
     while ( parent ) {
-        parent_parent = parent->parent;
         ex_vec2f_mul( _scale, _scale, &(parent->scale) );
+        parent_parent = parent->parent;
         parent = parent_parent ? EX_REF_PTR(ex_trans2d_t, parent_parent) : NULL;
     }
+
+    // DISABLE { 
+    // __update_local_to_world(_self);
+    // ex_mat33f_get_scale( _scale, &self->localToWorld );
+    // } DISABLE end 
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
+void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ) {
+    __update_local_to_world (_self);
+    *_result = EX_REF_PTR(ex_trans2d_t,_self)->localToWorld;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 
     ex_vec2f_set ( &self->pos, _x, _y );
+    self->dirty = true;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
+void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ) {
 	ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 	
     ex_angf_set_by_radians ( &self->ang, _radians );
+    self->dirty = true;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ) {
+void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 
     ex_vec2f_set ( &self->scale, _x, _y );
+    self->dirty = true;
 }

@@ -15,8 +15,6 @@
 #include "../../engine/engine_inc.h"
 #include "../../app/app.h"
 
-#include "simple_behavior.h"
-
 #if (EX_PLATFORM == EX_MACOSX)
 	#include "OpenGL/gl.h"
 	#include "OpenGL/glu.h"
@@ -26,6 +24,8 @@
 	#include <GL/glu.h>
 	#include <GL/glut.h>
 #endif
+
+#include "main.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -49,6 +49,12 @@ static int win_height = 480;
 
 // game
 ex_ref_t *g_world = NULL;
+game_t g_game = {
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -111,8 +117,11 @@ extern void test_transform ();
 // ------------------------------------------------------------------ 
 
 static void initGame () {
-    // register game classes
-    EX_REGISTER_CLASS(ex_simple_t);
+    // create test world
+    // NOTE: choose your game { 
+    // simple_world();
+    test_transform();
+    // } NOTE end 
 
     // load/setup the world
     g_world = ex_create_object( EX_TYPEID(ex_world_t), ex_generate_uid() );
@@ -131,9 +140,9 @@ static void initGame () {
         ex_camera_set_ortho_size( mainCam, (float)win_width/2.0f );
     }
 
-    // create test world
-    // simple_world();
-    test_transform();
+    // create the world
+    if ( g_game.init ) 
+        g_game.init();
 
     // run the world
     ex_world_run(g_world);
@@ -156,6 +165,10 @@ static void quitGame () {
 // ------------------------------------------------------------------ 
 
 static void updateGame () {
+    // why ?? for global control of the game.
+    if ( g_game.update )
+        g_game.update();
+
     ex_world_update(g_world);
 }
 
@@ -246,31 +259,24 @@ static void __keyboard ( unsigned char _key, int _x, int _y ) {
         switch (_key) {
         case 19: // ^S
             save_world ();
-            break;
+            return;
 
         case 12: // ^L
             load_world ();
-            break;
+            __reshape( win_width, win_height );
+            return;
         }
     }
     else {
         if ( _key == EX_KEY_ESC ) {
             exit(0);
-        }
-        else if ( _key == EX_KEY_d ) {
-            ex_ref_t *ref = ex_world_find_entity_byname (g_world, ex_strid("my_entity") );
-            if ( ref ) {
-                void *ptr = ref->ptr;
-                ex_destroy_object(ref);
-                ex_log( "entity %s destroyed. uid: %llu", 
-                        ex_strid_to_cstr( ((ex_object_t *)ptr)->name ),
-                        ((ex_object_t *)ptr)->uid
-                        );
-            }
+            return;
         }
     }
 
-    // printf ( "key is %c \n", _key );
+    //
+    if ( g_game.keyboard )
+        g_game.keyboard(_key);
 }
 
 // ------------------------------------------------------------------ 
@@ -280,6 +286,10 @@ static void __keyboard ( unsigned char _key, int _x, int _y ) {
 static void __mouse ( int _x, int _y ) {
     // TODO:
     // mousePoint = mouseToSpace(x, y);
+
+    //
+    if ( g_game.mouse )
+        g_game.mouse(_x,_y);
 }
 
 // ------------------------------------------------------------------ 

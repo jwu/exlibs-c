@@ -99,6 +99,28 @@ static inline void ex_mat33f_set ( ex_mat33f_t *_m,
 }
 
 // ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_mat33f_from_TRS ( ex_mat33f_t *_m, 
+                                        const ex_vec2f_t *_t,
+                                        const ex_angf_t *_r, 
+                                        const ex_vec2f_t *_s ) { 
+    float cos_a = cosf( _r->rad );
+    float sin_a = sinf( _r->rad );
+
+    // sx,  0.0   cosa, sina
+    // 0.0, sy   -sina, cosa
+
+    // NOTE: the reason use + for T is the T will rotate by parent's R 
+    // mat_S * mat_R + mat_T
+    ex_mat33f_set ( _m, 
+                    cos_a * _s->x, sin_a * _s->x, 0.0f,
+                   -sin_a * _s->y, cos_a * _s->y, 0.0f,
+                    _t->x,         _t->y,         1.0f );
+}
+
+// ------------------------------------------------------------------ 
 /*! 
  @fn static inline static inline float ex_mat33f_get ( ex_mat33f_t *_m, uint _row, uint _col ) 
  @param _m the matrix
@@ -108,10 +130,40 @@ static inline void ex_mat33f_set ( ex_mat33f_t *_m,
  @details get the matrix element in (_row, _col)
 */// ------------------------------------------------------------------ 
 
-static inline float ex_mat33f_get ( ex_mat33f_t *_m, uint _row, uint _col ) { 
+static inline float ex_mat33f_get ( const ex_mat33f_t *_m, uint _row, uint _col ) { 
     ex_assert( _row >= 0 && _row < 3, "out of range" );
     ex_assert( _col >= 0 && _col < 3, "out of range" );
     return _m->m[3*_row+_col];
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_mat33f_get_translate ( ex_vec2f_t *_r, const ex_mat33f_t *_m ) { 
+    _r->x = _m->m20;
+    _r->y = _m->m21;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_mat33f_get_scale ( ex_vec2f_t *_r, const ex_mat33f_t *_m ) { 
+    _r->x = sqrtf(_m->m00 * _m->m00 + _m->m10 * _m->m10);
+    _r->y = sqrtf(_m->m01 * _m->m01 + _m->m11 * _m->m11);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_mat33f_get_rotation ( ex_angf_t *_r, const ex_mat33f_t *_m ) { 
+    float rad = atanf( _m->m01 / _m->m00 );
+    if ( ex_signf(_m->m00) < 0.0f ) {
+        rad += EX_PI;
+    }
+    ex_angf_set_by_radians ( _r, rad );
 }
 
 // ------------------------------------------------------------------ 

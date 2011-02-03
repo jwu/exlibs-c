@@ -288,6 +288,7 @@
 		B2B113FE12DAAE66002E6C1A /* color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = color.c; sourceTree = "<group>"; };
 		B2B7AB5012F80A7600FA2EC0 /* simple_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simple_world.c; sourceTree = "<group>"; };
 		B2B7AB5112F80A7600FA2EC0 /* test_transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_transform.c; sourceTree = "<group>"; };
+		B2B7ABF212F8FF9D00FA2EC0 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		B2BD881A12E6F86A001F9D38 /* test_cstr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_cstr.c; sourceTree = "<group>"; };
 		B2C9220B12D8B4AA000FB811 /* circlef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circlef.h; sourceTree = "<group>"; };
 		B2C9220C12D8B4AA000FB811 /* line2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = line2f.h; sourceTree = "<group>"; };
@@ -556,6 +557,7 @@
 		B245482E12B91EF300EF7261 /* test_gl */ = {
 			isa = PBXGroup;
 			children = (
+				B2B7ABF212F8FF9D00FA2EC0 /* main.h */,
 				B2B7AB5012F80A7600FA2EC0 /* simple_world.c */,
 				B2B7AB5112F80A7600FA2EC0 /* test_transform.c */,
 				B2D8CAE612F14E7800584C38 /* simple_behavior.h */,

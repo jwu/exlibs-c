@@ -109,6 +109,18 @@ static inline float ex_angf_to_degrees_360 ( const ex_angf_t *_a ) {
 } 
 
 // ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_angf_to_rot22 ( const ex_angf_t *_a, ex_mat22f_t *_m ) {
+    float cos_theta = cosf( _a->rad );
+    float sin_theta = sinf( _a->rad );
+
+    _m->m00 =  cos_theta, _m->m01 = sin_theta; 
+    _m->m10 = -sin_theta, _m->m11 = cos_theta; 
+} 
+
+// ------------------------------------------------------------------ 
 /*! 
  @fn static inline void ex_angf_neg ( ex_angf_t *_a )
  @retval _a the result angle

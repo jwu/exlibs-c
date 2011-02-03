@@ -38,6 +38,9 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_vec2f_t  scale; // local scale
     ex_ref_t   *parent; // ex_trans2d_t *
     ex_array_t *children; // ex_trans2d_t * [] 
+
+    bool dirty;
+    ex_mat33f_t localToWorld; // not including the scale.
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -63,9 +66,15 @@ extern void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ); 
-extern void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ); 
-extern void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ); 
+extern void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y ); 
+extern void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ); 
+extern void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ); 
 
 
 // ######################### 

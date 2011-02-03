@@ -61,13 +61,12 @@ static void update ( ex_ref_t *_self ) {
         new_pos = ex_vec2f_zero;
         ex_vec2f_mul_scalar ( &new_pos, &self->move_dir, self->move_speed * ex_dt() );
         ex_vec2f_add ( &new_pos, &new_pos, &trans2d->pos );
-        ex_vec2f_set ( &trans2d->pos, new_pos.x, new_pos.y );
-        // ex_trans2d_world_position ( trans2d, &new_pos );
+        ex_trans2d_set_local_position ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, new_pos.x, new_pos.y );
 
         // process rotate
-        ex_angf_set_by_degrees( &new_ang, self->rot_speed * ex_dt() );
-        ex_angf_add( &trans2d->ang, &new_ang, &trans2d->ang );
-        // ex_trans2d_world_rotation ( trans2d, &new_ang );
+        ex_angf_set_by_radians( &new_ang, self->rot_speed * ex_dt() );
+        ex_angf_add( &new_ang, &new_ang, &trans2d->ang );
+        ex_trans2d_set_local_rotation ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, new_ang.rad );
     }
 }
 
