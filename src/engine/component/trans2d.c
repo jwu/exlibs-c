@@ -200,8 +200,18 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
 
 void ex_trans2d_detach_children ( ex_ref_t *_self ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_trans2d_t *child;
 
     ex_array_each ( self->children, ex_ref_t *, ref ) {
+        child = EX_REF_PTR(ex_trans2d_t,ref);
+
+        // get the world position under current parent
+        ex_trans2d_world_position(ref,&child->pos);
+        ex_trans2d_world_scale(ref,&child->scale);
+        ex_trans2d_world_rotation(ref,&child->ang);
+        child->dirty = true;
+
+        //
         EX_REF_PTR( ex_trans2d_t, ref )->parent = NULL;
     } ex_array_each_end
     ex_array_remove_all(self->children);

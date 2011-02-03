@@ -62,34 +62,49 @@ static void init () {
     ex_ref_t *trans2d_ref;
 
     ent1 = create_simple_entity("entity_01");
-    ent2 = create_simple_entity("entity_02");
-    ent3 = create_simple_entity("entity_03");
 
-    ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent2)->trans2d, 
-                            EX_REF_PTR(ex_entity_t,ent1)->trans2d );
+    for ( int i = 0; i < 2; ++i ) {
+        ent2 = create_simple_entity("entity_02");
+        ent3 = create_simple_entity("entity_03");
 
-    ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent3)->trans2d, 
-                            EX_REF_PTR(ex_entity_t,ent2)->trans2d );
+        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent2)->trans2d, 
+                                EX_REF_PTR(ex_entity_t,ent1)->trans2d );
 
-    simple_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_simple_t) );
-    EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 1.0f;
-    trans2d_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_trans2d_t) );
-    ex_trans2d_set_local_scale( trans2d_ref, 0.5f, 0.5f );
+        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent3)->trans2d, 
+                                EX_REF_PTR(ex_entity_t,ent2)->trans2d );
 
-    simple_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_simple_t) );
-    EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 2.0f;
-    trans2d_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_trans2d_t) );
-    ex_trans2d_set_local_position( trans2d_ref, 160.0f, 0.0f );
-    ex_trans2d_set_local_scale( trans2d_ref, 1.5f, 1.5f );
+        simple_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_simple_t) );
+        EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
+        EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 1.0f;
+        trans2d_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_trans2d_t) );
+        ex_trans2d_set_local_scale( trans2d_ref, 0.5f, 0.5f );
 
-    simple_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_simple_t) );
-    EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-    EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 3.0f;
-    trans2d_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_trans2d_t) );
-    ex_trans2d_set_local_position( trans2d_ref, 0.0f, 80.0f );
-    ex_trans2d_set_local_scale( trans2d_ref, 2.0f, 2.0f );
+        simple_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_simple_t) );
+        EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
+        EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 2.0f;
+        trans2d_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_trans2d_t) );
+        if ( i == 0 ) {
+            ex_trans2d_set_local_position( trans2d_ref, 160.0f, 0.0f );
+            ex_trans2d_set_local_scale( trans2d_ref, 1.5f, 1.5f );
+        }
+        else {
+            ex_trans2d_set_local_position( trans2d_ref, -160.0f, 0.0f );
+            ex_trans2d_set_local_scale( trans2d_ref, 1.5f, 1.5f );
+        }
+
+        simple_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_simple_t) );
+        EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
+        EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 3.0f;
+        trans2d_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_trans2d_t) );
+        if ( i == 0 ) {
+            ex_trans2d_set_local_position( trans2d_ref, 0.0f, 80.0f );
+            ex_trans2d_set_local_scale( trans2d_ref, 2.0f, 2.0f );
+        }
+        else {
+            ex_trans2d_set_local_position( trans2d_ref, 0.0f, -80.0f );
+            ex_trans2d_set_local_scale( trans2d_ref, 2.0f, 2.0f );
+        }
+    }
 
     ex_log ("done!");
 } 
@@ -118,6 +133,15 @@ static void keyboard ( uint8 _key ) {
             trans2d_ref = ex_entity_get_comp( ref, EX_TYPEID(ex_trans2d_t) );
             trans2d_ref2 = ex_entity_get_comp( ref2, EX_TYPEID(ex_trans2d_t) );
             ex_trans2d_set_parent( trans2d_ref, trans2d_ref2 );
+        }
+    }
+    else if ( _key == EX_KEY_s ) {
+        ex_ref_t *ref = ex_world_find_entity_byname (g_world, ex_strid("entity_01") );
+        ex_ref_t *trans2d_ref = NULL;
+
+        if ( ref ) {
+            trans2d_ref = ex_entity_get_comp( ref, EX_TYPEID(ex_trans2d_t) );
+            ex_trans2d_detach_children( trans2d_ref );
         }
     }
 }
