@@ -49,11 +49,14 @@ int ex_str_split_into_array( ex_array_t *_outList, const char *_token, const cha
         if ( ex_str_nicmp( string_to_parse, _token, token_len ) == 0 ) {
             if ( sub_str_len > 0 ) {
                 char *sub_str = (char *)ex_malloc ( sub_str_len );
-                strncpy(sub_str, string_to_split, sub_str_len );
-                ex_array_append ( _outList, sub_str );
+                strncpy(sub_str, string_to_split, sub_str_len-1 );
+                sub_str[sub_str_len-1] = '\0';
+                ex_array_append ( _outList, &sub_str );
             }
             else {
-                ex_array_append ( _outList, "" );
+                char *sub_str = (char *)ex_malloc (2);
+                sub_str = "";
+                ex_array_append ( _outList, &sub_str );
             }
 
             // reset the split value (skip token,too)
@@ -73,10 +76,11 @@ int ex_str_split_into_array( ex_array_t *_outList, const char *_token, const cha
     }
 
     if ( rest_string != NULL ) {
-        int size = strlen(rest_string)+1;
-        char *sub_str = (char *)ex_malloc(size);
-        strncpy(sub_str, rest_string, size );
-        ex_array_append ( _outList, sub_str );
+        int len = strlen(rest_string);
+        char *sub_str = (char *)ex_malloc(len+1);
+        strncpy(sub_str, rest_string, len );
+        sub_str[len] = '\0';
+        ex_array_append ( _outList, &sub_str );
     }
 
     return (int)ex_array_count(_outList);

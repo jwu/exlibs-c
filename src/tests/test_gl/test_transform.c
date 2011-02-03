@@ -44,8 +44,8 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
 
     ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
     ex_vec2f_normalize(&simple->move_dir);
-    // simple->move_speed = ex_range_randf(1.0f,100.0f);
-    // simple->rot_speed = ex_range_randf(-100.0f,100.0f);
+    simple->move_speed = 0.0f;
+    simple->rot_speed = 0.0f;
 
     return ent;
 }
@@ -61,8 +61,8 @@ static void init () {
     ex_ref_t *simple_ref;
     ex_ref_t *trans2d_ref;
 
+#if 0
     ent1 = create_simple_entity("entity_01");
-
     for ( int i = 0; i < 2; ++i ) {
         ent2 = create_simple_entity("entity_02");
         ent3 = create_simple_entity("entity_03");
@@ -104,6 +104,40 @@ static void init () {
             ex_trans2d_set_local_position( trans2d_ref, 0.0f, -80.0f );
             ex_trans2d_set_local_scale( trans2d_ref, 2.0f, 2.0f );
         }
+    }
+#endif
+
+    // test translate
+    {
+        ex_ref_t *e1 = create_simple_entity("foobar");
+        ex_ref_t *e2 = create_simple_entity("foo");
+        ex_ref_t *e3 = create_simple_entity("bar");
+        ex_ref_t *e = NULL;
+
+        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,e2)->trans2d, 
+                                EX_REF_PTR(ex_entity_t,e1)->trans2d );
+
+        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,e3)->trans2d, 
+                                EX_REF_PTR(ex_entity_t,e2)->trans2d );
+
+        trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );
+        ex_trans2d_set_local_rotation ( trans2d_ref, EX_PI/4.0f );
+
+        trans2d_ref = ex_entity_get_comp( e2, EX_TYPEID(ex_trans2d_t) );
+        ex_trans2d_set_local_rotation ( trans2d_ref, -EX_PI/8.0f );
+        ex_trans2d_translate( trans2d_ref, 40.0f, 0.0f, EX_SPACE_LOCAL );
+
+        trans2d_ref = ex_entity_get_comp( e3, EX_TYPEID(ex_trans2d_t) );
+        ex_trans2d_set_local_rotation ( trans2d_ref, -EX_PI/8.0f );
+        ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_WORLD );
+        // ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_LOCAL );
+
+        // test entity get
+        trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );
+        e = ex_trans2d_find( trans2d_ref, "foo/bar" );
+        ex_assert ( e && 
+                    EX_REF_PTR(ex_object_t,EX_REF_PTR(ex_component_t,e)->owner)->name == ex_strid("bar"),
+                    "failed to find foo/bar from foobar" );
     }
 
     ex_log ("done!");

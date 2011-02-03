@@ -67,6 +67,13 @@ extern void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale );
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_trans2d_right ( ex_ref_t *_self, ex_vec2f_t *_right ); 
+extern void ex_trans2d_up ( ex_ref_t *_self, ex_vec2f_t *_up ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ); 
 extern void ex_trans2d_world_to_local_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ); 
 
@@ -78,6 +85,25 @@ extern void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y 
 extern void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ); 
 extern void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ); 
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_SPACE_LOCAL 0
+#define EX_SPACE_WORLD 1
+
+extern void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ); 
+extern void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_transform ); 
+
+extern void ex_trans2d_rotate ( ex_ref_t *_self, float _radians, int _space ); 
+extern void ex_trans2d_rotate_relative_to ( ex_ref_t *_self, float _radians, ex_ref_t *_transform ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// NOTE: the name could be foo/bar/foobar 
+// ------------------------------------------------------------------ 
+
+extern ex_ref_t *ex_trans2d_find ( ex_ref_t *_self, const char *_name ); 
 
 // ######################### 
 #ifdef __cplusplus

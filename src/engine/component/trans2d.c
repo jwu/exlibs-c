@@ -289,6 +289,34 @@ void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_trans2d_right ( ex_ref_t *_self, ex_vec2f_t *_right ) {
+    ex_angf_t ang;
+    ex_mat22f_t rot;
+
+    ex_trans2d_world_rotation ( _self, &ang );
+    ex_angf_to_rot22 ( &ang, &rot );
+    ex_vec2f_set ( _right, 1.0f, 0.0f );
+    ex_vec2f_mul_mat22f ( _right, _right, &rot );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_up ( ex_ref_t *_self, ex_vec2f_t *_up ) {
+    ex_angf_t ang;
+    ex_mat22f_t rot;
+
+    ex_trans2d_world_rotation ( _self, &ang );
+    ex_angf_to_rot22 ( &ang, &rot );
+    ex_vec2f_set ( _up, 0.0f, 1.0f );
+    ex_vec2f_mul_mat22f ( _up, _up, &rot );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ) {
     __update_matrix (_self);
     *_result = EX_REF_PTR(ex_trans2d_t,_self)->localToWorld;
@@ -334,4 +362,114 @@ void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ) {
 
     ex_vec2f_set ( &self->scale, _x, _y );
     self->dirty = true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+
+    if ( _space == EX_SPACE_LOCAL ) {
+        ex_vec2f_t v2;
+
+        ex_vec2f_set ( &v2, _x, _y );
+        ex_vec2f_add ( &self->pos, &self->pos, &v2 );
+    }
+    else if ( _space == EX_SPACE_WORLD ) {
+        ex_vec3f_t v3;
+        ex_ref_t *parent_ref = self->parent;
+        ex_trans2d_t *parent = EX_REF_PTR(ex_trans2d_t,parent_ref);
+
+        __update_matrix(parent_ref);
+
+        ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
+        ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
+        ex_vec2f_add ( &self->pos, &self->pos, (ex_vec2f_t *)(&v3) ); // NOTE: yes, we can directly cast v3 to v2.
+    }
+
+    self->dirty = true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_transform ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_vec3f_t v3;
+
+    __update_matrix(_transform);
+
+    ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
+    ex_vec3f_mul_mat33f( &v3, &v3, &self->localToWorld );
+    ex_trans2d_translate(_self, v3.x, v3.y, EX_SPACE_WORLD );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_rotate ( ex_ref_t *_self, float _radians, int _space ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_rotate_relative_to ( ex_ref_t *_self, float _radians, ex_ref_t *_transform ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_trans2d_find ( ex_ref_t *_self, const char *_name ) {
+    ex_array_t splits;
+    ex_ref_t *current;
+
+    // if this is a NULL or an empty string, just return NULL reference.
+    if ( _name == NULL || strcmp( _name, "" ) == 0 )
+        return NULL;
+
+    // split name list by "/" and recursively search them.
+    ex_array_init( &splits, EX_STRID_NULL, sizeof(char *), 8,
+                   __ex_array_alloc,
+                   __ex_array_realloc,
+                   __ex_array_dealloc );
+    ex_str_split_into_array( &splits, "/", _name );
+
+    current = _self;
+    ex_array_each( &splits, char *, text ) {
+        ex_trans2d_t *current_trans = EX_REF_PTR(ex_trans2d_t,current);
+        strid_t nameID = ex_strid(text);
+        bool found = false;
+
+        // find the name in children
+        if ( current_trans->children ) {
+            ex_array_each( current_trans->children, ex_ref_t *, child_ref ) {
+                ex_object_t *ent = EX_REF_PTR( ex_object_t, EX_REF_PTR(ex_component_t,child_ref)->owner ); 
+                if ( ent->name == nameID ) {
+                    current = child_ref;
+                    found = true;
+                    break;
+                }
+            } ex_array_each_end
+        }
+
+        // if nothing found, return NULL directly 
+        if ( !found ) {
+            current = NULL;
+            break;
+        }
+    } ex_array_each_end
+
+    // free the array
+    ex_array_each( &splits, char *, text ) {
+        ex_free(text);
+    } ex_array_each_end
+    ex_array_deinit(&splits);
+
+    return current;
 }
