@@ -20,7 +20,7 @@ extern "C" {
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "component.h"
+#include "behavior.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // struct
@@ -28,6 +28,7 @@ extern "C" {
 
 #define EX_DEBUG_SHAPE_RECT     0
 #define EX_DEBUG_SHAPE_CIRCLE   1
+#define EX_MAX_TRAIL_VERTS 16
 
 // ------------------------------------------------------------------ 
 /*! 
@@ -35,11 +36,15 @@ extern "C" {
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
+EX_DECL_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
     int shapeType;
     ex_rectf_t rect;
     ex_circlef_t circle;
-EX_DECL_CLASS_SUPER_END(ex_debug2d_t,ex_component_t)
+
+    int trail_timer;
+    int trail_idx; 
+    ex_vec2f_t trails[EX_MAX_TRAIL_VERTS];
+EX_DECL_CLASS_SUPER_END(ex_debug2d_t,ex_behavior_t)
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions

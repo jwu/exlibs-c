@@ -34,11 +34,18 @@ extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __debug2d_deinit ( ex_ref_t *_self ) {
+    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
+    ex_stop_timer(self->trail_timer);
+
     __component_deinit(_self); // parent deinint
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __debug2d_level_start ( ex_ref_t * );
+extern void __debug2d_start ( ex_ref_t * );
+extern void __debug2d_update ( ex_ref_t * );
+extern void __debug2d_post_update ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
@@ -49,9 +56,17 @@ EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
     EX_MEMBER( ex_component_t, owner, NULL )
     EX_MEMBER( ex_component_t, active, true )
 
+    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, level_start, __debug2d_level_start )
+    EX_MEMBER( ex_behavior_t, start, __debug2d_start )
+    EX_MEMBER( ex_behavior_t, update, __debug2d_update )
+    EX_MEMBER( ex_behavior_t, post_update, __debug2d_post_update )
+
     EX_MEMBER( ex_debug2d_t, shapeType, EX_DEBUG_SHAPE_RECT )
     ex_rectf_set( &(((ex_debug2d_t *)__obj__)->rect), ex_vec2f_zero, 1.0f, 1.0f );
     ex_circlef_set( &(((ex_debug2d_t *)__obj__)->circle), ex_vec2f_zero, 1.0f );
+    EX_MEMBER( ex_debug2d_t, trail_idx, 0 )
+    EX_MEMBER( ex_debug2d_t, trail_timer, -1 )
 
 EX_DEF_OBJECT_END
 
@@ -64,6 +79,7 @@ EX_SERIALIZE_BEGIN_SUPER(ex_debug2d_t,ex_component_t)
     EX_SERIALIZE( _stream, vec2f, "rect_center", &(self->rect.center) )
     EX_SERIALIZE( _stream, float, "rect_width", &(self->rect.width) )
     EX_SERIALIZE( _stream, float, "rect_height", &(self->rect.height) )
+    // TODO: you can serialize "ex_vec2f_t trails[EX_MAX_TRAIL_VERTS]"
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
@@ -104,6 +120,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 
     static const bool show_cood = true;
     static const bool show_parentlink = true;
+    static const bool show_trails = true;
 
     //
     if ( self->shapeType == EX_DEBUG_SHAPE_RECT ) {
@@ -123,23 +140,10 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         ex_trans2d_world_rotation( ent->trans2d, &worldRot );
 
         {
-#if 1
             glMatrixMode( GL_MODELVIEW );
             glLoadIdentity();
             glTranslatef(self->rect.center.x + worldPos.x, self->rect.center.y + worldPos.y, 0.0f);
             glRotatef(ex_angf_to_degrees_360(&worldRot), 0.0f, 0.0f, 1.0f);
-#else
-            glMatrixMode( GL_MODELVIEW );
-            ex_mat33f_t r;
-            ex_trans2d_local_to_world_mat33f(ent->trans2d,&r);
-            float m[16] = {
-                r.m00, r.m01, r.m02, 0.0f,
-                r.m10, r.m11, r.m12, 0.0f,
-                0.0f,  0.0f,  1.0f,  0.0f,
-                r.m20, r.m21, r.m22, 1.0f,
-            };
-            glLoadMatrixf(m);
-#endif
         }
 
         // draw non-scale geometry first
@@ -177,11 +181,32 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
             }
         }
 
+        //
+        if ( show_trails ) {
+            ex_vec2f_t my_worldpos;
+            ex_trans2d_world_position( ent->trans2d, &my_worldpos );
+
+            glMatrixMode( GL_MODELVIEW );
+            glLoadIdentity();
+            glBegin(GL_LINE_STRIP); {
+                int cnt,i;
+
+                glColor4f( 1.0f, 0.5f, 1.0f, 1.0f );
+
+                cnt = 0;
+                i = (self->trail_idx+1)%EX_MAX_TRAIL_VERTS;
+                while ( cnt < EX_MAX_TRAIL_VERTS ) {
+                    ex_vec2f_t v2 = self->trails[i];
+                    glVertex3f( v2.x, v2.y, 0.0f );
+
+                    i = (i+1)%EX_MAX_TRAIL_VERTS; 
+                    ++cnt;
+                }
+            } glEnd();
+        }
+
         // draw scaled geometry
         {
-#if 0
-            glScalef(worldScale.x, worldScale.y, 1.0f);
-#else
             glMatrixMode( GL_MODELVIEW );
             ex_mat33f_t r;
             ex_trans2d_local_to_world_mat33f(ent->trans2d,&r);
@@ -192,7 +217,6 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
                 r.m20, r.m21, r.m22, 1.0f,
             };
             glLoadMatrixf(m);
-#endif
 
             glVertexPointer ( 2, GL_FLOAT, 0, verts );
             glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -200,4 +224,63 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         }
 
     }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int32 __add_trail ( uint32 _interval, void *_params ) {
+    ex_ref_t *dbg2d_ref = *((ex_ref_t **)_params); 
+    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,dbg2d_ref);
+    ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_vec2f_t worldPos;
+
+    ex_trans2d_world_position( ent->trans2d, &worldPos );
+    self->trail_idx = (self->trail_idx+1) % EX_MAX_TRAIL_VERTS; 
+    self->trails[self->trail_idx] = worldPos;
+
+    return _interval;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __debug2d_level_start ( ex_ref_t *_self ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __debug2d_start ( ex_ref_t *_self ) {
+    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
+    ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_vec2f_t worldPos;
+
+    ex_trans2d_world_position( ent->trans2d, &worldPos );
+    for ( int i = 0; i < EX_MAX_TRAIL_VERTS; ++i )
+        self->trails[i] = worldPos;
+
+    self->trail_timer = ex_add_timer( __add_trail, 
+                                      &_self, 
+                                      sizeof(ex_ref_t *), 
+                                      ex_timespan_from(0,50), 
+                                      EX_TIMESPAN_INFINITY );
+    ex_start_timer(self->trail_timer);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __debug2d_update ( ex_ref_t *_self ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __debug2d_post_update ( ex_ref_t *_self ) {
 }

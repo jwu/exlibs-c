@@ -39,6 +39,7 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_ref_t   *parent; // ex_trans2d_t *
     ex_array_t *children; // ex_trans2d_t * [] 
 
+    ex_mutex_t *dirty_mutex; // NOTE: it is possible user use timer change things
     bool dirty;
     ex_mat33f_t localToWorld;
     ex_mat33f_t worldToLocal; // TODO: I do remember Unreal have an easy worldToLocal algorithm 

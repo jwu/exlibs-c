@@ -260,7 +260,12 @@ bool ex_remove_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_start_timer ( int _id ) {
-    timer_t *t = (timer_t *)ex_pool_get ( &__timers, _id );
+    timer_t *t;
+
+    if ( _id == EX_INVALID_TIMER_ID )
+        return;
+
+    t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = ex_timer_get_ticks();
@@ -276,7 +281,12 @@ void ex_start_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_stop_timer ( int _id ) {
-    timer_t *t = (timer_t *)ex_pool_get ( &__timers, _id );
+    timer_t *t;
+
+    if ( _id == EX_INVALID_TIMER_ID )
+        return;
+
+    t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = -1;
@@ -290,7 +300,12 @@ void ex_stop_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_pause_timer ( int _id ) {
-    timer_t *t = (timer_t *)ex_pool_get ( &__timers, _id );
+    timer_t *t;
+
+    if ( _id == EX_INVALID_TIMER_ID )
+        return;
+    
+    t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             uint32 now = ex_timer_get_ticks();
@@ -308,7 +323,12 @@ void ex_pause_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_resume_timer ( int _id ) {
-    timer_t *t = (timer_t *)ex_pool_get ( &__timers, _id );
+    timer_t *t;
+
+    if ( _id == EX_INVALID_TIMER_ID )
+        return;
+
+    t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             uint32 now = ex_timer_get_ticks();
@@ -323,7 +343,12 @@ void ex_resume_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_reset_timer ( int _id ) {
-    timer_t *t = (timer_t *)ex_pool_get ( &__timers, _id );
+    timer_t *t;
+
+    if ( _id == EX_INVALID_TIMER_ID )
+        return;
+
+    t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = ex_timer_get_ticks();

@@ -23,6 +23,8 @@ extern "C" {
 #define EX_TIMER_SLICE      10
 #define EX_TIMER_RESOLUTION 10
 
+#define EX_INVALID_TIMER_ID -1
+
 // ------------------------------------------------------------------ 
 // Desc: return the new interval, if 0 the timer will be removed. 
 // ------------------------------------------------------------------ 
