@@ -85,6 +85,9 @@ static void update ( ex_ref_t *_self ) {
                     ex_trans2d_rotate_around ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, 
                                                new_ang.rad, 
                                                &wd_pos );
+                    ex_vec2f_set( &wd_pos, 0.0f, 1.0f );
+                    ex_trans2d_set_up( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, 
+                                       &wd_pos );
                 }
             }
             break;

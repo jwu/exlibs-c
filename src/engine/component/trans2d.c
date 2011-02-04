@@ -121,6 +121,20 @@ static void __add_child ( ex_ref_t *_self, ex_ref_t *_child ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __matrix_dirty ( ex_ref_t *_self ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    self->dirty = true;
+
+    ex_array_each ( self->children, ex_ref_t *, ref ) {
+        ex_trans2d_t *child = EX_REF_PTR(ex_trans2d_t,ref);
+        child->dirty = true;
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __update_matrix ( ex_ref_t *_self ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
     ex_trans2d_t *parent = self->parent ? EX_REF_PTR(ex_trans2d_t,self->parent) : NULL;
@@ -198,7 +212,7 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
         ex_vec2f_set( &self->pos, pos3.x, pos3.y );
     }
 
-    self->dirty = true;
+    __matrix_dirty(_self);
     self->parent = _parent;
 }
 
@@ -217,7 +231,7 @@ void ex_trans2d_detach_children ( ex_ref_t *_self ) {
         ex_trans2d_world_position(ref,&child->pos);
         ex_trans2d_world_scale(ref,&child->scale);
         ex_trans2d_world_rotation(ref,&child->ang);
-        child->dirty = true;
+        __matrix_dirty(ref);
 
         //
         EX_REF_PTR( ex_trans2d_t, ref )->parent = NULL;
@@ -347,7 +361,7 @@ void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 
     ex_vec2f_set ( &self->pos, _x, _y );
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -358,7 +372,7 @@ void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ) {
 	ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 	
     ex_angf_set_by_radians ( &self->ang, _radians );
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -369,7 +383,7 @@ void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 
     ex_vec2f_set ( &self->scale, _x, _y );
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -394,7 +408,7 @@ void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
         ex_vec2f_set ( &self->pos, _x, _y );
     }
 
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -416,7 +430,7 @@ void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
         ex_angf_set_by_radians( &self->ang, _radians );
     }
 
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -438,7 +452,39 @@ void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ) {
         ex_vec2f_set ( &self->scale, _x, _y );
     }
 
-    self->dirty = true;
+    __matrix_dirty(_self);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_right ( ex_ref_t *_self, const ex_vec2f_t *_right ) {
+    ex_vec2f_t w_right;
+    ex_vec2f_set( &w_right, 1.0f, 0.0f );
+    float sin_theta = ex_vec2f_cross( &w_right, _right );
+    float cos_theta = ex_vec2f_dot( &w_right, _right );
+    float rad = atanf( sin_theta/cos_theta );
+
+    if ( ex_signf(cos_theta) < 0.0f )
+        rad += EX_PI;
+    ex_trans2d_set_world_rotation( _self, rad );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_up ( ex_ref_t *_self, const ex_vec2f_t *_up ) {
+    ex_vec2f_t w_up;
+    ex_vec2f_set( &w_up, 0.0f, 1.0f );
+    float sin_theta = ex_vec2f_cross( &w_up, _up );
+    float cos_theta = ex_vec2f_dot( &w_up, _up );
+    float rad = atanf( sin_theta/cos_theta );
+
+    if ( ex_signf(cos_theta) < 0.0f )
+        rad += EX_PI;
+    ex_trans2d_set_world_rotation( _self, rad );
 }
 
 // ------------------------------------------------------------------ 
@@ -474,7 +520,7 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
         }
     }
 
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -502,7 +548,7 @@ void ex_trans2d_rotate ( ex_ref_t *_self, float _radians ) {
 
     ex_angf_set_by_radians( &new_ang, _radians );
     ex_angf_add( &self->ang, &self->ang, &new_ang );
-    self->dirty = true;
+    __matrix_dirty(_self);
 }
 
 // ------------------------------------------------------------------ 

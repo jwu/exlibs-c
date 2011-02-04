@@ -98,11 +98,31 @@ extern void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y );
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_trans2d_set_right ( ex_ref_t *_self, const ex_vec2f_t *_right ); 
+extern void ex_trans2d_set_up ( ex_ref_t *_self, const ex_vec2f_t *_up ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_trans2d_transform_point ( ex_ref_t *_self, const ex_vec2f_t *_pos, ex_vec2f_t *_oPos ); 
+extern void ex_trans2d_inverse_transform_point ( ex_ref_t *_self, const ex_vec2f_t *_pos, ex_vec2f_t *_oPos ); 
+
+extern void ex_trans2d_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir, ex_vec2f_t *_oDir ); 
+extern void ex_trans2d_inverse_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir, ex_vec2f_t *_oDir ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
 #define EX_SPACE_LOCAL 0
 #define EX_SPACE_WORLD 1
+// ------------------------------------------------------------------ 
 
 extern void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ); 
 extern void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_transform ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
 extern void ex_trans2d_rotate ( ex_ref_t *_self, float _radians ); 
 extern void ex_trans2d_rotate_around ( ex_ref_t *_self, float _radians, const ex_vec2f_t *_worldpos ); 
