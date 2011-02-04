@@ -167,6 +167,26 @@ static inline void ex_mat33f_get_rotation ( ex_angf_t *_r, const ex_mat33f_t *_m
 }
 
 // ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_mat33f_set_rotation ( ex_mat33f_t *_m, const ex_angf_t *_a ) { 
+    float cos_theta = cosf( _a->rad );
+    float sin_theta = sinf( _a->rad );
+
+    _m->m00 =  cos_theta, _m->m01 = sin_theta; 
+    _m->m10 = -sin_theta, _m->m11 = cos_theta; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline void ex_mat33f_set_translate ( ex_mat33f_t *_m, const ex_vec2f_t *_v ) { 
+    _m->m20 = _v->x; _m->m21 = _v->y; _m->m22 = 1.0f;
+}
+
+// ------------------------------------------------------------------ 
 /*! 
  @fn static inline void ex_mat33f_row ( ex_vec3f_t *_r, const ex_mat33f_t *_m, uint _row )
  @retval _r the result vector

@@ -376,6 +376,75 @@ void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_ref_t *parent_ref = self->parent;
+
+    if ( parent_ref ) {
+        ex_vec3f_t v3;
+        ex_trans2d_t *parent = EX_REF_PTR(ex_trans2d_t,parent_ref);
+
+        __update_matrix(parent_ref);
+
+        ex_vec3f_set ( &v3, _x, _y, 1.0f );
+        ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
+        ex_vec2f_set ( &self->pos, v3.x, v3.y );
+    }
+    else {
+        ex_vec2f_set ( &self->pos, _x, _y );
+    }
+
+    self->dirty = true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_ref_t *parent_ref = self->parent;
+
+    if ( parent_ref ) {
+        ex_angf_t ang,parent_ang;
+
+        ex_angf_set_by_radians( &ang, _radians );
+        ex_trans2d_world_rotation( parent_ref, &parent_ang );
+        ex_angf_sub( &self->ang, &ang, &parent_ang );
+    }
+    else {
+        ex_angf_set_by_radians( &self->ang, _radians );
+    }
+
+    self->dirty = true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_ref_t *parent_ref = self->parent;
+
+    if ( parent_ref ) {
+        ex_vec2f_t scale,parent_scale;
+
+        ex_vec2f_set ( &scale, _x, _y );
+        ex_trans2d_world_scale( parent_ref, &parent_scale );
+        ex_vec2f_div( &self->scale, &scale, &parent_scale );
+    }
+    else {
+        ex_vec2f_set ( &self->scale, _x, _y );
+    }
+
+    self->dirty = true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 
@@ -427,41 +496,12 @@ void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_rotate ( ex_ref_t *_self, float _radians, int _space ) {
+void ex_trans2d_rotate ( ex_ref_t *_self, float _radians ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
     ex_angf_t new_ang;
 
-    if ( _space == EX_SPACE_LOCAL ) {
-        ex_angf_set_by_radians( &new_ang, _radians );
-        ex_angf_add( &self->ang, &self->ang, &new_ang );
-    }
-    else if ( _space == EX_SPACE_WORLD ) {
-        ex_vec2f_t wpos;
-        ex_mat22f_t rot;
-        ex_ref_t *parent_ref;
-
-        __update_matrix(_self);
-        ex_angf_set_by_radians( &new_ang, _radians );
-        ex_angf_to_rot22( &new_ang, &rot );
-        ex_trans2d_world_position( _self, &wpos );
-        ex_vec2f_mul_mat22f( &wpos, &wpos, &rot );
-
-        parent_ref = self->parent;
-        if ( parent_ref ) {
-            ex_vec3f_t wpos_v3;
-            ex_trans2d_t *parent = EX_REF_PTR(ex_trans2d_t,parent_ref);
-
-            __update_matrix(parent_ref);
-
-            ex_vec3f_set( &wpos_v3, wpos.x, wpos.y, 1.0f );
-            ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &parent->worldToLocal );
-            ex_vec2f_set ( &self->pos, wpos_v3.x, wpos_v3.y );
-        }
-        else {
-            ex_vec2f_set ( &self->pos, wpos.x, wpos.y );
-        }
-    }
-
+    ex_angf_set_by_radians( &new_ang, _radians );
+    ex_angf_add( &self->ang, &self->ang, &new_ang );
     self->dirty = true;
 }
 
@@ -469,7 +509,81 @@ void ex_trans2d_rotate ( ex_ref_t *_self, float _radians, int _space ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_rotate_relative_to ( ex_ref_t *_self, float _radians, ex_ref_t *_transform ) {
+void ex_trans2d_rotate_around ( ex_ref_t *_self, float _radians, const ex_vec2f_t *_worldpos ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_angf_t rot_ang;
+    ex_mat33f_t m3;
+    ex_vec3f_t wpos_v3;
+    ex_vec2f_t wpos_v2;
+
+    // TODO: a simple way
+    // TODO: I do remember Unreal have an easy rotate around algorithm, that only multiply order difference. 
+#if 0
+    ex_mat22f_t rot;
+    ex_angf_set_by_radians( &rot_ang, _radians );
+    ex_angf_to_rot22 ( &rot_ang, &rot );
+    ex_mat33f_from_TRS( &m3, _worldpos, &rot_ang, &ex_vec2f_one );
+
+    ex_trans2d_world_position( _self, &wpos_v2 );
+    ex_vec3f_set( &wpos_v3, wpos_v2.x, wpos_v2.y, 1.0f );
+    ex_mat33f_mul_vec3f( &wpos_v3, &m3, &wpos_v3 );
+    // ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+#else
+    ex_angf_set_by_radians( &rot_ang, _radians );
+
+    ex_trans2d_world_position( _self, &wpos_v2 );
+    ex_vec3f_set( &wpos_v3, wpos_v2.x, wpos_v2.y, 1.0f );
+
+    m3 = ex_mat33f_identity;
+    ex_vec2f_get_neg ( &wpos_v2, _worldpos );
+    ex_mat33f_set_translate( &m3, &wpos_v2 );
+    ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+
+    m3 = ex_mat33f_identity;
+    ex_mat33f_set_rotation( &m3, &rot_ang );
+    ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+
+    m3 = ex_mat33f_identity;
+    ex_mat33f_set_translate( &m3, _worldpos );
+    ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+
+    // NOTE: this will also change the orientation.
+    ex_angf_add( &self->ang, &self->ang, &rot_ang );
+#endif
+
+    ex_trans2d_set_world_position( _self, wpos_v3.x, wpos_v3.y );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_rotate_around_fix_orient ( ex_ref_t *_self, float _radians, const ex_vec2f_t *_worldpos ) {
+    ex_angf_t rot_ang;
+    ex_mat33f_t m3;
+    ex_vec3f_t wpos_v3;
+    ex_vec2f_t wpos_v2;
+
+    // the only difference between this and rotate around is, we don't change the self-ang
+    ex_angf_set_by_radians( &rot_ang, _radians );
+
+    ex_trans2d_world_position( _self, &wpos_v2 );
+    ex_vec3f_set( &wpos_v3, wpos_v2.x, wpos_v2.y, 1.0f );
+
+    m3 = ex_mat33f_identity;
+    ex_vec2f_get_neg ( &wpos_v2, _worldpos );
+    ex_mat33f_set_translate( &m3, &wpos_v2 );
+    ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+
+    m3 = ex_mat33f_identity;
+    ex_mat33f_set_rotation( &m3, &rot_ang );
+    ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+
+    m3 = ex_mat33f_identity;
+    ex_mat33f_set_translate( &m3, _worldpos );
+    ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
+
+    ex_trans2d_set_world_position( _self, wpos_v3.x, wpos_v3.y );
 }
 
 // ------------------------------------------------------------------ 

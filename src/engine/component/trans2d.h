@@ -42,7 +42,7 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_mutex_t *dirty_mutex; // NOTE: it is possible user use timer change things
     bool dirty;
     ex_mat33f_t localToWorld;
-    ex_mat33f_t worldToLocal; // TODO: I do remember Unreal have an easy worldToLocal algorithm 
+    ex_mat33f_t worldToLocal;
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,14 +90,23 @@ extern void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y );
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ); 
+extern void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ); 
+extern void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 #define EX_SPACE_LOCAL 0
 #define EX_SPACE_WORLD 1
 
 extern void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ); 
 extern void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_transform ); 
 
-extern void ex_trans2d_rotate ( ex_ref_t *_self, float _radians, int _space ); 
-extern void ex_trans2d_rotate_relative_to ( ex_ref_t *_self, float _radians, ex_ref_t *_transform ); 
+extern void ex_trans2d_rotate ( ex_ref_t *_self, float _radians ); 
+extern void ex_trans2d_rotate_around ( ex_ref_t *_self, float _radians, const ex_vec2f_t *_worldpos ); 
+extern void ex_trans2d_rotate_around_fix_orient ( ex_ref_t *_self, float _radians, const ex_vec2f_t *_worldpos ); 
 
 // ------------------------------------------------------------------ 
 // Desc: 

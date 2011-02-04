@@ -75,13 +75,15 @@ static void init () {
 
         simple_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_simple_t) );
         EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-        EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 1.0f;
+        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 1.0f;
+        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_SELF;
         trans2d_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_trans2d_t) );
         // ex_trans2d_set_local_scale( trans2d_ref, 0.5f, 0.5f );
 
         simple_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_simple_t) );
         EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
         EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 2.0f;
+        EX_REF_PTR( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_PARENT;
         trans2d_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_trans2d_t) );
         // ex_trans2d_set_local_scale( trans2d_ref, 1.5f, 1.5f );
         if ( i == 0 ) {
@@ -93,7 +95,8 @@ static void init () {
 
         simple_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_simple_t) );
         EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 3.0f;
+        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = -3.0f;
+        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_PARENT;
         trans2d_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_trans2d_t) );
         // ex_trans2d_set_local_scale( trans2d_ref, 2.0f, 2.0f );
         if ( i == 0 ) {

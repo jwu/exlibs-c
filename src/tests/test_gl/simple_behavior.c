@@ -64,7 +64,31 @@ static void update ( ex_ref_t *_self ) {
 
         // process rotate
         ex_angf_set_by_radians( &new_ang, self->rot_speed * ex_dt() );
-        ex_trans2d_rotate ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, new_ang.rad, EX_SPACE_WORLD );
+        switch ( self->rot_around ) {
+        case ROT_AROUND_SELF:
+            ex_trans2d_rotate ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, new_ang.rad );
+            break;
+
+        case ROT_AROUND_WORLD:
+            ex_trans2d_rotate_around ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, 
+                                       new_ang.rad, 
+                                       &ex_vec2f_zero );
+            break;
+
+        case ROT_AROUND_PARENT:
+            {
+                ex_ref_t *parent = EX_REF_PTR(ex_trans2d_t,EX_REF_PTR(ex_entity_t,comp->owner)->trans2d)->parent; 
+                ex_vec2f_t wd_pos;
+
+                if ( parent ) {
+                    ex_trans2d_world_position( parent, &wd_pos );
+                    ex_trans2d_rotate_around ( EX_REF_PTR(ex_entity_t,comp->owner)->trans2d, 
+                                               new_ang.rad, 
+                                               &wd_pos );
+                }
+            }
+            break;
+        }
     }
 }
 
@@ -96,6 +120,7 @@ EX_DEF_OBJECT_BEGIN( ex_simple_t,
     EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_zero )
     EX_MEMBER( ex_simple_t, move_speed, 1.0f )
     EX_MEMBER( ex_simple_t, rot_speed, 1.0f )
+    EX_MEMBER( ex_simple_t, rot_around, ROT_AROUND_PARENT )
 
 EX_DEF_OBJECT_END
 
