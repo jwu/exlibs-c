@@ -21,44 +21,59 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// enhance 
+// core
 ///////////////////////////////////////////////////////////////////////////////
 
+extern int ex_lua_init ();
+extern void ex_lua_deinit ();
+extern bool ex_lua_initialized ();
+
+///////////////////////////////////////////////////////////////////////////////
+// lua api extend
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // global_module get the _key in global, check if it is a table, 
-// if not, it pop-up the key and create a new table, set the global _key field 
-// leave it at the top of the stack
+// if not, it pop-up the key and create a new table, set the global 
+// _key field leave it at the top of the stack.
+// [-0, +1, -]
+// ------------------------------------------------------------------ 
+
 extern int ex_lua_global_module ( lua_State *_l, const char *_key );
 
-// table actually do the same thing as global_module, instead it operate the table at _idx
+// ------------------------------------------------------------------ 
+// Desc: 
+// module actually do the same thing as global_module, 
+// instead it operate the table at _idx
+// [-0, +1, -]
+// ------------------------------------------------------------------ 
+
 extern int ex_lua_module ( lua_State *_l, int _idx, const char *_key );
 
-// usage: ex_lua_parse ( ex_lua_state(), luaL_loadfile(ex_lua_state(), filename) );
-extern int ex_lua_parse ( lua_State *_l, int status ); 
-extern void ex_lua_check ( lua_State *_l, int status );
+// ------------------------------------------------------------------ 
+// Desc: 
+// load the module from file in specific directory
+// NOTE: base_path must end with "/"
+// ------------------------------------------------------------------ 
 
-///////////////////////////////////////////////////////////////////////////////
-// engine level
-///////////////////////////////////////////////////////////////////////////////
+extern int ex_lua_load_modules ( lua_State *_l, const char *_base_path );
+extern int ex_lua_load_module ( lua_State *_l, const char *_base_path, const char *_module_path );
 
-extern void ex_lua_init ();
-extern void ex_lua_deinit ();
-extern lua_State *ex_lua_state ();
-
-// the load module will get base_path as the base directory for searching modules.
-// if the base directory is NULL, it will to the current-working path for searching.
-extern int ex_lua_load_module_byfile ( lua_State *_l, const wchar_t *_fullpath );
-extern int ex_lua_load_module ( lua_State *_l, const char *_module );
+#if 0
 extern int ex_lua_get_module ( lua_State *_l, const char *_moduleName );
 extern int ex_lua_get_function ( lua_State *_l, const char *_moduleName, const char *_funcName );
 
 // wrap helpers
 // Usage: { "__gc", ex_lua__gc },
 extern int ex_lua__gc ( lua_State *_l );
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // DEBUG:
 ///////////////////////////////////////////////////////////////////////////////
 
+extern void ex_lua_check ( lua_State *_l, int status );
 extern void ex_lua_dump_stack ( lua_State *_l );
 
 // ######################### 

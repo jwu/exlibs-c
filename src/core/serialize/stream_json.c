@@ -11,6 +11,12 @@
 
 #include "exsdk.h"
 
+// yajl
+#include <yajl/yajl_version.h>
+#include <yajl/yajl_common.h>
+#include <yajl/yajl_parse.h>
+#include <yajl/yajl_gen.h>
+
 ///////////////////////////////////////////////////////////////////////////////
 // static defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -904,7 +910,8 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
 
             // doing a next jump manually 
             ++__idx__;
-            __node__ = __node__->next;
+            __node__ = __node_next__;
+            __node_next__ = __node__->next;
             ex_assert_return( __node__, /*dummy*/, "value can't not be NULL if we have key!" );
             _child = *((__json_node_t **) ( __node__->value ));
 
@@ -1845,7 +1852,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     allocFuncs.ctx = (void *) &memCtx;
 
     //
-    file = ex_fopen(_fileName,"r");
+    file = ex_fopen_r(_fileName);
     if ( file == NULL ) // failed to open the file.
         return NULL;
     fileData = (unsigned char *) ex_malloc(bufSize);
@@ -1854,7 +1861,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     //
     done = 0;
 	while (!done) {
-        rd = ex_fread( file, fileData, 1, bufSize );
+        rd = ex_fread( file, fileData, bufSize );
         if (rd == -1) // read error.
             break;
 

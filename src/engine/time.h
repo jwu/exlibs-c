@@ -24,32 +24,32 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_time (); // time in seconds since the engine start (affect by time-scale)
-float ex_worldtime (); // time in seconds since the world has been loaded
-float ex_realtime (); // time in seconds since the engine start (not affect by time-scale)
+extern float ex_time (); // time in seconds since the engine start (affect by time-scale)
+extern float ex_worldtime (); // time in seconds since the world has been loaded
+extern float ex_realtime (); // time in seconds since the engine start (not affect by time-scale)
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_dt (); // the time in seconds it took to complete the last frame.
-float ex_dt_physics ();
+extern float ex_dt (); // the time in seconds it took to complete the last frame.
+extern float ex_dt_physics ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // NOTE: some game write code like yield waitForSeconds( 10.0f * timeScale )
 // ------------------------------------------------------------------ 
 
-float ex_time_scale ();
-void ex_set_time_scale ( float _scale );
-void ex_pause ();
-void ex_resume ();
+extern float ex_time_scale ();
+extern void ex_set_time_scale ( float _scale );
+extern void ex_pause ();
+extern void ex_resume ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_fps ();
+extern float ex_fps ();
 
 // ######################### 
 #ifdef __cplusplus

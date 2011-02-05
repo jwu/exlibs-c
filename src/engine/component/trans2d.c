@@ -491,6 +491,66 @@ void ex_trans2d_set_up ( ex_ref_t *_self, const ex_vec2f_t *_up ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_trans2d_transform_point ( ex_ref_t *_self, const ex_vec2f_t *_pos, ex_vec2f_t *_oPos ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_vec3f_t v3;
+
+    __update_matrix(_self);
+
+    ex_vec3f_set ( &v3, _pos->x, _pos->y, 1.0f );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->localToWorld );
+    ex_vec2f_set ( _oPos, v3.x, v3.y );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_inverse_transform_point ( ex_ref_t *_self, const ex_vec2f_t *_pos, ex_vec2f_t *_oPos ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_vec3f_t v3;
+
+    __update_matrix(_self);
+
+    ex_vec3f_set ( &v3, _pos->x, _pos->y, 1.0f );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->worldToLocal );
+    ex_vec2f_set ( _oPos, v3.x, v3.y );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir, ex_vec2f_t *_oDir ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_vec3f_t v3;
+
+    __update_matrix(_self);
+
+    ex_vec3f_set ( &v3, _dir->x, _dir->y, 0.0f );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->localToWorld );
+    ex_vec2f_set ( _oDir, v3.x, v3.y );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_inverse_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir, ex_vec2f_t *_oDir ) {
+    ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
+    ex_vec3f_t v3;
+
+    __update_matrix(_self);
+
+    ex_vec3f_set ( &v3, _dir->x, _dir->y, 0.0f );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->worldToLocal );
+    ex_vec2f_set ( _oDir, v3.x, v3.y );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
     ex_trans2d_t *self = EX_REF_PTR(ex_trans2d_t,_self);
 

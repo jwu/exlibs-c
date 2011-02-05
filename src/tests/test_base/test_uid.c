@@ -20,17 +20,13 @@
 // ------------------------------------------------------------------ 
 
 void test_uid () {
-    static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
     ex_text_file_t *txtFile;
-    char path[1024];
     ex_string_t *tmp;
     ex_hashmap_t *map;
     ex_uid_t uid, last_uid;
     size_t idx;
 
-    strncpy ( path, media_file, 1024 );
-    strcat ( path, "uid_test.txt" );
-    txtFile = ex_text_fopen(path,false);
+    txtFile = ex_text_fopen( "misc/uid_test.txt", false );
 
     map = ex_hashset(uint64,2048);
     tmp = ex_string("");

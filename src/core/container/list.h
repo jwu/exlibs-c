@@ -110,6 +110,7 @@ extern "C" {
 
 #define ex_list_continue \
     { \
+        ++__idx__; \
         __node__ = __node_next__; \
         continue; \
     }

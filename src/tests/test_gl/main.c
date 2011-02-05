@@ -31,13 +31,6 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-#if (EX_PLATFORM == EX_WIN32)
-    static const char *__media_file = "e:/project/dev/exsdk/res/";
-#else
-    static const char *__media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
-#endif
-#define maxPATH 256
-
 // system
 // DISABLE { 
 // static int paused = 0;
@@ -65,7 +58,6 @@ game_t g_game = {
 // ------------------------------------------------------------------ 
 
 static void save_world () {
-    char path[maxPATH];
     ex_stream_t *stream;
 
     if ( g_world == NULL )
@@ -74,8 +66,12 @@ static void save_world () {
     ex_log ("save world simple_world.json...");
     stream = ex_create_json_write_stream();
     ex_world_save( g_world, stream );
-    strncpy ( path, __media_file, maxPATH );
-    stream->save_to_file( stream, strcat(path, "simple_world.json") );
+
+    if ( ex_fsys_dir_exists("world") == false )
+        ex_fsys_mkdir("world");
+    if ( stream->save_to_file( stream, "world/simple_world.json" ) != 0 ) 
+        ex_log("failed to save world world/simple_world.json");
+
     ex_destroy_json_stream((ex_stream_json_t *)stream);
     ex_log ("simple_world.json saved!");
 }
@@ -85,7 +81,6 @@ static void save_world () {
 // ------------------------------------------------------------------ 
 
 static void load_world () {
-    char path[maxPATH];
     ex_stream_t *stream;
 
     if ( g_world == NULL )
@@ -98,8 +93,7 @@ static void load_world () {
     ex_destroy_object_immediately(g_world, true);
 
     ex_log ("loading world simple_world.json...");
-    strncpy ( path, __media_file, maxPATH );
-    stream = ex_create_json_read_stream( strcat(path, "simple_world.json") );
+    stream = ex_create_json_read_stream( "world/simple_world.json" );
 
     g_world = ex_world_load(stream);
     EX_REF_PTR(ex_object_t,g_world)->init(g_world);
@@ -117,6 +111,7 @@ extern void test_transform ();
 // ------------------------------------------------------------------ 
 
 static void initGame () {
+
     // create test world
     // NOTE: choose your game { 
     // simple_world();
@@ -387,17 +382,29 @@ static void exit_fn () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern const char *exsdk_dev_path;
 // ------------------------------------------------------------------ 
 
 int main( int argc, const char *argv[] ) {
+    char media_path[1024];
+
     printf ("================\n");
     printf ("start gl testing...\n");
     printf ("================\n");
 
     // init
     if ( ex_core_init() != -1 ) {
+
         // register exit function
         atexit(exit_fn);
+
+        // setup the fsys path
+        strncpy ( media_path, exsdk_dev_path, 1024 );
+        strcat ( media_path, "res/test_gl/" );
+        if ( ex_fsys_set_write_dir(media_path) == 0 )
+            ex_log("set write dir dir: %s", media_path );
+        if ( ex_fsys_mount( media_path, "/", true ) == 0 )
+            ex_log("mount dir: %s", media_path );
 
         // init graphics
         createWindow ( argc, argv );

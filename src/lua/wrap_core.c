@@ -35,10 +35,9 @@ static const luaL_Reg functions[] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int luaopen_core ( lua_State *_l )
-{
+int luaopen_core ( lua_State *_l ) {
     // we create global ex table if it not exists.
-    lua::global_module ( lua::state(), "ex" );
+    ex_lua_global_module ( lua::state(), "ex" );
     luaL_register( _l, 0, functions );
     return 0;
 }

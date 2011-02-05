@@ -12,89 +12,93 @@
 #include "exsdk.h"
 #include "lua_inc.h"
 
+// lua
+#include <lua-5.1.4/include/lua.h>
+#include <lua-5.1.4/include/lauxlib.h>
+#include <lua-5.1.4/include/lualib.h>
+
+///////////////////////////////////////////////////////////////////////////////
+// quick reference
+///////////////////////////////////////////////////////////////////////////////
+
+/**
+
+-------------------------------------------
+The index of the stack:
+-------------------------------------------
+
+ Top <--- current
+        | el(n)     | idx: -1
+        | el(n-1)   | idx: -2
+        | el(n-2)   | idx: -3
+        | ......... | ...
+        | ......... | ...
+        | ......... | ...
+        | el(2)     | idx: 2
+ Bottom | el(1)     | idx: 1
+
+ #define lua_pop(L,n) lua_settop(L, -(n) - 1)
+ so lua_pop(L,1) means lua_settop(L,-2) which will set current to -2 ( aka pop the -1 ) 
+
+-------------------------------------------
+Example:
+-------------------------------------------
+
+ int main (void) {
+     lua_State *L = luaL_newstate();
+
+                                 // bottome <----------------------------> top
+                                 //  1   | 2  | 3    | 4       | 5    | 6   |
+                                 // -----+----+------+---------+------+-----|
+     lua_pushboolean(L, 1);      // true |    |      |         |      |     |                    
+     lua_pushnumber(L, 10);      // true | 10 |      |         |      |     |      
+     lua_pushnil(L);             // true | 10 | nil  |         |      |     |         
+     lua_pushstring(L, "hello"); // true | 10 | nil  | ’hello’ |      |     |            
+     lua_pushvalue(L, -4);       // true | 10 | nil  | ’hello’ | true |     |           
+     lua_replace(L, 3);          // true | 10 | true | ’hello’ |      |     |              
+     lua_settop(L, 6);           // true | 10 | true | ’hello’ | nil  | nil |           
+     lua_remove(L, -3);          // true | 10 | true |  nil    | nil  |     |            
+     lua_settop(L, -5);          // true |    |      |         |      |     |          
+                                 // -----+----+------+---------+------+-----+
+     lua_close(L); 
+
+     return 0;
+ }
+
+-------------------------------------------
+API examplaint:
+-------------------------------------------
+
+Here we list all functions and types from the C API in alphabetical order. 
+Each function has an indicator like this:
+
+ [-o, +p, x]
+
+The first field, o, is how many elements the function pops from the stack. 
+
+The second field, p, is how many elements the function pushes onto the stack. 
+(Any function always pushes its results after popping its arguments.) 
+A field in the form x|y means the function can push (or pop) x or y elements, 
+depending on the situation; an interrogation mark '?' means that we cannot know 
+how many elements the function pops/pushes by looking only at its arguments 
+(e.g., they may depend on what is on the stack). 
+
+The third field, x, tells whether the function may throw errors: 
+'-' means the function never throws any error; 
+'m' means the function may throw an error only due to not enough memory; 
+'e' means the function may throw other kinds of errors; 
+'v' means the function may throw an error on purpose
+
+ */
+
 ///////////////////////////////////////////////////////////////////////////////
 // internal defines
 ///////////////////////////////////////////////////////////////////////////////
 
 static lua_State *__L = NULL;
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_lua_check ( lua_State *_l, int _status ) {
-    if ( _status != 0 ) {
-        lua_getglobal(_l, "_ALERT");
-        if ( lua_isfunction(_l, -1) ) {
-            lua_insert(_l, -2);
-            lua_call(_l, 1, 0);
-        }
-        else {  /* no _ALERT function; print it on stderr */
-            ex_error( "%s\n", lua_tostring(_l, -2) );
-            lua_pop(_l, 2);  /* remove error message and _ALERT */
-        }
-    }
-}
-
 ///////////////////////////////////////////////////////////////////////////////
-// enhance 
-///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_lua_global_module ( lua_State *_l, const char *_key )
-{
-    lua_getglobal(_l, _key);
-
-    if( !lua_istable(_l, -1) ) {
-        lua_pop(_l, 1); // Pop the non-table.
-        lua_newtable(_l);
-        // cause lua_setglobal below will pop the top of the stack, 
-        // and we will loose the table after the funciton call.
-        // To prevent this, we duplicate the value at the top of the stack.
-        lua_pushvalue(_l, -1);
-        lua_setglobal(_l, _key);
-    }
-
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_lua_module ( lua_State *_l, int _idx, const char *_key )
-{
-    lua_getfield(_l, _idx, _key);
-
-    // Create if necessary.
-    if( !lua_istable(_l, -1) ) {
-        lua_pop(_l, 1); // Pop the non-table.
-        lua_newtable(_l);
-        lua_pushvalue(_l, -1); // Duplicate the table to leave on top.
-        lua_setfield(_l, -3, _key); // _key[_idx] = table
-    }
-
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_lua_parse ( lua_State *_l, int status )
-{
-    if (status == 0) {  /* parse OK? */
-        status = lua_pcall(_l, 0, LUA_MULTRET, 0);  /* call main */
-    }
-    ex_lua_check(_l, status);
-    return status;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// engine level
+// core
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -102,92 +106,131 @@ int ex_lua_parse ( lua_State *_l, int status )
 extern int luaopen_core ( lua_State *_l );
 // ------------------------------------------------------------------ 
 
-void ex_lua_init ()
-{
-    if ( __L ) {
-        ex_warning ( "the lua engine already inited." );
-        return;
+int ex_lua_init () {
+    // if the core already initialized, don't init it second times.
+    if ( __initialized ) {
+        ex_warning ( "the lua-interpreter already initialized." );
+        return 1;
     }
+    ex_assert_return( __L == NULL, 1, "the lua status already opened." );
 
     __L = lua_open();
     luaL_openlibs(__L);
 
     // we create global ex table if it not exists.
-    ex_lua_global_module ( ex_lua_state(), "ex" );
+    ex_lua_global_module ( __L, "ex" );
 
     // init exlibs wraps
-    luaopen_core (ex_lua_state());
+    luaopen_core (__L);
+
+    // load builtin module
+    // TODO: ex_lua_load_modules( __L, ex_builtin_path() )
+    // load user module
+    // TODO: ex_lua_load_modules( __L, ex_user_path() )
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_lua_deinit ()
-{
-    lua_close(__L);
-    __L = NULL;
+void ex_lua_deinit () {
+    if ( __initialized ) {
+        lua_close(__L);
+        __L = NULL;
+    }
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-lua_State *ex_lua_state () { return __L; }
+bool ex_lua_initialized () { 
+    return __initialized;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// lua api extend
+///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_module_byfile ( lua_State *_l, const wchar_t *_fullpath )
-{
-    wstring_t rel_wpath ( _fullpath );
-    rel_wpath -= lua::base_path();
+int ex_lua_global_module ( lua_State *_l, const char *_key ) {
+    lua_getglobal(_l, _key); // [-0,+1,e]
 
-    char rel_path[1024];
-    char *p = rel_path;
-    ex::mem::zero( rel_path, 1024 );
-    wchar_to_char<1024> ( rel_wpath.c_str(), rel_path );
-    if ( rel_path[0] == '/' ) {
-        p++;
-    }
-    char *dot = strrchr( p, '.' );
-    int count = ex::str::len(p);
-    if ( dot != NULL ) {
-        count = dot - p;
-    }
-    char str[1024]; 
-    ex::str::ncpy( str, 1024, p, count );
-    str[count] = '\0';
+    // create if necessary.
+    if( !lua_istable(_l, -1) ) {
+        lua_pop(_l, 1); // [-1,+0,-] // pop the non-table
+        lua_newtable(_l); // [-0,+1,m]
 
-    Array<string_t> str_list;
-    ex::str::splitIntoArray ( "/", str, &str_list ); 
+        // cause lua_setglobal will pop the top of the stack, 
+        // and we will loose the table after the funciton call.
+        // To prevent this, we duplicate the value at the top of the stack.
 
-    string_t module_name;
-    if ( str_list.size() > 1 ) {
-        for ( Array<string_t>::iterator iter = str_list.begin(); iter != str_list.end()-1; ++iter ) {
-            module_name = module_name + *iter + '.';
-        }
-        module_name = module_name + *(str_list.end()-1);
-    }
-    else {
-        module_name = *(str_list.begin());
+        lua_pushvalue(_l, -1); // [-0,+1,-]
+        lua_setglobal(_l, _key); // [-1,+0,e]
     }
 
-    // now do the load
-    if ( lua::load_module( _l, module_name.c_str() ) != 0 ) {
-        ex_log ( "script ex_lua_module: %s loaded.\n", module_name.c_str() );
-        return 1;
-    }
-    return 0;
+    return 1;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int load_module ( lua_State *_l, const char *_module )
-{
+int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
+    lua_getfield(_l, _idx, _key); // [-0,+1,e]
+
+    // create if necessary.
+    if( !lua_istable(_l, -1) ) {
+        lua_pop(_l, 1); // [-1,+0,-] // pop the non-table
+        lua_newtable(_l); // [-0,+1,m]
+        lua_pushvalue(_l, -1); // [-0,+1,-] // duplicate the table to leave on top.
+        lua_setfield(_l, -2-_idx, _key); // [-1,+0,e] // _key[_idx] = table
+    }
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_load_module ( lua_State *_l, const char *_base_path, const char *_module_path ) {
+    ex_array_t splits;
+
+    // if this is a NULL or an empty string, just return NULL reference.
+    if ( _module_path == NULL || strcmp( _module_path, "" ) == 0 ) {
+        ex_error ( "the module name can't be NULL or empty" );
+        return -1;
+    }
+
+    // split name list by "/" and recursively search them.
+    ex_array_init( &splits, EX_STRID_NULL, sizeof(char *), 8,
+                   __ex_array_alloc,
+                   __ex_array_realloc,
+                   __ex_array_dealloc );
+    ex_str_split_into_array( &splits, ".", _module );
+
+    //
+    ex_array_each ( &splits, char *, sub_name ) {
+    } ex_array_each_end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Array<string_t> str_list;
     ex::str::splitIntoArray ( ".", _module, &str_list ); 
     
@@ -256,6 +299,7 @@ int load_module ( lua_State *_l, const char *_module )
     return 1;
 }
 
+#if 0
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -298,10 +342,29 @@ int w__gc ( lua_State *_l ) {
         obj->release();
     return 0;
 }
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // DEBUG
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_lua_check ( lua_State *_l, int _status ) {
+    if ( _status != 0 ) {
+        lua_getglobal(_l, "_ALERT");
+        if ( lua_isfunction(_l, -1) ) {
+            lua_insert(_l, -2);
+            lua_call(_l, 1, 0);
+        }
+        else {  /* no _ALERT function; print it on stderr */
+            ex_error( "%s\n", lua_tostring(_l, -2) );
+            lua_pop(_l, 2);  /* remove error message and _ALERT */
+        }
+    }
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -13,6 +13,16 @@
 #include "core.h"
 
 ///////////////////////////////////////////////////////////////////////////////
+// for developing
+///////////////////////////////////////////////////////////////////////////////
+
+#if (EX_PLATFORM == EX_WIN32)
+    const char *exsdk_dev_path = "e:/project/dev/exsdk/";
+#else
+    const char *exsdk_dev_path = "/Users/Johnny/dev/projects/exdev/exsdk/";
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +58,14 @@ int ex_core_init ()
         ex_log ("failed to init timer");
         return -1;
     }
-    ex_uid_init (); // init uid variables after tierm
+    ex_uid_init (); // init uid variables after timer
+
+    //
+    ex_log ("init fsys");
+    if ( ex_fsys_init() != 0 ) {
+        ex_log ("failed to init fsys");
+        return -1;
+    }
 
     //
     ex_log ("init memory");
@@ -96,6 +113,9 @@ void ex_core_deinit ()
 
         ex_log ("deinit memory");
         ex_mem_deinit();
+
+        ex_log ("deinit fsys");
+        ex_fsys_init();
 
         ex_log ("deinit timer");
         ex_timer_deinit();

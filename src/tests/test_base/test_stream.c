@@ -10,18 +10,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../../core/core_inc.h"
-#include "../../entity/trans2d.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
-
-#if (EX_PLATFORM == EX_WIN32)
-    static const char *media_file = "e:/project/dev/exsdk/res/";
-#else
-    static const char *media_file = "/Users/Johnny/dev/projects/exdev/exsdk/res/";
-#endif
-#define maxPATH 256
 
 // simple
 EX_DECL_CLASS_BEGIN(simple_t)
@@ -155,17 +147,14 @@ void init_complex_t ( complex_t *_self ) {
 // ------------------------------------------------------------------ 
 
 static void json_read_write () {
-    char path[maxPATH];
     ex_stream_t *stream = NULL;
 
-    strncpy ( path, media_file, maxPATH );
-    stream = ex_create_json_read_stream( strcat(path, "simple_read.json") );
-    stream->save_to_file ( stream, strcat(path, "simple_read_to_write.json" ) );
+    stream = ex_create_json_read_stream( "json/simple_read.json" );
+    stream->save_to_file ( stream, "json/simple_read_to_write.json" );
     ex_destroy_json_stream((ex_stream_json_t *)stream);
 
-    strncpy ( path, media_file, maxPATH );
-    stream = ex_create_json_read_stream( strcat(path, "complex_read.json") );
-    stream->save_to_file ( stream, strcat(path, "complex_read_to_write.json" ) );
+    stream = ex_create_json_read_stream( "json/complex_read.json" );
+    stream->save_to_file ( stream, "json/complex_read_to_write.json" );
     ex_destroy_json_stream((ex_stream_json_t *)stream);
 }
 
@@ -174,7 +163,6 @@ static void json_read_write () {
 // ------------------------------------------------------------------ 
 
 static void simple_read_write () {
-    char path[maxPATH];
     ex_serialize_pfn serialize_func;
     simple_t *s1, *s2;
     ex_string_t *str = ex_string("");
@@ -184,14 +172,13 @@ static void simple_read_write () {
     serialize_func = ex_rtti_get(EX_TYPEID(simple_t))->serialize;
 
     // serialize read s1, s2 from simple_read.json
-    strncpy ( path, media_file, maxPATH );
-    stream_read = ex_create_json_read_stream( strcat(path, "simple_read.json") );
+    stream_read = ex_create_json_read_stream( "json/simple_read.json" );
 
-    s1 = ex_create_simple_t();
+    s1 = EX_RTTI(simple_t)->create();
     init_simple_t(s1);
     serialize_func(stream_read, ex_strid("simple_01"), s1 );
 
-    s2 = ex_create_simple_t();
+    s2 = EX_RTTI(simple_t)->create();
     init_simple_t(s2);
     serialize_func(stream_read, ex_strid("simple_02"), s2 );
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
@@ -210,8 +197,7 @@ static void simple_read_write () {
     stream_write = ex_create_json_write_stream();
     serialize_func(stream_write, ex_strid("simple_01"), s1 );
     serialize_func(stream_write, ex_strid("simple_02"), s2 );
-    strncpy ( path, media_file, maxPATH );
-    stream_write->save_to_file ( stream_write, strcat(path, "simple_write.json" ) );
+    stream_write->save_to_file ( stream_write, "json/simple_write.json" );
     ex_destroy_json_stream((ex_stream_json_t *)stream_write);
 
     // destroy
@@ -224,14 +210,13 @@ static void simple_read_write () {
     ex_free(s2);
 
     // try to serialize s1, s2 from simple_write.json
-    strncpy ( path, media_file, maxPATH );
-    stream_read = ex_create_json_read_stream( strcat(path, "simple_write.json") );
+    stream_read = ex_create_json_read_stream( "json/simple_write.json" );
 
-    s1 = ex_create_simple_t();
+    s1 = EX_RTTI(simple_t)->create();
     init_simple_t(s1);
     serialize_func(stream_read, ex_strid("simple_01"), s1 );
 
-    s2 = ex_create_simple_t();
+    s2 = EX_RTTI(simple_t)->create();
     init_simple_t(s2);
     serialize_func(stream_read, ex_strid("simple_02"), s2 );
 
@@ -259,7 +244,6 @@ static void simple_read_write () {
 // ------------------------------------------------------------------ 
 
 static void complex_read_write () {
-    char path[maxPATH];
     ex_serialize_pfn serialize_func;
     complex_t *c1, *c2;
     ex_string_t *str = ex_string("");
@@ -269,28 +253,25 @@ static void complex_read_write () {
     serialize_func = ex_rtti_get(EX_TYPEID(complex_t))->serialize;
 
     // serialize read c1, c2 from complex_read.json
-    strncpy ( path, media_file, maxPATH );
-    stream_read = ex_create_json_read_stream( strcat(path, "complex_read.json") );
+    stream_read = ex_create_json_read_stream( "json/complex_read.json" );
 
-    c1 = ex_create_complex_t();
+    c1 = EX_RTTI(complex_t)->create();
     init_complex_t(c1);
     serialize_func(stream_read, ex_strid("complex_01"), c1 );
 
-    c2 = ex_create_complex_t();
+    c2 = EX_RTTI(complex_t)->create();
     init_complex_t(c2);
     serialize_func(stream_read, ex_strid("complex_02"), c2 );
 
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
 
     // serialize write c1, c2 to complex_write.json
-    strncpy ( path, media_file, maxPATH );
     stream_write = ex_create_json_write_stream();
 
     serialize_func(stream_write, ex_strid("complex_01"), c1 );
     serialize_func(stream_write, ex_strid("complex_02"), c2 );
 
-    strncpy ( path, media_file, maxPATH );
-    stream_write->save_to_file ( stream_write, strcat(path, "complex_write.json" ) );
+    stream_write->save_to_file ( stream_write, "json/complex_write.json" );
     ex_destroy_json_stream((ex_stream_json_t *)stream_write);
 
     // destroy
@@ -302,14 +283,13 @@ static void complex_read_write () {
     ex_free(c2);
 
     // try to serialize c1, c2 from complex_write.json 
-    strncpy ( path, media_file, maxPATH );
-    stream_read = ex_create_json_read_stream( strcat(path, "complex_write.json") );
+    stream_read = ex_create_json_read_stream( "json/complex_write.json" );
 
-    c1 = ex_create_complex_t();
+    c1 = EX_RTTI(complex_t)->create();
     init_complex_t(c1);
     serialize_func(stream_read, ex_strid("complex_01"), c1 );
 
-    c2 = ex_create_complex_t();
+    c2 = EX_RTTI(complex_t)->create();
     init_complex_t(c2);
     serialize_func(stream_read, ex_strid("complex_02"), c2 );
 

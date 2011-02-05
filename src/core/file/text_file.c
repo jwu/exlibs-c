@@ -26,9 +26,9 @@ ex_text_file_t *ex_text_fopen ( const char *_filename, bool _readonly ) {
     ex_file_t *file;
 
     if ( _readonly )
-        file = ex_fopen ( _filename, "r+" );
+        file = ex_fopen_r ( _filename );
     else
-        file = ex_fopen ( _filename, "w+" );
+        file = ex_fopen_w ( _filename );
 
     if ( file == NULL ) 
         return NULL;
@@ -45,7 +45,7 @@ ex_text_file_t *ex_text_fopen ( const char *_filename, bool _readonly ) {
 
 void ex_text_fclose ( ex_text_file_t *_txtFile ) {
     if ( _txtFile->index != 0 )
-        ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, _txtFile->index );
+        ex_fwrite ( _txtFile->file, _txtFile->buffer, _txtFile->index );
 
     _txtFile->index = 0;
     ex_fclose(_txtFile->file);
@@ -61,10 +61,10 @@ int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_text, int _len ) {
 
     if ( _len > BUF_SIZE ) {
         if ( _txtFile->index != 0 ) {
-            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, _txtFile->index );
+            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, _txtFile->index );
             _txtFile->index = 0;
         }
-        wroteBytes += ex_fwrite ( _txtFile->file, _text, 1, _len );
+        wroteBytes += ex_fwrite ( _txtFile->file, _text, _len );
     }
     else {
         int rest_size = BUF_SIZE - _txtFile->index;
@@ -73,7 +73,7 @@ int ex_text_fwrite ( ex_text_file_t *_txtFile, const char *_text, int _len ) {
         // fill the text-buffer, then write it to the sys-file, and store the rest to the buffer. 
         if ( _len >= rest_size ) {
             memcpy ( _txtFile->buffer + _txtFile->index, _text, rest_size ); 
-            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, 1, BUF_SIZE );
+            wroteBytes += ex_fwrite ( _txtFile->file, _txtFile->buffer, BUF_SIZE );
             memcpy ( _txtFile->buffer, _text + rest_size, _len - rest_size ); 
             _txtFile->index = _len - rest_size;
         }

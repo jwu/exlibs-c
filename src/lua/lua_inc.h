@@ -14,16 +14,8 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-// lua
-extern "C" {
-#include <lua-5.1.4/src/lua.h>
-#include <lua-5.1.4/src/lauxlib.h>
-#include <lua-5.1.4/src/lualib.h>
-}
-
 //
 #include "lua_global.h"
-#include "lua_proxy.h"
 
 // #################################################################################
 #endif // END LUA_INC_H_1289799394
