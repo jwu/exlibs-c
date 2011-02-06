@@ -76,6 +76,8 @@ extern const char *ex_fsys_mount_point ( const char *_dir );
 // don't forget to call ex_fsys_free_list(li);
 extern char **ex_fsys_mounts ();
 
+extern const char *ex_fsys_realpath ( const char *_path );
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 

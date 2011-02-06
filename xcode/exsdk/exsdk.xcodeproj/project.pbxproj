@@ -16,7 +16,6 @@
 		B200D2FF12E42DF7003B4944 /* stream_xml.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F712E42DF7003B4944 /* stream_xml.h */; };
 		B200D30012E42DF7003B4944 /* stream.h in Headers */ = {isa = PBXBuildFile; fileRef = B200D2F812E42DF7003B4944 /* stream.h */; };
 		B200D30212E4335E003B4944 /* builtin_type_registry.c in Sources */ = {isa = PBXBuildFile; fileRef = B200D30112E4335E003B4944 /* builtin_type_registry.c */; };
-		B200D37312E44B06003B4944 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B200D3D812E48DAA003B4944 /* test_stream.c in Sources */ = {isa = PBXBuildFile; fileRef = B200D3D712E48DAA003B4944 /* test_stream.c */; };
 		B200D3E412E48F51003B4944 /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
 		B20715A512C7A38900071C29 /* debug_draw.c in Sources */ = {isa = PBXBuildFile; fileRef = B20715A012C7A38900071C29 /* debug_draw.c */; };
@@ -77,6 +76,14 @@
 		B29D83CA12EE733F00AF7E1B /* builtin_tostring.h in Headers */ = {isa = PBXBuildFile; fileRef = B29D83C712EE733F00AF7E1B /* builtin_tostring.h */; };
 		B29D83CB12EE733F00AF7E1B /* runtime_macro.h in Headers */ = {isa = PBXBuildFile; fileRef = B29D83C812EE733F00AF7E1B /* runtime_macro.h */; };
 		B29D84BD12EFC8ED00AF7E1B /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
+		B2A22D7E12FEE78600F3C100 /* lua_global.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22D7A12FEE78600F3C100 /* lua_global.c */; };
+		B2A22D7F12FEE78600F3C100 /* lua_global.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A22D7B12FEE78600F3C100 /* lua_global.h */; };
+		B2A22D8012FEE78600F3C100 /* lua_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A22D7C12FEE78600F3C100 /* lua_inc.h */; };
+		B2A22D8112FEE78600F3C100 /* wrap_core.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22D7D12FEE78600F3C100 /* wrap_core.c */; };
+		B2A22DAA12FEEBF900F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
+		B2A22DBD12FEEC1200F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
+		B2A22DC012FEEC3000F3C100 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B2A22DDB12FEEDC400F3C100 /* test_lua.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22DDA12FEEDC400F3C100 /* test_lua.c */; };
 		B2B113FF12DAAE66002E6C1A /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B113FE12DAAE66002E6C1A /* color.c */; };
 		B2B7AB5212F80A7600FA2EC0 /* simple_world.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B7AB5012F80A7600FA2EC0 /* simple_world.c */; };
 		B2B7AB5312F80A7600FA2EC0 /* test_transform.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B7AB5112F80A7600FA2EC0 /* test_transform.c */; };
@@ -286,6 +293,13 @@
 		B29D83C612EE733F00AF7E1B /* builtin_prop_getset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = builtin_prop_getset.h; sourceTree = "<group>"; };
 		B29D83C712EE733F00AF7E1B /* builtin_tostring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = builtin_tostring.h; sourceTree = "<group>"; };
 		B29D83C812EE733F00AF7E1B /* runtime_macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = runtime_macro.h; sourceTree = "<group>"; };
+		B2A22D7A12FEE78600F3C100 /* lua_global.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lua_global.c; path = lua/lua_global.c; sourceTree = "<group>"; };
+		B2A22D7B12FEE78600F3C100 /* lua_global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_global.h; path = lua/lua_global.h; sourceTree = "<group>"; };
+		B2A22D7C12FEE78600F3C100 /* lua_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_inc.h; path = lua/lua_inc.h; sourceTree = "<group>"; };
+		B2A22D7D12FEE78600F3C100 /* wrap_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrap_core.c; path = lua/wrap_core.c; sourceTree = "<group>"; };
+		B2A22DA912FEEBF900F3C100 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/lua-5.1.4/lib/macosx/liblua.a"; sourceTree = "<absolute>"; };
+		B2A22DDA12FEEDC400F3C100 /* test_lua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_lua.c; sourceTree = "<group>"; };
+		B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "editor-Info.plist"; sourceTree = "<group>"; };
 		B2B113FE12DAAE66002E6C1A /* color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = color.c; sourceTree = "<group>"; };
 		B2B7AB5012F80A7600FA2EC0 /* simple_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simple_world.c; sourceTree = "<group>"; };
 		B2B7AB5112F80A7600FA2EC0 /* test_transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_transform.c; sourceTree = "<group>"; };
@@ -420,6 +434,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2A22DBD12FEEC1200F3C100 /* liblua.a in Frameworks */,
 				B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */,
 				B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */,
 				B245485112B920D200EF7261 /* libexsdk.a in Frameworks */,
@@ -432,10 +447,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2A22DC012FEEC3000F3C100 /* OpenGL.framework in Frameworks */,
 				B2B7B32912FD74D400FA2EC0 /* libphysfs.a in Frameworks */,
 				B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */,
-				B200D37312E44B06003B4944 /* OpenGL.framework in Frameworks */,
 				B200D3E412E48F51003B4944 /* libyajl_s.a in Frameworks */,
+				B2A22DAA12FEEBF900F3C100 /* liblua.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +479,8 @@
 				B245484B12B9209000EF7261 /* GLUT.framework */,
 				B200D3E312E48F51003B4944 /* libyajl_s.a */,
 				B2B7B31912FD71CD00FA2EC0 /* libphysfs.a */,
+				B2A22DA912FEEBF900F3C100 /* liblua.a */,
+				B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */,
 			);
 			name = exsdk;
 			sourceTree = "<group>";
@@ -577,6 +595,7 @@
 		B245483712B91F9E00EF7261 /* exsdk */ = {
 			isa = PBXGroup;
 			children = (
+				B2A22D7912FEE77500F3C100 /* lua */,
 				B215EA0A12F2932100F0C84B /* app */,
 				B215E9E212F292FA00F0C84B /* engine */,
 				B207159F12C7A36D00071C29 /* graphics */,
@@ -588,6 +607,17 @@
 			);
 			name = exsdk;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		B2A22D7912FEE77500F3C100 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				B2A22D7A12FEE78600F3C100 /* lua_global.c */,
+				B2A22D7B12FEE78600F3C100 /* lua_global.h */,
+				B2A22D7C12FEE78600F3C100 /* lua_inc.h */,
+				B2A22D7D12FEE78600F3C100 /* wrap_core.c */,
+			);
+			name = lua;
 			sourceTree = "<group>";
 		};
 		B2DD23EB12A7C7CE0053CA3F /* Products */ = {
@@ -611,6 +641,7 @@
 		B2DD23F112A7C86E0053CA3F /* test_base */ = {
 			isa = PBXGroup;
 			children = (
+				B2A22DDA12FEEDC400F3C100 /* test_lua.c */,
 				B2D8CA5512F1099D00584C38 /* test_uid.c */,
 				B2E2698712C9EC0100833568 /* test_thread.c */,
 				B2BD881A12E6F86A001F9D38 /* test_cstr.c */,
@@ -990,6 +1021,8 @@
 				B215EA1212F2935500F0C84B /* editor.h in Headers */,
 				B215EA3C12F3C2FE00F0C84B /* object.h in Headers */,
 				B215EA3E12F3C2FE00F0C84B /* ref.h in Headers */,
+				B2A22D7F12FEE78600F3C100 /* lua_global.h in Headers */,
+				B2A22D8012FEE78600F3C100 /* lua_inc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1119,6 +1152,7 @@
 				B2BD881B12E6F86A001F9D38 /* test_cstr.c in Sources */,
 				B259245812EA6F5000B49C04 /* test_string.c in Sources */,
 				B2D8CA5612F1099D00584C38 /* test_uid.c in Sources */,
+				B2A22DDB12FEEDC400F3C100 /* test_lua.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1219,8 @@
 				B215EA3B12F3C2FE00F0C84B /* object.c in Sources */,
 				B215EA3D12F3C2FE00F0C84B /* ref.c in Sources */,
 				B2B7B31412FD714700FA2EC0 /* file_physfs.c in Sources */,
+				B2A22D7E12FEE78600F3C100 /* lua_global.c in Sources */,
+				B2A22D8112FEE78600F3C100 /* wrap_core.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1303,6 +1339,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
 					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1335,6 +1372,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
 					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1366,6 +1404,7 @@
 					"../../ext/yajl-1.0.11/lib/",
 					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
 					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = test.base;
@@ -1389,6 +1428,7 @@
 					"../../ext/yajl-1.0.11/lib/",
 					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
 					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = test.base;

@@ -132,6 +132,7 @@ const char *ex_fsys_mount_point ( const char *_dir ) {
     return PHYSFS_getMountPoint ( _dir );
 }
 char **ex_fsys_mounts () { return PHYSFS_getSearchPath (); }
+const char *ex_fsys_realpath ( const char *_path ) { return PHYSFS_getRealDir(_path); }
 
 // ------------------------------------------------------------------ 
 // Desc: 

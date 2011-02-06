@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -265,18 +267,18 @@
 							<array>
 								<string>08FB7794FE84155DC02AAC07</string>
 								<string>B2DD23F012A7C81B0053CA3F</string>
+								<string>B2DD23F112A7C86E0053CA3F</string>
 								<string>B245483712B91F9E00EF7261</string>
 								<string>1C37FBAC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>24</integer>
-									<integer>21</integer>
+									<integer>43</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {183, 664}}</string>
+							<string>{{0, 237}, {183, 664}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -295,7 +297,7 @@
 							<real>183</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>1706 -55 1231 723 1280 -400 1920 1200 </string>
+						<string>1756 -51 1231 723 1280 -400 1920 1200 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -306,8 +308,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -325,7 +325,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2A22D6E12FE7D2E00F3C100</string>
+										<string>B2A22E4312FF093D00F3C100</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -456,7 +456,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1026, 356}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1706 -55 1231 723 1280 -400 1920 1200 </string>
+								<string>1756 -51 1231 723 1280 -400 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -476,7 +476,7 @@
 								<key>Frame</key>
 								<string>{{0, 361}, {1026, 321}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1706 -55 1231 723 1280 -400 1920 1200 </string>
+								<string>1756 -51 1231 723 1280 -400 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -640,16 +640,15 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2A22D7012FE7D2E00F3C100</string>
 		<string>B2A22D7112FE7D2E00F3C100</string>
 		<string>B2A22D7212FE7D2E00F3C100</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 	</array>
 	<key>WindowString</key>
-	<string>1706 -55 1231 723 1280 -400 1920 1200 </string>
+	<string>1756 -51 1231 723 1280 -400 1920 1200 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -665,12 +664,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>memmng.c</string>
+								<string>lua_global.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -687,8 +688,6 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -985,6 +984,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1030,7 +1031,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

@@ -9,8 +9,11 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "exlibs.h"
-#include "lua_inc.h"
+#include "exsdk.h"
+
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -18,7 +21,7 @@
 
 static int __log ( lua_State *_l ) {
     const char *msg = luaL_checkstring ( _l, 1 );
-    ex_log (msg);
+    ex_log ( "%s", msg );
     return 0;
 }
 
@@ -37,7 +40,7 @@ static const luaL_Reg functions[] = {
 
 int luaopen_core ( lua_State *_l ) {
     // we create global ex table if it not exists.
-    ex_lua_global_module ( lua::state(), "ex" );
+    ex_lua_global_module ( _l, "ex" );
     luaL_register( _l, 0, functions );
     return 0;
 }

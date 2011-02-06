@@ -10,12 +10,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "lua_inc.h"
 
-// lua
-#include <lua-5.1.4/include/lua.h>
-#include <lua-5.1.4/include/lauxlib.h>
-#include <lua-5.1.4/include/lualib.h>
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // quick reference
@@ -95,7 +93,10 @@ The third field, x, tells whether the function may throw errors:
 // internal defines
 ///////////////////////////////////////////////////////////////////////////////
 
+#define BUF_SIZE 1024
+
 static lua_State *__L = NULL;
+static bool __initialized = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 // core
@@ -115,13 +116,30 @@ int ex_lua_init () {
     ex_assert_return( __L == NULL, 1, "the lua status already opened." );
 
     __L = lua_open();
-    luaL_openlibs(__L);
+    luaL_openlibs(__L); // open default libs
+
+    // OPTME { 
+    // clear the package.path and package.cpath
+    ex_lua_dostring ( __L, "package.path = \"./?.lua\"" );
+    ex_lua_dostring ( __L, "package.cpath = \"./?.so;./?.dll\"" );
+    {
+        char **mounts = ex_fsys_mounts();
+        char **i;
+        for ( i = mounts; *i != NULL; ++i  ) {
+            ex_lua_add_path( __L, *i );
+            ex_lua_add_cpath( __L, *i );
+        }
+        ex_fsys_free_list(mounts);
+    }
+    // } OPTME end 
 
     // we create global ex table if it not exists.
     ex_lua_global_module ( __L, "ex" );
 
     // init exlibs wraps
     luaopen_core (__L);
+
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -143,9 +161,35 @@ bool ex_lua_initialized () {
     return __initialized;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+lua_state_t *ex_lua_default_state () { return __L; }
+
 ///////////////////////////////////////////////////////////////////////////////
 // lua api extend
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_add_path ( lua_state_t *_l, const char *_path ) {
+    return ex_lua_dostring ( _l, 
+                             "package.path = package.path .. \";%s?.lua\"", 
+                             _path );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_add_cpath ( lua_state_t *_l, const char *_path ) {
+    return ex_lua_dostring ( _l, 
+                             "package.cpath = package.cpath .. \";%s?.so;%s?.dll\"", 
+                             _path, _path );
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -192,106 +236,121 @@ int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_module ( lua_State *_l, const char *_base_path, const char *_module_path ) {
-    ex_array_t splits;
-
-    // if this is a NULL or an empty string, just return NULL reference.
-    if ( _module_path == NULL || strcmp( _module_path, "" ) == 0 ) {
-        ex_error ( "the module name can't be NULL or empty" );
-        return -1;
-    }
-
-    // split name list by "/" and recursively search them.
-    ex_array_init( &splits, EX_STRID_NULL, sizeof(char *), 8,
-                   __ex_array_alloc,
-                   __ex_array_realloc,
-                   __ex_array_dealloc );
-    ex_str_split_into_array( &splits, ".", _module );
-
-    //
-    ex_array_each ( &splits, char *, sub_name ) {
-    } ex_array_each_end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Array<string_t> str_list;
-    ex::str::splitIntoArray ( ".", _module, &str_list ); 
-    
-    string_t rel_path;
-    if ( str_list.size() > 1 ) {
-        for ( Array<string_t>::iterator iter = str_list.begin(); iter != str_list.end()-1; ++iter ) {
-            rel_path = rel_path + *iter + '/';
-        }
-    }
-    rel_path = rel_path + *(str_list.end()-1) + ".lua";
-    const char *rel_path_cstr = rel_path.c_str(); 
-    wchar rel_wpath[1024];
-    ex::mem::zero( rel_wpath, 1024 );
-    char_to_wchar<1024> ( rel_path_cstr, rel_wpath );
-
-    wpath_t full_path ( lua::base_path() );
-    full_path += rel_wpath;
-
-    // now load the buffer
-    IFile::smart_ptr_t spFile = futil::file::readonly<PhysicalFile>(full_path);
-    if ( spFile == NULL ) {
-        ex_error ( "can't find the ex_lua_module %s by file", _module );
-        return 0;
-    }
-
-    // now load the file to lua for execute
-    DataHolder dataHolder;
-    dataHolder.alloc ( size_t(spFile->size()) );
-    spFile->read( dataHolder.data(), spFile->size() );
-
-    //
-    lua::ex_lua_global_module( _l, (*str_list.begin()).c_str() );
-    for ( Array<string_t>::iterator iter = str_list.begin()+1; iter != str_list.end(); ++iter ) {
-        lua::ex_lua_module( _l, -1, (*iter).c_str() );
-    }
-
-    // lua: setmetatable(M, {__index = _G}) { 
-    // luaL_newmetatable ( _l, (*str_list.end()).c_str() );
-    lua_newtable (_l);
-    lua_getglobal ( _l, "_G" );
-    lua_setfield ( _l, -2, "__index" );
-    lua_setmetatable ( _l, -2 );
-    // } lua end 
-
-    // now load the buffer, this will create a function and put it at the top of the stack.
-    int status = luaL_loadbuffer( _l,
-                                  (const char *)(dataHolder.data()), 
-                                  dataHolder.size(), 
-                                  _module );
-    ex_lua_check(_l, status);
-
-    // lua: setfenv(1,M) { 
-    lua_pushvalue( _l, -2 ); // push the last table as the environment table.
-    lua_setfenv( _l, -2 ); // pop the last value on the stack, and set it as the function environment.
-    // } lua end 
-
-    status = lua_pcall(_l, 0, LUA_MULTRET, 0);  /* call main */
-    ex_lua_check(_l, status);
-
-    // after this, we will create a global link for faster access
-    lua_setglobal( _l, _module );
-
-    // now we can clear stack
-    lua_settop( _l, 0 );
-
+int ex_lua_load_modules ( lua_State *_l, const char *_base_path ) {
     return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_load_module_byfile ( lua_State *_l, const char *_file_name ) {
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_load_module_byfile2 ( lua_State *_l, const char *_file_name, const char *_module_name ) {
+    return -1;
+
+    // TODO:
+    // ex_array_t splits;
+
+    // // if this is a NULL or an empty string, just return NULL reference.
+    // if ( _module_path == NULL || strcmp( _module_path, "" ) == 0 ) {
+    //     ex_error ( "the module name can't be NULL or empty" );
+    //     return -1;
+    // }
+
+    // // split name list by "/" and recursively search them.
+    // ex_array_init( &splits, EX_STRID_NULL, sizeof(char *), 8,
+    //                __ex_array_alloc,
+    //                __ex_array_realloc,
+    //                __ex_array_dealloc );
+    // ex_str_split_into_array( &splits, ".", _module );
+
+    // //
+    // ex_array_each ( &splits, char *, sub_name ) {
+    // } ex_array_each_end
+
+
+
+
+
+
+
+
+
+
+
+    // Array<string_t> str_list;
+    // ex::str::splitIntoArray ( ".", _module, &str_list ); 
+    // 
+    // string_t rel_path;
+    // if ( str_list.size() > 1 ) {
+    //     for ( Array<string_t>::iterator iter = str_list.begin(); iter != str_list.end()-1; ++iter ) {
+    //         rel_path = rel_path + *iter + '/';
+    //     }
+    // }
+    // rel_path = rel_path + *(str_list.end()-1) + ".lua";
+    // const char *rel_path_cstr = rel_path.c_str(); 
+    // wchar rel_wpath[1024];
+    // ex::mem::zero( rel_wpath, 1024 );
+    // char_to_wchar<1024> ( rel_path_cstr, rel_wpath );
+
+    // wpath_t full_path ( lua::base_path() );
+    // full_path += rel_wpath;
+
+    // // now load the buffer
+    // IFile::smart_ptr_t spFile = futil::file::readonly<PhysicalFile>(full_path);
+    // if ( spFile == NULL ) {
+    //     ex_error ( "can't find the ex_lua_module %s by file", _module );
+    //     return 0;
+    // }
+
+    // // now load the file to lua for execute
+    // DataHolder dataHolder;
+    // dataHolder.alloc ( size_t(spFile->size()) );
+    // spFile->read( dataHolder.data(), spFile->size() );
+
+    // //
+    // lua::ex_lua_global_module( _l, (*str_list.begin()).c_str() );
+    // for ( Array<string_t>::iterator iter = str_list.begin()+1; iter != str_list.end(); ++iter ) {
+    //     lua::ex_lua_module( _l, -1, (*iter).c_str() );
+    // }
+
+    // // lua: setmetatable(M, {__index = _G}) { 
+    // // luaL_newmetatable ( _l, (*str_list.end()).c_str() );
+    // lua_newtable (_l);
+    // lua_getglobal ( _l, "_G" );
+    // lua_setfield ( _l, -2, "__index" );
+    // lua_setmetatable ( _l, -2 );
+    // // } lua end 
+
+    // // now load the buffer, this will create a function and put it at the top of the stack.
+    // int status = luaL_loadbuffer( _l,
+    //                               (const char *)(dataHolder.data()), 
+    //                               dataHolder.size(), 
+    //                               _module );
+    // ex_lua_alert(_l, status);
+
+    // // lua: setfenv(1,M) { 
+    // lua_pushvalue( _l, -2 ); // push the last table as the environment table.
+    // lua_setfenv( _l, -2 ); // pop the last value on the stack, and set it as the function environment.
+    // // } lua end 
+
+    // status = lua_pcall(_l, 0, LUA_MULTRET, 0);  /* call main */
+    // ex_lua_alert(_l, status);
+
+    // // after this, we will create a global link for faster access
+    // lua_setglobal( _l, _module );
+
+    // // now we can clear stack
+    // lua_settop( _l, 0 );
+
+    // return 1;
 }
 
 #if 0
@@ -340,6 +399,93 @@ int w__gc ( lua_State *_l ) {
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
+// interpreter
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_dofile ( lua_state_t *_l, const char *_filepath ) {
+    int status;
+    ex_file_t *file;
+    size_t buf_size;
+    void *buffer;
+
+    // open the file
+    file = ex_fopen_r(_filepath);
+    if ( file == NULL ) {
+        ex_error ( "can't find the file %s", _filepath );
+        return -1;
+    }
+
+    // get the file to the buffer we allocated.
+    buf_size = ex_fsize (file);
+    buffer = ex_malloc (buf_size);
+    ex_fread (file, buffer, buf_size );
+    ex_fclose(file);
+
+    // parse the buffer by lua interpreter
+    status = luaL_loadbuffer( _l, (const char *)buffer, buf_size, _filepath );
+    if ( status ) {
+        ex_lua_alert(_l);
+        goto PARSE_FAILED;
+    }
+
+    // call the script 
+    status = lua_pcall(_l, 0, LUA_MULTRET, 0);
+    if ( status ) {
+        ex_lua_alert(_l);
+        goto PARSE_FAILED;
+    }
+
+PARSE_FAILED:
+    ex_free(buffer);
+    return -1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_dostring ( lua_state_t *_l, const char *_fmt, ... ) {
+    int result = -1;
+    int status;
+    char buf[BUF_SIZE];
+    char *buffer = NULL;
+
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _fmt, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    buffer = buf;
+    if ( result == -1 ) {
+        char *dyn_buf = NULL;
+        int buffer_count = BUF_SIZE * 2;
+
+        // keep get va string until success 
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _fmt, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
+    }
+    buffer[result] = '\0';
+
+    // do lua script!
+    status = luaL_dostring(_l, buffer);
+
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
+
+    // check the result.
+    if ( status ) {
+        ex_lua_alert(_l);
+        return -1;
+    }
+    return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // DEBUG
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -347,17 +493,15 @@ int w__gc ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_lua_check ( lua_State *_l, int _status ) {
-    if ( _status != 0 ) {
-        lua_getglobal(_l, "_ALERT");
-        if ( lua_isfunction(_l, -1) ) {
-            lua_insert(_l, -2);
-            lua_call(_l, 1, 0);
-        }
-        else {  /* no _ALERT function; print it on stderr */
-            ex_error( "%s\n", lua_tostring(_l, -2) );
-            lua_pop(_l, 2);  /* remove error message and _ALERT */
-        }
+void ex_lua_alert ( lua_State *_l ) {
+    lua_getglobal(_l, "_ALERT");
+    if ( lua_isfunction(_l, -1) ) {
+        lua_insert(_l, -2);
+        lua_call(_l, 1, 0);
+    }
+    else {  /* no _ALERT function; print it on stderr */
+        ex_error( "%s\n", lua_tostring(_l, -2) );
+        lua_pop(_l, 2);  /* remove error message and _ALERT */
     }
 }
 

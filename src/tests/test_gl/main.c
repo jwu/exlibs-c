@@ -405,7 +405,7 @@ int main( int argc, const char *argv[] ) {
         strncpy ( media_path, exsdk_dev_path, 1024 );
         strcat ( media_path, "res/test_gl/" );
         if ( ex_fsys_set_write_dir(media_path) == 0 )
-            ex_log("set write dir dir: %s", media_path );
+            ex_log("set write dir: %s", media_path );
         if ( ex_fsys_mount( media_path, "/", true ) == 0 )
             ex_log("mount dir: %s", media_path );
 

@@ -43,44 +43,51 @@ int ex_core_init ()
     ex_srand((uint)time(0));
 
     //
-    ex_log ("init timer");
+    ex_log ("ex_core initializing...");
+    ex_log ("|- init timer...");
     if ( ex_timer_init() != 0 ) {
-        ex_log ("failed to init timer");
+        ex_log ("fatal error: failed to init timer");
         return -1;
     }
     ex_uid_init (); // init uid variables after timer
 
     //
-    ex_log ("init fsys");
+    ex_log ("|- init fsys...");
     if ( ex_fsys_init() != 0 ) {
-        ex_log ("failed to init fsys");
+        ex_log ("fatal error: failed to init fsys");
         return -1;
     }
 
-    // TODO: ex_log ("init lua");
+    ex_log ("|- init lua interpreter...");
+    if ( ex_lua_init () != 0 ) {
+        ex_log ("fatal error: failed to init lua interpreter");
+        return -1;
+    }
     // TODO: parse .exrc by lua
 
     //
-    ex_log ("init memory");
+    ex_log ("|- init memory...");
     if ( ex_mem_init() != 0 ) {
-        ex_log ("failed to init memory");
+        ex_log ("fatal error: failed to init memory");
         return -1;
     }
 
-    ex_log ("init string ID table");
+    ex_log ("|- init string ID table...");
     if ( ex_strid_init(65536) != 0 ) {
-        ex_log ("failed to init string ID table");
+        ex_log ("fatal error: failed to init string ID table");
         return -1;
     }
 
-    ex_log ("init rtti classes");
+    ex_log ("|- init rtti table...");
     if ( ex_rtti_init() != 0 ) {
-        ex_log ("failed to init rtti table");
+        ex_log ("fatal error: failed to init rtti table");
         return -1;
     }
 
     // after we init rtti, we can register all the classes we used in the app
+    ex_log ("|- register builtin types...");
     ex_register_builtin_types ();
+    ex_log ("|- register runtime classes...");
     ex_register_classes ();
 
     // TODO: { 
@@ -89,7 +96,8 @@ int ex_core_init ()
     // } TODO end 
 
     //
-    ex_log ("ex_core inited");
+    ex_log ("ex_core initialized!");
+    ex_log ("");
     __initialized = true;
     return 0;
 }
@@ -101,23 +109,28 @@ int ex_core_init ()
 void ex_core_deinit ()
 {
     if ( __initialized ) {
-        ex_log ("deinit rtti table");
+        ex_log ("");
+        ex_log ("ex_core de-initializing...");
+        ex_log ("|- deinit rtti table...");
         ex_rtti_deinit();
 
-        ex_log ("deinit string ID table");
+        ex_log ("|- deinit string ID table...");
         ex_strid_deinit();
 
-        ex_log ("deinit memory");
+        ex_log ("|- deinit memory...");
         ex_mem_deinit();
 
-        ex_log ("deinit fsys");
+        ex_log ("|- deinit lua interpreter...");
+        ex_lua_deinit();
+
+        ex_log ("|- deinit fsys...");
         ex_fsys_init();
 
-        ex_log ("deinit timer");
+        ex_log ("|- deinit timer...");
         ex_timer_deinit();
 
         //
-        ex_log ("ex_core deinitied");
+        ex_log ("ex_core de-initialized!");
         __initialized = false;
     }
 }

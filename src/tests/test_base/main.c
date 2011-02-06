@@ -37,6 +37,7 @@ extern void test_cstr();
 extern void test_encoding();
 extern void test_hashmap();
 extern void test_list();
+extern void test_lua();
 extern void test_memmng();
 extern void test_pool();
 extern void test_rapid();
@@ -68,7 +69,7 @@ int main( int argc, char *argv[] ) {
         strncpy ( media_path, exsdk_dev_path, 1024 );
         strcat ( media_path, "res/test_base/" );
         if ( ex_fsys_set_write_dir(media_path) == 0 )
-            ex_log("set write dir dir: %s", media_path );
+            ex_log("set write dir: %s", media_path );
         if ( ex_fsys_mount( media_path, "/", true ) == 0 )
             ex_log("mount dir: %s", media_path );
 
@@ -80,15 +81,16 @@ int main( int argc, char *argv[] ) {
         // test_encoding ();
         // test_hashmap ();
         // test_list ();
+        test_lua ();
         // test_memmng ();
         // test_pool ();
         // test_rtti ();
-        test_stream ();
+        // test_stream ();
         // test_string ();
         // test_stringID ();
         // test_thread();
         // test_timer();
-        test_uid();
+        // test_uid();
 
         // special
         // test_rapid ();
