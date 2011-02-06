@@ -59,7 +59,7 @@ int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ...
     if ( _msgType == EX_MSG_BOX_FAILED )
         type = MB_ABORTRETRYIGNORE|MB_ICONWARNING; // TODO: should be "Skip, Break, Ignore"
     else if ( _msgType == EX_MSG_BOX_ERROR )
-        type = MB_ICONERROR;
+        type = MB_ABORTRETRYIGNORE|MB_ICONERROR;
     else if ( _msgType == EX_MSG_BOX_WARNING )
         type = MB_ICONWARNING;
 

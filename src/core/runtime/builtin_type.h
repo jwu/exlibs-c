@@ -66,7 +66,6 @@
 DECL_BUILTIN_TYPE(bool);
 DECL_BUILTIN_TYPE(int);
 DECL_BUILTIN_TYPE(size_t);
-DECL_BUILTIN_TYPE_2(uid, ex_uid_t);
 DECL_BUILTIN_TYPE(int8);
 DECL_BUILTIN_TYPE(int16);
 DECL_BUILTIN_TYPE(int32);
@@ -94,6 +93,7 @@ DECL_BUILTIN_TYPE_2(color4u, ex_color4u_t);
 DECL_BUILTIN_TYPE_2(color4f, ex_color4f_t);
 DECL_BUILTIN_TYPE_2(array, ex_array_t *);
 DECL_BUILTIN_TYPE_2(map, ex_hashmap_t *);
+DECL_BUILTIN_TYPE_2(uid, ex_uid_t);
 DECL_BUILTIN_TYPE_2(ref, ex_ref_t *);
 
 #undef DECL_BUILTIN_TYPE

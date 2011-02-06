@@ -41,7 +41,6 @@ typedef struct ex_stream_t {
     void (*serialize_bool)      ( struct ex_stream_t *_stream, bool *_val );
     void (*serialize_int)       ( struct ex_stream_t *_stream, int *_val );
     void (*serialize_size_t)    ( struct ex_stream_t *_stream, size_t *_val );
-    void (*serialize_uid)       ( struct ex_stream_t *_stream, ex_uid_t *_val );
 
     void (*serialize_int8)      ( struct ex_stream_t *_stream, int8 *_val );
     void (*serialize_int16)     ( struct ex_stream_t *_stream, int16 *_val );
@@ -79,6 +78,8 @@ typedef struct ex_stream_t {
 
     void (*serialize_array)     ( struct ex_stream_t *_stream, ex_array_t *_val, ex_serialize_pfn _pfn_serialize_el );
     void (*serialize_map)       ( struct ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_pfn _pfn_serialize_key, ex_serialize_pfn _pfn_serialize_val );
+
+    void (*serialize_uid)       ( struct ex_stream_t *_stream, ex_uid_t *_val );
     void (*serialize_ref)       ( struct ex_stream_t *_stream, ex_ref_t **_val );
 
 } ex_stream_t;

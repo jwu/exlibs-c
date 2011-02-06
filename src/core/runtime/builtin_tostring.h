@@ -50,13 +50,6 @@ DEF_BUILTIN_TOSTRING(size_t) {
     snprintf ( buf, 1024, "%lu", *val );
     ex_string_ncat( _string, buf, strlen(buf) );
 }
-DEF_BUILTIN_TOSTRING(uid) {
-    char buf[1024];
-    ex_uid_t *val = (ex_uid_t *)_val;
-
-    snprintf ( buf, 1024, "0x%.16llX", *val );
-    ex_string_ncat( _string, buf, strlen(buf) );
-}
 
 DEF_BUILTIN_TOSTRING(int8) {
     char buf[1024];
@@ -320,6 +313,13 @@ static inline void __ex_tostring_map ( ex_string_t *_string, void *_val ) {
     __ex_tostring_map_2( _string, _val, key_tostring_pfn, value_tostring_pfn );
 }
 
+DEF_BUILTIN_TOSTRING(uid) {
+    char buf[1024];
+    ex_uid_t *val = (ex_uid_t *)_val;
+
+    snprintf ( buf, 1024, "0x%.16llX", *val );
+    ex_string_ncat( _string, buf, strlen(buf) );
+}
 DEF_BUILTIN_TOSTRING(ref) {
     char buf[1024];
     ex_ref_t *val = (ex_ref_t *)_val;

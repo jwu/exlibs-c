@@ -105,7 +105,6 @@ static int __yajl_boolean ( void *_ctx, int _bool ) {
     return 1;
 }
 
-// NOTE: we use long, so for uint64, it will appear minus value in the file.
 static int __yajl_integer ( void *_ctx, long _integer ) {
     __context *ctx = (__context *)_ctx;
     if ( ctx->get_method == NODE_STATUS_GET_VALUE ) {
@@ -215,7 +214,6 @@ static int __yajl_start_map ( void *_ctx ) {
 
 	return 1;
 }
-
 
 static int __yajl_end_map ( void *_ctx ) {
     __context *ctx = (__context *)_ctx;
@@ -443,21 +441,6 @@ static void __read_size_t ( ex_stream_t *_stream, size_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __read_uid ( ex_stream_t *_stream, ex_uid_t *_val ) {
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    *_val = *(ex_uid_t *)node->val;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 static void __read_int8 ( ex_stream_t *_stream, int8 *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -511,7 +494,13 @@ static void __read_int64 ( ex_stream_t *_stream, int64 *_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    *_val = (int64)(*(long *)node->val);
+    // NOTE: we disable this cause in win32 long only support int32
+    // *_val = (int64)(*(long *)node->val);
+#if (EX_PLATFORM == EX_WIN32)
+    *_val = (int64)_strtoi64( (const char *)node->val, NULL, 10  );
+#else
+    *_val = (int64)strtoll( (const char *)node->val, NULL, 10  );
+#endif
 }
 
 // ------------------------------------------------------------------ 
@@ -571,7 +560,13 @@ static void __read_uint64 ( ex_stream_t *_stream, uint64 *_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    *_val = (uint64)(*(long *)node->val);
+    // NOTE: we disable this cause in win32 long only support int32
+    // *_val = (uint64)(*(long *)node->val);
+#if (EX_PLATFORM == EX_WIN32)
+    *_val = (int64)_strtoui64( (const char *)node->val, NULL, 10  );
+#else
+    *_val = (uint64)strtoull( (const char *)node->val, NULL, 10  );
+#endif
 }
 
 // ------------------------------------------------------------------ 
@@ -930,6 +925,27 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __read_uid ( ex_stream_t *_stream, ex_uid_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    // NOTE: we disable this cause in win32 long only support int32
+    // *_val = (ex_uid_t)(*(long *)node->val);
+#if (EX_PLATFORM == EX_WIN32)
+    *_val = (ex_uid_t)_strtoui64( (const char *)node->val, NULL, 10  );
+#else
+    *_val = (ex_uid_t)strtoull( (const char *)node->val, NULL, 10  );
+#endif
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __read_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -939,7 +955,15 @@ static void __read_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    uid = *(ex_uid_t *)node->val;
+    // NOTE: we disable this cause in win32 long only support int32
+    // uid = (ex_uid_t)(*(long *)node->val);
+#if (EX_PLATFORM == EX_WIN32)
+    uid = (ex_uid_t)_strtoui64( (const char *)node->val, NULL, 10  );
+#else
+    uid = (ex_uid_t)strtoull( (const char *)node->val, NULL, 10  );
+#endif
+
+    //
     if ( uid == EX_UID_INVALID )
         *_val = NULL;
     else
@@ -1047,22 +1071,6 @@ static void __write_size_t ( ex_stream_t *_stream, size_t *_val ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __write_uid ( ex_stream_t *_stream, ex_uid_t *_val ) {
-    ex_stream_json_t *stream;
-    __json_node_t *node; 
-
-    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
-    stream = (ex_stream_json_t *)_stream; 
-    node = stream->current;
-
-    node->val = ex_malloc ( sizeof(long) ); 
-    *(long *)node->val = (long)*_val;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 static void __write_int8 ( ex_stream_t *_stream, int8 *_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -1119,8 +1127,8 @@ static void __write_int64 ( ex_stream_t *_stream, int64 *_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    node->val = ex_malloc ( sizeof(long) ); 
-    *(long *)node->val = (long)*_val;
+    node->val = ex_malloc ( sizeof(int64) ); 
+    *(int64 *)node->val = (int64)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1173,7 +1181,6 @@ static void __write_uint32 ( ex_stream_t *_stream, uint32 *_val ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// NOTE: we use long, so for uint64, it will appear minus value in the file.
 // ------------------------------------------------------------------ 
 
 static void __write_uint64 ( ex_stream_t *_stream, uint64 *_val ) {
@@ -1184,8 +1191,8 @@ static void __write_uint64 ( ex_stream_t *_stream, uint64 *_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    node->val = ex_malloc ( sizeof(long) ); 
-    *(long *)node->val = (long)*_val;
+    node->val = ex_malloc ( sizeof(uint64) ); 
+    *(uint64 *)node->val = (uint64)*_val;
 }
 
 // ------------------------------------------------------------------ 
@@ -1584,6 +1591,22 @@ static void __write_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static void __write_uid ( ex_stream_t *_stream, ex_uid_t *_val ) {
+    ex_stream_json_t *stream;
+    __json_node_t *node; 
+
+    ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
+    stream = (ex_stream_json_t *)_stream; 
+    node = stream->current;
+
+    node->val = ex_malloc ( sizeof(ex_uid_t) ); 
+    *(ex_uid_t *)node->val = *_val;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static void __write_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
@@ -1592,11 +1615,11 @@ static void __write_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    node->val = ex_malloc ( sizeof(long) ); 
+    node->val = ex_malloc ( sizeof(ex_uid_t) ); 
     if (*_val)
-        *(long *)node->val = (long)( ex_object_uid(*_val) );
+        *(ex_uid_t *)node->val = ex_object_uid(*_val);
     else
-        *(long *)node->val = EX_UID_INVALID;
+        *(ex_uid_t *)node->val = EX_UID_INVALID;
 }
 
 // ------------------------------------------------------------------ 
@@ -1658,7 +1681,12 @@ static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _
         ex_text_fwrite_fmt ( _txtFile, "%s }", *((bool *)_node->val) == true ? "true" : "false" );
     }
     else if ( ex_is_integer(_node->typeid) ) {
-        ex_text_fwrite_fmt ( _txtFile, "%ld }", *((long *)_node->val) );
+        if ( _node->typeid == EX_TYPEID(int64) )
+            ex_text_fwrite_fmt ( _txtFile, "\"%lld\" }", *((int64 *)_node->val) );
+        else if ( _node->typeid == EX_TYPEID(uint64) )
+            ex_text_fwrite_fmt ( _txtFile, "\"%llu\" }", *((uint64 *)_node->val) );
+        else
+            ex_text_fwrite_fmt ( _txtFile, "%ld }", *((long *)_node->val) );
     }
     else if ( ex_is_fp(_node->typeid) ) {
         ex_text_fwrite_fmt ( _txtFile, "%f }", *((double *)_node->val) );
@@ -1673,8 +1701,11 @@ static void __save_nodes ( ex_text_file_t *_txtFile, __json_node_t *_node, int _
     else if ( _node->typeid == EX_TYPEID(angf) ) {
         ex_text_fwrite_fmt ( _txtFile, "%f }", *((double *)_node->val) );
     }
+    else if ( _node->typeid == EX_TYPEID(uid) ) {
+        ex_text_fwrite_fmt ( _txtFile, "\"%llu\" }", *((ex_uid_t *)_node->val) );
+    }
     else if ( _node->typeid == EX_TYPEID(ref) ) {
-        ex_text_fwrite_fmt ( _txtFile, "%ld }", *((long *)_node->val) );
+        ex_text_fwrite_fmt ( _txtFile, "\"%llu\" }", *((ex_uid_t *)_node->val) );
     }
     else if ( _node->typeid >= EX_TYPEID(vec2f) && _node->typeid <= EX_TYPEID(color4f) ) {
         ex_text_fwrite_fmt ( _txtFile, "[" );
@@ -1787,7 +1818,6 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_bool,
         __read_int,
         __read_size_t,
-        __read_uid,
         __read_int8,
         __read_int16,
         __read_int32,
@@ -1815,6 +1845,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
         __read_color4f,
         __read_array,
         __read_map,
+        __read_uid,
         __read_ref,
 
         // nodes
@@ -1921,7 +1952,6 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_bool,
         __write_int,
         __write_size_t,
-        __write_uid,
         __write_int8,
         __write_int16,
         __write_int32,
@@ -1949,6 +1979,7 @@ ex_stream_t *ex_create_json_write_stream () {
         __write_color4f,
         __write_array,
         __write_map,
+        __write_uid,
         __write_ref,
 
         // nodes

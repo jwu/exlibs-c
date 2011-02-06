@@ -64,7 +64,7 @@ ex_uid_t ex_generate_uid () {
 #endif
 
     // if we have time conflict, increase offset to avoid same ID.
-    if ( __last_date == cur_date && __last_dtime == cur_dtime ) 
+    if ( __last_date == cur_date && __last_dtime == cur_dtime )
         ++__offset;
     else // else, we need reset the offset.
         __offset = 0;

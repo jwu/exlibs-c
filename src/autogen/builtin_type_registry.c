@@ -22,7 +22,6 @@
 EX_DEF_BUILTIN_TYPE(bool)
 EX_DEF_BUILTIN_TYPE(int)
 EX_DEF_BUILTIN_TYPE(size_t)
-EX_DEF_BUILTIN_TYPE(uid)
 EX_DEF_BUILTIN_TYPE(int8)
 EX_DEF_BUILTIN_TYPE(int16)
 EX_DEF_BUILTIN_TYPE(int32)
@@ -50,6 +49,7 @@ EX_DEF_BUILTIN_TYPE(color4u)
 EX_DEF_BUILTIN_TYPE(color4f)
 EX_DEF_BUILTIN_TYPE(array)
 EX_DEF_BUILTIN_TYPE(map)
+EX_DEF_BUILTIN_TYPE(uid)
 EX_DEF_BUILTIN_TYPE(ref);
 
 // ------------------------------------------------------------------ 
@@ -60,7 +60,6 @@ void ex_register_builtin_types () {
     EX_REGISTER_BUILTIN_TYPE(bool);
     EX_REGISTER_BUILTIN_TYPE(int);
     EX_REGISTER_BUILTIN_TYPE(size_t);
-    EX_REGISTER_BUILTIN_TYPE(uid);
     EX_REGISTER_BUILTIN_TYPE(int8);
     EX_REGISTER_BUILTIN_TYPE(int16);
     EX_REGISTER_BUILTIN_TYPE(int32);
@@ -88,5 +87,6 @@ void ex_register_builtin_types () {
     EX_REGISTER_BUILTIN_TYPE(color4f);
     EX_REGISTER_BUILTIN_TYPE(array);
     EX_REGISTER_BUILTIN_TYPE(map);
+    EX_REGISTER_BUILTIN_TYPE(uid);
     EX_REGISTER_BUILTIN_TYPE(ref);
 }
