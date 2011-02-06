@@ -74,14 +74,14 @@ bool assert_failed( bool *_pDoAssert, const char *_file_name, const char *_funct
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Assert Failed: %s(%d)::%s, %s", _file_name, _line_nr, short_name, buffer );
+    ex_log ( "Assert Failed: %s(%d)::%s, %s", _file_name, (int)_line_nr, short_name, buffer );
     mbResult = ex_message_box( EX_MSG_BOX_FAILED, "Assert Failed", 
                             "|ASSERT_FAILED|\n"
                             "FileName: %s\n"
                             "Line: %d\n"
                             "FunctionName: %s\n" 
                             "Expr: %s\n", 
-                            _file_name, _line_nr, short_name, buffer );
+                            _file_name, (int)_line_nr, short_name, buffer );
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )
@@ -128,8 +128,8 @@ bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, buffer );
-    mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, buffer );
+    ex_log ( "Error: %s(%d)[%s], %s", _file_name, (int)_line_nr, short_name, buffer );
+    mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, (int)_line_nr, short_name, buffer );
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )
@@ -176,8 +176,8 @@ bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_functi
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, buffer );
-    mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, buffer );
+    ex_log ( "Warning: %s(%d)[%s], %s", _file_name, (int)_line_nr, _function_name, buffer );
+    mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, (int)_line_nr, _function_name, buffer );
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )

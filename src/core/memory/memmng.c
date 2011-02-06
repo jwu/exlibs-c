@@ -276,7 +276,7 @@ static void __dump () {
                        "alloc nr:       %lu(%#.8lX)\r\n"
                        "thread ID:      %lu(%#.8lX)\r\n"
                        "\r\n"
-                       ,au->file_name ,au->line_nr 
+                       ,au->file_name ,(int)au->line_nr 
                        ,au->func_name 
                        ,au->tag_name 
                        ,ex_ptr_to_addr(au->org_addr) 

@@ -57,6 +57,9 @@ int ex_core_init ()
         return -1;
     }
 
+    // TODO: ex_log ("init lua");
+    // TODO: parse .exrc by lua
+
     //
     ex_log ("init memory");
     if ( ex_mem_init() != 0 ) {
@@ -80,7 +83,10 @@ int ex_core_init ()
     ex_register_builtin_types ();
     ex_register_classes ();
 
-    // TODO: ex_log ("init lua");
+    // TODO: { 
+    // // load builtin module
+    // ex_lua_load_modules( __L, "scripts/" )
+    // } TODO end 
 
     //
     ex_log ("ex_core inited");

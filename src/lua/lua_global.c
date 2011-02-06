@@ -122,11 +122,6 @@ int ex_lua_init () {
 
     // init exlibs wraps
     luaopen_core (__L);
-
-    // load builtin module
-    // TODO: ex_lua_load_modules( __L, ex_builtin_path() )
-    // load user module
-    // TODO: ex_lua_load_modules( __L, ex_user_path() )
 }
 
 // ------------------------------------------------------------------ 

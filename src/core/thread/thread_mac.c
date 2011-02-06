@@ -106,5 +106,5 @@ void ex_sys_setup_thread () {
 // ------------------------------------------------------------------ 
 
 void ex_sys_kill_thread ( ex_thread_t *_thread ) {
-	pthread_kill(thread->handle, SIGKILL);
+	pthread_kill(_thread->handle, SIGKILL);
 }
