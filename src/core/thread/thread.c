@@ -140,3 +140,15 @@ void ex_run_thread ( void *_data ) {
     // Run the function
     *status_loc = user_pfn(user_data);
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+extern void ex_sys_kill_thread( ex_thread_t *_thread );
+// ------------------------------------------------------------------ 
+
+void ex_kill_thread ( ex_thread_t *_thread ) {
+    if ( _thread ) {
+        ex_sys_kill_thread(_thread);
+        ex_wait_thread(_thread, NULL);
+    } 
+}

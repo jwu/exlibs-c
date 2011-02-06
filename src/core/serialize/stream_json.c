@@ -933,12 +933,13 @@ static void __read_map ( ex_stream_t *_stream, ex_hashmap_t *_val, ex_serialize_
 static void __read_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
     ex_stream_json_t *stream;
     __json_node_t *node; 
+    ex_uid_t uid;
 
     ex_assert_return ( _val, /*dummy*/, "the input value can't not be NULL" );
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    ex_uid_t uid = *(ex_uid_t *)node->val;
+    uid = *(ex_uid_t *)node->val;
     if ( uid == EX_UID_INVALID )
         *_val = NULL;
     else
@@ -1604,26 +1605,29 @@ static void __write_ref ( ex_stream_t *_stream, ex_ref_t **_val ) {
 
 #define WRITE_DOUBLE_ARRAY( _file, _array, _count ) \
     { \
+        int i; \
         double *a = (double *)(_array); \
         ex_text_fwrite_fmt ( _file, "%f", *a++ ); \
-        for ( int i = 1; i < _count; ++i ) \
+        for ( i = 1; i < _count; ++i ) \
             ex_text_fwrite_fmt ( _file, ", %f", *a++ ); \
     }
 
 #define WRITE_LONG_ARRAY( _file, _array, _count ) \
     { \
+        int i; \
         long *a = (long *)(_array); \
         ex_text_fwrite_fmt ( _file, "%ld", *a++ ); \
-        for ( int i = 1; i < _count; ++i ) \
+        for ( i = 1; i < _count; ++i ) \
             ex_text_fwrite_fmt ( _file, ", %ld", *a++ ); \
     }
 
 #define WRITE_DOUBLE_ARRAY_2D( _file, _array, _row, _col, _level ) \
     { \
+        int i, j; \
         double *a = (double *)(_array); \
-        for ( int i = 0; i < _col; ++i ) { \
+        for ( i = 0; i < _col; ++i ) { \
             ex_text_fwrite_fmt ( _file, "\n%*s", (_level)*4, "" ); \
-            for ( int j = 0; j < _row; ++j ) { \
+            for ( j = 0; j < _row; ++j ) { \
                 if ( i == _col - 1 && j == _row - 1 ) \
                     ex_text_fwrite_fmt ( _file, "%f", *a++ ); \
                 else \
@@ -1828,6 +1832,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     size_t rd;
     yajl_parser_config cfg = { 0, 1 };
     int done;
+    ex_stream_json_t *r_stream;
 
     /* memory allocation debugging: allocate a structure which collects statistics */
     __test_mem_context memCtx = { 0,0 };
@@ -1888,7 +1893,7 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
     ex_fclose(file);
 
     // copy the read methods
-    ex_stream_json_t *r_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );
+    r_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );
     memcpy ( r_stream, &json_stream, sizeof(ex_stream_json_t) );
     r_stream->root = context.root;
     r_stream->anchor = context.root;
@@ -1902,7 +1907,6 @@ ex_stream_t *ex_create_json_read_stream ( const char *_fileName ) {
 // ------------------------------------------------------------------ 
 
 ex_stream_t *ex_create_json_write_stream () {
-    __json_node_t *node;
     static const ex_stream_json_t json_stream = {
         // properties
         EX_STREAM_WRITE,
@@ -1952,13 +1956,15 @@ ex_stream_t *ex_create_json_write_stream () {
         NULL,
         NULL,
     }; // end of stream read
+    __json_node_t *node;
+    ex_stream_json_t *w_stream;
 
     // create root node
     node = __create_node();
     node->typeid = ex_strid("__root__"); // this will make him not a builtin-type.
 
     // copy the read methods
-    ex_stream_json_t *w_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );
+    w_stream = (ex_stream_json_t *)ex_malloc( sizeof(ex_stream_json_t) );
     memcpy ( w_stream, &json_stream, sizeof(ex_stream_json_t) );
     w_stream->root = node;
     w_stream->anchor = node;

@@ -25,20 +25,19 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __short_funcname ( char _short_name[], const char *_function_name, int _len )
-{
+static void __short_funcname ( char _short_name[], const char *_function_name, int _len ) {
     int len; 
 
-    ex_memzero ( _short_name, sizeof(char)*_len ); 
     len = strlen(_function_name); 
-    if ( len > _len ) { 
+    if ( len > _len-1 ) { 
         memcpy ( _short_name, _function_name, sizeof(char)*(_len-4) ); 
         _short_name[_len-4] = '.'; 
         _short_name[_len-3] = '.'; 
         _short_name[_len-2] = '.'; 
-        _short_name[_len-1] = 0; 
+        _short_name[_len-1] = '\0'; 
     } else { 
         strncpy( _short_name, _function_name, len ); 
+        _short_name[len] = '\0';
     } 
 }
 
@@ -68,14 +67,14 @@ bool assert_failed( bool *_pDoAssert, const char *_file_name, const char *_funct
         } while ( result == -1 );
         buffer = dyn_buf;
     }
-    buffer[result-1] = '\0';
+    buffer[result] = '\0';
 
 
     // short the function name
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Assert Failed: %s(%zd)::%s, %s", _file_name, _line_nr, short_name, buffer );
+    ex_log ( "Assert Failed: %s(%d)::%s, %s", _file_name, _line_nr, short_name, buffer );
     mbResult = ex_message_box( EX_MSG_BOX_FAILED, "Assert Failed", 
                             "|ASSERT_FAILED|\n"
                             "FileName: %s\n"
@@ -123,13 +122,13 @@ bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_
         } while ( result == -1 );
         buffer = dyn_buf;
     }
-    buffer[result-1] = '\0';
+    buffer[result] = '\0';
 
     // short the function name
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Error: %s(%zd)[%s], %s", _file_name, _line_nr, short_name, buffer );
+    ex_log ( "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, buffer );
     mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, _line_nr, short_name, buffer );
 
     // if we use dynamic buffer, free it
@@ -171,13 +170,13 @@ bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_functi
         } while ( result == -1 );
         buffer = dyn_buf;
     }
-    buffer[result-1] = '\0';
+    buffer[result] = '\0';
 
     // short the function name
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Warning: %s(%zd)[%s], %s", _file_name, _line_nr, _function_name, buffer );
+    ex_log ( "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, buffer );
     mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, _line_nr, _function_name, buffer );
 
     // if we use dynamic buffer, free it

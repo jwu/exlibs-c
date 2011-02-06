@@ -17,10 +17,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 void ex_draw_string ( int _x, int _y, const char *_text ) {
+    int i, len;
+
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glRasterPos2i(_x, _y);
 	
-	for ( int i=0, len=strlen(_text); i<len; ++i ){
+	for ( i=0, len=strlen(_text); i<len; ++i ){
         if ( _text[i] == '\n' ) {
             _y += 12;
             glRasterPos2i(_x,_y);

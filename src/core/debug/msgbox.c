@@ -52,7 +52,7 @@ int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ...
         } while ( result == -1 );
         buffer = dyn_buf;
     }
-    buffer[result-1] = '\0';
+    buffer[result] = '\0';
 
 
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)

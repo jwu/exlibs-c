@@ -145,7 +145,7 @@ int ex_text_fwrite_line ( ex_text_file_t *_txtFile, const char *_fmt, ... ) {
         buffer = dyn_buf;
     }
 
-    buffer[result-1] = '\n';
+    buffer[result] = '\n';
     ex_text_fwrite( _txtFile, buffer, result );
 
     // if we use dynamic buffer, release it

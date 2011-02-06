@@ -161,7 +161,7 @@ static inline void ex_mat33f_get_scale ( ex_vec2f_t *_r, const ex_mat33f_t *_m )
 static inline void ex_mat33f_get_rotation ( ex_angf_t *_r, const ex_mat33f_t *_m ) { 
     float rad = atanf( _m->m01 / _m->m00 );
     if ( ex_signf(_m->m00) < 0.0f ) {
-        rad += EX_PI;
+        rad += (float)EX_PI;
     }
     ex_angf_set_by_radians ( _r, rad );
 }

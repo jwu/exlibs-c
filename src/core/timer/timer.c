@@ -60,12 +60,14 @@ void __threaded_timer_tick () {
     ex_mutex_lock(__timer_mutex);
     now = ex_timer_get_ticks();
     ex_pool_raw_each ( &__timers, timer_t *, t ) {
+        int32 time_since_lastAlarm;
+
         if ( t->state != EX_TIMER_STATE_RUNNING )
             ex_pool_continue;
 
         // process internval
         ms = t->interval_counter - EX_TIMER_SLICE;
-        int32 time_since_lastAlarm = (int32)(now - t->last_alarm); 
+        time_since_lastAlarm = (int32)(now - t->last_alarm); 
 
         // if we exceed the interval
         if ( time_since_lastAlarm > ms ) {
@@ -94,8 +96,10 @@ void __threaded_timer_tick () {
 
         // process lifetime
         if ( t->lifetime != -1 ) {
+            int32 time_since_start;
+
             ms = t->lifetime_counter - EX_TIMER_SLICE;
-            int32 time_since_start = (int32)(now - t->start); 
+            time_since_start = (int32)(now - t->start); 
 
             // if we exceed the lifetime, remove the timer
             if ( time_since_start > ms ) {
@@ -212,7 +216,8 @@ int ex_add_timer ( ex_timer_pfn _cb,
                    size_t _size, /*parameter byte-size*/ 
                    timespan_t _interval,
                    timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ ) {
-    //
+
+    int id;
     timer_t newTimer;
 
     // check the inputs
@@ -235,7 +240,7 @@ int ex_add_timer ( ex_timer_pfn _cb,
     }
 
     //
-    int id = ex_pool_insert ( &__timers, &newTimer );
+    id = ex_pool_insert ( &__timers, &newTimer );
     return id;
 }
 
@@ -307,10 +312,13 @@ void ex_pause_timer ( int _id ) {
     
     t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
+        uint32 now;
+        int32 time_since_lastAlarm,time_since_start;
+
         ex_mutex_lock(__timer_mutex);
-            uint32 now = ex_timer_get_ticks();
-            int32 time_since_lastAlarm = (int32)(now - t->last_alarm);
-            int32 time_since_start = (int32)(now - t->start);
+            now = ex_timer_get_ticks();
+            time_since_lastAlarm = (int32)(now - t->last_alarm);
+            time_since_start = (int32)(now - t->start);
             t->interval_counter = t->interval_counter - time_since_lastAlarm;
             t->lifetime_counter = t->lifetime_counter - time_since_start;
             t->state = EX_TIMER_STATE_PAUSED;
@@ -330,8 +338,10 @@ void ex_resume_timer ( int _id ) {
 
     t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
+        uint32 now;
+
         ex_mutex_lock(__timer_mutex);
-            uint32 now = ex_timer_get_ticks();
+            now = ex_timer_get_ticks();
             t->start = t->last_alarm = now;
             t->state = EX_TIMER_STATE_RUNNING;
         ex_mutex_unlock(__timer_mutex);

@@ -25,13 +25,14 @@ void test_uid () {
     ex_hashmap_t *map;
     ex_uid_t uid, last_uid;
     size_t idx;
+    int i;
 
     txtFile = ex_text_fopen( "misc/uid_test.txt", false );
 
     map = ex_hashset(uint64,2048);
     tmp = ex_string("");
 
-    for ( int i = 0; i < 2000; ++i ) {
+    for ( i = 0; i < 2000; ++i ) {
         uid = ex_generate_uid();
 
         // __ex_tostring_uid( tmp, &uid );

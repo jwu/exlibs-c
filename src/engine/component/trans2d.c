@@ -460,11 +460,13 @@ void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ) {
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_set_right ( ex_ref_t *_self, const ex_vec2f_t *_right ) {
+    float sin_theta, cos_theta, rad;
+
     ex_vec2f_t w_right;
     ex_vec2f_set( &w_right, 1.0f, 0.0f );
-    float sin_theta = ex_vec2f_cross( &w_right, _right );
-    float cos_theta = ex_vec2f_dot( &w_right, _right );
-    float rad = atanf( sin_theta/cos_theta );
+    sin_theta = ex_vec2f_cross( &w_right, _right );
+    cos_theta = ex_vec2f_dot( &w_right, _right );
+    rad = atanf( sin_theta/cos_theta );
 
     if ( ex_signf(cos_theta) < 0.0f )
         rad += EX_PI;
@@ -476,11 +478,13 @@ void ex_trans2d_set_right ( ex_ref_t *_self, const ex_vec2f_t *_right ) {
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_set_up ( ex_ref_t *_self, const ex_vec2f_t *_up ) {
+    float sin_theta, cos_theta, rad;
+
     ex_vec2f_t w_up;
     ex_vec2f_set( &w_up, 0.0f, 1.0f );
-    float sin_theta = ex_vec2f_cross( &w_up, _up );
-    float cos_theta = ex_vec2f_dot( &w_up, _up );
-    float rad = atanf( sin_theta/cos_theta );
+    sin_theta = ex_vec2f_cross( &w_up, _up );
+    cos_theta = ex_vec2f_dot( &w_up, _up );
+    rad = atanf( sin_theta/cos_theta );
 
     if ( ex_signf(cos_theta) < 0.0f )
         rad += EX_PI;

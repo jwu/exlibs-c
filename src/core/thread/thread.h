@@ -58,6 +58,12 @@ extern ex_thread_t *ex_create_thread ( ex_thread_pfn_t _fn, void *_data );
 
 extern void ex_wait_thread ( ex_thread_t *_thread, int *_status );
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_kill_thread ( ex_thread_t *_thread );
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

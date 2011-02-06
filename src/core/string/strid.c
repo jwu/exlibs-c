@@ -27,8 +27,7 @@ static bool __initialized = false;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_strid_init ( size_t _size )
-{
+int ex_strid_init ( size_t _size ) {
     // if the core already initialized, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "string ID table already initialized" );
@@ -54,8 +53,7 @@ int ex_strid_init ( size_t _size )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_strid_deinit ()
-{
+void ex_strid_deinit () {
     if ( __initialized ) {
         // free all allocated string
         ex_hashmap_each ( &__string_set, char *, str ) {
@@ -76,8 +74,7 @@ bool ex_strid_initialized () { return __initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-strid_t ex_strid ( const char *_cstr )
-{
+strid_t ex_strid ( const char *_cstr ) {
     size_t idx = -1;
     size_t hash_idx = -1;
     char *str_new = NULL;
@@ -99,8 +96,7 @@ strid_t ex_strid ( const char *_cstr )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-strid_t ex_strid_from_wcs ( const wchar_t *_wcs )
-{
+strid_t ex_strid_from_wcs ( const wchar_t *_wcs ) {
     size_t idx = -1;
     size_t hash_idx = -1;
     size_t str_size = wcslen(_wcs)+1;
@@ -126,10 +122,11 @@ strid_t ex_strid_from_wcs ( const wchar_t *_wcs )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-const char *ex_strid_to_cstr ( strid_t _id )
-{
+const char *ex_strid_to_cstr ( strid_t _id ) {
+    char *addr;
+
     if ( _id == EX_STRID_NULL ) return NULL;
-    char *addr = (char *)__string_set.keys + _id * __string_set.key_bytes;
+    addr = (char *)__string_set.keys + _id * __string_set.key_bytes;
     return *((char **)addr);
 }
 

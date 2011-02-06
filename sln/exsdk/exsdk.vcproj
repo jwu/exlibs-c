@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext;..\..\src"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;"
 				PreprocessorDefinitions="WIN32;__EX_WIN32;__EX_DEBUG__;DEBUG;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -105,7 +105,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\ext;..\..\src"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\glut\include\;&quot;..\..\yajl-1.0.11\include\&quot;;&quot;..\..\physfs-2.0.1\include\&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -201,6 +201,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\core\global\config.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\global\constants.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\global\endian.h"
 					>
 				</File>
 				<File
@@ -300,6 +308,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\core\string\string.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\string\string.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\string\string_inc.h"
 					>
 				</File>
@@ -307,6 +323,22 @@
 			<Filter
 				Name="runtime"
 				>
+				<File
+					RelativePath="..\..\src\core\runtime\builtin_prop_getset.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\runtime\builtin_serialize.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\runtime\builtin_tostring.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\runtime\builtin_type.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\src\core\runtime\class.c"
 					>
@@ -335,16 +367,44 @@
 					RelativePath="..\..\src\core\runtime\runtime_inc.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\core\runtime\runtime_macro.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\runtime\typeop.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\runtime\typeop.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="thread"
 				>
+				<File
+					RelativePath="..\..\src\core\thread\cond.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\src\core\thread\mutex.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\core\thread\mutex_win32.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\thread\semaphore.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\thread\semaphore_win32.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\thread\thread.c"
 					>
 				</File>
 				<File
@@ -355,12 +415,28 @@
 					RelativePath="..\..\src\core\thread\thread_inc.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\core\thread\thread_win32.c"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="math"
 				>
 				<File
 					RelativePath="..\..\src\core\math\angf.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\math\circlef.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\math\color.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\math\color.h"
 					>
 				</File>
 				<File
@@ -373,6 +449,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\core\math\interpolation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\math\line2f.h"
 					>
 				</File>
 				<File
@@ -404,7 +484,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\core\math\mathdef.c"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\math\mathdef.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\math\mathdef2.h"
 					>
 				</File>
 				<File
@@ -424,15 +512,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\core\math\vec2f.c"
+					RelativePath="..\..\src\core\math\rectf.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\core\math\vec2f.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\core\math\vec3f.c"
 					>
 				</File>
 				<File
@@ -469,6 +553,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\core\algo\hash.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\algo\uid.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\algo\uid.h"
 					>
 				</File>
 			</Filter>
@@ -520,20 +612,212 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="file"
+				>
+				<File
+					RelativePath="..\..\src\core\file\file.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\file\file_inc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\file\file_physfs.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\file\text_file.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\file\text_file.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="timer"
+				>
+				<File
+					RelativePath="..\..\src\core\timer\date.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\date.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\dtime.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\dtime.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\timer.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\timer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\timer_inc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\timer_win32.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\timespan.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\timer\timespan.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="serialize"
+				>
+				<File
+					RelativePath="..\..\src\core\serialize\serialize_inc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\serialize\stream.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\serialize\stream_bin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\serialize\stream_json.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\serialize\stream_json.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\serialize\stream_xml.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="engine"
 			>
+			<File
+				RelativePath="..\..\src\engine\engine_inc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\entity.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\entity.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\object.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\object.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\ref.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\ref.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\time.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\time.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\world.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\world.h"
+				>
+			</File>
+			<Filter
+				Name="component"
+				>
+				<File
+					RelativePath="..\..\src\engine\component\behavior.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\behavior.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\camera.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\camera.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\component.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\component.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\debug2d.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\debug2d.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\sprite.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\sprite.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\trans2d.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\trans2d.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="graphics"
 			>
 			<File
-				RelativePath="..\..\src\graphics\device.c"
+				RelativePath="..\..\src\graphics\debug_draw.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\graphics\device.h"
+				RelativePath="..\..\src\graphics\debug_draw.h"
 				>
 			</File>
 			<File
@@ -552,6 +836,10 @@
 		<Filter
 			Name="autogen"
 			>
+			<File
+				RelativePath="..\..\src\autogen\builtin_type_registry.c"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\autogen\classes_registry.c"
 				>
@@ -600,6 +888,26 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="app"
+			>
+			<File
+				RelativePath="..\..\src\app\app.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\app\app.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\app\editor.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\app\editor.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\src\exsdk.c"

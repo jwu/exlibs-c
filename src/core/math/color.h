@@ -533,9 +533,9 @@ static inline void ex_color4u_to_color4f ( const ex_color4u_t *_c, ex_color4f_t 
 
 static inline void ex_color3f_to_color3u ( const ex_color3f_t *_c, ex_color3u_t *_cout ) { 
     ex_color3u_set ( _cout, 
-                     (uint8)_c->r * 255.0f, 
-                     (uint8)_c->g * 255.0f,
-                     (uint8)_c->b * 255.0f );
+                     (uint8)(_c->r * 255.0f), 
+                     (uint8)(_c->g * 255.0f),
+                     (uint8)(_c->b * 255.0f) );
 }
 
 // ------------------------------------------------------------------ 
@@ -564,10 +564,10 @@ static inline uint32 ex_color3f_to_RGBA ( const ex_color3f_t *_c ) {
 
 static inline void ex_color4f_to_color4u ( const ex_color4f_t *_c, ex_color4u_t *_cout ) { 
     ex_color4u_set ( _cout, 
-                     (uint8)_c->r * 255.0f, 
-                     (uint8)_c->g * 255.0f,
-                     (uint8)_c->b * 255.0f,
-                     (uint8)_c->a * 255.0f );
+                     (uint8)(_c->r * 255.0f), 
+                     (uint8)(_c->g * 255.0f),
+                     (uint8)(_c->b * 255.0f),
+                     (uint8)(_c->a * 255.0f) );
 }
 
 // ------------------------------------------------------------------ 

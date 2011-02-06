@@ -44,7 +44,7 @@ static inline uint64 ex_cpu_cycle() {
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
     LARGE_INTEGER counter;
     QueryPerformanceCounter(&counter);
-    return uint64(counter.QuadPart);
+    return (uint64)(counter.QuadPart);
 #elif (EX_PLATFORM == EX_PS3 )
     uint64 counter;
     __asm__ __volatile__( "mftb %0" : "=r" (counter) );
@@ -63,7 +63,7 @@ static inline uint64 ex_cpu_freq () {
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
     LARGE_INTEGER freq;
     QueryPerformanceFrequency(&freq);
-    return uint64(freq.QuadPart);    
+    return (uint64)(freq.QuadPart);    
 #elif (EX_PLATFORM == EX_PS3 )
     return sys_time_get_timebase_frequency();
 #else
@@ -78,7 +78,7 @@ static inline uint64 ex_cpu_freq () {
 
 static inline void ex_sleep ( uint32 _ms ) {
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
-    ::Sleep(_ms);
+    Sleep(_ms);
 #elif (EX_PLATFORM == EX_PS3) 
     sys_timer_usleep( _ms * 1000 );
 #else

@@ -2,31 +2,31 @@
     "num_objects": { "int": 24 },
     "type": { "strid": "ex_world_t" },
     "object": { "ex_world_t": {
-        "uid": { "uid": 17222821719177 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "World" },
         "flags": { "uint32": 0 },
         "entities": { "array": [
-             { "ref": 17222821719178 },
-             { "ref": 17222821719201 },
-             { "ref": 1143122728561825 },
-             { "ref": 2269022635404449 },
-             { "ref": 17222821719202 },
-             { "ref": 1143122728561826 }
+             { "ref": 52849943 },
+             { "ref": 52849943 },
+             { "ref": 52849943 },
+             { "ref": 52849943 },
+             { "ref": 52849944 },
+             { "ref": 52849944 }
         ] }
     } },
     "type": { "strid": "ex_entity_t" },
     "object": { "ex_entity_t": {
-        "uid": { "uid": 17222821719178 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "main_camera" },
         "flags": { "uint32": 0 },
         "components": { "array": [
-             { "ref": 17222821719194 },
-             { "ref": 298697798429850 }
+             { "ref": 52849943 },
+             { "ref": 52849943 }
         ] }
     } },
     "type": { "strid": "ex_trans2d_t" },
     "object": { "ex_trans2d_t": {
-        "uid": { "uid": 17222821719194 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Transform 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -38,7 +38,7 @@
     } },
     "type": { "strid": "ex_camera_t" },
     "object": { "ex_camera_t": {
-        "uid": { "uid": 298697798429850 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Camera" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -50,18 +50,18 @@
     } },
     "type": { "strid": "ex_entity_t" },
     "object": { "ex_entity_t": {
-        "uid": { "uid": 17222821719201 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "entity_01" },
         "flags": { "uint32": 0 },
         "components": { "array": [
-             { "ref": 298697798429857 },
-             { "ref": 580172775140513 },
-             { "ref": 861647751851169 }
+             { "ref": 52849943 },
+             { "ref": 52849943 },
+             { "ref": 52849943 }
         ] }
     } },
     "type": { "strid": "ex_trans2d_t" },
     "object": { "ex_trans2d_t": {
-        "uid": { "uid": 298697798429857 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Transform 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -70,13 +70,13 @@
         "scale": { "vec2f": [1.000000, 1.000000] },
         "parent": { "ref": -1 },
         "children": { "array": [
-             { "ref": 1424597705272481 },
-             { "ref": 298697798429858 }
+             { "ref": 52849943 },
+             { "ref": 52849944 }
         ] }
     } },
     "type": { "strid": "ex_debug2d_t" },
     "object": { "ex_debug2d_t": {
-        "uid": { "uid": 580172775140513 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Debug 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -87,42 +87,42 @@
     } },
     "type": { "strid": "ex_simple_t" },
     "object": { "ex_simple_t": {
-        "uid": { "uid": 861647751851169 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Simple Behavior" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "move_dir": { "vec2f": [0.776036, -0.630689] },
+        "move_dir": { "vec2f": [-0.804443, -0.594030] },
         "move_speed": { "float": 0.000000 },
         "rot_speed": { "float": 0.000000 }
     } },
     "type": { "strid": "ex_entity_t" },
     "object": { "ex_entity_t": {
-        "uid": { "uid": 1143122728561825 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "entity_02" },
         "flags": { "uint32": 0 },
         "components": { "array": [
-             { "ref": 1424597705272481 },
-             { "ref": 1706072681983137 },
-             { "ref": 1987547658693793 }
+             { "ref": 52849943 },
+             { "ref": 52849943 },
+             { "ref": 52849943 }
         ] }
     } },
     "type": { "strid": "ex_trans2d_t" },
     "object": { "ex_trans2d_t": {
-        "uid": { "uid": 1424597705272481 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Transform 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "pos": { "vec2f": [-122.831100, 102.537148] },
+        "pos": { "vec2f": [-97.998100, 126.476959] },
         "ang": { "angf": 0.000000 },
         "scale": { "vec2f": [1.000000, 1.000000] },
-        "parent": { "ref": 298697798429857 },
+        "parent": { "ref": 52849943 },
         "children": { "array": [
-             { "ref": 2550497612115105 }
+             { "ref": 52849943 }
         ] }
     } },
     "type": { "strid": "ex_debug2d_t" },
     "object": { "ex_debug2d_t": {
-        "uid": { "uid": 1706072681983137 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Debug 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -133,40 +133,40 @@
     } },
     "type": { "strid": "ex_simple_t" },
     "object": { "ex_simple_t": {
-        "uid": { "uid": 1987547658693793 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Simple Behavior" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "move_dir": { "vec2f": [0.975625, -0.219444] },
+        "move_dir": { "vec2f": [-0.261950, 0.965081] },
         "move_speed": { "float": 0.000000 },
         "rot_speed": { "float": 2.000000 }
     } },
     "type": { "strid": "ex_entity_t" },
     "object": { "ex_entity_t": {
-        "uid": { "uid": 2269022635404449 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "entity_03" },
         "flags": { "uint32": 0 },
         "components": { "array": [
-             { "ref": 2550497612115105 },
-             { "ref": 2831972588825761 },
-             { "ref": 3113447565536417 }
+             { "ref": 52849943 },
+             { "ref": 52849943 },
+             { "ref": 52849943 }
         ] }
     } },
     "type": { "strid": "ex_trans2d_t" },
     "object": { "ex_trans2d_t": {
-        "uid": { "uid": 2550497612115105 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Transform 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "pos": { "vec2f": [0.000000, 79.999992] },
+        "pos": { "vec2f": [0.000000, 79.999985] },
         "ang": { "angf": 0.000000 },
         "scale": { "vec2f": [1.000000, 1.000000] },
-        "parent": { "ref": 1424597705272481 },
+        "parent": { "ref": 52849943 },
         "children": { "array": [ ] }
     } },
     "type": { "strid": "ex_debug2d_t" },
     "object": { "ex_debug2d_t": {
-        "uid": { "uid": 2831972588825761 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Debug 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -177,42 +177,42 @@
     } },
     "type": { "strid": "ex_simple_t" },
     "object": { "ex_simple_t": {
-        "uid": { "uid": 3113447565536417 },
+        "uid": { "uid": 52849943 },
         "name": { "strid": "Simple Behavior" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "move_dir": { "vec2f": [-0.050357, 0.998731] },
+        "move_dir": { "vec2f": [-0.907579, 0.419881] },
         "move_speed": { "float": 0.000000 },
         "rot_speed": { "float": 0.000000 }
     } },
     "type": { "strid": "ex_entity_t" },
     "object": { "ex_entity_t": {
-        "uid": { "uid": 17222821719202 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "entity_02" },
         "flags": { "uint32": 0 },
         "components": { "array": [
-             { "ref": 298697798429858 },
-             { "ref": 580172775140514 },
-             { "ref": 861647751851170 }
+             { "ref": 52849944 },
+             { "ref": 52849944 },
+             { "ref": 52849944 }
         ] }
     } },
     "type": { "strid": "ex_trans2d_t" },
     "object": { "ex_trans2d_t": {
-        "uid": { "uid": 298697798429858 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "Transform 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "pos": { "vec2f": [122.831100, -102.537148] },
+        "pos": { "vec2f": [97.998100, -126.476959] },
         "ang": { "angf": 0.000000 },
         "scale": { "vec2f": [1.000000, 1.000000] },
-        "parent": { "ref": 298697798429857 },
+        "parent": { "ref": 52849943 },
         "children": { "array": [
-             { "ref": 1424597705272482 }
+             { "ref": 52849944 }
         ] }
     } },
     "type": { "strid": "ex_debug2d_t" },
     "object": { "ex_debug2d_t": {
-        "uid": { "uid": 580172775140514 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "Debug 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -223,40 +223,40 @@
     } },
     "type": { "strid": "ex_simple_t" },
     "object": { "ex_simple_t": {
-        "uid": { "uid": 861647751851170 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "Simple Behavior" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "move_dir": { "vec2f": [-0.992422, -0.122877] },
+        "move_dir": { "vec2f": [-0.187346, 0.982294] },
         "move_speed": { "float": 0.000000 },
         "rot_speed": { "float": 2.000000 }
     } },
     "type": { "strid": "ex_entity_t" },
     "object": { "ex_entity_t": {
-        "uid": { "uid": 1143122728561826 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "entity_03" },
         "flags": { "uint32": 0 },
         "components": { "array": [
-             { "ref": 1424597705272482 },
-             { "ref": 1706072681983138 },
-             { "ref": 1987547658693794 }
+             { "ref": 52849944 },
+             { "ref": 52849944 },
+             { "ref": 52849944 }
         ] }
     } },
     "type": { "strid": "ex_trans2d_t" },
     "object": { "ex_trans2d_t": {
-        "uid": { "uid": 1424597705272482 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "Transform 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "pos": { "vec2f": [0.000000, -79.999992] },
+        "pos": { "vec2f": [0.000000, -79.999985] },
         "ang": { "angf": 0.000000 },
         "scale": { "vec2f": [1.000000, 1.000000] },
-        "parent": { "ref": 298697798429858 },
+        "parent": { "ref": 52849944 },
         "children": { "array": [ ] }
     } },
     "type": { "strid": "ex_debug2d_t" },
     "object": { "ex_debug2d_t": {
-        "uid": { "uid": 1706072681983138 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "Debug 2D" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
@@ -267,13 +267,13 @@
     } },
     "type": { "strid": "ex_simple_t" },
     "object": { "ex_simple_t": {
-        "uid": { "uid": 1987547658693794 },
+        "uid": { "uid": 52849944 },
         "name": { "strid": "Simple Behavior" },
         "flags": { "uint32": 0 },
         "active": { "bool": true },
-        "move_dir": { "vec2f": [-0.677339, -0.735671] },
+        "move_dir": { "vec2f": [0.948683, 0.316228] },
         "move_speed": { "float": 0.000000 },
         "rot_speed": { "float": 0.000000 }
     } },
-    "uid": { "uid": 17222821719177 }
+    "uid": { "uid": 52849943 }
 }

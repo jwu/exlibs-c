@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test.lua"
-	ProjectGUID="{C0A58EB5-8FC5-4545-A545-C39A36AD0675}"
+	Name="test_base"
+	ProjectGUID="{70C797D6-A09F-48F5-9049-F5AB1A7BBDCC}"
 	RootNamespace="tests"
 	TargetFrameworkVersion="196613"
 	>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext;..\..\src"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;"
 				PreprocessorDefinitions="__EX_DEBUG__;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,8 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="lua51.lib"
-				AdditionalLibraryDirectories="&quot;..\..\ext\lua-5.1.4\src&quot;"
+				AdditionalDependencies="glut32.lib physfs.lib yajl_s.lib"
+				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32;&quot;..\..\ext\physfs-2.0.1\lib\win32&quot;;&quot;..\..\ext\yajl-1.0.11\lib\win32&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -113,7 +113,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\ext;..\..\src"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -130,6 +130,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="physfs.lib yajl_s.lib"
+				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -162,11 +164,75 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\tests\test.lua\main.c"
+			RelativePath="..\..\src\tests\test_base\main.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\tests\test.lua\test_normal.c"
+			RelativePath="..\..\src\tests\test_base\test_array.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_bitarry.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_btree.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_cstr.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_encoding.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_hashmap.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_list.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_memmng.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_pool.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_rapid.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_rtti.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_stream.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_string.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_stringID.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_thread.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_timer.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\tests\test_base\test_uid.c"
 			>
 		</File>
 	</Files>

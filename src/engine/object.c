@@ -123,8 +123,11 @@ static ex_ref_t *__reftable_add ( void *_obj ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_create_object ( strid_t _typeID, ex_uid_t _uid ) {
+    ex_object_t *obj;
+
     ex_assert_return( _uid != EX_UID_INVALID, NULL, "faield to create object. uid is invalid." );
-    ex_object_t *obj = (ex_object_t *)ex_create(_typeID);
+
+    obj = (ex_object_t *)ex_create(_typeID);
     obj->uid = _uid;
     return __reftable_add (obj);
 }
@@ -231,12 +234,13 @@ void ex_serialize_objects ( ex_stream_t *_stream ) {
     int num_objects;
     strid_t typeID;
     ex_object_t *obj;
+    int i;
     
     num_objects = ex_hashmap_count(&__uid_to_refptr);
     EX_SERIALIZE( _stream, int, "num_objects", &num_objects );
 
     if ( _stream->type == EX_STREAM_READ ) {
-        for ( int i = 0; i < num_objects; ++i ) {
+        for ( i = 0; i < num_objects; ++i ) {
             EX_SERIALIZE( _stream, strid, "type", &typeID );
             obj = ex_create(typeID);
             ex_rtti_info(obj)->serialize( _stream, ex_strid("object"), obj );

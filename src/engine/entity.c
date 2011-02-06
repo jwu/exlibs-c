@@ -103,6 +103,7 @@ void __entity_deinit ( ex_ref_t *_self ) {
     ex_entity_t *self = EX_REF_PTR(ex_entity_t,_self);
     ex_trans2d_t *trans2d = EX_REF_PTR(ex_trans2d_t,self->trans2d);
     ex_ref_t *comp;
+    int i;
 
     // do children-parent deinit.
     if ( trans2d ) {
@@ -121,7 +122,7 @@ void __entity_deinit ( ex_ref_t *_self ) {
 
     // NOTE: the destroy will invoke __entity_remove_comp, so we remove the component inversed.
     // NOTE: you don't need to call ex_decref, cause the component->deinit will do it.
-    for ( int i = ex_array_count(self->comps)-1; i >= 0; --i ) {
+    for ( i = ex_array_count(self->comps)-1; i >= 0; --i ) {
         comp = *((ex_ref_t **)ex_array_get(self->comps, i));
         ex_destroy_object_immediately(comp,true);
     }

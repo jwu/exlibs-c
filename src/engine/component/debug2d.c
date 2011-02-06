@@ -207,20 +207,23 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 
         // draw scaled geometry
         {
-            glMatrixMode( GL_MODELVIEW );
             ex_mat33f_t r;
-            ex_trans2d_local_to_world_mat33f(ent->trans2d,&r);
-            float m[16] = {
-                r.m00, r.m01, r.m02, 0.0f,
-                r.m10, r.m11, r.m12, 0.0f,
-                0.0f,  0.0f,  1.0f,  0.0f,
-                r.m20, r.m21, r.m22, 1.0f,
-            };
-            glLoadMatrixf(m);
 
-            glVertexPointer ( 2, GL_FLOAT, 0, verts );
-            glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
-            glDrawArrays(GL_LINE_LOOP, 0, 4);
+            glMatrixMode( GL_MODELVIEW );
+            ex_trans2d_local_to_world_mat33f(ent->trans2d,&r);
+            {
+                float m[16] = {
+                    r.m00, r.m01, r.m02, 0.0f,
+                    r.m10, r.m11, r.m12, 0.0f,
+                    0.0f,  0.0f,  1.0f,  0.0f,
+                    r.m20, r.m21, r.m22, 1.0f,
+                };
+                glLoadMatrixf(m);
+
+                glVertexPointer ( 2, GL_FLOAT, 0, verts );
+                glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
+                glDrawArrays(GL_LINE_LOOP, 0, 4);
+            }
         }
 
     }
@@ -258,9 +261,10 @@ void __debug2d_start ( ex_ref_t *_self ) {
     ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
     ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
     ex_vec2f_t worldPos;
+    int i;
 
     ex_trans2d_world_position( ent->trans2d, &worldPos );
-    for ( int i = 0; i < EX_MAX_TRAIL_VERTS; ++i )
+    for ( i = 0; i < EX_MAX_TRAIL_VERTS; ++i )
         self->trails[i] = worldPos;
 
     self->trail_timer = ex_add_timer( __add_trail, 

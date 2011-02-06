@@ -125,8 +125,9 @@ static void initGame () {
 
     // create main camera
     {
-        ex_log ("create main camera...");
         ex_ref_t *mainCam;
+
+        ex_log ("create main camera...");
         ex_world_create_camera2d ( g_world, ex_strid("main_camera") );
         mainCam = ex_world_main_camera (g_world);
         ex_assert ( mainCam, "can't find main camera" );
@@ -172,9 +173,11 @@ static void updateGame () {
 // ------------------------------------------------------------------ 
 
 static void __reshape ( int _width, int _height ) {
+    ex_ref_t *mainCam;
+    
     win_width = _width;
     win_height = _height;
-    ex_ref_t *mainCam = ex_world_main_camera (g_world);
+    mainCam = ex_world_main_camera (g_world);
 
     // setup viewport
     glViewport(0, 0, win_width, win_height);
@@ -190,7 +193,7 @@ static void __reshape ( int _width, int _height ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __idle() {
+static void __idle(void) {
     updateGame();
 	glutPostRedisplay();
 }
@@ -199,7 +202,7 @@ static void __idle() {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __display() {
+static void __display(void) {
     // DISABLE { 
     // cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
 
@@ -369,7 +372,7 @@ static void registerFuncs () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void exit_fn () {
+static void exit_fn (void) {
     // deinit
     quitGame ();
     ex_app_deinit();

@@ -58,7 +58,7 @@ ex_string_t *ex_string_fmt ( const char *_fmt, ... ) {
         EX_GET_VA_STRING_WITH_RESULT( string->text, buffer_count-1, _fmt, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
         buffer_count *= 2;
     } while ( result == -1 );
-    string->text[result-1] = '\0';
+    string->text[result] = '\0';
     string->len = result;
     return string;
 }
@@ -99,7 +99,7 @@ void ex_string_printf ( ex_string_t *_string, const char *_fmt, ... ) {
             buffer_count *= 2;
         } while ( result == -1 );
     }
-    _string->text[result-1] = '\0';
+    _string->text[result] = '\0';
     _string->len = result;
 }
 

@@ -266,7 +266,7 @@ static void __dump () {
             char text[2048];
             ex_memzero ( text, 2048 );
             snprintf ( text, 2048, 
-                       "%s:%zd: error memory leak\r\n"
+                       "%s:%d: error memory leak\r\n"
                        "function name:  %s\r\n"
                        "tag name:       %s\r\n"
                        "original addr:  %#.8lx\r\n"

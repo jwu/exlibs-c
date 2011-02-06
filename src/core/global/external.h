@@ -31,6 +31,10 @@
     // // to use the sse intrins in gcc, please add -msse compile flag in makefile of this project
     // #include <xmmintrin.h>  // for type __m128
 
+	#include <gl/gl.h>
+	#include <gl/glu.h>
+	#include "GL/glut.h"
+
 #elif (EX_PLATFORM == EX_LINUX)
 
     #include <malloc.h> 
@@ -48,8 +52,8 @@
     #include <semaphore.h>
     #include <errno.h>
 
-	#include "OpenGL/gl.h"
-	#include "OpenGL/glu.h"
+	#include <OpenGL/gl.h>
+	#include <OpenGL/glu.h>
 	#include <GLUT/glut.h>
     #include <sys/time.h>
 #endif

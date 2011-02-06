@@ -13,16 +13,6 @@
 #include "core.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// for developing
-///////////////////////////////////////////////////////////////////////////////
-
-#if (EX_PLATFORM == EX_WIN32)
-    const char *exsdk_dev_path = "e:/project/dev/exsdk/";
-#else
-    const char *exsdk_dev_path = "/Users/Johnny/dev/projects/exdev/exsdk/";
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -50,7 +40,7 @@ int ex_core_init ()
     //       they are strongly initialized by order.
 
     // before we start, we need to change the rand seed 
-    ex_srand(time(0));
+    ex_srand((uint)time(0));
 
     //
     ex_log ("init timer");

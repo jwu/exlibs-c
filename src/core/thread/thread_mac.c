@@ -100,3 +100,11 @@ void ex_sys_setup_thread () {
 // #endif
 // } jwu DISABLE end 
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_sys_kill_thread ( ex_thread_t *_thread ) {
+	pthread_kill(thread->handle, SIGKILL);
+}

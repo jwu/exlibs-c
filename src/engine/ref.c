@@ -61,6 +61,7 @@ int ex_decref ( ex_ref_t *_ref ) {
     ex_assert_return( _ref->refcount > 0, -1, "the reference count already zero, you dereference it twice." );
 
     _ref->refcount -= 1;
+    ret = _ref->refcount; 
     if ( _ref->refcount == 0 ) {
         if ( _ref->ptr )
             ex_destroy_object(_ref);

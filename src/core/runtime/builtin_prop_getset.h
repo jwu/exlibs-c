@@ -28,12 +28,12 @@ extern "C" {
 
 #define DEF_BUILTIN_PROP_SET_RAW(_type) \
     static inline void ex_prop_set_raw_##_type ( void *_obj, size_t _offset, const void *_value ) {  \
-        *(_type *)ex_ptr_add(_obj,_offset) = *(const _type *)_value;  \
+        *(_type *)ex_ptr_add(_obj,_offset) = *(_type const *)_value;  \
     }
 
 #define DEF_BUILTIN_PROP_SET_RAW_2(_typename,_type) \
     static inline void ex_prop_set_raw_##_typename ( void *_obj, size_t _offset, const void *_value ) {  \
-        *(_type *)ex_ptr_add(_obj,_offset) = *(const _type *)_value;  \
+        *(_type *)ex_ptr_add(_obj,_offset) = *(_type const *)_value;  \
     }
 
 #define DEF_BUILTIN_PROP_GET_RAW(_type) \
@@ -88,7 +88,7 @@ DEF_BUILTIN_PROP_GET_RAW(float);
 DEF_BUILTIN_PROP_SET_RAW(double);
 DEF_BUILTIN_PROP_GET_RAW(double);
 
-DEF_BUILTIN_PROP_SET_RAW_2(cstr, const char *);
+DEF_BUILTIN_PROP_SET_RAW_2(cstr, char *);
 DEF_BUILTIN_PROP_GET_RAW_2(cstr, char *);
 
 // string - ex_string_t

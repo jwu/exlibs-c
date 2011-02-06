@@ -26,21 +26,23 @@
 // ------------------------------------------------------------------ 
 
 static ex_ref_t *create_simple_entity ( const char *_name ) {
+    ex_ref_t *trans2d, *dbg2d, *simple_ref;
+    ex_simple_t *simple;
     ex_ref_t *ent = ex_world_create_entity ( g_world, ex_strid(_name) ); 
 
     // trans2d
-    ex_ref_t *trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
+    trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
     ex_trans2d_set_local_position( trans2d, 0.0f, 0.0f );
     ex_trans2d_set_local_scale ( trans2d, 1.0f, 1.0f );
     ex_trans2d_set_local_rotation ( trans2d, 0.0f );
 
     // dbg2d
-    ex_ref_t *dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
+    dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
     ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 20.0f, 20.0f );
 
     // simple
-    ex_ref_t *simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
-    ex_simple_t *simple = EX_REF_PTR(ex_simple_t,simple_ref);
+    simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
+    simple = EX_REF_PTR(ex_simple_t,simple_ref);
 
     ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
     ex_vec2f_normalize(&simple->move_dir);
@@ -55,15 +57,16 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
 // ------------------------------------------------------------------ 
 
 static void init () {
-    ex_log ("create test transform...");
-
     ex_ref_t *ent1, *ent2, *ent3;
     ex_ref_t *simple_ref;
     ex_ref_t *trans2d_ref;
+    int i;
+
+    ex_log ("create test transform...");
 
 #if 1
     ent1 = create_simple_entity("entity_01");
-    for ( int i = 0; i < 2; ++i ) {
+    for ( i = 0; i < 2; ++i ) {
         ent2 = create_simple_entity("entity_02");
         ent3 = create_simple_entity("entity_03");
 

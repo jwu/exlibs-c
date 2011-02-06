@@ -19,7 +19,7 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void exit_fn () {
+static void exit_fn (void) {
     // deinit
     ex_core_deinit();
 
@@ -88,7 +88,7 @@ int main( int argc, char *argv[] ) {
         // test_stringID ();
         // test_thread();
         // test_timer();
-        // test_uid();
+        test_uid();
 
         // special
         // test_rapid ();
