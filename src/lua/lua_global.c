@@ -99,7 +99,7 @@ static lua_State *__L = NULL;
 static bool __initialized = false;
 
 ///////////////////////////////////////////////////////////////////////////////
-// core
+// lua core
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -120,6 +120,13 @@ int ex_lua_init () {
 
     // OPTME { 
     // clear the package.path and package.cpath
+    ex_lua_dostring ( __L, "package.path = \"\"" );
+    ex_lua_dostring ( __L, "package.cpath = \"\"" );
+
+    // NOTE: we don't need any search path. 
+    // in exsdk, require("module") is deprecated all script load as module.
+#if 0
+    // clear the package.path and package.cpath
     ex_lua_dostring ( __L, "package.path = \"./?.lua\"" );
     ex_lua_dostring ( __L, "package.cpath = \"./?.so;./?.dll\"" );
     {
@@ -131,6 +138,7 @@ int ex_lua_init () {
         }
         ex_fsys_free_list(mounts);
     }
+#endif
     // } OPTME end 
 
     // we create global ex table if it not exists.
@@ -165,17 +173,17 @@ bool ex_lua_initialized () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-lua_state_t *ex_lua_default_state () { return __L; }
+lua_State *ex_lua_default_state () { return __L; }
 
 ///////////////////////////////////////////////////////////////////////////////
-// lua api extend
+// lua module op
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_add_path ( lua_state_t *_l, const char *_path ) {
+int ex_lua_add_path ( lua_State *_l, const char *_path ) {
     return ex_lua_dostring ( _l, 
                              "package.path = package.path .. \";%s?.lua\"", 
                              _path );
@@ -185,7 +193,7 @@ int ex_lua_add_path ( lua_state_t *_l, const char *_path ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_add_cpath ( lua_state_t *_l, const char *_path ) {
+int ex_lua_add_cpath ( lua_State *_l, const char *_path ) {
     return ex_lua_dostring ( _l, 
                              "package.cpath = package.cpath .. \";%s?.so;%s?.dll\"", 
                              _path, _path );
@@ -236,177 +244,212 @@ int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_modules ( lua_State *_l, const char *_base_path ) {
-    return 1;
+int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
+    char **file_list, **i;
+    char full_path[256];
+    int base_len, fname_len;
+
+    //
+    base_len = strlen(_dir);
+    if ( base_len+2 > 256 ) {
+        ex_error ( "directory path is too long! %s", _dir );
+        return -1;
+    }
+
+    // append '/' at the end of the path if not exists.
+    strncpy ( full_path, _dir, base_len  );
+    if ( full_path[base_len-1] != '/' ) {
+        full_path[base_len] = '/';
+        full_path[base_len+1] = '\0';
+        base_len += 1;
+    }
+    else {
+        full_path[base_len] = '\0';
+    }
+
+    //
+    file_list = ex_fsys_files_in(_dir);
+    for ( i = file_list; *i != NULL; ++i ) {
+        fname_len = strlen(*i);
+        if ( base_len + fname_len + 1 > 256 ) {
+            ex_error ( "file path is too long! %s%s", _dir, *i );
+            continue;
+        }
+
+        // skip the hidden directory or file
+        if ( **i == '.' ) {
+            continue;
+        }
+
+        // get the full path
+        full_path[base_len] = '\0'; // the easist way to reset the full_path to base_path
+        strncat ( full_path, *i, fname_len  );
+        full_path[base_len+fname_len] = '\0';
+
+        // if this is a directory
+        if ( ex_fsys_isdir( full_path ) ) {
+            ex_lua_load_modules ( _l, full_path );
+        }
+        // NOTE: it is possible that its a symbolic link
+        else if ( ex_fsys_isfile( full_path ) ) {
+            // if this is a file, check if it is a lua file.
+            if ( strncmp (*i+fname_len-4, ".lua", 4 ) == 0 ) {
+                ex_lua_dofile(_l,full_path);
+                ex_log ("load lua module from file %s", full_path);
+            }
+        }
+    }
+    ex_fsys_free_list(file_list);
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_module_byfile ( lua_State *_l, const char *_file_name ) {
-    return 1;
+int ex_lua_load_module_byfile ( lua_State *_l, const char *_base_path, const char *_file_name ) {
+    char full_path[256];
+    char modname[128];
+    int modname_len;
+    int i, base_len, fname_len;
+
+    //
+    base_len = strlen(_base_path);
+    fname_len = strlen(_file_name);
+    modname_len = fname_len - 4;
+    if ( strncmp (_file_name + modname_len, ".lua", 4 ) != 0 ) {
+        ex_error ( "failed to load lua module by file %s%s, not a valid lua file", _base_path, _file_name );
+        return -1;
+    }
+    if ( modname_len + 1 > 128 ) {
+        ex_error ( "failed to load lua module by file %s, module file name too long!", _file_name );
+        return -1;
+    }
+    if ( base_len + fname_len + 1 > 256 ) {
+        ex_error ( "failed to load lua module by file %s%s, file name too long!", _base_path, _file_name );
+        return -1;
+    }
+    strncpy ( modname, _file_name, modname_len );
+    modname[modname_len] = '\0';
+
+    strncpy ( full_path, _base_path, base_len );
+    strncat ( full_path, _file_name, fname_len );
+    full_path[base_len+fname_len] = '\0';
+
+    // substitue '/' by '.'
+    for ( i = 0; i < modname_len; ++i ) {
+        if ( modname[i] == '/' )
+            modname[i] = '.';
+    }
+
+    //
+    ex_lua_load_module_byfile2 ( _l, full_path, modname );
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_module_byfile2 ( lua_State *_l, const char *_file_name, const char *_module_name ) {
-    return -1;
+int ex_lua_load_module_byfile2 ( lua_State *_l, const char *_filepath, const char *_module_name ) {
+    ex_array_t splits;
 
-    // TODO:
-    // ex_array_t splits;
+    // if this is a NULL or an empty string, just return NULL reference.
+    if ( _module_name == NULL || strcmp( _module_name, "" ) == 0 ) {
+        ex_error ( "the module name can't be NULL or empty" );
+        return -1;
+    }
 
-    // // if this is a NULL or an empty string, just return NULL reference.
-    // if ( _module_path == NULL || strcmp( _module_path, "" ) == 0 ) {
-    //     ex_error ( "the module name can't be NULL or empty" );
-    //     return -1;
-    // }
+    // split name list by "/" and recursively search them.
+    ex_array_init( &splits, EX_STRID_NULL, sizeof(char *), 8,
+                   __ex_array_alloc,
+                   __ex_array_realloc,
+                   __ex_array_dealloc );
+    ex_str_split_into_array( &splits, ".", _module_name );
 
-    // // split name list by "/" and recursively search them.
-    // ex_array_init( &splits, EX_STRID_NULL, sizeof(char *), 8,
-    //                __ex_array_alloc,
-    //                __ex_array_realloc,
-    //                __ex_array_dealloc );
-    // ex_str_split_into_array( &splits, ".", _module );
+    //
+    ex_lua_global_module ( _l, *((char **)(splits.data)) );
+    {
+        char *sub_name;
+        size_t i = 1;
+        while ( i < splits.count ) {
+            sub_name = *( (char **) (splits.data) + i );
+            ex_lua_module ( _l, -1, sub_name );
+            ++i;
+        }
+    }
 
-    // //
-    // ex_array_each ( &splits, char *, sub_name ) {
-    // } ex_array_each_end
+    // lua: setmetatable(M, {__index = _G}) { 
+    // luaL_newmetatable ( _l, (*splits.last).c_str() );
+    lua_newtable (_l);
+    lua_getglobal ( _l, "_G" );
+    lua_setfield ( _l, -2, "__index" );
+    lua_setmetatable ( _l, -2 );
+    // } lua end 
 
+    // lua: setfenv(1,M) { 
+    lua_pushvalue( _l, -2 ); // push the last table as the environment table.
+    lua_setfenv( _l, -2 ); // pop the last value on the stack, and set it as the function environment.
+    // } lua end 
 
+    // now load the buffer
+    if ( ex_lua_dofile(_l, _filepath ) != 0 ) {
+        return -1;
+    }
 
+    // after this, we will create a global link for faster access
+    lua_setglobal( _l, _module_name );
 
+    // now we can clear stack
+    lua_settop( _l, 0 );
 
-
-
-
-
-
-
-    // Array<string_t> str_list;
-    // ex::str::splitIntoArray ( ".", _module, &str_list ); 
-    // 
-    // string_t rel_path;
-    // if ( str_list.size() > 1 ) {
-    //     for ( Array<string_t>::iterator iter = str_list.begin(); iter != str_list.end()-1; ++iter ) {
-    //         rel_path = rel_path + *iter + '/';
-    //     }
-    // }
-    // rel_path = rel_path + *(str_list.end()-1) + ".lua";
-    // const char *rel_path_cstr = rel_path.c_str(); 
-    // wchar rel_wpath[1024];
-    // ex::mem::zero( rel_wpath, 1024 );
-    // char_to_wchar<1024> ( rel_path_cstr, rel_wpath );
-
-    // wpath_t full_path ( lua::base_path() );
-    // full_path += rel_wpath;
-
-    // // now load the buffer
-    // IFile::smart_ptr_t spFile = futil::file::readonly<PhysicalFile>(full_path);
-    // if ( spFile == NULL ) {
-    //     ex_error ( "can't find the ex_lua_module %s by file", _module );
-    //     return 0;
-    // }
-
-    // // now load the file to lua for execute
-    // DataHolder dataHolder;
-    // dataHolder.alloc ( size_t(spFile->size()) );
-    // spFile->read( dataHolder.data(), spFile->size() );
-
-    // //
-    // lua::ex_lua_global_module( _l, (*str_list.begin()).c_str() );
-    // for ( Array<string_t>::iterator iter = str_list.begin()+1; iter != str_list.end(); ++iter ) {
-    //     lua::ex_lua_module( _l, -1, (*iter).c_str() );
-    // }
-
-    // // lua: setmetatable(M, {__index = _G}) { 
-    // // luaL_newmetatable ( _l, (*str_list.end()).c_str() );
-    // lua_newtable (_l);
-    // lua_getglobal ( _l, "_G" );
-    // lua_setfield ( _l, -2, "__index" );
-    // lua_setmetatable ( _l, -2 );
-    // // } lua end 
-
-    // // now load the buffer, this will create a function and put it at the top of the stack.
-    // int status = luaL_loadbuffer( _l,
-    //                               (const char *)(dataHolder.data()), 
-    //                               dataHolder.size(), 
-    //                               _module );
-    // ex_lua_alert(_l, status);
-
-    // // lua: setfenv(1,M) { 
-    // lua_pushvalue( _l, -2 ); // push the last table as the environment table.
-    // lua_setfenv( _l, -2 ); // pop the last value on the stack, and set it as the function environment.
-    // // } lua end 
-
-    // status = lua_pcall(_l, 0, LUA_MULTRET, 0);  /* call main */
-    // ex_lua_alert(_l, status);
-
-    // // after this, we will create a global link for faster access
-    // lua_setglobal( _l, _module );
-
-    // // now we can clear stack
-    // lua_settop( _l, 0 );
-
-    // return 1;
+    return 0;
 }
 
-#if 0
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int get_module ( lua_State *_l, const char *_moduleName )
+int ex_lua_get_module ( lua_State *_l, const char *_moduleName )
 {
-    lua_getglobal( ex_lua_state(), _moduleName );
+    // FIXME: this is wrong, should recursively load the module by . { 
+    lua_getglobal( _l, _moduleName );
     if( !lua_istable(_l, -1) ) {
         lua_pop(_l, 1); // Pop the non-table.
-        return 0;
+        return -1;
     }
-    return 1;
+    return 0;
+    // } FIXME end 
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int get_function ( lua_State *_l, const char *_moduleName, const char *_funcName )
+int ex_lua_get_function ( lua_State *_l, const char *_moduleName, const char *_funcName )
 {
+    // FIXME: same as above { 
     lua_getglobal( _l, _moduleName );
     lua_getfield( _l, -1, _funcName );
     if ( lua_isnil( _l, -1 ) ) {
         lua_pop(_l, 1); // remove nil
         ex_error ( "can't find function %s in ex_lua_module %s", _funcName, _moduleName );
-        return 0;
+        return -1;
     }
     lua_remove(_l, -2); // remove mod
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int w__gc ( lua_State *_l ) {
-    Proxy *p = (Proxy *)lua_touserdata(_l, 1);
-    Object *obj = (Object *)p->user_data;
-    if ( p->own_by_gc )
-        obj->release();
     return 0;
+    // } FIXME end 
 }
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
-// interpreter
+// lua interpreter op
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_dofile ( lua_state_t *_l, const char *_filepath ) {
+int ex_lua_dofile ( lua_State *_l, const char *_filepath ) {
     int status;
     ex_file_t *file;
     size_t buf_size;
@@ -448,7 +491,7 @@ PARSE_FAILED:
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_dostring ( lua_state_t *_l, const char *_fmt, ... ) {
+int ex_lua_dostring ( lua_State *_l, const char *_fmt, ... ) {
     int result = -1;
     int status;
     char buf[BUF_SIZE];
@@ -486,7 +529,7 @@ int ex_lua_dostring ( lua_state_t *_l, const char *_fmt, ... ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// DEBUG
+// lua debug op
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -540,3 +583,140 @@ void ex_lua_dump_stack ( lua_State *_l ) {
     }
     ex_log("-- stack: bottom -- \n");
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// lua register op
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __gc ( lua_State *_l ) {
+    // TODO { 
+    // Proxy *p = (Proxy *)lua_touserdata(_l, 1);
+    // Object *obj = (Object *)p->user_data;
+    // if ( p->own_by_gc )
+    //     obj->release();
+    // } TODO end 
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __tostring ( lua_State *_l ) {
+    // lua_pushvalue ( _l, lua_upvalueindex(1) );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __type ( lua_State *_l ) {
+    lua_pushvalue ( _l, lua_upvalueindex(1) );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __type_of ( lua_State *_l ) {
+    lua_pushvalue ( _l, lua_upvalueindex(1) );
+    return 1;
+}
+
+#if 0
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_register_builtin ( lua_State *_l, const char *_typeName, const void *_funcs ) {
+    const luaL_Reg *reg_funcs = (const luaL_Reg *)_funcs;
+
+    // lua: setmetatable()
+    luaL_newmetatable(_l, _typeName);
+
+    // m.__index = m
+    lua_pushvalue(_l, -1);
+    lua_setfield(_l, -2, "__index");
+
+    // add tostring function.
+    lua_pushcfunction(_l, __tostring);
+    lua_setfield(_l, -2, "__tostring");
+
+    // NOTE: builtin type no need for gc
+
+    // add tostring to as type() as well.
+    lua_pushstring(_l, _typeName);
+    lua_pushcclosure(_l, __type, 1);
+    lua_setfield(_l, -2, "type");
+
+    // add typeof
+    lua_pushcfunction(_l, __type_of);
+    lua_setfield(_l, -2, "typeof");
+
+    if ( reg_funcs != NULL )
+        luaL_register(_l, 0, reg_funcs);
+
+    lua_pop(_l, 1); // pops metatable.
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_register_class ( struct lua_State *_l, const char *_typeName, const void *_funcs ) {
+    const luaL_Reg *reg_funcs = (const luaL_Reg *)_funcs;
+
+    // lua: setmetatable()
+    luaL_newmetatable(_l, _typeName);
+
+    // m.__index = m
+    lua_pushvalue(_l, -1);
+    lua_setfield(_l, -2, "__index");
+
+    // setup gc
+    lua_pushcfunction(_l, __gc);
+    lua_setfield(_l, -2, "__gc");
+
+    // add tostring function.
+    lua_pushstring(_l, _typeName);
+    lua_pushcclosure(_l, __tostring, 1);
+    lua_setfield(_l, -2, "__tostring");
+
+    // add tostring to as type() as well.
+    lua_pushstring(_l, _typeName);
+    lua_pushcclosure(_l, __tostring, 1);
+    lua_setfield(_l, -2, "type");
+
+    // add typeof
+    lua_pushcfunction(_l, __type_of);
+    lua_setfield(_l, -2, "typeof");
+
+    // add childof
+    lua_pushcfunction(_l, __childof);
+    lua_setfield(_l, -2, "childof");
+
+    // add superof
+    lua_pushcfunction(_l, __superof);
+    lua_setfield(_l, -2, "superof");
+
+    // add isa
+    lua_pushcfunction(_l, __isa);
+    lua_setfield(_l, -2, "isa");
+
+    //
+    if ( reg_funcs != NULL )
+        luaL_register(_l, 0, reg_funcs);
+
+    lua_pop(_l, 1); // pops metatable.
+
+    return 0;
+}
+#endif

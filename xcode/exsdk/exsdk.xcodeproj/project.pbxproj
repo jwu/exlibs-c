@@ -84,6 +84,9 @@
 		B2A22DBD12FEEC1200F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
 		B2A22DC012FEEC3000F3C100 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B2A22DDB12FEEDC400F3C100 /* test_lua.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22DDA12FEEDC400F3C100 /* test_lua.c */; };
+		B2A22EF01300371800F3C100 /* test_script.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22EEF1300371800F3C100 /* test_script.c */; };
+		B2A22EF81300392100F3C100 /* wrap_world.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22EF71300392100F3C100 /* wrap_world.c */; };
+		B2A22F12130059C400F3C100 /* wrap_vec2f.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A22F11130059C400F3C100 /* wrap_vec2f.c */; };
 		B2B113FF12DAAE66002E6C1A /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B113FE12DAAE66002E6C1A /* color.c */; };
 		B2B7AB5212F80A7600FA2EC0 /* simple_world.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B7AB5012F80A7600FA2EC0 /* simple_world.c */; };
 		B2B7AB5312F80A7600FA2EC0 /* test_transform.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B7AB5112F80A7600FA2EC0 /* test_transform.c */; };
@@ -300,6 +303,9 @@
 		B2A22DA912FEEBF900F3C100 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/lua-5.1.4/lib/macosx/liblua.a"; sourceTree = "<absolute>"; };
 		B2A22DDA12FEEDC400F3C100 /* test_lua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_lua.c; sourceTree = "<group>"; };
 		B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "editor-Info.plist"; sourceTree = "<group>"; };
+		B2A22EEF1300371800F3C100 /* test_script.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_script.c; sourceTree = "<group>"; };
+		B2A22EF71300392100F3C100 /* wrap_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrap_world.c; path = lua/wrap_world.c; sourceTree = "<group>"; };
+		B2A22F11130059C400F3C100 /* wrap_vec2f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wrap_vec2f.c; path = lua/wrap_vec2f.c; sourceTree = "<group>"; };
 		B2B113FE12DAAE66002E6C1A /* color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = color.c; sourceTree = "<group>"; };
 		B2B7AB5012F80A7600FA2EC0 /* simple_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = simple_world.c; sourceTree = "<group>"; };
 		B2B7AB5112F80A7600FA2EC0 /* test_transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_transform.c; sourceTree = "<group>"; };
@@ -581,6 +587,7 @@
 		B245482E12B91EF300EF7261 /* test_gl */ = {
 			isa = PBXGroup;
 			children = (
+				B2A22EEF1300371800F3C100 /* test_script.c */,
 				B2B7ABF212F8FF9D00FA2EC0 /* main.h */,
 				B2B7AB5012F80A7600FA2EC0 /* simple_world.c */,
 				B2B7AB5112F80A7600FA2EC0 /* test_transform.c */,
@@ -612,6 +619,8 @@
 		B2A22D7912FEE77500F3C100 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				B2A22F11130059C400F3C100 /* wrap_vec2f.c */,
+				B2A22EF71300392100F3C100 /* wrap_world.c */,
 				B2A22D7A12FEE78600F3C100 /* lua_global.c */,
 				B2A22D7B12FEE78600F3C100 /* lua_global.h */,
 				B2A22D7C12FEE78600F3C100 /* lua_inc.h */,
@@ -1127,6 +1136,7 @@
 				B2D8CAC112F1480A00584C38 /* simple_behavior.c in Sources */,
 				B2B7AB5212F80A7600FA2EC0 /* simple_world.c in Sources */,
 				B2B7AB5312F80A7600FA2EC0 /* test_transform.c in Sources */,
+				B2A22EF01300371800F3C100 /* test_script.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,6 +1231,8 @@
 				B2B7B31412FD714700FA2EC0 /* file_physfs.c in Sources */,
 				B2A22D7E12FEE78600F3C100 /* lua_global.c in Sources */,
 				B2A22D8112FEE78600F3C100 /* wrap_core.c in Sources */,
+				B2A22EF81300392100F3C100 /* wrap_world.c in Sources */,
+				B2A22F12130059C400F3C100 /* wrap_vec2f.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

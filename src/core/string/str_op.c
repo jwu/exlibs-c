@@ -31,6 +31,35 @@ static const char __white_space_list[] = {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+char *ex_strrstr( const char *_str, const char *_needle ) {
+    int src_len = strlen(_str);
+    int needle_len = strlen(_needle);
+    int i;
+
+    //
+    if ( needle_len > src_len )
+        return NULL;
+
+    //
+    if ( needle_len == src_len ) {
+        if ( strncmp ( _str, _needle, needle_len ) == 0 )
+            return (char *)_str;
+        return NULL;
+    }
+
+    //
+    for ( i = src_len - needle_len; i >= 0; --i ) {
+        char *src = (char *)_str + i;
+        if ( strncmp( src, _needle, needle_len ) == 0 )
+            return src;
+    }
+    return NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int ex_str_split_into_array( ex_array_t *_outList, const char *_token, const char *_text )
 {
     const char *string_to_parse = _text;

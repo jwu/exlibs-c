@@ -72,10 +72,15 @@ extern const char *ex_fsys_write_dir ();
 extern int ex_fsys_mount ( const char *_dir, const char *_mount_point, bool _append );
 extern int ex_fsys_unmount ( const char *_dir );
 extern const char *ex_fsys_mount_point ( const char *_dir );
-// usage: for ( i = ex_fsys_mounts(); *i != NULL; ++i )
-// don't forget to call ex_fsys_free_list(li);
-extern char **ex_fsys_mounts ();
 
+
+// usage:
+// char **file_list, i;
+// file_list = ex_fsys_files_in("your/search/path/");
+// for ( i = file_list; *i != NULL; ++i ) {
+// }
+// ex_fsys_free_list(file_list); // DO NOT forget!
+extern char **ex_fsys_mounts ();
 extern const char *ex_fsys_realpath ( const char *_path );
 
 // ------------------------------------------------------------------ 

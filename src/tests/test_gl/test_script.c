@@ -1,39 +1,50 @@
 // ======================================================================================
-// File         : test_lua.c
+// File         : test_script.c
 // Author       : Wu Jie 
-// Last Change  : 02/06/2011 | 22:53:10 PM | Sunday,February
+// Last Change  : 02/07/2011 | 22:16:20 PM | Monday,February
 // Description  : 
 // ======================================================================================
 
 ///////////////////////////////////////////////////////////////////////////////
-// includes
+// externs
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "../../core/core_inc.h"
-#include "../../lua/lua_inc.h"
+#include "exsdk.h"
+
+#include "../../graphics/graphics_inc.h"
+#include "../../engine/engine_inc.h"
+
+#include "main.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// defines
+// world
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void normal () {
+static void init () {
     struct lua_State *l = ex_lua_default_state();
 
-    ex_lua_load_modules( l, "lua" );
-    // ex_lua_add_path( l, strcat( path, "lua/" ) );
-    // ex_lua_add_cpath( l, strcat( path, "lua/" ) );
-
-    ex_lua_dofile( l, "lua/simple.lua" );
+    ex_lua_dofile( l, "script_world.lua" );
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_lua () {
-    normal();
+static void keyboard ( uint8 _key ) {
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void test_script () {
+    g_game.init = init;
+    g_game.update = NULL;
+    g_game.keyboard = keyboard;
+    g_game.mouse = NULL;
+}
+
