@@ -19,13 +19,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef struct vec2f_proxy_t {
-    bool readonly;
-    strid_t typeid;
-    ex_vec2f_t val;
-} vec2f_proxy_t;
-
-static inline vec2f_proxy_t *__check_type ( lua_State *_l, int _idx ) {
+vec2f_proxy_t *ex_lua_checkvec2f ( lua_State *_l, int _idx ) {
     vec2f_proxy_t *u;
 
     if ( lua_isuserdata(_l, _idx) == 0 )
@@ -33,6 +27,19 @@ static inline vec2f_proxy_t *__check_type ( lua_State *_l, int _idx ) {
     u = (vec2f_proxy_t *)lua_touserdata(_l,_idx);
     if ( u->typeid != EX_TYPEID(vec2f) )
         return NULL;
+
+    return u;
+}
+
+vec2f_proxy_t *ex_lua_pushvec2f ( lua_State *_l, bool _readonly ) {
+    vec2f_proxy_t *u;
+
+    u = (vec2f_proxy_t *)lua_newuserdata(_l, sizeof(vec2f_proxy_t));
+    u->readonly = _readonly;
+    u->typeid = EX_TYPEID(vec2f);
+    luaL_newmetatable(_l,"vec2f_meta");
+    lua_setmetatable(_l,-2);
+
     return u;
 }
 
@@ -60,7 +67,7 @@ static int __vec2f_meta_set ( lua_State *_l ) {
     getset_t *getset;
 
     // get and check the type
-    u = __check_type(_l,1);
+    u = ex_lua_checkvec2f(_l,1);
     if ( u == NULL ) {
         ex_error("invalid parameter type, expected vec2f");
         return 0;
@@ -97,7 +104,7 @@ static int __vec2f_meta_get ( lua_State *_l ) {
     vec2f_proxy_t *u;
     getset_t *getset;
 
-    u = __check_type(_l,1);
+    u = ex_lua_checkvec2f(_l,1);
     if ( u == NULL ) {
         ex_error("invalid parameter type, expected vec2f");
         lua_pushnil(_l);
@@ -131,7 +138,7 @@ static int __vec2f_tostring ( lua_State *_l ) {
     ex_string_t *str = ex_string_alloc("",256);
     vec2f_proxy_t *u;
 
-    u = __check_type(_l,1);
+    u = ex_lua_checkvec2f(_l,1);
     if ( u == NULL ) {
         ex_error("invalid parameter type, expected vec2f");
         lua_pushnil(_l);
@@ -151,13 +158,13 @@ static int __vec2f_tostring ( lua_State *_l ) {
 static int __vec2f_add ( lua_State *_l ) {
     vec2f_proxy_t *u,*u1,*u2;
 
-    u1 = __check_type(_l,1);
+    u1 = ex_lua_checkvec2f(_l,1);
     if ( u1 == NULL ) {
         ex_error("invalid parameter type, expected vec2f");
         lua_pushnil(_l);
         return 1;
     }
-    u2 = __check_type(_l,2);
+    u2 = ex_lua_checkvec2f(_l,2);
     if ( u2 == NULL ) {
         ex_error("invalid parameter type, expected vec2f");
         lua_pushnil(_l);
@@ -165,13 +172,36 @@ static int __vec2f_add ( lua_State *_l ) {
     }
 
     // push
-    u = (vec2f_proxy_t *)lua_newuserdata(_l, sizeof(vec2f_proxy_t));
-    u->readonly = false;
-    u->typeid = EX_TYPEID(vec2f);
-    luaL_newmetatable(_l,"vec2f.meta");
-    lua_setmetatable(_l,-2);
-
+    u = ex_lua_pushvec2f(_l,false);
     ex_vec2f_add( &u->val, &u1->val, &u2->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_sub ( lua_State *_l ) {
+    vec2f_proxy_t *u,*u1,*u2;
+
+    u1 = ex_lua_checkvec2f(_l,1);
+    if ( u1 == NULL ) {
+        ex_error("invalid parameter type, expected vec2f");
+        lua_pushnil(_l);
+        return 1;
+    }
+    u2 = ex_lua_checkvec2f(_l,2);
+    if ( u2 == NULL ) {
+        ex_error("invalid parameter type, expected vec2f");
+        lua_pushnil(_l);
+        return 1;
+    }
+
+    // push
+    u = ex_lua_pushvec2f(_l,false);
+    ex_vec2f_sub( &u->val, &u1->val, &u2->val );
+
     return 1;
 }
 
@@ -182,22 +212,9 @@ static int __vec2f_add ( lua_State *_l ) {
 static int __vec2f_new ( lua_State *_l ) {
     vec2f_proxy_t *u;
     
-    u = (vec2f_proxy_t *)lua_newuserdata(_l, sizeof(vec2f_proxy_t));
-    u->readonly = false;
-    u->typeid = EX_TYPEID(vec2f);
-    luaL_newmetatable(_l,"vec2f.meta");
-    lua_setmetatable(_l,-2);
-
+    u = ex_lua_pushvec2f(_l,false);
     ex_vec2f_set( &u->val, lua_tonumber(_l,1), lua_tonumber(_l,2) );
-    return 1;
-}
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_type ( lua_State *_l ) {
-    lua_pushstring(_l, "vec2f");
     return 1;
 }
 
@@ -210,7 +227,7 @@ static const luaL_Reg __vec2f_meta[] = {
     { "__index", __vec2f_meta_get },
     { "__tostring", __vec2f_tostring },
     { "__add", __vec2f_add },
-    { "type", __vec2f_type },
+    { "__sub", __vec2f_sub },
     { "new", __vec2f_new },
     { 0, 0 }
 };
@@ -218,6 +235,15 @@ static const luaL_Reg __vec2f_meta[] = {
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_get_type ( lua_State *_l, ex_vec2f_t *_v ) {
+    lua_pushstring(_l, "vec2f");
+    return 1;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -260,6 +286,7 @@ static int __vec2f_set_y ( lua_State *_l, ex_vec2f_t *_v ) {
 // ------------------------------------------------------------------ 
 
 static getset_t __getset_list[] = {
+    { "type", __vec2f_get_type, NULL },
     { "x", __vec2f_get_x, __vec2f_set_x },
     { "y", __vec2f_get_y, __vec2f_set_y },
     { NULL, NULL, NULL },
@@ -272,6 +299,7 @@ static getset_t __getset_list[] = {
 //
 int luaopen_vec2f ( lua_State *_l ) {
     getset_t *getset;
+    vec2f_proxy_t *u;
 
     // init the hashtable
     ex_hashmap_init ( &__key_to_getset,
@@ -291,20 +319,24 @@ int luaopen_vec2f ( lua_State *_l ) {
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" ); // [-0,+1,-]
 
-    // register vec2f.meta
-    luaL_newmetatable(_l, "vec2f.meta"); // [-0,+1,m]
-    // DISABLE { 
-    // lua_pushvalue(_l, -1); // [-0,+1,-]
-    // lua_setfield(_l, -2, "__index"); // [-1,+0,e] m.__index = m
-    // } DISABLE end 
+    // register vec2f_meta
+    luaL_newmetatable(_l, "vec2f_meta"); // [-0,+1,m]
     luaL_register(_l, NULL, __vec2f_meta); // [-1,+1,m]
 
     // register vec2f
     lua_newtable(_l); // [-0,+1,m]
-    lua_setmetatable(_l,-2); // [-1,+0,-] setmetatable( ex.vec2f, vec2f.meta )
-    lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex.vec2f = table
+    lua_setmetatable(_l,-2); // [-1,+0,-] setmetatable( ex.vec2f, vec2f_meta )
+
+    // FIXME: readonly not working { 
+    // ex.vec2f.zero = ex_vec2f_zero
+    u = ex_lua_pushvec2f(_l,true); u->val = ex_vec2f_zero; lua_setfield(_l,-2,"zero");
+
+    // ex.vec2f.one = ex_vec2f_one
+    u = ex_lua_pushvec2f(_l,true); u->val = ex_vec2f_one; lua_setfield(_l,-2,"one");
+    // } FIXME end 
 
     //
+    lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex.vec2f = table
     lua_pop(_l, 1); // [-1,+0,-] pops ex.
 
     return 0;

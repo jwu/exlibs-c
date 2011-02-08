@@ -101,17 +101,6 @@ extern int ex_lua_dostring ( struct lua_State *_l, const char *_fmt, ... );
 extern void ex_lua_alert ( struct lua_State *_l );
 extern void ex_lua_dump_stack ( struct lua_State *_l );
 
-///////////////////////////////////////////////////////////////////////////////
-// lua register op
-///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern int ex_lua_register_builtin ( struct lua_State *_l, const char *_typeName, const void *_funcs );
-extern int ex_lua_register_class ( struct lua_State *_l, const char *_typeName, const void *_funcs );
-
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

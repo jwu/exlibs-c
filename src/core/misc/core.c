@@ -65,19 +65,14 @@ int ex_core_init ()
         return -1;
     }
 
+    //
     ex_log ("|- init string ID table...");
     if ( ex_strid_init(65536) != 0 ) {
         ex_log ("fatal error: failed to init string ID table");
         return -1;
     }
 
-    ex_log ("|- init lua interpreter...");
-    if ( ex_lua_init () != 0 ) {
-        ex_log ("fatal error: failed to init lua interpreter");
-        return -1;
-    }
-    // TODO: parse .exrc by lua
-
+    //
     ex_log ("|- init rtti table...");
     if ( ex_rtti_init() != 0 ) {
         ex_log ("fatal error: failed to init rtti table");
@@ -90,6 +85,13 @@ int ex_core_init ()
     ex_log ("|- register runtime classes...");
     ex_register_classes ();
 
+    //
+    ex_log ("|- init lua interpreter...");
+    if ( ex_lua_init () != 0 ) {
+        ex_log ("fatal error: failed to init lua interpreter");
+        return -1;
+    }
+    // TODO: parse .exrc by lua
     // TODO: { 
     // // load builtin module
     // ex_lua_load_modules( __L, "scripts/" )
@@ -111,11 +113,12 @@ void ex_core_deinit ()
     if ( __initialized ) {
         ex_log ("");
         ex_log ("ex_core de-initializing...");
-        ex_log ("|- deinit rtti table...");
-        ex_rtti_deinit();
 
         ex_log ("|- deinit lua interpreter...");
         ex_lua_deinit();
+
+        ex_log ("|- deinit rtti table...");
+        ex_rtti_deinit();
 
         ex_log ("|- deinit string ID table...");
         ex_strid_deinit();
