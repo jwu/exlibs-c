@@ -20,6 +20,16 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+typedef struct ex_getset_t {
+    const char *key;
+    int (*get) ( struct lua_State * );
+    int (*set) ( struct lua_State * );
+} ex_getset_t;
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 #define EX_DECL_LUA_BUILTIN_TYPE_2(_typename,_type) \
     typedef struct _typename##_proxy_t { \
         bool readonly; \
@@ -28,8 +38,6 @@ extern "C" {
     } _typename##_proxy_t; \
     extern _typename##_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
     extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
-
-#define 
 
 // ------------------------------------------------------------------ 
 // Desc: 
