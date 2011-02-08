@@ -104,7 +104,8 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern int luaopen_core ( lua_State *_l );
+extern int luaopen_core ( lua_State * );
+extern int luaopen_vec2f ( lua_State * );
 // ------------------------------------------------------------------ 
 
 int ex_lua_init () {
@@ -142,20 +143,29 @@ int ex_lua_init () {
     // } OPTME end 
 
     // we create global ex table if it not exists.
-    ex_lua_global_module ( __L, "ex" );
+    ex_lua_global_module ( __L, "ex" ); // [-0,+1,-]
 
     // init exlibs wraps
-    luaopen_core (__L);
+    luaopen_core (__L); // [-0,+0,-]
+    luaopen_vec2f (__L); // [-0,+0,-]
+
+    // pops ex.
+    lua_pop(__L, 1); // [-1,+0,-]
 
     return 0;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void luaclose_core ();
+extern void luaclose_vec2f ();
 // ------------------------------------------------------------------ 
 
 void ex_lua_deinit () {
     if ( __initialized ) {
+        luaclose_core ();
+        luaclose_vec2f ();
+
         lua_close(__L);
         __L = NULL;
     }

@@ -229,8 +229,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -267,19 +265,24 @@
 							<array>
 								<string>08FB7794FE84155DC02AAC07</string>
 								<string>B2DD23F012A7C81B0053CA3F</string>
+								<string>B245482E12B91EF300EF7261</string>
 								<string>B2DD23F112A7C86E0053CA3F</string>
 								<string>B245483712B91F9E00EF7261</string>
+								<string>B2A22D7912FEE77500F3C100</string>
 								<string>1C37FBAC04509CD000000102</string>
+								<string>B2A22F211300C6F500F3C100</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>45</integer>
-									<integer>43</integer>
+									<integer>32</integer>
+									<integer>31</integer>
+									<integer>30</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 237}, {183, 664}}</string>
+							<string>{{0, 112}, {183, 664}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -309,12 +312,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>thread_mac.c</string>
+								<string>wrap_vec2f.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -322,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>thread_mac.c</string>
+										<string>wrap_vec2f.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2A22EE613002C8900F3C100</string>
+										<string>B2A22FC41300F57500F3C100</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -443,7 +448,9 @@
 											<string>B2B7B38C12FDAECE00FA2EC0</string>
 											<string>B2B7B38D12FDAECE00FA2EC0</string>
 											<string>B2B7B3CA12FE27C100FA2EC0</string>
-											<string>B2A22D5D12FE7C8700F3C100</string>
+											<string>B2A22F481300CE3F00F3C100</string>
+											<string>B2A22F491300CE3F00F3C100</string>
+											<string>B2A22F4A1300CE3F00F3C100</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -643,9 +650,9 @@
 	<array>
 		<string>B2A22D7112FE7D2E00F3C100</string>
 		<string>B2A22D7212FE7D2E00F3C100</string>
-		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
@@ -670,7 +677,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>lua_global.c</string>
+								<string>wrap_vec2f.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -999,7 +1006,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {857, 516}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1702 211 857 557 1280 -400 1920 1200 </string>
+								<string>1481 -49 857 557 1280 -400 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -1028,7 +1035,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>1702 211 857 557 1280 -400 1920 1200 </string>
+			<string>1481 -49 857 557 1280 -400 1920 1200 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>

@@ -58,13 +58,6 @@ int ex_core_init ()
         return -1;
     }
 
-    ex_log ("|- init lua interpreter...");
-    if ( ex_lua_init () != 0 ) {
-        ex_log ("fatal error: failed to init lua interpreter");
-        return -1;
-    }
-    // TODO: parse .exrc by lua
-
     //
     ex_log ("|- init memory...");
     if ( ex_mem_init() != 0 ) {
@@ -77,6 +70,13 @@ int ex_core_init ()
         ex_log ("fatal error: failed to init string ID table");
         return -1;
     }
+
+    ex_log ("|- init lua interpreter...");
+    if ( ex_lua_init () != 0 ) {
+        ex_log ("fatal error: failed to init lua interpreter");
+        return -1;
+    }
+    // TODO: parse .exrc by lua
 
     ex_log ("|- init rtti table...");
     if ( ex_rtti_init() != 0 ) {
@@ -114,14 +114,14 @@ void ex_core_deinit ()
         ex_log ("|- deinit rtti table...");
         ex_rtti_deinit();
 
+        ex_log ("|- deinit lua interpreter...");
+        ex_lua_deinit();
+
         ex_log ("|- deinit string ID table...");
         ex_strid_deinit();
 
         ex_log ("|- deinit memory...");
         ex_mem_deinit();
-
-        ex_log ("|- deinit lua interpreter...");
-        ex_lua_deinit();
 
         ex_log ("|- deinit fsys...");
         ex_fsys_init();

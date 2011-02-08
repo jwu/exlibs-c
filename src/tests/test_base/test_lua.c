@@ -21,13 +21,30 @@
 // ------------------------------------------------------------------ 
 
 static void normal () {
+    char path[256];
     struct lua_State *l = ex_lua_default_state();
 
-    ex_lua_load_modules( l, "lua" );
-    // ex_lua_add_path( l, strcat( path, "lua/" ) );
-    // ex_lua_add_cpath( l, strcat( path, "lua/" ) );
+    // test call from require
+    strcpy( path, ex_fsys_realpath("lua/modules") );
+    strcat( path, "lua/modules/" );
+    ex_log("add path %s", path);
+    ex_lua_add_path( l, path );
+    ex_lua_add_cpath( l, path );
+    ex_lua_dofile( l, "lua/test_require.lua" );
 
-    ex_lua_dofile( l, "lua/simple.lua" );
+    // test call modules
+    ex_lua_load_modules( l, "lua/modules" );
+    ex_lua_dofile( l, "lua/test_module.lua" );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void wrap () {
+    struct lua_State *l = ex_lua_default_state();
+
+    ex_lua_dofile( l, "lua/test_wrap.lua" );
 }
 
 // ------------------------------------------------------------------ 
@@ -35,5 +52,6 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 void test_lua () {
-    normal();
+    // normal();
+    wrap();
 }

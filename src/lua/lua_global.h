@@ -109,8 +109,8 @@ extern void ex_lua_dump_stack ( struct lua_State *_l );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_register_builtin ( struct lua_State *_l, const char *_typeName, const void *_funcs );
-int ex_lua_register_class ( struct lua_State *_l, const char *_typeName, const void *_funcs );
+extern int ex_lua_register_builtin ( struct lua_State *_l, const char *_typeName, const void *_funcs );
+extern int ex_lua_register_class ( struct lua_State *_l, const char *_typeName, const void *_funcs );
 
 // ######################### 
 #ifdef __cplusplus
