@@ -224,15 +224,13 @@ static void __display(void) {
 
     // render 2D/3D objects in g_world space 
     {
-        ex_world_render(g_world);
+        // ex_world_render(g_world);
     }
 
     // test render lua
-    {
-        ex_camera_apply ( ex_world_main_camera(g_world) );
-        if ( ex_fsys_file_exists( "render_3D.lua" ) )
-            ex_lua_dofile( l, "render_3D.lua" );
-    }
+    ex_camera_apply ( ex_world_main_camera(g_world) );
+    if ( ex_fsys_file_exists( "render_3D.lua" ) )
+        ex_lua_dofile( l, "render_3D.lua" );
 
     // draw 2D objects in screen space
     glMatrixMode( GL_MODELVIEW );
@@ -423,7 +421,7 @@ int main( int argc, const char *argv[] ) {
 
         // setup the fsys path
         strncpy ( media_path, exsdk_dev_path, 1024 );
-        strcat ( media_path, "res/test_gl/" );
+        strcat ( media_path, "test_res/test_gl/" );
         if ( ex_fsys_set_write_dir(media_path) == 0 )
             ex_log("set write dir: %s", media_path );
         if ( ex_fsys_mount( media_path, "/", true ) == 0 )

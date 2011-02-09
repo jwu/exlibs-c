@@ -67,7 +67,7 @@ int main( int argc, char *argv[] ) {
 
         // setup the fsys path
         strncpy ( media_path, exsdk_dev_path, 1024 );
-        strcat ( media_path, "res/test_base/" );
+        strcat ( media_path, "test_res/test_base/" );
         if ( ex_fsys_set_write_dir(media_path) == 0 )
             ex_log("set write dir: %s", media_path );
         if ( ex_fsys_mount( media_path, "/", true ) == 0 )

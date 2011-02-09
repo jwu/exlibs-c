@@ -128,7 +128,6 @@ int ex_lua_init () {
 
     // NOTE: we don't need any search path. 
     // in exsdk, require("module") is deprecated all script load as module.
-#if 0
     // clear the package.path and package.cpath
     ex_lua_dostring ( __L, "package.path = \"./?.lua\"" );
     ex_lua_dostring ( __L, "package.cpath = \"./?.so;./?.dll\"" );
@@ -141,7 +140,6 @@ int ex_lua_init () {
         }
         ex_fsys_free_list(mounts);
     }
-#endif
     // } OPTME end 
 
     // we create global ex table if it not exists.

@@ -1,9 +1,11 @@
 -- ======================================================================================
--- File         : test_rapid.lua
+-- File         : simple.lua
 -- Author       : Wu Jie 
--- Last Change  : 02/09/2011 | 09:00:01 AM | Wednesday,February
+-- Last Change  : 02/06/2011 | 23:51:16 PM | Sunday,February
 -- Description  : 
 -- ======================================================================================
 
-ex.log ( "test rapid" )
+local ex = ex
+local math = math
 
+module ("ex.simple")

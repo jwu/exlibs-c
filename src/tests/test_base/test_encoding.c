@@ -50,9 +50,9 @@ static void filesystem () {
 #if ( EX_PLATFORM == EX_WIN32 )
     {
         HANDLE hFile;
-        wchar_t *wpath_srcEncoding = L"e:/project/dev/exsdk/res/path/中文/你好.txt";
+        wchar_t *wpath_srcEncoding = L"e:/project/dev/exsdk/test_res/path/中文/你好.txt";
         wchar_t wpath_unicode[MAX_PATH];
-        char *path_srcEncoding = "e:/project/dev/exsdk/res/path/中文/你好.txt";
+        char *path_srcEncoding = "e:/project/dev/exsdk/test_res/path/中文/你好.txt";
 
         MultiByteToWideChar(CP_UTF8, 0, path_srcEncoding, -1, wpath_unicode, strlen(path_srcEncoding) * sizeof(wchar_t));
         hFile = CreateFileW( wpath_unicode, FILE_READ_DATA, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );

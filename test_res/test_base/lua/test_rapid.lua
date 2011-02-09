@@ -1,10 +1,8 @@
 -- ======================================================================================
--- File         : simple.lua
+-- File         : test_rapid.lua
 -- Author       : Wu Jie 
--- Last Change  : 02/06/2011 | 23:51:16 PM | Sunday,February
+-- Last Change  : 02/09/2011 | 09:00:01 AM | Wednesday,February
 -- Description  : 
 -- ======================================================================================
 
-local ex = ex
-module ("ex.simple")
-
+ex.log ( "test rapid" )

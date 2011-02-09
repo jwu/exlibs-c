@@ -19,7 +19,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-const char *media_file = "e:/project/dev/exsdk/res/lua/";
+const char *media_file = "e:/project/dev/exsdk/test_res/lua/";
 
 /* Declare the Lua libraries we wish to use. */
 /* Note: If you are opening and running a file containing Lua code */

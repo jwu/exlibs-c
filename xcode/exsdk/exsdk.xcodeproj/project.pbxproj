@@ -218,6 +218,8 @@
 		B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */; };
 		B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B77012A6B144009FE3E8 /* exsdk.h */; };
 		B2E2698812C9EC0100833568 /* test_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E2698712C9EC0100833568 /* test_thread.c */; };
+		B2F4088E1302C04F00FCF2B5 /* probability.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F4088C1302C04F00FCF2B5 /* probability.c */; };
+		B2F4088F1302C04F00FCF2B5 /* probability.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F4088D1302C04F00FCF2B5 /* probability.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -452,6 +454,8 @@
 		B2E0B76F12A6B144009FE3E8 /* exsdk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = exsdk.c; path = ../../src/exsdk.c; sourceTree = SOURCE_ROOT; };
 		B2E0B77012A6B144009FE3E8 /* exsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = exsdk.h; path = ../../src/exsdk.h; sourceTree = SOURCE_ROOT; };
 		B2E2698712C9EC0100833568 /* test_thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_thread.c; sourceTree = "<group>"; };
+		B2F4088C1302C04F00FCF2B5 /* probability.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = probability.c; sourceTree = "<group>"; };
+		B2F4088D1302C04F00FCF2B5 /* probability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = probability.h; sourceTree = "<group>"; };
 		D2AAC046055464E500DB518D /* libexsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexsdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -764,6 +768,8 @@
 		B2A231EA1302221D00F3C100 /* math */ = {
 			isa = PBXGroup;
 			children = (
+				B2F4088C1302C04F00FCF2B5 /* probability.c */,
+				B2F4088D1302C04F00FCF2B5 /* probability.h */,
 				B2A231EB1302221D00F3C100 /* angf.h */,
 				B2A231EC1302221D00F3C100 /* circlef.h */,
 				B2A231ED1302221D00F3C100 /* color.c */,
@@ -1088,6 +1094,7 @@
 				B2A232CD1302221D00F3C100 /* timespan.h in Headers */,
 				B2A232D31302226000F3C100 /* debug_draw.h in Headers */,
 				B2A232D41302226000F3C100 /* graphics_inc.h in Headers */,
+				B2F4088F1302C04F00FCF2B5 /* probability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1293,6 +1300,7 @@
 				B2A232D21302226000F3C100 /* debug_draw.c in Sources */,
 				B2A232D81302227200F3C100 /* builtin_type_registry.c in Sources */,
 				B2A232D91302227200F3C100 /* classes_registry.c in Sources */,
+				B2F4088E1302C04F00FCF2B5 /* probability.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

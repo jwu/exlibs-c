@@ -23,6 +23,7 @@ static bool __initialized = false;
 extern void ex_register_builtin_types ();
 extern void ex_register_classes ();
 extern void ex_uid_init ();
+extern const char *exsdk_dev_path;
 // ------------------------------------------------------------------ 
 
 // success: 0
@@ -92,10 +93,22 @@ int ex_core_init ()
         return -1;
     }
     // TODO: parse .exrc by lua
-    // TODO: { 
-    // // load builtin module
-    // ex_lua_load_modules( __L, "scripts/" )
-    // } TODO end 
+#if 0
+    ex_lua_load_modules( ex_lua_default_state(), "builtin/" );
+#else
+    // for development
+    ex_fsys_mount( exsdk_dev_path, "/", true );
+    {
+        char path[256];
+        strcpy( path, exsdk_dev_path );
+        strcat( path, "builtin/" );
+            
+        ex_lua_add_path( ex_lua_default_state(), path );
+        ex_lua_add_cpath( ex_lua_default_state(), path );
+    }
+
+    ex_lua_load_modules( ex_lua_default_state(), "builtin" );
+#endif
 
     //
     ex_log ("ex_core initialized!");

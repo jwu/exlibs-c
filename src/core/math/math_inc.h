@@ -17,6 +17,7 @@
 #include "mathdef.h"
 #include "mathop.h"
 #include "random.h"
+#include "probability.h"
 #include "interpolation.h"
 #include "ease_curve.h"
 

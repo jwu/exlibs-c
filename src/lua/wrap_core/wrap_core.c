@@ -29,6 +29,18 @@ static int __log ( lua_State *_l ) {
     return 0;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __range_rand ( lua_State *_l ) {
+    float low = luaL_checknumber(_l,1); 
+    float high = luaL_checknumber(_l,2); 
+
+    lua_pushnumber(_l, ex_range_randf(low,high) );
+    return 1;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,6 +48,7 @@ static int __log ( lua_State *_l ) {
 //
 static const luaL_Reg __core_funcs[] = {
     { "log", __log },
+    { "range_rand", __range_rand },
     { 0, 0 }
 };
 
