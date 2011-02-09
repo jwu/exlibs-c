@@ -106,6 +106,8 @@ static bool __initialized = false;
 // Desc: 
 extern int luaopen_core ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
+extern int luaopen_luagl ( lua_State * );
+extern int luaopen_luaglu ( lua_State * );
 // ------------------------------------------------------------------ 
 
 int ex_lua_init () {
@@ -145,12 +147,14 @@ int ex_lua_init () {
     // we create global ex table if it not exists.
     ex_lua_global_module ( __L, "ex" ); // [-0,+1,-]
 
-    // init exlibs wraps
+    // init ex_core wraps
     luaopen_core (__L); // [-0,+0,-]
     luaopen_vec2f (__L); // [-0,+0,-]
 
-    // pops ex.
-    lua_pop(__L, 1); // [-1,+0,-]
+    // init graphics wraps
+    lua_settop ( __L, 0 ); // clear the stack
+    luaopen_luagl (__L);
+    luaopen_luaglu (__L);
 
     return 0;
 }

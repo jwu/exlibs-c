@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../engine/world.h"
+#include "../../engine/world.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -33,6 +33,9 @@ int luaopen_world ( lua_State *_l ) {
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" );
     luaL_register( _l, 0, __functions );
+
+    lua_pop(_l, 1); // [-1,+0,-] pops ex
+
     return 0;
 }
 

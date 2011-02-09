@@ -1,9 +1,7 @@
 -- ======================================================================================
--- File         : test_rapid.lua
+-- File         : render_2D.lua
 -- Author       : Wu Jie 
--- Last Change  : 02/09/2011 | 09:00:01 AM | Wednesday,February
+-- Last Change  : 02/09/2011 | 09:47:04 AM | Wednesday,February
 -- Description  : 
 -- ======================================================================================
-
-ex.log ( "test rapid" )
 

@@ -45,7 +45,7 @@ static void wrap () {
     struct lua_State *l = ex_lua_default_state();
 
     ex_lua_dofile( l, "lua/test_rapid.lua" );
-    ex_lua_dofile( l, "lua/unit_tests/test_vec2f.lua" );
+    // ex_lua_dofile( l, "lua/unit_tests/test_vec2f.lua" );
 }
 
 // ------------------------------------------------------------------ 

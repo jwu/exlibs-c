@@ -64,7 +64,7 @@ EX_DEF_OBJECT_BEGIN( ex_camera_t,
     EX_MEMBER( ex_camera_t, isOrtho, false )
     EX_MEMBER( ex_camera_t, orthoSize, 600/2 )
     EX_MEMBER( ex_camera_t, aspect, 4.0f/3.0f )
-    EX_MEMBER( ex_camera_t, clearFlags, EX_CLEAR_COLOR )
+    EX_MEMBER( ex_camera_t, clearFlags, EX_CLEAR_COLOR|EX_CLEAR_DEPTH )
     ex_color3f_set( &(((ex_camera_t *)__obj__)->bgColor), 0.0f, 0.5f, 1.0f );
     EX_MEMBER( ex_camera_t, matWorldToView, ex_mat44f_identity )
     EX_MEMBER( ex_camera_t, matProjection, ex_mat44f_identity )
@@ -165,17 +165,22 @@ void ex_camera_apply ( ex_ref_t *_self ) {
                   self->bgColor.g,
                   self->bgColor.b,
                   1.0f ); // RGBA background color
-    if ( ex_flags_has( self->clearFlags, EX_CLEAR_COLOR ) )
+
+    if ( ex_flags_has( self->clearFlags, EX_CLEAR_COLOR ) ) {
         clearFlags |= GL_COLOR_BUFFER_BIT;
-    if ( ex_flags_has( self->clearFlags, EX_CLEAR_DEPTH ) )
+    }
+
+    if ( ex_flags_has( self->clearFlags, EX_CLEAR_DEPTH ) ) {
         clearFlags |= GL_DEPTH_BUFFER_BIT;
+        glClearDepth(1.0f);
+    }
     glClear(clearFlags);
 
     // setup view matrix
     if ( self->isOrtho ) {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(-rx, rx, -ry, ry, -1.0, 1.0);
+        glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
         glTranslated(0.5, 0.5, 0.0);
     }
     else {

@@ -2,8 +2,8 @@
 {
 	08FB7793FE84155DC02AAC07 /* Project object */ = {
 		activeBuildConfigurationName = Debug;
-		activeExecutable = B2DD23EC12A7C7CE0053CA3F /* test_base */;
-		activeTarget = B2DD23E912A7C7CE0053CA3F /* test_base */;
+		activeExecutable = B245482912B91E9900EF7261 /* test_gl */;
+		activeTarget = B245482712B91E9900EF7261 /* test_gl */;
 		addToTargets = (
 			D2AAC045055464E500DB518D /* exsdk */,
 		);
@@ -76,7 +76,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					787,
+					694,
 					20,
 					48,
 					43,
@@ -150,7 +150,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					747,
+					654,
 					60,
 					20,
 					48,
@@ -358,6 +358,28 @@
 			B2A2312913019B6500F3C100 /* PBXTextBookmark */ = B2A2312913019B6500F3C100 /* PBXTextBookmark */;
 			B2A2312F1301A38700F3C100 /* PBXTextBookmark */ = B2A2312F1301A38700F3C100 /* PBXTextBookmark */;
 			B2A231341301A4C400F3C100 /* PBXTextBookmark */ = B2A231341301A4C400F3C100 /* PBXTextBookmark */;
+			B2A232EB130226C000F3C100 /* PBXTextBookmark */ = B2A232EB130226C000F3C100 /* PBXTextBookmark */;
+			B2A232EC130226C000F3C100 /* PBXTextBookmark */ = B2A232EC130226C000F3C100 /* PBXTextBookmark */;
+			B2A232ED130226C000F3C100 /* PBXTextBookmark */ = B2A232ED130226C000F3C100 /* PBXTextBookmark */;
+			B2A232EE130226C000F3C100 /* PBXTextBookmark */ = B2A232EE130226C000F3C100 /* PBXTextBookmark */;
+			B2A232EF130226C000F3C100 /* PBXTextBookmark */ = B2A232EF130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F0130226C000F3C100 /* PBXTextBookmark */ = B2A232F0130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F1130226C000F3C100 /* PBXTextBookmark */ = B2A232F1130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F2130226C000F3C100 /* PBXTextBookmark */ = B2A232F2130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F3130226C000F3C100 /* PBXTextBookmark */ = B2A232F3130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F4130226C000F3C100 /* PBXTextBookmark */ = B2A232F4130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F5130226C000F3C100 /* PBXTextBookmark */ = B2A232F5130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F6130226C000F3C100 /* PBXTextBookmark */ = B2A232F6130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F7130226C000F3C100 /* PBXTextBookmark */ = B2A232F7130226C000F3C100 /* PBXTextBookmark */;
+			B2A232F8130226C000F3C100 /* PBXTextBookmark */ = B2A232F8130226C000F3C100 /* PBXTextBookmark */;
+			B2A2330913022AFE00F3C100 /* PBXTextBookmark */ = B2A2330913022AFE00F3C100 /* PBXTextBookmark */;
+			B2A2330A13022AFE00F3C100 /* PBXTextBookmark */ = B2A2330A13022AFE00F3C100 /* PBXTextBookmark */;
+			B2A2330B13022AFE00F3C100 /* PBXTextBookmark */ = B2A2330B13022AFE00F3C100 /* PBXTextBookmark */;
+			B2A2330E13022B1400F3C100 /* PBXTextBookmark */ = B2A2330E13022B1400F3C100 /* PBXTextBookmark */;
+			B2A233351302319300F3C100 /* PBXTextBookmark */ = B2A233351302319300F3C100 /* PBXTextBookmark */;
+			B2A2333B1302327500F3C100 /* PBXTextBookmark */ = B2A2333B1302327500F3C100 /* PBXTextBookmark */;
+			B2A233451302346500F3C100 /* PBXTextBookmark */ = B2A233451302346500F3C100 /* PBXTextBookmark */;
+			B2A233491302353800F3C100 /* PBXTextBookmark */ = B2A233491302353800F3C100 /* PBXTextBookmark */;
 			B2AD31C612B4EDC300D62651 = B2AD31C612B4EDC300D62651 /* PBXTextBookmark */;
 			B2AD31FE12B50FBB00D62651 = B2AD31FE12B50FBB00D62651 /* PBXTextBookmark */;
 			B2B5025F12CAD7FB00D50FDE = B2B5025F12CAD7FB00D50FDE /* PBXTextBookmark */;
@@ -418,6 +440,12 @@
 		};
 	};
 	B200D2B912E17384003B4944 /* file_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = file_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/file/file_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {965, 320}}";
 			sepNavSelRange = "{618, 0}";
@@ -425,6 +453,12 @@
 		};
 	};
 	B200D2F212E42DF7003B4944 /* serialize_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = serialize_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/serialize/serialize_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 520}}";
 			sepNavSelRange = "{0, 0}";
@@ -432,6 +466,12 @@
 		};
 	};
 	B200D2F412E42DF7003B4944 /* stream_bin.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = stream_bin.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/serialize/stream_bin.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 429}}";
 			sepNavSelRange = "{0, 0}";
@@ -439,6 +479,12 @@
 		};
 	};
 	B200D2F512E42DF7003B4944 /* stream_json.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = stream_json.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/serialize/stream_json.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 25675}}";
 			sepNavSelRange = "{63329, 0}";
@@ -447,6 +493,12 @@
 		};
 	};
 	B200D2F612E42DF7003B4944 /* stream_json.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = stream_json.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/serialize/stream_json.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 715}}";
 			sepNavSelRange = "{654, 0}";
@@ -454,20 +506,25 @@
 		};
 	};
 	B200D2F712E42DF7003B4944 /* stream_xml.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = stream_xml.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/serialize/stream_xml.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 378}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 0}";
 		};
 	};
-	B200D2F812E42DF7003B4944 /* stream.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1183}}";
-			sepNavSelRange = "{1165, 0}";
-			sepNavVisRange = "{812, 1511}";
-		};
-	};
 	B200D30112E4335E003B4944 /* builtin_type_registry.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = builtin_type_registry.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/autogen/builtin_type_registry.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 1170}}";
 			sepNavSelRange = "{0, 0}";
@@ -524,14 +581,26 @@
 		vrLoc = 1173;
 	};
 	B20715A012C7A38900071C29 /* debug_draw.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = debug_draw.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/graphics/debug_draw.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1349, 431}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1064}";
+			sepNavIntBoundsRect = "{{0, 0}, {965, 455}}";
+			sepNavSelRange = "{820, 0}";
+			sepNavVisRange = "{0, 885}";
 			sepNavWindowFrame = "{{526, 1047}, {877, 769}}";
 		};
 	};
 	B20715A112C7A38900071C29 /* debug_draw.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = debug_draw.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/graphics/debug_draw.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 481}}";
 			sepNavSelRange = "{0, 0}";
@@ -585,35 +654,26 @@
 		vrLen = 1022;
 		vrLoc = 10216;
 	};
-	B215E9E412F2931600F0C84B /* behavior.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 845}}";
-			sepNavSelRange = "{1542, 0}";
-			sepNavVisRange = "{1093, 862}";
-		};
-	};
 	B215E9E612F2931600F0C84B /* camera.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = camera.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/engine/component/camera.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 2444}}";
 			sepNavSelRange = "{1048, 0}";
 			sepNavVisRange = "{652, 711}";
 		};
 	};
-	B215E9E812F2931600F0C84B /* component.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 923}}";
-			sepNavSelRange = "{1285, 0}";
-			sepNavVisRange = "{955, 802}";
-		};
-	};
-	B215E9E912F2931600F0C84B /* component.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 871}}";
-			sepNavSelRange = "{1508, 0}";
-			sepNavVisRange = "{1021, 992}";
-		};
-	};
 	B215E9EA12F2931600F0C84B /* debug2d.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = debug2d.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/engine/component/debug2d.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {818, 3874}}";
 			sepNavSelRange = "{10187, 0}";
@@ -621,63 +681,39 @@
 			sepNavWindowFrame = "{{1364, -332}, {877, 769}}";
 		};
 	};
-	B215E9EB12F2931600F0C84B /* debug2d.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1001}}";
-			sepNavSelRange = "{2532, 0}";
-			sepNavVisRange = "{842, 883}";
-		};
-	};
-	B215E9EC12F2931600F0C84B /* sprite.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1079}}";
-			sepNavSelRange = "{2712, 0}";
-			sepNavVisRange = "{1577, 946}";
-		};
-	};
 	B215E9EE12F2931600F0C84B /* trans2d.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = trans2d.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/engine/component/trans2d.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 9919}}";
 			sepNavSelRange = "{2370, 0}";
 			sepNavVisRange = "{1928, 961}";
 		};
 	};
-	B215E9EF12F2931600F0C84B /* trans2d.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 845}}";
-			sepNavSelRange = "{2460, 0}";
-			sepNavVisRange = "{923, 1063}";
-		};
-	};
 	B215E9F112F2931600F0C84B /* entity.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = entity.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/engine/entity.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {965, 3575}}";
 			sepNavSelRange = "{8571, 0}";
 			sepNavVisRange = "{7899, 780}";
 		};
 	};
-	B215E9F212F2931600F0C84B /* entity.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1118}}";
-			sepNavSelRange = "{3118, 0}";
-			sepNavVisRange = "{1008, 1056}";
-		};
-	};
-	B215E9F512F2931600F0C84B /* world.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 5213}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 996}";
-		};
-	};
-	B215E9F612F2931600F0C84B /* world.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1300}}";
-			sepNavSelRange = "{3612, 0}";
-			sepNavVisRange = "{142, 965}";
-		};
-	};
 	B215EA0B12F2933A00F0C84B /* app.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = app.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/app/app.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 845}}";
 			sepNavSelRange = "{0, 0}";
@@ -685,6 +721,12 @@
 		};
 	};
 	B215EA0C12F2933A00F0C84B /* app.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = app.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/app/app.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 754}}";
 			sepNavSelRange = "{0, 0}";
@@ -692,6 +734,12 @@
 		};
 	};
 	B215EA0D12F2933A00F0C84B /* editor.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = editor.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/app/editor.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 845}}";
 			sepNavSelRange = "{0, 0}";
@@ -749,27 +797,25 @@
 		vrLoc = 0;
 	};
 	B215EA3712F3C2FE00F0C84B /* object.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = object.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/engine/object.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 3419}}";
-			sepNavSelRange = "{8950, 0}";
-			sepNavVisRange = "{8069, 842}";
-		};
-	};
-	B215EA3812F3C2FE00F0C84B /* object.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 1456}}";
-			sepNavSelRange = "{3463, 0}";
-			sepNavVisRange = "{2894, 879}";
-		};
-	};
-	B215EA3912F3C2FE00F0C84B /* ref.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 936}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1006}";
+			sepNavIntBoundsRect = "{{0, 0}, {965, 3471}}";
+			sepNavSelRange = "{8902, 0}";
+			sepNavVisRange = "{7912, 952}";
 		};
 	};
 	B215EA3A12F3C2FE00F0C84B /* ref.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = ref.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/engine/ref.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {965, 689}}";
 			sepNavSelRange = "{1726, 0}";
@@ -804,6 +850,12 @@
 		vrLoc = 0;
 	};
 	B23B2D2B12CAF7140011E237 /* timer_mac.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = timer_mac.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/timer_mac.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1026, 1040}}";
 			sepNavSelRange = "{1122, 0}";
@@ -812,6 +864,12 @@
 		};
 	};
 	B23B2D2C12CAF7140011E237 /* timer.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = timer.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/timer.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 4368}}";
 			sepNavSelRange = "{11182, 0}";
@@ -942,13 +1000,19 @@
 	};
 	B245482F12B91EF300EF7261 /* main.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 5772}}";
-			sepNavSelRange = "{11839, 0}";
-			sepNavVisRange = "{11191, 648}";
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 5811}}";
+			sepNavSelRange = "{12070, 0}";
+			sepNavVisRange = "{5335, 725}";
 			sepNavWindowFrame = "{{49, 9}, {877, 769}}";
 		};
 	};
 	B24EC45512EB4D140070C3F8 /* text_file.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = text_file.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/file/text_file.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1976}}";
 			sepNavSelRange = "{1964, 0}";
@@ -967,6 +1031,12 @@
 		vrLoc = 0;
 	};
 	B25923D312E941E400B49C04 /* typeop.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = typeop.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/typeop.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1053}}";
 			sepNavSelRange = "{869, 0}";
@@ -1034,6 +1104,12 @@
 		vrLoc = 636;
 	};
 	B259244512E9BB2600B49C04 /* builtin_serialize.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = builtin_serialize.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/builtin_serialize.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1976}}";
 			sepNavSelRange = "{5404, 0}";
@@ -1048,6 +1124,12 @@
 		};
 	};
 	B259245B12EA6F7700B49C04 /* string.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = string.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/string/string.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 2470}}";
 			sepNavSelRange = "{0, 0}";
@@ -1056,6 +1138,12 @@
 		};
 	};
 	B259245C12EA6F7700B49C04 /* string.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = string.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/string/string.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 1222}}";
 			sepNavSelRange = "{0, 0}";
@@ -1244,6 +1332,12 @@
 		vrLoc = 1416;
 	};
 	B261C0E112CD637B0018BCDA /* date.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = date.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/date.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 2236}}";
 			sepNavSelRange = "{3271, 0}";
@@ -1251,6 +1345,12 @@
 		};
 	};
 	B261C0E212CD637B0018BCDA /* date.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = date.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/date.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 806}}";
 			sepNavSelRange = "{0, 0}";
@@ -1258,6 +1358,12 @@
 		};
 	};
 	B261C0E512CD637B0018BCDA /* timespan.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = timespan.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/timespan.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 2275}}";
 			sepNavSelRange = "{6461, 0}";
@@ -1265,6 +1371,12 @@
 		};
 	};
 	B261C0E612CD637B0018BCDA /* timespan.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = timespan.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/timespan.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {782, 1105}}";
 			sepNavSelRange = "{0, 0}";
@@ -1272,6 +1384,12 @@
 		};
 	};
 	B261C13312CDACAF0018BCDA /* dtime.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = dtime.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/dtime.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 1924}}";
 			sepNavSelRange = "{2462, 0}";
@@ -1279,6 +1397,12 @@
 		};
 	};
 	B261C13412CDACAF0018BCDA /* dtime.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = dtime.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/dtime.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 858}}";
 			sepNavSelRange = "{0, 0}";
@@ -1292,7 +1416,7 @@
 		rLen = 0;
 		rLoc = 0;
 		rType = 0;
-		vrLen = 860;
+		vrLen = 837;
 		vrLoc = 0;
 	};
 	B27BBE4612D4D22F00C2139F /* PBXTextBookmark */ = {
@@ -1422,28 +1546,6 @@
 		vrLen = 957;
 		vrLoc = 0;
 	};
-	B29D83A112EDF83400AF7E1B /* mathdef.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 754}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1063}";
-		};
-	};
-	B29D83C612EE733F00AF7E1B /* builtin_prop_getset.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 2600}}";
-			sepNavSelRange = "{7102, 0}";
-			sepNavVisRange = "{5656, 1052}";
-			sepNavWindowFrame = "{{49, 0}, {877, 769}}";
-		};
-	};
-	B29D83C712EE733F00AF7E1B /* builtin_tostring.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 4368}}";
-			sepNavSelRange = "{9735, 0}";
-			sepNavVisRange = "{9165, 1005}";
-		};
-	};
 	B29D83F112EE9CF000AF7E1B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = B2E0B73B12A6B144009FE3E8 /* mathdef.h */;
@@ -1553,27 +1655,6 @@
 		vrLen = 742;
 		vrLoc = 2516;
 	};
-	B2A22D7A12FEE78600F3C100 /* lua_global.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 7852}}";
-			sepNavSelRange = "{18108, 0}";
-			sepNavVisRange = "{17760, 691}";
-		};
-	};
-	B2A22D7B12FEE78600F3C100 /* lua_global.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1586}}";
-			sepNavSelRange = "{5077, 0}";
-			sepNavVisRange = "{3412, 1156}";
-		};
-	};
-	B2A22D7D12FEE78600F3C100 /* wrap_core.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 611}}";
-			sepNavSelRange = "{1436, 0}";
-			sepNavVisRange = "{527, 815}";
-		};
-	};
 	B2A22D8212FEE78F00F3C100 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = B2E2691D12C9DC3100833568 /* thread_mac.c */;
@@ -1606,9 +1687,9 @@
 	};
 	B2A22DDA12FEEDC400F3C100 /* test_lua.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 754}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1230, 767}}";
 			sepNavSelRange = "{1823, 0}";
-			sepNavVisRange = "{1310, 527}";
+			sepNavVisRange = "{1191, 657}";
 		};
 	};
 	B2A22E4312FF093D00F3C100 /* PBXTextBookmark */ = {
@@ -1702,6 +1783,12 @@
 		vrLoc = 2516;
 	};
 	B2A22EF71300392100F3C100 /* wrap_world.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = wrap_world.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/lua/wrap_world.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {965, 494}}";
 			sepNavSelRange = "{0, 0}";
@@ -1709,10 +1796,16 @@
 		};
 	};
 	B2A22F11130059C400F3C100 /* wrap_vec2f.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = wrap_vec2f.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/lua/wrap_vec2f.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {965, 10855}}";
-			sepNavSelRange = "{24139, 0}";
-			sepNavVisRange = "{1859, 749}";
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 11050}}";
+			sepNavSelRange = "{24606, 0}";
+			sepNavVisRange = "{6241, 802}";
 			sepNavWindowFrame = "{{48, 0}, {877, 769}}";
 		};
 	};
@@ -2776,6 +2869,339 @@
 		vrLen = 749;
 		vrLoc = 1859;
 	};
+	B2A23156130221C700F3C100 /* lua_global.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 7956}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 799}";
+			sepNavWindowFrame = "{{47, 0}, {877, 769}}";
+		};
+	};
+	B2A2315A130221C700F3C100 /* lua_wrap_helper.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 741}}";
+			sepNavSelRange = "{2028, 0}";
+			sepNavVisRange = "{1038, 990}";
+		};
+	};
+	B2A2315D130221C700F3C100 /* wrap_vec2f.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1230, 10985}}";
+			sepNavSelRange = "{5684, 0}";
+			sepNavVisRange = "{5372, 539}";
+		};
+	};
+	B2A2315F130221C700F3C100 /* wrap_world.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 507}}";
+			sepNavSelRange = "{1243, 0}";
+			sepNavVisRange = "{0, 932}";
+		};
+	};
+	B2A23195130221F600F3C100 /* time.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 2015}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1001}";
+		};
+	};
+	B2A231D21302221D00F3C100 /* core_inc.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {965, 546}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 997}";
+		};
+	};
+	B2A231DA1302221D00F3C100 /* file.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {965, 2041}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1109}";
+		};
+	};
+	B2A231DB1302221D00F3C100 /* file_inc.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {965, 324}}";
+			sepNavSelRange = "{618, 0}";
+			sepNavVisRange = "{0, 798}";
+		};
+	};
+	B2A231DD1302221D00F3C100 /* file_physfs.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {965, 4667}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 904}";
+		};
+	};
+	B2A232321302221D00F3C100 /* cond.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 1261}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 959}";
+		};
+	};
+	B2A232371302221D00F3C100 /* semaphore.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {965, 1092}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 974}";
+		};
+	};
+	B2A232381302221D00F3C100 /* semaphore_mac.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 2080}}";
+			sepNavSelRange = "{968, 0}";
+			sepNavVisRange = "{231, 862}";
+		};
+	};
+	B2A2323E1302221D00F3C100 /* thread_mac.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 1430}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 911}";
+		};
+	};
+	B2A232411302221D00F3C100 /* date.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1020, 2158}}";
+			sepNavSelRange = "{5537, 0}";
+			sepNavVisRange = "{4073, 770}";
+		};
+	};
+	B2A232471302221D00F3C100 /* timer_inc.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 324}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 837}";
+		};
+	};
+	B2A232481302221D00F3C100 /* timer_mac.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 1027}}";
+			sepNavSelRange = "{1841, 0}";
+			sepNavVisRange = "{146, 870}";
+		};
+	};
+	B2A232EB130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B245482F12B91EF300EF7261 /* main.c */;
+		name = "main.c: 426";
+		rLen = 0;
+		rLoc = 11818;
+		rType = 0;
+		vrLen = 660;
+		vrLoc = 3784;
+	};
+	B2A232EC130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A2315A130221C700F3C100 /* lua_wrap_helper.h */;
+		name = "lua_wrap_helper.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 912;
+		vrLoc = 0;
+	};
+	B2A232ED130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 823;
+		vrLoc = 0;
+	};
+	B2A232EE130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A231D21302221D00F3C100 /* core_inc.h */;
+		name = "core_inc.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 997;
+		vrLoc = 0;
+	};
+	B2A232EF130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A231DA1302221D00F3C100 /* file.h */;
+		name = "file.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1109;
+		vrLoc = 0;
+	};
+	B2A232F0130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A231DD1302221D00F3C100 /* file_physfs.c */;
+		name = "file_physfs.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 904;
+		vrLoc = 0;
+	};
+	B2A232F1130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A231DB1302221D00F3C100 /* file_inc.h */;
+		name = "file_inc.h: 16";
+		rLen = 0;
+		rLoc = 618;
+		rType = 0;
+		vrLen = 798;
+		vrLoc = 0;
+	};
+	B2A232F2130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232371302221D00F3C100 /* semaphore.h */;
+		name = "semaphore.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 974;
+		vrLoc = 0;
+	};
+	B2A232F3130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232381302221D00F3C100 /* semaphore_mac.c */;
+		name = "semaphore_mac.c: 27";
+		rLen = 0;
+		rLoc = 968;
+		rType = 0;
+		vrLen = 862;
+		vrLoc = 231;
+	};
+	B2A232F4130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A2323E1302221D00F3C100 /* thread_mac.c */;
+		name = "thread_mac.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 911;
+		vrLoc = 0;
+	};
+	B2A232F5130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232321302221D00F3C100 /* cond.h */;
+		name = "cond.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 959;
+		vrLoc = 0;
+	};
+	B2A232F6130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232411302221D00F3C100 /* date.c */;
+		name = "date.c: 172";
+		rLen = 0;
+		rLoc = 5537;
+		rType = 0;
+		vrLen = 770;
+		vrLoc = 4073;
+	};
+	B2A232F7130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232471302221D00F3C100 /* timer_inc.h */;
+		name = "timer_inc.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 837;
+		vrLoc = 0;
+	};
+	B2A232F8130226C000F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232481302221D00F3C100 /* timer_mac.c */;
+		name = "timer_mac.c: 61";
+		rLen = 0;
+		rLoc = 1841;
+		rType = 0;
+		vrLen = 870;
+		vrLoc = 146;
+	};
+	B2A2330913022AFE00F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A232481302221D00F3C100 /* timer_mac.c */;
+		name = "timer_mac.c: 61";
+		rLen = 0;
+		rLoc = 1841;
+		rType = 0;
+		vrLen = 870;
+		vrLoc = 146;
+	};
+	B2A2330A13022AFE00F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 823;
+		vrLoc = 0;
+	};
+	B2A2330B13022AFE00F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 823;
+		vrLoc = 0;
+	};
+	B2A2330E13022B1400F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 823;
+		vrLoc = 0;
+	};
+	B2A233351302319300F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 799;
+		vrLoc = 0;
+	};
+	B2A2333B1302327500F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 799;
+		vrLoc = 0;
+	};
+	B2A233451302346500F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 799;
+		vrLoc = 0;
+	};
+	B2A233491302353800F3C100 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 799;
+		vrLoc = 0;
+	};
 	B2AD31C612B4EDC300D62651 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = B2E0B70F12A6B144009FE3E8 /* CRC.c */;
@@ -2797,6 +3223,12 @@
 		vrLoc = 2916;
 	};
 	B2B113FE12DAAE66002E6C1A /* color.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = color.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/color.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 1040}}";
 			sepNavSelRange = "{0, 0}";
@@ -2847,7 +3279,7 @@
 		ignoreCount = 0;
 		lineNumber = 265;
 		location = test_gl;
-		modificationTime = 318875195.15771;
+		modificationTime = 318911796.888117;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -2865,7 +3297,7 @@
 		ignoreCount = 0;
 		lineNumber = 201;
 		location = test_gl;
-		modificationTime = 318875195.157771;
+		modificationTime = 318911796.888172;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -2952,13 +3384,6 @@
 		rType = 0;
 		vrLen = 780;
 		vrLoc = 7899;
-	};
-	B2B7B31312FD714700FA2EC0 /* file_physfs.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 4667}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 993}";
-		};
 	};
 	B2B7B33112FD74E400FA2EC0 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3132,13 +3557,6 @@
 		vrLen = 921;
 		vrLoc = 1392;
 	};
-	B2C9226412D96539000FB811 /* color.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 7033}}";
-			sepNavSelRange = "{20501, 0}";
-			sepNavVisRange = "{18107, 1060}";
-		};
-	};
 	B2D838DD12CF0AE000CC6B35 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = B2E0B71412A6B144009FE3E8 /* array.c */;
@@ -3158,13 +3576,6 @@
 		rType = 0;
 		vrLen = 1148;
 		vrLoc = 0;
-	};
-	B2D8C9BF12F098C700584C38 /* uid.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 1248}}";
-			sepNavSelRange = "{1889, 0}";
-			sepNavVisRange = "{1530, 841}";
-		};
 	};
 	B2D8CA0012F0FDDA00584C38 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -3488,6 +3899,12 @@
 		};
 	};
 	B2DD24D012A817E50053CA3F /* mutex_mac.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = mutex_mac.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/mutex_mac.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1261}}";
 			sepNavSelRange = "{1991, 0}";
@@ -3519,6 +3936,12 @@
 		indexTemplatePath = "";
 	};
 	B2E0B70212A6B144009FE3E8 /* btree_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = btree_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/ai/behavior_tree/btree_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 479}}";
 			sepNavSelRange = "{887, 0}";
@@ -3526,6 +3949,12 @@
 		};
 	};
 	B2E0B70312A6B144009FE3E8 /* node.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = node.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/ai/behavior_tree/node.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 988}}";
 			sepNavSelRange = "{0, 0}";
@@ -3533,63 +3962,51 @@
 		};
 	};
 	B2E0B70A12A6B144009FE3E8 /* classes_registry.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = classes_registry.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/autogen/classes_registry.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 429}}";
 			sepNavSelRange = "{497, 0}";
 			sepNavVisRange = "{0, 960}";
 		};
 	};
-	B2E0B70E12A6B144009FE3E8 /* bit.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {818, 2977}}";
-			sepNavSelRange = "{1431, 0}";
-			sepNavVisRange = "{628, 1798}";
-			sepNavWindowFrame = "{{-305, 1226}, {877, 769}}";
-		};
-	};
 	B2E0B70F12A6B144009FE3E8 /* CRC.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = CRC.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/algo/CRC.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1349, 6487}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 1344}";
 		};
 	};
-	B2E0B71112A6B144009FE3E8 /* hash.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 14885}}";
-			sepNavSelRange = "{33765, 0}";
-			sepNavVisRange = "{32907, 1296}";
-		};
-	};
-	B2E0B71212A6B144009FE3E8 /* hash.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 3172}}";
-			sepNavSelRange = "{7384, 0}";
-			sepNavVisRange = "{3988, 1270}";
-		};
-	};
 	B2E0B71412A6B144009FE3E8 /* array.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = array.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/container/array.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 2782}}";
 			sepNavSelRange = "{1420, 0}";
 			sepNavVisRange = "{2321, 616}";
 		};
 	};
-	B2E0B71512A6B144009FE3E8 /* array.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 5538}}";
-			sepNavSelRange = "{4247, 0}";
-			sepNavVisRange = "{3778, 859}";
-		};
-	};
-	B2E0B71612A6B144009FE3E8 /* bitarray.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1026, 1937}}";
-			sepNavSelRange = "{2357, 0}";
-			sepNavVisRange = "{2057, 726}";
-		};
-	};
 	B2E0B71712A6B144009FE3E8 /* bitarray.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = bitarray.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/container/bitarray.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 1157}}";
 			sepNavSelRange = "{0, 0}";
@@ -3597,6 +4014,12 @@
 		};
 	};
 	B2E0B71812A6B144009FE3E8 /* container_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = container_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/container/container_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 422}}";
 			sepNavSelRange = "{0, 0}";
@@ -3604,27 +4027,25 @@
 		};
 	};
 	B2E0B71912A6B144009FE3E8 /* hashmap.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = hashmap.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/container/hashmap.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 4667}}";
 			sepNavSelRange = "{843, 0}";
 			sepNavVisRange = "{7546, 769}";
 		};
 	};
-	B2E0B71A12A6B144009FE3E8 /* hashmap.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1272, 3887}}";
-			sepNavSelRange = "{12824, 0}";
-			sepNavVisRange = "{11504, 1817}";
-		};
-	};
-	B2E0B71B12A6B144009FE3E8 /* list.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 5213}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1220}";
-		};
-	};
 	B2E0B71D12A6B144009FE3E8 /* pool.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = pool.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/container/pool.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 5018}}";
 			sepNavSelRange = "{12418, 0}";
@@ -3632,6 +4053,12 @@
 		};
 	};
 	B2E0B71E12A6B144009FE3E8 /* pool.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = pool.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/container/pool.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 3159}}";
 			sepNavSelRange = "{11647, 0}";
@@ -3639,6 +4066,12 @@
 		};
 	};
 	B2E0B71F12A6B144009FE3E8 /* core_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = core_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/core_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 546}}";
 			sepNavSelRange = "{0, 0}";
@@ -3647,6 +4080,12 @@
 		};
 	};
 	B2E0B72112A6B144009FE3E8 /* debug.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = debug.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/debug/debug.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 2522}}";
 			sepNavSelRange = "{6755, 0}";
@@ -3654,6 +4093,12 @@
 		};
 	};
 	B2E0B72212A6B144009FE3E8 /* debug.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = debug.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/debug/debug.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {943, 6253}}";
 			sepNavSelRange = "{17228, 0}";
@@ -3661,6 +4106,12 @@
 		};
 	};
 	B2E0B72312A6B144009FE3E8 /* debug_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = debug_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/debug/debug_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 479}}";
 			sepNavSelRange = "{0, 0}";
@@ -3668,6 +4119,12 @@
 		};
 	};
 	B2E0B72412A6B144009FE3E8 /* msgbox.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = msgbox.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/debug/msgbox.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1349, 949}}";
 			sepNavSelRange = "{0, 0}";
@@ -3676,6 +4133,12 @@
 		};
 	};
 	B2E0B72712A6B144009FE3E8 /* compiler.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = compiler.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/global/compiler.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 2977}}";
 			sepNavSelRange = "{0, 0}";
@@ -3683,21 +4146,25 @@
 		};
 	};
 	B2E0B72812A6B144009FE3E8 /* config.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = config.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/global/config.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 1807}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 1138}";
 		};
 	};
-	B2E0B72A12A6B144009FE3E8 /* external.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1365}}";
-			sepNavSelRange = "{2632, 0}";
-			sepNavVisRange = "{2082, 849}";
-			sepNavWindowFrame = "{{-305, 1226}, {877, 769}}";
-		};
-	};
 	B2E0B72B12A6B144009FE3E8 /* global_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = global_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/global/global_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 378}}";
 			sepNavSelRange = "{224, 0}";
@@ -3705,6 +4172,12 @@
 		};
 	};
 	B2E0B72E12A6B144009FE3E8 /* types.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = types.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/global/types.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 3627}}";
 			sepNavSelRange = "{8901, 0}";
@@ -3712,6 +4185,12 @@
 		};
 	};
 	B2E0B73012A6B144009FE3E8 /* angf.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = angf.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/angf.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 3341}}";
 			sepNavSelRange = "{2533, 0}";
@@ -3719,41 +4198,25 @@
 		};
 	};
 	B2E0B73112A6B144009FE3E8 /* ease_curve.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = ease_curve.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/ease_curve.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 13195}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 1110}";
 		};
 	};
-	B2E0B73312A6B144009FE3E8 /* interpolation.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1349, 2457}}";
-			sepNavSelRange = "{7094, 0}";
-			sepNavVisRange = "{3799, 1600}";
-		};
-	};
-	B2E0B73412A6B144009FE3E8 /* mat22f.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1196}}";
-			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 1028}";
-		};
-	};
-	B2E0B73512A6B144009FE3E8 /* mat22f.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1349, 7527}}";
-			sepNavSelRange = "{5429, 0}";
-			sepNavVisRange = "{5024, 1006}";
-		};
-	};
-	B2E0B73712A6B144009FE3E8 /* mat33f.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 9178}}";
-			sepNavSelRange = "{5413, 0}";
-			sepNavVisRange = "{5064, 749}";
-		};
-	};
 	B2E0B73912A6B144009FE3E8 /* mat44f.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = mat44f.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/mat44f.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 11336}}";
 			sepNavSelRange = "{27874, 0}";
@@ -3762,6 +4225,12 @@
 		};
 	};
 	B2E0B73A12A6B144009FE3E8 /* math_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = math_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/math_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 598}}";
 			sepNavSelRange = "{1044, 0}";
@@ -3769,6 +4238,12 @@
 		};
 	};
 	B2E0B73B12A6B144009FE3E8 /* mathdef.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = mathdef.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/mathdef.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 4108}}";
 			sepNavSelRange = "{0, 0}";
@@ -3776,6 +4251,12 @@
 		};
 	};
 	B2E0B73C12A6B144009FE3E8 /* mathop.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = mathop.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/mathop.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 5408}}";
 			sepNavSelRange = "{9520, 58}";
@@ -3783,6 +4264,12 @@
 		};
 	};
 	B2E0B73D12A6B144009FE3E8 /* quatf.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = quatf.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/quatf.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 2912}}";
 			sepNavSelRange = "{0, 0}";
@@ -3790,6 +4277,12 @@
 		};
 	};
 	B2E0B73E12A6B144009FE3E8 /* quatf.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = quatf.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/quatf.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1006, 10062}}";
 			sepNavSelRange = "{2145, 0}";
@@ -3797,6 +4290,12 @@
 		};
 	};
 	B2E0B73F12A6B144009FE3E8 /* random.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = random.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/random.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 1534}}";
 			sepNavSelRange = "{3386, 0}";
@@ -3804,6 +4303,12 @@
 		};
 	};
 	B2E0B74112A6B144009FE3E8 /* vec2f.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = vec2f.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/vec2f.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 8320}}";
 			sepNavSelRange = "{4657, 0}";
@@ -3812,6 +4317,12 @@
 		};
 	};
 	B2E0B74312A6B144009FE3E8 /* vec3f.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = vec3f.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/vec3f.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {983, 8749}}";
 			sepNavSelRange = "{20494, 0}";
@@ -3819,6 +4330,12 @@
 		};
 	};
 	B2E0B74412A6B144009FE3E8 /* vec4f.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = vec4f.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/math/vec4f.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1006, 9139}}";
 			sepNavSelRange = "{4855, 0}";
@@ -3826,6 +4343,12 @@
 		};
 	};
 	B2E0B74612A6B144009FE3E8 /* dlmalloc-2.8.4.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = "dlmalloc-2.8.4.c";
+		path = "/Users/Johnny/dev/projects/exdev/exsdk/src/core/memory/dlmalloc-2.8.4.c";
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 74243}}";
 			sepNavSelRange = "{116512, 0}";
@@ -3833,6 +4356,12 @@
 		};
 	};
 	B2E0B74812A6B144009FE3E8 /* memmng.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = memmng.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/memory/memmng.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 7462}}";
 			sepNavSelRange = "{8590, 0}";
@@ -3840,14 +4369,13 @@
 			sepNavWindowFrame = "{{-282, 1205}, {877, 769}}";
 		};
 	};
-	B2E0B74C12A6B144009FE3E8 /* core.c */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1230, 1339}}";
-			sepNavSelRange = "{1351, 0}";
-			sepNavVisRange = "{1324, 548}";
-		};
-	};
 	B2E0B75212A6B144009FE3E8 /* class.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = class.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/class.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 403}}";
 			sepNavSelRange = "{767, 0}";
@@ -3855,6 +4383,12 @@
 		};
 	};
 	B2E0B75312A6B144009FE3E8 /* class.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = class.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/class.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1430}}";
 			sepNavSelRange = "{2127, 0}";
@@ -3862,6 +4396,12 @@
 		};
 	};
 	B2E0B75412A6B144009FE3E8 /* prop.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = prop.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/prop.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 352}}";
 			sepNavSelRange = "{0, 0}";
@@ -3869,6 +4409,12 @@
 		};
 	};
 	B2E0B75512A6B144009FE3E8 /* prop.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = prop.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/prop.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 1781}}";
 			sepNavSelRange = "{7879, 0}";
@@ -3876,6 +4422,12 @@
 		};
 	};
 	B2E0B75612A6B144009FE3E8 /* rtti.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = rtti.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/rtti.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 2067}}";
 			sepNavSelRange = "{5210, 0}";
@@ -3883,6 +4435,12 @@
 		};
 	};
 	B2E0B75712A6B144009FE3E8 /* rtti.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = rtti.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/rtti.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1950}}";
 			sepNavSelRange = "{4243, 0}";
@@ -3890,6 +4448,12 @@
 		};
 	};
 	B2E0B75812A6B144009FE3E8 /* runtime_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = runtime_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/runtime/runtime_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 364}}";
 			sepNavSelRange = "{0, 0}";
@@ -3897,6 +4461,12 @@
 		};
 	};
 	B2E0B75A12A6B144009FE3E8 /* encoding.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = encoding.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/string/encoding.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 1469}}";
 			sepNavSelRange = "{505, 0}";
@@ -3904,6 +4474,12 @@
 		};
 	};
 	B2E0B75C12A6B144009FE3E8 /* str_op.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = str_op.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/string/str_op.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 1560}}";
 			sepNavSelRange = "{3632, 0}";
@@ -3911,6 +4487,12 @@
 		};
 	};
 	B2E0B75D12A6B144009FE3E8 /* str_op.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = str_op.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/string/str_op.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 858}}";
 			sepNavSelRange = "{1403, 0}";
@@ -3918,6 +4500,12 @@
 		};
 	};
 	B2E0B75E12A6B144009FE3E8 /* strid.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = strid.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/string/strid.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1230, 1703}}";
 			sepNavSelRange = "{2811, 0}";
@@ -3925,6 +4513,12 @@
 		};
 	};
 	B2E0B76212A6B144009FE3E8 /* mutex.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = mutex.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/mutex.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {635, 806}}";
 			sepNavSelRange = "{0, 0}";
@@ -3932,6 +4526,12 @@
 		};
 	};
 	B2E0B76412A6B144009FE3E8 /* thread.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = thread.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/thread.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 936}}";
 			sepNavSelRange = "{1004, 0}";
@@ -3940,6 +4540,12 @@
 		};
 	};
 	B2E0B76512A6B144009FE3E8 /* thread_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = thread_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/thread_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 447}}";
 			sepNavSelRange = "{552, 20}";
@@ -3972,6 +4578,12 @@
 		vrLoc = 0;
 	};
 	B2E2690912C9DB8700833568 /* timer.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = timer.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/timer.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 1729}}";
 			sepNavSelRange = "{4303, 0}";
@@ -3979,6 +4591,12 @@
 		};
 	};
 	B2E2690A12C9DB8700833568 /* timer_inc.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = timer_inc.h;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/timer/timer_inc.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {761, 441}}";
 			sepNavSelRange = "{0, 0}";
@@ -3986,6 +4604,12 @@
 		};
 	};
 	B2E2691B12C9DC3100833568 /* semaphore_mac.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = semaphore_mac.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/semaphore_mac.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 2119}}";
 			sepNavSelRange = "{0, 0}";
@@ -3993,15 +4617,13 @@
 			sepNavWindowFrame = "{{-259, 1184}, {877, 769}}";
 		};
 	};
-	B2E2691C12C9DC3100833568 /* semaphore.h */ = {
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1349, 1040}}";
-			sepNavSelRange = "{2800, 0}";
-			sepNavVisRange = "{1175, 1256}";
-			sepNavWindowFrame = "{{-213, 1142}, {877, 769}}";
-		};
-	};
 	B2E2691D12C9DC3100833568 /* thread_mac.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = thread_mac.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/thread_mac.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {965, 1456}}";
 			sepNavSelRange = "{2698, 0}";
@@ -4010,6 +4632,12 @@
 		};
 	};
 	B2E2691E12C9DC3100833568 /* thread.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = thread.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/thread.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 1794}}";
 			sepNavSelRange = "{0, 0}";
@@ -4035,6 +4663,12 @@
 		vrLoc = 1680;
 	};
 	B2E269B812C9FA5900833568 /* cond_mac.c */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.c;
+		name = cond_mac.c;
+		path = /Users/Johnny/dev/projects/exdev/exsdk/src/core/thread/cond_mac.c;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1261, 2171}}";
 			sepNavSelRange = "{0, 0}";
