@@ -567,31 +567,28 @@ void ex_lua_alert ( lua_State *_l ) {
 void ex_lua_dump_stack ( lua_State *_l ) {
     int i;
     int top = lua_gettop(_l);
-    ex_log("-- stack: top --\n");
-    for ( i = top; i >= 0; --i ) { /* repeat for each level */
+    ex_log("dump lua stack:");
+    ex_log("---------- top ----------");
+    for ( i = top; i >= 0; --i ) {
         int t = lua_type(_l, i);
         switch (t) {
         case LUA_TSTRING: 
-            { /* strings */
-                ex_log("|- '%s'\n", lua_tostring(_l, i));
-                break;
-            }
+            ex_log("%d: '%s'", i, lua_tostring(_l, i));
+            break;
+
         case LUA_TBOOLEAN: 
-            { /* booleans */
-                ex_log(lua_toboolean(_l, i) ? "|- true\n" : "|- false\n");
-                break;
-            }
+            ex_log( "%d: %s", i, lua_toboolean(_l, i) ? "true" : "false");
+            break;
+
         case LUA_TNUMBER: 
-            { /* numbers */
-                ex_log("|- %g\n", lua_tonumber(_l, i));
-                break;
-            }
+            ex_log("%d: %g", i, lua_tonumber(_l, i));
+            break;
+
+            // other type ( userdata, function, table ... )
         default: 
-            { /* other values */
-                ex_log("|- %s\n", lua_typename(_l, t));
-                break;
-            }
+            ex_log("%d: %s", i, lua_typename(_l, t));
+            break;
         }
     }
-    ex_log("-- stack: bottom -- \n");
+    ex_log("---------- bottom ----------");
 }

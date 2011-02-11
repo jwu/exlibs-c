@@ -88,7 +88,7 @@ end
 
 ticks = ticks or 0
 
-pdf = pdf or { 0.12, 0.4, 0.4, 0.07, 0.9 }
+pdf = pdf or { 0.1, 0.2, 0.3, 0.4, 0.5 }
 cdf = cdf or ex.probability.gen_cdf(pdf) 
 if freq == nil then 
     freq = {}
@@ -96,7 +96,6 @@ if freq == nil then
         freq[i]=0.0 
     end
 end
-my_pdf = my_pdf or { 0.0, 0.0, 0.0, 0.0, 0.0 }
 
 -- ======================================================== 
 -- 
@@ -107,8 +106,7 @@ calc_pdf()
 
 ticks = ticks + 1
 plot( 0.0, 0.0, pdf, 100.0 )
--- plot( -250.0, -250.0, cdf, 100.0 )
-plot( -250.0, 0.0, my_pdf, 100.0 )
+-- plot( -250.0, 0.0, cdf, 100.0 )
 
 -- ======================================================== 
 -- draws

@@ -47,6 +47,7 @@ game_t g_game = {
     NULL,
     NULL,
     NULL,
+    NULL,
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -205,8 +206,6 @@ static void __idle(void) {
 // ------------------------------------------------------------------ 
 
 static void __display(void) {
-    struct lua_State *l = ex_lua_default_state();
-
     // DISABLE { 
     // cpVect newPoint = cpvlerp(mousePoint_last, mousePoint, 0.25f);
 
@@ -222,15 +221,13 @@ static void __display(void) {
     // }
     // } TODO end 
 
-    // render 2D/3D objects in g_world space 
-    {
-        // ex_world_render(g_world);
+    // render 2D/3D objects, if g_game have the render function, let it do the things 
+    if ( g_game.render ) {
+        g_game.render (); 
     }
-
-    // test render lua
-    ex_camera_apply ( ex_world_main_camera(g_world) );
-    if ( ex_fsys_file_exists( "render_3D.lua" ) )
-        ex_lua_dofile( l, "render_3D.lua" );
+    else {
+        ex_world_render(g_world);
+    }
 
     // draw 2D objects in screen space
     glMatrixMode( GL_MODELVIEW );
@@ -238,8 +235,6 @@ static void __display(void) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
     glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
-    if ( ex_fsys_file_exists( "render_2D.lua" ) )
-        ex_lua_dofile( l, "render_2D.lua" );
     {
         char text[128];
         int x = 10; int y = 10;

@@ -52,7 +52,7 @@ vec2f_proxy_t *ex_lua_pushvec2f ( lua_State *_l, bool _readonly ) {
     u = (vec2f_proxy_t *)lua_newuserdata(_l, sizeof(vec2f_proxy_t));
     u->readonly = _readonly;
     u->typeid = EX_TYPEID(vec2f);
-    luaL_newmetatable(_l,"vec2f_meta");
+    luaL_newmetatable(_l,"ex.vec2f.meta"); // NOTE: this find a table in LUA_REGISTRYINDEX
     lua_setmetatable(_l,-2);
 
     return u;
@@ -62,15 +62,19 @@ vec2f_proxy_t *ex_lua_pushvec2f ( lua_State *_l, bool _readonly ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_meta_set ( lua_State *_l ) {
+static int __vec2f_meta_newindex ( lua_State *_l ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
 
     // first use rawget check if we have value in metatable.
     // NOTE: we not allow change the builtin values. so all of them are readonly.
+    // NOTE: we not use luaL_getmetatable( _l, "ex,vec2f.meta" ) since the function below is faster than it.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        ex_error ( "fatal error: can't find the metatable!" );
+        return 0;
+    }
     key = luaL_checkstring(_l, 2);
-    lua_getmetatable( _l, 1 );
     lua_pushstring ( _l, key );
     lua_rawget ( _l, -2 );
     // if this is not nil
@@ -99,14 +103,19 @@ static int __vec2f_meta_set ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_meta_get ( lua_State *_l ) {
+static int __vec2f_meta_index ( lua_State *_l ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
 
     // first use rawget check if we have value in metatable.
+    // NOTE: we not use luaL_getmetatable( _l, "ex,vec2f.meta" ) since the function below is faster than it.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        ex_error ( "fatal error: can't find the metatable!" );
+        lua_pushnil(_l);
+        return 1;
+    }
     key = luaL_checkstring(_l, 2);
-    lua_getmetatable( _l, 1 );
     lua_pushstring ( _l, key );
     lua_rawget ( _l, -2 );
     if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
@@ -135,15 +144,18 @@ static int __vec2f_meta_get ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_type_set ( lua_State *_l ) {
+static int __vec2f_type_newindex ( lua_State *_l ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
 
     // first use rawget check if we have value in metatable.
     // NOTE: we not allow change the builtin values. so all of them are readonly.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        ex_error ( "fatal error: can't find the metatable!" );
+        return 0;
+    }
     key = luaL_checkstring(_l, 2);
-    lua_getmetatable( _l, 1 );
     lua_pushstring ( _l, key );
     lua_rawget ( _l, -2 );
     // if this is not nil
@@ -172,14 +184,18 @@ static int __vec2f_type_set ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_type_get ( lua_State *_l ) {
+static int __vec2f_type_index ( lua_State *_l ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
 
     // first use rawget check if we have value in metatable.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        ex_error ( "fatal error: can't find the metatable!" );
+        lua_pushnil(_l);
+        return 1;
+    }
     key = luaL_checkstring(_l, 2);
-    lua_getmetatable( _l, 1 );
     lua_pushstring ( _l, key );
     lua_rawget ( _l, -2 );
     if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
@@ -749,8 +765,8 @@ int luaopen_vec2f ( lua_State *_l ) {
 
     // meta
     static const luaL_Reg __meta_funcs[] = {
-        { "__newindex", __vec2f_meta_set },
-        { "__index", __vec2f_meta_get },
+        { "__newindex", __vec2f_meta_newindex },
+        { "__index", __vec2f_meta_index },
         { "__tostring", __vec2f_tostring },
         { "__add", __vec2f_add },
         { "__sub", __vec2f_sub },
@@ -776,9 +792,9 @@ int luaopen_vec2f ( lua_State *_l ) {
 
     // type
     static const luaL_Reg __type_funcs[] = {
+        { "__newindex", __vec2f_type_newindex },
+        { "__index", __vec2f_type_index },
         { "__call", __vec2f_new },
-        { "__newindex", __vec2f_type_set },
-        { "__index", __vec2f_type_get },
         { "dot", __vec2f_dot },
         { "cross", __vec2f_cross },
         { NULL, NULL },
@@ -826,16 +842,16 @@ int luaopen_vec2f ( lua_State *_l ) {
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" ); // [-0,+1,-]
 
-    // register vec2f_meta
-    luaL_newmetatable(_l, "vec2f_meta"); // [-0,+1,m]
+    // register ex.vec2f.meta
+    luaL_newmetatable(_l, "ex.vec2f.meta"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
     luaL_register(_l, NULL, __meta_funcs); // [-1,+1,m]
-    lua_pop(_l, 1); // [-1,+0,-] pops vec2f_meta
+    lua_pop(_l, 1); // [-1,+0,-] pops ex.vec2f.meta
 
     // register vec2f
     lua_newtable(_l); // [-0,+1,m]
-    luaL_newmetatable(_l, "vec2f_t"); // [-0,+1,m]
+    luaL_newmetatable(_l, "ex.vec2f"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
     luaL_register(_l, NULL, __type_funcs); // [-1,+1,m]
-    lua_setmetatable(_l,-2); // [-1,+0,-] setmetatable( new_table, vec2f )
+    lua_setmetatable(_l,-2); // [-1,+0,-] setmetatable( new_table, ex.vec2f )
     lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex[vec2f] = new_table
 
     lua_pop(_l, 1); // [-1,+0,-] pops ex

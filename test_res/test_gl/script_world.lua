@@ -6,5 +6,12 @@
 -- ======================================================================================
 
 ex.log ("creating script world...")
+
+local v1 = ex.vec2f( 1.0, 1.0 )
+print (v1)
+
 local v2 = ex.vec2f( 1.0, 1.0 )
 print (v2)
+
+local d3 = ex.vec2f.dot( v1, v2 ) 
+print (d3)

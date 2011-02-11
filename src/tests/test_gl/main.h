@@ -19,6 +19,7 @@ extern "C" {
 typedef struct game_t {
     void (*init) ();
     void (*update) ();
+    void (*render) ();
     void (*keyboard) ( uint8 );
     void (*mouse) ( int , int );
 } game_t;

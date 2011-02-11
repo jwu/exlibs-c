@@ -87,6 +87,7 @@ void simple_world () {
 
     g_game.init = init;
     g_game.update = NULL;
+    g_game.render = NULL;
     g_game.keyboard = keyboard;
     g_game.mouse = NULL;
 }
