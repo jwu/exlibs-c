@@ -5,9 +5,29 @@
 -- Description  : 
 -- ======================================================================================
 
--- ======================================================== 
--- 
--- ======================================================== 
+--/////////////////////////////////////////////////////////////////////////////
+-- require and module
+--/////////////////////////////////////////////////////////////////////////////
+
+local getmetatable = getmetatable
+local setmetatable = setmetatable
+local require = require
+local print = print
+local assert = assert
+local rawget = rawget
+local rawset = rawset
+local type = type
+local pairs = pairs
+
+module ("ex.class")
+
+--/////////////////////////////////////////////////////////////////////////////
+-- functions defines
+--/////////////////////////////////////////////////////////////////////////////
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
 function deepcopy(_obj)
     local lookup_table = {}
@@ -27,6 +47,10 @@ function deepcopy(_obj)
     return _copy(_obj)
 end
 
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
 function isclass (_class)
     local mt = getmetatable(_class)
     while mt ~= nil do
@@ -35,6 +59,10 @@ function isclass (_class)
     end
     return false
 end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
 function class_index ( _t, _k )
     -- check if the table have the key
@@ -53,11 +81,15 @@ function class_index ( _t, _k )
             rawset(_t,_k,vv)
             return vv
         end
-        mt = getmetatable(_t) 
+        mt = getmetatable(mt) 
     end
     -- return
     return nil
 end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
 function class_new ( _self, ... )
     local table = ...
@@ -65,11 +97,19 @@ function class_new ( _self, ... )
     return setmetatable( table or {}, _self )
 end
 
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
 class_meta = {
     __index = class_index,
     -- __newindex = class_set,
     __call = class_new,
 }
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
 function class(...)
     local base,super = ...
@@ -84,11 +124,15 @@ function class(...)
     end
 end
 
+--/////////////////////////////////////////////////////////////////////////////
+-- tests
+--/////////////////////////////////////////////////////////////////////////////
+
 -- ======================================================== 
 -- 
 -- ======================================================== 
 
-foobar = class {
+foo = class {
     a = 10.0,
     _b = 20.0, -- private equals to ex.hide|ex.no_serialize
     c = "hello", -- ex.prop( "hello", ex.readonly ),
@@ -96,20 +140,28 @@ foobar = class {
     e = 10, -- ex.prop( 10, ex.hide ),
     f = 20, -- ex.prop( 20, ex.hide|ex.no_serialize ), -- equals to _b
 }
+bar = class ({
+    gg = 10.0,
+    a = 1.0,
+}, foo)
 
 -- ======================================================== 
 -- 
 -- ======================================================== 
 
-obj = foobar {
+foo_obj = foo {
     a = 1.0,
 }
+foo_obj.d = { 3.0 }
 
-tt = require("table2")
-ddd = {
-    a = 10.0
+bar_obj = bar{
+    a = 100.0,
 }
-tt.print(ddd)
--- print ( obj.a )
--- print ( obj._b )
--- print ( foobar._b )
+print( bar_obj.d[2] )
+
+
+dbg = require("ex.debug")
+print ( dbg.print_table(foo_obj,"foo_obj") )
+print ( dbg.print_table(bar_obj,"bar_obj") )
+
+-- TODO: think about super, so would we need __index for those super functions ????
