@@ -98,7 +98,9 @@ function print_table(_t, _name, _indent, _show_meta)
     end
     ]]
     -- (RiciLake) returns true if the table is empty
-    local function isemptytable(_t) return next(_t) == nil end
+    local function isvalidtable(_t) 
+        return type(_t) == "userdata" or next(_t) == nil 
+    end
 
     local function basicSerialize (o)
         local so = tostring(o)
@@ -130,7 +132,7 @@ function print_table(_t, _name, _indent, _show_meta)
 
         cart = cart .. _indent .. _field
 
-        if type(_value) ~= "table" then
+        if type(_value) ~= "table" and type(_value) ~= "userdata" then
             cart = cart .. " = " .. basicSerialize(_value) .. ";\n"
         else
             if _saved[_value] then
@@ -142,23 +144,25 @@ function print_table(_t, _name, _indent, _show_meta)
                 if _show_meta then mt = getmetatable(_value) end
                 _saved[_value] = _name
 
-                --if tablecount(_value) == 0 then
-                if isemptytable(_value) and mt == nil then
+                -- if tablecount(_value) == 0 then
+                if isvalidtable(_value) and mt == nil then
                     cart = cart .. " = {};\n"
                 else
                     cart = cart .. " = {\n"
                     -- _saved mt
                     if mt then
-                        addtocart(mt, "", _indent .. "   ", _saved, "[metatable]", _show_meta)
+                        addtocart(mt, "", _indent .. "   ", {} --[[ FIXME: this may have bugs in self reference --]], "[metatable]", _show_meta)
                     end
 
-                    -- save others
-                    for k, v in pairs(_value) do
-                        local sk = basicSerialize(k)
-                        local fname = string.format("%s[%s]", _name, sk)
-                        _field = string.format("[%s]", k)
-                        -- three spaces between levels
-                        addtocart(v, fname, _indent .. "   ", _saved, _field, _show_meta)
+                    -- save table if it is not empty
+                    if isvalidtable(_value) == false then
+                        for k, v in pairs(_value) do
+                            local sk = basicSerialize(k)
+                            local fname = string.format("%s[%s]", _name, sk)
+                            _field = string.format("[%s]", k)
+                            -- three spaces between levels
+                            addtocart(v, fname, _indent .. "   ", _saved, _field, _show_meta)
+                        end
                     end
                     cart = cart .. _indent .. "};\n"
                 end
@@ -167,7 +171,7 @@ function print_table(_t, _name, _indent, _show_meta)
     end
 
     _name = _name or "__unnamed__"
-    if type(_t) ~= "table" then
+    if type(_t) ~= "table" and type(_t) ~= "userdata" then
         return _name .. " = " .. basicSerialize(_t)
     end
     cart, autoref = "", ""

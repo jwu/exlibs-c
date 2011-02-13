@@ -19,7 +19,7 @@ local rawset = rawset
 local type = type
 local pairs = pairs
 
-module ("ex.class")
+module ("ex.class_v2")
 
 --/////////////////////////////////////////////////////////////////////////////
 -- functions defines
@@ -52,8 +52,10 @@ end
 -- ------------------------------------------------------------------ 
 
 function isclass (_class)
-    local mt = getmetatable(_class)
-    if mt == class_meta then return true end
+    -- TODO { 
+    -- local mt = getmetatable(_class)
+    -- if mt == class_meta then return true end
+    -- } TODO end 
     return false
 end
 
@@ -66,62 +68,30 @@ function member_readonly ( _t, _k, _v )
 end
 
 function member_readonly_get ( _t, _k )
-    print( "get value " .. _k )
-    return rawget(_t,_k)
+    local mt = getmetatable(_t) 
+    assert( mt, "can't find the metatable of _t" )
+    local v = rawget( mt, _k )
+    if v ~= nil then return v end
+
+    local super = rawget( mt, "super" )
+    local super_mt = nil
+    while super ~= nil do
+        super_mt = getmetatable(super)
+        assert( super_mt, "can't find the metatable of _t" )
+        local v = rawget( super_mt, _k )
+        if v ~= nil then return v end
+
+        super = rawget( super_mt, "super" )
+    end
+    return nil
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function class_newindex ( _t, _k, _v )
-    -- NOTE: the _t can only be object instance, 
-    --       we can garantee this, case if it is a class, 
-    --       it never use class_index as __index method. 
-    --       it use class_meta.__index
-
-    if _t.__readonly ~= nil and _t.__readonly then
-        assert ( false, "the table is readonly" )
-        return
-    end
-
-    -- check if the metatable have the key
-    local mt = getmetatable(_t) 
-    assert( mt, "can't find the metatable of _t" )
-    v = rawget(mt,_k)
-    if v ~= nil then 
-        if type(v) ~= type(_v) then
-            assert( false, "can't set the key ".._k..", the type is not the same" )
-            return
-        end
-        rawset(_t,_k,_v)
-        return
-    end
-
-    -- check if the super have the key
-    local super = rawget(mt,"__super")
-    while super ~= nil do
-        -- get key from super's metatable
-        v = rawget(super,_k)
-
-        --
-        if v ~= nil then 
-            if type(v) ~= type(_v) then
-                assert( false, "can't set the key ".._k..", the type is not the same" )
-                return
-            end
-            rawset(_t,_k,_v)
-            return
-        end
-
-        -- get super's super from super's metatable
-        super = rawget(super,"__super")
-    end
-
-    -- 
-    assert( false, "can't find the key " .. _k )
-    return
-end
+-- function class_newindex ( _t, _k )
+-- end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
@@ -135,15 +105,18 @@ function class_index ( _t, _k )
 
     -- speical case
     if _k == "super" then
-        local mt = getmetatable(_t) 
-        assert( mt, "can't find the metatable of _t" )
-        -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
-        return setmetatable( { __readonly = true }, rawget(mt,"__super") )
+        local mt = getmetatable(getmetatable(_t)) 
+        assert( mt, "can't find valid metatable in _t" )
+        return rawget(mt,"super")
     end
 
+    -- check if the table have the key
+    local v = rawget(_t,_k)
+    if v ~= nil then return v end
+
     -- check if the metatable have the key
-    local mt = getmetatable(_t) 
-    assert( mt, "can't find the metatable of _t" )
+    local mt = getmetatable(getmetatable(_t)) 
+    assert( mt, "can't find valid metatable in _t" )
     v = rawget(mt,_k)
     if v ~= nil then 
         local vv = v
@@ -155,10 +128,13 @@ function class_index ( _t, _k )
     end
 
     -- check if the super have the key
-    local super = rawget(mt,"__super")
+    local super = rawget(mt,"super")
+    local super_mt = nil
     while super ~= nil do
         -- get key from super's metatable
-        v = rawget(super,_k)
+        super_mt = getmetatable(super)
+        assert( super_mt, "can't find the metatable of _t" )
+        local v = rawget( super_mt, _k )
 
         --
         if v ~= nil then 
@@ -171,7 +147,7 @@ function class_index ( _t, _k )
         end
 
         -- get super's super from super's metatable
-        super = rawget(super,"__super")
+        super = rawget( super_mt, "super" )
     end
 
     -- return
@@ -191,9 +167,11 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-class_meta = {
-    __call = class_new,
-}
+-- class_meta = {
+--     __call = class_new,
+--     __index = member_readonly_get,
+--     __newindex = member_readonly,
+-- }
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
@@ -202,15 +180,27 @@ class_meta = {
 function class(...)
     local base,super = ...
     if super == nil then
-        rawset(base, "__super", nil)
+        base.super = nil
     else
-        assert( isclass(super), "super is not a class" )
-        rawset(base, "__super", super)
+        -- assert( isclass(super), "super is not a class" )
+        -- base.super = setmetatable({},super) -- this allow foo.super.d save values in the super's table
+        base.super = super
     end
 
-    base.__index = class_index
-    base.__newindex = class_newindex
-    return setmetatable(base,class_meta)
+    local t = {
+        __index = class_index,
+        -- __newindex = class_newindex,
+    }
+    base.__call = class_new
+    base.__index = member_readonly_get
+    base.__newindex = member_readonly
+    return setmetatable(t,base)
+
+    -- DISABLE { 
+    -- base.__index = class_index
+    -- -- base.__newindex = class_newindex,
+    -- return setmetatable(base,class_meta)
+    -- } DISABLE end 
 end
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -290,36 +280,38 @@ foobar = class ({
 -- 
 -- ======================================================== 
 
-foo_obj = foo {
-    m_normal = 1.0,
-}
-foo_obj.m_array = { "foo" }
+-- foo_obj = foo {
+--     m_normal = 1.0,
+-- }
+-- foo_obj.m_array = { "foo" }
 
-bar_obj = bar {
-    m_normal = 10.0,
-}
-print( bar_obj.super.m_array[2] )
-print( bar_obj.m_array[2] )
+-- bar_obj = bar {
+--     m_normal = 10.0,
+-- }
+-- print( bar_obj.super.m_array[2] )
+-- print( bar_obj.m_array[2] )
 
-foobar_obj = foobar {
-    m_normal = 100.0,
-}
-print( foobar_obj.m_array[1] )
+-- foobar_obj = foobar {
+--     m_normal = 100.0,
+-- }
+-- print( foobar_obj.m_array[2] )
 
 
 dbg = require("ex.debug")
 print ( dbg.print_table(foo,"foo") )
--- print ( dbg.print_table(foo_obj,"foo_obj") )
+print ( dbg.print_table(foo_obj,"foo_obj") )
 
 -- print ( dbg.print_table(bar,"bar") )
 -- print ( dbg.print_table(bar_obj,"bar_obj") )
 
-foobar_obj.m_test_func2( foobar_obj )
-foobar_obj.super.m_test_func2( foobar_obj )
-print ( dbg.print_table(foobar,"foobar") )
+-- foobar_obj.test_func2( foobar_obj )
+-- foobar_obj.super.test_func2( foobar_obj )
+-- print ( dbg.print_table(foobar,"foobar") )
 -- foobar_obj.super.m_normal = "hahahahahahaha"
+-- print(bar.m_normal)
+-- print(bar.m_string)
 -- bar.m_normal = "hohohohoho"
 -- foo.m_normal = "hehehehehe"
-print ( dbg.print_table(foobar,"foobar") )
+-- print ( dbg.print_table(foobar,"foobar") )
 -- print ( dbg.print_table(bar_obj.super,"bar_super") )
-print ( dbg.print_table(foobar_obj,"foobar_obj") )
+-- print ( dbg.print_table(foobar_obj,"foobar_obj") )

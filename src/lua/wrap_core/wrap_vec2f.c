@@ -15,6 +15,85 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+
+/**
+ex.vec2f = [metatable] = {
+    [metatable] = {
+        [__newindex] = "function: 0x101014640, C function";
+        [__index] = "function: 0x101014440, C function";
+        {
+            { "one", __vec2f_get_one, NULL };
+            { "zero", __vec2f_get_zero, NULL };
+            { "up", __vec2f_get_up, NULL };
+            { "right", __vec2f_get_right, NULL };
+        }
+        [__call] = "function: 0x101014410, C function";
+    };
+    [__unm] = "function: 0x1010146a0, C function";
+    [__eq] = "function: 0x101014560, C function";
+    [__concat] = "function: 0x1010146d0, C function";
+    [__tostring] = "function: 0x101014380, C function";
+    [__add] = "function: 0x1010144d0, C function";
+    [__div] = "function: 0x101014670, C function";
+    [__len] = "function: 0x101014530, C function";
+    [__mul] = "function: 0x1010143e0, C function";
+    [__sub] = "function: 0x101014500, C function";
+    [__index] = "function: 0x1010143b0, C function";
+    {
+        { "x", __vec2f_get_x, __vec2f_set_x };
+        { "y", __vec2f_get_y, __vec2f_set_y };
+        { "1", __vec2f_get_x, __vec2f_set_x };
+        { "2", __vec2f_get_y, __vec2f_set_y };
+        { "normalized", __vec2f_get_normalized, NULL },
+        { "length", __vec2f_get_length, NULL },
+        { "sqr_length", __vec2f_get_lengthSQR, NULL },
+    }
+    [__newindex] = "function: 0x101014350, C function";
+    [dot] = "function: 0x101014ac0, C function";
+    [cross] = "function: 0x101014af0, C function";
+};
+
+v1 = ex.vec2f(1.0,2.0)
+
+v1 = {
+    [metatable] = {
+        [metatable] = {
+            [__newindex] = "function: 0x101014640, C function";
+            [__index] = "function: 0x101014440, C function";
+            {
+                { "one", __vec2f_get_one, NULL },
+                { "zero", __vec2f_get_zero, NULL },
+                { "up", __vec2f_get_up, NULL },
+                { "right", __vec2f_get_right, NULL },
+            }
+            [__call] = "function: 0x101014410, C function";
+        };
+        [__unm] = "function: 0x1010146a0, C function";
+        [__eq] = "function: 0x101014560, C function";
+        [__concat] = "function: 0x1010146d0, C function";
+        [__tostring] = "function: 0x101014380, C function";
+        [__add] = "function: 0x1010144d0, C function";
+        [__div] = "function: 0x101014670, C function";
+        [__len] = "function: 0x101014530, C function";
+        [__mul] = "function: 0x1010143e0, C function";
+        [__sub] = "function: 0x101014500, C function";
+        [__index] = "function: 0x1010143b0, C function";
+        {
+            { "x", __vec2f_get_x, __vec2f_set_x },
+            { "y", __vec2f_get_y, __vec2f_set_y },
+            { "1", __vec2f_get_x, __vec2f_set_x },
+            { "2", __vec2f_get_y, __vec2f_set_y },
+            { "normalized", __vec2f_get_normalized, NULL },
+            { "length", __vec2f_get_length, NULL },
+            { "sqr_length", __vec2f_get_lengthSQR, NULL },
+        }
+        [__newindex] = "function: 0x101014350, C function";
+        [dot] = "function: 0x101014ac0, C function";
+        [cross] = "function: 0x101014af0, C function";
+    };
+};
+*/
+
 ///////////////////////////////////////////////////////////////////////////////
 // general defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +148,6 @@ static int __vec2f_meta_newindex ( lua_State *_l ) {
 
     // first use rawget check if we have value in metatable.
     // NOTE: we not allow change the builtin values. so all of them are readonly.
-    // NOTE: we not use luaL_getmetatable( _l, "ex,vec2f.meta" ) since the function below is faster than it.
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
         ex_error ( "fatal error: can't find the metatable!" );
         return 0;
@@ -109,7 +187,6 @@ static int __vec2f_meta_index ( lua_State *_l ) {
     ex_getset_t *getset;
 
     // first use rawget check if we have value in metatable.
-    // NOTE: we not use luaL_getmetatable( _l, "ex,vec2f.meta" ) since the function below is faster than it.
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
         ex_error ( "fatal error: can't find the metatable!" );
         lua_pushnil(_l);
@@ -763,7 +840,34 @@ static int __vec2f_get_right ( lua_State *_l ) {
 //
 int luaopen_vec2f ( lua_State *_l ) {
 
-    // meta
+    // type.meta
+    static const ex_getset_t __type_getsets[] = {
+        { "one", __vec2f_get_one, NULL },
+        { "zero", __vec2f_get_zero, NULL },
+        { "up", __vec2f_get_up, NULL },
+        { "right", __vec2f_get_right, NULL },
+        { NULL, NULL, NULL },
+    };
+    static const luaL_Reg __type_funcs[] = {
+        { "__newindex", __vec2f_type_newindex },
+        { "__index", __vec2f_type_index },
+        { "__call", __vec2f_new },
+        { NULL, NULL },
+    };
+
+    // vec2f.meta
+    static const ex_getset_t __meta_getsets[] = {
+        // { "type", __vec2f_get_type, NULL }, // TODO:
+        { "x", __vec2f_get_x, __vec2f_set_x },
+        { "y", __vec2f_get_y, __vec2f_set_y },
+        { "1", __vec2f_get_x, __vec2f_set_x },
+        { "2", __vec2f_get_y, __vec2f_set_y },
+        { "normalized", __vec2f_get_normalized, NULL },
+        { "length", __vec2f_get_length, NULL },
+        { "sqr_length", __vec2f_get_lengthSQR, NULL },
+        // { "new", __vec2f_get_new, NULL }, // DISABLE: we use __call instead
+        { NULL, NULL, NULL },
+    };
     static const luaL_Reg __meta_funcs[] = {
         { "__newindex", __vec2f_meta_newindex },
         { "__index", __vec2f_meta_index },
@@ -776,36 +880,10 @@ int luaopen_vec2f ( lua_State *_l ) {
         { "__concat", __vec2f_concat },
         { "__len", __vec2f_len },
         { "__eq", __vec2f_eq },
-        { NULL, NULL },
-    };
-    static const ex_getset_t __meta_getsets[] = {
-        { "type", __vec2f_get_type, NULL },
-        { "x", __vec2f_get_x, __vec2f_set_x },
-        { "y", __vec2f_get_y, __vec2f_set_y },
-        { "1", __vec2f_get_x, __vec2f_set_x },
-        { "2", __vec2f_get_y, __vec2f_set_y },
-        { "normalized", __vec2f_get_normalized, NULL },
-        { "length", __vec2f_get_length, NULL },
-        { "sqr_length", __vec2f_get_lengthSQR, NULL },
-        { NULL, NULL, NULL },
-    };
-
-    // type
-    static const luaL_Reg __type_funcs[] = {
-        { "__newindex", __vec2f_type_newindex },
-        { "__index", __vec2f_type_index },
-        { "__call", __vec2f_new },
+        // { "__type", __vec2f_get_type }, // TODO:
         { "dot", __vec2f_dot },
         { "cross", __vec2f_cross },
         { NULL, NULL },
-    };
-    static const ex_getset_t __type_getsets[] = {
-        // { "new", __vec2f_get_new, NULL }, // NOTE: we use __call instead
-        { "one", __vec2f_get_one, NULL },
-        { "zero", __vec2f_get_zero, NULL },
-        { "up", __vec2f_get_up, NULL },
-        { "right", __vec2f_get_right, NULL },
-        { NULL, NULL, NULL },
     };
     const ex_getset_t *getset;
 
@@ -842,6 +920,7 @@ int luaopen_vec2f ( lua_State *_l ) {
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" ); // [-0,+1,-]
 
+#if 0
     // register ex.vec2f.meta
     luaL_newmetatable(_l, "ex.vec2f.meta"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
     luaL_register(_l, NULL, __meta_funcs); // [-1,+1,m]
@@ -853,6 +932,32 @@ int luaopen_vec2f ( lua_State *_l ) {
     luaL_register(_l, NULL, __type_funcs); // [-1,+1,m]
     lua_setmetatable(_l,-2); // [-1,+0,-] setmetatable( new_table, ex.vec2f )
     lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex[vec2f] = new_table
+#else
+    /**
+      ex.vec2f = ex.vec2f.meta = {
+          type.meta = {
+              __call = ...;
+              __index = ...;
+              __newindex = ...;
+          };
+          __index = ...;
+          __newindex = ...;
+      };
+     */
+
+    // register metatable ex.vec2f.meta
+    luaL_newmetatable(_l, "ex.vec2f.meta"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
+    luaL_register(_l, NULL, __meta_funcs); // [-1,+1,m]
+
+    // setmetatable( ex.vec2f.meta, newtable(aka. type.meta) )
+    lua_newtable(_l); // [-0,+1,m]
+    luaL_register(_l, NULL, __type_funcs); // [-1,+1,m]
+    lua_setmetatable(_l,-2); // [-1,+0,-] 
+
+    lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex[vec2f] = ex.vec2f.meta
+    lua_pop(_l, 1); // [-1,+0,-] pops ex.vec2f.meta
+
+#endif
 
     lua_pop(_l, 1); // [-1,+0,-] pops ex
 
