@@ -17,6 +17,20 @@
 
 
 /**
+
+// EXAMPLE { 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+{ "new", __vec2f_get_new, NULL },
+
+static int __vec2f_get_new ( lua_State *_l ) {
+    lua_pushcfunction(_l, __vec2f_new);
+    return 1;
+}
+// } EXAMPLE end 
+
 ex.vec2f = [metatable] = {
     [metatable] = {
         [__newindex] = "function: 0x101014640, C function";
@@ -782,17 +796,6 @@ static int __vec2f_cross ( lua_State *_l ) {
 // type getset
 ///////////////////////////////////////////////////////////////////////////////
 
-// DISABLE { 
-// // ------------------------------------------------------------------ 
-// // Desc: 
-// // ------------------------------------------------------------------ 
-
-// static int __vec2f_get_new ( lua_State *_l ) {
-//     lua_pushcfunction(_l, __vec2f_new);
-//     return 1;
-// }
-// } DISABLE end 
-
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -837,7 +840,10 @@ static int __vec2f_get_right ( lua_State *_l ) {
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
-//
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int luaopen_vec2f ( lua_State *_l ) {
 
     // type.meta
@@ -865,7 +871,6 @@ int luaopen_vec2f ( lua_State *_l ) {
         { "normalized", __vec2f_get_normalized, NULL },
         { "length", __vec2f_get_length, NULL },
         { "sqr_length", __vec2f_get_lengthSQR, NULL },
-        // { "new", __vec2f_get_new, NULL }, // DISABLE: we use __call instead
         { NULL, NULL, NULL },
     };
     static const luaL_Reg __meta_funcs[] = {
@@ -920,19 +925,6 @@ int luaopen_vec2f ( lua_State *_l ) {
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" ); // [-0,+1,-]
 
-#if 0
-    // register ex.vec2f.meta
-    luaL_newmetatable(_l, "ex.vec2f.meta"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
-    luaL_register(_l, NULL, __meta_funcs); // [-1,+1,m]
-    lua_pop(_l, 1); // [-1,+0,-] pops ex.vec2f.meta
-
-    // register vec2f
-    lua_newtable(_l); // [-0,+1,m]
-    luaL_newmetatable(_l, "ex.vec2f"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
-    luaL_register(_l, NULL, __type_funcs); // [-1,+1,m]
-    lua_setmetatable(_l,-2); // [-1,+0,-] setmetatable( new_table, ex.vec2f )
-    lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex[vec2f] = new_table
-#else
     /**
       ex.vec2f = ex.vec2f.meta = {
           type.meta = {
@@ -955,16 +947,15 @@ int luaopen_vec2f ( lua_State *_l ) {
     lua_setmetatable(_l,-2); // [-1,+0,-] 
 
     lua_setfield(_l,-2,"vec2f"); // [-1,+0,e] ex[vec2f] = ex.vec2f.meta
-    lua_pop(_l, 1); // [-1,+0,-] pops ex.vec2f.meta
-
-#endif
-
     lua_pop(_l, 1); // [-1,+0,-] pops ex
 
     return 0;
 }
 
-//
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void luaclose_vec2f () {
     // deinit the hashtable
     ex_hashmap_deinit ( &__key_to_meta_getset );

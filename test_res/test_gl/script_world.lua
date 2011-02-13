@@ -18,8 +18,6 @@ local d3 = ex.vec2f.dot( v1, v2 )
 print (d3)
 print ("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
-a,b = type(v1)
-print ( a .. "," .. b )
 print ( ex.debug.print_table(v1,"v1") )
 print ( ex.debug.print_table(ex.vec2f,"ex.vec2f") )
 -- print ( ex.debug.print_table(getmetatable(v1),"v1") )

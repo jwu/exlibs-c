@@ -74,7 +74,7 @@ which logically are exactly not equivalent to the original code.
 This routine can serve for pretty formating tables with
 proper indentations, apart from printing them:
 
-print(print_table(t, "t"))   -- a typical use
+print_table(t, "t")   -- a typical use
 
 Heavily based on "Saving tables with cycles", PIL2, p. 113.
 
@@ -176,5 +176,5 @@ function print_table(_t, _name, _indent, _show_meta)
     end
     cart, autoref = "", ""
     addtocart(_t, _name, _indent, {}, _name, _show_meta)
-    return cart .. autoref
+    print(cart .. autoref)
 end

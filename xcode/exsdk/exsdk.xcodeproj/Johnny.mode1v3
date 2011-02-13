@@ -327,7 +327,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2EC5966130782820021E1FC</string>
+										<string>B2EC5A0913082D170021E1FC</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -649,6 +649,9 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>B2EC5A00130801BA0021E1FC</string>
+		<string>B2EC5A01130801BA0021E1FC</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
@@ -1025,7 +1028,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>B2F408B11302C32C00FCF2B5</string>
+				<string>B2EC59FE130801BA0021E1FC</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
