@@ -9,6 +9,8 @@
 -- require and module
 --/////////////////////////////////////////////////////////////////////////////
 
+require ("ex.core")
+
 local getmetatable = getmetatable
 local setmetatable = setmetatable
 local require = require
@@ -17,8 +19,8 @@ local assert = assert
 local rawget = rawget
 local rawset = rawset
 local type = type
-local pairs = pairs
 local tostring = tostring
+local ex = ex
 
 module ("ex.class")
 
@@ -30,71 +32,13 @@ module ("ex.class")
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function deepcopy(_obj)
-    local lookup_table = {}
-    local function _copy(_obj)
-        if type(_obj) ~= "table" then
-            return _obj
-        elseif lookup_table[_obj] then
-            return lookup_table[_obj]
-        end
-        local new_table = {}
-        lookup_table[_obj] = new_table
-        for index, value in pairs(_obj) do
-            new_table[_copy(index)] = _copy(value)
-        end
-        return setmetatable(new_table, getmetatable(_obj))
-    end
-    return _copy(_obj)
-end
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
-function isclass (_class)
-    local mt = getmetatable(_class)
-    if mt == class_meta then return true end
-    return false
-end
-
-classof = getmetatable
-
-local function __childof(_myclass,_superclass)
-    local super = rawget(_myclass,"__super")
-    while super ~= nil do
-        if super == _superclass then 
-            return true 
-        end
-        super = rawget(super,"__super")
-    end
-    return false
-end
-
-function childof(_object, _superclass)
-    return __childof(classof(_object),_superclass)
-end
-
-function superof(_object, _subclass)
-	return __childof(_subclass,classof(_object))
-end
-
-function isa(_object, _class)
-    local cls = classof(_object)
-    return cls == _class or __childof(cls,_class)
-end
-
-function is(_object, _class)
-    return classof(_object) == _class
-end
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
 function member_readonly ( _t, _k, _v )
     assert( false, "keys are readonly" )
 end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
 function member_readonly_get ( _t, _k )
     print( "get value " .. _k )
@@ -181,7 +125,7 @@ function class_index ( _t, _k )
     if v ~= nil then 
         local vv = v
         if type(vv) == "table" and getmetatable(vv) == nil then
-            vv = deepcopy(v)
+            vv = ex.deepcopy(v)
         end
         rawset(_t,_k,vv)
         return vv
@@ -197,7 +141,7 @@ function class_index ( _t, _k )
         if v ~= nil then 
             local vv = v
             if type(vv) == "table" and getmetatable(vv) == nil then
-                vv = deepcopy(v)
+                vv = ex.deepcopy(v)
             end
             rawset(_t,_k,vv)
             return vv
@@ -215,39 +159,27 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function class_new ( _self, ... )
-    local table = ...
-    return setmetatable( table or {}, _self )
-end
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
-class_meta = {
-    __call = class_new,
-}
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
 function class(...)
     local base,super = ...
+    assert( type(base) == "table", "the first parameter must be a table" )
+
     if super == nil then
         rawset(base, "__super", nil)
     else
-        assert( isclass(super), "super is not a class" )
+        assert( ex.isclass(super), "super is not a class" )
         rawset(base, "__super", super)
     end
 
     base.__index = class_index
     base.__newindex = class_newindex
-    base.is = is
-    base.isa = isa
-    base.superof = superof
-    base.childof = childof
-    return setmetatable(base,class_meta)
+    base.classof = ex.classof
+    base.superof = ex.superof
+    base.childof = ex.childof
+    base.isa = ex.isa
+    base.derive = function (_t)
+        return class( _t, base )
+    end
+    return setmetatable(base,ex.class_meta)
 end
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -301,7 +233,29 @@ bar = class ({
         print ( "i'm test function 2" )
     end
 }, foo)
-foobar = class ({
+-- foobar = class ({
+--     -- override foo
+--     m_normal = 100.0,
+--     m_array = { "five" },
+
+--     -- override bar
+--     m_string2 = "hello world",
+--     m_table2 = {
+--         a2 = "i'm a2 in foobar",
+--         b2 = "i'm b2 in foobar",
+--         c2 = "i'm c2 in foobar",
+--     },
+--     m_test_func2 = function( self ) 
+--         print ( "i'm test function 2 in foobar" )
+--     end,
+
+--     -- 
+--     m_test_func3 = function( self ) 
+--         print ( "i'm test function 3" )
+--     end
+-- }, bar)
+
+foobar = bar.derive ({
     -- override foo
     m_normal = 100.0,
     m_array = { "five" },
@@ -321,7 +275,7 @@ foobar = class ({
     m_test_func3 = function( self ) 
         print ( "i'm test function 3" )
     end
-}, bar)
+})
 
 -- ======================================================== 
 -- 
@@ -361,12 +315,13 @@ dbg.print_table(foobar,"foobar")
 -- dbg.print_table(bar_obj.super,"bar_super") 
 dbg.print_table(foobar_obj,"foobar_obj") 
 
-print( "foobar_obj is foobar: " .. tostring(foobar_obj:is(foobar)) )
-print( "foobar_obj is bar: " .. tostring(foobar_obj:is(bar)) )
-print( "foobar_obj is foo: " .. tostring(foobar_obj:is(foo)) )
 print( "foobar_obj isa foobar: " .. tostring(foobar_obj:isa(foobar)) )
 print( "foobar_obj isa bar: " .. tostring(foobar_obj:isa(bar)) )
 print( "foobar_obj isa foo: " .. tostring(foobar_obj:isa(foo)) )
-print( "foobar_obj superof foo: " .. tostring(foobar_obj:superof(foo)) )
-print( "foobar_obj childof foo: " .. tostring(foobar_obj:childof(foo)) )
+print( "foobar_obj is classof foobar: " .. tostring(foobar_obj:classof(foobar)) )
+print( "foobar_obj is classof bar: " .. tostring(foobar_obj:classof(bar)) )
+print( "foobar_obj is classof foo: " .. tostring(foobar_obj:classof(foo)) )
+print( "foobar_obj is superof foo: " .. tostring(foobar_obj:superof(foo)) )
+print( "foo_obj    is superof foobar: " .. tostring(foo_obj:superof(foobar)) )
+print( "foobar_obj is childof foo: " .. tostring(foobar_obj:childof(foo)) )
 

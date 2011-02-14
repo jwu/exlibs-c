@@ -43,6 +43,8 @@ ex.vec2f = [metatable] = {
         }
         [__call] = "function: 0x101014410, C function";
     };
+    [__typename] = "vec2f";
+    [__builtin] = "true";
     [__unm] = "function: 0x1010146a0, C function";
     [__eq] = "function: 0x101014560, C function";
     [__concat] = "function: 0x1010146d0, C function";
@@ -82,6 +84,8 @@ v1 = {
             }
             [__call] = "function: 0x101014410, C function";
         };
+        [__typename] = "vec2f";
+        [__builtin] = "true";
         [__unm] = "function: 0x1010146a0, C function";
         [__eq] = "function: 0x101014560, C function";
         [__concat] = "function: 0x1010146d0, C function";
@@ -580,22 +584,6 @@ static int __vec2f_eq ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_get_type ( lua_State *_l ) {
-    // check the value
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected vec2f");
-        lua_pushnil(_l);
-        return 1;
-    }
-    lua_pushstring(_l, "vec2f");
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 static int __vec2f_get_x ( lua_State *_l ) {
     // check the value
     vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
@@ -676,7 +664,7 @@ static int __vec2f_get_normalized ( lua_State *_l ) {
         return 1;
     }
 
-    r = ex_lua_pushvec2f(_l, true);
+    r = ex_lua_pushvec2f(_l, false);
     ex_vec2f_get_normalize( &r->val, &u->val );
     return 1;
 }
@@ -716,23 +704,6 @@ static int __vec2f_get_lengthSQR ( lua_State *_l ) {
 
     r = ex_vec2f_lenSQR( &u->val );
     lua_pushnumber(_l,r);
-    return 1;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// type method
-///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_new ( lua_State *_l ) {
-    vec2f_proxy_t *u;
-    
-    u = ex_lua_pushvec2f(_l,false);
-    ex_vec2f_set( &u->val, lua_tonumber(_l,2), lua_tonumber(_l,3) );
-
     return 1;
 }
 
@@ -792,6 +763,43 @@ static int __vec2f_cross ( lua_State *_l ) {
     return 1;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_copy ( lua_State *_l ) {
+    vec2f_proxy_t *u,*v;
+
+    v = ex_lua_checkvec2f(_l,1);
+    if ( v == NULL ) {
+        ex_error("invalid parameter type, expected vec2f");
+        lua_pushnil(_l);
+        return 1;
+    }
+
+    // push
+    u = ex_lua_pushvec2f(_l,false);
+    ex_vec2f_set( &u->val, v->val.x, v->val.y );
+    return 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// type method
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_new ( lua_State *_l ) {
+    vec2f_proxy_t *u;
+    
+    u = ex_lua_pushvec2f(_l,false);
+    ex_vec2f_set( &u->val, lua_tonumber(_l,2), lua_tonumber(_l,3) );
+
+    return 1;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // type getset
 ///////////////////////////////////////////////////////////////////////////////
@@ -801,7 +809,7 @@ static int __vec2f_cross ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_one ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,true); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
     u->val = ex_vec2f_one;
     return 1;
 }
@@ -811,7 +819,7 @@ static int __vec2f_get_one ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_zero ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,true); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
     u->val = ex_vec2f_zero;
     return 1;
 }
@@ -821,7 +829,7 @@ static int __vec2f_get_zero ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_up ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,true); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
     ex_vec2f_set( &u->val, 0.0f, 1.0f );
     return 1;
 }
@@ -831,7 +839,7 @@ static int __vec2f_get_up ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_right ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,true); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
     ex_vec2f_set( &u->val, 1.0f, 0.0f );
     return 1;
 }
@@ -863,7 +871,8 @@ int luaopen_vec2f ( lua_State *_l ) {
 
     // vec2f.meta
     static const ex_getset_t __meta_getsets[] = {
-        // { "type", __vec2f_get_type, NULL }, // TODO:
+        // NOTE: the __typename is for print (ex.classname(v1)), but do not use this for typecheck.
+        //       instead, use classof(v1) == ex.vec2f is more faster
         { "x", __vec2f_get_x, __vec2f_set_x },
         { "y", __vec2f_get_y, __vec2f_set_y },
         { "1", __vec2f_get_x, __vec2f_set_x },
@@ -885,9 +894,9 @@ int luaopen_vec2f ( lua_State *_l ) {
         { "__concat", __vec2f_concat },
         { "__len", __vec2f_len },
         { "__eq", __vec2f_eq },
-        // { "__type", __vec2f_get_type }, // TODO:
         { "dot", __vec2f_dot },
         { "cross", __vec2f_cross },
+        { "copy", __vec2f_copy },
         { NULL, NULL },
     };
     const ex_getset_t *getset;
@@ -940,6 +949,12 @@ int luaopen_vec2f ( lua_State *_l ) {
     // register metatable ex.vec2f.meta
     luaL_newmetatable(_l, "ex.vec2f.meta"); // [-0,+1,m] // NOTE: this store a table in LUA_REGISTRYINDEX
     luaL_register(_l, NULL, __meta_funcs); // [-1,+1,m]
+    //  ex.vec2f.meta.__typename = "vec2f", used in print(ex.typename(v1)). fot faster typecheck, use ex.typeof(v1) == ex.vec2f instead.
+    lua_pushstring(_l, "vec2f"); // [-0,+1,m] 
+    lua_setfield(_l,-2,"__typename"); // [-1,+0,e]
+    //  ex.vec2f.meta.__builtin = true, used in isbuiltin(ex.vec2f)
+    lua_pushboolean(_l, true); // [-0,+1,-] 
+    lua_setfield(_l,-2,"__builtin"); // [-1,+0,e]
 
     // setmetatable( ex.vec2f.meta, newtable(aka. type.meta) )
     lua_newtable(_l); // [-0,+1,m]
