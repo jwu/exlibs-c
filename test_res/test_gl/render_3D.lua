@@ -89,7 +89,7 @@ end
 ticks = ticks or 0
 
 pdf = pdf or { 0.1, 0.2, 0.3, 0.4, 0.5 }
-cdf = cdf or ex.probability.gen_cdf(pdf) 
+cdf = cdf or ex.math.probability(pdf) 
 if freq == nil then 
     freq = {}
     for i=1,#pdf do 

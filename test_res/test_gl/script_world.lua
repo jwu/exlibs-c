@@ -5,8 +5,6 @@
 -- Description  : 
 -- ======================================================================================
 
-return
-
 ex.log ("creating script world...")
 
 local v1 = ex.vec2f( 1.0, 1.0 )
@@ -23,9 +21,14 @@ print(v3)
 -- local d3 = ex.vec2f.dot( v1, v2 ) 
 local d3 = ex.vec2f.dot( v1, v2 ) 
 print (d3)
-print ("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
-print ( ex.debug.print_table(v1,"v1") )
-print ( ex.debug.print_table(ex.vec2f,"ex.vec2f") )
--- print ( ex.debug.print_table(getmetatable(v1),"v1") )
+ex.debug.dump(v1,"v1")
+ex.debug.dump(ex.vec2f,"ex.vec2f")
 
+t = {
+    v = ex.vec2f.one,
+    tt = {
+        foobar = "hello"
+    }
+}
+ex.debug.dump(t,"t") 

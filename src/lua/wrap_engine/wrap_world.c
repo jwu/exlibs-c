@@ -20,16 +20,16 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static const luaL_Reg __functions[] = {
-    // { "log", lua_ex_log },
-    { 0, 0 }
-};
-
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 int luaopen_world ( lua_State *_l ) {
+    static const luaL_Reg __functions[] = {
+        // { "log", lua_ex_log },
+        { 0, 0 }
+    };
+
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" );
     luaL_register( _l, 0, __functions );

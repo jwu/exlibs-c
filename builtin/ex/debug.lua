@@ -30,29 +30,6 @@ module ("ex.debug")
 --/////////////////////////////////////////////////////////////////////////////
 
 -- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
-function dump (_o)
-    if type(_o) == "number" then
-        io.write( _o )
-    elseif type(_o) == "string" then
-        io.write( string.format("%q", _o) )
-    elseif type(_o) == "table" then
-        io.write( "{\n" )
-        -- str_lv = string.rep("  ",lv)
-        for k,v in pairs(_o) do
-            io.write( " ", k, " = " )
-            dump(v)
-            io.write( ",\n" )
-        end
-        io.write( "}\n" )
-    else
-        error("cannot dump a " .. type(_o))
-    end
-end
-
--- ------------------------------------------------------------------ 
 -- Desc: Modified by Wu Jie
 --[[
 Author: Julio Manuel Fernandez-Diaz
@@ -74,7 +51,7 @@ which logically are exactly not equivalent to the original code.
 This routine can serve for pretty formating tables with
 proper indentations, apart from printing them:
 
-print_table(t, "t")   -- a typical use
+dump(t, "t")   -- a typical use
 
 Heavily based on "Saving tables with cycles", PIL2, p. 113.
 
@@ -86,7 +63,7 @@ indent is a first indentation (optional).
 -- ------------------------------------------------------------------ 
 
 
-function print_table(_t, _name, _indent, _show_meta)
+function dump(_t, _name, _indent, _show_meta)
     local cart     -- a container
     local autoref  -- for self references
 
@@ -98,8 +75,8 @@ function print_table(_t, _name, _indent, _show_meta)
     end
     ]]
     -- (RiciLake) returns true if the table is empty
-    local function isvalidtable(_t) 
-        return type(_t) == "userdata" or next(_t) == nil 
+    local function isemptytable(_t) 
+        return next(_t) == nil 
     end
 
     local function basicSerialize (o)
@@ -132,7 +109,7 @@ function print_table(_t, _name, _indent, _show_meta)
 
         cart = cart .. _indent .. _field
 
-        if type(_value) ~= "table" and type(_value) ~= "userdata" then
+        if type(_value) ~= "table" then
             cart = cart .. " = " .. basicSerialize(_value) .. ";\n"
         else
             if _saved[_value] then
@@ -145,7 +122,7 @@ function print_table(_t, _name, _indent, _show_meta)
                 _saved[_value] = _name
 
                 -- if tablecount(_value) == 0 then
-                if isvalidtable(_value) and mt == nil then
+                if isemptytable(_value) and mt == nil then
                     cart = cart .. " = {};\n"
                 else
                     cart = cart .. " = {\n"
@@ -155,7 +132,7 @@ function print_table(_t, _name, _indent, _show_meta)
                     end
 
                     -- save table if it is not empty
-                    if isvalidtable(_value) == false then
+                    if isemptytable(_value) == false then
                         for k, v in pairs(_value) do
                             local sk = basicSerialize(k)
                             local fname = string.format("%s[%s]", _name, sk)
@@ -171,7 +148,7 @@ function print_table(_t, _name, _indent, _show_meta)
     end
 
     _name = _name or "__unnamed__"
-    if type(_t) ~= "table" and type(_t) ~= "userdata" then
+    if type(_t) ~= "table" then
         return _name .. " = " .. basicSerialize(_t)
     end
     cart, autoref = "", ""

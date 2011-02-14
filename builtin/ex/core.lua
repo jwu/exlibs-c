@@ -9,11 +9,6 @@
 -- require and module
 --/////////////////////////////////////////////////////////////////////////////
 
-require("ex.math")
-require("ex.ease")
-
-local ex_math,ex_ease = ex.math,ex.ease
-local os,math = os,math
 local assert = assert
 local type = type
 local getmetatable = getmetatable
@@ -25,43 +20,72 @@ local rawset = rawset
 module("ex")
 
 --/////////////////////////////////////////////////////////////////////////////
--- class defines
+-- base functions
 --/////////////////////////////////////////////////////////////////////////////
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-typeof = getmetatable
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
-local function class_new ( _self, ... )
-    local table = ...
-    return setmetatable( table or {}, _self )
-end
-
---
-
-class_meta = {
-    __call = class_new,
-}
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
-function isclass (_class)
-    if type(_class) ~= "table" then 
-        return false
+function deepcopy (_obj)
+    local lookup_table = {}
+    local function _copy(_obj)
+        if isbuiltin( typeof(_obj) ) then
+            assert(_obj.copy, "please provide copy function for builtin type: " .. typename(_obj) )
+            return _obj:copy()
+        elseif type(_obj) ~= "table" then
+            return _obj
+        elseif lookup_table[_obj] then
+            return lookup_table[_obj]
+        end
+        local new_table = {}
+        lookup_table[_obj] = new_table
+        for index, value in pairs(_obj) do
+            new_table[_copy(index)] = _copy(value)
+        end
+        return setmetatable(new_table, getmetatable(_obj))
     end
-
-    local mt = getmetatable(_class)
-    if mt == class_meta then return true end
-    return false
+    return _copy(_obj)
 end
+
+--/////////////////////////////////////////////////////////////////////////////
+-- type-op
+--/////////////////////////////////////////////////////////////////////////////
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+-- typeof = getmetatable
+
+-- -- ------------------------------------------------------------------ 
+-- -- Desc: 
+-- -- ------------------------------------------------------------------ 
+
+-- local function class_new ( _self, ... )
+--     local table = ...
+--     return setmetatable( table or {}, _self )
+-- end
+
+-- --
+
+-- local class_meta = {
+--     __call = class_new,
+-- }
+
+-- -- ------------------------------------------------------------------ 
+-- -- Desc: 
+-- -- ------------------------------------------------------------------ 
+
+-- function isclass (_class)
+--     if type(_class) ~= "table" then 
+--         return false
+--     end
+
+--     local mt = getmetatable(_class)
+--     if mt == class_meta then return true end
+--     return false
+-- end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
@@ -91,11 +115,15 @@ function typename(_object)
     return tp
 end
 
+--/////////////////////////////////////////////////////////////////////////////
+-- class functions
+--/////////////////////////////////////////////////////////////////////////////
+
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function classof(_object, _class)
+local function classof(_object, _class)
     return typeof(_object) == _class
 end
 
@@ -116,13 +144,13 @@ end
 
 --
 
-function childof(_object, _superclass)
+local function childof(_object, _superclass)
     return __childof(typeof(_object),_superclass)
 end
 
 --
 
-function superof(_object, _subclass)
+local function superof(_object, _subclass)
 	return __childof(_subclass,typeof(_object))
 end
 
@@ -130,57 +158,163 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function isa(_object, _class)
+local function isa(_object, _class)
     local cls = typeof(_object)
     return cls == _class or __childof(cls,_class)
 end
 
---/////////////////////////////////////////////////////////////////////////////
--- misc functions
---/////////////////////////////////////////////////////////////////////////////
-
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function make_curve ( _from, _to, _duration, _curve )
-    assert ( type(_from) == "number", "_from is not a number" )
-    assert ( type(_to) == "number", "_to is not a number" )
-
-    -- init startTime and curve
-    local startTime = os.clock()
-    local curve = _curve or ex_ease.linear  
-
-    -- create tick closure
-    return function ()
-        local curTime = os.clock()
-        local t = math.min( 1.0, (curTime - startTime) / _duration )
-        local ratio = curve(t)
-        return ex_math.lerp( _from, _to, ratio ), (t == 1.0) -- current value, finished
-    end
+local function member_readonly ( _t, _k, _v )
+    assert( false, "keys are readonly" )
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function deepcopy (_obj)
-    local lookup_table = {}
-    local function _copy(_obj)
-        if isbuiltin( typeof(_obj) ) then
-            assert(_obj.copy, "please provide copy function for builtin type: " .. typename(_obj) )
-            return _obj:copy()
-        elseif type(_obj) ~= "table" then
-            return _obj
-        elseif lookup_table[_obj] then
-            return lookup_table[_obj]
-        end
-        local new_table = {}
-        lookup_table[_obj] = new_table
-        for index, value in pairs(_obj) do
-            new_table[_copy(index)] = _copy(value)
-        end
-        return setmetatable(new_table, getmetatable(_obj))
-    end
-    return _copy(_obj)
+local function member_readonly_get ( _t, _k )
+    print( "get value " .. _k )
+    return rawget(_t,_k)
 end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+local function class_newindex ( _t, _k, _v )
+    -- NOTE: the _t can only be object instance, 
+    --       we can garantee this, case if it is a class, 
+    --       it never use class_index as __index method. 
+    --       it use class_meta.__index
+
+    -- make sure only get __readonly in table _t, not invoke __index method.
+    local is_readonly = rawget(_t,"__readonly")
+    if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
+        assert ( false, "the table is readonly" )
+        return
+    end
+
+    -- check if the metatable have the key
+    local mt = getmetatable(_t) 
+    assert( mt, "can't find the metatable of _t" )
+    v = rawget(mt,_k)
+    if v ~= nil then 
+        if type(v) ~= type(_v) then
+            assert( false, "can't set the key ".._k..", the type is not the same" )
+            return
+        end
+        rawset(_t,_k,_v)
+        return
+    end
+
+    -- check if the super have the key
+    local super = rawget(mt,"__super")
+    while super ~= nil do
+        -- get key from super's metatable
+        v = rawget(super,_k)
+
+        --
+        if v ~= nil then 
+            if type(v) ~= type(_v) then
+                assert( false, "can't set the key ".._k..", the type is not the same" )
+                return
+            end
+            rawset(_t,_k,_v)
+            return
+        end
+
+        -- get super's super from super's metatable
+        super = rawget(super,"__super")
+    end
+
+    -- 
+    assert( false, "can't find the key " .. _k )
+    return
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+local function class_index ( _t, _k )
+    -- NOTE: the _t can only be object instance, 
+    --       we can garantee this, case if it is a class, 
+    --       it never use class_index as __index method. 
+    --       it use class_meta.__index
+
+    -- speical case
+    if _k == "super" then
+        local mt = getmetatable(_t) 
+        assert( mt, "can't find the metatable of _t" )
+        -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
+        return setmetatable( { __readonly = true }, rawget(mt,"__super") )
+    end
+
+    -- check if the metatable have the key
+    local mt = getmetatable(_t) 
+    assert( mt, "can't find the metatable of _t" )
+    v = rawget(mt,_k)
+    if v ~= nil then 
+        local vv = v
+        if type(vv) == "table" and getmetatable(vv) == nil then
+            vv = deepcopy(v)
+        end
+        rawset(_t,_k,vv)
+        return vv
+    end
+
+    -- check if the super have the key
+    local super = rawget(mt,"__super")
+    while super ~= nil do
+        -- get key from super's metatable
+        v = rawget(super,_k)
+
+        --
+        if v ~= nil then 
+            local vv = v
+            if type(vv) == "table" and getmetatable(vv) == nil then
+                vv = deepcopy(v)
+            end
+            rawset(_t,_k,vv)
+            return vv
+        end
+
+        -- get super's super from super's metatable
+        super = rawget(super,"__super")
+    end
+
+    -- return
+    return nil
+end
+
+-- TODO: in c { 
+-- -- ------------------------------------------------------------------ 
+-- -- Desc: 
+-- -- ------------------------------------------------------------------ 
+
+-- function class(...)
+--     local base,super = ...
+--     assert( type(base) == "table", "the first parameter must be a table" )
+
+--     if super == nil then
+--         rawset(base, "__super", nil)
+--     else
+--         assert( isclass(super), "super is not a class" )
+--         rawset(base, "__super", super)
+--     end
+
+--     base.__index = class_index
+--     base.__newindex = class_newindex
+--     base.classof = classof
+--     base.superof = superof
+--     base.childof = childof
+--     base.isa = isa
+--     base.derive = function (_t)
+--         return class( _t, base )
+--     end
+--     return setmetatable(base,class_meta)
+-- end
+-- } TODO end 

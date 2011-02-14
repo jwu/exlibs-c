@@ -14,6 +14,7 @@ require("ex.math")
 local assert,type = assert,type
 local pi,two_pi,half_pi = math.pi,ex.math.two_pi,ex.math.half_pi
 local sin,cos,asin,acos,sqrt,min,max,abs = math.sin,math.cos,math.asin,math.acos,math.sqrt,math.min,math.max,math.abs
+local os = os
 
 module("ex.ease")
 
@@ -352,4 +353,25 @@ end
 -- contrary to the usual 0 to 1 easing curve.
 function curve_cosine (_t) 
     return (cos(((_t * two_pi)) - half_pi) + 1) / 2 
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function make_curve ( _from, _to, _duration, _curve )
+    assert ( type(_from) == "number", "_from is not a number" )
+    assert ( type(_to) == "number", "_to is not a number" )
+
+    -- init startTime and curve
+    local startTime = os.clock()
+    local curve = _curve or ex_ease.linear  
+
+    -- create tick closure
+    return function ()
+        local curTime = os.clock()
+        local t = math.min( 1.0, (curTime - startTime) / _duration )
+        local ratio = curve(t)
+        return ex_math.lerp( _from, _to, ratio ), (t == 1.0) -- current value, finished
+    end
 end
