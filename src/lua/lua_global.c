@@ -293,6 +293,13 @@ int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
             continue;
         }
 
+        // ignore file name or directory name start with '__', 
+        // this can help me temporary disable loading specific modules.
+        if ( strncmp(*i,"__",2) == 0 ) {
+            // ex_log("skip loading %s%s", _dir, *i); // for DEBUG
+            continue;
+        }
+
         // get the full path
         full_path[base_len] = '\0'; // the easist way to reset the full_path to base_path
         strncat ( full_path, *i, fname_len  );
@@ -568,27 +575,28 @@ void ex_lua_dump_stack ( lua_State *_l ) {
     int i;
     int top = lua_gettop(_l);
     ex_log("dump lua stack:");
-    ex_log("---------- top ----------");
+    ex_log("+_________");
+    ex_log("|-> TOP");
     for ( i = top; i >= 0; --i ) {
         int t = lua_type(_l, i);
         switch (t) {
         case LUA_TSTRING: 
-            ex_log("%d: '%s'", i, lua_tostring(_l, i));
+            ex_log("| %d: '%s'", i, lua_tostring(_l, i));
             break;
 
         case LUA_TBOOLEAN: 
-            ex_log( "%d: %s", i, lua_toboolean(_l, i) ? "true" : "false");
+            ex_log( "| %d: %s", i, lua_toboolean(_l, i) ? "true" : "false");
             break;
 
         case LUA_TNUMBER: 
-            ex_log("%d: %g", i, lua_tonumber(_l, i));
+            ex_log("| %d: %g", i, lua_tonumber(_l, i));
             break;
 
             // other type ( userdata, function, table ... )
         default: 
-            ex_log("%d: %s", i, lua_typename(_l, t));
+            ex_log("| %d: %s", i, lua_typename(_l, t));
             break;
         }
     }
-    ex_log("---------- bottom ----------");
+    ex_log("|__________");
 }

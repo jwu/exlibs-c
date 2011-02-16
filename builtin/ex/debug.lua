@@ -149,7 +149,8 @@ function dump(_t, _name, _indent, _show_meta)
 
     _name = _name or "__unnamed__"
     if type(_t) ~= "table" then
-        return _name .. " = " .. basicSerialize(_t)
+        print (_name .. " = " .. basicSerialize(_t))
+        return
     end
     cart, autoref = "", ""
     addtocart(_t, _name, _indent, {}, _name, _show_meta)

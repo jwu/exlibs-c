@@ -56,36 +56,32 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
--- typeof = getmetatable
+typeof = getmetatable
 
--- -- ------------------------------------------------------------------ 
--- -- Desc: 
--- -- ------------------------------------------------------------------ 
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
--- local function class_new ( _self, ... )
---     local table = ...
---     return setmetatable( table or {}, _self )
--- end
+meta_class = {
+    __call = function ( _self, ... )
+        local table = ...
+        return setmetatable( table or {}, _self )
+    end
+}
 
--- --
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
--- local class_meta = {
---     __call = class_new,
--- }
+function isclass (_class)
+    if type(_class) ~= "table" then 
+        return false
+    end
 
--- -- ------------------------------------------------------------------ 
--- -- Desc: 
--- -- ------------------------------------------------------------------ 
-
--- function isclass (_class)
---     if type(_class) ~= "table" then 
---         return false
---     end
-
---     local mt = getmetatable(_class)
---     if mt == class_meta then return true end
---     return false
--- end
+    local mt = getmetatable(_class)
+    if mt == meta_class then return true end
+    return false
+end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
@@ -116,7 +112,7 @@ function typename(_object)
 end
 
 --/////////////////////////////////////////////////////////////////////////////
--- class functions
+-- classes functions
 --/////////////////////////////////////////////////////////////////////////////
 
 -- ------------------------------------------------------------------ 
@@ -188,7 +184,7 @@ local function class_newindex ( _t, _k, _v )
     -- NOTE: the _t can only be object instance, 
     --       we can garantee this, case if it is a class, 
     --       it never use class_index as __index method. 
-    --       it use class_meta.__index
+    --       it use meta_class.__index
 
     -- make sure only get __readonly in table _t, not invoke __index method.
     local is_readonly = rawget(_t,"__readonly")
@@ -243,7 +239,7 @@ local function class_index ( _t, _k )
     -- NOTE: the _t can only be object instance, 
     --       we can garantee this, case if it is a class, 
     --       it never use class_index as __index method. 
-    --       it use class_meta.__index
+    --       it use meta_class.__index
 
     -- speical case
     if _k == "super" then
@@ -290,31 +286,29 @@ local function class_index ( _t, _k )
     return nil
 end
 
--- TODO: in c { 
--- -- ------------------------------------------------------------------ 
--- -- Desc: 
--- -- ------------------------------------------------------------------ 
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
 
--- function class(...)
---     local base,super = ...
---     assert( type(base) == "table", "the first parameter must be a table" )
+function class(...)
+    local base,super = ...
+    assert( type(base) == "table", "the first parameter must be a table" )
 
---     if super == nil then
---         rawset(base, "__super", nil)
---     else
---         assert( isclass(super), "super is not a class" )
---         rawset(base, "__super", super)
---     end
+    if super == nil then
+        rawset(base, "__super", nil)
+    else
+        assert( isclass(super), "super is not a class" )
+        rawset(base, "__super", super)
+    end
 
---     base.__index = class_index
---     base.__newindex = class_newindex
---     base.classof = classof
---     base.superof = superof
---     base.childof = childof
---     base.isa = isa
---     base.derive = function (_t)
---         return class( _t, base )
---     end
---     return setmetatable(base,class_meta)
--- end
--- } TODO end 
+    base.__index = class_index
+    base.__newindex = class_newindex
+    base.classof = classof
+    base.superof = superof
+    base.childof = childof
+    base.isa = isa
+    base.derive = function (_t)
+        return class( _t, base )
+    end
+    return setmetatable(base,meta_class)
+end

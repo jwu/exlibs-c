@@ -9,14 +9,39 @@
 -- require and module
 --/////////////////////////////////////////////////////////////////////////////
 
-require ("ex.core")
-require("ex.debug")
+require ("ex.debug")
 
 --/////////////////////////////////////////////////////////////////////////////
 -- unit tests
 --/////////////////////////////////////////////////////////////////////////////
 
-local do_test = true
+t = {
+    x = 1, 
+    y = 1, 
+    z = 1, 
+    foobar = {
+        txt = "hello world",
+        tt = {
+            d = "yes"
+        }
+    },
+    v = ex.vec2f.zero,
+}
+-- ex.debug.dump(t.v,"t.v");
+-- ex.debug.dump(getmetatable(t.v),"t.v.meta");
+
+tt = ex.deepcopy(t)
+
+tt.x = 10.0
+tt.y = 20.0
+tt.z = 30.0
+tt.foobar.txt = "hello foobr!!!"
+tt.foobar.tt.d = "no"
+tt.v.x = 10.0
+ex.debug.dump(t,"t");
+ex.debug.dump(tt,"tt");
+
+local do_test = false
 if do_test == false then
     return
 end
@@ -48,6 +73,7 @@ foo = ex.class {
         print ( "i'm test function" )
     end
 }
+
 bar = ex.class ({
     -- override foo
     m_normal = 10.0,
@@ -63,6 +89,7 @@ bar = ex.class ({
         print ( "i'm test function 2" )
     end
 }, foo)
+
 -- foobar = ex.class ({
 --     -- override foo
 --     m_normal = 100.0,
