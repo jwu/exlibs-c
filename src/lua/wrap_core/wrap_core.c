@@ -28,18 +28,431 @@
 // ------------------------------------------------------------------ 
 
 static int __class_new ( lua_State *_l ) {
-    lua_pushvalue(_l,1); // [-0,+1,-]
-    if ( lua_isnil(_l,2) != 0 ) // if 2nd args is nil
-        lua_newtable(_l); // [-0,+1,m]
+    int nargs = lua_gettop(_l);
+
+    if ( nargs == 1 )  // if 2nd args is nil
+        lua_newtable(_l); // push {}
     else
-        lua_pushvalue(_l,2); // [-0,+1,-]
-    lua_setmetatable(_l,-2); // [-1,+0,-] 
+        lua_pushvalue(_l,2); // push 2nd args
+
+    lua_pushvalue(_l,-1); // push the table to set
+    lua_pushvalue(_l,1); // push _self
+
+    lua_setmetatable(_l,-2); // setmetatable( new_table, _self )
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: NOTE: this function only used in __class_index 
+// if v ~= nil then 
+//     local vv = v
+//     if type(vv) == "table" and getmetatable(vv) == nil then
+//         vv = deepcopy(v)
+//     end
+//     rawset(_t,_k,vv)
+//     return vv
+// end
+// ------------------------------------------------------------------ 
+
+static inline int __copy_v ( lua_State *_l ) {
+    // if type(v) == "table" and getmetatable(v) == nil then
+    if ( lua_istable(_l,-1) ) {
+        if ( lua_getmetatable(_l,-1) == 0 ) {
+            // vv = deepcopy(v)
+            ex_lua_deepcopy(_l, lua_gettop(_l) );
+            lua_remove(_l,-2); // remove v
+        }
+        else {
+            // local vv = v
+            lua_pop(_l,1); // pops mt
+        }
+    }
+    // rawset(_t,_k,vv)
+    lua_pushvalue(_l,2); // push key
+    lua_pushvalue(_l,-2); // push vv
+    lua_rawset ( _l, 1 );
+
+    // return vv
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function class_index ( _t, _k )
+//     -- NOTE: the _t can only be object instance, 
+//     --       we can garantee this, case if it is a class, 
+//     --       it never use class_index as __index method. 
+//     --       it use meta_class.__index
+//     -- speical case
+//     if _k == "super" then
+//         local mt = getmetatable(_t) 
+//         assert( mt, "can't find the metatable of _t" )
+//         -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
+//         return setmetatable( { __readonly = true }, rawget(mt,"__super") )
+//     end
+//     -- check if the metatable have the key
+//     local mt = getmetatable(_t) 
+//     assert( mt, "can't find the metatable of _t" )
+//     local v = rawget(mt,_k)
+//     if v ~= nil then 
+//         local vv = v
+//         if type(vv) == "table" and getmetatable(vv) == nil then
+//             vv = deepcopy(v)
+//         end
+//         rawset(_t,_k,vv)
+//         return vv
+//     end
+//     -- check if the super have the key
+//     local super = rawget(mt,"__super")
+//     while super ~= nil do
+//         -- get key from super's metatable
+//         v = rawget(super,_k)
+//         --
+//         if v ~= nil then 
+//             local vv = v
+//             if type(vv) == "table" and getmetatable(vv) == nil then
+//                 vv = deepcopy(v)
+//             end
+//             rawset(_t,_k,vv)
+//             return vv
+//         end
+//         -- get super's super from super's metatable
+//         super = rawget(super,"__super")
+//     end
+//     -- return
+//     return nil
+// end
+// ------------------------------------------------------------------ 
+
+static int __class_index ( lua_State *_l ) {
+    const char *key = luaL_checkstring(_l,2);
+
+    // if _k == "super" then
+    if ( strcmp( key, "super" ) == 0 ) {
+        // local mt = getmetatable(_t) 
+        if ( lua_getmetatable(_l,1) == 0 ) {
+            ex_error ( "can't find the metatable of _t" );
+            lua_pushnil(_l);
+            return 1;
+        }
+
+        // new_table = { __readonly = true }
+        lua_newtable(_l);
+        lua_pushboolean(_l,true);
+        lua_setfield(_l,-2,"__readonly");
+
+        // rawget(mt,"__super")
+        lua_pushstring(_l,"__super");
+        // top <--
+        // "__super"
+        // new_table
+        // mt
+        lua_rawget(_l,-3);
+
+        // top <--
+        // rawget(mt,"__super")
+        // new_table
+        // mt
+        // return setmetatable( { __readonly = true }, rawget(mt,"__super") )
+        lua_setmetatable(_l, -2 );
+        return 1;
+    }
+
+    // check if the metatable have the key
+    // local mt = getmetatable(_t) 
+    if ( lua_getmetatable(_l,1) == 0 ) {
+        ex_error ( "can't find the metatable of _t" );
+        lua_pushnil(_l);
+        return 1;
+    }
+    // v = rawget(mt,_k)
+    lua_pushvalue(_l,2);
+    lua_rawget(_l,-2);
+
+    // if v ~= nil then 
+    if ( lua_isnil(_l,-1) == 0 ) {
+        return __copy_v(_l);
+    }
+    lua_pop(_l,1); // pops v
+
+    // check if the super have the key
+    // local super = rawget(mt,"__super")
+    lua_pushstring(_l,"__super");
+    lua_rawget(_l,-2);
+
+    // while super ~= nil do
+    while ( lua_isnil(_l,-1) == 0 ) {
+        // get key from super's metatable
+        // v = rawget(super,_k)
+        lua_pushvalue(_l,2); // push key
+        lua_rawget(_l,-2);
+        // if v ~= nil then 
+        if ( lua_isnil(_l,-1) == 0 ) {
+            return __copy_v(_l);
+        }
+        lua_pop(_l,1); // pops v, pops rawget
+
+        // get super's super from super's metatable
+        // super = rawget(super,"__super")
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-2);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops rawget
+
+    // return nil
+    lua_pushnil(_l);
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function class_newindex ( _t, _k, _v )
+//     -- NOTE: the _t can only be object instance, 
+//     --       we can garantee this, case if it is a class, 
+//     --       it never use class_index as __index method. 
+//     --       it use meta_class.__index
+//     -- make sure only get __readonly in table _t, not invoke __index method.
+//     local is_readonly = rawget(_t,"__readonly")
+//     if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
+//         assert ( false, "the table is readonly" )
+//         return
+//     end
+//     -- check if the metatable have the key
+//     local mt = getmetatable(_t) 
+//     assert( mt, "can't find the metatable of _t" )
+//     local v = rawget(mt,_k)
+//     if v ~= nil then 
+//         rawset(_t,_k,_v)
+//         return
+//     end
+//     -- check if the super have the key
+//     local super = rawget(mt,"__super")
+//     while super ~= nil do
+//         -- get key from super's metatable
+//         v = rawget(super,_k)
+//         --
+//         if v ~= nil then 
+//             rawset(_t,_k,_v)
+//             return
+//         end
+//         -- get super's super from super's metatable
+//         super = rawget(super,"__super")
+//     end
+//     -- 
+//     assert( false, "can't find the key " .. _k )
+//     return
+// end
+// ------------------------------------------------------------------ 
+
+static int __class_newindex ( lua_State *_l ) {
+    // make sure only get __readonly in table _t, not invoke __index method.
+    // local is_readonly = rawget(_t,"__readonly")
+    lua_pushstring(_l,"__readonly");
+    lua_rawget(_l,1);
+    // if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
+    if ( lua_isboolean(_l,-1) && lua_toboolean(_l,-1) ) {
+        ex_error ("the table is readonly");
+        return 0;
+    }
+    lua_pop(_l,1); // pop is_readonly
+
+    // check if the metatable have the key
+    // local mt = getmetatable(_t) 
+    if ( lua_getmetatable(_l,1) == 0 ) {
+        ex_error ( "can't find the metatable of _t" );
+        return 0;
+    }
+    // v = rawget(mt,_k)
+    lua_pushvalue(_l,2);
+    lua_rawget(_l,-2);
+
+    // if v ~= nil then 
+    if ( lua_isnil(_l,-1) == 0 ) {
+        // rawset(_t,_k,_v)
+        lua_pushvalue(_l,2); // push _k
+        lua_pushvalue(_l,3); // push _v
+        lua_rawset (_l,1);
+        return 0;
+    }
+    lua_pop(_l,1); // pops v
+
+    // check if the super have the key
+    // local super = rawget(mt,"__super")
+    lua_pushstring(_l,"__super");
+    lua_rawget(_l,-2);
+
+    // while super ~= nil do
+    while ( lua_isnil(_l,-1) == 0 ) {
+        // get key from super's metatable
+        // v = rawget(super,_k)
+        lua_pushvalue(_l,2); // push key
+        lua_rawget(_l,-2);
+        // if v ~= nil then 
+        if ( lua_isnil(_l,-1) == 0 ) {
+            // rawset(_t,_k,_v)
+            lua_pushvalue(_l,2); // push _k
+            lua_pushvalue(_l,3); // push _v
+            lua_rawset (_l,1);
+            return 0;
+        }
+        lua_pop(_l,1); // pops v, pops rawget
+
+        // get super's super from super's metatable
+        // super = rawget(super,"__super")
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-2);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops rawget
+
+    ex_error ( "can't find the key %s", lua_tostring(_l,2) );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function classof(_object, _class)
+//     return typeof(_object) == _class
+// end
+// ------------------------------------------------------------------ 
+
+static int __classof ( lua_State *_l ) {
+    bool r;
+
+    // typeof(_object)
+    if ( lua_getmetatable(_l,1) == 0 ) {
+        lua_pushboolean(_l,false);
+        return 1;
+    }
+
+    // return typeof(_object) == _class
+    r = lua_rawequal( _l, -1, 2 );
+    lua_pushboolean(_l,r);
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function __childof(_myclass,_superclass)
+//     local super = rawget(_myclass,"__super")
+//     while super ~= nil do
+//         if super == _superclass then 
+//             return true 
+//         end
+//         super = rawget(super,"__super")
+//     end
+//     return false
+// end
+// ------------------------------------------------------------------ 
+
+static inline bool __internal_childof ( lua_State *_l, int _my_idx, int _super_idx ) {
+    // check if the super have the key
+    // local super = rawget(_myclass,"__super")
+    lua_pushstring(_l,"__super");
+    lua_rawget(_l,_my_idx);
+
+    // while super ~= nil do
+    while ( lua_isnil(_l,-1) == 0 ) {
+        // if super == _superclass then 
+        if ( lua_rawequal( _l, -1, _super_idx ) ) {
+            lua_pop(_l,1); // pops rawget
+            return true;
+        }
+
+        // get super's super from super's metatable
+        // super = rawget(super,"__super")
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-2);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops rawget
+    return false;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function superof(_object, _subclass)
+//     return __childof(_subclass,typeof(_object))
+// end
+// ------------------------------------------------------------------ 
+
+static int __superof ( lua_State *_l ) {
+    bool r;
+
+    // typeof(_object)
+    if ( lua_getmetatable(_l,1) == 0 ) {
+        lua_pushboolean(_l,false);
+        return 1;
+    }
+
+    r =  __internal_childof( _l, 2, lua_gettop(_l) );
+    lua_pushboolean(_l,r);
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function childof(_object, _superclass)
+//     return __childof(typeof(_object),_superclass)
+// end
+// ------------------------------------------------------------------ 
+
+static int __childof ( lua_State *_l ) {
+    bool r;
+
+    // typeof(_object)
+    if ( lua_getmetatable(_l,1) == 0 ) {
+        lua_pushboolean(_l,false);
+        return 1;
+    }
+
+    r =  __internal_childof( _l, lua_gettop(_l), 2 );
+    lua_pushboolean(_l,r);
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// local function isa(_object, _class)
+//     local cls = typeof(_object)
+//     return cls == _class or __childof(cls,_class)
+// end
+// ------------------------------------------------------------------ 
+
+static int __isa ( lua_State *_l ) {
+    bool r;
+
+    // typeof(_object)
+    if ( lua_getmetatable(_l,1) == 0 ) {
+        lua_pushboolean(_l,false);
+        return 1;
+    }
+
+    // typeof(_object) == _class
+    if ( lua_rawequal(_l,-1,2) ) {
+        lua_pushboolean(_l,true);
+        return 1;
+    }
+
+    // __childof(typeof(_object),_class)
+    r =  __internal_childof( _l, lua_gettop(_l), 2 );
+    lua_pushboolean(_l,r);
     return 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __dump_stack ( lua_State *_l ) {
+    ex_lua_dump_stack(_l);
+    return 0;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -68,7 +481,7 @@ static int __log ( lua_State *_l ) {
 // typeof = getmetatable
 // ------------------------------------------------------------------ 
 
-static inline int __type_of ( lua_State *_l ) {
+static int __type_of ( lua_State *_l ) {
     if ( lua_getmetatable(_l,1) == 0 )
         lua_pushnil(_l);
     return 1;
@@ -101,7 +514,7 @@ bool ex_lua_isclass ( lua_State *_l, int _idx ) {
     // if mt == _R["ex.class.meta"] then return true end
     // return false
     luaL_getmetatable(_l,"ex.class.meta");
-    if ( lua_topointer(_l,-1) == lua_topointer(_l,-2) ) {
+    if ( lua_rawequal(_l,-1,-2) ) {
         lua_pop(_l, 2); // pops mt, ex.class.meta
         return true;
     }
@@ -110,7 +523,7 @@ bool ex_lua_isclass ( lua_State *_l, int _idx ) {
     return false;
 }
 
-static inline int __isclass ( lua_State *_l ) {
+static int __isclass ( lua_State *_l ) {
     lua_pushboolean( _l, ex_lua_isclass (_l,1) );
     return 1;
 }
@@ -151,7 +564,7 @@ bool ex_lua_isbuiltin ( lua_State *_l, int _idx ) {
     return r;
 }
 
-static inline int __isbuiltin ( lua_State *_l ) {
+static int __isbuiltin ( lua_State *_l ) {
     lua_pushboolean( _l, ex_lua_isbuiltin(_l,1) );
     return 1;
 }
@@ -173,8 +586,6 @@ int ex_lua_typename ( lua_State *_l, int _idx ) {
     // local tp = type(_object) 
     // if tp == "userdata" or tp == "table" then 
     if ( lua_isuserdata(_l,_idx) || lua_istable(_l,_idx) ) {
-        lua_pop(_l,1); // pop tp
-
         // local name = rawget(typeof(_object), "__typename")
         if ( lua_getmetatable(_l,_idx) == 0 ) {
             ex_error ("can't find metatable in the class.");
@@ -183,7 +594,6 @@ int ex_lua_typename ( lua_State *_l, int _idx ) {
         }
         lua_pushstring(_l,"__typename");
         lua_rawget(_l,-2);
-        lua_pop(_l,1); // pop mt
 
         // assert ( name ~= nil, "can't find __typename define in your class." )
         if ( lua_isnil(_l,-1) ) {
@@ -191,14 +601,16 @@ int ex_lua_typename ( lua_State *_l, int _idx ) {
         }
 
         // return name
+        lua_remove(_l, -2); // remove mt
         return 1;
     }
 
-    // return tp
+    // return type(_object)
+    lua_pushstring(_l, luaL_typename(_l,_idx) );
     return 1;
 }
 
-static inline int __typename ( lua_State *_l ) {
+static int __typename ( lua_State *_l ) {
     return ex_lua_typename(_l,1);
 }
 
@@ -362,7 +774,7 @@ static int __copy ( lua_State *_l ) {
 }
 #undef OBJ_IDX
 
-static int __deepcopy ( lua_State *_l ) {
+static int ex_lua_deepcopy ( lua_State *_l, int _idx ) {
     // local lookup_table = {}
     lua_newtable(_l);
 
@@ -370,9 +782,12 @@ static int __deepcopy ( lua_State *_l ) {
     lua_pushcclosure(_l,__copy,1);
 
     // return _copy(_obj)
-    lua_pushvalue(_l,1); // push first args to stack
+    lua_pushvalue(_l,_idx); // push first args to stack
     lua_call(_l,1,1); // call _copy with 1 args, 1 result.
     return 1;
+}
+static int __deepcopy ( lua_State *_l ) {
+    return ex_lua_deepcopy(_l,1);
 }
 
 // ------------------------------------------------------------------ 
@@ -401,6 +816,29 @@ static int __deepcopy ( lua_State *_l ) {
 // end
 // ------------------------------------------------------------------ 
 
+static int __class ( lua_State *_l ) {
+    int nargs = lua_gettop(_l);
+    if ( nargs == 0 ) {
+        ex_error ( "can't find any input arguments" );
+        lua_pushnil(_l);
+        return 1;
+    }
+    if ( nargs == 1 ) {
+        lua_pushnil(_l);
+    }
+    return ex_lua_class(_l,1,2);
+}
+
+static int __derive ( lua_State *_l ) {
+    int nargs = lua_gettop(_l);
+    if ( nargs != 1 ) {
+        ex_error ( "only 1 arguments accept in derive function" );
+        lua_pushnil(_l);
+        return 1;
+    }
+    return ex_lua_class(_l,1,lua_upvalueindex(1));
+}
+
 int ex_lua_class ( lua_State *_l, int _base_idx, int _super_idx ) {
     // local base,super = ...
     // assert( type(base) == "table", "the first parameter must be a table" )
@@ -411,23 +849,20 @@ int ex_lua_class ( lua_State *_l, int _base_idx, int _super_idx ) {
     }
 
     // if super == nil then
-    if ( lua_isnil(_l,2) ) {
+    if ( lua_isnil(_l,_super_idx) ) {
         // rawset(base, "__super", nil)
         lua_pushstring(_l,"__super");
         lua_pushnil(_l);
         lua_rawset ( _l, _base_idx );
     }
     else {
-        bool r = false;
-        
         // assert( isclass(super), "super is not a class" )
-        if ( ex_lua_isclass(_l,_super_idx) ) {
+        if ( !ex_lua_isclass(_l,_super_idx) ) {
             ex_error( "super is not a class" );
             lua_pop(_l,1); // pop __isclass push
             lua_pushnil(_l);
             return 1;
         }
-        lua_pop(_l,1); // pop __isclass push
 
         // rawset(base, "__super", super)
         lua_pushstring(_l,"__super");
@@ -436,21 +871,42 @@ int ex_lua_class ( lua_State *_l, int _base_idx, int _super_idx ) {
     }
 
     // base.__index = class_index
+    lua_pushcfunction(_l,__class_index);
+    lua_setfield(_l,_base_idx,"__index");
+
     // base.__newindex = class_newindex
+    lua_pushcfunction(_l,__class_newindex);
+    lua_setfield(_l,_base_idx,"__newindex");
+
     // base.classof = classof
+    lua_pushcfunction(_l,__classof);
+    lua_setfield(_l,_base_idx,"classof");
+
     // base.superof = superof
+    lua_pushcfunction(_l,__superof);
+    lua_setfield(_l,_base_idx,"superof");
+
     // base.childof = childof
+    lua_pushcfunction(_l,__childof);
+    lua_setfield(_l,_base_idx,"childof");
+
     // base.isa = isa
+    lua_pushcfunction(_l,__isa);
+    lua_setfield(_l,_base_idx,"isa");
+
     // base.derive = function (_t)
     //     return class( _t, base )
     // end
-    // return setmetatable(base,class_meta)
-}
+    lua_pushvalue(_l,_base_idx);
+    lua_pushcclosure(_l,__derive,1);
+    lua_setfield(_l,_base_idx,"derive");
 
-static inline int __class ( lua_State *_l ) {
-    ex_lua_class(_l,1,2);
+    // return setmetatable(base,ex.class.meta)
+    luaL_getmetatable(_l,"ex.class.meta");
+    lua_setmetatable(_l,_base_idx);
+    lua_pushvalue(_l,_base_idx);
+    return 1;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // register
@@ -468,7 +924,7 @@ int luaopen_core ( lua_State *_l ) {
     };
     // ex functions
     static const luaL_Reg __core_funcs[] = {
-        { "dumpstack", ex_lua_dump_stack }, // DEBUG:
+        { "dump_stack", __dump_stack }, // DEBUG:
         { "range_rand", __range_rand }, // TODO: go to ex.random.range
         { "log", __log },
         { "deepcopy", __deepcopy },

@@ -196,12 +196,14 @@ local function class_newindex ( _t, _k, _v )
     -- check if the metatable have the key
     local mt = getmetatable(_t) 
     assert( mt, "can't find the metatable of _t" )
-    v = rawget(mt,_k)
+    local v = rawget(mt,_k)
     if v ~= nil then 
-        if type(v) ~= type(_v) then
-            assert( false, "can't set the key ".._k..", the type is not the same" )
-            return
-        end
+        -- DISABLE: the new index can only garantee 'new' value, but old one still not protected. { 
+        -- if type(v) ~= type(_v) then
+        --     assert( false, "can't set the key ".._k..", the type is not the same" )
+        --     return
+        -- end
+        -- } DISABLE end 
         rawset(_t,_k,_v)
         return
     end
@@ -214,10 +216,12 @@ local function class_newindex ( _t, _k, _v )
 
         --
         if v ~= nil then 
-            if type(v) ~= type(_v) then
-                assert( false, "can't set the key ".._k..", the type is not the same" )
-                return
-            end
+            -- DISABLE: the new index can only garantee 'new' value, but old one still not protected. { 
+            -- if type(v) ~= type(_v) then
+            --     assert( false, "can't set the key ".._k..", the type is not the same" )
+            --     return
+            -- end
+            -- } DISABLE end 
             rawset(_t,_k,_v)
             return
         end
@@ -252,7 +256,7 @@ local function class_index ( _t, _k )
     -- check if the metatable have the key
     local mt = getmetatable(_t) 
     assert( mt, "can't find the metatable of _t" )
-    v = rawget(mt,_k)
+    local v = rawget(mt,_k)
     if v ~= nil then 
         local vv = v
         if type(vv) == "table" and getmetatable(vv) == nil then

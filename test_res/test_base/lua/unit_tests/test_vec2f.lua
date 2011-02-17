@@ -5,6 +5,17 @@
 -- Description  : 
 -- ======================================================================================
 
+--/////////////////////////////////////////////////////////////////////////////
+--
+--/////////////////////////////////////////////////////////////////////////////
+
+local do_test = false
+if not do_test then return end
+
+--/////////////////////////////////////////////////////////////////////////////
+--
+--/////////////////////////////////////////////////////////////////////////////
+
 ex.log ( "test vec2f" )
 
 v1 = ex.vec2f( 10.0, 20.0 )
@@ -91,3 +102,11 @@ print ( "v3 squred length = " .. v3.normalized.sqr_length)
 -- check boolean
 print ( "v1 is equal to v2: " .. tostring(v1 == v2) )
 print ( "v1 is not equal to v2: " .. tostring(v1 ~= v2) )
+
+-- check is type correct
+v = ex.vec2f.zero
+print ("xxxxxxxxxxxxxxxxxxxxxxx")
+print ("is builtin " .. tostring(ex.isbuiltin( ex.typeof(v) )) )
+print ("is class " .. tostring(ex.isclass( ex.typeof(v) )) )
+print ("is vec2f " .. tostring(ex.typeof(v) == ex.vec2f) )
+print ("xxxxxxxxxxxxxxxxxxxxxxx")

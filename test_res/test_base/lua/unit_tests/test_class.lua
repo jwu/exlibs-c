@@ -1,24 +1,21 @@
 -- ======================================================================================
--- File         : rapid_test.lua
+-- File         : test_class.lua
 -- Author       : Wu Jie 
--- Last Change  : 02/14/2011 | 13:56:45 PM | Monday,February
+-- Last Change  : 02/17/2011 | 09:55:55 AM | Thursday,February
 -- Description  : 
 -- ======================================================================================
 
 --/////////////////////////////////////////////////////////////////////////////
--- require and module
+--
 --/////////////////////////////////////////////////////////////////////////////
 
 require ("ex.debug")
+local do_test = true
+if not do_test then return end
 
 --/////////////////////////////////////////////////////////////////////////////
--- unit tests
+--
 --/////////////////////////////////////////////////////////////////////////////
-
-local do_test = false
-if do_test == false then
-    return
-end
 
 -- ======================================================== 
 -- 
@@ -86,27 +83,27 @@ bar = ex.class ({
 --     end
 -- }, bar)
 
--- foobar = bar.derive ({
---     -- override foo
---     m_normal = 100.0,
---     m_array = { "five" },
+foobar = bar.derive ({
+    -- override foo
+    m_normal = 100.0,
+    m_array = { "five" },
 
---     -- override bar
---     m_string2 = "hello world",
---     m_table2 = {
---         a2 = "i'm a2 in foobar",
---         b2 = "i'm b2 in foobar",
---         c2 = "i'm c2 in foobar",
---     },
---     m_test_func2 = function( self ) 
---         print ( "i'm test function 2 in foobar" )
---     end,
+    -- override bar
+    m_string2 = "hello world",
+    m_table2 = {
+        a2 = "i'm a2 in foobar",
+        b2 = "i'm b2 in foobar",
+        c2 = "i'm c2 in foobar",
+    },
+    m_test_func2 = function( self ) 
+        print ( "i'm test function 2 in foobar" )
+    end,
 
---     -- 
---     m_test_func3 = function( self ) 
---         print ( "i'm test function 3" )
---     end
--- })
+    -- 
+    m_test_func3 = function( self ) 
+        print ( "i'm test function 3" )
+    end
+})
 
 -- ======================================================== 
 -- 
@@ -117,19 +114,20 @@ foo_obj = foo {
 }
 foo_obj.m_array = { "foo" }
 
--- bar_obj = bar {
---     m_normal = 10.0,
--- }
--- print( bar_obj.super.m_array[2] )
--- print( bar_obj.m_array[2] )
+bar_obj = bar {
+    m_normal = 10.0,
+}
+print( bar_obj.super.m_array[2] )
+print( bar_obj.m_array[2] )
+bar_obj.m_array = {"yes", "you", "are", "right"}
 
--- foobar_obj = foobar {
---     m_normal = 100.0,
--- }
--- print( foobar_obj.m_array[1] )
+foobar_obj = foobar {
+    m_normal = 100.0,
+}
+print( foobar_obj.m_array[1] )
 
 
-ex.debug.dump(foo,"foo")
+-- ex.debug.dump(foo,"foo")
 -- ex.debug.dump(foo_obj,"foo_obj") 
 
 -- ex.debug.dump(bar,"bar") 
@@ -137,13 +135,13 @@ ex.debug.dump(foo,"foo")
 
 foobar_obj.m_test_func2( foobar_obj )
 foobar_obj.super.m_test_func2( foobar_obj )
-ex.debug.dump(foobar,"foobar") 
--- foobar_obj.super.m_normal = "hahahahahahaha"
--- bar.m_normal = "hohohohoho"
--- foo.m_normal = "hehehehehe"
-ex.debug.dump(foobar,"foobar") 
--- ex.debug.dump(bar_obj.super,"bar_super") 
-ex.debug.dump(foobar_obj,"foobar_obj") 
+-- ex.debug.dump(foobar,"foobar") 
+-- -- foobar_obj.super.m_normal = "hahahahahahaha"
+-- -- bar.m_normal = "hohohohoho"
+-- -- foo.m_normal = "hehehehehe"
+-- ex.debug.dump(foobar,"foobar") 
+-- -- ex.debug.dump(bar_obj.super,"bar_super") 
+-- ex.debug.dump(foobar_obj,"foobar_obj") 
 
 print( "foobar_obj isa foobar: " .. tostring(foobar_obj:isa(foobar)) )
 print( "foobar_obj isa bar: " .. tostring(foobar_obj:isa(bar)) )
@@ -154,4 +152,5 @@ print( "foobar_obj is classof foo: " .. tostring(foobar_obj:classof(foo)) )
 print( "foobar_obj is superof foo: " .. tostring(foobar_obj:superof(foo)) )
 print( "foo_obj    is superof foobar: " .. tostring(foo_obj:superof(foobar)) )
 print( "foobar_obj is childof foo: " .. tostring(foobar_obj:childof(foo)) )
+print( "foobar_obj is childof bar: " .. tostring(foobar_obj:childof(bar)) )
 
