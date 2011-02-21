@@ -20,6 +20,8 @@ EX_DEF_CLASS_BEGIN(ex_object_t)
     EX_MEMBER(ex_object_t, uid, EX_UID_INVALID)
     EX_MEMBER(ex_object_t, name, EX_STRID_NULL)
     EX_MEMBER(ex_object_t, flags, EX_OBJECT_NONE)
+    EX_MEMBER(ex_object_t, init, NULL)
+    EX_MEMBER(ex_object_t, deinit, NULL)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_object_t)
@@ -122,12 +124,12 @@ static ex_ref_t *__reftable_add ( void *_obj ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_ref_t *ex_create_object ( strid_t _typeID, ex_uid_t _uid ) {
+ex_ref_t *ex_create_object ( const ex_rtti_t *_rtti, ex_uid_t _uid ) {
     ex_object_t *obj;
 
     ex_assert_return( _uid != EX_UID_INVALID, NULL, "faield to create object. uid is invalid." );
 
-    obj = (ex_object_t *)ex_create(_typeID);
+    obj = (ex_object_t *)(_rtti->create());
     obj->uid = _uid;
     return __reftable_add (obj);
 }
@@ -156,7 +158,9 @@ void ex_destroy_object_immediately ( ex_ref_t *_ref, bool _no_error ) {
             ex_warning ( "warning: the refcount is not zero" );
     }
 
-    obj->deinit(_ref);
+    // if we have deinit function, call it
+    if ( obj->deinit )
+        obj->deinit(_ref);
     obj->uid = EX_UID_INVALID;
     obj->name = EX_STRID_NULL;
     obj->flags = EX_OBJECT_NONE;
@@ -200,7 +204,9 @@ void ex_object_gc () {
 
         // if we found dead object.
         if ( obj && ex_flags_has(obj->flags,EX_OBJECT_DEAD) ) {
-            obj->deinit(ref);
+            // if we have deinit function, call it
+            if ( obj->deinit )
+                obj->deinit(ref);
             obj->uid = EX_UID_INVALID;
             obj->name = EX_STRID_NULL;
             obj->flags = EX_OBJECT_NONE;
@@ -250,7 +256,7 @@ void ex_serialize_objects ( ex_stream_t *_stream ) {
     else if ( _stream->type == EX_STREAM_WRITE ) {
         ex_hashmap_each ( &__uid_to_refptr, ex_ref_t *, ref ) {
             ex_rtti_t *rtti = NULL;
-            obj = EX_REF_PTR(ex_object_t,ref);
+            obj = EX_REF_CAST(ex_object_t,ref);
 
             // do NOT save NULL objects
             if ( obj == NULL || ex_flags_has(obj->flags,EX_OBJECT_DEAD) ) {

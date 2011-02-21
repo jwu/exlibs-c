@@ -48,12 +48,13 @@ static void init () {
 
             // simple
             simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
-            simple = EX_REF_PTR(ex_simple_t,simple_ref);
+            simple = EX_REF_CAST(ex_simple_t,simple_ref);
 
             ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
             ex_vec2f_normalize(&simple->move_dir);
             simple->move_speed = ex_range_randf(1.0f,100.0f);
             simple->rot_speed = ex_range_randf(-5.0f,5.0f);
+            simple->rot_around = ROT_AROUND_SELF;
         }
     }
     ex_log ("done!");

@@ -25,8 +25,8 @@ extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __camera_init ( ex_ref_t *_self ) {
-    ex_component_t *comp = EX_REF_PTR(ex_component_t, _self);
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,comp->owner);
+    ex_component_t *comp = EX_REF_CAST(ex_component_t, _self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->owner);
 
     __component_init(_self); // parent init
 
@@ -40,8 +40,8 @@ extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __camera_deinit ( ex_ref_t *_self ) {
-    ex_component_t *comp = EX_REF_PTR(ex_component_t, _self);
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,comp->owner);
+    ex_component_t *comp = EX_REF_CAST(ex_component_t, _self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->owner);
 
     if ( ent ) {
         ex_world_remove_camera( ent->world, _self );
@@ -106,7 +106,7 @@ EX_DEF_TOSTRING_END
 // ------------------------------------------------------------------ 
 
 void ex_camera_set_ortho ( ex_ref_t *_self, bool _isOrtho ) {
-    EX_REF_PTR(ex_camera_t,_self)->isOrtho = _isOrtho;
+    EX_REF_CAST(ex_camera_t,_self)->isOrtho = _isOrtho;
 }
 
 // ------------------------------------------------------------------ 
@@ -114,7 +114,7 @@ void ex_camera_set_ortho ( ex_ref_t *_self, bool _isOrtho ) {
 // ------------------------------------------------------------------ 
 
 bool ex_camera_is_ortho ( ex_ref_t *_self ) {
-    return EX_REF_PTR(ex_camera_t,_self)->isOrtho;
+    return EX_REF_CAST(ex_camera_t,_self)->isOrtho;
 }
 
 // ------------------------------------------------------------------ 
@@ -122,7 +122,7 @@ bool ex_camera_is_ortho ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_camera_set_ortho_size ( ex_ref_t *_self, float _orthoSize ) {
-    EX_REF_PTR(ex_camera_t,_self)->orthoSize = _orthoSize;
+    EX_REF_CAST(ex_camera_t,_self)->orthoSize = _orthoSize;
 } 
 
 // ------------------------------------------------------------------ 
@@ -130,7 +130,7 @@ void ex_camera_set_ortho_size ( ex_ref_t *_self, float _orthoSize ) {
 // ------------------------------------------------------------------ 
 
 float ex_camera_ortho_size ( ex_ref_t *_self ) {
-    return EX_REF_PTR(ex_camera_t,_self)->orthoSize;
+    return EX_REF_CAST(ex_camera_t,_self)->orthoSize;
 }
 
 // ------------------------------------------------------------------ 
@@ -138,7 +138,7 @@ float ex_camera_ortho_size ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_camera_set_aspect ( ex_ref_t *_self, float _aspect ) {
-    EX_REF_PTR(ex_camera_t,_self)->aspect = _aspect;
+    EX_REF_CAST(ex_camera_t,_self)->aspect = _aspect;
 }
 
 // ------------------------------------------------------------------ 
@@ -146,7 +146,7 @@ void ex_camera_set_aspect ( ex_ref_t *_self, float _aspect ) {
 // ------------------------------------------------------------------ 
 
 float ex_camera_aspect ( ex_ref_t *_self ) {
-    return EX_REF_PTR(ex_camera_t,_self)->aspect;
+    return EX_REF_CAST(ex_camera_t,_self)->aspect;
 }
 
 // ------------------------------------------------------------------ 
@@ -154,7 +154,7 @@ float ex_camera_aspect ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_camera_apply ( ex_ref_t *_self ) {
-    ex_camera_t *self = EX_REF_PTR(ex_camera_t,_self);
+    ex_camera_t *self = EX_REF_CAST(ex_camera_t,_self);
 
     GLbitfield clearFlags = 0;
     double rx = self->orthoSize * self->aspect; // half viewport width

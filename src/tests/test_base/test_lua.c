@@ -11,6 +11,39 @@
 
 #include "../../core/core_inc.h"
 #include "../../lua/lua_inc.h"
+#include "../../app/app.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// wrap test class
+///////////////////////////////////////////////////////////////////////////////
+
+#if 0
+typedef struct foobar {
+    char *text;
+} foobar;
+void say_hello ( foobar *_f ) {
+    ex_log ( "a foobar object say hello: %s", _f->text );
+}
+
+int lua_say_hello ( lua_State *_l ) {
+    // TODO:
+    // say_hello ( f );
+}
+int register_foobar ( lua_State *_l ) {
+    static const luaL_Reg __funcs[] = {
+        { "say_hello", say_hello },
+        { NULL, NULL },
+    };
+
+    ex_lua_global_module ( _l, "ex" );
+    lua_newtable(_l);
+    luaL_register(_l, NULL, __funcs);
+    lua_setfield(_l,-2,"foobar");
+    lua_pop(_l, 1); // pops ex
+    return 0;
+}
+#endif
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -42,12 +75,20 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 static void wrap () {
+    int i = 0;
+
     struct lua_State *l = ex_lua_default_state();
 
     ex_lua_dofile( l, "lua/test_rapid.lua" );
     ex_lua_dofile( l, "lua/unit_tests/test_class.lua" );
     ex_lua_dofile( l, "lua/unit_tests/test_deepcopy.lua" );
     ex_lua_dofile( l, "lua/unit_tests/test_vec2f.lua" );
+
+    // since object is an runtime class, if we would like to test it, we have to start engine
+    ex_app_init();
+    ex_lua_dofile( l, "lua/unit_tests/test_object.lua" );
+    ex_lua_deinit();
+    ex_app_deinit();
 }
 
 // ------------------------------------------------------------------ 

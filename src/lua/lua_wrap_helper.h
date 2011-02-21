@@ -20,6 +20,61 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+typedef struct ref_proxy_t { 
+    strid_t typeid;
+    bool readonly; 
+    // bool gc_owner; // TODO: do we really need this ??? 
+    ex_ref_t *ref; 
+} ref_proxy_t; 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+// EX_DECL_LUA_BUILTIN_TYPE, EX_DECL_LUA_BUILTIN_TYPE_2
+#define EX_DECL_LUA_BUILTIN_TYPE(_type) EX_DECL_LUA_BUILTIN_TYPE_2(_type,_type)
+#define EX_DECL_LUA_BUILTIN_TYPE_2(_typename,_type) \
+    typedef struct _typename##_proxy_t { \
+        strid_t typeid; \
+        bool readonly; \
+        _type val; \
+    } _typename##_proxy_t; \
+    extern _typename##_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
+    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+
+// EX_DECL_LUA_BUILTIN_CLASS, EX_DECL_LUA_BUILTIN_CLASS_2
+#define EX_DECL_LUA_BUILTIN_CLASS(_type) EX_DECL_LUA_BUILTIN_TYPE_2(_type,_type)
+#define EX_DECL_LUA_BUILTIN_CLASS_2(_typename,_type) \
+    typedef struct _typename##_proxy_t { \
+        strid_t typeid; \
+        bool readonly; \
+        _type *val; \
+    } _typename##_proxy_t; \
+    extern _typename##_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
+    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+
+// EX_DECL_LUA_BUILTIN_REF, EX_DECL_LUA_BUILTIN_CLASS_2
+#define EX_DECL_LUA_BUILTIN_REF(_type) EX_DECL_LUA_BUILTIN_CLASS_2(_type,_type)
+#define EX_DECL_LUA_BUILTIN_REF_2(_typename,_type) \
+    extern ref_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
+    extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+
+// defines
+EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
+EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
+
+// undef macros
+#undef EX_DECL_LUA_BUILTIN_TYPE
+#undef EX_DECL_LUA_BUILTIN_TYPE_2
+#undef EX_DECL_LUA_BUILTIN_CLASS
+#undef EX_DECL_LUA_BUILTIN_CLASS_2
+#undef EX_DECL_LUA_BUILTIN_REF
+#undef EX_DECL_LUA_BUILTIN_REF_2
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 typedef struct ex_getset_t {
     const char *key;
     int (*get) ( struct lua_State * );
@@ -30,20 +85,29 @@ typedef struct ex_getset_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_LUA_BUILTIN_TYPE_2(_typename,_type) \
-    typedef struct _typename##_proxy_t { \
-        bool readonly; \
-        strid_t typeid; \
-        _type val; \
-    } _typename##_proxy_t; \
-    extern _typename##_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
-    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+extern int ex_lua_ref_gc ( struct lua_State *_l );
+extern int ex_lua_ref_tostring ( struct lua_State *_l );
+extern int ex_lua_ref_eq ( struct lua_State *_l );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
+extern int ex_lua_register_builtin ( struct lua_State *_l, 
+                                     const char *_field, 
+                                     const char *_typename, 
+                                     const void *_meta_funcs,
+                                     const void *_type_meta_funcs );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern int ex_lua_register_class ( struct lua_State *_l, 
+                                   const char *_field, 
+                                   const char *_typename, 
+                                   const void *_meta_funcs,
+                                   const void *_type_meta_funcs );
 
 // ######################### 
 #ifdef __cplusplus

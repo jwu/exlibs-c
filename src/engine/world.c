@@ -31,8 +31,8 @@ void __world_init ( ex_ref_t *_self ) {
     ex_world_t *self = (ex_world_t *)_self->ptr;
 
     ex_array_each ( self->entities, ex_ref_t *, ref ) {
-        EX_REF_PTR(ex_entity_t,ref)->world = _self;
-        EX_REF_PTR(ex_object_t,ref)->init(ref);
+        EX_REF_CAST(ex_entity_t,ref)->world = _self;
+        EX_REF_CAST(ex_object_t,ref)->init(ref);
     } ex_array_each_end;
 }
 
@@ -142,12 +142,12 @@ void ex_world_reset ( ex_ref_t *_self, ex_stream_t *_stream ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_world_create_entity ( ex_ref_t *_self, strid_t _name ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
-    ex_ref_t *ref = ex_create_object( EX_TYPEID(ex_entity_t), ex_generate_uid() );
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
+    ex_ref_t *ref = ex_create_object( EX_RTTI(ex_entity_t), ex_generate_uid() );
 
-    EX_REF_PTR(ex_object_t,ref)->name = _name;
-    EX_REF_PTR(ex_entity_t,ref)->world = _self;
-    EX_REF_PTR(ex_object_t,ref)->init(ref);
+    EX_REF_CAST(ex_object_t,ref)->name = _name;
+    EX_REF_CAST(ex_entity_t,ref)->world = _self;
+    EX_REF_CAST(ex_object_t,ref)->init(ref);
 
     ex_array_append( world->entities, &ref );
     ex_incref( ref );
@@ -184,7 +184,7 @@ ex_ref_t *ex_world_create_rect ( ex_ref_t *_self, strid_t _name ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_clear ( ex_ref_t *_self ) {
-	ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+	ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 	
     // decrease reference count and destroy all entities
     ex_array_each ( world->entities, ex_ref_t *, ref ) {
@@ -203,7 +203,7 @@ void ex_world_clear ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_append( world->cameras, &_cam );
     ex_incref(_cam);
@@ -217,7 +217,7 @@ void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
     int result_idx = -1;
 
     ex_array_each ( world->cameras, ex_ref_t *, cam ) {
@@ -247,7 +247,7 @@ void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_world_main_camera ( ex_ref_t *_self ) {
-    return EX_REF_PTR(ex_world_t,_self)->mainCamera;
+    return EX_REF_CAST(ex_world_t,_self)->mainCamera;
 }
 
 // ------------------------------------------------------------------ 
@@ -255,13 +255,13 @@ ex_ref_t *ex_world_main_camera ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_world_find_entity_byname ( ex_ref_t *_self, strid_t _name ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) )
             ex_array_continue;
 
-        if ( EX_REF_PTR(ex_object_t,ent)->name == _name )
+        if ( EX_REF_CAST(ex_object_t,ent)->name == _name )
             return ent;
     } ex_array_each_end
     return NULL;
@@ -272,13 +272,13 @@ ex_ref_t *ex_world_find_entity_byname ( ex_ref_t *_self, strid_t _name ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_find_entities_byname ( ex_ref_t *_self, strid_t _name, ex_array_t *_result ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) )
             ex_array_continue;
 
-        if ( EX_REF_PTR(ex_object_t,ent)->name == _name )
+        if ( EX_REF_CAST(ex_object_t,ent)->name == _name )
             ex_array_append( _result, &ent );
     } ex_array_each_end
 }
@@ -289,7 +289,7 @@ extern void __tick_engine_time ();
 // ------------------------------------------------------------------ 
 
 void ex_world_update ( ex_ref_t *_self ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     // the world is stopped, don't do anything, even the timer tick
     if ( world->state == EX_WORLD_STATE_STOPPED )
@@ -337,7 +337,7 @@ void ex_world_update ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_render ( ex_ref_t *_self ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( world->cameras, ex_ref_t *, cam ) {
         ex_camera_apply (cam);
@@ -351,7 +351,7 @@ void ex_world_render ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_run ( ex_ref_t *_self ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     if ( world->state != EX_WORLD_STATE_STOPPED )
         return;
@@ -370,7 +370,7 @@ void ex_world_run ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_stop ( ex_ref_t *_self ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     if ( world->state == EX_WORLD_STATE_STOPPED )
         return;
@@ -382,7 +382,7 @@ void ex_world_stop ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_pause ( ex_ref_t *_self ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     if ( world->state != EX_WORLD_STATE_RUNNING )
         return;
@@ -394,7 +394,7 @@ void ex_world_pause ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_resume ( ex_ref_t *_self ) {
-    ex_world_t *world = EX_REF_PTR(ex_world_t,_self);
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
 
     if ( world->state != EX_WORLD_STATE_PAUSED )
         return;

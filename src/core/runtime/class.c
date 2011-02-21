@@ -32,9 +32,14 @@ void *__ex_create_ex_class_t() {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void *__ex_as ( ex_class_t *_obj, const ex_rtti_t *_rtti ) {
+void *__ex_cast ( ex_class_t *_obj, const ex_rtti_t *_rtti, bool _no_error ) {
     if ( ex_rtti_isa ( _obj->rtti, _rtti ) )
         return _obj;
+
+    if ( !_no_error ) {
+        ex_error ( "can't cast object to type %s", 
+                   ex_strid_to_cstr(ex_rtti_typeid(_rtti)) );
+    }
     return NULL;
 }
 

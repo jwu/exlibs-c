@@ -34,7 +34,7 @@ extern void __component_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __debug2d_deinit ( ex_ref_t *_self ) {
-    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
+    ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
     ex_stop_timer(self->trail_timer);
 
     __component_deinit(_self); // parent deinint
@@ -97,7 +97,7 @@ EX_DEF_TOSTRING_END
 void ex_debug2d_set_rect ( ex_ref_t *_self, 
                            float _x, float _y, float _width, float _height ) 
 {
-    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
+    ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
     ex_rectf_t r;
     ex_vec2f_t v;
 
@@ -112,8 +112,8 @@ void ex_debug2d_set_rect ( ex_ref_t *_self,
 // ------------------------------------------------------------------ 
 
 void ex_debug2d_draw ( ex_ref_t *_self ) {
-    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
-    ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
+    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->owner );
     ex_vec2f_t worldPos;
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;
@@ -162,7 +162,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 
         //
         if ( show_parentlink ) {
-            ex_ref_t *parent = EX_REF_PTR(ex_trans2d_t,ent->trans2d)->parent;
+            ex_ref_t *parent = EX_REF_CAST(ex_trans2d_t,ent->trans2d)->parent;
             if ( parent ) {
                 ex_vec2f_t my_worldpos,parent_worldpos;
 
@@ -235,8 +235,8 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 
 static int32 __add_trail ( uint32 _interval, void *_params ) {
     ex_ref_t *dbg2d_ref = *((ex_ref_t **)_params); 
-    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,dbg2d_ref);
-    ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,dbg2d_ref);
+    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->owner );
     ex_vec2f_t worldPos;
 
     ex_trans2d_world_position( ent->trans2d, &worldPos );
@@ -258,8 +258,8 @@ void __debug2d_level_start ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void __debug2d_start ( ex_ref_t *_self ) {
-    ex_debug2d_t *self = EX_REF_PTR(ex_debug2d_t,_self);
-    ex_entity_t *ent = EX_REF_PTR( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
+    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->owner );
     ex_vec2f_t worldPos;
     int i;
 

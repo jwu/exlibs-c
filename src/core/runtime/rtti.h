@@ -112,7 +112,7 @@ static inline ex_rtti_t *ex_rtti_super ( const ex_rtti_t *_info ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline bool ex_rtti_classof ( const ex_rtti_t *_myclass, const ex_rtti_t *_yourclass ) { 
+static inline bool ex_rtti_instanceof ( const ex_rtti_t *_myclass, const ex_rtti_t *_yourclass ) { 
     return _myclass->typeID == _yourclass->typeID;
 }
 
@@ -135,7 +135,7 @@ static inline bool ex_rtti_superof ( const ex_rtti_t *_myclass, const ex_rtti_t 
 // ------------------------------------------------------------------ 
 
 static inline bool ex_rtti_isa ( const ex_rtti_t *_myclass, const ex_rtti_t *_class ) { 
-    return ex_rtti_classof(_myclass,_class) || ex_rtti_childof(_myclass,_class);
+    return ex_rtti_instanceof(_myclass,_class) || ex_rtti_childof(_myclass,_class);
 }
 
 // ######################### 

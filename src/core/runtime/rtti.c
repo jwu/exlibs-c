@@ -149,7 +149,7 @@ bool ex_rtti_childof ( const ex_rtti_t *_myclass, const ex_rtti_t *_superclass )
 { 
     ex_rtti_t *tmp = ex_rtti_super(_myclass);
     while ( tmp ) {
-        if ( ex_rtti_classof(tmp, _superclass) ) 
+        if ( ex_rtti_instanceof(tmp, _superclass) ) 
             return true;
         tmp = ex_rtti_super(tmp);
     }

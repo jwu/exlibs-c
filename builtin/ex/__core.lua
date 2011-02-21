@@ -30,7 +30,7 @@ module("ex")
 function deepcopy (_obj)
     local lookup_table = {}
     local function _copy(_obj)
-        if isbuiltin( typeof(_obj) ) then
+        if isbuiltin( _obj ) then
             assert(_obj.copy, "please provide copy function for builtin type: " .. typename(_obj) )
             return _obj:copy()
         elseif type(_obj) ~= "table" then
@@ -73,27 +73,33 @@ meta_class = {
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function isclass (_class)
-    if type(_class) ~= "table" then 
+function isclass (_object)
+    local tp = typeof(_object)
+    if type(tp) ~= "table" then 
         return false
     end
 
-    local mt = getmetatable(_class)
-    if mt == meta_class then return true end
-    return false
+    local r = rawget(tp, "__isclass")
+    if r == nil then 
+        return false 
+    end
+    return r
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function isbuiltin (_class)
-    if type(_class) ~= "table" then 
+function isbuiltin (_object)
+    local tp = typeof(_object)
+    if type(tp) ~= "table" then 
         return false 
     end 
 
-    local r = rawget(_class, "__builtin")
-    if r == nil then return false end
+    local r = rawget(tp, "__isbuiltin")
+    if r == nil then 
+        return false 
+    end
     return r
 end
 
@@ -102,13 +108,12 @@ end
 -- ------------------------------------------------------------------ 
 
 function typename(_object)
-    local tp = type(_object) 
-    if tp == "userdata" or tp == "table" then 
+    if isbuiltin(_object) or isclass(_object) then 
         local name = rawget(typeof(_object), "__typename")
         assert ( name ~= nil, "can't find __typename define in your class." )
         return name
     end
-    return tp
+    return type(_object)
 end
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -119,7 +124,7 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-local function classof(_object, _class)
+local function instanceof(_object, _class)
     return typeof(_object) == _class
 end
 
@@ -249,8 +254,14 @@ local function class_index ( _t, _k )
     if _k == "super" then
         local mt = getmetatable(_t) 
         assert( mt, "can't find the metatable of _t" )
-        -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
-        return setmetatable( { __readonly = true }, rawget(mt,"__super") )
+        local super = rawget(mt,"__super")
+
+        if super and rawget(super, "__isbuiltin") then
+            return rawget(_t, "__cobject")
+        else
+            -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
+            return setmetatable( { __readonly = true }, super )
+        end
     end
 
     -- check if the metatable have the key
@@ -301,13 +312,15 @@ function class(...)
     if super == nil then
         rawset(base, "__super", nil)
     else
-        assert( isclass(super), "super is not a class" )
+        assert( type(super) == "table", "the super parameter must be a table" )
+        assert( rawget(super,"__isclass"), "the super parameter must be a class" )
         rawset(base, "__super", super)
     end
 
+    base.__isclass = true
     base.__index = class_index
     base.__newindex = class_newindex
-    base.classof = classof
+    base.instanceof = instanceof
     base.superof = superof
     base.childof = childof
     base.isa = isa

@@ -37,18 +37,7 @@
 // declares
 ///////////////////////////////////////////////////////////////////////////////
 
-#define DECL_BUILTIN_TYPE(_typename) \
-    extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
-    static inline void __ex_register_builtin_type_##_typename () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_typename##__ = ex_strid(#_typename); \
-        __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
-                                                          NULL, \
-                                                          sizeof(_typename), \
-                                                          NULL, \
-                                                          __ex_serialize_##_typename, \
-                                                          __ex_tostring_##_typename \
-                                                          ); \
-    }
+#define DECL_BUILTIN_TYPE(_typename) DECL_BUILTIN_TYPE_2(_typename,_typename)
 
 #define DECL_BUILTIN_TYPE_2(_typename,_type) \
     extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \

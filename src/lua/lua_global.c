@@ -106,6 +106,7 @@ static bool __initialized = false;
 // Desc: 
 extern int luaopen_core ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
+extern int luaopen_object ( lua_State * );
 extern int luaopen_luagl ( lua_State * );
 extern int luaopen_luaglu ( lua_State * );
 // ------------------------------------------------------------------ 
@@ -143,16 +144,21 @@ int ex_lua_init () {
     // } OPTME end 
 
     // we create global ex table if it not exists.
-    ex_lua_global_module ( __L, "ex" ); // [-0,+1,-]
+    ex_lua_global_module ( __L, "ex" );
 
     // init ex_core wraps
-    luaopen_core (__L); // [-0,+0,-]
-    luaopen_vec2f (__L); // [-0,+0,-]
+    luaopen_core (__L);
+    luaopen_vec2f (__L);
 
     // init graphics wraps
     lua_settop ( __L, 0 ); // clear the stack
     luaopen_luagl (__L);
     luaopen_luaglu (__L);
+
+    // init engine wraps
+    luaopen_object (__L);
+
+    __initialized = true;
 
     return 0;
 }
@@ -161,15 +167,23 @@ int ex_lua_init () {
 // Desc: 
 extern void luaclose_core ();
 extern void luaclose_vec2f ();
+extern void luaclose_object ();
 // ------------------------------------------------------------------ 
 
 void ex_lua_deinit () {
     if ( __initialized ) {
+        // before close modules, force a complete garbage collection in case of memory leak
+        lua_gc(__L, LUA_GCCOLLECT, 0);
+        // ex_lua_dostring(__L, "collectgarbage('collect')" );
+
         luaclose_core ();
         luaclose_vec2f ();
 
+        luaclose_object ();
+
         lua_close(__L);
         __L = NULL;
+        __initialized = false;
     }
 }
 
@@ -216,19 +230,19 @@ int ex_lua_add_cpath ( lua_State *_l, const char *_path ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_global_module ( lua_State *_l, const char *_key ) {
-    lua_getglobal(_l, _key); // [-0,+1,e]
+    lua_getglobal(_l, _key);
 
     // create if necessary.
     if( !lua_istable(_l, -1) ) {
-        lua_pop(_l, 1); // [-1,+0,-] // pop the non-table
-        lua_newtable(_l); // [-0,+1,m]
+        lua_pop(_l, 1); // pop the non-table
+        lua_newtable(_l);
 
         // cause lua_setglobal will pop the top of the stack, 
         // and we will loose the table after the funciton call.
         // To prevent this, we duplicate the value at the top of the stack.
 
-        lua_pushvalue(_l, -1); // [-0,+1,-]
-        lua_setglobal(_l, _key); // [-1,+0,e]
+        lua_pushvalue(_l, -1);
+        lua_setglobal(_l, _key);
     }
 
     return 1;
@@ -239,14 +253,14 @@ int ex_lua_global_module ( lua_State *_l, const char *_key ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
-    lua_getfield(_l, _idx, _key); // [-0,+1,e]
+    lua_getfield(_l, _idx, _key);
 
     // create if necessary.
     if( !lua_istable(_l, -1) ) {
-        lua_pop(_l, 1); // [-1,+0,-] // pop the non-table
-        lua_newtable(_l); // [-0,+1,m]
-        lua_pushvalue(_l, -1); // [-0,+1,-] // duplicate the table to leave on top.
-        lua_setfield(_l, -2-_idx, _key); // [-1,+0,e] // _key[_idx] = table
+        lua_pop(_l, 1); // pop the non-table
+        lua_newtable(_l);
+        lua_pushvalue(_l, -1); // duplicate the table to leave on top.
+        lua_setfield(_l, -2-_idx, _key); // _key[_idx] = table
     }
 
     return 1;
@@ -545,6 +559,389 @@ int ex_lua_dostring ( lua_State *_l, const char *_fmt, ... ) {
         return -1;
     }
     return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// lua module functions in c
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// function isclass (_object)
+//     local tp = typeof(_object)
+//     if type(tp) ~= "table" then 
+//         return false
+//     end
+//     local mt = getmetatable(tp)
+//     if mt == meta_class then 
+//         return true 
+//     end
+//     return false
+// end
+// ------------------------------------------------------------------ 
+
+bool ex_lua_isclass ( lua_State *_l, int _idx ) {
+    bool r;
+
+    // local tp = typeof(_object)
+    if ( lua_getmetatable(_l,_idx) == 0 )
+        return false;
+
+    // if type(tp) ~= "table" then return false end
+    if ( lua_istable( _l, -1 ) == 0 ) {
+        lua_pop(_l, 1); // pops tp
+        return false;
+    }
+
+    // local r = rawget(tp, "__isclass")
+    lua_pushstring(_l,"__isclass");
+    lua_rawget ( _l, -2 );
+
+    // if r == nil then return false end
+    if ( lua_isnil(_l,-1) ) {
+        lua_pop(_l,2); // pops tp, r
+        return false;
+    }
+
+    // return r
+    r = lua_toboolean(_l,-1);
+    lua_pop(_l,2); // pops tp, r
+    return r;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// function isbuiltin (_object)
+//     local tp = typeof(_object)
+//     if type(tp) ~= "table" then 
+//         return false 
+//     end 
+//     local r = rawget(tp, "__isbuiltin")
+//     if r == nil then 
+//         return false 
+//     end
+//     return r
+// end
+// ------------------------------------------------------------------ 
+
+bool ex_lua_isbuiltin ( lua_State *_l, int _idx ) {
+    bool r;
+
+    // local tp = typeof(_object)
+    if ( lua_getmetatable(_l,_idx) == 0 )
+        return false;
+
+    // if type(tp) ~= "table" then return false end
+    if ( lua_istable( _l, -1 ) == 0 ) {
+        lua_pop(_l,1); // pops tp
+        return false;
+    }
+
+    // local r = rawget(tp, "__isbuiltin")
+    lua_pushstring(_l,"__isbuiltin");
+    lua_rawget ( _l, -2 );
+
+    // if r == nil then return false end
+    if ( lua_isnil(_l,-1) ) {
+        lua_pop(_l,2); // pops tp, r
+        return false;
+    }
+
+    // return r
+    r = lua_toboolean(_l,-1);
+    lua_pop(_l,2); // pops tp, r
+    return r;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// function typename(_object)
+//     local tp = type(_object) 
+//     if tp == "userdata" or tp == "table" then 
+//         local name = rawget(typeof(_object), "__typename")
+//         assert ( name ~= nil, "can't find __typename define in your class." )
+//         return name
+//     end
+//     return tp
+// end
+// ------------------------------------------------------------------ 
+
+int ex_lua_typename ( lua_State *_l, int _idx ) {
+    // local tp = type(_object) 
+    // if tp == "userdata" or tp == "table" then 
+    if ( lua_isuserdata(_l,_idx) || lua_istable(_l,_idx) ) {
+        // local name = rawget(typeof(_object), "__typename")
+        if ( lua_getmetatable(_l,_idx) == 0 ) {
+            ex_error ("can't find metatable in the class.");
+            lua_pushnil(_l);
+            return 1;
+        }
+        lua_pushstring(_l,"__typename");
+        lua_rawget(_l,-2);
+
+        // assert ( name ~= nil, "can't find __typename define in your class." )
+        if ( lua_isnil(_l,-1) ) {
+            ex_error ("can't find __tpename define in the class.");
+        }
+
+        // return name
+        lua_remove(_l, -2); // remove mt
+        return 1;
+    }
+
+    // return type(_object)
+    lua_pushstring(_l, luaL_typename(_l,_idx) );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// function deepcopy (_obj)
+//     local lookup_table = {}
+//     local function _copy(_obj)
+//         if isbuiltin( typeof(_obj) ) then
+//             assert(_obj.copy, "please provide copy function for builtin type: " .. typename(_obj) )
+//             return _obj:copy()
+//         elseif type(_obj) ~= "table" then
+//             return _obj
+//         elseif lookup_table[_obj] then
+//             return lookup_table[_obj]
+//         end
+//         local new_table = {}
+//         lookup_table[_obj] = new_table
+//         for index, value in pairs(_obj) do
+//             new_table[_copy(index)] = _copy(value)
+//         end
+//         return setmetatable(new_table, getmetatable(_obj))
+//     end
+//     return _copy(_obj)
+// end
+// ------------------------------------------------------------------ 
+
+#define OBJ_IDX 1
+static int __copy ( lua_State *_l ) {
+    // if isbuiltin( _obj ) then
+    if ( ex_lua_isbuiltin(_l, OBJ_IDX) ) {
+        lua_pop(_l,1); // pops mt
+
+        // assert(_obj.copy, "please provide copy function for builtin type: " .. typename(_obj) )
+        lua_getfield(_l,OBJ_IDX,"copy");
+        if ( lua_isnil(_l,-1) ) {
+            ex_lua_typename(_l,OBJ_IDX);
+            ex_error ( "please provide copy function for builtin type: %s", lua_tostring(_l,-1) );
+            lua_pop(_l,2); // pops typename, nil 
+            lua_pushnil(_l);
+            return 1;
+        }
+        // return _obj:copy()
+        lua_pushvalue(_l,OBJ_IDX);
+        lua_call(_l,1,1);
+        return 1;
+    }
+
+    // elseif type(_obj) ~= "table" then
+    if ( lua_istable(_l,OBJ_IDX) == 0 ) {
+        // return _obj
+        lua_pushvalue(_l,OBJ_IDX);
+        return 1;
+    }
+
+    // elseif lookup_table[_obj] then
+    lua_pushvalue(_l,OBJ_IDX);
+    lua_gettable(_l,lua_upvalueindex(1));
+    if ( lua_isnil(_l,-1) == 0 ) {
+        // return lookup_table[_obj]
+        return 1;
+    }
+    lua_pop(_l,1); // pops lookup_table[_obj] 
+
+    // local new_table = {}
+    lua_newtable(_l);
+    // lookup_table[_obj] = new_table
+    lua_pushvalue(_l,OBJ_IDX); // k
+    lua_pushvalue(_l,-2); // v
+    lua_settable(_l,lua_upvalueindex(1));
+    // for key, value in pairs(_obj) do
+    //     new_table[_copy(key)] = _copy(value)
+    // end
+    lua_pushnil(_l); /* first key */
+    while ( lua_next(_l,OBJ_IDX) != 0 ) {
+        /* uses 'key' (at index -2) and 'value' (at index -1) */
+
+        // top
+        // v
+        // k
+        // DEBUG { 
+        // ex_log ( "should be:\nv\nk" );
+        // ex_lua_dump_stack(_l);
+        // ex_log ( "" );
+        // } DEBUG end 
+
+        // ======================================================== 
+        // _copy(key)
+        // ======================================================== 
+
+        lua_pushvalue(_l,lua_upvalueindex(1));
+        lua_pushcclosure(_l,__copy,1);
+        // top
+        // f
+        // v
+        // k
+        // DEBUG { 
+        // ex_log ( "should be:\nf\nv\nk" );
+        // ex_lua_dump_stack(_l);
+        // ex_log ( "" );
+        // } DEBUG end 
+
+        lua_pushvalue(_l,-3); // key
+        lua_call(_l,1,1);
+
+        // ======================================================== 
+        // _copy(value)
+        // ======================================================== 
+
+        lua_pushvalue(_l,lua_upvalueindex(1));
+        lua_pushcclosure(_l,__copy,1);
+        // top
+        // f
+        // r (result)
+        // v
+        // k
+        // DEBUG { 
+        // ex_log ( "should be:\nf\nr\nv\nk" );
+        // ex_lua_dump_stack(_l);
+        // ex_log ( "" );
+        // } DEBUG end 
+
+        lua_pushvalue(_l,-3); // value
+        lua_call(_l,1,1);
+
+        // ======================================================== 
+        // new_table[_copy(key)] = _copy(value)
+        // ======================================================== 
+
+        // top
+        // r (result)
+        // r (result)
+        // v
+        // k
+        // DEBUG { 
+        // ex_log ( "should be:\nr\nr\nv\nk" );
+        // ex_lua_dump_stack(_l);
+        // ex_log ( "" );
+        // } DEBUG end 
+        lua_settable(_l,-5);
+
+        // DEBUG { 
+        // ex_log ( "done!" );
+        // ex_lua_dump_stack(_l);
+        // ex_log ( "" );
+        // } DEBUG end 
+        /* removes 'value'; keeps 'key' for next iteration */
+        lua_pop(_l, 1);
+    }
+
+    // return setmetatable(new_table, getmetatable(_obj))
+    if ( lua_getmetatable(_l,OBJ_IDX) ) {
+        lua_setmetatable(_l,-1);
+    }
+
+    // return new_table
+    return 1;
+}
+#undef OBJ_IDX
+
+int ex_lua_deepcopy ( lua_State *_l, int _idx ) {
+    // local lookup_table = {}
+    lua_newtable(_l);
+
+    // def local functon _copy, and associate it with lookup table
+    lua_pushcclosure(_l,__copy,1);
+
+    // return _copy(_obj)
+    lua_pushvalue(_l,_idx); // push first args to stack
+    lua_call(_l,1,1); // call _copy with 1 args, 1 result.
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_builtin_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+    const char* key;
+    strid_t key_id;
+    ex_getset_t *getset;
+
+    // first use rawget check if we have value in metatable.
+    // NOTE: we not allow change the builtin values. so all of them are readonly.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        ex_error ( "fatal error: can't find the metatable!" );
+        return 0;
+    }
+    key = luaL_checkstring(_l, 2);
+    lua_pushstring ( _l, key );
+    lua_rawget ( _l, -2 );
+    // if this is not nil
+    if ( lua_isnil( _l, -1 ) == 0 ) {
+        ex_error("the key %s is readonly", key);
+        return 0;
+    }
+
+    // get and check the key
+    key_id = ex_strid(key);
+    getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
+    if ( getset == NULL ) {
+        ex_error("key %s not found", key);
+        return 0;
+    }
+    if ( getset->set == NULL ) {
+        ex_error("the key %s is readonly", key);
+        return 0;
+    }
+
+    // process
+    return getset->set(_l);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_builtin_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+    const char* key;
+    strid_t key_id;
+    ex_getset_t *getset;
+
+    // first use rawget check if we have value in metatable.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        ex_error ( "fatal error: can't find the metatable!" );
+        lua_pushnil(_l);
+        return 1;
+    }
+    key = luaL_checkstring(_l, 2);
+    lua_pushstring ( _l, key );
+    lua_rawget ( _l, -2 );
+    if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
+        return 1;
+    lua_pop(_l,2);
+
+    // check the key
+    key_id = ex_strid(key);
+    getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
+    if ( getset == NULL ) {
+        ex_error("key %s not found", key);
+        lua_pushnil(_l);
+        return 1;
+    }
+    if ( getset->get == NULL ) {
+        ex_error("the key %s is writeonly", key);
+        lua_pushnil(_l);
+        return 1;
+    }
+
+    // process
+    return getset->get(_l);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

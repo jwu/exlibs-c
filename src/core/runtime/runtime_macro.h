@@ -54,9 +54,9 @@ extern "C" {
 #define EX_RTTI(_typename) (__RTTI_##_typename##__)
 #define EX_TYPEID(_typename) (__TYPEID_##_typename##__)
 
-// ex_classof is strong compare, it must be the class, can't be its child or parent
+// ex_instanceof is strong compare, it must be the class, can't be its child or parent
 // _obj_ptr->type == _type
-#define ex_classof(_type,_obj_ptr) __ex_classof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+#define ex_instanceof(_type,_obj_ptr) __ex_instanceof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
 
 // ex_childof gets the _obj_ptr's parent, parent's parent ... for compare ( *not* including itself )
 // _obj_ptr->parent->...->parent->type == _type
@@ -66,11 +66,19 @@ extern "C" {
 // _type->parent->...->parent->type == _type
 #define ex_superof(_type,_obj_ptr) __ex_superof((ex_class_t *)_obj_ptr,EX_RTTI(_type))
 
-// ex_isa equals to ex_classof || ex_childof
+// ex_isa equals to ex_instanceof || ex_childof
 #define ex_isa(_type,_obj_ptr) __ex_isa((ex_class_t *)_obj_ptr,EX_RTTI(_type))
 
+// ex_cast use ex_isa compare the type, if it is, then return the casted type, else report an error and return NULL.
+// NOTE: ex_cast will use static cast in release version.
+#ifdef EX_DEBUG
+    #define ex_cast(_type,_obj_ptr) ((_type *)__ex_cast((ex_class_t *)(_obj_ptr),EX_RTTI(_type),false))
+#else
+    #define ex_cast(_type,_obj_ptr) ((_type *)(_obj_ptr))
+#endif
+
 // ex_as use ex_isa compare the type, if it is, then return the casted type.
-#define ex_as(_type,_obj_ptr) (_type *)__ex_as((ex_class_t *)_obj_ptr,EX_RTTI(_type))
+#define ex_as(_type,_obj_ptr) ((_type *)__ex_cast((ex_class_t *)(_obj_ptr),EX_RTTI(_type),true))
 
 ///////////////////////////////////////////////////////////////////////////////
 // class help macros

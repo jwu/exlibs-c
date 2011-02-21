@@ -27,15 +27,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 // DEF_BUILTIN_SERIALIZE
-#define DEF_BUILTIN_SERIALIZE(_type) \
-    extern strid_t __TYPEID_##_type##__; \
-    static inline void __ex_serialize_##_type ( ex_stream_t *_stream, strid_t _name, void *_val ) { \
-        if ( _stream->next ) { \
-            int ret = _stream->next( _stream, _name, EX_TYPEID(_type) ); \
-            if ( ret != 0 ) return; \
-        } \
-        _stream->serialize_##_type(_stream,(_type *)_val); \
-    }
+#define DEF_BUILTIN_SERIALIZE(_type) DEF_BUILTIN_SERIALIZE_2(_type,_type)
 
 // DEF_BUILTIN_SERIALIZE_2
 #define DEF_BUILTIN_SERIALIZE_2( _typename, _type ) \

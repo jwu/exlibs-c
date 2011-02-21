@@ -34,7 +34,7 @@ int luaopen_world ( lua_State *_l ) {
     ex_lua_global_module ( _l, "ex" );
     luaL_register( _l, 0, __functions );
 
-    lua_pop(_l, 1); // [-1,+0,-] pops ex
+    lua_pop(_l, 1); // pops ex
 
     return 0;
 }

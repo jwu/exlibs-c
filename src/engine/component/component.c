@@ -32,7 +32,7 @@ extern void __entity_remove_comp( ex_ref_t *_ent, ex_ref_t *_comp );
 // ------------------------------------------------------------------ 
 
 void __component_deinit ( ex_ref_t *_self ) {
-    ex_component_t *self = EX_REF_PTR(ex_component_t,_self);
+    ex_component_t *self = EX_REF_CAST(ex_component_t,_self);
 
     if ( self->owner->ptr ) {
         __entity_remove_comp( self->owner, _self );

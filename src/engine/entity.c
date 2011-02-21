@@ -49,8 +49,8 @@ static void __rm_from_cache ( ex_entity_t *_ent, strid_t _typeID ) {
 // ------------------------------------------------------------------ 
 
 static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref ) {
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
-    ex_component_t *comp = EX_REF_PTR(ex_component_t,_comp_ref);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+    ex_component_t *comp = EX_REF_CAST(ex_component_t,_comp_ref);
 
     comp->owner = _self; // set the owner of the component before init.
     ((ex_object_t *)comp)->init(_comp_ref);
@@ -65,7 +65,7 @@ static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref )
 // ------------------------------------------------------------------ 
 
 void __entity_remove_comp( ex_ref_t *_self, ex_ref_t *_comp ) {
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
 
     ex_array_each ( ent->comps, ex_ref_t *, comp ) {
         if ( comp == _comp ) {
@@ -86,11 +86,11 @@ void __entity_remove_comp( ex_ref_t *_self, ex_ref_t *_comp ) {
 // ------------------------------------------------------------------ 
 
 void __entity_init ( ex_ref_t *_self ) {
-    ex_entity_t *self = EX_REF_PTR(ex_entity_t,_self);
+    ex_entity_t *self = EX_REF_CAST(ex_entity_t,_self);
 
     ex_array_each ( self->comps, ex_ref_t *, comp ) {
-        EX_REF_PTR(ex_component_t,comp)->owner = _self;
-        EX_REF_PTR(ex_object_t,comp)->init(comp);
+        EX_REF_CAST(ex_component_t,comp)->owner = _self;
+        EX_REF_CAST(ex_object_t,comp)->init(comp);
         __add_to_cache ( self, ex_rtti_info(comp->ptr)->typeID, comp );
     } ex_array_each_end
 }
@@ -100,8 +100,8 @@ void __entity_init ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void __entity_deinit ( ex_ref_t *_self ) {
-    ex_entity_t *self = EX_REF_PTR(ex_entity_t,_self);
-    ex_trans2d_t *trans2d = EX_REF_PTR(ex_trans2d_t,self->trans2d);
+    ex_entity_t *self = EX_REF_CAST(ex_entity_t,_self);
+    ex_trans2d_t *trans2d = EX_REF_CAST(ex_trans2d_t,self->trans2d);
     ex_ref_t *comp;
     int i;
 
@@ -112,7 +112,7 @@ void __entity_deinit ( ex_ref_t *_self ) {
 
         //
         ex_array_each ( trans2d->children, ex_ref_t *, ref ) {
-            ex_trans2d_t *child = EX_REF_PTR( ex_trans2d_t, ref );
+            ex_trans2d_t *child = EX_REF_CAST( ex_trans2d_t, ref );
             // NOTE: this will prevent child remove from parent, which we will do it by ourself
             child->parent = NULL;
             ex_destroy_object_immediately( ((ex_component_t *)child)->owner, true );
@@ -170,7 +170,7 @@ EX_DEF_TOSTRING_END
 
 ex_ref_t *ex_entity_get_comp ( const ex_ref_t *_self, strid_t _typeID ) {
     ex_rtti_t *rtti;
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
 
     rtti = ex_rtti_get(_typeID);
     ex_assert_return( rtti, 
@@ -200,7 +200,7 @@ ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
     }
 
     // create a component and added to the component list, then return it.
-    compref = ex_create_object(_typeID,ex_generate_uid());
+    compref = ex_create_object(ex_rtti_get(_typeID),ex_generate_uid());
     if ( compref ) {
         __add_comp( _self, _typeID, compref );
         return compref;
@@ -214,12 +214,12 @@ ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
 // ------------------------------------------------------------------ 
 
 void ex_entity_level_start ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_PTR(ex_behavior_t,compref);
-        if ( ex_childof(ex_behavior_t,be) ) {
+        be = EX_REF_AS(ex_behavior_t,compref);
+        if ( be ) {
             if ( be->level_start )
                 be->level_start(compref);
         }
@@ -231,13 +231,12 @@ void ex_entity_level_start ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_entity_update ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_PTR(ex_behavior_t,compref);
-
-        if ( ex_childof(ex_behavior_t,be) ) {
+        be = EX_REF_AS(ex_behavior_t,compref);
+        if ( be ) {
             if ( be->state == EX_BEHAVIOR_STATE_NEW ) {
                 if ( be->start )
                     be->start(compref);
@@ -256,13 +255,12 @@ void ex_entity_update ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_entity_post_update ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_PTR(ex_entity_t,_self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_PTR(ex_behavior_t,compref);
-
-        if ( ex_childof(ex_behavior_t,be) ) {
+        be = EX_REF_AS(ex_behavior_t,compref);
+        if ( be ) {
             if ( be->post_update )
                 be->post_update(compref);
         }

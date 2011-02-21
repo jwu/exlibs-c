@@ -23,77 +23,16 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __gc ( lua_State *_l ) {
-    // TODO { 
-    // Proxy *p = (Proxy *)lua_touserdata(_l, 1);
-    // Object *obj = (Object *)p->user_data;
-    // if ( p->own_by_gc )
-    //     obj->release();
-    // } TODO end 
-    return 0;
-}
+int ex_lua_ref_gc ( lua_State *_l ) {
+    ref_proxy_t *u;
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+    if ( lua_isuserdata(_l,1) == 0 ) {
+        ex_error ( "fatal error: the gc object is not an userdata" );
+        return 0;
+    }
 
-static int __tostring ( lua_State *_l ) {
-    // lua_pushvalue ( _l, lua_upvalueindex(1) );
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __type ( lua_State *_l ) {
-    lua_pushvalue ( _l, lua_upvalueindex(1) );
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __type_of ( lua_State *_l ) {
-    lua_pushvalue ( _l, lua_upvalueindex(1) );
-    return 1;
-}
-
-#if 0
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-int ex_lua_register_builtin ( lua_State *_l, const char *_typeName, const void *_funcs ) {
-    const luaL_Reg *reg_funcs = (const luaL_Reg *)_funcs;
-
-    // lua: setmetatable()
-    luaL_newmetatable(_l, _typeName);
-
-    // m.__index = m
-    lua_pushvalue(_l, -1);
-    lua_setfield(_l, -2, "__index");
-
-    // add tostring function.
-    lua_pushcfunction(_l, __tostring);
-    lua_setfield(_l, -2, "__tostring");
-
-    // NOTE: builtin type no need for gc
-
-    // add tostring to as type() as well.
-    lua_pushstring(_l, _typeName);
-    lua_pushcclosure(_l, __type, 1);
-    lua_setfield(_l, -2, "type");
-
-    // add typeof
-    lua_pushcfunction(_l, __type_of);
-    lua_setfield(_l, -2, "typeof");
-
-    if ( reg_funcs != NULL )
-        luaL_register(_l, 0, reg_funcs);
-
-    lua_pop(_l, 1); // pops metatable.
+    u = (ref_proxy_t *)lua_touserdata(_l,1);
+    ex_decref(u->ref);
 
     return 0;
 }
@@ -102,52 +41,175 @@ int ex_lua_register_builtin ( lua_State *_l, const char *_typeName, const void *
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_register_class ( struct lua_State *_l, const char *_typeName, const void *_funcs ) {
-    const luaL_Reg *reg_funcs = (const luaL_Reg *)_funcs;
+int ex_lua_ref_tostring ( lua_State *_l ) {
+    ref_proxy_t *u;
+    void *obj;
+    ex_string_t *str;
 
-    // lua: setmetatable()
-    luaL_newmetatable(_l, _typeName);
+    if ( lua_isuserdata(_l,1) == 0 ) {
+        ex_error ( "fatal error: the gc object is not an userdata" );
+        lua_pushstring(_l,"");
+        return 1;
+    }
 
-    // m.__index = m
-    lua_pushvalue(_l, -1);
-    lua_setfield(_l, -2, "__index");
+    u = (ref_proxy_t *)lua_touserdata(_l,1);
+    obj = u->ref->ptr;
+    str = ex_string_alloc( "", 128 );
+    ex_rtti_info(obj)->tostring( str, obj );
+    lua_pushstring ( _l, str->text );
+    ex_string_free(str);
+    return 1;
+}
 
-    // setup gc
-    lua_pushcfunction(_l, __gc);
-    lua_setfield(_l, -2, "__gc");
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    // add tostring function.
-    lua_pushstring(_l, _typeName);
-    lua_pushcclosure(_l, __tostring, 1);
-    lua_setfield(_l, -2, "__tostring");
+int ex_lua_ref_eq ( struct lua_State *_l ) {
+    ref_proxy_t *lhs, *rhs;
 
-    // add tostring to as type() as well.
-    lua_pushstring(_l, _typeName);
-    lua_pushcclosure(_l, __tostring, 1);
-    lua_setfield(_l, -2, "type");
+    if ( lua_isuserdata(_l,1) == 0 ) {
+        ex_error ( "fatal error: the gc object is not an userdata" );
+        lua_pushstring(_l,"");
+        return 1;
+    }
+    lhs = (ref_proxy_t *)lua_touserdata(_l,1);
 
-    // add typeof
-    lua_pushcfunction(_l, __type_of);
-    lua_setfield(_l, -2, "typeof");
+    // check if we compare with nil
+    if ( lua_isnil(_l,2) ) {
+        lua_pushboolean(_l,lhs->ref->ptr == NULL);
+        return 1;
+    }
 
-    // add childof
-    lua_pushcfunction(_l, __childof);
-    lua_setfield(_l, -2, "childof");
+    // check if we compare with other ref
+    rhs = (ref_proxy_t *)lua_touserdata(_l,2);
+    lua_pushboolean(_l,lhs->ref->ptr == rhs->ref->ptr);
+    return 1;
+}
 
-    // add superof
-    lua_pushcfunction(_l, __superof);
-    lua_setfield(_l, -2, "superof");
+// ------------------------------------------------------------------ 
+// Desc: 
+// TODO: we could do it even bettern if we can anlysis _field by split them by "."
+// ------------------------------------------------------------------ 
 
-    // add isa
-    lua_pushcfunction(_l, __isa);
-    lua_setfield(_l, -2, "isa");
+int ex_lua_register_builtin ( lua_State *_l, 
+                              const char *_field, 
+                              const char *_typename, 
+                              const void *_meta_funcs,
+                              const void *_type_meta_funcs ) 
+{
+    ex_assert( _field, "_field can't be NULL" );
+    ex_assert( _typename, "_typename can't be NULL" );
+    ex_assert( _meta_funcs, "_meta_funcs can't be NULL" );
+    ex_assert( _type_meta_funcs, "_type_meta_funcs can't be NULL" );
+
+    /**
+     * if
+          _typename = "ex.vec2f"
+          _field = "vec2f"
+
+       and we add it in global table "ex",
+       then the table looks like this:
+
+          ex.vec2f = _R["ex.vec2f"] = {
+              meta = {
+                  __call = ...;
+                  __index = ...;
+                  __newindex = ...;
+              };
+              __index = ...;
+              __newindex = ...;
+          };
+     */
+
+    // the lua code
+    // _field = "vec2f"
+    // _typename = "ex.vec2f"
+    // _R[_typename] = { _meta_funcs } --  do register
+    // _R[_typename].__typename = _typename
+    // _R[_typename].__isbuiltin = true
+    // setmetatable ( _R[_typename], { _type_meta_funcs } )
+    // _G[_field] = _R[_typename] -- NOTE: _G depends on the table on the stack
+
+    // register metatable -- _typename
+    // _R[_typename] = { _meta_funcs }
+    luaL_newmetatable(_l, _typename); // NOTE: this store a table in LUA_REGISTRYINDEX
+    luaL_register(_l, NULL, _meta_funcs);
+
+    // tp.__typename = _typename
+    // NOTE: the __typename is for print (ex.typename(v1)), for faster typecheck, 
+    //       use ex.typeof(v1) == ex.vec2f is faster instead.
+    lua_pushstring(_l, _typename);
+    lua_setfield(_l,-2,"__typename");
+
+    //  tp.__isbuiltin = true, used in isbuiltin(v1)
+    lua_pushboolean(_l, true);
+    lua_setfield(_l,-2,"__isbuiltin");
+
+    // setmetatable( tp, { _type_meta_funcs } )
+    lua_newtable(_l);
+    luaL_register(_l, NULL, _type_meta_funcs);
+    lua_setmetatable(_l,-2);
+
+    lua_setfield(_l,-2,_field); // _G[_field] = _R[_typename]
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// TODO: we could do it even bettern if we can anlysis _field by split them by "."
+// ------------------------------------------------------------------ 
+
+int ex_lua_register_class ( lua_State *_l, 
+                            const char *_field, 
+                            const char *_typename, 
+                            const void *_meta_funcs,
+                            const void *_type_meta_funcs ) 
+{
+    ex_assert( _field, "_field can't be NULL" );
+    ex_assert( _typename, "_typename can't be NULL" );
+    ex_assert( _meta_funcs, "_meta_funcs can't be NULL" );
+    ex_assert( _type_meta_funcs, "_type_meta_funcs can't be NULL" );
+
+    // the lua code
+    // _field = "object"
+    // _typename = "ex.object"
+    // _R[_typename] = { _meta_funcs } --  do register
+    // _R[_typename].__typename = _field
+    // _R[_typename].__isbuiltin = true
+    // _R[_typename].__isclass = true
+    // _G[_field] = ex.class(_R[_typename]) -- NOTE: here _G depends on what is the current table on the stack
+    //                 |- _R[_typename].__super = nil -- TODO: we should have super I think
+    //                 |- setmetatable ( _R[_typename], { _type_meta_funcs } )
 
     //
-    if ( reg_funcs != NULL )
-        luaL_register(_l, 0, reg_funcs);
+    luaL_newmetatable(_l, _typename); // NOTE: this store a table in LUA_REGISTRYINDEX
+    luaL_register( _l, NULL, _meta_funcs );
 
-    lua_pop(_l, 1); // pops metatable.
+    // tp.__typename = "object"
+    lua_pushstring(_l, _typename);
+    lua_setfield(_l,-2,"__typename");
 
+    // tp.__isbuiltin = true
+    lua_pushboolean(_l, true);
+    lua_setfield(_l,-2,"__isbuiltin");
+
+    // tp = ex.class ( tp )
+    lua_pushnil(_l); // super is nil // TODO: for super not nil
+    // now create type meta class
+    lua_newtable(_l);
+    luaL_register(_l, NULL, _type_meta_funcs);
+    ex_lua_class( _l, 
+                  lua_gettop(_l)-2, // base idx
+                  lua_gettop(_l)-1, // super idx
+                  lua_gettop(_l),   // meta idx
+                  NULL, 
+                  NULL );
+
+    // _G[_field] = ex.class(tp) -- NOTE: here _G depends on what is the current table on the stack
+    lua_pushvalue(_l,-1);
+    lua_setfield(_l,-6,_field);
+
+    lua_pop(_l, 4); // pops base, type_meta, super, base
     return 0;
 }
-#endif

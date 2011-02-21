@@ -59,11 +59,11 @@ static inline ex_rtti_t *ex_rtti_info ( void *_obj ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: helper function for using ex_classof
+// Desc: helper function for using ex_instanceof
 // ------------------------------------------------------------------ 
 
-static inline bool __ex_classof ( const ex_class_t *_obj, const ex_rtti_t *_rtti ) {
-    return ex_rtti_classof( _obj->rtti, _rtti );
+static inline bool __ex_instanceof ( const ex_class_t *_obj, const ex_rtti_t *_rtti ) {
+    return ex_rtti_instanceof( _obj->rtti, _rtti );
 }
 
 // ------------------------------------------------------------------ 
@@ -94,7 +94,7 @@ static inline bool __ex_isa ( const ex_class_t *_obj, const ex_rtti_t *_rtti ) {
 // Desc: helper function for using ex_as
 // ------------------------------------------------------------------ 
 
-extern void *__ex_as ( ex_class_t *_obj, const ex_rtti_t *_rtti );
+extern void *__ex_cast ( ex_class_t *_obj, const ex_rtti_t *_rtti, bool _no_error );
 
 // ######################### 
 #ifdef __cplusplus

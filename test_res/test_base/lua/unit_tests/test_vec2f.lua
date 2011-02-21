@@ -20,6 +20,7 @@ ex.log ( "test vec2f" )
 
 v1 = ex.vec2f( 10.0, 20.0 )
 v2 = ex.vec2f( -20.0, -10.0 )
+v3 = ex.vec2f.one
 
 print ("v1 is "..v1)
 print ("v2 is "..v2)
@@ -36,14 +37,15 @@ end
 -- ex.vec2f.one.x = 20.0
 print (ex.vec2f.one)
 
+-- check type
+print ( "typename(v3) is " .. ex.typename(v3) )
+print ( "typeof(v3) is ex.vec2f: " .. tostring(ex.typeof(v3) == ex.vec2f) )
+
 -- check single element
 v3 = v1
 v3.x = v3.x + 5.0
 v3.y = v3.y - 5.0
 print ( "v1.x + 5, v1.y - 5 = " .. v3)
-
--- check type
-print (v3.type)
 
 -- check add
 v3 = v1 + v2

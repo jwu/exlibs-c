@@ -42,7 +42,7 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
 
     // simple
     simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
-    simple = EX_REF_PTR(ex_simple_t,simple_ref);
+    simple = EX_REF_CAST(ex_simple_t,simple_ref);
 
     ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );
     ex_vec2f_normalize(&simple->move_dir);
@@ -70,23 +70,23 @@ static void init () {
         ent2 = create_simple_entity("entity_02");
         ent3 = create_simple_entity("entity_03");
 
-        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent2)->trans2d, 
-                                EX_REF_PTR(ex_entity_t,ent1)->trans2d );
+        ex_trans2d_set_parent ( EX_REF_CAST(ex_entity_t,ent2)->trans2d, 
+                                EX_REF_CAST(ex_entity_t,ent1)->trans2d );
 
-        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,ent3)->trans2d, 
-                                EX_REF_PTR(ex_entity_t,ent2)->trans2d );
+        ex_trans2d_set_parent ( EX_REF_CAST(ex_entity_t,ent3)->trans2d, 
+                                EX_REF_CAST(ex_entity_t,ent2)->trans2d );
 
         simple_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_simple_t) );
-        EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 1.0f;
-        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_SELF;
+        EX_REF_CAST( ex_simple_t, simple_ref )->move_speed = 0.0f;
+        // EX_REF_CAST( ex_simple_t, simple_ref )->rot_speed = 1.0f;
+        // EX_REF_CAST( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_SELF;
         trans2d_ref = ex_entity_get_comp( ent1, EX_TYPEID(ex_trans2d_t) );
         // ex_trans2d_set_local_scale( trans2d_ref, 0.5f, 0.5f );
 
         simple_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_simple_t) );
-        EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-        EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = 2.0f;
-        EX_REF_PTR( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_PARENT;
+        EX_REF_CAST( ex_simple_t, simple_ref )->move_speed = 0.0f;
+        EX_REF_CAST( ex_simple_t, simple_ref )->rot_speed = 2.0f;
+        EX_REF_CAST( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_PARENT;
         trans2d_ref = ex_entity_get_comp( ent2, EX_TYPEID(ex_trans2d_t) );
         // ex_trans2d_set_local_scale( trans2d_ref, 1.5f, 1.5f );
         if ( i == 0 ) {
@@ -97,9 +97,9 @@ static void init () {
         }
 
         simple_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_simple_t) );
-        EX_REF_PTR( ex_simple_t, simple_ref )->move_speed = 0.0f;
-        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_speed = -3.0f;
-        // EX_REF_PTR( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_PARENT;
+        EX_REF_CAST( ex_simple_t, simple_ref )->move_speed = 0.0f;
+        // EX_REF_CAST( ex_simple_t, simple_ref )->rot_speed = -3.0f;
+        // EX_REF_CAST( ex_simple_t, simple_ref )->rot_around = ROT_AROUND_PARENT;
         trans2d_ref = ex_entity_get_comp( ent3, EX_TYPEID(ex_trans2d_t) );
         // ex_trans2d_set_local_scale( trans2d_ref, 2.0f, 2.0f );
         if ( i == 0 ) {
@@ -117,11 +117,11 @@ static void init () {
         ex_ref_t *e3 = create_simple_entity("bar");
         ex_ref_t *e = NULL;
 
-        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,e2)->trans2d, 
-                                EX_REF_PTR(ex_entity_t,e1)->trans2d );
+        ex_trans2d_set_parent ( EX_REF_CAST(ex_entity_t,e2)->trans2d, 
+                                EX_REF_CAST(ex_entity_t,e1)->trans2d );
 
-        ex_trans2d_set_parent ( EX_REF_PTR(ex_entity_t,e3)->trans2d, 
-                                EX_REF_PTR(ex_entity_t,e2)->trans2d );
+        ex_trans2d_set_parent ( EX_REF_CAST(ex_entity_t,e3)->trans2d, 
+                                EX_REF_CAST(ex_entity_t,e2)->trans2d );
 
         trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );
         ex_trans2d_set_local_rotation ( trans2d_ref, EX_PI/4.0f );
@@ -139,7 +139,7 @@ static void init () {
         trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );
         e = ex_trans2d_find( trans2d_ref, "foo/bar" );
         ex_assert ( e && 
-                    EX_REF_PTR(ex_object_t,EX_REF_PTR(ex_component_t,e)->owner)->name == ex_strid("bar"),
+                    EX_REF_CAST(ex_object_t,EX_REF_CAST(ex_component_t,e)->owner)->name == ex_strid("bar"),
                     "failed to find foo/bar from foobar" );
     }
 #endif

@@ -10,7 +10,8 @@
 --/////////////////////////////////////////////////////////////////////////////
 
 require ("ex.debug")
-local do_test = true
+
+local do_test = false
 if not do_test then return end
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -128,7 +129,8 @@ print( foobar_obj.m_array[1] )
 
 
 -- ex.debug.dump(foo,"foo")
--- ex.debug.dump(foo_obj,"foo_obj") 
+foo_obj:m_test_func()
+ex.debug.dump(foo_obj,"foo_obj") 
 
 -- ex.debug.dump(bar,"bar") 
 -- ex.debug.dump(bar_obj,"bar_obj") 
@@ -146,9 +148,9 @@ foobar_obj.super.m_test_func2( foobar_obj )
 print( "foobar_obj isa foobar: " .. tostring(foobar_obj:isa(foobar)) )
 print( "foobar_obj isa bar: " .. tostring(foobar_obj:isa(bar)) )
 print( "foobar_obj isa foo: " .. tostring(foobar_obj:isa(foo)) )
-print( "foobar_obj is classof foobar: " .. tostring(foobar_obj:classof(foobar)) )
-print( "foobar_obj is classof bar: " .. tostring(foobar_obj:classof(bar)) )
-print( "foobar_obj is classof foo: " .. tostring(foobar_obj:classof(foo)) )
+print( "foobar_obj is instanceof foobar: " .. tostring(foobar_obj:instanceof(foobar)) )
+print( "foobar_obj is instanceof bar: " .. tostring(foobar_obj:instanceof(bar)) )
+print( "foobar_obj is instanceof foo: " .. tostring(foobar_obj:instanceof(foo)) )
 print( "foobar_obj is superof foo: " .. tostring(foobar_obj:superof(foo)) )
 print( "foo_obj    is superof foobar: " .. tostring(foo_obj:superof(foobar)) )
 print( "foobar_obj is childof foo: " .. tostring(foobar_obj:childof(foo)) )

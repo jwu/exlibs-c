@@ -97,7 +97,7 @@ static void load_world () {
     stream = ex_create_json_read_stream( "world/simple_world.json" );
 
     g_world = ex_world_load(stream);
-    EX_REF_PTR(ex_object_t,g_world)->init(g_world);
+    EX_REF_CAST(ex_object_t,g_world)->init(g_world);
     
     ex_destroy_json_stream((ex_stream_json_t *)stream);
     ex_log ("simple_world.json loaded!");
@@ -122,9 +122,9 @@ static void initGame () {
     // } NOTE end 
 
     // load/setup the world
-    g_world = ex_create_object( EX_TYPEID(ex_world_t), ex_generate_uid() );
+    g_world = ex_create_object( EX_RTTI(ex_world_t), ex_generate_uid() );
     ex_incref(g_world);
-    EX_REF_PTR(ex_object_t,g_world)->init(g_world);
+    EX_REF_CAST(ex_object_t,g_world)->init(g_world);
 
     // create main camera
     {
