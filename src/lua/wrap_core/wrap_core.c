@@ -589,7 +589,7 @@ static int __class ( lua_State *_l ) {
 
     // push the suitable meta table
     if ( derived_from_builtin ) {
-        // TODO:
+        lua_getfield(_l,-1,"__metaclass");
     }
     else {
         luaL_getmetatable(_l,"ex.class.meta");
@@ -626,7 +626,7 @@ static int __derive ( lua_State *_l ) {
 
     // push the suitable meta table
     if ( derived_from_builtin ) {
-        // TODO:
+        lua_getfield(_l,-1,"__metaclass");
     }
     else {
         luaL_getmetatable(_l,"ex.class.meta");
@@ -747,7 +747,7 @@ int ex_lua_class ( lua_State *_l,
     lua_setmetatable(_l,_base_idx);
     lua_pushvalue(_l,_base_idx);
 
-    // TODO: dynamically register the new class to rtti 
+    // TODO: dynamically register the new class to rtti TODO:
 
     return 1;
 }

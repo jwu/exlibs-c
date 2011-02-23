@@ -71,7 +71,7 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-meta_class = {
+metaclass = {
     __call = function ( _self, ... )
         local table = ... or {}
         table.__isinstance = true
@@ -199,7 +199,7 @@ local function class_newindex ( _t, _k, _v )
     -- NOTE: the _t can only be object instance, 
     --       we can garantee this, case if it is a class, 
     --       it never use class_index as __index method. 
-    --       it use meta_class.__index
+    --       it use metaclass.__index
 
     -- make sure only get __readonly in table _t, not invoke __index method.
     local is_readonly = rawget(_t,"__readonly")
@@ -258,7 +258,7 @@ local function class_index ( _t, _k )
     -- NOTE: the _t can only be object instance, 
     --       we can garantee this, case if it is a class, 
     --       it never use class_index as __index method. 
-    --       it use meta_class.__index
+    --       it use metaclass.__index
 
     -- speical case
     if _k == "super" then
@@ -353,12 +353,9 @@ function class(...)
 
     -- 
     if derived_from_builtin then
-        local table = {
-            __call = builtin_class.__call2
-        }
-        return setmetatable(base,table)
+        return setmetatable(base,builtin_class.__metaclass)
     else
-        return setmetatable(base,meta_class)
+        return setmetatable(base,metaclass)
     end
 end
 

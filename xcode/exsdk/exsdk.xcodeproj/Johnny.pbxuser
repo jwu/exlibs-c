@@ -256,6 +256,8 @@
 			B24BEE7A13151AC20042B8DF /* PBXTextBookmark */ = B24BEE7A13151AC20042B8DF /* PBXTextBookmark */;
 			B24BEE7B13151AE50042B8DF /* PBXTextBookmark */ = B24BEE7B13151AE50042B8DF /* PBXTextBookmark */;
 			B24BEE8213151C490042B8DF /* PBXTextBookmark */ = B24BEE8213151C490042B8DF /* PBXTextBookmark */;
+			B24BEE8F13152E0F0042B8DF /* PBXTextBookmark */ = B24BEE8F13152E0F0042B8DF /* PBXTextBookmark */;
+			B24BEE9E1315433C0042B8DF /* PBXTextBookmark */ = B24BEE9E1315433C0042B8DF /* PBXTextBookmark */;
 			B25923BB12E938D900B49C04 = B25923BB12E938D900B49C04 /* PBXTextBookmark */;
 			B25923DD12E9429200B49C04 = B25923DD12E9429200B49C04 /* PBXTextBookmark */;
 			B25923DE12E9429200B49C04 = B25923DE12E9429200B49C04 /* PBXTextBookmark */;
@@ -699,9 +701,9 @@
 	};
 	B243C0BB130D86170056158F /* wrap_object.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1226, 4264}}";
-			sepNavSelRange = "{5875, 0}";
-			sepNavVisRange = "{5777, 712}";
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 4420}}";
+			sepNavSelRange = "{10626, 0}";
+			sepNavVisRange = "{7323, 767}";
 		};
 	};
 	B243C0C1130D8C350056158F /* PBXTextBookmark */ = {
@@ -863,7 +865,7 @@
 		fRef = B2A2315A130221C700F3C100 /* lua_wrap_helper.h */;
 		name = "lua_wrap_helper.h: 121";
 		rLen = 0;
-		rLoc = 4729;
+		rLoc = 4736;
 		rType = 0;
 		vrLen = 998;
 		vrLoc = 1668;
@@ -893,7 +895,7 @@
 		fRef = B2A23159130221C700F3C100 /* lua_wrap_helper.c */;
 		name = "lua_wrap_helper.c: 218";
 		rLen = 0;
-		rLoc = 7240;
+		rLoc = 7242;
 		rType = 0;
 		vrLen = 515;
 		vrLoc = 748;
@@ -997,7 +999,7 @@
 		fRef = B2A2315A130221C700F3C100 /* lua_wrap_helper.h */;
 		name = "lua_wrap_helper.h: 115";
 		rLen = 0;
-		rLoc = 4487;
+		rLoc = 4494;
 		rType = 0;
 		vrLen = 1247;
 		vrLoc = 1603;
@@ -1431,6 +1433,26 @@
 		vrLoc = 4545;
 	};
 	B24BEE8213151C490042B8DF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */;
+		name = "exsdk.c: 150";
+		rLen = 0;
+		rLoc = 4852;
+		rType = 0;
+		vrLen = 572;
+		vrLoc = 4545;
+	};
+	B24BEE8F13152E0F0042B8DF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */;
+		name = "exsdk.c: 150";
+		rLen = 0;
+		rLoc = 4852;
+		rType = 0;
+		vrLen = 572;
+		vrLoc = 4545;
+	};
+	B24BEE9E1315433C0042B8DF /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */;
 		name = "exsdk.c: 150";
@@ -1937,9 +1959,9 @@
 	};
 	B2A22DDA12FEEDC400F3C100 /* test_lua.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 1326}}";
-			sepNavSelRange = "{2282, 0}";
-			sepNavVisRange = "{2010, 936}";
+			sepNavIntBoundsRect = "{{0, 0}, {1226, 1300}}";
+			sepNavSelRange = "{2690, 0}";
+			sepNavVisRange = "{2010, 854}";
 		};
 	};
 	B2A22EEF1300371800F3C100 /* test_script.c */ = {
@@ -1951,9 +1973,9 @@
 	};
 	B2A23156130221C700F3C100 /* lua_global.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1261, 16510}}";
-			sepNavSelRange = "{38005, 0}";
-			sepNavVisRange = "{35702, 687}";
+			sepNavIntBoundsRect = "{{0, 0}, {1226, 16952}}";
+			sepNavSelRange = "{16796, 0}";
+			sepNavVisRange = "{37617, 805}";
 			sepNavWindowFrame = "{{47, 0}, {877, 769}}";
 		};
 	};
@@ -1980,9 +2002,9 @@
 	};
 	B2A2315A130221C700F3C100 /* lua_wrap_helper.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {872, 1573}}";
-			sepNavSelRange = "{4729, 0}";
-			sepNavVisRange = "{1668, 998}";
+			sepNavIntBoundsRect = "{{0, 0}, {1261, 1586}}";
+			sepNavSelRange = "{4151, 0}";
+			sepNavVisRange = "{3563, 1106}";
 		};
 	};
 	B2A2315C130221C700F3C100 /* wrap_core.c */ = {

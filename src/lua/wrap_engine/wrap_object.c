@@ -116,7 +116,7 @@ static int __object_new ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __object_new2 ( lua_State *_l ) {
+static int __object_new_for_child ( lua_State *_l ) {
     ref_proxy_t *u;
 
     // TODO: new table or from argument { 
@@ -259,7 +259,6 @@ int luaopen_object ( lua_State *_l ) {
         { "__newindex", __object_type_meta_newindex },
         { "__index", __object_type_meta_index },
         { "__call", __object_new },
-        { "__call2", __object_new2 },
         { NULL, NULL },
     };
 
@@ -316,7 +315,8 @@ int luaopen_object ( lua_State *_l ) {
                             "object",
                             __typename,
                             __meta_funcs,
-                            __type_meta_funcs );
+                            __type_meta_funcs,
+                            __object_new_for_child );
     lua_pop(_l, 1); // pops ex
     return 0;
 }

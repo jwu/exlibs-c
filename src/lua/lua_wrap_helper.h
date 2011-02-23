@@ -107,7 +107,8 @@ extern int ex_lua_register_class ( struct lua_State *_l,
                                    const char *_field, 
                                    const char *_typename, 
                                    const void *_meta_funcs,
-                                   const void *_type_meta_funcs );
+                                   const void *_type_meta_funcs,
+                                   const void *_metacall_for_child );
 
 // ######################### 
 #ifdef __cplusplus

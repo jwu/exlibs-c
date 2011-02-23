@@ -62,6 +62,10 @@ bar = ex.class( {
     text2 = "hello bar",
     say = function (_self) 
         ex.log("bar said: " .. _self.text2)
+    end,
+    destroy = function (_self)
+        ex.log("haha, my destroy")
+        _self.super.destroy(_self)
     end
 }, foo )
 
