@@ -32,13 +32,36 @@ static const char *__typename = "ex.object";
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __type_meta_newindex ( lua_State *_l ) {
+    return ex_lua_userdata_newindex( _l, &__key_to_type_meta_getset );
+}
+static int __type_meta_index ( lua_State *_l ) {
+    return ex_lua_userdata_index( _l, &__key_to_type_meta_getset );
+}
+static int __meta_newindex ( lua_State *_l ) {
+    return ex_lua_userdata_newindex( _l, &__key_to_meta_getset );
+}
+static int __meta_index ( lua_State *_l ) {
+    return ex_lua_userdata_index( _l, &__key_to_meta_getset );
+}
+static int __child_meta_newindex ( lua_State *_l ) {
+    return ex_lua_userdata_newindex_for_child( _l, &__key_to_meta_getset );
+}
+static int __child_meta_index ( lua_State *_l ) {
+    return ex_lua_userdata_index_for_child( _l, &__key_to_meta_getset );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 ref_proxy_t *ex_lua_checkobject ( lua_State *_l, int _idx ) {
     ref_proxy_t *u;
 
     if ( lua_isuserdata(_l, _idx) == 0 )
         return NULL;
     u = (ref_proxy_t *)lua_touserdata(_l,_idx);
-    if ( u->typeid != EX_TYPEID(ex_object_t) )
+    if ( ex_rtti_isa( ex_rtti_get(u->typeid), EX_RTTI(ex_object_t) ) )
         return NULL;
 
     return u;
@@ -69,29 +92,6 @@ ref_proxy_t *ex_lua_pushobject ( lua_State *_l, bool _readonly ) {
     lua_remove(_l,-2);
 
     return u;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __object_type_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex( _l, &__key_to_type_meta_getset );
-}
-static int __object_type_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index( _l, &__key_to_type_meta_getset );
-}
-static int __object_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex( _l, &__key_to_meta_getset );
-}
-static int __object_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index( _l, &__key_to_meta_getset );
-}
-static int __child_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex_for_child( _l, &__key_to_meta_getset );
-}
-static int __child_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index_for_child( _l, &__key_to_meta_getset );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -131,6 +131,8 @@ static int __object_new_for_child ( lua_State *_l ) {
     lua_setfield(_l,-2,"__newindex");
     lua_pushcfunction(_l,ex_lua_ref_gc);
     lua_setfield(_l,-2,"__gc");
+    lua_pushcfunction(_l,ex_lua_ref_eq);
+    lua_setfield(_l,-2,"__eq");
     // TODO: should be lua class __tostring { 
     lua_pushcfunction(_l,ex_lua_ref_tostring);
     lua_setfield(_l,-2,"__tostring");
@@ -256,8 +258,8 @@ int luaopen_object ( lua_State *_l ) {
         { NULL, NULL, NULL },
     };
     static const luaL_Reg __type_meta_funcs[] = {
-        { "__newindex", __object_type_meta_newindex },
-        { "__index", __object_type_meta_index },
+        { "__newindex", __type_meta_newindex },
+        { "__index", __type_meta_index },
         { "__call", __object_new },
         { NULL, NULL },
     };
@@ -270,8 +272,8 @@ int luaopen_object ( lua_State *_l ) {
     };
     static const luaL_Reg __meta_funcs[] = {
         { "__gc", ex_lua_ref_gc },
-        { "__newindex", __object_meta_newindex },
-        { "__index", __object_meta_index },
+        { "__newindex", __meta_newindex },
+        { "__index", __meta_index },
         { "__tostring", ex_lua_ref_tostring },
         { "__eq", ex_lua_ref_eq },
         { "destroy", __object_destroy },
@@ -313,6 +315,7 @@ int luaopen_object ( lua_State *_l ) {
     ex_lua_global_module ( _l, "ex" );
     ex_lua_register_class ( _l,
                             "object",
+                            "NULL",
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,

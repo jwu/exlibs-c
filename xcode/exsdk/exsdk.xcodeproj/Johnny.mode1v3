@@ -329,7 +329,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B24BEE9E1315433C0042B8DF</string>
+										<string>B24BEEA813156F010042B8DF</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -658,8 +658,8 @@
 		<string>B24BED0D13126B070042B8DF</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
 	</array>
 	<key>WindowString</key>
 	<string>1381 -16 1231 723 1280 -400 1920 1200 </string>
@@ -678,14 +678,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>lua_wrap_helper.c</string>
+								<string>wrap_world.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -702,6 +700,8 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

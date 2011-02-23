@@ -162,6 +162,7 @@ int ex_lua_register_builtin ( lua_State *_l,
 
 int ex_lua_register_class ( lua_State *_l, 
                             const char *_field, 
+                            const char *_supername, 
                             const char *_typename, 
                             const void *_meta_funcs,
                             const void *_type_meta_funcs,
@@ -204,7 +205,13 @@ int ex_lua_register_class ( lua_State *_l,
     lua_setfield(_l,-2,"__metaclass");
 
     // tp = ex.class ( tp )
-    lua_pushnil(_l); // super is nil // TODO: for super not nil
+    if ( _supername == NULL ) {
+        lua_pushnil(_l); // super is nil
+    }
+    else {
+        luaL_newmetatable(_l,_supername); // get super metatable
+    }
+
     // now create type meta class
     lua_newtable(_l);
     luaL_register(_l, NULL, _type_meta_funcs);

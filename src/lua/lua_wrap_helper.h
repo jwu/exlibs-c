@@ -105,6 +105,7 @@ extern int ex_lua_register_builtin ( struct lua_State *_l,
 
 extern int ex_lua_register_class ( struct lua_State *_l, 
                                    const char *_field, 
+                                   const char *_supername, 
                                    const char *_typename, 
                                    const void *_meta_funcs,
                                    const void *_type_meta_funcs,
