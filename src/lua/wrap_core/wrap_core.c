@@ -190,7 +190,7 @@ static int __class_index ( lua_State *_l ) {
         if ( lua_isnil(_l,-1) == 0 ) {
             return __copy_v(_l);
         }
-        lua_pop(_l,1); // pops v, pops rawget
+        lua_pop(_l,1); // pops v
 
         // get super's super from super's metatable
         // super = rawget(super,"__super")
@@ -296,7 +296,7 @@ static int __class_newindex ( lua_State *_l ) {
             lua_rawset (_l,1);
             return 0;
         }
-        lua_pop(_l,1); // pops v, pops rawget
+        lua_pop(_l,1); // pops v
 
         // get super's super from super's metatable
         // super = rawget(super,"__super")
@@ -550,6 +550,8 @@ static int __deepcopy ( lua_State *_l ) {
 
 static int __class ( lua_State *_l ) {
     int nargs = lua_gettop(_l);
+    bool derived_from_builtin = false;
+
     if ( nargs == 0 ) {
         ex_error ( "can't find any input arguments" );
         lua_pushnil(_l);
@@ -558,22 +560,79 @@ static int __class ( lua_State *_l ) {
     if ( nargs == 1 ) {
         lua_pushnil(_l);
     }
-    // TODO: 
-    // while super ~= builtin ...
-    // builtin type isa ex_object_t
-    // then ...
-    luaL_getmetatable(_l,"ex.class.meta");
+
+    // check if super is builtin
+    lua_pushvalue(_l,-1); // push super
+    while ( lua_isnil(_l,-1) ) {
+        bool r;
+
+        // check if super is builtin
+        lua_pushstring(_l,"__isbuiltin");
+        lua_rawget ( _l, -2 );
+        if ( lua_isnil(_l,-1) ) {
+            r = false;
+        }
+        r = lua_toboolean(_l,-1);
+        if (r) {
+            derived_from_builtin = true;
+            lua_pop(_l,2); // pops r, pushvalue
+            break;
+        }
+        lua_pop(_l,1); // pops r
+
+        // super = super.__super
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-1);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops pushvalue
+
+    // push the suitable meta table
+    if ( derived_from_builtin ) {
+        // TODO:
+    }
+    else {
+        luaL_getmetatable(_l,"ex.class.meta");
+    }
+
+    //
     return ex_lua_class( _l, 1, 2, lua_gettop(_l), __class_index, __class_newindex );
 }
 
 static int __derive ( lua_State *_l ) {
     int nargs = lua_gettop(_l);
+    bool derived_from_builtin = false;
+
     if ( nargs != 1 ) {
         ex_error ( "only 1 arguments accept in derive function" );
         lua_pushnil(_l);
         return 1;
     }
-    luaL_getmetatable(_l,"ex.class.meta");
+
+    // check if super is builtin
+    lua_pushvalue(_l,lua_upvalueindex(1)); // push super
+    while ( lua_isnil(_l,-1) ) {
+        if ( ex_lua_isbuiltin(_l,lua_gettop(_l)) ) {
+            derived_from_builtin = true;
+            lua_pop(_l,1); // pops pushvalue
+            break;
+        }
+
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-1);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops pushvalue
+
+    // push the suitable meta table
+    if ( derived_from_builtin ) {
+        // TODO:
+    }
+    else {
+        luaL_getmetatable(_l,"ex.class.meta");
+    }
+
+    //
     return ex_lua_class( _l, 1, lua_upvalueindex(1), lua_gettop(_l), __class_index, __class_newindex );
 }
 
@@ -583,6 +642,9 @@ int ex_lua_class ( lua_State *_l,
                    int _meta_idx,
                    lua_pfn _index_func, 
                    lua_pfn _newindex_func ) {
+
+    const char *typename = NULL;
+
     // local base,super = ...
     // assert( type(base) == "table", "the first parameter must be a table" )
     if ( lua_istable(_l,_base_idx) == 0 ) {
@@ -590,6 +652,15 @@ int ex_lua_class ( lua_State *_l,
         lua_pushnil(_l);
         return 1;
     }
+
+    // if you don't define the __typename, report error!
+    lua_getfield(_l,_base_idx,"__typename");
+    if ( lua_isnil(_l,-1) ) {
+        ex_error ( "please define __typename for your class!" );
+        return 1;
+    }
+    typename = luaL_checkstring(_l,-1);
+    lua_pop(_l,1); // pos field __typename
 
     // if super == nil then
     if ( lua_isnil(_l,_super_idx) ) {
@@ -642,6 +713,12 @@ int ex_lua_class ( lua_State *_l,
         lua_setfield(_l,_base_idx,"__newindex");
     }
 
+    // TODO: must check if base have __serialize, if not use the default one { 
+    // // base.__serialize = class_serialize
+    // lua_pushcfunction(_l,class_serialize);
+    // lua_setfield(_l,_base_idx,"__serialize");
+    // } TODO end 
+
     // base.instanceof = instanceof
     lua_pushcfunction(_l,__instanceof);
     lua_setfield(_l,_base_idx,"instanceof");
@@ -669,6 +746,9 @@ int ex_lua_class ( lua_State *_l,
     lua_pushvalue(_l,_meta_idx);
     lua_setmetatable(_l,_base_idx);
     lua_pushvalue(_l,_base_idx);
+
+    // TODO: dynamically register the new class to rtti 
+
     return 1;
 }
 

@@ -147,14 +147,9 @@ DEF_BUILTIN_TOSTRING(strid) {
     strid_t *val = (strid_t *)_val;
     const char *text = ex_strid_to_cstr(*val);
 
-    if ( *val != EX_STRID_NULL ) {
-        ex_string_cat( _string, "\"" );
-        ex_string_ncat( _string, text, strlen(text) );
-        ex_string_cat( _string, "\"" );
-    }
-    else {
-        ex_string_cat( _string, "\"\"" );
-    }
+    ex_string_cat( _string, "\"" );
+    ex_string_ncat( _string, text, strlen(text) );
+    ex_string_cat( _string, "\"" );
 }
 
 DEF_BUILTIN_TOSTRING(angf) {

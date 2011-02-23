@@ -108,8 +108,11 @@ extern int ex_lua_class ( struct lua_State *_l,
                           lua_pfn _index_func, 
                           lua_pfn _newindex_func );
 
-extern int ex_lua_builtin_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
-extern int ex_lua_builtin_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
+extern int ex_lua_userdata_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
+extern int ex_lua_userdata_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
+
+extern int ex_lua_userdata_newindex_for_child ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
+extern int ex_lua_userdata_index_for_child ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
 
 ///////////////////////////////////////////////////////////////////////////////
 // lua debug op

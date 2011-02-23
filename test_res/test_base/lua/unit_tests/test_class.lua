@@ -34,6 +34,8 @@ if not do_test then return end
 -- foo -> bar -> foobar
 
 foo = ex.class {
+    __typename = "foo",
+
     m_normal = 2.0,
     m_string = "hello",
     m_array = { "one", "two", "three", "four" },
@@ -47,6 +49,8 @@ foo = ex.class {
 }
 
 bar = ex.class ({
+    __typename = "bar",
+
     -- override foo
     m_normal = 10.0,
     -- 
@@ -85,6 +89,8 @@ bar = ex.class ({
 -- }, bar)
 
 foobar = bar.derive ({
+    __typename = "foobar",
+
     -- override foo
     m_normal = 100.0,
     m_array = { "five" },

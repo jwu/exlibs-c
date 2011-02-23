@@ -125,7 +125,7 @@ strid_t ex_strid_from_wcs ( const wchar_t *_wcs ) {
 const char *ex_strid_to_cstr ( strid_t _id ) {
     char *addr;
 
-    if ( _id == EX_STRID_NULL ) return NULL;
+    if ( _id == EX_STRID_NULL ) return "";
     addr = (char *)__string_set.keys + _id * __string_set.key_bytes;
     return *((char **)addr);
 }

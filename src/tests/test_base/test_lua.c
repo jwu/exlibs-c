@@ -75,8 +75,6 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 static void wrap () {
-    int i = 0;
-
     struct lua_State *l = ex_lua_default_state();
 
     ex_lua_dofile( l, "lua/test_rapid.lua" );

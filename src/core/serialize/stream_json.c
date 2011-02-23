@@ -1286,17 +1286,12 @@ static void __write_strid ( ex_stream_t *_stream, strid_t *_val ) {
     stream = (ex_stream_json_t *)_stream; 
     node = stream->current;
 
-    if ( *_val != EX_STRID_NULL  ) {
-        str = ex_strid_to_cstr(*_val);
-        len = strlen(str);
+    str = ex_strid_to_cstr(*_val);
+    len = strlen(str);
 
-        node->val = ex_malloc ( len+1 ); 
-        strncpy( (char *)node->val, str, len );
-        ((char *)node->val)[len] = '\0';
-    }
-    else {
-        node->val = NULL;
-    }
+    node->val = ex_malloc ( len+1 ); 
+    strncpy( (char *)node->val, str, len );
+    ((char *)node->val)[len] = '\0';
 }
 
 // ------------------------------------------------------------------ 

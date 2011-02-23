@@ -126,6 +126,7 @@ static const char *__typename = "ex.vec2f";
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// TODO: in lua, luaL_checkstring will report error in lua directly, we should learn to write code like that.
 // ------------------------------------------------------------------ 
 
 vec2f_proxy_t *ex_lua_checkvec2f ( lua_State *_l, int _idx ) {
@@ -171,16 +172,16 @@ vec2f_proxy_t *ex_lua_pushvec2f ( lua_State *_l, bool _readonly ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_type_meta_newindex ( lua_State *_l ) {
-    return ex_lua_builtin_newindex( _l, &__key_to_type_meta_getset );
+    return ex_lua_userdata_newindex( _l, &__key_to_type_meta_getset );
 }
 static int __vec2f_type_meta_index ( lua_State *_l ) {
-    return ex_lua_builtin_index( _l, &__key_to_type_meta_getset );
+    return ex_lua_userdata_index( _l, &__key_to_type_meta_getset );
 }
 static int __vec2f_meta_newindex ( lua_State *_l ) {
-    return ex_lua_builtin_newindex( _l, &__key_to_meta_getset );
+    return ex_lua_userdata_newindex( _l, &__key_to_meta_getset );
 }
 static int __vec2f_meta_index ( lua_State *_l ) {
-    return ex_lua_builtin_index( _l, &__key_to_meta_getset );
+    return ex_lua_userdata_index( _l, &__key_to_meta_getset );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

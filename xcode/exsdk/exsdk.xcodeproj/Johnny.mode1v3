@@ -317,7 +317,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>object.c</string>
+								<string>exsdk.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -325,11 +325,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>object.c</string>
+										<string>exsdk.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B24BED35131279260042B8DF</string>
+										<string>B24BEE8213151C490042B8DF</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -446,7 +446,6 @@
 											<string>B2F4097E13040D8A00FCF2B5</string>
 											<string>B2F4097F13040D8A00FCF2B5</string>
 											<string>B243BFAD130CB64B0056158F</string>
-											<string>B243BFAE130CB64B0056158F</string>
 											<string>B243BFE4130CD2770056158F</string>
 											<string>B24BED0413126B070042B8DF</string>
 											<string>B24BED0613126B070042B8DF</string>
@@ -455,8 +454,9 @@
 											<string>B24BED1213126B300042B8DF</string>
 											<string>B24BED1D131276D20042B8DF</string>
 											<string>B24BED1E131276D20042B8DF</string>
-											<string>B24BED1F131276D20042B8DF</string>
-											<string>B24BED20131276D20042B8DF</string>
+											<string>B24BEDBC13135C8F0042B8DF</string>
+											<string>B24BEDF71314BD970042B8DF</string>
+											<string>B24BEDF81314BD970042B8DF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -678,6 +678,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -700,8 +702,6 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1012,7 +1012,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {857, 516}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1368 -64 857 557 1280 -400 1920 1200 </string>
+								<string>1357 -229 857 557 1280 -400 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -1041,7 +1041,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>1368 -64 857 557 1280 -400 1920 1200 </string>
+			<string>1357 -229 857 557 1280 -400 1920 1200 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>

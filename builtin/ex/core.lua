@@ -56,7 +56,16 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-typeof = getmetatable
+function typeof (_object)
+    local obj = _object
+    while obj.__isinstance == false do 
+        obj = getmetatable(obj)
+    end
+    if obj.__isinstance then
+        return getmetatable(obj)
+    end
+    return nil
+end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
@@ -64,8 +73,9 @@ typeof = getmetatable
 
 meta_class = {
     __call = function ( _self, ... )
-        local table = ...
-        return setmetatable( table or {}, _self )
+        local table = ... or {}
+        table.__isinstance = true
+        return setmetatable( table, _self )
     end
 }
 
@@ -308,6 +318,7 @@ end
 function class(...)
     local base,super = ...
     assert( type(base) == "table", "the first parameter must be a table" )
+    assert( base.__typename ~= nil, "please define __typename for your class" )
 
     if super == nil then
         rawset(base, "__super", nil)
@@ -327,5 +338,156 @@ function class(...)
     base.derive = function (_t)
         return class( _t, base )
     end
-    return setmetatable(base,meta_class)
+
+    -- check if we derived from builtin class
+    local derived_from_builtin = false
+    local builtin_class = nil
+    while super ~= nil do 
+        derived_from_builtin = rawget(super, "__isbuiltin")
+        if derived_from_builtin then 
+            builtin_class = super
+            break 
+        end
+        super = rawget(super, "__super")
+    end
+
+    -- 
+    if derived_from_builtin then
+        local table = {
+            __call = builtin_class.__call2
+        }
+        return setmetatable(base,table)
+    else
+        return setmetatable(base,meta_class)
+    end
 end
+
+-- foo = {
+--    [metatable] = {
+--       [__call] = "function: 0x10021f6c0, defined in (66-69)builtin/ex/core.lua";
+--    };
+--    [isa] = "function: 0x100223200, defined in (162-165)builtin/ex/core.lua";
+--    [__typename] = "foo";
+--    [__super] = {
+--       [metatable] = {
+--          [__newindex] = "function: 0x10100f6d0, C function";
+--          [__index] = "function: 0x10100f730, C function";
+--          [__call] = "function: 0x10100f700, C function";
+--       };
+--       [destroy] = "function: 0x10100f400, C function";
+--       [__typename] = "ex.object";
+--       [__eq] = "function: 0x10100f520, C function";
+--       [childof] = "function: 0x10100f630, C function";
+--       [derive] = "function: 0x10100fa80, C function";
+--       [__gc] = "function: 0x10100f370, C function";
+--       [isa] = "function: 0x10100fa30, C function";
+--       [superof] = "function: 0x10100f5e0, C function";
+--       [instanceof] = "function: 0x10100f580, C function";
+--       [__isclass] = "true";
+--       [__newindex] = "function: 0x10100f3d0, C function";
+--       [__tostring] = "function: 0x10100f4f0, C function";
+--       [__index] = "function: 0x10100f3a0, C function";
+--       [__isbuiltin] = "true";
+--    };
+--    [childof] = "function: 0x100223170, defined in (148-150)builtin/ex/core.lua";
+--    [text] = "hello world";
+--    [instanceof] = "function: 0x100223110, defined in (127-129)builtin/ex/core.lua";
+--    [derive] = "function: 0x10021fa90, defined in (328-330)builtin/ex/core.lua";
+--    [__index] = "function: 0x100223310, defined in (247-302)builtin/ex/core.lua";
+--    [__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
+--    [__isclass] = "true";
+--    [superof] = "function: 0x1002231d0, defined in (154-156)builtin/ex/core.lua";
+-- };
+
+-- foo_obj = {
+--    [metatable] = {
+--       [metatable] = {
+--          [__call] = "function: 0x10021f6c0, defined in (66-69)builtin/ex/core.lua";
+--       };
+--       [isa] = "function: 0x100223200, defined in (162-165)builtin/ex/core.lua";
+--       [__typename] = "foo";
+--       [__super] = {
+--          [metatable] = {
+--             [__newindex] = "function: 0x10100f6d0, C function";
+--             [__index] = "function: 0x10100f730, C function";
+--             [__call] = "function: 0x10100f700, C function";
+--          };
+--          [destroy] = "function: 0x10100f400, C function";
+--          [__typename] = "ex.object";
+--          [__eq] = "function: 0x10100f520, C function";
+--          [childof] = "function: 0x10100f630, C function";
+--          [derive] = "function: 0x10100fa80, C function";
+--          [__gc] = "function: 0x10100f370, C function";
+--          [isa] = "function: 0x10100fa30, C function";
+--          [superof] = "function: 0x10100f5e0, C function";
+--          [instanceof] = "function: 0x10100f580, C function";
+--          [__isclass] = "true";
+--          [__newindex] = "function: 0x10100f3d0, C function";
+--          [__tostring] = "function: 0x10100f4f0, C function";
+--          [__index] = "function: 0x10100f3a0, C function";
+--          [__isbuiltin] = "true";
+--       };
+--       [childof] = "function: 0x100223170, defined in (148-150)builtin/ex/core.lua";
+--       [text] = "hello world";
+--       [instanceof] = "function: 0x100223110, defined in (127-129)builtin/ex/core.lua";
+--       [derive] = "function: 0x10021fa90, defined in (328-330)builtin/ex/core.lua";
+--       [__index] = "function: 0x100223310, defined in (247-302)builtin/ex/core.lua";
+--       [__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
+--       [__isclass] = "true";
+--       [superof] = "function: 0x1002231d0, defined in (154-156)builtin/ex/core.lua";
+--    };
+--    [text] = "hello foo";
+-- };
+
+-- foo_obj = userdata = {
+--     [metatable] = {
+--         [metatable] = {
+--             [metatable] = {
+--                 [__call] = "function: 0x10021f6c0, defined in (66-69)builtin/ex/core.lua";
+--             };
+--             [isa] = "function: 0x100223200, defined in (162-165)builtin/ex/core.lua";
+--             [__typename] = "foo";
+--             [__super] = {
+--                 [metatable] = {
+--                     [__newindex] = "function: 0x10100f6d0, C function";
+--                     [__index] = "function: 0x10100f730, C function";
+--                     [__call] = "function: 0x10100f700, C function";
+--                 };
+--                 [destroy] = "function: 0x10100f400, C function";
+--                 [__typename] = "ex.object";
+--                 [__eq] = "function: 0x10100f520, C function";
+--                 [childof] = "function: 0x10100f630, C function";
+--                 [derive] = "function: 0x10100fa80, C function";
+--                 [__gc] = "function: 0x10100f370, C function";
+--                 [isa] = "function: 0x10100fa30, C function";
+--                 [superof] = "function: 0x10100f5e0, C function";
+--                 [instanceof] = "function: 0x10100f580, C function";
+--                 [__isclass] = "true";
+--                 [__newindex] = "function: 0x10100f3d0, C function";
+--                 [__tostring] = "function: 0x10100f4f0, C function";
+--                 [__index] = "function: 0x10100f3a0, C function";
+--                 [__isbuiltin] = "true";
+--             };
+--             [childof] = "function: 0x100223170, defined in (148-150)builtin/ex/core.lua";
+--             [text] = "hello world";
+--             [instanceof] = "function: 0x100223110, defined in (127-129)builtin/ex/core.lua";
+--             [derive] = "function: 0x10021fa90, defined in (328-330)builtin/ex/core.lua";
+--             [__index] = "function: 0x100223310, defined in (247-302)builtin/ex/core.lua";
+--             [__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
+--             [__isclass] = "true";
+--             [superof] = "function: 0x1002231d0, defined in (154-156)builtin/ex/core.lua";
+--         };
+--         [__isinstance] = true
+--         [text] = "hello foo";
+--         *[__index] = -- search object member data, getraw in this table, get in super
+--         *[__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
+--         [__gc] = copy from derived builtin
+--         [__tostring] = ....
+--     };
+-- };
+
+-- foo_obj.x
+-- if foo_obj.x not found then -- this through foo_obj.metatable.__index
+--     foo_obj.metatable.x -- this use our old class method
+-- end
+
