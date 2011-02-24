@@ -94,7 +94,6 @@ extern int ex_lua_dostring ( struct lua_State *_l, const char *_fmt, ... );
 // lua module functions in c
 ///////////////////////////////////////////////////////////////////////////////
 
-
 extern bool ex_lua_isclass ( struct lua_State *_l, int _idx );
 extern bool ex_lua_isbuiltin ( struct lua_State *_l, int _idx );
 extern int ex_lua_typename ( struct lua_State *_l, int _idx );

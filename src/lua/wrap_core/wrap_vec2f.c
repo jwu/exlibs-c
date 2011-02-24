@@ -126,19 +126,38 @@ static const char *__typename = "ex.vec2f";
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// TODO: in lua, luaL_checkstring will report error in lua directly, we should learn to write code like that.
 // ------------------------------------------------------------------ 
 
-vec2f_proxy_t *ex_lua_checkvec2f ( lua_State *_l, int _idx ) {
+bool ex_lua_isvec2f ( lua_State *_l, int _idx ) {
     vec2f_proxy_t *u;
 
     if ( lua_isuserdata(_l, _idx) == 0 )
-        return NULL;
+        return false;
+
     u = (vec2f_proxy_t *)lua_touserdata(_l,_idx);
     if ( u->typeid != EX_TYPEID(vec2f) )
-        return NULL;
+        return false;
 
-    return u;
+    return true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_vec2f_t *ex_lua_tovec2f ( lua_State *_l, int _idx ) {
+    vec2f_proxy_t *u = (vec2f_proxy_t *)lua_touserdata(_l,_idx);
+    return &(u->val);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_vec2f_t *ex_lua_checkvec2f ( lua_State *_l, int _idx ) {
+    if ( ex_lua_isvec2f(_l,_idx) == false )
+        luaL_error( _l, "invalid parameter type, expected %s", __typename );
+    return ex_lua_tovec2f(_l,_idx);
 }
 
 // ------------------------------------------------------------------ 
@@ -255,16 +274,10 @@ static int __vec2f_get_right ( lua_State *_l ) {
 
 static int __vec2f_tostring ( lua_State *_l ) {
     ex_string_t *str = ex_string_alloc("",256);
-    vec2f_proxy_t *u;
+    ex_vec2f_t *v;
 
-    u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
-
-    EX_RTTI(vec2f)->tostring(str, &u->val);
+    v = ex_lua_checkvec2f(_l,1);
+    EX_RTTI(vec2f)->tostring(str, v);
     lua_pushstring(_l, str->text);
     ex_string_free(str);
     return 1;
@@ -276,24 +289,15 @@ static int __vec2f_tostring ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_add ( lua_State *_l ) {
-    vec2f_proxy_t *r,*lhs,*rhs;
+    vec2f_proxy_t *r;
+    ex_vec2f_t *lhs,*rhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
-    if ( lhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
     rhs = ex_lua_checkvec2f(_l,2);
-    if ( rhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
     r = ex_lua_pushvec2f(_l,false);
-    ex_vec2f_add( &r->val, &lhs->val, &rhs->val );
+    ex_vec2f_add( &r->val, lhs, rhs );
 
     return 1;
 }
@@ -303,24 +307,15 @@ static int __vec2f_add ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_sub ( lua_State *_l ) {
-    vec2f_proxy_t *r,*lhs,*rhs;
+    vec2f_proxy_t *r;
+    ex_vec2f_t *lhs,*rhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
-    if ( lhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
     rhs = ex_lua_checkvec2f(_l,2);
-    if ( rhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
     r = ex_lua_pushvec2f(_l,false);
-    ex_vec2f_sub( &r->val, &lhs->val, &rhs->val );
+    ex_vec2f_sub( &r->val, lhs, rhs );
 
     return 1;
 }
@@ -330,47 +325,38 @@ static int __vec2f_sub ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_mul ( lua_State *_l ) {
-    vec2f_proxy_t *r,*lhs,*rhs;
+    vec2f_proxy_t *r;
+    ex_vec2f_t *lhs = NULL;
+    ex_vec2f_t *rhs = NULL;
 
-    lhs = ex_lua_checkvec2f(_l,1);
-    rhs = ex_lua_checkvec2f(_l,2);
+    //
+    if ( ex_lua_isvec2f(_l,1) )
+        lhs = ex_lua_tovec2f(_l,1);
+    if ( ex_lua_isvec2f(_l,2) )
+        rhs = ex_lua_tovec2f(_l,2);
 
     if ( lhs != NULL && rhs != NULL ) {
         r = ex_lua_pushvec2f(_l,false);
-        ex_vec2f_mul( &r->val, &lhs->val, &rhs->val );
+        ex_vec2f_mul( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( lhs != NULL ) {
-        if ( lua_isnumber(_l,2) ) {
-            float rhs = (float)lua_tonumber(_l,2);
-            r = ex_lua_pushvec2f(_l,false);
-            ex_vec2f_mul_scalar( &r->val, &lhs->val, rhs );
-            return 1;
-        }
-        else {
-            ex_error("invalid parameter type, rhs must be %s or number", __typename);
-            lua_pushnil(_l);
-            return 1;
-        }
+        float rhs = (float)luaL_checknumber(_l,2);
+        r = ex_lua_pushvec2f(_l,false);
+        ex_vec2f_mul_scalar( &r->val, lhs, rhs );
+        return 1;
     }
 
     if ( rhs != NULL ) {
-        if ( lua_isnumber(_l,1) ) {
-            float lhs = (float)lua_tonumber(_l,1);
-            r = ex_lua_pushvec2f(_l,false);
-            ex_vec2f_mul_scalar( &r->val, &rhs->val, lhs );
-            return 1;
-        }
-        else {
-            ex_error("invalid parameter type, lhs must be %s or number", __typename);
-            lua_pushnil(_l);
-            return 1;
-        }
+        float lhs = (float)luaL_checknumber(_l,1);
+        r = ex_lua_pushvec2f(_l,false);
+        ex_vec2f_mul_scalar( &r->val, rhs, lhs );
+        return 1;
     }
 
     // push
-    ex_error("invalid parameter type, lhs and rhs must be %s or number", __typename);
+    luaL_error("invalid parameter type, lhs and rhs must be %s or number", __typename);
     lua_pushnil(_l);
     return 1;
 }
@@ -380,47 +366,37 @@ static int __vec2f_mul ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_div ( lua_State *_l ) {
-    vec2f_proxy_t *r,*lhs,*rhs;
+    vec2f_proxy_t *r;
+    ex_vec2f_t *lhs = NULL;
+    ex_vec2f_t *rhs = NULL;
 
-    lhs = ex_lua_checkvec2f(_l,1);
-    rhs = ex_lua_checkvec2f(_l,2);
+    if ( ex_lua_isvec2f(_l,1) )
+        lhs = ex_lua_tovec2f(_l,1);
+    if ( ex_lua_isvec2f(_l,2) )
+        rhs = ex_lua_tovec2f(_l,2);
 
     if ( lhs != NULL && rhs != NULL ) {
         r = ex_lua_pushvec2f(_l,false);
-        ex_vec2f_div( &r->val, &lhs->val, &rhs->val );
+        ex_vec2f_div( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( lhs != NULL ) {
-        if ( lua_isnumber(_l,2) ) {
-            float rhs = (float)lua_tonumber(_l,2);
-            r = ex_lua_pushvec2f(_l,false);
-            ex_vec2f_div_scalar( &r->val, &lhs->val, rhs );
-            return 1;
-        }
-        else {
-            ex_error("invalid parameter type, rhs must be %s or number", __typename);
-            lua_pushnil(_l);
-            return 1;
-        }
+        float rhs = (float)luaL_checknumber(_l,2);
+        r = ex_lua_pushvec2f(_l,false);
+        ex_vec2f_div_scalar( &r->val, lhs, rhs );
+        return 1;
     }
 
     if ( rhs != NULL ) {
-        if ( lua_isnumber(_l,1) ) {
-            float lhs = (float)lua_tonumber(_l,1);
-            r = ex_lua_pushvec2f(_l,false);
-            ex_scalar_div_vec2f( &r->val, lhs, &rhs->val );
-            return 1;
-        }
-        else {
-            ex_error("invalid parameter type, lhs must be %s or number", __typename);
-            lua_pushnil(_l);
-            return 1;
-        }
+        float lhs = (float)luaL_checknumber(_l,1);
+        r = ex_lua_pushvec2f(_l,false);
+        ex_scalar_div_vec2f( &r->val, lhs, rhs );
+        return 1;
     }
 
     // push
-    ex_error("invalid parameter type, lhs and rhs must be %s or number", __typename);
+    luaL_error("invalid parameter type, lhs and rhs must be %s or number", __typename);
     lua_pushnil(_l);
     return 1;
 }
@@ -430,18 +406,14 @@ static int __vec2f_div ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_unm ( lua_State *_l ) {
-    vec2f_proxy_t *r,*lhs;
+    vec2f_proxy_t *r;
+    ex_vec2f_t *lhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
-    if ( lhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
     r = ex_lua_pushvec2f(_l,false);
-    ex_vec2f_get_neg( &r->val, &lhs->val );
+    ex_vec2f_get_neg( &r->val, lhs );
 
     return 1;
 }
@@ -452,21 +424,15 @@ static int __vec2f_unm ( lua_State *_l ) {
 
 static int __vec2f_concat ( lua_State *_l ) {
     const char *lhs;
-    vec2f_proxy_t *rhs;
+    ex_vec2f_t *rhs;
     ex_string_t *str;
 
     lhs = luaL_checkstring(_l, 1);
     str = ex_string_alloc(lhs,256);
     rhs = ex_lua_checkvec2f(_l,2);
-    if ( rhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        ex_string_cat( str, "nil" );
-        lua_pushstring( _l, str->text );
-        return 1;
-    }
 
     // push
-    EX_RTTI(vec2f)->tostring(str, &rhs->val);
+    EX_RTTI(vec2f)->tostring(str, rhs);
     lua_pushstring(_l, str->text);
     ex_string_free(str);
     return 1;
@@ -486,23 +452,13 @@ static int __vec2f_len ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_eq ( lua_State *_l ) {
-    vec2f_proxy_t *lhs, *rhs;
+    ex_vec2f_t *lhs, *rhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
-    if ( lhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
     rhs = ex_lua_checkvec2f(_l,2);
-    if ( rhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
-    lua_pushboolean(_l, ex_vec2f_is_equal( &lhs->val, &rhs->val ) );
+    lua_pushboolean(_l, ex_vec2f_is_equal( lhs, rhs ) );
     return 1;
 }
 
@@ -516,13 +472,8 @@ static int __vec2f_eq ( lua_State *_l ) {
 
 static int __vec2f_get_x ( lua_State *_l ) {
     // check the value
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
-    lua_pushnumber(_l, u->val.x);
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
+    lua_pushnumber(_l, v->x);
     return 1;
 }
 
@@ -532,16 +483,14 @@ static int __vec2f_get_x ( lua_State *_l ) {
 
 static int __vec2f_set_x ( lua_State *_l ) {
     // get and check the type
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
+    ex_vec2f_t *v;
+    if ( ex_lua_is_readonly(_l,1) ) {
+        luaL_error( _l, "the value is readonly" );
         return 0;
     }
-    if ( u->readonly ) {
-        ex_error("the value is readonly");
-        return 0;
-    }
-    u->val.x = luaL_checknumber(_l, 3);
+    
+    v = ex_lua_checkvec2f(_l,1);
+    v->x = luaL_checknumber(_l, 3);
     return 0;
 }
 
@@ -551,13 +500,8 @@ static int __vec2f_set_x ( lua_State *_l ) {
 
 static int __vec2f_get_y ( lua_State *_l ) {
     // check the value
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
-    lua_pushnumber(_l, u->val.y);
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
+    lua_pushnumber(_l, v->y);
     return 1;
 }
 
@@ -567,16 +511,14 @@ static int __vec2f_get_y ( lua_State *_l ) {
 
 static int __vec2f_set_y ( lua_State *_l ) {
     // get and check the type
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
+    ex_vec2f_t *v;
+    if ( ex_lua_is_readonly(_l,1) ) {
+        luaL_error( _l, "the value is readonly" );
         return 0;
     }
-    if ( u->readonly ) {
-        ex_error("the value is readonly");
-        return 0;
-    }
-    u->val.y = luaL_checknumber(_l, 3);
+    
+    v = ex_lua_checkvec2f(_l,1);
+    v->y = luaL_checknumber(_l, 3);
     return 0;
 }
 
@@ -587,15 +529,10 @@ static int __vec2f_set_y ( lua_State *_l ) {
 static int __vec2f_get_normalized ( lua_State *_l ) {
     // check the value
     vec2f_proxy_t *r;
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
 
     r = ex_lua_pushvec2f(_l, false);
-    ex_vec2f_get_normalize( &r->val, &u->val );
+    ex_vec2f_get_normalize( &r->val, v );
     return 1;
 }
 
@@ -606,14 +543,9 @@ static int __vec2f_get_normalized ( lua_State *_l ) {
 static int __vec2f_get_length ( lua_State *_l ) {
     // check the value
     float r;
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
 
-    r = ex_vec2f_len( &u->val );
+    r = ex_vec2f_len( v );
     lua_pushnumber(_l,r);
     return 1;
 }
@@ -625,14 +557,9 @@ static int __vec2f_get_length ( lua_State *_l ) {
 static int __vec2f_get_lengthSQR ( lua_State *_l ) {
     // check the value
     float r;
-    vec2f_proxy_t *u = ex_lua_checkvec2f(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
 
-    r = ex_vec2f_lenSQR( &u->val );
+    r = ex_vec2f_lenSQR( v );
     lua_pushnumber(_l,r);
     return 1;
 }
@@ -643,23 +570,13 @@ static int __vec2f_get_lengthSQR ( lua_State *_l ) {
 
 static int __vec2f_dot ( lua_State *_l ) {
     float r;
-    vec2f_proxy_t *lhs,*rhs;
+    ex_vec2f_t *lhs,*rhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
-    if ( lhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
     rhs = ex_lua_checkvec2f(_l,2);
-    if ( rhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
-    r = ex_vec2f_dot( &lhs->val, &rhs->val );
+    r = ex_vec2f_dot( lhs, rhs );
     lua_pushnumber(_l,r);
 
     return 1;
@@ -671,23 +588,13 @@ static int __vec2f_dot ( lua_State *_l ) {
 
 static int __vec2f_cross ( lua_State *_l ) {
     float r;
-    vec2f_proxy_t *lhs,*rhs;
+    ex_vec2f_t *lhs,*rhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
-    if ( lhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
     rhs = ex_lua_checkvec2f(_l,2);
-    if ( rhs == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
-    r = ex_vec2f_cross( &lhs->val, &rhs->val );
+    r = ex_vec2f_cross( lhs, rhs );
     lua_pushnumber(_l,r);
 
     return 1;
@@ -698,18 +605,14 @@ static int __vec2f_cross ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_copy ( lua_State *_l ) {
-    vec2f_proxy_t *u,*v;
+    vec2f_proxy_t *u;
+    ex_vec2f_t *v;
 
     v = ex_lua_checkvec2f(_l,1);
-    if ( v == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
 
     // push
     u = ex_lua_pushvec2f(_l,false);
-    ex_vec2f_set( &u->val, v->val.x, v->val.y );
+    ex_vec2f_set( &u->val, v->x, v->y );
     return 1;
 }
 
@@ -717,55 +620,56 @@ static int __vec2f_copy ( lua_State *_l ) {
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
+// ex.vec2f.meta
+static const ex_getset_t __type_meta_getsets[] = {
+    { "one", __vec2f_get_one, NULL },
+    { "zero", __vec2f_get_zero, NULL },
+    { "up", __vec2f_get_up, NULL },
+    { "right", __vec2f_get_right, NULL },
+    { NULL, NULL, NULL },
+};
+static const luaL_Reg __type_meta_funcs[] = {
+    { "__newindex", __vec2f_type_meta_newindex },
+    { "__index", __vec2f_type_meta_index },
+    { "__call", __vec2f_new },
+    { NULL, NULL },
+};
+
+// ex.vec2f
+static const ex_getset_t __meta_getsets[] = {
+    { "x", __vec2f_get_x, __vec2f_set_x },
+    { "y", __vec2f_get_y, __vec2f_set_y },
+    { "1", __vec2f_get_x, __vec2f_set_x },
+    { "2", __vec2f_get_y, __vec2f_set_y },
+    { "normalized", __vec2f_get_normalized, NULL },
+    { "length", __vec2f_get_length, NULL },
+    { "sqr_length", __vec2f_get_lengthSQR, NULL },
+    { NULL, NULL, NULL },
+};
+static const luaL_Reg __meta_funcs[] = {
+    { "__newindex", __vec2f_meta_newindex },
+    { "__index", __vec2f_meta_index },
+    { "__tostring", __vec2f_tostring },
+    { "__add", __vec2f_add },
+    { "__sub", __vec2f_sub },
+    { "__mul", __vec2f_mul },
+    { "__div", __vec2f_div },
+    { "__unm", __vec2f_unm },
+    { "__concat", __vec2f_concat },
+    { "__len", __vec2f_len },
+    { "__eq", __vec2f_eq },
+    { "dot", __vec2f_dot },
+    { "cross", __vec2f_cross },
+    { "copy", __vec2f_copy },
+    { NULL, NULL },
+};
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 int luaopen_vec2f ( lua_State *_l ) {
 
-    // ex.vec2f.meta
-    static const ex_getset_t __type_meta_getsets[] = {
-        { "one", __vec2f_get_one, NULL },
-        { "zero", __vec2f_get_zero, NULL },
-        { "up", __vec2f_get_up, NULL },
-        { "right", __vec2f_get_right, NULL },
-        { NULL, NULL, NULL },
-    };
-    static const luaL_Reg __type_meta_funcs[] = {
-        { "__newindex", __vec2f_type_meta_newindex },
-        { "__index", __vec2f_type_meta_index },
-        { "__call", __vec2f_new },
-        { NULL, NULL },
-    };
-
-    // ex.vec2f
-    static const ex_getset_t __meta_getsets[] = {
-        { "x", __vec2f_get_x, __vec2f_set_x },
-        { "y", __vec2f_get_y, __vec2f_set_y },
-        { "1", __vec2f_get_x, __vec2f_set_x },
-        { "2", __vec2f_get_y, __vec2f_set_y },
-        { "normalized", __vec2f_get_normalized, NULL },
-        { "length", __vec2f_get_length, NULL },
-        { "sqr_length", __vec2f_get_lengthSQR, NULL },
-        { NULL, NULL, NULL },
-    };
-    static const luaL_Reg __meta_funcs[] = {
-        { "__newindex", __vec2f_meta_newindex },
-        { "__index", __vec2f_meta_index },
-        { "__tostring", __vec2f_tostring },
-        { "__add", __vec2f_add },
-        { "__sub", __vec2f_sub },
-        { "__mul", __vec2f_mul },
-        { "__div", __vec2f_div },
-        { "__unm", __vec2f_unm },
-        { "__concat", __vec2f_concat },
-        { "__len", __vec2f_len },
-        { "__eq", __vec2f_eq },
-        { "dot", __vec2f_dot },
-        { "cross", __vec2f_cross },
-        { "copy", __vec2f_copy },
-        { NULL, NULL },
-    };
     const ex_getset_t *getset;
 
     // init the type meta hashtable
@@ -780,7 +684,7 @@ int luaopen_vec2f ( lua_State *_l ) {
                     );
     for ( getset = __type_meta_getsets; getset->key != NULL; ++getset ) {
         strid_t keyid = ex_strid(getset->key);
-        ex_hashmap_insert( &__key_to_type_meta_getset, &keyid, getset, NULL );
+        ex_hashmap_set( &__key_to_type_meta_getset, &keyid, getset );
     }
 
     // init the meta hashtable
@@ -795,7 +699,7 @@ int luaopen_vec2f ( lua_State *_l ) {
                     );
     for ( getset = __meta_getsets; getset->key != NULL; ++getset ) {
         strid_t keyid = ex_strid(getset->key);
-        ex_hashmap_insert( &__key_to_meta_getset, &keyid, getset, NULL );
+        ex_hashmap_set( &__key_to_meta_getset, &keyid, getset );
     }
 
     // we create global ex table if it not exists.

@@ -275,6 +275,32 @@ bool ex_hashmap_insert ( ex_hashmap_t *_hashmap, const void *_key, const void *_
 // Desc: 
 // ------------------------------------------------------------------ 
 
+bool ex_hashmap_set ( ex_hashmap_t *_hashmap, const void *_key, const void *_val )
+{
+    size_t hash_next;
+    uint32 hash_idx = __hash_index ( _hashmap, _key ); 
+
+    // check if the key exists. if yes, don't do any thing.
+    for ( hash_next = _hashmap->indices[hash_idx]; hash_next != -1; hash_next = __getnode(_hashmap,hash_next)->next )
+    {
+        // compare the key
+        if ( _hashmap->keycmp(_key, __getkey( _hashmap, hash_next ) ) == 0 ) {
+            size_t idx = hash_next;
+            void *value = __getvalue ( _hashmap, idx );
+            memcpy ( (char *)_hashmap->values + idx * _hashmap->value_bytes,  value, _hashmap->value_bytes );
+            return false;
+        }
+    }
+
+    ex_hashmap_insert_new( _hashmap, _key, _val, hash_idx, NULL );
+    return true;
+}
+
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void ex_hashmap_cpy ( ex_hashmap_t *_to, const ex_hashmap_t *_from ) {
     ex_assert_return ( _to->key_typeid == _from->key_typeid &&
                        _to->key_bytes == _from->key_bytes,

@@ -23,8 +23,8 @@ extern "C" {
 typedef struct ref_proxy_t { 
     strid_t typeid;
     bool readonly; 
-    // bool gc_owner; // TODO: do we really need this ??? 
     ex_ref_t *ref; 
+    // bool gc_owner; // TODO: do we really need this ??? 
 } ref_proxy_t; 
 
 // ------------------------------------------------------------------ 
@@ -39,8 +39,10 @@ typedef struct ref_proxy_t {
         bool readonly; \
         _type val; \
     } _typename##_proxy_t; \
-    extern _typename##_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
-    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
+    extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
+    extern _type *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
+    extern _type *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
 
 // EX_DECL_LUA_BUILTIN_CLASS, EX_DECL_LUA_BUILTIN_CLASS_2
 #define EX_DECL_LUA_BUILTIN_CLASS(_type) EX_DECL_LUA_BUILTIN_TYPE_2(_type,_type)
@@ -50,14 +52,18 @@ typedef struct ref_proxy_t {
         bool readonly; \
         _type *val; \
     } _typename##_proxy_t; \
-    extern _typename##_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
-    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
+    extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
+    extern _type *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
+    extern _type *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
 
 // EX_DECL_LUA_BUILTIN_REF, EX_DECL_LUA_BUILTIN_CLASS_2
 #define EX_DECL_LUA_BUILTIN_REF(_type) EX_DECL_LUA_BUILTIN_CLASS_2(_type,_type)
 #define EX_DECL_LUA_BUILTIN_REF_2(_typename,_type) \
-    extern ref_proxy_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx ); \
-    extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly );
+    extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
+    extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
+    extern _type *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
+    extern _type *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
 
 // defines
 EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
@@ -84,6 +90,16 @@ typedef struct ex_getset_t {
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
+
+extern bool ex_lua_is_readonly ( struct lua_State *_l, int _idx );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern ref_proxy_t *ex_lua_pushref ( struct lua_State *_l, int _meta_idx, bool _readonly );
+extern ex_ref_t *ex_lua_checkref ( struct lua_State *_l, int _idx );
+extern bool ex_lua_isref ( lua_State *_l, int _idx );
 
 extern int ex_lua_ref_gc ( struct lua_State *_l );
 extern int ex_lua_ref_tostring ( struct lua_State *_l );

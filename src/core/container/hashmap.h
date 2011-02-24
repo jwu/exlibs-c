@@ -272,12 +272,12 @@ extern void *ex_hashmap_get_by_idx ( const ex_hashmap_t *_hashmap, size_t _index
 
 // ------------------------------------------------------------------ 
 // Desc: 
-//  @return: -1: already exists
+//  @return: false: already exists
 // ------------------------------------------------------------------ 
 
 extern bool ex_hashmap_insert ( ex_hashmap_t *_hashmap, const void *_key, const void *_val, size_t *_index );
-
-// TODO: void ex_hashmap_set ( ex_hashmap_t *_hashmap, const void *_key, const void *_val );
+// set will still set the already exists value, insert new one
+extern bool ex_hashmap_set ( ex_hashmap_t *_hashmap, const void *_key, const void *_val );
 
 // ------------------------------------------------------------------ 
 // Desc: 

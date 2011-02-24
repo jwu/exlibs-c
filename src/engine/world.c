@@ -20,6 +20,12 @@
 // } TEMP end 
 
 ///////////////////////////////////////////////////////////////////////////////
+// static defines
+///////////////////////////////////////////////////////////////////////////////
+
+static ex_ref_t *__cur_world = NULL;
+
+///////////////////////////////////////////////////////////////////////////////
 // class define
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +40,11 @@ void __world_init ( ex_ref_t *_self ) {
         EX_REF_CAST(ex_entity_t,ref)->world = _self;
         EX_REF_CAST(ex_object_t,ref)->init(ref);
     } ex_array_each_end;
+
+    // if this is the first world
+    if ( __cur_world == NULL ) {
+        __cur_world = _self;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -57,6 +68,11 @@ void __world_deinit ( ex_ref_t *_self ) {
         ex_decref(ref);
     } ex_array_each_end;
     ex_array_free ( self->entities );
+
+    //
+    if ( __cur_world == _self ) {
+        __cur_world = NULL;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -109,33 +125,13 @@ static void __debug_draw ( ex_world_t *_world ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_save ( ex_ref_t *_self, ex_stream_t *_stream ) {
-    ex_uid_t uid; 
-
-    ex_serialize_objects(_stream);
-    uid = ex_object_uid(_self);
-    EX_SERIALIZE( _stream, uid, "uid", &uid );
-}
+ex_ref_t *ex_current_world () { return __cur_world; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_ref_t *ex_world_load ( ex_stream_t *_stream ) {
-    ex_uid_t uid;
-
-    ex_serialize_objects(_stream);
-    EX_SERIALIZE( _stream, uid, "uid", &uid );
-    return ex_getref(uid);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_world_reset ( ex_ref_t *_self, ex_stream_t *_stream ) {
-    // TODO:
-}
+void ex_set_current_world ( ex_ref_t *_world ) { __cur_world = _world; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -344,6 +340,30 @@ void ex_world_render ( ex_ref_t *_self ) {
         // TODO: __render_scene(_world);
         __debug_draw(world); // TEMP
     } ex_array_each_end;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_save ( ex_ref_t *_self, ex_stream_t *_stream ) {
+    ex_uid_t uid; 
+
+    ex_serialize_objects(_stream);
+    uid = ex_object_uid(_self);
+    EX_SERIALIZE( _stream, uid, "uid", &uid );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_world_load ( ex_stream_t *_stream ) {
+    ex_uid_t uid;
+
+    ex_serialize_objects(_stream);
+    EX_SERIALIZE( _stream, uid, "uid", &uid );
+    return ex_getref(uid);
 }
 
 // ------------------------------------------------------------------ 

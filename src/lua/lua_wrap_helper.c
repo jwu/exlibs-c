@@ -23,6 +23,61 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
+typedef struct __generic_proxy_t { 
+    strid_t typeid;
+    bool readonly; 
+    // NOTE: no mater what is below, the first two field are the same
+} __generic_proxy_t; 
+
+bool ex_lua_is_readonly ( struct lua_State *_l, int _idx ) {
+    __generic_proxy_t *u = (__generic_proxy_t *)lua_touserdata(_l,_idx);
+    return u->readonly; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ref_proxy_t *ex_lua_pushref ( lua_State *_l, int _meta_idx, bool _readonly ) {
+    ref_proxy_t *u;
+
+    u = (ref_proxy_t *)lua_newuserdata(_l, sizeof(ref_proxy_t));
+    u->readonly = _readonly;
+    u->typeid = EX_TYPEID(ref);
+    u->ref = NULL;
+    lua_pushvalue(_l,_meta_idx);
+    lua_setmetatable(_l,-2);
+
+    return u;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_lua_isref ( lua_State *_l, int _idx ) {
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_lua_checkref ( lua_State *_l, int _idx ) {
+    ref_proxy_t *u;
+
+    if ( lua_isuserdata(_l, _idx) == 0 )
+        return NULL;
+    u = (ref_proxy_t *)lua_touserdata(_l,_idx);
+    if ( u->typeid != EX_TYPEID(ref) )
+        return NULL;
+
+    return u;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int ex_lua_ref_gc ( lua_State *_l ) {
     ref_proxy_t *u;
 

@@ -11,7 +11,7 @@
 
 require ("ex.debug")
 
-local do_test = true
+local do_test = false
 if not do_test then return end
 
 --/////////////////////////////////////////////////////////////////////////////

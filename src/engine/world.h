@@ -45,7 +45,8 @@ EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_world_reset ( ex_ref_t *_self, ex_stream_t *_stream );
+extern ex_ref_t *ex_current_world ();
+extern void ex_set_current_world ( ex_ref_t *_world );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -61,9 +62,11 @@ extern void ex_world_clear ( ex_ref_t *_self );
 // Desc: 
 // ------------------------------------------------------------------ 
 
+// TODO: should this in camera_component ??? { 
 extern void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam );
 extern void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam );
 extern ex_ref_t *ex_world_main_camera ( ex_ref_t *_self );
+// } TODO end 
 
 // ------------------------------------------------------------------ 
 // Desc: 

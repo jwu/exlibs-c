@@ -131,7 +131,7 @@ static int __class_index ( lua_State *_l ) {
     if ( strcmp( key, "super" ) == 0 ) {
         // local mt = getmetatable(_t) 
         if ( lua_getmetatable(_l,1) == 0 ) {
-            ex_error ( "can't find the metatable of _t" );
+            luaL_error ( _l, "can't find the metatable of _t" );
             lua_pushnil(_l);
             return 1;
         }
@@ -161,7 +161,7 @@ static int __class_index ( lua_State *_l ) {
     // check if the metatable have the key
     // local mt = getmetatable(_t) 
     if ( lua_getmetatable(_l,1) == 0 ) {
-        ex_error ( "can't find the metatable of _t" );
+        luaL_error ( _l, "can't find the metatable of _t" );
         lua_pushnil(_l);
         return 1;
     }
@@ -252,7 +252,7 @@ static int __class_newindex ( lua_State *_l ) {
     lua_rawget(_l,1);
     // if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
     if ( lua_isboolean(_l,-1) && lua_toboolean(_l,-1) ) {
-        ex_error ("the table is readonly");
+        luaL_error ( _l, "the table is readonly" );
         return 0;
     }
     lua_pop(_l,1); // pop is_readonly
@@ -260,7 +260,7 @@ static int __class_newindex ( lua_State *_l ) {
     // check if the metatable have the key
     // local mt = getmetatable(_t) 
     if ( lua_getmetatable(_l,1) == 0 ) {
-        ex_error ( "can't find the metatable of _t" );
+        luaL_error ( _l, "can't find the metatable of _t" );
         return 0;
     }
     // v = rawget(mt,_k)
@@ -306,7 +306,7 @@ static int __class_newindex ( lua_State *_l ) {
     }
     lua_pop(_l,1); // pops rawget
 
-    ex_error ( "can't find the key %s", lua_tostring(_l,2) );
+    luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
     return 0;
 }
 
@@ -553,7 +553,7 @@ static int __class ( lua_State *_l ) {
     bool derived_from_builtin = false;
 
     if ( nargs == 0 ) {
-        ex_error ( "can't find any input arguments" );
+        luaL_error ( _l, "can't find any input arguments" );
         lua_pushnil(_l);
         return 1;
     }
@@ -604,7 +604,7 @@ static int __derive ( lua_State *_l ) {
     bool derived_from_builtin = false;
 
     if ( nargs != 1 ) {
-        ex_error ( "only 1 arguments accept in derive function" );
+        luaL_error ( _l, "only 1 arguments accept in derive function" );
         lua_pushnil(_l);
         return 1;
     }
@@ -648,7 +648,7 @@ int ex_lua_class ( lua_State *_l,
     // local base,super = ...
     // assert( type(base) == "table", "the first parameter must be a table" )
     if ( lua_istable(_l,_base_idx) == 0 ) {
-        ex_error ( "the first parameter must be a table" );
+        luaL_error ( _l, "the first parameter must be a table" );
         lua_pushnil(_l);
         return 1;
     }
@@ -656,7 +656,7 @@ int ex_lua_class ( lua_State *_l,
     // if you don't define the __typename, report error!
     lua_getfield(_l,_base_idx,"__typename");
     if ( lua_isnil(_l,-1) ) {
-        ex_error ( "please define __typename for your class!" );
+        luaL_error ( _l, "please define __typename for your class!" );
         return 1;
     }
     typename = luaL_checkstring(_l,-1);
@@ -685,7 +685,7 @@ int ex_lua_class ( lua_State *_l,
             }
         }
         if ( is_class == false ) {
-            ex_error( "super is not a class" );
+            luaL_error( _l, "super is not a class" );
             lua_pop(_l,1); // pop __isclass push
             lua_pushnil(_l);
             return 1;
@@ -756,45 +756,43 @@ int ex_lua_class ( lua_State *_l,
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
+// ex functions
+static const luaL_Reg __core_funcs[] = {
+    { "dump_stack", __dump_stack }, // DEBUG:
+    { "range_rand", __range_rand }, // TODO: go to ex.random.range
+    { "log", __log },
+    { "deepcopy", __deepcopy },
+    { "typeof", __type_of }, // NOTE: c don't allow function named __typeof or typeof
+    { "isclass", __isclass },
+    { "isbuiltin", __isbuiltin },
+    { "typename", __typename },
+    { "class", __class },
+    { 0, 0 }
+};
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 int luaopen_core ( lua_State *_l ) {
-    // ex.class.meta functions
-    static const luaL_Reg __meta_funcs[] = {
-        { "__call", __class_new },
-        { NULL, NULL },
-    };
-    // ex functions
-    static const luaL_Reg __core_funcs[] = {
-        { "dump_stack", __dump_stack }, // DEBUG:
-        { "range_rand", __range_rand }, // TODO: go to ex.random.range
-        { "log", __log },
-        { "deepcopy", __deepcopy },
-        { "typeof", __type_of }, // NOTE: c don't allow function named __typeof or typeof
-        { "isclass", __isclass },
-        { "isbuiltin", __isbuiltin },
-        { "typename", __typename },
-        { "class", __class },
-        { 0, 0 }
-    };
-
-    //
-    ex_lua_global_module ( _l, "ex" );
 
     // register metatable ex.class.meta
     luaL_newmetatable(_l, "ex.class.meta"); // NOTE: this store a table in LUA_REGISTRYINDEX
-    luaL_register(_l, NULL, __meta_funcs);
+    lua_pushcfunction(_l, __class_new);
+    lua_setfield(_l,-2,"__call");
     lua_pop(_l, 1); // pops ex.class.meta
 
-    //
+    // register core
+    ex_lua_global_module ( _l, "ex" );
     luaL_register( _l, 0, __core_funcs );
     lua_pop(_l, 1); // pops ex.
 
     return 0;
 }
 
-//
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void luaclose_core () {
 }
