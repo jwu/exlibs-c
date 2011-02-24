@@ -356,7 +356,7 @@ static int __vec2f_mul ( lua_State *_l ) {
     }
 
     // push
-    luaL_error("invalid parameter type, lhs and rhs must be %s or number", __typename);
+    luaL_error(_l,"invalid parameter type, lhs and rhs must be %s or number", __typename);
     lua_pushnil(_l);
     return 1;
 }
@@ -396,7 +396,7 @@ static int __vec2f_div ( lua_State *_l ) {
     }
 
     // push
-    luaL_error("invalid parameter type, lhs and rhs must be %s or number", __typename);
+    luaL_error(_l,"invalid parameter type, lhs and rhs must be %s or number", __typename);
     lua_pushnil(_l);
     return 1;
 }

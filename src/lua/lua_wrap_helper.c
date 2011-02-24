@@ -44,7 +44,7 @@ ref_proxy_t *ex_lua_pushref ( lua_State *_l, int _meta_idx, bool _readonly ) {
     u = (ref_proxy_t *)lua_newuserdata(_l, sizeof(ref_proxy_t));
     u->readonly = _readonly;
     u->typeid = EX_TYPEID(ref);
-    u->ref = NULL;
+    u->val = NULL;
     lua_pushvalue(_l,_meta_idx);
     lua_setmetatable(_l,-2);
 
@@ -56,6 +56,26 @@ ref_proxy_t *ex_lua_pushref ( lua_State *_l, int _meta_idx, bool _readonly ) {
 // ------------------------------------------------------------------ 
 
 bool ex_lua_isref ( lua_State *_l, int _idx ) {
+    ref_proxy_t *u;
+
+    if ( lua_isuserdata(_l, _idx) == 0 )
+        return false;
+
+    u = (ref_proxy_t *)lua_touserdata(_l,_idx);
+    if ( u->typeid != EX_TYPEID(ref) )
+        return false;
+
+    return true;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_lua_toref ( lua_State *_l, int _idx ) {
+    ref_proxy_t *u;
+    u = (ref_proxy_t *)lua_touserdata(_l,_idx);
+    return u->val;
 }
 
 // ------------------------------------------------------------------ 
@@ -63,15 +83,21 @@ bool ex_lua_isref ( lua_State *_l, int _idx ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_lua_checkref ( lua_State *_l, int _idx ) {
-    ref_proxy_t *u;
+    if ( ex_lua_isref(_l,_idx) == false ) {
+        luaL_error( _l, "invalid parameter type, expected ref" );
+    }
 
-    if ( lua_isuserdata(_l, _idx) == 0 )
-        return NULL;
-    u = (ref_proxy_t *)lua_touserdata(_l,_idx);
-    if ( u->typeid != EX_TYPEID(ref) )
-        return NULL;
+    return ex_lua_toref(_l,_idx);
+}
 
-    return u;
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_lua_check_nullref ( lua_State *_l, ex_ref_t *_ref ) {
+    if ( _ref->ptr == NULL ) {
+        luaL_error( _l, "error: null reference" );
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -79,15 +105,8 @@ ex_ref_t *ex_lua_checkref ( lua_State *_l, int _idx ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_ref_gc ( lua_State *_l ) {
-    ref_proxy_t *u;
-
-    if ( lua_isuserdata(_l,1) == 0 ) {
-        ex_error ( "fatal error: the gc object is not an userdata" );
-        return 0;
-    }
-
-    u = (ref_proxy_t *)lua_touserdata(_l,1);
-    ex_decref(u->ref);
+    ex_ref_t *r = ex_lua_checkref(_l,1);
+    ex_decref(r);
 
     return 0;
 }
@@ -97,18 +116,14 @@ int ex_lua_ref_gc ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_ref_tostring ( lua_State *_l ) {
-    ref_proxy_t *u;
     void *obj;
     ex_string_t *str;
+    ex_ref_t *r;
 
-    if ( lua_isuserdata(_l,1) == 0 ) {
-        ex_error ( "fatal error: the gc object is not an userdata" );
-        lua_pushstring(_l,"");
-        return 1;
-    }
+    r = ex_lua_checkref(_l,1);
+    ex_lua_check_nullref(_l,r);
 
-    u = (ref_proxy_t *)lua_touserdata(_l,1);
-    obj = u->ref->ptr;
+    obj = r->ptr;
     str = ex_string_alloc( "", 128 );
     ex_rtti_info(obj)->tostring( str, obj );
     lua_pushstring ( _l, str->text );
@@ -121,24 +136,19 @@ int ex_lua_ref_tostring ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_ref_eq ( struct lua_State *_l ) {
-    ref_proxy_t *lhs, *rhs;
+    ex_ref_t *lhs, *rhs;
 
-    if ( lua_isuserdata(_l,1) == 0 ) {
-        ex_error ( "fatal error: the gc object is not an userdata" );
-        lua_pushstring(_l,"");
-        return 1;
-    }
-    lhs = (ref_proxy_t *)lua_touserdata(_l,1);
+    lhs = ex_lua_checkref(_l,1);
 
     // check if we compare with nil
     if ( lua_isnil(_l,2) ) {
-        lua_pushboolean(_l,lhs->ref->ptr == NULL);
+        lua_pushboolean(_l,lhs->ptr == NULL);
         return 1;
     }
 
     // check if we compare with other ref
-    rhs = (ref_proxy_t *)lua_touserdata(_l,2);
-    lua_pushboolean(_l,lhs->ref->ptr == rhs->ref->ptr);
+    rhs = ex_lua_checkref(_l,2);
+    lua_pushboolean(_l,lhs == rhs);
     return 1;
 }
 

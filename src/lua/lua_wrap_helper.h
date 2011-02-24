@@ -23,7 +23,7 @@ extern "C" {
 typedef struct ref_proxy_t { 
     strid_t typeid;
     bool readonly; 
-    ex_ref_t *ref; 
+    ex_ref_t *val; 
     // bool gc_owner; // TODO: do we really need this ??? 
 } ref_proxy_t; 
 
@@ -62,12 +62,15 @@ typedef struct ref_proxy_t {
 #define EX_DECL_LUA_BUILTIN_REF_2(_typename,_type) \
     extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
     extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
-    extern _type *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
-    extern _type *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
+    extern ex_ref_t *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
+    extern ex_ref_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
 
 // defines
 EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
+
 EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
+    EX_DECL_LUA_BUILTIN_REF_2(world,ex_world_t)
+    EX_DECL_LUA_BUILTIN_REF_2(entity,ex_entity_t)
 
 // undef macros
 #undef EX_DECL_LUA_BUILTIN_TYPE
@@ -98,8 +101,10 @@ extern bool ex_lua_is_readonly ( struct lua_State *_l, int _idx );
 // ------------------------------------------------------------------ 
 
 extern ref_proxy_t *ex_lua_pushref ( struct lua_State *_l, int _meta_idx, bool _readonly );
+extern bool ex_lua_isref ( struct lua_State *_l, int _idx );
+extern ex_ref_t *ex_lua_toref ( struct lua_State *_l, int _idx );
 extern ex_ref_t *ex_lua_checkref ( struct lua_State *_l, int _idx );
-extern bool ex_lua_isref ( lua_State *_l, int _idx );
+extern void ex_lua_check_nullref ( struct lua_State *_l, ex_ref_t *_ref );
 
 extern int ex_lua_ref_gc ( struct lua_State *_l );
 extern int ex_lua_ref_tostring ( struct lua_State *_l );

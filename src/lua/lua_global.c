@@ -106,9 +106,13 @@ static bool __initialized = false;
 // Desc: 
 extern int luaopen_core ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
-extern int luaopen_object ( lua_State * );
+
 extern int luaopen_luagl ( lua_State * );
 extern int luaopen_luaglu ( lua_State * );
+
+extern int luaopen_object ( lua_State * );
+extern int luaopen_world ( lua_State * );
+extern int luaopen_entity ( lua_State * );
 // ------------------------------------------------------------------ 
 
 int ex_lua_init () {
@@ -157,6 +161,8 @@ int ex_lua_init () {
 
     // init engine wraps
     luaopen_object (__L);
+        luaopen_world (__L);
+        luaopen_entity (__L);
 
     __initialized = true;
 
@@ -167,7 +173,10 @@ int ex_lua_init () {
 // Desc: 
 extern void luaclose_core ();
 extern void luaclose_vec2f ();
+
 extern void luaclose_object ();
+extern void luaclose_world ();
+extern void luaclose_entity ();
 // ------------------------------------------------------------------ 
 
 void ex_lua_deinit () {
@@ -180,6 +189,8 @@ void ex_lua_deinit () {
         luaclose_vec2f ();
 
         luaclose_object ();
+            luaclose_world ();
+            luaclose_entity ();
 
         lua_close(__L);
         __L = NULL;

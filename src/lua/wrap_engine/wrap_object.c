@@ -55,28 +55,6 @@ static int __child_meta_index ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_lua_isobject ( lua_State *_l, int _idx ) {
-    ref_proxy_t *u = ex_lua_checkref(_l,_idx);
-    if ( u && ex_isa( ex_object_t, u->ref->ptr ) )
-        return true;
-    return false;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_object_t *ex_lua_checkobject ( lua_State *_l, int _idx ) {
-    ref_proxy_t *u = ex_lua_checkref(_l,_idx);
-    if ( u && ex_isa( ex_object_t, u->ref->ptr ) )
-        return u;
-    return NULL;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 ref_proxy_t *ex_lua_pushobject ( lua_State *_l, bool _readonly ) {
     ref_proxy_t *u;
 
@@ -85,6 +63,38 @@ ref_proxy_t *ex_lua_pushobject ( lua_State *_l, bool _readonly ) {
     lua_remove(_l,-2);
 
     return u;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_lua_isobject ( lua_State *_l, int _idx ) {
+    if ( ex_lua_isref(_l,_idx) ) {
+        ex_ref_t *r = ex_lua_toref(_l,_idx);
+        if ( ex_isa( ex_object_t, r->ptr ) )
+            return true;
+    }
+    return false;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_lua_toobject ( lua_State *_l, int _idx ) {
+    return ex_lua_toref(_l,_idx);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_lua_checkobject ( lua_State *_l, int _idx ) {
+    if ( ex_lua_isobject(_l,_idx) == false ) {
+        luaL_error( _l, "invalid parameter type, expected %s", __typename );
+    }
+    return ex_lua_toobject(_l,_idx);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -99,8 +109,8 @@ static int __object_new ( lua_State *_l ) {
     ref_proxy_t *u;
     
     u = ex_lua_pushref(_l,1,false);
-    u->ref = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_incref(u->ref);
+    u->val = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
+    ex_incref(u->val);
 
     return 1;
 }
@@ -135,8 +145,8 @@ static int __object_new_for_child ( lua_State *_l ) {
     lua_setmetatable(_l,-2);
     
     u = ex_lua_pushref(_l,lua_gettop(_l),false);
-    u->ref = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_incref(u->ref);
+    u->val = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
+    ex_incref(u->val);
 
     return 1;
 }
@@ -151,20 +161,12 @@ static int __object_new_for_child ( lua_State *_l ) {
 
 static int __object_get_uid ( lua_State *_l ) {
     ex_object_t *self;
-    ref_proxy_t *u;
+    ex_ref_t *r;
     
-    u = ex_lua_checkobject(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
-    self = EX_REF_CAST(ex_object_t,u->ref);
-    if ( self == NULL ) {
-        ex_error("error: null reference!");
-        lua_pushnil(_l);
-        return 1;
-    }
+    r = ex_lua_checkobject(_l,1);
+    ex_lua_check_nullref(_l,r);
+    self = EX_REF_CAST(ex_object_t,r);
+
     // CHECK: i don't know could this be done in 32-bit system (such as win32.) { 
     lua_pushinteger( _l, self->uid ); 
     // } CHECK end 
@@ -177,20 +179,12 @@ static int __object_get_uid ( lua_State *_l ) {
 
 static int __object_get_name ( lua_State *_l ) {
     ex_object_t *self;
-    ref_proxy_t *u;
+    ex_ref_t *r;
     
-    u = ex_lua_checkobject(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        lua_pushnil(_l);
-        return 1;
-    }
-    self = EX_REF_CAST(ex_object_t,u->ref);
-    if ( self == NULL ) {
-        ex_error("error: null reference!");
-        lua_pushnil(_l);
-        return 1;
-    }
+    r = ex_lua_checkobject(_l,1);
+    ex_lua_check_nullref(_l,r);
+    self = EX_REF_CAST(ex_object_t,r);
+
     lua_pushstring( _l, ex_strid_to_cstr(self->name) ); 
     return 1;
 }
@@ -201,20 +195,13 @@ static int __object_get_name ( lua_State *_l ) {
 
 static int __object_set_name ( lua_State *_l ) {
     ex_object_t *self;
-    ref_proxy_t *u;
+    ex_ref_t *r;
     const char *in_name;
 
     in_name = luaL_checkstring(_l,3);
-    u = ex_lua_checkobject(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        return 0;
-    }
-    self = EX_REF_CAST(ex_object_t,u->ref);
-    if ( self == NULL ) {
-        ex_error("error: null reference!");
-        return 0;
-    }
+    r = ex_lua_checkobject(_l,1);
+    ex_lua_check_nullref(_l,r);
+    self = EX_REF_CAST(ex_object_t,r);
     self->name = ex_strid(in_name);
     return 0;
 }
@@ -224,15 +211,10 @@ static int __object_set_name ( lua_State *_l ) {
 ///////////////////////////////////////////////////////////////////////////////
 
 static int __object_destroy ( lua_State *_l ) {
-    ref_proxy_t *u;
+    ex_ref_t *r;
 
-    u = ex_lua_checkobject(_l,1);
-    if ( u == NULL ) {
-        ex_error("invalid parameter type, expected %s", __typename);
-        return 0;
-    }
-
-    ex_destroy_object(u->ref);
+    r = ex_lua_checkobject(_l,1);
+    ex_destroy_object(r);
     return 0;
 }
 

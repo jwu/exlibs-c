@@ -17,6 +17,7 @@
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
 		B245485112B920D200EF7261 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B259245812EA6F5000B49C04 /* test_string.c in Sources */ = {isa = PBXBuildFile; fileRef = B259245712EA6F5000B49C04 /* test_string.c */; };
+		B25D6E661316D28B006E1328 /* wrap_entity.c in Sources */ = {isa = PBXBuildFile; fileRef = B25D6E651316D28B006E1328 /* wrap_entity.c */; };
 		B29D84BD12EFC8ED00AF7E1B /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
 		B2A22DAA12FEEBF900F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
 		B2A22DBD12FEEC1200F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
@@ -251,6 +252,7 @@
 		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		B259245712EA6F5000B49C04 /* test_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_string.c; sourceTree = "<group>"; };
+		B25D6E651316D28B006E1328 /* wrap_entity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_entity.c; sourceTree = "<group>"; };
 		B2A22DA912FEEBF900F3C100 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/lua-5.1.4/lib/macosx/liblua.a"; sourceTree = "<absolute>"; };
 		B2A22DDA12FEEDC400F3C100 /* test_lua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = test_lua.c; sourceTree = "<group>"; };
 		B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "editor-Info.plist"; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 		B2A2315E130221C700F3C100 /* wrap_engine */ = {
 			isa = PBXGroup;
 			children = (
+				B25D6E651316D28B006E1328 /* wrap_entity.c */,
 				B243C0BB130D86170056158F /* wrap_object.c */,
 				B2A2315F130221C700F3C100 /* wrap_world.c */,
 			);
@@ -1305,6 +1308,7 @@
 				B2A232D91302227200F3C100 /* classes_registry.c in Sources */,
 				B2F4088E1302C04F00FCF2B5 /* probability.c in Sources */,
 				B243C0BC130D86170056158F /* wrap_object.c in Sources */,
+				B25D6E661316D28B006E1328 /* wrap_entity.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
