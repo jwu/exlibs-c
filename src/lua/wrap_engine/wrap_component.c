@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "../../engine/entity.h"
-#include "../../engine/component.h"
+#include "../../engine/component/component.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -98,6 +98,28 @@ static int __component_new_for_child ( lua_State *_l ) {
 // meta method
 ///////////////////////////////////////////////////////////////////////////////
 
+// TESTME: I don't known if this will incref but no gc it. { 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __component_get_entity ( lua_State *_l ) {
+    ex_ref_t *r;
+    ex_component_t *self;
+    ref_proxy_t *u;
+
+    r = ex_lua_checkcomponent(_l,1); 
+    ex_lua_check_nullref(_l,r);
+    self = EX_REF_CAST(ex_component_t,r);
+
+    u = ex_lua_pushentity(_l,false);
+    u->val = self->entity;
+    ex_incref(u->val);
+
+    return 1;
+}
+// } TESTME end 
+
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
@@ -115,6 +137,7 @@ static const luaL_Reg __type_meta_funcs[] = {
 
 // ex.component
 static const ex_getset_t __meta_getsets[] = {
+    { "entity", __component_get_entity, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {

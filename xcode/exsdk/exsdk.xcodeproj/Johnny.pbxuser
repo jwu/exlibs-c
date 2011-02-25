@@ -215,6 +215,10 @@
 			B226FEBB1317C9110011A8A7 /* PBXTextBookmark */ = B226FEBB1317C9110011A8A7 /* PBXTextBookmark */;
 			B226FEBD1317C92B0011A8A7 /* PBXTextBookmark */ = B226FEBD1317C92B0011A8A7 /* PBXTextBookmark */;
 			B226FEBE1317C92B0011A8A7 /* PBXTextBookmark */ = B226FEBE1317C92B0011A8A7 /* PBXTextBookmark */;
+			B226FEC91317D8AB0011A8A7 /* PBXTextBookmark */ = B226FEC91317D8AB0011A8A7 /* PBXTextBookmark */;
+			B226FECA1317D8AB0011A8A7 /* PBXTextBookmark */ = B226FECA1317D8AB0011A8A7 /* PBXTextBookmark */;
+			B226FED11317D8D90011A8A7 /* PBXTextBookmark */ = B226FED11317D8D90011A8A7 /* PBXTextBookmark */;
+			B226FED21317D8D90011A8A7 /* PBXTextBookmark */ = B226FED21317D8D90011A8A7 /* PBXTextBookmark */;
 			B23B2D3B12CAF8D00011E237 = B23B2D3B12CAF8D00011E237 /* PBXTextBookmark */;
 			B23B2D3D12CAF8D00011E237 = B23B2D3D12CAF8D00011E237 /* PBXTextBookmark */;
 			B23B2D3E12CAF8D00011E237 = B23B2D3E12CAF8D00011E237 /* PBXTextBookmark */;
@@ -898,6 +902,46 @@
 		vrLen = 1394;
 		vrLoc = 17733;
 	};
+	B226FEC91317D8AB0011A8A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 502";
+		rLen = 0;
+		rLoc = 16392;
+		rType = 0;
+		vrLen = 407;
+		vrLoc = 16712;
+	};
+	B226FECA1317D8AB0011A8A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1430";
+		rLen = 0;
+		rLoc = 43874;
+		rType = 0;
+		vrLen = 1443;
+		vrLoc = 17733;
+	};
+	B226FED11317D8D90011A8A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 502";
+		rLen = 0;
+		rLoc = 16392;
+		rType = 0;
+		vrLen = 406;
+		vrLoc = 16712;
+	};
+	B226FED21317D8D90011A8A7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1430";
+		rLen = 0;
+		rLoc = 43874;
+		rType = 0;
+		vrLen = 1394;
+		vrLoc = 17733;
+	};
 	B23B2D2C12CAF7140011E237 /* timer.c */ = {
 		isa = PBXFileReference;
 		fileEncoding = 4;
@@ -1436,7 +1480,7 @@
 		ignoreCount = 0;
 		lineNumber = 61;
 		location = test_gl;
-		modificationTime = 320325904.593658;
+		modificationTime = 320329941.099632;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1454,7 +1498,7 @@
 		ignoreCount = 0;
 		lineNumber = 118;
 		location = test_gl;
-		modificationTime = 320325904.593692;
+		modificationTime = 320329941.099668;
 		originalNumberOfMultipleMatches = 1;
 		state = 2;
 	};
@@ -1732,16 +1776,16 @@
 	};
 	B2A22EEF1300371800F3C100 /* test_script.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1169, 1092}}";
-			sepNavSelRange = "{1005, 0}";
-			sepNavVisRange = "{609, 704}";
+			sepNavIntBoundsRect = "{{0, 0}, {871, 1066}}";
+			sepNavSelRange = "{1889, 0}";
+			sepNavVisRange = "{690, 542}";
 		};
 	};
 	B2A23156130221C700F3C100 /* lua_global.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1076, 19084}}";
-			sepNavSelRange = "{43874, 0}";
-			sepNavVisRange = "{17733, 1394}";
+			sepNavIntBoundsRect = "{{0, 0}, {871, 18551}}";
+			sepNavSelRange = "{44023, 0}";
+			sepNavVisRange = "{16685, 530}";
 			sepNavWindowFrame = "{{1625, -326}, {877, 769}}";
 		};
 	};
@@ -2802,7 +2846,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1169, 1443}}";
 			sepNavSelRange = "{4106, 0}";
-			sepNavVisRange = "{1146, 1079}";
+			sepNavVisRange = "{1146, 1151}";
 		};
 	};
 	B2E0B75412A6B144009FE3E8 /* prop.c */ = {

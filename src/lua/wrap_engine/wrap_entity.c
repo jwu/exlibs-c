@@ -97,6 +97,7 @@ static int __entity_add_comp ( lua_State *_l ) {
     const char *comp_typename;
     
     ent = ex_lua_checkentity(_l,1);
+    ex_lua_check_nullref(_l,ent);
     comp_typename = luaL_checkstring(_l,2); // TODO: could be table :)
 
     comp = ex_entity_add_comp( ent, ex_strid(comp_typename) );
@@ -120,6 +121,7 @@ static int __entity_get_comp ( lua_State *_l ) {
     const char *comp_typename;
     
     ent = ex_lua_checkentity(_l,1);
+    ex_lua_check_nullref(_l,ent);
     comp_typename = luaL_checkstring(_l,2); // TODO: could be table :)
 
     comp = ex_entity_get_comp( ent, ex_strid(comp_typename) );

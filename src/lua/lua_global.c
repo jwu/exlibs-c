@@ -113,6 +113,7 @@ extern int luaopen_luaglu ( lua_State * );
 extern int luaopen_object ( lua_State * );
 extern int luaopen_world ( lua_State * );
 extern int luaopen_entity ( lua_State * );
+extern int luaopen_component ( lua_State * );
 // ------------------------------------------------------------------ 
 
 int ex_lua_init () {
@@ -163,6 +164,7 @@ int ex_lua_init () {
     luaopen_object (__L);
         luaopen_world (__L);
         luaopen_entity (__L);
+        luaopen_component (__L);
 
     __initialized = true;
 
@@ -177,6 +179,7 @@ extern void luaclose_vec2f ();
 extern void luaclose_object ();
 extern void luaclose_world ();
 extern void luaclose_entity ();
+extern void luaclose_component ();
 // ------------------------------------------------------------------ 
 
 void ex_lua_deinit () {
@@ -190,6 +193,7 @@ void ex_lua_deinit () {
         luaclose_object ();
             luaclose_world ();
             luaclose_entity ();
+            luaclose_component ();
 
         lua_close(__L);
         __L = NULL;

@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>B226FEBE1317C92B0011A8A7</string>
+						<string>B226FED21317D8D90011A8A7</string>
 						<key>history</key>
 						<array>
 							<string>B25D6F7513176448006E1328</string>
@@ -368,7 +368,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B226FEBD1317C92B0011A8A7</string>
+										<string>B226FED11317D8D90011A8A7</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -695,14 +695,14 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B226FEBC1317C9110011A8A7</string>
+		<string>B226FED31317D8D90011A8A7</string>
 		<string>B226FE511317B3D40011A8A7</string>
 		<string>B226FE521317B3D40011A8A7</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 		<string>B25D6F3E131759F4006E1328</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
 	</array>
 	<key>WindowString</key>
 	<string>1397 -245 1230 723 1280 -400 1920 1200 </string>
@@ -726,7 +726,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>class.h</string>
+								<string>wrap_entity.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
