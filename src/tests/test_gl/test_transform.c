@@ -139,7 +139,7 @@ static void init () {
         trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );
         e = ex_trans2d_find( trans2d_ref, "foo/bar" );
         ex_assert ( e && 
-                    EX_REF_CAST(ex_object_t,EX_REF_CAST(ex_component_t,e)->owner)->name == ex_strid("bar"),
+                    EX_REF_CAST(ex_object_t,EX_REF_CAST(ex_component_t,e)->entity)->name == ex_strid("bar"),
                     "failed to find foo/bar from foobar" );
     }
 #endif

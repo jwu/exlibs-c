@@ -131,9 +131,7 @@ static int __class_index ( lua_State *_l ) {
     if ( strcmp( key, "super" ) == 0 ) {
         // local mt = getmetatable(_t) 
         if ( lua_getmetatable(_l,1) == 0 ) {
-            luaL_error ( _l, "can't find the metatable of _t" );
-            lua_pushnil(_l);
-            return 1;
+            return luaL_error ( _l, "can't find the metatable of _t" );
         }
 
         // new_table = { __readonly = true }
@@ -161,9 +159,7 @@ static int __class_index ( lua_State *_l ) {
     // check if the metatable have the key
     // local mt = getmetatable(_t) 
     if ( lua_getmetatable(_l,1) == 0 ) {
-        luaL_error ( _l, "can't find the metatable of _t" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "can't find the metatable of _t" );
     }
     // v = rawget(mt,_k)
     lua_pushvalue(_l,2);
@@ -252,16 +248,14 @@ static int __class_newindex ( lua_State *_l ) {
     lua_rawget(_l,1);
     // if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
     if ( lua_isboolean(_l,-1) && lua_toboolean(_l,-1) ) {
-        luaL_error ( _l, "the table is readonly" );
-        return 0;
+        return luaL_error ( _l, "the table is readonly" );
     }
     lua_pop(_l,1); // pop is_readonly
 
     // check if the metatable have the key
     // local mt = getmetatable(_t) 
     if ( lua_getmetatable(_l,1) == 0 ) {
-        luaL_error ( _l, "can't find the metatable of _t" );
-        return 0;
+        return luaL_error ( _l, "can't find the metatable of _t" );
     }
     // v = rawget(mt,_k)
     lua_pushvalue(_l,2);
@@ -306,8 +300,7 @@ static int __class_newindex ( lua_State *_l ) {
     }
     lua_pop(_l,1); // pops rawget
 
-    luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
-    return 0;
+    return luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
 }
 
 // ------------------------------------------------------------------ 
@@ -553,9 +546,7 @@ static int __class ( lua_State *_l ) {
     bool derived_from_builtin = false;
 
     if ( nargs == 0 ) {
-        luaL_error ( _l, "can't find any input arguments" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "can't find any input arguments" );
     }
     if ( nargs == 1 ) {
         lua_pushnil(_l);
@@ -604,9 +595,7 @@ static int __derive ( lua_State *_l ) {
     bool derived_from_builtin = false;
 
     if ( nargs != 1 ) {
-        luaL_error ( _l, "only 1 arguments accept in derive function" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "only 1 arguments accept in derive function" );
     }
 
     // check if super is builtin
@@ -648,16 +637,13 @@ int ex_lua_class ( lua_State *_l,
     // local base,super = ...
     // assert( type(base) == "table", "the first parameter must be a table" )
     if ( lua_istable(_l,_base_idx) == 0 ) {
-        luaL_error ( _l, "the first parameter must be a table" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "the first parameter must be a table" );
     }
 
     // if you don't define the __typename, report error!
     lua_getfield(_l,_base_idx,"__typename");
     if ( lua_isnil(_l,-1) ) {
-        luaL_error ( _l, "please define __typename for your class!" );
-        return 1;
+        return luaL_error ( _l, "please define __typename for your class!" );
     }
     typename = luaL_checkstring(_l,-1);
     lua_pop(_l,1); // pos field __typename
@@ -685,10 +671,7 @@ int ex_lua_class ( lua_State *_l,
             }
         }
         if ( is_class == false ) {
-            luaL_error( _l, "super is not a class" );
-            lua_pop(_l,1); // pop __isclass push
-            lua_pushnil(_l);
-            return 1;
+            return luaL_error( _l, "super is not a class" );
         }
 
         // rawset(base, "__super", super)

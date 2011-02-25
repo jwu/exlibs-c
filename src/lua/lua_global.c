@@ -711,16 +711,14 @@ int ex_lua_typename ( lua_State *_l, int _idx ) {
     if ( lua_isuserdata(_l,_idx) || lua_istable(_l,_idx) ) {
         // local name = rawget(typeof(_object), "__typename")
         if ( lua_getmetatable(_l,_idx) == 0 ) {
-            luaL_error (_l,"can't find metatable in the class.");
-            lua_pushnil(_l);
-            return 1;
+            return luaL_error (_l,"can't find metatable in the class.");
         }
         lua_pushstring(_l,"__typename");
         lua_rawget(_l,-2);
 
         // assert ( name ~= nil, "can't find __typename define in your class." )
         if ( lua_isnil(_l,-1) ) {
-            luaL_error (_l,"can't find __tpename define in the class.");
+            return luaL_error (_l,"can't find __tpename define in the class.");
         }
 
         // return name
@@ -767,7 +765,7 @@ static int __copy ( lua_State *_l ) {
         lua_getfield(_l,OBJ_IDX,"copy");
         if ( lua_isnil(_l,-1) ) {
             ex_lua_typename(_l,OBJ_IDX);
-            luaL_error ( _l, "please provide copy function for builtin type: %s", lua_tostring(_l,-1) );
+            return luaL_error ( _l, "please provide copy function for builtin type: %s", lua_tostring(_l,-1) );
             lua_pop(_l,2); // pops typename, nil 
             lua_pushnil(_l);
             return 1;
@@ -915,28 +913,24 @@ int ex_lua_type_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     // first use rawget check if we have value in metatable.
     // NOTE: we not allow change the builtin values. so all of them are readonly.
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
-        luaL_error ( _l, "fatal error: can't find the metatable!" );
-        return 0;
+        return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
     key = luaL_checkstring(_l, 2);
     lua_pushstring ( _l, key );
     lua_rawget ( _l, -2 );
     // if this is not nil
     if ( lua_isnil( _l, -1 ) == 0 ) {
-        luaL_error(_l,"the key %s is readonly", key);
-        return 0;
+        return luaL_error(_l,"the key %s is readonly", key);
     }
 
     // get and check the key
     key_id = ex_strid(key);
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset == NULL ) {
-        luaL_error(_l,"key %s not found", key);
-        return 0;
+        return luaL_error(_l,"key %s not found", key);
     }
     if ( getset->set == NULL ) {
-        luaL_error(_l,"the key %s is readonly", key);
-        return 0;
+        return luaL_error(_l,"the key %s is readonly", key);
     }
 
     // NOTE: we don't go for super, 
@@ -957,9 +951,7 @@ int ex_lua_type_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 
     // first use rawget check if we have value in metatable.
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
-        luaL_error ( _l, "fatal error: can't find the metatable!" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
     lua_pushvalue ( _l, 2 );
     lua_rawget ( _l, -2 );
@@ -972,14 +964,10 @@ int ex_lua_type_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     key_id = ex_strid(key);
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset == NULL ) {
-        luaL_error(_l, "key %s not found", key);
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error(_l, "key %s not found", key);
     }
     if ( getset->get == NULL ) {
-        luaL_error(_l, "the key %s is writeonly", key);
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error(_l, "the key %s is writeonly", key);
     }
 
     // NOTE: we don't go for super, 
@@ -1001,16 +989,14 @@ int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) 
     // first use rawget check if we have value in metatable.
     // NOTE: we not allow change the builtin values. so all of them are readonly.
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
-        luaL_error ( _l, "fatal error: can't find the metatable!" );
-        return 0;
+        return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
     key = luaL_checkstring(_l, 2);
     lua_pushstring ( _l, key );
     lua_rawget ( _l, -2 );
     // if this is not nil
     if ( lua_isnil( _l, -1 ) == 0 ) {
-        luaL_error(_l,"the key %s is readonly", key);
-        return 0;
+        return luaL_error(_l,"the key %s is readonly", key);
     }
     lua_pop(_l,1); // pops v
 
@@ -1019,8 +1005,7 @@ int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) 
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset ) {
         if ( getset->set == NULL ) {
-            luaL_error(_l,"the key %s is readonly", key);
-            return 0;
+            return luaL_error(_l,"the key %s is readonly", key);
         }
         // process
         return getset->set(_l);
@@ -1057,8 +1042,7 @@ int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) 
     }
     lua_pop(_l,1); // pops rawget
 
-    luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
-    return 0;
+    return luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
 }
 
 // ------------------------------------------------------------------ 
@@ -1072,9 +1056,7 @@ int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 
     // first use rawget check if we have value in metatable.
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
-        luaL_error ( _l, "fatal error: can't find the metatable!" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
     lua_pushvalue ( _l, 2 );
     lua_rawget ( _l, -2 );
@@ -1088,9 +1070,7 @@ int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset ) {
         if ( getset->get == NULL ) {
-            luaL_error(_l, "the key %s is writeonly", key);
-            lua_pushnil(_l);
-            return 1;
+            return luaL_error(_l, "the key %s is writeonly", key);
         }
         // process
         return getset->get(_l);
@@ -1182,16 +1162,14 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     // lua_rawget(_l,1);
     // // if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
     // if ( lua_isboolean(_l,-1) && lua_toboolean(_l,-1) ) {
-    //     luaL_error (_l,"the table is readonly");
-    //     return 0;
+    //     return luaL_error (_l,"the table is readonly");
     // }
     // lua_pop(_l,1); // pop is_readonly
     // } DISABLE end 
 
     // assume the userdata must have the metatable
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
-        luaL_error ( _l, "fatal error: can't find the metatable!" );
-        return 0;
+        return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
 
     // first use rawget check if we have value in metatable.
@@ -1214,8 +1192,7 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset ) {
         if ( getset->set == NULL ) {
-            luaL_error(_l, "the key %s is readonly", key);
-            return 0;
+            return luaL_error(_l, "the key %s is readonly", key);
         }
         // process
         return getset->set(_l);
@@ -1229,8 +1206,7 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     // local mt = getmetatable(mt) 
     lua_getmetatable( _l, 1 );
     if ( lua_getmetatable(_l,-1) == 0 ) {
-        luaL_error ( _l, "can't find the meta-meta-table of _t" );
-        return 0;
+        return luaL_error ( _l, "can't find the meta-meta-table of _t" );
     }
     // v = rawget(mt,_k)
     lua_pushvalue(_l,2);
@@ -1277,8 +1253,7 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     }
     lua_pop(_l,1); // pops rawget
 
-    luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
-    return 0;
+    return luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
 }
 
 // ------------------------------------------------------------------ 
@@ -1297,9 +1272,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     // assume the userdata must have the metatable
     // local mt = getmetatable(_t) 
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
-        luaL_error ( _l, "fatal error: can't find the metatable!" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
 
     // new an userdata, setup and return it.
@@ -1307,9 +1280,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     key = luaL_checkstring(_l, 2);
     if ( strcmp( key, "super" ) == 0 ) {
         if ( lua_getmetatable(_l,-1) == 0 ) {
-            luaL_error ( _l, "can't find the meta-meta-table of _t" );
-            lua_pushnil(_l);
-            return 1;
+            return luaL_error ( _l, "can't find the meta-meta-table of _t" );
         }
 
         // new_table = { __readonly = true }
@@ -1346,9 +1317,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset ) {
         if ( getset->get == NULL ) {
-            luaL_error(_l, "the key %s is writeonly", key);
-            lua_pushnil(_l);
-            return 1;
+            return luaL_error(_l, "the key %s is writeonly", key);
         }
 
         // process
@@ -1363,9 +1332,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     // local mt = getmetatable(mt) 
     lua_getmetatable( _l, 1 );
     if ( lua_getmetatable(_l,-1) == 0 ) {
-        luaL_error ( _l, "can't find the meta-meta-table of _t" );
-        lua_pushnil(_l);
-        return 1;
+        return luaL_error ( _l, "can't find the meta-meta-table of _t" );
     }
     // v = rawget(mt,_k)
     lua_pushvalue(_l,2);

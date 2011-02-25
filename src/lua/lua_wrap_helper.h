@@ -84,6 +84,57 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
+#define EX_DEF_LUA_BUILTIN_REF(_type,_typename,_lua_typename) \
+    static ex_hashmap_t __key_to_type_meta_getset; \
+    static ex_hashmap_t __key_to_meta_getset; \
+    static const char *__typename = _lua_typename; \
+    static int __type_meta_newindex ( lua_State *_l ) { \
+        return ex_lua_type_meta_newindex( _l, &__key_to_type_meta_getset ); \
+    } \
+    static int __type_meta_index ( lua_State *_l ) { \
+        return ex_lua_type_meta_index( _l, &__key_to_type_meta_getset ); \
+    } \
+    static int __meta_newindex ( lua_State *_l ) { \
+        return ex_lua_meta_newindex( _l, &__key_to_meta_getset ); \
+    } \
+    static int __meta_index ( lua_State *_l ) { \
+        return ex_lua_meta_index( _l, &__key_to_meta_getset ); \
+    } \
+    static int __child_meta_newindex ( lua_State *_l ) { \
+        return ex_lua_child_meta_newindex( _l, &__key_to_meta_getset ); \
+    } \
+    static int __child_meta_index ( lua_State *_l ) { \
+        return ex_lua_child_meta_index( _l, &__key_to_meta_getset ); \
+    } \
+    ref_proxy_t *ex_lua_push##_typename ( lua_State *_l, bool _readonly ) { \
+        ref_proxy_t *u; \
+        luaL_newmetatable( _l, __typename ); /* NOTE: this find a table in LUA_REGISTRYINDEX */ \
+        u = ex_lua_pushref ( _l, lua_gettop(_l), _readonly ); \
+        lua_remove(_l,-2); \
+        return u; \
+    } \
+    bool ex_lua_is##_typename ( lua_State *_l, int _idx ) { \
+        if ( ex_lua_isref(_l,_idx) ) { \
+            ex_ref_t *r = ex_lua_toref(_l,_idx); \
+            if ( ex_isa( _type, r->ptr ) ) \
+                return true; \
+        } \
+        return false; \
+    } \
+    ex_ref_t *ex_lua_to##_typename ( lua_State *_l, int _idx ) { \
+        return ex_lua_toref(_l,_idx); \
+    } \
+    ex_ref_t *ex_lua_check##_typename ( lua_State *_l, int _idx ) { \
+        if ( ex_lua_is##_typename(_l,_idx) == false ) { \
+            luaL_error( _l, "invalid parameter type, expected %s", __typename ); \
+        } \
+        return ex_lua_to##_typename(_l,_idx); \
+    }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 typedef struct ex_getset_t {
     const char *key;
     int (*get) ( struct lua_State * );

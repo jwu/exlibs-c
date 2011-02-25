@@ -52,8 +52,8 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
                      __trans2d_init,
                      __trans2d_deinit )
 
-    EX_MEMBER( ex_component_t, owner, NULL )
-    EX_MEMBER( ex_component_t, active, true )
+    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_trans2d_t, pos, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
@@ -724,7 +724,7 @@ ex_ref_t *ex_trans2d_find ( ex_ref_t *_self, const char *_name ) {
         // find the name in children
         if ( current_trans->children ) {
             ex_array_each( current_trans->children, ex_ref_t *, child_ref ) {
-                ex_object_t *ent = EX_REF_CAST( ex_object_t, EX_REF_CAST(ex_component_t,child_ref)->owner ); 
+                ex_object_t *ent = EX_REF_CAST( ex_object_t, EX_REF_CAST(ex_component_t,child_ref)->entity ); 
                 if ( ent->name == nameID ) {
                     current = child_ref;
                     found = true;

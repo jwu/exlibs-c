@@ -53,8 +53,8 @@ EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
                      __debug2d_init,
                      __debug2d_deinit )
 
-    EX_MEMBER( ex_component_t, owner, NULL )
-    EX_MEMBER( ex_component_t, active, true )
+    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
     EX_MEMBER( ex_behavior_t, level_start, __debug2d_level_start )
@@ -113,7 +113,7 @@ void ex_debug2d_set_rect ( ex_ref_t *_self,
 
 void ex_debug2d_draw ( ex_ref_t *_self ) {
     ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
-    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->entity );
     ex_vec2f_t worldPos;
     ex_vec2f_t worldScale;
     ex_angf_t worldRot;
@@ -236,7 +236,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 static int32 __add_trail ( uint32 _interval, void *_params ) {
     ex_ref_t *dbg2d_ref = *((ex_ref_t **)_params); 
     ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,dbg2d_ref);
-    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->entity );
     ex_vec2f_t worldPos;
 
     ex_trans2d_world_position( ent->trans2d, &worldPos );
@@ -259,7 +259,7 @@ void __debug2d_level_start ( ex_ref_t *_self ) {
 
 void __debug2d_start ( ex_ref_t *_self ) {
     ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
-    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->owner );
+    ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->entity );
     ex_vec2f_t worldPos;
     int i;
 

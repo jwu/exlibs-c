@@ -51,7 +51,7 @@ static void start ( ex_ref_t *_self ) {
 static void update ( ex_ref_t *_self ) {
     ex_simple_t *self = EX_REF_CAST(ex_simple_t, _self);
     ex_component_t *comp = (ex_component_t *)self;
-    ex_trans2d_t *trans2d = EX_REF_CAST( ex_trans2d_t, EX_REF_CAST(ex_entity_t,comp->owner)->trans2d );
+    ex_trans2d_t *trans2d = EX_REF_CAST( ex_trans2d_t, EX_REF_CAST(ex_entity_t,comp->entity)->trans2d );
 
     if ( trans2d ) {
         ex_vec2f_t new_pos;
@@ -60,33 +60,33 @@ static void update ( ex_ref_t *_self ) {
         // process movement
         new_pos = ex_vec2f_zero;
         ex_vec2f_mul_scalar ( &new_pos, &self->move_dir, self->move_speed * ex_dt() );
-        ex_trans2d_translate ( EX_REF_CAST(ex_entity_t,comp->owner)->trans2d, new_pos.x, new_pos.y, EX_SPACE_LOCAL );
+        ex_trans2d_translate ( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, new_pos.x, new_pos.y, EX_SPACE_LOCAL );
 
         // process rotate
         ex_angf_set_by_radians( &new_ang, self->rot_speed * ex_dt() );
         switch ( self->rot_around ) {
         case ROT_AROUND_SELF:
-            ex_trans2d_rotate ( EX_REF_CAST(ex_entity_t,comp->owner)->trans2d, new_ang.rad );
+            ex_trans2d_rotate ( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, new_ang.rad );
             break;
 
         case ROT_AROUND_WORLD:
-            ex_trans2d_rotate_around ( EX_REF_CAST(ex_entity_t,comp->owner)->trans2d, 
+            ex_trans2d_rotate_around ( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, 
                                        new_ang.rad, 
                                        &ex_vec2f_zero );
             break;
 
         case ROT_AROUND_PARENT:
             {
-                ex_ref_t *parent = EX_REF_CAST(ex_trans2d_t,EX_REF_CAST(ex_entity_t,comp->owner)->trans2d)->parent; 
+                ex_ref_t *parent = EX_REF_CAST(ex_trans2d_t,EX_REF_CAST(ex_entity_t,comp->entity)->trans2d)->parent; 
                 ex_vec2f_t wd_pos;
 
                 if ( parent ) {
                     ex_trans2d_world_position( parent, &wd_pos );
-                    ex_trans2d_rotate_around ( EX_REF_CAST(ex_entity_t,comp->owner)->trans2d, 
+                    ex_trans2d_rotate_around ( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, 
                                                new_ang.rad, 
                                                &wd_pos );
                     ex_vec2f_set( &wd_pos, 0.0f, 1.0f );
-                    ex_trans2d_set_up( EX_REF_CAST(ex_entity_t,comp->owner)->trans2d, 
+                    ex_trans2d_set_up( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, 
                                        &wd_pos );
                 }
             }
@@ -111,8 +111,8 @@ EX_DEF_OBJECT_BEGIN( ex_simple_t,
                      init,
                      deinit )
 
-    EX_MEMBER( ex_component_t, owner, NULL )
-    EX_MEMBER( ex_component_t, active, true )
+    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
     EX_MEMBER( ex_behavior_t, level_start, level_start )

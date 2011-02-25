@@ -45,6 +45,7 @@
         __TYPEID_##_typename##__ = ex_strid(#_typename); \
         __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
                                                           NULL, \
+                                                          NULL, \
                                                           sizeof(_type), \
                                                           NULL, \
                                                           __ex_serialize_##_typename, \

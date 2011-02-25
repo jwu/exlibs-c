@@ -7,11 +7,13 @@
 
 ex.log ("creating script world...")
 
-world = ex.world.current
-ent2 = world:new_entity("hello")
-ent2 = nil
+-- world = ex.world.current
+-- ent2 = world:new_entity("hello")
+-- ent2 = nil
 
 ent = ex.entity("entity foo 01")
+ent:add_comp("ex.trans2d")
+
 -- ex.debug.dump(getmetatable(ent),"ent")
 -- ent:destroy()
 

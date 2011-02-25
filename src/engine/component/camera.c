@@ -26,7 +26,7 @@ extern void __component_init ( ex_ref_t * );
 
 void __camera_init ( ex_ref_t *_self ) {
     ex_component_t *comp = EX_REF_CAST(ex_component_t, _self);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->owner);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
 
     __component_init(_self); // parent init
 
@@ -41,7 +41,7 @@ extern void __component_deinit ( ex_ref_t * );
 
 void __camera_deinit ( ex_ref_t *_self ) {
     ex_component_t *comp = EX_REF_CAST(ex_component_t, _self);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->owner);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
 
     if ( ent ) {
         ex_world_remove_camera( ent->world, _self );
@@ -58,8 +58,8 @@ EX_DEF_OBJECT_BEGIN( ex_camera_t,
                      __camera_init,
                      __camera_deinit )
 
-    EX_MEMBER( ex_component_t, owner, NULL )
-    EX_MEMBER( ex_component_t, active, true )
+    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_camera_t, isOrtho, false )
     EX_MEMBER( ex_camera_t, orthoSize, 600/2 )

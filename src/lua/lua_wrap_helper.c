@@ -241,7 +241,6 @@ int ex_lua_register_class ( lua_State *_l,
     ex_assert( _typename, "_typename can't be NULL" );
     ex_assert( _meta_funcs, "_meta_funcs can't be NULL" );
     ex_assert( _type_meta_funcs, "_type_meta_funcs can't be NULL" );
-    ex_assert( _metacall_for_child, "_metacall_for_child can't be NULL" );
 
     // the lua code
     // _field = "object"
@@ -268,10 +267,13 @@ int ex_lua_register_class ( lua_State *_l,
     lua_setfield(_l,-2,"__isbuiltin");
 
     // tp.__meta_for_child = { __call = _metacall_for_child }
-    lua_newtable(_l);
-    lua_pushcfunction(_l, _metacall_for_child);
-    lua_setfield(_l,-2,"__call");
-    lua_setfield(_l,-2,"__metaclass");
+    // NOTE: _metacall_for_child could be NULL
+    if ( _metacall_for_child ) {
+        lua_newtable(_l);
+        lua_pushcfunction(_l, _metacall_for_child);
+        lua_setfield(_l,-2,"__call");
+        lua_setfield(_l,-2,"__metaclass");
+    }
 
     // tp = ex.class ( tp )
     if ( _supername == NULL ) {

@@ -37,6 +37,7 @@ typedef void (*ex_tostring_pfn) ( ex_string_t *, void * );
 typedef struct ex_rtti_t {
     struct ex_rtti_t *super;
     strid_t typeID;
+    strid_t lua_typeID;
     size_t size; // the sizeof(type)
     ex_prop_t *props;
     uint32 prop_count;
@@ -66,6 +67,7 @@ extern bool ex_rtti_initialized ();
 
 extern ex_rtti_t *ex_rtti_register_class ( strid_t _typeID, 
                                            ex_rtti_t *_super, 
+                                           const char *_lua_typename,
                                            size_t _typeSize,
                                            ex_create_pfn _pfn_create,
                                            ex_serialize_pfn _pfn_serialize,

@@ -33,8 +33,8 @@ extern "C" {
 */// ------------------------------------------------------------------ 
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_component_t,ex_object_t)
-    ex_ref_t *owner;
-    bool active;
+    ex_ref_t *entity;
+    bool enabled;
 EX_DECL_CLASS_SUPER_END(ex_component_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////

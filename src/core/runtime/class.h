@@ -39,6 +39,7 @@ static inline void __ex_register_class_ex_class_t () {
     __TYPEID_ex_class_t__ = ex_strid("ex_class_t"); \
     __RTTI_ex_class_t__ = ex_rtti_register_class ( __TYPEID_ex_class_t__,
                                                    NULL,
+                                                   NULL,
                                                    sizeof(ex_class_t),
                                                    __ex_create_ex_class_t,
                                                    NULL,

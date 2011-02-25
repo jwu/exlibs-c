@@ -232,7 +232,7 @@ void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
         ex_decref(_cam);
     }
     else {
-        ex_warning ( "can't find camera %s", ex_strid_to_cstr( ex_object_name( ((ex_component_t *)_cam)->owner->ptr ) ) );
+        ex_warning ( "can't find camera %s", ex_strid_to_cstr( ex_object_name( ((ex_component_t *)_cam)->entity->ptr ) ) );
         return;
     }
 

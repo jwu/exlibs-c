@@ -52,8 +52,7 @@ int ex_rtti_init ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_rtti_deinit ()
-{
+void ex_rtti_deinit () {
     if ( __initialized ) {
         // free all allocated string
         ex_hashmap_each ( __typeid_to_rtti, ex_rtti_t *, _info ) {
@@ -77,6 +76,7 @@ bool ex_rtti_initialized () { return __initialized; }
 
 ex_rtti_t *ex_rtti_register_class ( strid_t _typeID, 
                                     ex_rtti_t *_super, 
+                                    const char *_lua_typename,
                                     size_t _typeSize,
                                     ex_create_pfn _pfn_create,
                                     ex_serialize_pfn _pfn_serialize,
@@ -93,6 +93,7 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
     my_rtti = (ex_rtti_t *)ex_malloc ( sizeof(ex_rtti_t) );
     my_rtti->super = _super;
     my_rtti->typeID = _typeID;
+    my_rtti->lua_typeID = ex_strid(_lua_typename);
     my_rtti->size = _typeSize;
     my_rtti->props = NULL;
     my_rtti->prop_count = 0;
@@ -106,6 +107,31 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
         ex_warning( "failed to insert new rtti info in to hashmap" );
         ex_free (my_rtti);
         return NULL;
+    }
+
+    // if we have alias lua typename. add it, too.
+    if ( _lua_typename != NULL ) {
+        // HACK: this could help us deinit rtti class easily { 
+        ex_rtti_t *lua_rtti;
+        // we got everything we want, now we can create rtti info.
+        lua_rtti = (ex_rtti_t *)ex_malloc ( sizeof(ex_rtti_t) );
+        lua_rtti->super = _super;
+        lua_rtti->typeID = _typeID;
+        lua_rtti->lua_typeID = ex_strid(_lua_typename);
+        lua_rtti->size = _typeSize;
+        lua_rtti->props = NULL;
+        lua_rtti->prop_count = 0;
+        lua_rtti->create = _pfn_create;
+        lua_rtti->serialize = _pfn_serialize;
+        lua_rtti->tostring = _pfn_tostring;
+
+        result = ex_hashmap_insert( __typeid_to_rtti, &(lua_rtti->lua_typeID), &lua_rtti, NULL );
+        if ( result == false ) {
+            ex_warning( "failed to insert new rtti info in to hashmap" );
+            ex_free (my_rtti);
+            return NULL;
+        }
+        // } HACK end 
     }
 
     //

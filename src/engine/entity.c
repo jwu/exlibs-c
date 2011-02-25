@@ -52,7 +52,7 @@ static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref )
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_component_t *comp = EX_REF_CAST(ex_component_t,_comp_ref);
 
-    comp->owner = _self; // set the owner of the component before init.
+    comp->entity = _self; // set the entity of the component before init.
     ((ex_object_t *)comp)->init(_comp_ref);
 
     ex_array_append( ent->comps, &_comp_ref );
@@ -89,7 +89,7 @@ void __entity_init ( ex_ref_t *_self ) {
     ex_entity_t *self = EX_REF_CAST(ex_entity_t,_self);
 
     ex_array_each ( self->comps, ex_ref_t *, comp ) {
-        EX_REF_CAST(ex_component_t,comp)->owner = _self;
+        EX_REF_CAST(ex_component_t,comp)->entity = _self;
         EX_REF_CAST(ex_object_t,comp)->init(comp);
         __add_to_cache ( self, ex_rtti_info(comp->ptr)->typeID, comp );
     } ex_array_each_end
@@ -115,7 +115,7 @@ void __entity_deinit ( ex_ref_t *_self ) {
             ex_trans2d_t *child = EX_REF_CAST( ex_trans2d_t, ref );
             // NOTE: this will prevent child remove from parent, which we will do it by ourself
             child->parent = NULL;
-            ex_destroy_object_immediately( ((ex_component_t *)child)->owner, true );
+            ex_destroy_object_immediately( ((ex_component_t *)child)->entity, true );
         } ex_array_each_end
         ex_array_remove_all(trans2d->children);
     }
@@ -243,7 +243,7 @@ void ex_entity_update ( ex_ref_t *_self ) {
                 be->state = EX_BEHAVIOR_STATE_STARTED;
             }
             else {
-                if ( be->update ) 
+                if ( ((ex_component_t *)be)->enabled && be->update ) 
                     be->update(compref);
             }
         }
@@ -261,7 +261,7 @@ void ex_entity_post_update ( ex_ref_t *_self ) {
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
         if ( be ) {
-            if ( be->post_update )
+            if ( ((ex_component_t *)be)->enabled && be->post_update ) 
                 be->post_update(compref);
         }
     } ex_array_each_end

@@ -356,9 +356,7 @@ static int __vec2f_mul ( lua_State *_l ) {
     }
 
     // push
-    luaL_error(_l,"invalid parameter type, lhs and rhs must be %s or number", __typename);
-    lua_pushnil(_l);
-    return 1;
+    return luaL_error(_l,"invalid parameter type, lhs and rhs must be %s or number", __typename);
 }
 
 // ------------------------------------------------------------------ 
@@ -396,9 +394,7 @@ static int __vec2f_div ( lua_State *_l ) {
     }
 
     // push
-    luaL_error(_l,"invalid parameter type, lhs and rhs must be %s or number", __typename);
-    lua_pushnil(_l);
-    return 1;
+    return luaL_error(_l,"invalid parameter type, lhs and rhs must be %s or number", __typename);
 }
 
 // ------------------------------------------------------------------ 
@@ -485,8 +481,7 @@ static int __vec2f_set_x ( lua_State *_l ) {
     // get and check the type
     ex_vec2f_t *v;
     if ( ex_lua_is_readonly(_l,1) ) {
-        luaL_error( _l, "the value is readonly" );
-        return 0;
+        return luaL_error( _l, "the value is readonly" );
     }
     
     v = ex_lua_checkvec2f(_l,1);
@@ -513,8 +508,7 @@ static int __vec2f_set_y ( lua_State *_l ) {
     // get and check the type
     ex_vec2f_t *v;
     if ( ex_lua_is_readonly(_l,1) ) {
-        luaL_error( _l, "the value is readonly" );
-        return 0;
+        return luaL_error( _l, "the value is readonly" );
     }
     
     v = ex_lua_checkvec2f(_l,1);

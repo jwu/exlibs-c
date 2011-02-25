@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : wrap_object.c
+// File         : wrap_component.c
 // Author       : Wu Jie 
-// Last Change  : 02/17/2011 | 20:47:12 PM | Thursday,February
+// Last Change  : 02/25/2011 | 20:04:30 PM | Friday,February
 // Description  : 
 // ======================================================================================
 
@@ -10,7 +10,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../engine/object.h"
+#include "../../engine/entity.h"
+#include "../../engine/component.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -20,22 +21,37 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_LUA_BUILTIN_REF( ex_object_t, object, "ex.object" )
+EX_DEF_LUA_BUILTIN_REF( ex_component_t, component, "ex.component" )
+
+///////////////////////////////////////////////////////////////////////////////
+// type meta getset
+///////////////////////////////////////////////////////////////////////////////
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // type meta method
 ///////////////////////////////////////////////////////////////////////////////
 
+// TODO: this kind of constructor looks cool!
+// ent = ex.entity("entity foo 01")
+// -- ent:add_comp("ex.trans2d")
+// ex.trans2d( ent, {
+//     pos = ex.vec2f(1.0,1.0),
+//     scale = ex.vec2f(1.0,1.0),
+// } )
+
+#if 0
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __object_new ( lua_State *_l ) {
+static int __component_new ( lua_State *_l ) {
     ref_proxy_t *u;
+    const char *name;
     
     u = ex_lua_pushref(_l,1,false);
-    u->val = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_incref(u->val);
+    name = luaL_checkstring(_l,2);
+    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
 
     return 1;
 }
@@ -44,8 +60,9 @@ static int __object_new ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __object_new_for_child ( lua_State *_l ) {
+static int __component_new_for_child ( lua_State *_l ) {
     ref_proxy_t *u;
+    const char *name;
 
     // TODO: new table or from argument { 
     lua_newtable(_l);
@@ -70,98 +87,34 @@ static int __object_new_for_child ( lua_State *_l ) {
     lua_setmetatable(_l,-2);
     
     u = ex_lua_pushref(_l,lua_gettop(_l),false);
-    u->val = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_incref(u->val);
+    name = luaL_checkstring(_l,2); // TODO: ???????
+    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
 
     return 1;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// meta getset
-///////////////////////////////////////////////////////////////////////////////
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __object_get_uid ( lua_State *_l ) {
-    ex_object_t *self;
-    ex_ref_t *r;
-    
-    r = ex_lua_checkobject(_l,1);
-    ex_lua_check_nullref(_l,r);
-    self = EX_REF_CAST(ex_object_t,r);
-
-    // CHECK: i don't know could this be done in 32-bit system (such as win32.) { 
-    lua_pushinteger( _l, self->uid ); 
-    // } CHECK end 
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __object_get_name ( lua_State *_l ) {
-    ex_object_t *self;
-    ex_ref_t *r;
-    
-    r = ex_lua_checkobject(_l,1);
-    ex_lua_check_nullref(_l,r);
-    self = EX_REF_CAST(ex_object_t,r);
-
-    lua_pushstring( _l, ex_strid_to_cstr(self->name) ); 
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __object_set_name ( lua_State *_l ) {
-    ex_object_t *self;
-    ex_ref_t *r;
-    const char *in_name;
-
-    in_name = luaL_checkstring(_l,3);
-    r = ex_lua_checkobject(_l,1);
-    ex_lua_check_nullref(_l,r);
-    self = EX_REF_CAST(ex_object_t,r);
-    self->name = ex_strid(in_name);
-    return 0;
-}
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // meta method
 ///////////////////////////////////////////////////////////////////////////////
 
-static int __object_destroy ( lua_State *_l ) {
-    ex_ref_t *r;
-
-    r = ex_lua_checkobject(_l,1);
-    ex_destroy_object(r);
-    return 0;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
-// ex.object.meta
+// ex.component.meta
 static const ex_getset_t __type_meta_getsets[] = {
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {
     { "__newindex", __type_meta_newindex },
     { "__index", __type_meta_index },
-    { "__call", __object_new },
+    // { "__call", __component_new }, // NOTE: component can't construct directly
     { NULL, NULL },
 };
 
-// ex.object
+// ex.component
 static const ex_getset_t __meta_getsets[] = {
-    { "uid", __object_get_uid, NULL },
-    { "name", __object_get_name, __object_set_name },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {
@@ -170,20 +123,24 @@ static const luaL_Reg __meta_funcs[] = {
     { "__index", __meta_index },
     { "__tostring", ex_lua_ref_tostring },
     { "__eq", ex_lua_ref_eq },
-    { "destroy", __object_destroy },
     { NULL, NULL },
 };
 
-// exposed meta getsets
-const ex_getset_t *ex_object_meta_getsets = __meta_getsets;
-
 // ------------------------------------------------------------------ 
 // Desc: 
+extern const ex_getset_t *ex_object_meta_getsets;
 // ------------------------------------------------------------------ 
 
-int luaopen_object ( lua_State *_l ) {
+int luaopen_component ( lua_State *_l ) {
 
+    const ex_getset_t *meta_getsets_including_parents[3];
+    const ex_getset_t **getsets;
     const ex_getset_t *getset;
+
+    // NOTE: since we have extern link pointers, we can't use static const define
+    meta_getsets_including_parents[0] = ex_object_meta_getsets;
+    meta_getsets_including_parents[1] = __meta_getsets;
+    meta_getsets_including_parents[2] = NULL;
 
     // init the type meta hashtable
     ex_hashmap_init ( &__key_to_type_meta_getset,
@@ -210,20 +167,22 @@ int luaopen_object ( lua_State *_l ) {
                       __ex_hashmap_realloc,
                       __ex_hashmap_dealloc
                     );
-    for ( getset = __meta_getsets; getset->key != NULL; ++getset ) {
-        strid_t keyid = ex_strid(getset->key);
-        ex_hashmap_set( &__key_to_meta_getset, &keyid, getset );
+    for ( getsets = meta_getsets_including_parents; *getsets != NULL; ++getsets ) {
+        for ( getset = *getsets; getset->key != NULL; ++getset ) {
+            strid_t keyid = ex_strid(getset->key);
+            ex_hashmap_set( &__key_to_meta_getset, &keyid, getset );
+        }
     }
 
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" );
     ex_lua_register_class ( _l,
-                            "object",
-                            NULL,
+                            "component",
+                            "ex.object",
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
-                            __object_new_for_child );
+                            NULL );
     lua_pop(_l, 1); // pops ex
     return 0;
 }
@@ -232,8 +191,9 @@ int luaopen_object ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void luaclose_object () {
+void luaclose_component () {
     // deinit the hashtable
     ex_hashmap_deinit ( &__key_to_type_meta_getset );
     ex_hashmap_deinit ( &__key_to_meta_getset );
 }
+
