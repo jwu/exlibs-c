@@ -109,6 +109,7 @@ static int __world_get_current ( lua_State *_l ) {
     ex_ref_t *cur = ex_current_world();
     ref_proxy_t *u = ex_lua_pushworld(_l,false);
     u->val = cur;
+    ex_incref(u->val);
     return 1;
 }
 
@@ -199,7 +200,6 @@ static int __world_new_entity ( lua_State *_l ) {
 
     u = ex_lua_pushentity(_l,false);
     u->val = ent; 
-    ex_incref(u->val);
 
     return 1;
 }

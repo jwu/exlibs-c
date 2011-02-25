@@ -106,8 +106,12 @@ void ex_lua_check_nullref ( lua_State *_l, ex_ref_t *_ref ) {
 
 int ex_lua_ref_gc ( lua_State *_l ) {
     ex_ref_t *r = ex_lua_checkref(_l,1);
+    // DEBUG { 
+    // if ( r->refcount == 1 ) {
+    //     ex_log( "DEBUG: object %s destroyed!!!", ex_strid_to_cstr(ex_object_name(r)) ); 
+    // } 
+    // } DEBUG end 
     ex_decref(r);
-
     return 0;
 }
 

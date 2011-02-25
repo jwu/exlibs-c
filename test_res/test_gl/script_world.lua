@@ -7,9 +7,13 @@
 
 ex.log ("creating script world...")
 
+world = ex.world.current
+ent2 = world:new_entity("hello")
+ent2 = nil
+
 ent = ex.entity("entity foo 01")
 -- ex.debug.dump(getmetatable(ent),"ent")
-ent:destroy()
+-- ent:destroy()
 
 -- local v1 = ex.vec2f( 1.0, 1.0 )
 -- print (v1)
