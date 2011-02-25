@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : wrap_component.c
+// File         : wrap_trans2d.c
 // Author       : Wu Jie 
-// Last Change  : 02/25/2011 | 20:04:30 PM | Friday,February
+// Last Change  : 02/26/2011 | 00:38:20 AM | Saturday,February
 // Description  : 
 // ======================================================================================
 
@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "../../engine/entity.h"
-#include "../../engine/component/component.h"
+#include "../../engine/component/trans2d.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -21,7 +21,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_LUA_BUILTIN_REF( ex_component_t, component, "ex.component" )
+EX_DEF_LUA_BUILTIN_REF( ex_trans2d_t, trans2d, "ex.trans2d" )
 
 ///////////////////////////////////////////////////////////////////////////////
 // type meta getset
@@ -45,7 +45,7 @@ EX_DEF_LUA_BUILTIN_REF( ex_component_t, component, "ex.component" )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __component_new ( lua_State *_l ) {
+static int __trans2d_new ( lua_State *_l ) {
     ref_proxy_t *u;
     const char *name;
     
@@ -60,7 +60,7 @@ static int __component_new ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __component_new_for_child ( lua_State *_l ) {
+static int __trans2d_new_for_child ( lua_State *_l ) {
     ref_proxy_t *u;
     const char *name;
 
@@ -102,27 +102,12 @@ static int __component_new_for_child ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __component_get_entity ( lua_State *_l ) {
-    ex_ref_t *r;
-    ex_component_t *self;
-    ref_proxy_t *u;
-
-    r = ex_lua_checkcomponent(_l,1); 
-    ex_lua_check_nullref(_l,r);
-    self = EX_REF_CAST(ex_component_t,r);
-
-    u = ex_lua_pushentity(_l,false);
-    u->val = self->entity;
-    ex_incref(u->val);
-
-    return 1;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
-// ex.component.meta
+// ex.trans2d.meta
 static const ex_getset_t __type_meta_getsets[] = {
     { NULL, NULL, NULL },
 };
@@ -132,9 +117,14 @@ static const luaL_Reg __type_meta_funcs[] = {
     { NULL, NULL },
 };
 
-// ex.component
+// ex.trans2d
 static const ex_getset_t __meta_getsets[] = {
-    { "entity", __component_get_entity, NULL },
+    // { "local_pos", __trans2d_get_local_pos, __trans2d_set_local_pos },
+    // { "local_ang", __trans2d_get_local_ang, __trans2d_set_local_ang },
+    // { "local_scale", __trans2d_get_local_scale, __trans2d_set_local_scale },
+    // { "world_pos", __trans2d_get_world_pos, __trans2d_set_world_pos },
+    // { "world_ang", __trans2d_get_world_ang, __trans2d_set_world_ang },
+    // { "world_scale", __trans2d_get_world_scale, __trans2d_set_world_scale },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {
@@ -145,14 +135,14 @@ static const luaL_Reg __meta_funcs[] = {
     { "__eq", ex_lua_ref_eq },
     { NULL, NULL },
 };
-const ex_getset_t *ex_component_meta_getsets = __meta_getsets;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 extern const ex_getset_t *ex_object_meta_getsets;
+extern const ex_getset_t *ex_component_meta_getsets;
 // ------------------------------------------------------------------ 
 
-int luaopen_component ( lua_State *_l ) {
+int luaopen_trans2d ( lua_State *_l ) {
 
     const ex_getset_t *meta_getsets_including_parents[3];
     const ex_getset_t **getsets;
@@ -160,8 +150,9 @@ int luaopen_component ( lua_State *_l ) {
 
     // NOTE: since we have extern link pointers, we can't use static const define
     meta_getsets_including_parents[0] = ex_object_meta_getsets;
-    meta_getsets_including_parents[1] = __meta_getsets;
-    meta_getsets_including_parents[2] = NULL;
+    meta_getsets_including_parents[1] = ex_component_meta_getsets;
+    meta_getsets_including_parents[2] = __meta_getsets;
+    meta_getsets_including_parents[3] = NULL;
 
     // init the type meta hashtable
     ex_hashmap_init ( &__key_to_type_meta_getset,
@@ -198,8 +189,8 @@ int luaopen_component ( lua_State *_l ) {
     // we create global ex table if it not exists.
     ex_lua_global_module ( _l, "ex" );
     ex_lua_register_class ( _l,
-                            "component",
-                            "ex.object",
+                            "trans2d",
+                            "ex.component",
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
@@ -212,9 +203,10 @@ int luaopen_component ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void luaclose_component () {
+void luaclose_trans2d () {
     // deinit the hashtable
     ex_hashmap_deinit ( &__key_to_type_meta_getset );
     ex_hashmap_deinit ( &__key_to_meta_getset );
 }
+
 

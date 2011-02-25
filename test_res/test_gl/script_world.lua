@@ -12,7 +12,10 @@ ex.log ("creating script world...")
 -- ent2 = nil
 
 ent = ex.entity("entity foo 01")
-ent:add_comp("ex.trans2d")
+trans2d = ent:add_comp("ex.trans2d")
+
+ex.log("entity name " .. trans2d.entity.name ) 
+ex.log("is the same " .. tostring( trans2d.entity == ent ) ) 
 
 -- ex.debug.dump(getmetatable(ent),"ent")
 -- ent:destroy()

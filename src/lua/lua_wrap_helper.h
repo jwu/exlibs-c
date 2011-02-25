@@ -71,6 +71,8 @@ EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
 EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     EX_DECL_LUA_BUILTIN_REF_2(world,ex_world_t)
     EX_DECL_LUA_BUILTIN_REF_2(entity,ex_entity_t)
+    EX_DECL_LUA_BUILTIN_REF_2(component,ex_component_t)
+    EX_DECL_LUA_BUILTIN_REF_2(trans2d,ex_trans2d_t)
 
 // undef macros
 #undef EX_DECL_LUA_BUILTIN_TYPE

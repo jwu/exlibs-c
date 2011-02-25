@@ -109,6 +109,7 @@ static int __entity_add_comp ( lua_State *_l ) {
     luaL_newmetatable( _l, comp_typename );
     u = ex_lua_pushref ( _l, lua_gettop(_l), false );
     u->val = comp;
+    ex_incref(u->val);
     return 1;
 }
 
