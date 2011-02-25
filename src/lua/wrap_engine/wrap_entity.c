@@ -34,22 +34,22 @@ static const char *__typename = "ex.entity";
 // ------------------------------------------------------------------ 
 
 static int __type_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex( _l, &__key_to_type_meta_getset );
+    return ex_lua_type_meta_newindex( _l, &__key_to_type_meta_getset );
 }
 static int __type_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index( _l, &__key_to_type_meta_getset );
+    return ex_lua_type_meta_index( _l, &__key_to_type_meta_getset );
 }
 static int __meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex( _l, &__key_to_meta_getset );
+    return ex_lua_meta_newindex( _l, &__key_to_meta_getset );
 }
 static int __meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index( _l, &__key_to_meta_getset );
+    return ex_lua_meta_index( _l, &__key_to_meta_getset );
 }
 static int __child_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex_for_child( _l, &__key_to_meta_getset );
+    return ex_lua_child_meta_newindex( _l, &__key_to_meta_getset );
 }
 static int __child_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index_for_child( _l, &__key_to_meta_getset );
+    return ex_lua_child_meta_index( _l, &__key_to_meta_getset );
 }
 
 // ------------------------------------------------------------------ 
@@ -118,6 +118,7 @@ static int __entity_new ( lua_State *_l ) {
     u = ex_lua_pushref(_l,1,false);
     name = luaL_checkstring(_l,2);
     u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    ex_incref(u->val); // NOTE: you must increase reference here so that lua can keep it, create_entity incref because of the world keep it.
 
     return 1;
 }
@@ -155,6 +156,7 @@ static int __entity_new_for_child ( lua_State *_l ) {
     u = ex_lua_pushref(_l,lua_gettop(_l),false);
     name = luaL_checkstring(_l,2); // TODO: ???????
     u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    ex_incref(u->val); // NOTE: you must increase reference here so that lua can keep it, create_entity incref because of the world keep it.
 
     return 1;
 }

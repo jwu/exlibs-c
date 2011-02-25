@@ -8,8 +8,8 @@
 ex.log ("creating script world...")
 
 ent = ex.entity("entity foo 01")
-ex.debug.dump(getmetatable(ent),"ent")
--- ent:destroy()
+-- ex.debug.dump(getmetatable(ent),"ent")
+ent:destroy()
 
 -- local v1 = ex.vec2f( 1.0, 1.0 )
 -- print (v1)

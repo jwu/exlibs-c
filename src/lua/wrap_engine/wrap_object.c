@@ -33,22 +33,22 @@ static const char *__typename = "ex.object";
 // ------------------------------------------------------------------ 
 
 static int __type_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex( _l, &__key_to_type_meta_getset );
+    return ex_lua_type_meta_newindex( _l, &__key_to_type_meta_getset );
 }
 static int __type_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index( _l, &__key_to_type_meta_getset );
+    return ex_lua_type_meta_index( _l, &__key_to_type_meta_getset );
 }
 static int __meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex( _l, &__key_to_meta_getset );
+    return ex_lua_meta_newindex( _l, &__key_to_meta_getset );
 }
 static int __meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index( _l, &__key_to_meta_getset );
+    return ex_lua_meta_index( _l, &__key_to_meta_getset );
 }
 static int __child_meta_newindex ( lua_State *_l ) {
-    return ex_lua_userdata_newindex_for_child( _l, &__key_to_meta_getset );
+    return ex_lua_child_meta_newindex( _l, &__key_to_meta_getset );
 }
 static int __child_meta_index ( lua_State *_l ) {
-    return ex_lua_userdata_index_for_child( _l, &__key_to_meta_getset );
+    return ex_lua_child_meta_index( _l, &__key_to_meta_getset );
 }
 
 // ------------------------------------------------------------------ 

@@ -183,7 +183,6 @@ void ex_lua_deinit () {
     if ( __initialized ) {
         // before close modules, force a complete garbage collection in case of memory leak
         lua_gc(__L, LUA_GCCOLLECT, 0);
-        // ex_lua_dostring(__L, "collectgarbage('collect')" );
 
         luaclose_core ();
         luaclose_vec2f ();
@@ -572,6 +571,35 @@ int ex_lua_dostring ( lua_State *_l, const char *_fmt, ... ) {
     return 0;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_clear_refs ( lua_State *_l ) {
+    // get global table "_G"
+    lua_getglobal(_l, "_G");
+
+    // first key
+    lua_pushnil(_l);
+    while ( lua_next(_l, -2) != 0 ) {
+
+        // TODO: should recursively check the table....
+
+        if ( ex_lua_isclass( _l, lua_gettop(_l) ) ) {
+            lua_pushvalue(_l,-3); // push table
+            lua_pushvalue(_l,-3); // push key
+            lua_pushnil(_l); // push key
+            lua_settable(_l,-3);
+            lua_pop(_l,1); // pops table
+        }
+
+        // removes 'value'; keeps 'key' for next iteration
+        lua_pop(_l, 1);
+    }
+    lua_gc(__L, LUA_GCCOLLECT, 0);
+    return 0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // lua module functions in c
 ///////////////////////////////////////////////////////////////////////////////
@@ -879,7 +907,7 @@ int ex_lua_deepcopy ( lua_State *_l, int _idx ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_userdata_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+int ex_lua_type_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
@@ -922,7 +950,7 @@ int ex_lua_userdata_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_userdata_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+int ex_lua_type_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
@@ -959,6 +987,145 @@ int ex_lua_userdata_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 
     // process
     return getset->get(_l);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+    const char* key;
+    strid_t key_id;
+    ex_getset_t *getset;
+
+    // first use rawget check if we have value in metatable.
+    // NOTE: we not allow change the builtin values. so all of them are readonly.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        luaL_error ( _l, "fatal error: can't find the metatable!" );
+        return 0;
+    }
+    key = luaL_checkstring(_l, 2);
+    lua_pushstring ( _l, key );
+    lua_rawget ( _l, -2 );
+    // if this is not nil
+    if ( lua_isnil( _l, -1 ) == 0 ) {
+        luaL_error(_l,"the key %s is readonly", key);
+        return 0;
+    }
+    lua_pop(_l,1); // pops v
+
+    // get and check the key
+    key_id = ex_strid(key);
+    getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
+    if ( getset ) {
+        if ( getset->set == NULL ) {
+            luaL_error(_l,"the key %s is readonly", key);
+            return 0;
+        }
+        // process
+        return getset->set(_l);
+    }
+    
+    // process super
+
+    // check if the super have the key
+    // local super = rawget(mt,"__super")
+    lua_pushstring(_l,"__super");
+    lua_rawget(_l,-2);
+
+    // while super ~= nil do
+    while ( lua_isnil(_l,-1) == 0 ) {
+        // get key from super's metatable
+        // v = rawget(super,_k)
+        lua_pushvalue(_l,2); // push key
+        lua_rawget(_l,-2);
+        // if v ~= nil then 
+        if ( lua_isnil(_l,-1) == 0 ) {
+            // rawset(_t,_k,_v)
+            lua_pushvalue(_l,2); // push _k
+            lua_pushvalue(_l,3); // push _v
+            lua_rawset (_l,1);
+            return 0;
+        }
+        lua_pop(_l,1); // pops v
+
+        // get super's super from super's metatable
+        // super = rawget(super,"__super")
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-2);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops rawget
+
+    luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+    const char* key;
+    strid_t key_id;
+    ex_getset_t *getset;
+
+    // first use rawget check if we have value in metatable.
+    if ( lua_getmetatable( _l, 1 ) == 0 ) {
+        luaL_error ( _l, "fatal error: can't find the metatable!" );
+        lua_pushnil(_l);
+        return 1;
+    }
+    lua_pushvalue ( _l, 2 );
+    lua_rawget ( _l, -2 );
+    if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
+        return 1;
+    lua_pop(_l,1); // pops v
+
+    // check the key
+    key = luaL_checkstring(_l, 2);
+    key_id = ex_strid(key);
+    getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
+    if ( getset ) {
+        if ( getset->get == NULL ) {
+            luaL_error(_l, "the key %s is writeonly", key);
+            lua_pushnil(_l);
+            return 1;
+        }
+        // process
+        return getset->get(_l);
+    }
+
+    // process in super
+
+    // check if the super have the key
+    // local super = rawget(mt,"__super")
+    lua_pushstring(_l,"__super");
+    lua_rawget(_l,-2);
+
+    // while super ~= nil do
+    while ( lua_isnil(_l,-1) == 0 ) {
+        // get key from super's metatable
+        // v = rawget(super,_k)
+        lua_pushvalue(_l,2); // push key
+        lua_rawget(_l,-2);
+        // if v ~= nil then 
+        if ( lua_isnil(_l,-1) == 0 ) {
+            return 1;
+        }
+        lua_pop(_l,1); // pops v
+
+        // get super's super from super's metatable
+        // super = rawget(super,"__super")
+        lua_pushstring(_l,"__super");
+        lua_rawget(_l,-2);
+        lua_remove(_l,-2); // pops prev rawget
+    }
+    lua_pop(_l,1); // pops rawget
+
+    // return nil
+    lua_pushnil(_l);
+    return 1;
 }
 
 // ------------------------------------------------------------------ 
@@ -999,7 +1166,7 @@ static inline int __copy_v ( lua_State *_l, int _idx ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_userdata_newindex_for_child ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
@@ -1118,7 +1285,7 @@ int ex_lua_userdata_newindex_for_child ( lua_State *_l, ex_hashmap_t *_key_to_ge
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_userdata_index_for_child ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
+int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     const char* key;
     strid_t key_id;
     ex_getset_t *getset;
