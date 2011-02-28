@@ -91,6 +91,8 @@ static int __world_new_for_child ( lua_State *_l ) {
     // TODO: should be lua class __tostring { 
     lua_pushcfunction(_l,ex_lua_ref_tostring);
     lua_setfield(_l,-2,"__tostring");
+    lua_pushcfunction(_l,ex_lua_ref_concat);
+    lua_setfield(_l,-2,"__concat");
     // } TODO end 
 
     lua_pushvalue(_l,1);
