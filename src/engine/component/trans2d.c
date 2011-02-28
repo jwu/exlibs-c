@@ -55,9 +55,9 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_component_t, entity, NULL )
     EX_MEMBER( ex_component_t, enabled, true )
 
-    EX_MEMBER( ex_trans2d_t, pos, ex_vec2f_zero )
-    EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
-    EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_one )
+    EX_MEMBER( ex_trans2d_t, local_pos, ex_vec2f_zero )
+    EX_MEMBER( ex_trans2d_t, local_ang, ex_angf_zero )
+    EX_MEMBER( ex_trans2d_t, local_scale, ex_vec2f_one )
     EX_MEMBER( ex_trans2d_t, parent, NULL )
     EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
     EX_MEMBER( ex_trans2d_t, dirty, true )
@@ -67,23 +67,23 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
 EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_trans2d_t)
-    EX_PROP( ex_trans2d_t, vec2f, pos, "position",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_trans2d_t, angf, ang, "angle",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_trans2d_t, vec2f, scale, "scale",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, vec2f, local_pos, "local position",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, angf, local_ang, "local angle",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, vec2f, local_scale, "local scale",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN_SUPER(ex_trans2d_t,ex_component_t)
-    EX_MEMBER_SERIALIZE( vec2f, pos )
-    EX_MEMBER_SERIALIZE( angf, ang )
-    EX_MEMBER_SERIALIZE( vec2f, scale )
+    EX_MEMBER_SERIALIZE( vec2f, local_pos )
+    EX_MEMBER_SERIALIZE( angf, local_ang )
+    EX_MEMBER_SERIALIZE( vec2f, local_scale )
     EX_MEMBER_SERIALIZE( ref, parent )
     EX_MEMBER_SERIALIZE_ARRAY( ref, children )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
-    EX_MEMBER_TOSTRING ( vec2f, "position", self->pos )
-    EX_MEMBER_TOSTRING ( angf, "angle", self->ang )
-    EX_MEMBER_TOSTRING ( vec2f, "scale", self->scale )
+    EX_MEMBER_TOSTRING ( vec2f, "local position", self->local_pos )
+    EX_MEMBER_TOSTRING ( angf, "local angle", self->local_ang )
+    EX_MEMBER_TOSTRING ( vec2f, "local scale", self->local_scale )
     EX_MEMBER_TOSTRING ( ref, "parent", self->parent )
     EX_MEMBER_TOSTRING ( array, "childrent", self->children )
 EX_DEF_TOSTRING_END
@@ -147,8 +147,8 @@ static void __update_matrix ( ex_ref_t *_self ) {
     ex_mutex_lock(self->dirty_mutex);
 
     // calculate the local to world matrix.
-    // ex_mat33f_from_TRS( &(self->localToWorld), &self->pos, &self->ang, &ex_vec2f_one );
-    ex_mat33f_from_TRS( &(self->localToWorld), &self->pos, &self->ang, &self->scale );
+    // ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &ex_vec2f_one );
+    ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &self->local_scale );
 
     if ( parent ) {
         ex_mat33f_t matParent;
@@ -181,9 +181,9 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
         return;
 
     // get the world position under current parent
-    ex_trans2d_world_position(_self,&self->pos);
-    ex_trans2d_world_scale(_self,&self->scale);
-    ex_trans2d_world_rotation(_self,&self->ang);
+    ex_trans2d_world_position(_self,&self->local_pos);
+    ex_trans2d_world_scale(_self,&self->local_scale);
+    ex_trans2d_world_rotation(_self,&self->local_ang);
 
     // remove self from old parent
     if ( self->parent ) {
@@ -202,14 +202,14 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
         __update_matrix(_parent);
 
         ex_trans2d_world_rotation( _parent, &parent_ang );
-        ex_angf_sub( &self->ang, &self->ang, &parent_ang );
+        ex_angf_sub( &self->local_ang, &self->local_ang, &parent_ang );
 
         ex_trans2d_world_scale( _parent, &parent_scale );
-        ex_vec2f_div( &self->scale, &self->scale, &parent_scale );
+        ex_vec2f_div( &self->local_scale, &self->local_scale, &parent_scale );
 
-        ex_vec3f_set(&pos3, self->pos.x, self->pos.y, 1.0f );
+        ex_vec3f_set(&pos3, self->local_pos.x, self->local_pos.y, 1.0f );
         ex_vec3f_mul_mat33f( &pos3, &pos3, &parent->worldToLocal );
-        ex_vec2f_set( &self->pos, pos3.x, pos3.y );
+        ex_vec2f_set( &self->local_pos, pos3.x, pos3.y );
     }
 
     __matrix_dirty(_self);
@@ -228,9 +228,9 @@ void ex_trans2d_detach_children ( ex_ref_t *_self ) {
         child = EX_REF_CAST(ex_trans2d_t,ref);
 
         // get the world position under current parent
-        ex_trans2d_world_position(ref,&child->pos);
-        ex_trans2d_world_scale(ref,&child->scale);
-        ex_trans2d_world_rotation(ref,&child->ang);
+        ex_trans2d_world_position(ref,&child->local_pos);
+        ex_trans2d_world_scale(ref,&child->local_scale);
+        ex_trans2d_world_rotation(ref,&child->local_ang);
         __matrix_dirty(ref);
 
         //
@@ -251,12 +251,12 @@ void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
 
     // KEEPME: the old method { 
     // ex_mat22f_t rot;
-    // *_pos = self->pos;
+    // *_pos = self->local_pos;
     // ex_trans2d_t *parent = self->parent ? EX_REF_CAST(ex_trans2d_t,self->parent) : NULL;
     // while ( parent ) {
-    //     ex_angf_to_rot22 ( &(parent->ang), &rot );
+    //     ex_angf_to_rot22 ( &(parent->local_ang), &rot );
     //     ex_vec2f_mul_mat22f ( _pos, _pos, &rot );
-    //     ex_vec2f_add( _pos, _pos, &(parent->pos) );
+    //     ex_vec2f_add( _pos, _pos, &(parent->local_pos) );
     //     parent = parent->parent ? EX_REF_CAST(ex_trans2d_t, parent->parent) : NULL;
     // }
     // } KEEPME end 
@@ -275,9 +275,9 @@ void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
     // KEEPME { 
     // ex_trans2d_t *parent = self->parent ? EX_REF_CAST(ex_trans2d_t,self->parent) : NULL;
     // ex_ref_t *parent_parent = NULL;
-    // *_ang = self->ang;
+    // *_ang = self->local_ang;
     // while ( parent ) {
-    //     ex_angf_add( _ang, _ang, &(parent->ang) );
+    //     ex_angf_add( _ang, _ang, &(parent->local_ang) );
 
     //     parent_parent = parent->parent;
     //     parent = parent_parent ? EX_REF_CAST(ex_trans2d_t, parent_parent) : NULL;
@@ -298,9 +298,9 @@ void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
     // KEEPME { 
     // ex_trans2d_t *parent = self->parent ? EX_REF_CAST(ex_trans2d_t,self->parent) : NULL;
     // ex_ref_t *parent_parent = NULL;
-    // *_scale = self->scale;
+    // *_scale = self->local_scale;
     // while ( parent ) {
-    //     ex_vec2f_mul( _scale, _scale, &(parent->scale) );
+    //     ex_vec2f_mul( _scale, _scale, &(parent->local_scale) );
     //     parent_parent = parent->parent;
     //     parent = parent_parent ? EX_REF_CAST(ex_trans2d_t, parent_parent) : NULL;
     // }
@@ -313,7 +313,7 @@ void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
 
 void ex_trans2d_local_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
-    *_pos = self->pos; 
+    *_pos = self->local_pos; 
 }
 
 // ------------------------------------------------------------------ 
@@ -322,7 +322,7 @@ void ex_trans2d_local_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
 
 void ex_trans2d_local_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
-    *_ang = self->ang; 
+    *_ang = self->local_ang; 
 } 
 
 // ------------------------------------------------------------------ 
@@ -331,7 +331,7 @@ void ex_trans2d_local_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
 
 void ex_trans2d_local_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
-    *_scale = self->scale; 
+    *_scale = self->local_scale; 
 }
 
 // ------------------------------------------------------------------ 
@@ -387,7 +387,7 @@ void ex_trans2d_world_to_local_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ) 
 void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
-    ex_vec2f_set ( &self->pos, _x, _y );
+    ex_vec2f_set ( &self->local_pos, _x, _y );
     __matrix_dirty(_self);
 }
 
@@ -398,7 +398,7 @@ void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y ) {
 void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ) {
 	ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 	
-    ex_angf_set_by_radians ( &self->ang, _radians );
+    ex_angf_set_by_radians ( &self->local_ang, _radians );
     __matrix_dirty(_self);
 }
 
@@ -409,7 +409,7 @@ void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ) {
 void ex_trans2d_set_local_scale ( ex_ref_t *_self, float _x, float _y ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
-    ex_vec2f_set ( &self->scale, _x, _y );
+    ex_vec2f_set ( &self->local_scale, _x, _y );
     __matrix_dirty(_self);
 }
 
@@ -429,10 +429,10 @@ void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
 
         ex_vec3f_set ( &v3, _x, _y, 1.0f );
         ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
-        ex_vec2f_set ( &self->pos, v3.x, v3.y );
+        ex_vec2f_set ( &self->local_pos, v3.x, v3.y );
     }
     else {
-        ex_vec2f_set ( &self->pos, _x, _y );
+        ex_vec2f_set ( &self->local_pos, _x, _y );
     }
 
     __matrix_dirty(_self);
@@ -451,10 +451,10 @@ void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
 
         ex_angf_set_by_radians( &ang, _radians );
         ex_trans2d_world_rotation( parent_ref, &parent_ang );
-        ex_angf_sub( &self->ang, &ang, &parent_ang );
+        ex_angf_sub( &self->local_ang, &ang, &parent_ang );
     }
     else {
-        ex_angf_set_by_radians( &self->ang, _radians );
+        ex_angf_set_by_radians( &self->local_ang, _radians );
     }
 
     __matrix_dirty(_self);
@@ -473,10 +473,10 @@ void ex_trans2d_set_world_scale ( ex_ref_t *_self, float _x, float _y ) {
 
         ex_vec2f_set ( &scale, _x, _y );
         ex_trans2d_world_scale( parent_ref, &parent_scale );
-        ex_vec2f_div( &self->scale, &scale, &parent_scale );
+        ex_vec2f_div( &self->local_scale, &scale, &parent_scale );
     }
     else {
-        ex_vec2f_set ( &self->scale, _x, _y );
+        ex_vec2f_set ( &self->local_scale, _x, _y );
     }
 
     __matrix_dirty(_self);
@@ -589,7 +589,7 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
         ex_vec2f_t v2;
 
         ex_vec2f_set ( &v2, _x, _y );
-        ex_vec2f_add ( &self->pos, &self->pos, &v2 );
+        ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
     }
     else if ( _space == EX_SPACE_WORLD ) {
         ex_vec3f_t v3;
@@ -602,12 +602,12 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
 
             ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
             ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
-            ex_vec2f_add ( &self->pos, &self->pos, (ex_vec2f_t *)(&v3) ); // NOTE: yes, we can directly cast v3 to v2.
+            ex_vec2f_add ( &self->local_pos, &self->local_pos, (ex_vec2f_t *)(&v3) ); // NOTE: yes, we can directly cast v3 to v2.
         }
         else {
             ex_vec2f_t v2;
             ex_vec2f_set ( &v2, _x, _y );
-            ex_vec2f_add ( &self->pos, &self->pos, &v2 );
+            ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
         }
     }
 
@@ -638,7 +638,7 @@ void ex_trans2d_rotate ( ex_ref_t *_self, float _radians ) {
     ex_angf_t new_ang;
 
     ex_angf_set_by_radians( &new_ang, _radians );
-    ex_angf_add( &self->ang, &self->ang, &new_ang );
+    ex_angf_add( &self->local_ang, &self->local_ang, &new_ang );
     __matrix_dirty(_self);
 }
 
@@ -685,7 +685,7 @@ void ex_trans2d_rotate_around ( ex_ref_t *_self, float _radians, const ex_vec2f_
     ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
 
     // NOTE: this will also change the orientation.
-    ex_angf_add( &self->ang, &self->ang, &rot_ang );
+    ex_angf_add( &self->local_ang, &self->local_ang, &rot_ang );
 #endif
 
     ex_trans2d_set_world_position( _self, wpos_v3.x, wpos_v3.y );

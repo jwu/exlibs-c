@@ -155,6 +155,7 @@ static const luaL_Reg __meta_funcs[] = {
     { "__newindex", __meta_newindex },
     { "__index", __meta_index },
     { "__tostring", ex_lua_ref_tostring },
+    { "__concat", ex_lua_ref_concat },
     { "__eq", ex_lua_ref_eq },
     { "new_entity", __world_new_entity },
     { NULL, NULL },

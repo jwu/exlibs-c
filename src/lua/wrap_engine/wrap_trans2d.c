@@ -138,6 +138,10 @@ static int __trans2d_get_local_pos ( lua_State *_l ) {
 static int __trans2d_set_local_pos ( lua_State *_l ) {
     ex_ref_t *r;
 
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
+
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
@@ -170,6 +174,10 @@ int __trans2d_get_local_ang ( lua_State *_l ) {
 
 int __trans2d_set_local_ang ( lua_State *_l ) {
     ex_ref_t *r;
+
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
@@ -214,6 +222,10 @@ int __trans2d_get_local_scale ( lua_State *_l ) {
 int __trans2d_set_local_scale ( lua_State *_l ) {
     ex_ref_t *r;
 
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
+
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
@@ -247,6 +259,10 @@ int __trans2d_get_world_pos ( lua_State *_l ) {
 int __trans2d_set_world_pos ( lua_State *_l ) {
     ex_ref_t *r;
 
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
+
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
@@ -279,6 +295,10 @@ int __trans2d_get_world_ang ( lua_State *_l ) {
 
 int __trans2d_set_world_ang ( lua_State *_l ) {
     ex_ref_t *r;
+
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
@@ -323,6 +343,10 @@ int __trans2d_get_world_scale ( lua_State *_l ) {
 int __trans2d_set_world_scale ( lua_State *_l ) {
     ex_ref_t *r;
 
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
+
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
@@ -330,6 +354,119 @@ int __trans2d_set_world_scale ( lua_State *_l ) {
     ex_trans2d_set_world_scale( r, v->x, v->y );
 
     return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_right ( lua_State *_l ) {
+    ex_ref_t *r;
+    vec2f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushvec2f(_l,false);
+    ex_trans2d_right( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_right ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    ex_trans2d_set_right( r, v );
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_up ( lua_State *_l ) {
+    ex_ref_t *r;
+    vec2f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushvec2f(_l,false);
+    ex_trans2d_up( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_up ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    if ( ex_lua_is_readonly(_l,1) ) {
+        return luaL_error( _l, "the value is readonly" );
+    }
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    ex_trans2d_set_up( r, v );
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_parent ( lua_State *_l ) {
+    ex_ref_t *r;
+    ref_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushtrans2d(_l,false);
+    u->val = EX_REF_CAST(ex_trans2d_t,r)->parent;
+    ex_incref(u->val);
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_parent ( lua_State *_l ) {
+    ex_ref_t *r, *parent;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    if ( lua_isnil(_l,3) ) {
+        ex_trans2d_set_parent ( r, NULL );
+    }
+    else {
+        parent = ex_lua_checktrans2d(_l,3);
+        ex_trans2d_set_parent ( r, parent );
+    }
+
+    return 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -355,6 +492,9 @@ static const ex_getset_t __meta_getsets[] = {
     { "position", __trans2d_get_world_pos, __trans2d_set_world_pos },
     { "angle", __trans2d_get_world_ang, __trans2d_set_world_ang },
     { "scale", __trans2d_get_world_scale, __trans2d_set_world_scale },
+    { "right", __trans2d_get_right, __trans2d_set_right },
+    { "up", __trans2d_get_up, __trans2d_set_up },
+    { "parent", __trans2d_get_parent, __trans2d_set_parent },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {
@@ -362,6 +502,7 @@ static const luaL_Reg __meta_funcs[] = {
     { "__newindex", __meta_newindex },
     { "__index", __meta_index },
     { "__tostring", ex_lua_ref_tostring },
+    { "__concat", ex_lua_ref_concat },
     { "__eq", ex_lua_ref_eq },
     { NULL, NULL },
 };

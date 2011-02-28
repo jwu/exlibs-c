@@ -7,18 +7,26 @@
 
 ex.log ("creating script world...")
 
--- world = ex.world.current
--- ent2 = world:new_entity("hello")
--- ent2 = nil
-
-ent = ex.entity("entity foo 01")
-trans2d = ent:add_comp("ex.trans2d")
--- trans2d.scale = ex.vec2f(100.0,100.0)
+ent1 = ex.entity("entity foo 01")
+trans2d = ent1:add_comp("ex.trans2d")
 trans2d.scale = ex.vec2f(100.0,100.0)
-ent:add_comp("ex.debug2d")
+trans2d.position = ex.vec2f(0.0,0.0)
+ent1:add_comp("ex.debug2d")
 
-ex.log("entity name " .. trans2d.entity.name ) 
-ex.log("is the same " .. tostring( trans2d.entity == ent ) ) 
+ent2 = ex.entity("entity foo 02")
+trans2d = ent2:add_comp("ex.trans2d")
+trans2d.scale = ex.vec2f(50.0,50.0)
+trans2d.position = ex.vec2f(200.0,200.0)
+trans2d.parent = ent1.trans2d
+ent2:add_comp("ex.debug2d")
+ex.log ("trans2d is " .. trans2d)
+
+ent3 = ex.entity("entity foo 03")
+trans2d = ent3:add_comp("ex.trans2d")
+trans2d.scale = ex.vec2f(50.0,50.0)
+trans2d.position = ex.vec2f(-200.0,200.0)
+trans2d.parent = ent2.trans2d.parent
+ent3:add_comp("ex.debug2d")
 
 -- ex.debug.dump(getmetatable(ent),"ent")
 -- ent:destroy()

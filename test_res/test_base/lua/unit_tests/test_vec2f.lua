@@ -9,7 +9,7 @@
 --
 --/////////////////////////////////////////////////////////////////////////////
 
-local do_test = false
+local do_test = true
 if not do_test then return end
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -21,6 +21,7 @@ ex.log ( "test vec2f" )
 v1 = ex.vec2f( 10.0, 20.0 )
 v2 = ex.vec2f( -20.0, -10.0 )
 v3 = ex.vec2f.one
+ex.vec2f.one.x = 2.0
 
 print ("v1 is "..v1)
 print ("v2 is "..v2)

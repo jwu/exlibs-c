@@ -166,6 +166,28 @@ static int __entity_get_comp ( lua_State *_l ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// meta getset
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __entity_get_trans2d ( lua_State *_l ) {
+    ex_ref_t *r;
+    ref_proxy_t *u;
+
+    r = ex_lua_checkentity(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushtrans2d(_l,false);
+    u->val = EX_REF_CAST(ex_entity_t,r)->trans2d; 
+    ex_incref(u->val);
+
+    return 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -182,6 +204,7 @@ static const luaL_Reg __type_meta_funcs[] = {
 
 // ex.entity
 static const ex_getset_t __meta_getsets[] = {
+    { "trans2d", __entity_get_trans2d, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {
@@ -189,6 +212,7 @@ static const luaL_Reg __meta_funcs[] = {
     { "__newindex", __meta_newindex },
     { "__index", __meta_index },
     { "__tostring", ex_lua_ref_tostring },
+    { "__concat", ex_lua_ref_concat },
     { "__eq", ex_lua_ref_eq },
     { "add_comp", __entity_add_comp },
     { "get_comp", __entity_get_comp },

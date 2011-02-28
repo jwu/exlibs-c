@@ -139,6 +139,23 @@ int ex_lua_ref_tostring ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+int ex_lua_ref_concat ( lua_State *_l ) {
+    void *obj;
+    const char *lhs = luaL_checkstring(_l, 1); 
+    ex_string_t *str = ex_string_alloc(lhs,256); 
+    ex_ref_t *rhs = ex_lua_checkref(_l,2); 
+
+    obj = rhs->ptr;
+    ex_rtti_info(obj)->tostring(str, obj); 
+    lua_pushstring(_l, str->text); 
+    ex_string_free(str); 
+    return 1; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 int ex_lua_ref_eq ( struct lua_State *_l ) {
     ex_ref_t *lhs, *rhs;
 

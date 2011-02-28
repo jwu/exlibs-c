@@ -235,6 +235,7 @@ extern void ex_lua_check_nullref ( struct lua_State *_l, ex_ref_t *_ref );
 
 extern int ex_lua_ref_gc ( struct lua_State *_l );
 extern int ex_lua_ref_tostring ( struct lua_State *_l );
+extern int ex_lua_ref_concat ( struct lua_State *_l );
 extern int ex_lua_ref_eq ( struct lua_State *_l );
 
 // ------------------------------------------------------------------ 
