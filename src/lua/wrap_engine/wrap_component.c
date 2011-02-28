@@ -27,33 +27,17 @@ EX_DEF_LUA_BUILTIN_REF( ex_component_t, component, "ex.component" )
 // type meta getset
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // type meta method
 ///////////////////////////////////////////////////////////////////////////////
 
-// TODO: this kind of constructor looks cool!
-// ent = ex.entity("entity foo 01")
-// -- ent:add_comp("ex.trans2d")
-// ex.trans2d( ent, {
-//     pos = ex.vec2f(1.0,1.0),
-//     scale = ex.vec2f(1.0,1.0),
-// } )
-
-#if 0
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 static int __component_new ( lua_State *_l ) {
-    ref_proxy_t *u;
-    const char *name;
-    
-    u = ex_lua_pushref(_l,1,false);
-    name = luaL_checkstring(_l,2);
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
-
-    return 1;
+    luaL_error( _l, "can't construct empty component directly" );
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -62,7 +46,9 @@ static int __component_new ( lua_State *_l ) {
 
 static int __component_new_for_child ( lua_State *_l ) {
     ref_proxy_t *u;
-    const char *name;
+    ex_ref_t *ent, *comp;
+    const char *tp_name;
+    int nargs = lua_gettop(_l);
 
     // TODO: new table or from argument { 
     lua_newtable(_l);
@@ -85,14 +71,22 @@ static int __component_new_for_child ( lua_State *_l ) {
 
     lua_pushvalue(_l,1);
     lua_setmetatable(_l,-2);
-    
+
+    //
     u = ex_lua_pushref(_l,lua_gettop(_l),false);
-    name = luaL_checkstring(_l,2); // TODO: ???????
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    ent = ex_lua_checkentity(_l,2);
+
+    lua_getfield(_l,1,"__typename");
+    tp_name = luaL_checkstring(_l,-1);
+    comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
+    u->val = comp;
+
+    if ( nargs > 1 ) {
+        // TODO:
+    }
 
     return 1;
 }
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // meta method
@@ -129,6 +123,7 @@ static const ex_getset_t __type_meta_getsets[] = {
 static const luaL_Reg __type_meta_funcs[] = {
     { "__newindex", __type_meta_newindex },
     { "__index", __type_meta_index },
+    { "__call", __component_new },
     { NULL, NULL },
 };
 
@@ -203,7 +198,7 @@ int luaopen_component ( lua_State *_l ) {
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
-                            NULL );
+                            __component_new_for_child );
     lua_pop(_l, 1); // pops ex
     return 0;
 }

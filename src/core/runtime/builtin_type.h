@@ -37,19 +37,20 @@
 // declares
 ///////////////////////////////////////////////////////////////////////////////
 
-#define DECL_BUILTIN_TYPE(_typename) DECL_BUILTIN_TYPE_2(_typename,_typename)
 
-#define DECL_BUILTIN_TYPE_2(_typename,_type) \
-    extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
-    static inline void __ex_register_builtin_type_##_typename () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_typename##__ = ex_strid(#_typename); \
-        __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
+#define DECL_BUILTIN_TYPE(_ctype) DECL_BUILTIN_TYPE_3(_ctype,_ctype,"ex."#_ctype)
+#define DECL_BUILTIN_TYPE_2(_shotname,_ctype) DECL_BUILTIN_TYPE_3(_shotname,_ctype,"ex."#_shotname)
+#define DECL_BUILTIN_TYPE_3(_shotname,_ctype,_luatype) \
+    extern ex_rtti_t *__RTTI_##_shotname##__; /*for EX_RTTI*/ \
+    static inline void __ex_register_builtin_type_##_shotname () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __TYPEID_##_shotname##__ = ex_strid(_luatype); \
+        __RTTI_##_shotname##__ = ex_rtti_register_class ( __TYPEID_##_shotname##__, \
                                                           NULL, \
+                                                          _luatype, \
+                                                          sizeof(_ctype), \
                                                           NULL, \
-                                                          sizeof(_type), \
-                                                          NULL, \
-                                                          __ex_serialize_##_typename, \
-                                                          __ex_tostring_##_typename \
+                                                          __ex_serialize_##_shotname, \
+                                                          __ex_tostring_##_shotname \
                                                           ); \
     }
 
@@ -88,6 +89,7 @@ DECL_BUILTIN_TYPE_2(ref, ex_ref_t *);
 
 #undef DECL_BUILTIN_TYPE
 #undef DECL_BUILTIN_TYPE_2
+#undef DECL_BUILTIN_TYPE_3
 
 ///////////////////////////////////////////////////////////////////////////////
 // func

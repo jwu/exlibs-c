@@ -13,6 +13,9 @@ ex.log ("creating script world...")
 
 ent = ex.entity("entity foo 01")
 trans2d = ent:add_comp("ex.trans2d")
+-- trans2d.scale = ex.vec2f(100.0,100.0)
+trans2d.scale = ex.vec2f(100.0,100.0)
+ent:add_comp("ex.debug2d")
 
 ex.log("entity name " .. trans2d.entity.name ) 
 ex.log("is the same " .. tostring( trans2d.entity == ent ) ) 

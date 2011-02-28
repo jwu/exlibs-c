@@ -32,6 +32,16 @@ EX_DEF_LUA_BUILTIN_REF( ex_entity_t, entity, "ex.entity" )
 // type meta method
 ///////////////////////////////////////////////////////////////////////////////
 
+// TODO:
+// ent = ex.entity( "foobar", {
+//     ex.trans2d = {
+//          ...
+//     },
+//     ex.rigidbody = {
+//          ...
+//     },
+// })
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
@@ -39,10 +49,17 @@ EX_DEF_LUA_BUILTIN_REF( ex_entity_t, entity, "ex.entity" )
 static int __entity_new ( lua_State *_l ) {
     ref_proxy_t *u;
     const char *name;
+    int nargs = lua_gettop(_l);
     
     u = ex_lua_pushref(_l,1,false);
     name = luaL_checkstring(_l,2);
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name) );
+
+    // add component if 3rd argument is a table
+    if ( nargs > 2 ) {
+        luaL_checktype(_l, 3, LUA_TTABLE);
+        // TODO: get each element, create it as component
+    }
 
     return 1;
 }
@@ -54,6 +71,7 @@ static int __entity_new ( lua_State *_l ) {
 static int __entity_new_for_child ( lua_State *_l ) {
     ref_proxy_t *u;
     const char *name;
+    int nargs = lua_gettop(_l);
 
     // TODO: new table or from argument { 
     lua_newtable(_l);
@@ -78,8 +96,14 @@ static int __entity_new_for_child ( lua_State *_l ) {
     lua_setmetatable(_l,-2);
     
     u = ex_lua_pushref(_l,lua_gettop(_l),false);
-    name = luaL_checkstring(_l,2); // TODO: ???????
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    name = luaL_checkstring(_l,2);
+    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name) );
+
+    // add component if 3rd argument is a table
+    if ( nargs > 2 ) {
+        luaL_checktype(_l, 3, LUA_TTABLE);
+        // TODO:
+    }
 
     return 1;
 }

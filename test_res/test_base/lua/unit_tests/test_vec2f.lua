@@ -9,7 +9,7 @@
 --
 --/////////////////////////////////////////////////////////////////////////////
 
-local do_test = true
+local do_test = false
 if not do_test then return end
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ print ( "typename(v3) is " .. ex.typename(v3) )
 print ( "typeof(v3) is ex.vec2f: " .. tostring(ex.typeof(v3) == ex.vec2f) )
 
 -- check single element
-v3 = v1
+v3 = v1:copy()
 v3.x = v3.x + 5.0
 v3.y = v3.y - 5.0
 print ( "v1.x + 5, v1.y - 5 = " .. v3)
@@ -108,7 +108,6 @@ print ( "v1 is not equal to v2: " .. tostring(v1 ~= v2) )
 -- check is type correct
 v = ex.vec2f.zero
 print ("xxxxxxxxxxxxxxxxxxxxxxx")
-print ("is builtin " .. tostring(ex.isbuiltin( ex.typeof(v) )) )
-print ("is class " .. tostring(ex.isclass( ex.typeof(v) )) )
-print ("is vec2f " .. tostring(ex.typeof(v) == ex.vec2f) )
+print ("is builtin " .. tostring(ex.isbuiltin(v)) )
+print ("is class " .. tostring(ex.isclass(v)) )
 print ("xxxxxxxxxxxxxxxxxxxxxxx")

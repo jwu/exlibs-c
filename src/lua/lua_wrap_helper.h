@@ -67,6 +67,7 @@ typedef struct ref_proxy_t {
 
 // defines
 EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
+EX_DECL_LUA_BUILTIN_TYPE_2(angf,ex_angf_t)
 
 EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     EX_DECL_LUA_BUILTIN_REF_2(world,ex_world_t)
@@ -83,7 +84,7 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
 #undef EX_DECL_LUA_BUILTIN_REF_2
 
 // ------------------------------------------------------------------ 
-// Desc: 
+// Desc: EX_DEF_LUA_BUILTIN_REF
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_LUA_BUILTIN_REF(_type,_typename,_lua_typename) \
@@ -131,6 +132,79 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
             luaL_error( _l, "invalid parameter type, expected %s", __typename ); \
         } \
         return ex_lua_to##_typename(_l,_idx); \
+    }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+#define EX_DEF_LUA_BUILTIN_TYPE(_type,_typename,_lua_typename) \
+    static ex_hashmap_t __key_to_type_meta_getset; \
+    static ex_hashmap_t __key_to_meta_getset; \
+    static const char *__typename = _lua_typename; \
+    static int __type_meta_newindex ( lua_State *_l ) { \
+        return ex_lua_type_meta_newindex( _l, &__key_to_type_meta_getset ); \
+    } \
+    static int __type_meta_index ( lua_State *_l ) { \
+        return ex_lua_type_meta_index( _l, &__key_to_type_meta_getset ); \
+    } \
+    static int __meta_newindex ( lua_State *_l ) { \
+        return ex_lua_meta_newindex( _l, &__key_to_meta_getset ); \
+    } \
+    static int __meta_index ( lua_State *_l ) { \
+        return ex_lua_meta_index( _l, &__key_to_meta_getset ); \
+    } \
+    bool ex_lua_is##_typename ( lua_State *_l, int _idx ) { \
+        _typename##_proxy_t *u; \
+        if ( lua_isuserdata(_l, _idx) == 0 ) \
+            return false; \
+        u = (_typename##_proxy_t *)lua_touserdata(_l,_idx); \
+        if ( u->typeid != EX_TYPEID(_typename) ) \
+            return false; \
+        return true; \
+    } \
+    _type *ex_lua_to##_typename ( lua_State *_l, int _idx ) { \
+        _typename##_proxy_t *u = (_typename##_proxy_t *)lua_touserdata(_l,_idx); \
+        return &(u->val); \
+    } \
+    _type *ex_lua_check##_typename ( lua_State *_l, int _idx ) { \
+        if ( ex_lua_is##_typename(_l,_idx) == false ) \
+            luaL_error( _l, "invalid parameter type, expected %s", __typename ); \
+        return ex_lua_to##_typename(_l,_idx); \
+    } \
+    static _typename##_proxy_t *__push##_typename ( lua_State *_l, int _meta_idx, bool _readonly ) { \
+        _typename##_proxy_t *u; \
+        u = (_typename##_proxy_t *)lua_newuserdata(_l, sizeof(_typename##_proxy_t)); \
+        u->readonly = _readonly; \
+        u->typeid = EX_TYPEID(_typename); \
+        lua_pushvalue(_l,_meta_idx); \
+        lua_setmetatable(_l,-2); \
+        return u; \
+    } \
+    _typename##_proxy_t *ex_lua_push##_typename ( lua_State *_l, bool _readonly ) { \
+        _typename##_proxy_t *u; \
+        luaL_newmetatable( _l, __typename ); /*NOTE: this find a table in LUA_REGISTRYINDEX*/ \
+        u = __push##_typename ( _l, lua_gettop(_l), _readonly ); \
+        lua_remove(_l,-2); \
+        return u; \
+    } \
+    static int __##_typename##_tostring ( lua_State *_l ) { \
+        ex_string_t *str = ex_string_alloc("",256); \
+        _type *v = ex_lua_check##_typename(_l,1); \
+        EX_RTTI(_typename)->tostring(str, v); \
+        lua_pushstring(_l, str->text); \
+        ex_string_free(str); \
+        return 1; \
+    } \
+    static int __##_typename##_concat ( lua_State *_l ) { \
+        const char *lhs = luaL_checkstring(_l, 1); \
+        ex_string_t *str = ex_string_alloc(lhs,256); \
+        _type *rhs = ex_lua_check##_typename(_l,2); \
+        /*push*/ \
+        EX_RTTI(_typename)->tostring(str, rhs); \
+        lua_pushstring(_l, str->text); \
+        ex_string_free(str); \
+        return 1; \
     }
 
 // ------------------------------------------------------------------ 

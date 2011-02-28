@@ -81,6 +81,7 @@ static void wrap () {
     ex_lua_dofile( l, "lua/unit_tests/test_class.lua" );
     ex_lua_dofile( l, "lua/unit_tests/test_deepcopy.lua" );
     ex_lua_dofile( l, "lua/unit_tests/test_vec2f.lua" );
+    ex_lua_dofile( l, "lua/unit_tests/test_angf.lua" );
 
     // since object is an runtime class, if we would like to test it, we have to start engine
     ex_app_init();

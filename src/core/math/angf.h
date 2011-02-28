@@ -200,6 +200,19 @@ static inline void ex_angf_div_scalar ( ex_angf_t *_r, const ex_angf_t *_lhs, fl
 
 // ------------------------------------------------------------------ 
 /*! 
+ @fn static inline void ex_scalar_div_angf ( ex_angf_t *_r, float _scalar, const ex_angf_t *_rhs )
+ @retval _r the result angle
+ @param _lhs left hand scalar
+ @param _rhs right hand side angle 
+ @details divide scalar with angle
+*/// ------------------------------------------------------------------ 
+
+static inline void ex_scalar_div_angf ( ex_angf_t *_r, float _scalar, const ex_angf_t *_rhs ) { 
+    ex_angf_set_by_radians( _r, _scalar / _rhs->rad );
+}
+
+// ------------------------------------------------------------------ 
+/*! 
  @fn static inline void ex_angf_add ( ex_angf_t *_r, const ex_angf_t *_lhs, const ex_angf_t *_rhs )
  @retval _r the result angle
  @param _lhs left hand side angle 

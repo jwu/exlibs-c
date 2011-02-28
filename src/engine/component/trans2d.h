@@ -68,6 +68,14 @@ extern void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale );
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_trans2d_local_position ( ex_ref_t *_self, ex_vec2f_t *_pos ); 
+extern void ex_trans2d_local_rotation ( ex_ref_t *_self, ex_angf_t *_ang ); 
+extern void ex_trans2d_local_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ); 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern void ex_trans2d_right ( ex_ref_t *_self, ex_vec2f_t *_right ); 
 extern void ex_trans2d_up ( ex_ref_t *_self, ex_vec2f_t *_up ); 
 

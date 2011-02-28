@@ -109,31 +109,6 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
         return NULL;
     }
 
-    // if we have alias lua typename. add it, too.
-    if ( _lua_typename != NULL ) {
-        // HACK: this could help us deinit rtti class easily { 
-        ex_rtti_t *lua_rtti;
-        // we got everything we want, now we can create rtti info.
-        lua_rtti = (ex_rtti_t *)ex_malloc ( sizeof(ex_rtti_t) );
-        lua_rtti->super = _super;
-        lua_rtti->typeID = _typeID;
-        lua_rtti->lua_typeID = ex_strid(_lua_typename);
-        lua_rtti->size = _typeSize;
-        lua_rtti->props = NULL;
-        lua_rtti->prop_count = 0;
-        lua_rtti->create = _pfn_create;
-        lua_rtti->serialize = _pfn_serialize;
-        lua_rtti->tostring = _pfn_tostring;
-
-        result = ex_hashmap_insert( __typeid_to_rtti, &(lua_rtti->lua_typeID), &lua_rtti, NULL );
-        if ( result == false ) {
-            ex_warning( "failed to insert new rtti info in to hashmap" );
-            ex_free (my_rtti);
-            return NULL;
-        }
-        // } HACK end 
-    }
-
     //
     return my_rtti;
 }

@@ -57,7 +57,7 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
 
     EX_MEMBER( ex_trans2d_t, pos, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, ang, ex_angf_zero )
-    EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_zero )
+    EX_MEMBER( ex_trans2d_t, scale, ex_vec2f_one )
     EX_MEMBER( ex_trans2d_t, parent, NULL )
     EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
     EX_MEMBER( ex_trans2d_t, dirty, true )
@@ -305,6 +305,33 @@ void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
     //     parent = parent_parent ? EX_REF_CAST(ex_trans2d_t, parent_parent) : NULL;
     // }
     // } KEEPME end 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_local_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
+    ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
+    *_pos = self->pos; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_local_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
+    ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
+    *_ang = self->ang; 
+} 
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_trans2d_local_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
+    ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
+    *_scale = self->scale; 
 }
 
 // ------------------------------------------------------------------ 

@@ -40,18 +40,24 @@ EX_DEF_LUA_BUILTIN_REF( ex_trans2d_t, trans2d, "ex.trans2d" )
 //     scale = ex.vec2f(1.0,1.0),
 // } )
 
-#if 0
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 static int __trans2d_new ( lua_State *_l ) {
     ref_proxy_t *u;
-    const char *name;
+    ex_ref_t *ent, *comp;
+    int nargs = lua_gettop(_l);
     
+    //
     u = ex_lua_pushref(_l,1,false);
-    name = luaL_checkstring(_l,2);
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    ent = ex_lua_checkentity(_l,2);
+    comp = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
+    u->val = comp;
+
+    if ( nargs > 1 ) {
+        // TODO:
+    }
 
     return 1;
 }
@@ -62,7 +68,9 @@ static int __trans2d_new ( lua_State *_l ) {
 
 static int __trans2d_new_for_child ( lua_State *_l ) {
     ref_proxy_t *u;
-    const char *name;
+    ex_ref_t *ent, *comp;
+    const char *tp_name;
+    int nargs = lua_gettop(_l);
 
     // TODO: new table or from argument { 
     lua_newtable(_l);
@@ -86,13 +94,21 @@ static int __trans2d_new_for_child ( lua_State *_l ) {
     lua_pushvalue(_l,1);
     lua_setmetatable(_l,-2);
     
+    //
     u = ex_lua_pushref(_l,lua_gettop(_l),false);
-    name = luaL_checkstring(_l,2); // TODO: ???????
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name)  );
+    ent = ex_lua_checkentity(_l,2);
+
+    lua_getfield(_l,1,"__typename");
+    tp_name = luaL_checkstring(_l,-1);
+    comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
+    u->val = comp;
+
+    if ( nargs > 1 ) {
+        // TODO:
+    }
 
     return 1;
 }
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // meta method
@@ -102,6 +118,219 @@ static int __trans2d_new_for_child ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __trans2d_get_local_pos ( lua_State *_l ) {
+    ex_ref_t *r;
+    vec2f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushvec2f(_l,false);
+    ex_trans2d_local_position( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __trans2d_set_local_pos ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    ex_trans2d_set_local_position( r, v->x, v->y );
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_local_ang ( lua_State *_l ) {
+    ex_ref_t *r;
+    angf_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushangf(_l,false);
+    ex_trans2d_local_rotation( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_local_ang ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // if pass vector
+    if ( lua_isnumber(_l,3) ) {
+        float rad = (float)lua_tonumber(_l,3);
+        ex_trans2d_set_local_rotation( r, rad );
+    }
+    else if ( ex_lua_isangf(_l,3) ) {
+        ex_angf_t *a = ex_lua_toangf(_l,3);
+        ex_trans2d_set_local_rotation( r, a->rad );
+    }
+    else {
+        luaL_error( _l, "invalid parameter type, expected ex.angf or number " );
+    }
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_local_scale ( lua_State *_l ) {
+    ex_ref_t *r;
+    vec2f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushvec2f(_l,false);
+    ex_trans2d_local_scale( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_local_scale ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    ex_trans2d_set_local_scale( r, v->x, v->y );
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_world_pos ( lua_State *_l ) {
+    ex_ref_t *r;
+    vec2f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushvec2f(_l,false);
+    ex_trans2d_world_position( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_world_pos ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    ex_trans2d_set_world_position( r, v->x, v->y );
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_world_ang ( lua_State *_l ) {
+    ex_ref_t *r;
+    angf_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushangf(_l,false);
+    ex_trans2d_world_rotation( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_world_ang ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // if pass vector
+    if ( lua_isnumber(_l,3) ) {
+        float rad = (float)lua_tonumber(_l,3);
+        ex_trans2d_set_world_rotation( r, rad );
+    }
+    else if ( ex_lua_isangf(_l,3) ) {
+        ex_angf_t *a = ex_lua_toangf(_l,3);
+        ex_trans2d_set_world_rotation( r, a->rad );
+    }
+    else {
+        luaL_error( _l, "invalid parameter type, expected ex.angf or number " );
+    }
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_world_scale ( lua_State *_l ) {
+    ex_ref_t *r;
+    vec2f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushvec2f(_l,false);
+    ex_trans2d_world_scale( r, &u->val );
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_set_world_scale ( lua_State *_l ) {
+    ex_ref_t *r;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    ex_trans2d_set_world_scale( r, v->x, v->y );
+
+    return 0;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // register
@@ -114,17 +343,18 @@ static const ex_getset_t __type_meta_getsets[] = {
 static const luaL_Reg __type_meta_funcs[] = {
     { "__newindex", __type_meta_newindex },
     { "__index", __type_meta_index },
+    { "__call", __trans2d_new },
     { NULL, NULL },
 };
 
 // ex.trans2d
 static const ex_getset_t __meta_getsets[] = {
-    // { "local_pos", __trans2d_get_local_pos, __trans2d_set_local_pos },
-    // { "local_ang", __trans2d_get_local_ang, __trans2d_set_local_ang },
-    // { "local_scale", __trans2d_get_local_scale, __trans2d_set_local_scale },
-    // { "world_pos", __trans2d_get_world_pos, __trans2d_set_world_pos },
-    // { "world_ang", __trans2d_get_world_ang, __trans2d_set_world_ang },
-    // { "world_scale", __trans2d_get_world_scale, __trans2d_set_world_scale },
+    { "local_position", __trans2d_get_local_pos, __trans2d_set_local_pos },
+    { "local_angle", __trans2d_get_local_ang, __trans2d_set_local_ang },
+    { "local_scale", __trans2d_get_local_scale, __trans2d_set_local_scale },
+    { "position", __trans2d_get_world_pos, __trans2d_set_world_pos },
+    { "angle", __trans2d_get_world_ang, __trans2d_set_world_ang },
+    { "scale", __trans2d_get_world_scale, __trans2d_set_world_scale },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {
@@ -194,7 +424,7 @@ int luaopen_trans2d ( lua_State *_l ) {
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
-                            NULL );
+                            __trans2d_new_for_child );
     lua_pop(_l, 1); // pops ex
     return 0;
 }

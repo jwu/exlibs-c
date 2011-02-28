@@ -78,7 +78,8 @@ static void keyboard ( uint8 _key ) {
 void test_script () {
     g_game.init = init;
     g_game.update = update;
-    g_game.render = render;
+    // g_game.render = render;
+    g_game.render = NULL;
     g_game.keyboard = keyboard;
     g_game.mouse = NULL;
 }

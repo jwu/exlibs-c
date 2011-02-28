@@ -116,92 +116,7 @@ v1 = {
 // general defines
 ///////////////////////////////////////////////////////////////////////////////
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static ex_hashmap_t __key_to_type_meta_getset;
-static ex_hashmap_t __key_to_meta_getset;
-static const char *__typename = "ex.vec2f";
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-bool ex_lua_isvec2f ( lua_State *_l, int _idx ) {
-    vec2f_proxy_t *u;
-
-    if ( lua_isuserdata(_l, _idx) == 0 )
-        return false;
-
-    u = (vec2f_proxy_t *)lua_touserdata(_l,_idx);
-    if ( u->typeid != EX_TYPEID(vec2f) )
-        return false;
-
-    return true;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_vec2f_t *ex_lua_tovec2f ( lua_State *_l, int _idx ) {
-    vec2f_proxy_t *u = (vec2f_proxy_t *)lua_touserdata(_l,_idx);
-    return &(u->val);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-ex_vec2f_t *ex_lua_checkvec2f ( lua_State *_l, int _idx ) {
-    if ( ex_lua_isvec2f(_l,_idx) == false )
-        luaL_error( _l, "invalid parameter type, expected %s", __typename );
-    return ex_lua_tovec2f(_l,_idx);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static vec2f_proxy_t *__pushvec2f ( lua_State *_l, int _meta_idx, bool _readonly ) {
-    vec2f_proxy_t *u;
-
-    u = (vec2f_proxy_t *)lua_newuserdata(_l, sizeof(vec2f_proxy_t));
-    u->readonly = _readonly;
-    u->typeid = EX_TYPEID(vec2f);
-    lua_pushvalue(_l,_meta_idx);
-    lua_setmetatable(_l,-2);
-
-    return u;
-}
-
-vec2f_proxy_t *ex_lua_pushvec2f ( lua_State *_l, bool _readonly ) {
-    vec2f_proxy_t *u;
-
-    luaL_newmetatable( _l, __typename ); // NOTE: this find a table in LUA_REGISTRYINDEX
-    u = __pushvec2f ( _l, lua_gettop(_l), _readonly );
-    lua_remove(_l,-2);
-
-    return u;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_type_meta_newindex ( lua_State *_l ) {
-    return ex_lua_type_meta_newindex( _l, &__key_to_type_meta_getset );
-}
-static int __vec2f_type_meta_index ( lua_State *_l ) {
-    return ex_lua_type_meta_index( _l, &__key_to_type_meta_getset );
-}
-static int __vec2f_meta_newindex ( lua_State *_l ) {
-    return ex_lua_meta_newindex( _l, &__key_to_meta_getset );
-}
-static int __vec2f_meta_index ( lua_State *_l ) {
-    return ex_lua_meta_index( _l, &__key_to_meta_getset );
-}
+EX_DEF_LUA_BUILTIN_TYPE(ex_vec2f_t,vec2f,"ex.vec2f")
 
 ///////////////////////////////////////////////////////////////////////////////
 // type meta method
@@ -272,14 +187,23 @@ static int __vec2f_get_right ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_tostring ( lua_State *_l ) {
-    ex_string_t *str = ex_string_alloc("",256);
-    ex_vec2f_t *v;
+static int __vec2f_len ( lua_State *_l ) {
+    lua_pushinteger(_l,2);
+    return 1;
+}
 
-    v = ex_lua_checkvec2f(_l,1);
-    EX_RTTI(vec2f)->tostring(str, v);
-    lua_pushstring(_l, str->text);
-    ex_string_free(str);
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_eq ( lua_State *_l ) {
+    ex_vec2f_t *lhs, *rhs;
+
+    lhs = ex_lua_checkvec2f(_l,1);
+    rhs = ex_lua_checkvec2f(_l,2);
+
+    // push
+    lua_pushboolean(_l, ex_vec2f_is_equal( lhs, rhs ) );
     return 1;
 }
 
@@ -418,43 +342,51 @@ static int __vec2f_unm ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __vec2f_concat ( lua_State *_l ) {
-    const char *lhs;
-    ex_vec2f_t *rhs;
-    ex_string_t *str;
-
-    lhs = luaL_checkstring(_l, 1);
-    str = ex_string_alloc(lhs,256);
-    rhs = ex_lua_checkvec2f(_l,2);
-
-    // push
-    EX_RTTI(vec2f)->tostring(str, rhs);
-    lua_pushstring(_l, str->text);
-    ex_string_free(str);
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_len ( lua_State *_l ) {
-    lua_pushinteger(_l,2);
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_eq ( lua_State *_l ) {
-    ex_vec2f_t *lhs, *rhs;
+static int __vec2f_dot ( lua_State *_l ) {
+    float r;
+    ex_vec2f_t *lhs,*rhs;
 
     lhs = ex_lua_checkvec2f(_l,1);
     rhs = ex_lua_checkvec2f(_l,2);
 
     // push
-    lua_pushboolean(_l, ex_vec2f_is_equal( lhs, rhs ) );
+    r = ex_vec2f_dot( lhs, rhs );
+    lua_pushnumber(_l,r);
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_cross ( lua_State *_l ) {
+    float r;
+    ex_vec2f_t *lhs,*rhs;
+
+    lhs = ex_lua_checkvec2f(_l,1);
+    rhs = ex_lua_checkvec2f(_l,2);
+
+    // push
+    r = ex_vec2f_cross( lhs, rhs );
+    lua_pushnumber(_l,r);
+
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __vec2f_copy ( lua_State *_l ) {
+    vec2f_proxy_t *u;
+    ex_vec2f_t *v;
+
+    v = ex_lua_checkvec2f(_l,1);
+
+    // push
+    u = ex_lua_pushvec2f(_l,false);
+    ex_vec2f_set( &u->val, v->x, v->y );
     return 1;
 }
 
@@ -558,58 +490,6 @@ static int __vec2f_get_lengthSQR ( lua_State *_l ) {
     return 1;
 }
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_dot ( lua_State *_l ) {
-    float r;
-    ex_vec2f_t *lhs,*rhs;
-
-    lhs = ex_lua_checkvec2f(_l,1);
-    rhs = ex_lua_checkvec2f(_l,2);
-
-    // push
-    r = ex_vec2f_dot( lhs, rhs );
-    lua_pushnumber(_l,r);
-
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_cross ( lua_State *_l ) {
-    float r;
-    ex_vec2f_t *lhs,*rhs;
-
-    lhs = ex_lua_checkvec2f(_l,1);
-    rhs = ex_lua_checkvec2f(_l,2);
-
-    // push
-    r = ex_vec2f_cross( lhs, rhs );
-    lua_pushnumber(_l,r);
-
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __vec2f_copy ( lua_State *_l ) {
-    vec2f_proxy_t *u;
-    ex_vec2f_t *v;
-
-    v = ex_lua_checkvec2f(_l,1);
-
-    // push
-    u = ex_lua_pushvec2f(_l,false);
-    ex_vec2f_set( &u->val, v->x, v->y );
-    return 1;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
@@ -623,8 +503,8 @@ static const ex_getset_t __type_meta_getsets[] = {
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {
-    { "__newindex", __vec2f_type_meta_newindex },
-    { "__index", __vec2f_type_meta_index },
+    { "__newindex", __type_meta_newindex },
+    { "__index", __type_meta_index },
     { "__call", __vec2f_new },
     { NULL, NULL },
 };
@@ -641,17 +521,17 @@ static const ex_getset_t __meta_getsets[] = {
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {
-    { "__newindex", __vec2f_meta_newindex },
-    { "__index", __vec2f_meta_index },
+    { "__newindex", __meta_newindex },
+    { "__index", __meta_index },
     { "__tostring", __vec2f_tostring },
+    { "__concat", __vec2f_concat },
+    { "__len", __vec2f_len },
+    { "__eq", __vec2f_eq },
     { "__add", __vec2f_add },
     { "__sub", __vec2f_sub },
     { "__mul", __vec2f_mul },
     { "__div", __vec2f_div },
     { "__unm", __vec2f_unm },
-    { "__concat", __vec2f_concat },
-    { "__len", __vec2f_len },
-    { "__eq", __vec2f_eq },
     { "dot", __vec2f_dot },
     { "cross", __vec2f_cross },
     { "copy", __vec2f_copy },

@@ -106,6 +106,7 @@ static bool __initialized = false;
 // Desc: 
 extern int luaopen_core ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
+extern int luaopen_angf ( lua_State * );
 
 extern int luaopen_luagl ( lua_State * );
 extern int luaopen_luaglu ( lua_State * );
@@ -155,6 +156,7 @@ int ex_lua_init () {
     // init ex_core wraps
     luaopen_core (__L);
     luaopen_vec2f (__L);
+    luaopen_angf (__L);
 
     // init graphics wraps
     lua_settop ( __L, 0 ); // clear the stack
@@ -177,6 +179,7 @@ int ex_lua_init () {
 // Desc: 
 extern void luaclose_core ();
 extern void luaclose_vec2f ();
+extern void luaclose_angf ();
 
 extern void luaclose_object ();
 extern void luaclose_world ();
@@ -192,6 +195,7 @@ void ex_lua_deinit () {
 
         luaclose_core ();
         luaclose_vec2f ();
+        luaclose_angf ();
 
         luaclose_object ();
             luaclose_world ();
