@@ -10,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
+#include "../../engine/component/lua_behavior.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -586,8 +587,7 @@ static int __class ( lua_State *_l ) {
         luaL_getmetatable(_l,"ex.class.meta");
     }
 
-    //
-    return ex_lua_class( _l, 1, 2, lua_gettop(_l), __class_index, __class_newindex );
+    return ex_lua_class( _l, 1, 2, lua_gettop(_l), false );
 }
 
 static int __derive ( lua_State *_l ) {
@@ -597,6 +597,16 @@ static int __derive ( lua_State *_l ) {
     if ( nargs != 1 ) {
         return luaL_error ( _l, "only 1 arguments accept in derive function" );
     }
+
+    // DEBUG { 
+    // ex_lua_global_module ( _l, "ex" );
+    // lua_getfield(_l, -1, "debug");
+    // lua_getfield(_l, -1, "dump");
+    // lua_pushvalue(_l,1);
+    // lua_call( _l, 1, 0 );
+    // } DEBUG end 
+    lua_getfield(_l,1,"_NAME");
+    lua_setfield(_l,1,"__typename");
 
     // check if super is builtin
     lua_pushvalue(_l,lua_upvalueindex(1)); // push super
@@ -621,16 +631,14 @@ static int __derive ( lua_State *_l ) {
         luaL_getmetatable(_l,"ex.class.meta");
     }
 
-    //
-    return ex_lua_class( _l, 1, lua_upvalueindex(1), lua_gettop(_l), __class_index, __class_newindex );
+    return ex_lua_class( _l, 1, lua_upvalueindex(1), lua_gettop(_l), false );
 }
 
 int ex_lua_class ( lua_State *_l, 
                    int _base_idx,
                    int _super_idx,
                    int _meta_idx,
-                   lua_pfn _index_func, 
-                   lua_pfn _newindex_func ) {
+                   bool _isbuiltin ) {
 
     const char *typename = NULL;
 
@@ -647,6 +655,10 @@ int ex_lua_class ( lua_State *_l,
     }
     typename = luaL_checkstring(_l,-1);
     lua_pop(_l,1); // pos field __typename
+
+    // register the base table in metatable
+    lua_pushvalue(_l,_base_idx);
+    lua_setfield( _l, LUA_REGISTRYINDEX, typename );
 
     // if super == nil then
     if ( lua_isnil(_l,_super_idx) ) {
@@ -684,15 +696,18 @@ int ex_lua_class ( lua_State *_l,
     lua_pushboolean(_l,true);
     lua_setfield(_l,_base_idx,"__isclass");
 
-    // base.__index = class_index
-    if ( _index_func ) {
-        lua_pushcfunction(_l,_index_func);
-        lua_setfield(_l,_base_idx,"__index");
-    }
+    // base.__isbuiltin = _isbuiltin
+    lua_pushboolean(_l,_isbuiltin);
+    lua_setfield(_l,_base_idx,"__isbuiltin");
 
-    // base.__newindex = class_newindex
-    if ( _newindex_func ) {
-        lua_pushcfunction(_l,_newindex_func);
+    // if this is not builtin type, add our custom index, newindex
+    if ( !_isbuiltin ) {
+        // base.__index = class_index
+        lua_pushcfunction(_l,__class_index);
+        lua_setfield(_l,_base_idx,"__index");
+
+        // base.__newindex = class_newindex
+        lua_pushcfunction(_l,__class_newindex);
         lua_setfield(_l,_base_idx,"__newindex");
     }
 
@@ -730,7 +745,31 @@ int ex_lua_class ( lua_State *_l,
     lua_setmetatable(_l,_base_idx);
     lua_pushvalue(_l,_base_idx);
 
-    // TODO: dynamically register the new class to rtti TODO:
+    // dynamically register the new class to rtti
+    if ( !_isbuiltin ) {
+        // TODO { 
+        // strid_t typeID = ex_strid(typename);
+        // ex_rtti_register_class ( typeID, 
+        //                          ex_rtti_t *_super, 
+        //                          const char *_lua_typename,
+        //                          size_t _typeSize,
+        //                          ex_create_pfn _pfn_create,
+        //                          ex_serialize_pfn _pfn_serialize,
+        //                          ex_tostring_pfn _pfn_tostring
+        //                        );
+        // } TODO end 
+
+        strid_t typeID = ex_strid(typename);
+        ex_rtti_register_class ( typeID, 
+                                 NULL,
+                                 typename,
+                                 0,
+                                 __ex_create_ex_lua_behavior_t,
+                                 __ex_serialize_ex_lua_behavior_t,
+                                 __ex_tostring_ex_lua_behavior_t
+                               );
+    }
+    // TODO: also think about dynamically unregister type.
 
     return 1;
 }

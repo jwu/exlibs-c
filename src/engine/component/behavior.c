@@ -47,10 +47,11 @@ EX_DEF_OBJECT_BEGIN( ex_behavior_t,
     EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
-    EX_MEMBER( ex_behavior_t, level_start, NULL )
     EX_MEMBER( ex_behavior_t, start, NULL )
     EX_MEMBER( ex_behavior_t, update, NULL )
     EX_MEMBER( ex_behavior_t, post_update, NULL )
+
+    EX_MEMBER( ex_behavior_t, on_world_start, NULL )
 
 EX_DEF_OBJECT_END
 

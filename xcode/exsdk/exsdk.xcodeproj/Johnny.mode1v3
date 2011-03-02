@@ -268,6 +268,8 @@
 								<string>08FB7794FE84155DC02AAC07</string>
 								<string>B2DD23F012A7C81B0053CA3F</string>
 								<string>B245483712B91F9E00EF7261</string>
+								<string>B2A23180130221F600F3C100</string>
+								<string>B2A23181130221F600F3C100</string>
 								<string>B2A23155130221C700F3C100</string>
 								<string>B2A2315B130221C700F3C100</string>
 								<string>B2A2315E130221C700F3C100</string>
@@ -276,15 +278,15 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>23</integer>
-									<integer>22</integer>
-									<integer>11</integer>
+									<integer>46</integer>
+									<integer>43</integer>
+									<integer>37</integer>
 									<integer>4</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {276, 664}}</string>
+							<string>{{0, 658}, {276, 664}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -319,7 +321,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>wrap_trans2d.c</string>
+								<string>wrap_core.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +329,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>wrap_trans2d.c</string>
+										<string>wrap_core.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2B8B196131C110300D11A44</string>
+										<string>B2B8B399131DE40900D11A44</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -443,7 +445,6 @@
 											<string>B243BFAD130CB64B0056158F</string>
 											<string>B24BEDBC13135C8F0042B8DF</string>
 											<string>B25D6F3C131759F4006E1328</string>
-											<string>B226FEA41317C8630011A8A7</string>
 											<string>B226FEA51317C8630011A8A7</string>
 											<string>B226FEA81317C8630011A8A7</string>
 											<string>B226FEAB1317C8630011A8A7</string>
@@ -454,18 +455,23 @@
 											<string>B226FEE613181BBE0011A8A7</string>
 											<string>B226FEE713181BBE0011A8A7</string>
 											<string>B226FEFB13181D8D0011A8A7</string>
-											<string>B215FDE5131B364F00DAAFDD</string>
 											<string>B215FE1B131B6D5D00DAAFDD</string>
 											<string>B215FE1C131B6D5D00DAAFDD</string>
-											<string>B215FE1D131B6D5D00DAAFDD</string>
 											<string>B215FE1F131B6D5D00DAAFDD</string>
 											<string>B215FE7F131B939700DAAFDD</string>
-											<string>B215FE80131B939700DAAFDD</string>
-											<string>B215FE82131B939700DAAFDD</string>
-											<string>B215FE83131B939700DAAFDD</string>
 											<string>B215FE96131B962A00DAAFDD</string>
 											<string>B215FE97131B962A00DAAFDD</string>
-											<string>B2B8B11D131BD70900D11A44</string>
+											<string>B2B8B1CA131D22D400D11A44</string>
+											<string>B2B8B1CB131D22D400D11A44</string>
+											<string>B2B8B20D131D416800D11A44</string>
+											<string>B2B8B20E131D416800D11A44</string>
+											<string>B2B8B20F131D416800D11A44</string>
+											<string>B2B8B210131D416800D11A44</string>
+											<string>B2B8B211131D416800D11A44</string>
+											<string>B2B8B212131D416800D11A44</string>
+											<string>B2B8B213131D416800D11A44</string>
+											<string>B2B8B23C131D437F00D11A44</string>
+											<string>B2B8B247131D60C600D11A44</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -663,7 +669,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2B8B197131C110300D11A44</string>
+		<string>B2B8B39A131DE40900D11A44</string>
 		<string>B2B8B126131BD71D00D11A44</string>
 		<string>B2B8B127131BD71D00D11A44</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
@@ -693,7 +699,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>lua_wrap_helper.c</string>
+								<string>ref.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : behavior.h
+// File         : lua_behavior.h
 // Author       : Wu Jie 
-// Last Change  : 01/27/2011 | 11:48:41 AM | Thursday,January
+// Last Change  : 03/01/2011 | 15:33:24 PM | Tuesday,March
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef BEHAVIOR_H_1296100122
-#define BEHAVIOR_H_1296100122
+#ifndef LUA_BEHAVIOR_H_1298964806
+#define LUA_BEHAVIOR_H_1298964806
 // #################################################################################
 
 // ######################### 
@@ -20,41 +20,22 @@ extern "C" {
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "component.h"
-
+#include "behavior.h"
+    
 ///////////////////////////////////////////////////////////////////////////////
-// macros
+// defines
 ///////////////////////////////////////////////////////////////////////////////
-
-#define EX_BEHAVIOR_STATE_NEW      1
-#define EX_BEHAVIOR_STATE_STARTED  2
-#define EX_BEHAVIOR_STATE_DEAD     3
 
 // ------------------------------------------------------------------ 
 /*! 
- @struct ex_behavior_t
+ @struct ex_lua_behavior_t
  @details
 */// ------------------------------------------------------------------ 
 
-EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
-    int state;
-
-    // invoked at the next frame's update after the component added to the entity. 
-    void (*start) ( ex_ref_t *_self );
-
-    // invoked in ex_world_update if the behavior is stated.
-    void (*update) ( ex_ref_t *_self );
-
-    // invoked in ex_world_update after animation, phsyics update if the behavior is started.
-    void (*post_update) ( ex_ref_t *_self );
-
-    // invoked in ex_world_start start
-    void (*on_world_start) ( ex_ref_t *_self );
-EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
-
-///////////////////////////////////////////////////////////////////////////////
-// functions
-///////////////////////////////////////////////////////////////////////////////
+EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
+    void *l; // lua state
+    const char *lua_typename;
+EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 
 // ######################### 
 #ifdef __cplusplus
@@ -62,9 +43,6 @@ EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
 #endif
 // ######################### 
 
-
 // #################################################################################
-#endif // END BEHAVIOR_H_1296100122
+#endif // END LUA_BEHAVIOR_H_1298964806
 // #################################################################################
-
-

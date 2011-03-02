@@ -25,24 +25,17 @@
 
 typedef struct __generic_proxy_t { 
     strid_t typeid;
-    bool readonly; 
     // NOTE: no mater what is below, the first two field are the same
 } __generic_proxy_t; 
-
-bool ex_lua_is_readonly ( struct lua_State *_l, int _idx ) {
-    __generic_proxy_t *u = (__generic_proxy_t *)lua_touserdata(_l,_idx);
-    return u->readonly; 
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ref_proxy_t *ex_lua_pushref ( lua_State *_l, int _meta_idx, bool _readonly ) {
+ref_proxy_t *ex_lua_pushref ( lua_State *_l, int _meta_idx ) {
     ref_proxy_t *u;
 
     u = (ref_proxy_t *)lua_newuserdata(_l, sizeof(ref_proxy_t));
-    u->readonly = _readonly;
     u->typeid = EX_TYPEID(ref);
     u->val = NULL;
     lua_pushvalue(_l,_meta_idx);
@@ -156,7 +149,7 @@ int ex_lua_ref_concat ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_ref_eq ( struct lua_State *_l ) {
+int ex_lua_ref_eq ( lua_State *_l ) {
     ex_ref_t *lhs, *rhs;
 
     lhs = ex_lua_checkref(_l,1);
@@ -255,6 +248,7 @@ int ex_lua_register_class ( lua_State *_l,
                             const void *_metacall_for_child ) 
 {
     ex_assert( _field, "_field can't be NULL" );
+    ex_assert( _supername, "_supername can't be NULL, put \"\" instead." );
     ex_assert( _typename, "_typename can't be NULL" );
     ex_assert( _meta_funcs, "_meta_funcs can't be NULL" );
     ex_assert( _type_meta_funcs, "_type_meta_funcs can't be NULL" );
@@ -272,16 +266,14 @@ int ex_lua_register_class ( lua_State *_l,
     //                 |- setmetatable ( _R[_typename], { _type_meta_funcs } )
 
     //
-    luaL_newmetatable(_l, _typename); // NOTE: this store a table in LUA_REGISTRYINDEX
+    // NOTE: instead of use luaL_newmetatable(_l, _typename), we just create a table here, 
+    //       but set it in LUA_REGISTRYINDEX by ex_lua_class below. 
+    lua_newtable(_l);
     luaL_register( _l, NULL, _meta_funcs );
 
     // tp.__typename = "object"
     lua_pushstring(_l, _typename);
     lua_setfield(_l,-2,"__typename");
-
-    // tp.__isbuiltin = true
-    lua_pushboolean(_l, true);
-    lua_setfield(_l,-2,"__isbuiltin");
 
     // tp.__meta_for_child = { __call = _metacall_for_child }
     // NOTE: _metacall_for_child could be NULL
@@ -293,12 +285,8 @@ int ex_lua_register_class ( lua_State *_l,
     }
 
     // tp = ex.class ( tp )
-    if ( _supername == NULL ) {
-        lua_pushnil(_l); // super is nil
-    }
-    else {
-        luaL_newmetatable(_l,_supername); // get super metatable
-    }
+    // get super metatable, if _supername is "", it will get nil
+    luaL_getmetatable(_l,_supername);
 
     // now create type meta class
     lua_newtable(_l);
@@ -307,8 +295,8 @@ int ex_lua_register_class ( lua_State *_l,
                   lua_gettop(_l)-2, // base idx
                   lua_gettop(_l)-1, // super idx
                   lua_gettop(_l),   // meta idx
-                  NULL, 
-                  NULL );
+                  true // is builtin
+                  );
 
     // _G[_field] = ex.class(tp) -- NOTE: here _G depends on what is the current table on the stack
     lua_pushvalue(_l,-1);

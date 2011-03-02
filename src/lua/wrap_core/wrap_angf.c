@@ -33,7 +33,7 @@ static int __angf_new ( lua_State *_l ) {
     angf_proxy_t *u;
     float d;
     
-    u = __pushangf(_l,1,false);
+    u = __pushangf(_l,1);
     d = (float)luaL_checknumber(_l,2);
     ex_angf_set_by_degrees ( &u->val, d );
 
@@ -49,7 +49,7 @@ static int __angf_new ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __angf_get_zero ( lua_State *_l ) {
-    angf_proxy_t *u = ex_lua_pushangf(_l,false); 
+    angf_proxy_t *u = ex_lua_pushangf(_l); 
     u->val = ex_angf_zero;
     return 1;
 }
@@ -70,7 +70,7 @@ static int __angf_add ( lua_State *_l ) {
     rhs = ex_lua_checkangf(_l,2);
 
     // push
-    r = ex_lua_pushangf(_l,false);
+    r = ex_lua_pushangf(_l);
     ex_angf_add( &r->val, lhs, rhs );
 
     return 1;
@@ -88,7 +88,7 @@ static int __angf_sub ( lua_State *_l ) {
     rhs = ex_lua_checkangf(_l,2);
 
     // push
-    r = ex_lua_pushangf(_l,false);
+    r = ex_lua_pushangf(_l);
     ex_angf_sub( &r->val, lhs, rhs );
 
     return 1;
@@ -110,21 +110,21 @@ static int __angf_mul ( lua_State *_l ) {
         rhs = ex_lua_toangf(_l,2);
 
     if ( lhs != NULL && rhs != NULL ) {
-        r = ex_lua_pushangf(_l,false);
+        r = ex_lua_pushangf(_l);
         ex_angf_mul( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( lhs != NULL ) {
         float rhs = (float)luaL_checknumber(_l,2);
-        r = ex_lua_pushangf(_l,false);
+        r = ex_lua_pushangf(_l);
         ex_angf_mul_scalar( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( rhs != NULL ) {
         float lhs = (float)luaL_checknumber(_l,1);
-        r = ex_lua_pushangf(_l,false);
+        r = ex_lua_pushangf(_l);
         ex_angf_mul_scalar( &r->val, rhs, lhs );
         return 1;
     }
@@ -148,21 +148,21 @@ static int __angf_div ( lua_State *_l ) {
         rhs = ex_lua_toangf(_l,2);
 
     if ( lhs != NULL && rhs != NULL ) {
-        r = ex_lua_pushangf(_l,false);
+        r = ex_lua_pushangf(_l);
         ex_angf_div( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( lhs != NULL ) {
         float rhs = (float)luaL_checknumber(_l,2);
-        r = ex_lua_pushangf(_l,false);
+        r = ex_lua_pushangf(_l);
         ex_angf_div_scalar( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( rhs != NULL ) {
         float lhs = (float)luaL_checknumber(_l,1);
-        r = ex_lua_pushangf(_l,false);
+        r = ex_lua_pushangf(_l);
         ex_scalar_div_angf( &r->val, lhs, rhs );
         return 1;
     }
@@ -182,7 +182,7 @@ static int __angf_unm ( lua_State *_l ) {
     lhs = ex_lua_checkangf(_l,1);
 
     // push
-    r = ex_lua_pushangf(_l,false);
+    r = ex_lua_pushangf(_l);
     ex_angf_get_neg( &r->val, lhs );
 
     return 1;
@@ -223,7 +223,7 @@ static int __angf_copy ( lua_State *_l ) {
     a = ex_lua_checkangf(_l,1);
 
     // push
-    u = ex_lua_pushangf(_l,false);
+    u = ex_lua_pushangf(_l);
     u->val = *a;
     return 1;
 }
@@ -250,9 +250,6 @@ static int __angf_get_rad ( lua_State *_l ) {
 static int __angf_set_rad ( lua_State *_l ) {
     // get and check the type
     ex_angf_t *a;
-    if ( ex_lua_is_readonly(_l,1) ) {
-        return luaL_error( _l, "the value is readonly" );
-    }
     
     a = ex_lua_checkangf(_l,1);
     ex_angf_set_by_radians ( a, (float)luaL_checknumber(_l, 3) );

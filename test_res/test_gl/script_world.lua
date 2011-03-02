@@ -19,7 +19,7 @@ trans2d.scale = ex.vec2f(50.0,50.0)
 trans2d.position = ex.vec2f(200.0,200.0)
 trans2d.parent = ent1.trans2d
 ent2:add_comp("ex.debug2d")
-ex.log ("trans2d is " .. trans2d)
+ent2:add_comp("ex.simple_update")
 
 ent3 = ex.entity("entity foo 03")
 trans2d = ent3:add_comp("ex.trans2d")

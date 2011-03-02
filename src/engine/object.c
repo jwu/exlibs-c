@@ -47,12 +47,20 @@ EX_DEF_TOSTRING_END
 ///////////////////////////////////////////////////////////////////////////////
 
 static ex_hashmap_t __uid_to_refptr;
+static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 void __init_ref_table () {
+    // if the core already inited, don't init it second times.
+    if ( __initialized ) {
+        ex_warning ( "ex_editor already inited" );
+        return;
+    }
+
+    //
     ex_hashmap_init ( &__uid_to_refptr,
                       EX_STRID_NULL, sizeof(ex_uid_t),
                       EX_STRID_NULL, sizeof(ex_ref_t *),
@@ -62,6 +70,8 @@ void __init_ref_table () {
                       __ex_hashmap_realloc,
                       __ex_hashmap_dealloc
                     );
+    ex_log ("ref-table inited");
+    __initialized = true;
 }
 
 // ------------------------------------------------------------------ 
@@ -69,20 +79,24 @@ void __init_ref_table () {
 // ------------------------------------------------------------------ 
 
 void __deinit_ref_table () {
-    // first we doing a gc so that we can collect most objects.
-    ex_object_gc();
+    if ( __initialized ) {
+        // first we doing a gc so that we can collect most objects.
+        ex_object_gc();
 
-    //
-    ex_hashmap_each ( &__uid_to_refptr, ex_ref_t *, ref ) {
-        // it is possible the object already destroyed.
-        if ( ref->ptr != NULL ) {
-            ex_error( "reference count is not zero for object uid: name: %s, 0x%.16llX",  
-                      ex_strid_to_cstr( ((ex_object_t *)ref->ptr)->name ),
-                      ((ex_object_t *)ref->ptr)->uid  );
-        }
-        ex_delref(ref);
-    } ex_hashmap_each_end
-    ex_hashmap_deinit( &__uid_to_refptr );
+        //
+        ex_hashmap_each ( &__uid_to_refptr, ex_ref_t *, ref ) {
+            // it is possible the object already destroyed.
+            if ( ref->ptr != NULL ) {
+                ex_error( "reference count is not zero for object uid: name: %s, 0x%.16llX",  
+                          ex_strid_to_cstr( ((ex_object_t *)ref->ptr)->name ),
+                          ((ex_object_t *)ref->ptr)->uid  );
+            }
+            ex_delref(ref);
+        } ex_hashmap_each_end
+        ex_hashmap_deinit( &__uid_to_refptr );
+        ex_log ("ref-table deinited");
+        __initialized = false;
+    }
 }
 
 // ------------------------------------------------------------------ 

@@ -213,23 +213,6 @@ ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_level_start ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-    ex_behavior_t *be;
-
-    ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be ) {
-            if ( be->level_start )
-                be->level_start(compref);
-        }
-    } ex_array_each_end
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
 void ex_entity_update ( ex_ref_t *_self ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
@@ -263,6 +246,23 @@ void ex_entity_post_update ( ex_ref_t *_self ) {
         if ( be ) {
             if ( ((ex_component_t *)be)->enabled && be->post_update ) 
                 be->post_update(compref);
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_entity_on_world_start ( ex_ref_t *_self ) {
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+    ex_behavior_t *be;
+
+    ex_array_each ( ent->comps, ex_ref_t *, compref ) {
+        be = EX_REF_AS(ex_behavior_t,compref);
+        if ( be ) {
+            if ( be->on_world_start )
+                be->on_world_start(compref);
         }
     } ex_array_each_end
 }

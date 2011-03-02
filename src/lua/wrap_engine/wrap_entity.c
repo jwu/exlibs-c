@@ -12,6 +12,7 @@
 #include "exsdk.h"
 #include "../../engine/world.h"
 #include "../../engine/entity.h"
+#include "../../engine/component/lua_behavior.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -51,9 +52,10 @@ static int __entity_new ( lua_State *_l ) {
     const char *name;
     int nargs = lua_gettop(_l);
     
-    u = ex_lua_pushref(_l,1,false);
+    u = ex_lua_pushref(_l,1);
     name = luaL_checkstring(_l,2);
     u->val = ex_world_create_entity( ex_current_world(), ex_strid(name) );
+    ex_incref(u->val);
 
     // add component if 3rd argument is a table
     if ( nargs > 2 ) {
@@ -97,9 +99,10 @@ static int __entity_new_for_child ( lua_State *_l ) {
     lua_pushvalue(_l,1);
     lua_setmetatable(_l,-2);
     
-    u = ex_lua_pushref(_l,lua_gettop(_l),false);
+    u = ex_lua_pushref(_l,lua_gettop(_l));
     name = luaL_checkstring(_l,2);
     u->val = ex_world_create_entity( ex_current_world(), ex_strid(name) );
+    ex_incref(u->val);
 
     // add component if 3rd argument is a table
     if ( nargs > 2 ) {
@@ -121,21 +124,29 @@ static int __entity_new_for_child ( lua_State *_l ) {
 static int __entity_add_comp ( lua_State *_l ) {
     ex_ref_t *ent, *comp;
     const char *comp_typename;
+    ref_proxy_t *u;
+    ex_lua_behavior_t *be;
     
     ent = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,ent);
-    comp_typename = luaL_checkstring(_l,2); // TODO: could be table :)
+    comp_typename = luaL_checkstring(_l,2); // TODO: could be table with default member values :)
 
     comp = ex_entity_add_comp( ent, ex_strid(comp_typename) );
     if ( comp == NULL ) {
         return luaL_error( _l, "can't add component by type %s", comp_typename );
     }
+    // HACK { 
+    be = EX_REF_AS(ex_lua_behavior_t,comp);
+    if ( be ) {
+        be->l = _l; 
+        be->lua_typename = comp_typename; 
+    }
+    // } HACK end 
 
-    ref_proxy_t *u;
-    luaL_newmetatable( _l, comp_typename );
-    u = ex_lua_pushref ( _l, lua_gettop(_l), false );
+    u = ex_lua_push_generic_component ( _l, comp_typename );
     u->val = comp;
     ex_incref(u->val);
+
     return 1;
 }
 
@@ -146,10 +157,11 @@ static int __entity_add_comp ( lua_State *_l ) {
 static int __entity_get_comp ( lua_State *_l ) {
     ex_ref_t *ent, *comp;
     const char *comp_typename;
+    ref_proxy_t *u;
     
     ent = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,ent);
-    comp_typename = luaL_checkstring(_l,2); // TODO: could be table :)
+    comp_typename = luaL_checkstring(_l,2);
 
     comp = ex_entity_get_comp( ent, ex_strid(comp_typename) );
     // it is allowed to get nil component
@@ -158,12 +170,10 @@ static int __entity_get_comp ( lua_State *_l ) {
         return 1;
     }
 
-    //
-    ref_proxy_t *u;
-    luaL_newmetatable( _l, comp_typename );
-    u = ex_lua_pushref ( _l, lua_gettop(_l), false );
+    u = ex_lua_push_generic_component ( _l, comp_typename );
     u->val = comp;
     ex_incref(u->val);
+
     return 1;
 }
 
@@ -182,7 +192,7 @@ static int __entity_get_trans2d ( lua_State *_l ) {
     r = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    u = ex_lua_pushtrans2d(_l,false);
+    u = ex_lua_pushtrans2d(_l);
     u->val = EX_REF_CAST(ex_entity_t,r)->trans2d; 
     ex_incref(u->val);
 

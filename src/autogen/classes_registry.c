@@ -28,6 +28,7 @@ void ex_register_classes () {
                     EX_REGISTER_CLASS_2( ex_trans2d_t, "ex.trans2d" );
                     EX_REGISTER_CLASS_2( ex_camera_t, "ex.camera" );
                     EX_REGISTER_CLASS_2( ex_behavior_t, "ex.behavior" );
-                    EX_REGISTER_CLASS_2( ex_debug2d_t, "ex.debug2d" );
+                        EX_REGISTER_CLASS_2( ex_debug2d_t, "ex.debug2d" );
+                        EX_REGISTER_CLASS_2( ex_lua_behavior_t, "ex.lua_behavior" );
 }
 

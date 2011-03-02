@@ -116,6 +116,8 @@ extern int luaopen_world ( lua_State * );
 extern int luaopen_entity ( lua_State * );
 extern int luaopen_component ( lua_State * );
 extern int luaopen_trans2d ( lua_State * );
+extern int luaopen_behavior ( lua_State * );
+extern int luaopen_lua_behavior ( lua_State * );
 // ------------------------------------------------------------------ 
 
 int ex_lua_init () {
@@ -169,6 +171,8 @@ int ex_lua_init () {
         luaopen_entity (__L);
         luaopen_component (__L);
             luaopen_trans2d (__L);
+            luaopen_behavior (__L);
+                luaopen_lua_behavior (__L);
 
     __initialized = true;
 
@@ -186,6 +190,8 @@ extern void luaclose_world ();
 extern void luaclose_entity ();
 extern void luaclose_component ();
 extern void luaclose_trans2d ();
+extern void luaclose_behavior ();
+extern void luaclose_lua_behavior ();
 // ------------------------------------------------------------------ 
 
 void ex_lua_deinit () {
@@ -202,6 +208,8 @@ void ex_lua_deinit () {
             luaclose_entity ();
             luaclose_component ();
                 luaclose_trans2d ();
+                luaclose_behavior ();
+                    luaclose_lua_behavior ();
 
         lua_close(__L);
         __L = NULL;
@@ -648,12 +656,6 @@ bool ex_lua_isclass ( lua_State *_l, int _idx ) {
     lua_pushstring(_l,"__isclass");
     lua_rawget ( _l, -2 );
 
-    // if r == nil then return false end
-    if ( lua_isnil(_l,-1) ) {
-        lua_pop(_l,2); // pops tp, r
-        return false;
-    }
-
     // return r
     r = lua_toboolean(_l,-1);
     lua_pop(_l,2); // pops tp, r
@@ -691,12 +693,6 @@ bool ex_lua_isbuiltin ( lua_State *_l, int _idx ) {
     // local r = rawget(tp, "__isbuiltin")
     lua_pushstring(_l,"__isbuiltin");
     lua_rawget ( _l, -2 );
-
-    // if r == nil then return false end
-    if ( lua_isnil(_l,-1) ) {
-        lua_pop(_l,2); // pops tp, r
-        return false;
-    }
 
     // return r
     r = lua_toboolean(_l,-1);

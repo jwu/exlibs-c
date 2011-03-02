@@ -381,7 +381,7 @@ void ex_world_run ( ex_ref_t *_self ) {
 
     // start all behavior
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
-        ex_entity_level_start(ent);
+        ex_entity_on_world_start(ent);
     } ex_array_each_end
 
     //

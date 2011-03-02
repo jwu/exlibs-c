@@ -63,9 +63,10 @@ extern ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_entity_level_start ( ex_ref_t *_self );
 extern void ex_entity_update ( ex_ref_t *_self );
 extern void ex_entity_post_update ( ex_ref_t *_self );
+
+extern void ex_entity_on_world_start ( ex_ref_t *_self );
 
 // ######################### 
 #ifdef __cplusplus

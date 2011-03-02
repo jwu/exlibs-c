@@ -22,7 +22,6 @@ extern "C" {
 
 typedef struct ref_proxy_t { 
     strid_t typeid;
-    bool readonly; 
     ex_ref_t *val; 
     // bool gc_owner; // TODO: do we really need this ??? 
 } ref_proxy_t; 
@@ -36,10 +35,9 @@ typedef struct ref_proxy_t {
 #define EX_DECL_LUA_BUILTIN_TYPE_2(_typename,_type) \
     typedef struct _typename##_proxy_t { \
         strid_t typeid; \
-        bool readonly; \
         _type val; \
     } _typename##_proxy_t; \
-    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
+    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l ); \
     extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
     extern _type *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
     extern _type *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
@@ -49,10 +47,9 @@ typedef struct ref_proxy_t {
 #define EX_DECL_LUA_BUILTIN_CLASS_2(_typename,_type) \
     typedef struct _typename##_proxy_t { \
         strid_t typeid; \
-        bool readonly; \
         _type *val; \
     } _typename##_proxy_t; \
-    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
+    extern _typename##_proxy_t *ex_lua_push##_typename ( struct lua_State *_l ); \
     extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
     extern _type *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
     extern _type *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
@@ -60,7 +57,7 @@ typedef struct ref_proxy_t {
 // EX_DECL_LUA_BUILTIN_REF, EX_DECL_LUA_BUILTIN_CLASS_2
 #define EX_DECL_LUA_BUILTIN_REF(_type) EX_DECL_LUA_BUILTIN_CLASS_2(_type,_type)
 #define EX_DECL_LUA_BUILTIN_REF_2(_typename,_type) \
-    extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l, bool _readonly ); \
+    extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l ); \
     extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
     extern ex_ref_t *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
     extern ex_ref_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
@@ -109,10 +106,10 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     static int __child_meta_index ( lua_State *_l ) { \
         return ex_lua_child_meta_index( _l, &__key_to_meta_getset ); \
     } \
-    ref_proxy_t *ex_lua_push##_typename ( lua_State *_l, bool _readonly ) { \
+    ref_proxy_t *ex_lua_push##_typename ( lua_State *_l ) { \
         ref_proxy_t *u; \
         luaL_newmetatable( _l, __typename ); /* NOTE: this find a table in LUA_REGISTRYINDEX */ \
-        u = ex_lua_pushref ( _l, lua_gettop(_l), _readonly ); \
+        u = ex_lua_pushref ( _l, lua_gettop(_l) ); \
         lua_remove(_l,-2); \
         return u; \
     } \
@@ -172,19 +169,18 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
             luaL_error( _l, "invalid parameter type, expected %s", __typename ); \
         return ex_lua_to##_typename(_l,_idx); \
     } \
-    static _typename##_proxy_t *__push##_typename ( lua_State *_l, int _meta_idx, bool _readonly ) { \
+    static _typename##_proxy_t *__push##_typename ( lua_State *_l, int _meta_idx ) { \
         _typename##_proxy_t *u; \
         u = (_typename##_proxy_t *)lua_newuserdata(_l, sizeof(_typename##_proxy_t)); \
-        u->readonly = _readonly; \
         u->typeid = EX_TYPEID(_typename); \
         lua_pushvalue(_l,_meta_idx); \
         lua_setmetatable(_l,-2); \
         return u; \
     } \
-    _typename##_proxy_t *ex_lua_push##_typename ( lua_State *_l, bool _readonly ) { \
+    _typename##_proxy_t *ex_lua_push##_typename ( lua_State *_l ) { \
         _typename##_proxy_t *u; \
         luaL_newmetatable( _l, __typename ); /*NOTE: this find a table in LUA_REGISTRYINDEX*/ \
-        u = __push##_typename ( _l, lua_gettop(_l), _readonly ); \
+        u = __push##_typename ( _l, lua_gettop(_l) ); \
         lua_remove(_l,-2); \
         return u; \
     } \
@@ -221,13 +217,7 @@ typedef struct ex_getset_t {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool ex_lua_is_readonly ( struct lua_State *_l, int _idx );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern ref_proxy_t *ex_lua_pushref ( struct lua_State *_l, int _meta_idx, bool _readonly );
+extern ref_proxy_t *ex_lua_pushref ( struct lua_State *_l, int _meta_idx );
 extern bool ex_lua_isref ( struct lua_State *_l, int _idx );
 extern ex_ref_t *ex_lua_toref ( struct lua_State *_l, int _idx );
 extern ex_ref_t *ex_lua_checkref ( struct lua_State *_l, int _idx );
@@ -237,6 +227,9 @@ extern int ex_lua_ref_gc ( struct lua_State *_l );
 extern int ex_lua_ref_tostring ( struct lua_State *_l );
 extern int ex_lua_ref_concat ( struct lua_State *_l );
 extern int ex_lua_ref_eq ( struct lua_State *_l );
+
+// NOTE: unlike ref, generic will create an user-data and apply proper metatable on it
+extern ref_proxy_t *ex_lua_push_generic_component ( struct lua_State *_l, const char *_lua_typename );
 
 // ------------------------------------------------------------------ 
 // Desc: 

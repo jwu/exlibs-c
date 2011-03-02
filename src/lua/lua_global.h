@@ -102,11 +102,10 @@ extern int ex_lua_deepcopy ( struct lua_State *_l, int _idx );
 
 typedef int (*lua_pfn) ( struct lua_State * );
 extern int ex_lua_class ( struct lua_State *_l, 
-                          int _base_idx, 
-                          int _super_idx, 
-                          int _meta_idx, 
-                          lua_pfn _index_func, 
-                          lua_pfn _newindex_func );
+                          int _base_idx,
+                          int _super_idx,
+                          int _meta_idx,
+                          bool _isbuiltin );
 
 extern int ex_lua_type_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );
 extern int ex_lua_type_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset );

@@ -75,13 +75,14 @@ static int __component_new_for_child ( lua_State *_l ) {
     lua_setmetatable(_l,-2);
 
     //
-    u = ex_lua_pushref(_l,lua_gettop(_l),false);
+    u = ex_lua_pushref(_l,lua_gettop(_l));
     ent = ex_lua_checkentity(_l,2);
 
     lua_getfield(_l,1,"__typename");
     tp_name = luaL_checkstring(_l,-1);
     comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
     u->val = comp;
+    ex_incref(u->val);
 
     if ( nargs > 1 ) {
         // TODO:
@@ -107,7 +108,7 @@ static int __component_get_entity ( lua_State *_l ) {
     ex_lua_check_nullref(_l,r);
     self = EX_REF_CAST(ex_component_t,r);
 
-    u = ex_lua_pushentity(_l,false);
+    u = ex_lua_pushentity(_l);
     u->val = self->entity;
     ex_incref(u->val);
 

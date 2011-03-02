@@ -129,7 +129,7 @@ EX_DEF_LUA_BUILTIN_TYPE(ex_vec2f_t,vec2f,"ex.vec2f")
 static int __vec2f_new ( lua_State *_l ) {
     vec2f_proxy_t *u;
     
-    u = __pushvec2f(_l,1,false);
+    u = __pushvec2f(_l,1);
     ex_vec2f_set( &u->val, lua_tonumber(_l,2), lua_tonumber(_l,3) );
 
     return 1;
@@ -144,7 +144,7 @@ static int __vec2f_new ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_one ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l); 
     u->val = ex_vec2f_one;
     return 1;
 }
@@ -154,7 +154,7 @@ static int __vec2f_get_one ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_zero ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l); 
     u->val = ex_vec2f_zero;
     return 1;
 }
@@ -164,7 +164,7 @@ static int __vec2f_get_zero ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_up ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l); 
     ex_vec2f_set( &u->val, 0.0f, 1.0f );
     return 1;
 }
@@ -174,7 +174,7 @@ static int __vec2f_get_up ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __vec2f_get_right ( lua_State *_l ) {
-    vec2f_proxy_t *u = ex_lua_pushvec2f(_l,false); 
+    vec2f_proxy_t *u = ex_lua_pushvec2f(_l); 
     ex_vec2f_set( &u->val, 1.0f, 0.0f );
     return 1;
 }
@@ -220,7 +220,7 @@ static int __vec2f_add ( lua_State *_l ) {
     rhs = ex_lua_checkvec2f(_l,2);
 
     // push
-    r = ex_lua_pushvec2f(_l,false);
+    r = ex_lua_pushvec2f(_l);
     ex_vec2f_add( &r->val, lhs, rhs );
 
     return 1;
@@ -238,7 +238,7 @@ static int __vec2f_sub ( lua_State *_l ) {
     rhs = ex_lua_checkvec2f(_l,2);
 
     // push
-    r = ex_lua_pushvec2f(_l,false);
+    r = ex_lua_pushvec2f(_l);
     ex_vec2f_sub( &r->val, lhs, rhs );
 
     return 1;
@@ -260,21 +260,21 @@ static int __vec2f_mul ( lua_State *_l ) {
         rhs = ex_lua_tovec2f(_l,2);
 
     if ( lhs != NULL && rhs != NULL ) {
-        r = ex_lua_pushvec2f(_l,false);
+        r = ex_lua_pushvec2f(_l);
         ex_vec2f_mul( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( lhs != NULL ) {
         float rhs = (float)luaL_checknumber(_l,2);
-        r = ex_lua_pushvec2f(_l,false);
+        r = ex_lua_pushvec2f(_l);
         ex_vec2f_mul_scalar( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( rhs != NULL ) {
         float lhs = (float)luaL_checknumber(_l,1);
-        r = ex_lua_pushvec2f(_l,false);
+        r = ex_lua_pushvec2f(_l);
         ex_vec2f_mul_scalar( &r->val, rhs, lhs );
         return 1;
     }
@@ -298,21 +298,21 @@ static int __vec2f_div ( lua_State *_l ) {
         rhs = ex_lua_tovec2f(_l,2);
 
     if ( lhs != NULL && rhs != NULL ) {
-        r = ex_lua_pushvec2f(_l,false);
+        r = ex_lua_pushvec2f(_l);
         ex_vec2f_div( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( lhs != NULL ) {
         float rhs = (float)luaL_checknumber(_l,2);
-        r = ex_lua_pushvec2f(_l,false);
+        r = ex_lua_pushvec2f(_l);
         ex_vec2f_div_scalar( &r->val, lhs, rhs );
         return 1;
     }
 
     if ( rhs != NULL ) {
         float lhs = (float)luaL_checknumber(_l,1);
-        r = ex_lua_pushvec2f(_l,false);
+        r = ex_lua_pushvec2f(_l);
         ex_scalar_div_vec2f( &r->val, lhs, rhs );
         return 1;
     }
@@ -332,7 +332,7 @@ static int __vec2f_unm ( lua_State *_l ) {
     lhs = ex_lua_checkvec2f(_l,1);
 
     // push
-    r = ex_lua_pushvec2f(_l,false);
+    r = ex_lua_pushvec2f(_l);
     ex_vec2f_get_neg( &r->val, lhs );
 
     return 1;
@@ -385,7 +385,7 @@ static int __vec2f_copy ( lua_State *_l ) {
     v = ex_lua_checkvec2f(_l,1);
 
     // push
-    u = ex_lua_pushvec2f(_l,false);
+    u = ex_lua_pushvec2f(_l);
     ex_vec2f_set( &u->val, v->x, v->y );
     return 1;
 }
@@ -412,9 +412,6 @@ static int __vec2f_get_x ( lua_State *_l ) {
 static int __vec2f_set_x ( lua_State *_l ) {
     // get and check the type
     ex_vec2f_t *v;
-    if ( ex_lua_is_readonly(_l,1) ) {
-        return luaL_error( _l, "the value is readonly" );
-    }
     
     v = ex_lua_checkvec2f(_l,1);
     v->x = luaL_checknumber(_l, 3);
@@ -439,9 +436,6 @@ static int __vec2f_get_y ( lua_State *_l ) {
 static int __vec2f_set_y ( lua_State *_l ) {
     // get and check the type
     ex_vec2f_t *v;
-    if ( ex_lua_is_readonly(_l,1) ) {
-        return luaL_error( _l, "the value is readonly" );
-    }
     
     v = ex_lua_checkvec2f(_l,1);
     v->y = luaL_checknumber(_l, 3);
@@ -457,7 +451,7 @@ static int __vec2f_get_normalized ( lua_State *_l ) {
     vec2f_proxy_t *r;
     ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
 
-    r = ex_lua_pushvec2f(_l, false);
+    r = ex_lua_pushvec2f(_l);
     ex_vec2f_get_normalize( &r->val, v );
     return 1;
 }

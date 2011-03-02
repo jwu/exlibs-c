@@ -388,6 +388,7 @@ static void registerFuncs () {
 static void exit_fn (void) {
     // deinit
     quitGame ();
+    ex_lua_deinit();
     ex_app_deinit();
     ex_core_deinit();
 
@@ -429,6 +430,7 @@ int main( int argc, const char *argv[] ) {
 
         // init game
         ex_app_init();
+        ex_lua_load_modules( ex_lua_default_state(), "comps" );
         ex_lua_load_modules( ex_lua_default_state(), "scripts" );
         initGame();
 

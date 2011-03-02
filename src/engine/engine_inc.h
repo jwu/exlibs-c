@@ -25,8 +25,9 @@ extern "C" {
         #include "component/trans2d.h"
         #include "component/sprite.h"
         #include "component/camera.h"
-        #include "component/behavior.h"
         #include "component/debug2d.h"
+        #include "component/behavior.h"
+            #include "component/lua_behavior.h"
 
 // ######################### 
 #ifdef __cplusplus
