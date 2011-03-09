@@ -115,7 +115,7 @@ static void post_update ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void on_world_start ( ex_ref_t *_self ) {
+static void awake ( ex_ref_t *_self ) {
     int status;
     ex_lua_behavior_t *self;
     ref_proxy_t *u;
@@ -125,7 +125,7 @@ static void on_world_start ( ex_ref_t *_self ) {
     u->val = _self;
     ex_incref(u->val);
 
-    lua_getfield( self->l, -1, "on_world_start" );
+    lua_getfield( self->l, -1, "awake" );
     if ( lua_isnil(self->l,-1) == 0 ) {
         ex_incref(u->val);
         lua_pushvalue(self->l,-2);
@@ -149,10 +149,10 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
     EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, awake, awake )
     EX_MEMBER( ex_behavior_t, start, start )
     EX_MEMBER( ex_behavior_t, update, update )
     EX_MEMBER( ex_behavior_t, post_update, post_update )
-    EX_MEMBER( ex_behavior_t, on_world_start, on_world_start )
 
     EX_MEMBER( ex_lua_behavior_t, l, NULL )
 

@@ -307,7 +307,7 @@ void ex_world_update ( ex_ref_t *_self ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) )
             ex_array_continue;
 
-        ex_entity_update(ent);
+        ex_entity_update_behaviors(ent);
     } ex_array_each_end
 
     // TODO: __update_animation(world);
@@ -318,7 +318,7 @@ void ex_world_update ( ex_ref_t *_self ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) )
             ex_array_continue;
 
-        ex_entity_post_update(ent);
+        ex_entity_post_update_behaviors(ent);
     } ex_array_each_end
 
     // at the end of the update, we do a garbage collection
@@ -381,7 +381,7 @@ void ex_world_run ( ex_ref_t *_self ) {
 
     // start all behavior
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
-        ex_entity_on_world_start(ent);
+        ex_entity_awake_behaviors(ent);
     } ex_array_each_end
 
     //

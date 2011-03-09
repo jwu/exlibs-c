@@ -56,10 +56,10 @@ EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
     EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, awake, NULL )
     EX_MEMBER( ex_behavior_t, start, __debug2d_start )
     EX_MEMBER( ex_behavior_t, update, __debug2d_update )
     EX_MEMBER( ex_behavior_t, post_update, __debug2d_post_update )
-    EX_MEMBER( ex_behavior_t, on_world_start, NULL )
 
     EX_MEMBER( ex_debug2d_t, shapeType, EX_DEBUG_SHAPE_RECT )
     ex_rectf_set( &(((ex_debug2d_t *)__obj__)->rect), ex_vec2f_zero, 1.0f, 1.0f );

@@ -51,6 +51,7 @@ static void __rm_from_cache ( ex_entity_t *_ent, strid_t _typeID ) {
 static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_component_t *comp = EX_REF_CAST(ex_component_t,_comp_ref);
+    ex_behavior_t *be;
 
     comp->entity = _self; // set the entity of the component before init.
     ((ex_object_t *)comp)->init(_comp_ref);
@@ -58,6 +59,12 @@ static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref )
     ex_array_append( ent->comps, &_comp_ref );
     ex_incref(_comp_ref);
     __add_to_cache ( ent, _typeID, _comp_ref );
+    // awake behavior
+    if ( _typeID == EX_TYPEID(ex_behavior_t) ) {
+        be = EX_REF_CAST(ex_behavior_t,_comp_ref);
+        if ( be->awake )
+            be->awake(_comp_ref);
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -213,7 +220,7 @@ ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_update ( ex_ref_t *_self ) {
+void ex_entity_update_behaviors ( ex_ref_t *_self ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
@@ -237,7 +244,7 @@ void ex_entity_update ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_post_update ( ex_ref_t *_self ) {
+void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
@@ -254,15 +261,15 @@ void ex_entity_post_update ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_on_world_start ( ex_ref_t *_self ) {
+void ex_entity_awake_behaviors ( ex_ref_t *_self ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
         if ( be ) {
-            if ( be->on_world_start )
-                be->on_world_start(compref);
+            if ( be->awake )
+                be->awake(compref);
         }
     } ex_array_each_end
 }

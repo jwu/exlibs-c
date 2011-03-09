@@ -39,6 +39,9 @@ extern "C" {
 EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
     int state;
 
+    // invoked in ex_world_start start
+    void (*awake) ( ex_ref_t *_self );
+
     // invoked at the next frame's update after the component added to the entity. 
     void (*start) ( ex_ref_t *_self );
 
@@ -47,9 +50,6 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
 
     // invoked in ex_world_update after animation, phsyics update if the behavior is started.
     void (*post_update) ( ex_ref_t *_self );
-
-    // invoked in ex_world_start start
-    void (*on_world_start) ( ex_ref_t *_self );
 EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////

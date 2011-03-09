@@ -99,7 +99,7 @@ static void post_update ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void on_world_start ( ex_ref_t *_self ) {
+static void awake ( ex_ref_t *_self ) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -115,10 +115,10 @@ EX_DEF_OBJECT_BEGIN( ex_simple_t,
     EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, awake, NULL )
     EX_MEMBER( ex_behavior_t, start, start )
     EX_MEMBER( ex_behavior_t, update, update )
     EX_MEMBER( ex_behavior_t, post_update, post_update )
-    EX_MEMBER( ex_behavior_t, on_world_start, NULL )
 
     EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_zero )
     EX_MEMBER( ex_simple_t, move_speed, 1.0f )
