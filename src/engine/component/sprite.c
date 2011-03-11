@@ -50,7 +50,6 @@ EX_DEF_OBJECT_BEGIN( ex_sprite_t,
                      __sprite_deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
-    EX_MEMBER( ex_component_t, enabled, true )
 
 EX_DEF_OBJECT_END
 

@@ -38,6 +38,7 @@ extern "C" {
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
     int state;
+    bool enabled;
 
     // invoked in ex_world_start start
     void (*awake) ( ex_ref_t *_self );

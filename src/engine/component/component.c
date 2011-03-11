@@ -50,20 +50,16 @@ EX_DEF_OBJECT_BEGIN( ex_component_t,
                      __component_deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
-    EX_MEMBER( ex_component_t, enabled, true )
 
 EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_component_t)
-    EX_PROP( ex_component_t, bool, enabled, "enabled",  EX_PROP_ATTR_HIDE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_BEGIN_SUPER(ex_component_t,ex_object_t)
-    EX_MEMBER_SERIALIZE( bool, enabled )
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_component_t,ex_object_t)
-    EX_MEMBER_TOSTRING ( bool, "enabled", self->enabled )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

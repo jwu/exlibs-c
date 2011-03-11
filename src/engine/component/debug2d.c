@@ -53,9 +53,9 @@ EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
                      __debug2d_deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
-    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, enabled, true )
     EX_MEMBER( ex_behavior_t, awake, NULL )
     EX_MEMBER( ex_behavior_t, start, __debug2d_start )
     EX_MEMBER( ex_behavior_t, update, __debug2d_update )

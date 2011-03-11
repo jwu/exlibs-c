@@ -53,7 +53,6 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
                      __trans2d_deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
-    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_trans2d_t, local_pos, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, local_ang, ex_angf_zero )

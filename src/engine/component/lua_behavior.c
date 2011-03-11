@@ -146,9 +146,9 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
                      deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
-    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
+    EX_MEMBER( ex_behavior_t, enabled, true )
     EX_MEMBER( ex_behavior_t, awake, awake )
     EX_MEMBER( ex_behavior_t, start, start )
     EX_MEMBER( ex_behavior_t, update, update )

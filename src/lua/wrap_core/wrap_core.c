@@ -763,9 +763,11 @@ int ex_lua_class ( lua_State *_l,
         //       also, builtin also include other derived type, not just lua_behavior { 
         strid_t typeID = ex_strid(typename);
         ex_rtti_register_class ( typeID, 
-                                 NULL,
+                                 NULL, // TODO: we should have super !!
                                  typename,
                                  0,
+                                 // how can I create script class that inherit from c-type 
+                                 // in runtime (answer: call the script class' constructor)
                                  __ex_create_ex_lua_behavior_t,
                                  __ex_serialize_ex_lua_behavior_t,
                                  __ex_tostring_ex_lua_behavior_t

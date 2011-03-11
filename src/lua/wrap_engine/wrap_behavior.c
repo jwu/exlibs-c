@@ -95,6 +95,42 @@ static int __behavior_new_for_child ( lua_State *_l ) {
 // meta method
 ///////////////////////////////////////////////////////////////////////////////
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __behavior_get_enabled ( lua_State *_l ) {
+    ex_ref_t *r;
+    ex_behavior_t *self;
+
+    r = ex_lua_checkbehavior(_l,1); 
+    ex_lua_check_nullref(_l,r);
+    self = EX_REF_CAST(ex_behavior_t,r);
+
+    lua_pushboolean(_l, self->enabled);
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __behavior_set_enabled ( lua_State *_l ) {
+    ex_ref_t *r;
+    ex_behavior_t *self;
+
+    r = ex_lua_checkbehavior(_l,1); 
+    ex_lua_check_nullref(_l,r);
+    self = EX_REF_CAST(ex_behavior_t,r);
+
+    if ( lua_isboolean(_l,3) ) {
+        self->enabled = lua_toboolean(_l, 3);
+    }
+    else {
+        luaL_error( _l, "invalid parameter type, expected boolean" );
+    }
+    return 0;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // register
@@ -102,6 +138,7 @@ static int __behavior_new_for_child ( lua_State *_l ) {
 
 // ex.component.meta
 static const ex_getset_t __type_meta_getsets[] = {
+    { "enabled", __behavior_get_enabled, __behavior_set_enabled },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {

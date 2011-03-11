@@ -59,12 +59,15 @@ static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref )
     ex_array_append( ent->comps, &_comp_ref );
     ex_incref(_comp_ref);
     __add_to_cache ( ent, _typeID, _comp_ref );
+
+    // TODO: only awake when world is running { 
     // awake behavior
     if ( _typeID == EX_TYPEID(ex_behavior_t) ) {
         be = EX_REF_CAST(ex_behavior_t,_comp_ref);
         if ( be->awake )
             be->awake(_comp_ref);
     }
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 
@@ -233,7 +236,7 @@ void ex_entity_update_behaviors ( ex_ref_t *_self ) {
                 be->state = EX_BEHAVIOR_STATE_STARTED;
             }
             else {
-                if ( ((ex_component_t *)be)->enabled && be->update ) 
+                if ( be->enabled && be->update ) 
                     be->update(compref);
             }
         }
@@ -251,7 +254,7 @@ void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
         if ( be ) {
-            if ( ((ex_component_t *)be)->enabled && be->post_update ) 
+            if ( be->enabled && be->post_update ) 
                 be->post_update(compref);
         }
     } ex_array_each_end

@@ -59,7 +59,6 @@ EX_DEF_OBJECT_BEGIN( ex_camera_t,
                      __camera_deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
-    EX_MEMBER( ex_component_t, enabled, true )
 
     EX_MEMBER( ex_camera_t, isOrtho, false )
     EX_MEMBER( ex_camera_t, orthoSize, 600/2 )
