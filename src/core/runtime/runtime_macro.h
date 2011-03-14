@@ -88,8 +88,8 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_REGISTER_CLASS(_typename) EX_REGISTER_CLASS_2(_typename,#_typename)
-#define EX_REGISTER_CLASS_2(_typename,_lua_typename) __ex_register_class_##_typename(_lua_typename)
+#define EX_REGISTER_CLASS(_ctype) EX_REGISTER_CLASS_2(_ctype,_ctype)
+#define EX_REGISTER_CLASS_2(_ctype,_typename) __ex_register_class_##_ctype(ex_strid(#_typename))
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -111,11 +111,10 @@ extern "C" {
     extern void __ex_register_properties_##_typename (); \
     extern void __ex_serialize_##_typename( struct ex_stream_t *, strid_t, void * ); \
     extern void __ex_tostring_##_typename( struct ex_string_t *, void * ); \
-    static inline void __ex_register_class_##_typename ( const char *_lua_typename ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_typename##__ = ex_strid(_lua_typename); \
+    static inline void __ex_register_class_##_typename ( strid_t _typeID ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __TYPEID_##_typename##__ = _typeID; \
         __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
                                                           EX_RTTI(ex_class_t), \
-                                                          _lua_typename, \
                                                           sizeof(_typename), \
                                                           __ex_create_##_typename, \
                                                           __ex_serialize_##_typename, \
@@ -144,11 +143,10 @@ extern "C" {
     extern void __ex_register_properties_##_typename (); \
     extern void __ex_serialize_##_typename( struct ex_stream_t *, strid_t, void * ); \
     extern void __ex_tostring_##_typename( struct ex_string_t *, void * ); \
-    static inline void __ex_register_class_##_typename ( const char *_lua_typename ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_typename##__ = ex_strid(_lua_typename); \
+    static inline void __ex_register_class_##_typename ( strid_t _typeID ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __TYPEID_##_typename##__ = _typeID; \
         __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
                                                           EX_RTTI(_super), \
-                                                          _lua_typename, \
                                                           sizeof(_typename), \
                                                           __ex_create_##_typename, \
                                                           __ex_serialize_##_typename, \

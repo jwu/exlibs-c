@@ -751,7 +751,6 @@ int ex_lua_class ( lua_State *_l,
         // strid_t typeID = ex_strid(typename);
         // ex_rtti_register_class ( typeID, 
         //                          ex_rtti_t *_super, 
-        //                          const char *_lua_typename,
         //                          size_t _typeSize,
         //                          ex_create_pfn _pfn_create,
         //                          ex_serialize_pfn _pfn_serialize,
@@ -764,7 +763,6 @@ int ex_lua_class ( lua_State *_l,
         strid_t typeID = ex_strid(typename);
         ex_rtti_register_class ( typeID, 
                                  NULL, // TODO: we should have super !!
-                                 typename,
                                  0,
                                  // how can I create script class that inherit from c-type 
                                  // in runtime (answer: call the script class' constructor)

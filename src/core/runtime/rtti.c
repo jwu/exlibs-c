@@ -76,7 +76,6 @@ bool ex_rtti_initialized () { return __initialized; }
 
 ex_rtti_t *ex_rtti_register_class ( strid_t _typeID, 
                                     ex_rtti_t *_super, 
-                                    const char *_lua_typename,
                                     size_t _typeSize,
                                     ex_create_pfn _pfn_create,
                                     ex_serialize_pfn _pfn_serialize,
@@ -93,7 +92,6 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
     my_rtti = (ex_rtti_t *)ex_malloc ( sizeof(ex_rtti_t) );
     my_rtti->super = _super;
     my_rtti->typeID = _typeID;
-    my_rtti->lua_typeID = ex_strid(_lua_typename);
     my_rtti->size = _typeSize;
     my_rtti->props = NULL;
     my_rtti->prop_count = 0;

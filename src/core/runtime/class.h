@@ -35,11 +35,10 @@ extern ex_rtti_t *__RTTI_ex_class_t__;
 extern void *__ex_create_ex_class_t();
 
 //
-static inline void __ex_register_class_ex_class_t ( const char *_lua_typename ) { 
-    __TYPEID_ex_class_t__ = ex_strid(_lua_typename); \
+static inline void __ex_register_class_ex_class_t ( strid_t _typeID ) { 
+    __TYPEID_ex_class_t__ = _typeID;
     __RTTI_ex_class_t__ = ex_rtti_register_class ( __TYPEID_ex_class_t__,
                                                    NULL,
-                                                   _lua_typename,
                                                    sizeof(ex_class_t),
                                                    __ex_create_ex_class_t,
                                                    NULL,

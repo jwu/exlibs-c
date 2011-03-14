@@ -38,15 +38,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#define DECL_BUILTIN_TYPE(_ctype) DECL_BUILTIN_TYPE_3(_ctype,_ctype,"ex."#_ctype)
-#define DECL_BUILTIN_TYPE_2(_shotname,_ctype) DECL_BUILTIN_TYPE_3(_shotname,_ctype,"ex."#_shotname)
-#define DECL_BUILTIN_TYPE_3(_shotname,_ctype,_luatype) \
+#define DECL_BUILTIN_TYPE(_ctype) DECL_BUILTIN_TYPE_3(_ctype,_ctype,ex.#_ctype)
+#define DECL_BUILTIN_TYPE_2(_shotname,_ctype) DECL_BUILTIN_TYPE_3(_shotname,_ctype,ex.#_shotname)
+#define DECL_BUILTIN_TYPE_3(_shotname,_ctype,_type) \
     extern ex_rtti_t *__RTTI_##_shotname##__; /*for EX_RTTI*/ \
     static inline void __ex_register_builtin_type_##_shotname () { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_shotname##__ = ex_strid(_luatype); \
+        __TYPEID_##_shotname##__ = ex_strid(#_type); \
         __RTTI_##_shotname##__ = ex_rtti_register_class ( __TYPEID_##_shotname##__, \
                                                           NULL, \
-                                                          _luatype, \
                                                           sizeof(_ctype), \
                                                           NULL, \
                                                           __ex_serialize_##_shotname, \
