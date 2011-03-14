@@ -23,10 +23,10 @@ void *ex_create ( strid_t _typeID ) {
     ex_rtti_t *rtti = ex_rtti_get(_typeID);
     if ( rtti ) {
         if ( rtti->create ) return rtti->create();
-        else ex_warning ("can't find creator for type %s", ex_strid_to_cstr(_typeID) );
+        else ex_warning ( "can't find creator for type %s", ex_strid_to_cstr(_typeID) );
     }
     else {
-        ex_warning ("can't find rtti for type %s", ex_strid_to_cstr(_typeID) );
+        ex_warning ( "can't find rtti for type %s", ex_strid_to_cstr(_typeID) );
     }
     return NULL;
 }

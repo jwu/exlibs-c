@@ -95,76 +95,76 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_BEGIN(_typename) \
-    typedef struct _typename { \
+#define EX_DECL_CLASS_BEGIN(_ctype) \
+    typedef struct _ctype { \
         const struct ex_class_t _;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_END(_typename) \
-    } _typename; \
-    extern strid_t __TYPEID_##_typename##__; /*for EX_TYPEID*/ \
-    extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
-    extern void *__ex_create_##_typename(); \
-    extern void __ex_register_properties_##_typename (); \
-    extern void __ex_serialize_##_typename( struct ex_stream_t *, strid_t, void * ); \
-    extern void __ex_tostring_##_typename( struct ex_string_t *, void * ); \
-    static inline void __ex_register_class_##_typename ( strid_t _typeID ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_typename##__ = _typeID; \
-        __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
-                                                          EX_RTTI(ex_class_t), \
-                                                          sizeof(_typename), \
-                                                          __ex_create_##_typename, \
-                                                          __ex_serialize_##_typename, \
-                                                          __ex_tostring_##_typename \
-                                                          ); \
-        __ex_register_properties_##_typename(); \
+#define EX_DECL_CLASS_END(_ctype) \
+    } _ctype; \
+    extern strid_t __TYPEID_##_ctype##__; /*for EX_TYPEID*/ \
+    extern ex_rtti_t *__RTTI_##_ctype##__; /*for EX_RTTI*/ \
+    extern void *__ex_create_##_ctype(); \
+    extern void __ex_register_properties_##_ctype (); \
+    extern void __ex_serialize_##_ctype( struct ex_stream_t *, strid_t, void * ); \
+    extern void __ex_tostring_##_ctype( struct ex_string_t *, void * ); \
+    static inline void __ex_register_class_##_ctype ( strid_t _typeID ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __TYPEID_##_ctype##__ = _typeID; \
+        __RTTI_##_ctype##__ = ex_rtti_register_class ( __TYPEID_##_ctype##__, \
+                                                       EX_RTTI(ex_class_t), \
+                                                       sizeof(_ctype), \
+                                                       __ex_create_##_ctype, \
+                                                       __ex_serialize_##_ctype, \
+                                                       __ex_tostring_##_ctype \
+                                                     ); \
+        __ex_register_properties_##_ctype(); \
     }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_SUPER_BEGIN(_typename,_super) \
-    typedef struct _typename { \
+#define EX_DECL_CLASS_SUPER_BEGIN(_ctype,_super) \
+    typedef struct _ctype { \
         const struct _super _;
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DECL_CLASS_SUPER_END(_typename,_super) \
-    } _typename; \
-    extern strid_t __TYPEID_##_typename##__; /*for EX_TYPEID*/ \
-    extern ex_rtti_t *__RTTI_##_typename##__; /*for EX_RTTI*/ \
-    extern void *__ex_create_##_typename(); \
-    extern void __ex_register_properties_##_typename (); \
-    extern void __ex_serialize_##_typename( struct ex_stream_t *, strid_t, void * ); \
-    extern void __ex_tostring_##_typename( struct ex_string_t *, void * ); \
-    static inline void __ex_register_class_##_typename ( strid_t _typeID ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
-        __TYPEID_##_typename##__ = _typeID; \
-        __RTTI_##_typename##__ = ex_rtti_register_class ( __TYPEID_##_typename##__, \
-                                                          EX_RTTI(_super), \
-                                                          sizeof(_typename), \
-                                                          __ex_create_##_typename, \
-                                                          __ex_serialize_##_typename, \
-                                                          __ex_tostring_##_typename \
-                                                          ); \
-        __ex_register_properties_##_typename(); \
+#define EX_DECL_CLASS_SUPER_END(_ctype,_super) \
+    } _ctype; \
+    extern strid_t __TYPEID_##_ctype##__; /*for EX_TYPEID*/ \
+    extern ex_rtti_t *__RTTI_##_ctype##__; /*for EX_RTTI*/ \
+    extern void *__ex_create_##_ctype(); \
+    extern void __ex_register_properties_##_ctype (); \
+    extern void __ex_serialize_##_ctype( struct ex_stream_t *, strid_t, void * ); \
+    extern void __ex_tostring_##_ctype( struct ex_string_t *, void * ); \
+    static inline void __ex_register_class_##_ctype ( strid_t _typeID ) { /*for EX_REGISTER_CLASS, define in EX_DEF_PROPS_BEGIN*/ \
+        __TYPEID_##_ctype##__ = _typeID; \
+        __RTTI_##_ctype##__ = ex_rtti_register_class ( __TYPEID_##_ctype##__, \
+                                                       EX_RTTI(_super), \
+                                                       sizeof(_ctype), \
+                                                       __ex_create_##_ctype, \
+                                                       __ex_serialize_##_ctype, \
+                                                       __ex_tostring_##_ctype \
+                                                     ); \
+        __ex_register_properties_##_ctype(); \
     }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_CLASS_BEGIN(_typename) \
-    strid_t __TYPEID_##_typename##__ = EX_STRID_NULL; \
-    ex_rtti_t *__RTTI_##_typename##__ = NULL; \
-    void *__ex_create_##_typename() { \
-        void *__obj__ = ex_malloc(sizeof(_typename)); \
-        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_typename); \
+#define EX_DEF_CLASS_BEGIN(_ctype) \
+    strid_t __TYPEID_##_ctype##__ = EX_STRID_NULL; \
+    ex_rtti_t *__RTTI_##_ctype##__ = NULL; \
+    void *__ex_create_##_ctype() { \
+        void *__obj__ = ex_malloc(sizeof(_ctype)); \
+        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_ctype);
 
 #define EX_DEF_CLASS_END \
         return __obj__; \
@@ -207,13 +207,13 @@ extern "C" {
 // };
 
 // ------------------------------------------------------------------ 
-// Desc: EX_DEF_PROPS_BEGIN(_typename)
+// Desc: EX_DEF_PROPS_BEGIN(_ctype)
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_PROPS_BEGIN(_typename) \
-    void __ex_register_properties_##_typename () { \
-        ex_rtti_t *__rtti__ = EX_RTTI(_typename); \
-        const char *__typename__ = #_typename; \
+#define EX_DEF_PROPS_BEGIN(_ctype) \
+    void __ex_register_properties_##_ctype () { \
+        ex_rtti_t *__rtti__ = EX_RTTI(_ctype); \
+        const char *__typename__ = #_ctype; \
         static const ex_prop_t __props__[] = {
 
 // ------------------------------------------------------------------ 
