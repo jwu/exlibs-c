@@ -183,7 +183,7 @@ void ex_world_clear ( ex_ref_t *_self ) {
 	ex_world_t *world;
     
     world = EX_REF_CAST(ex_world_t,_self);
-    ex_lua_clear_refs( ex_lua_default_state() );
+    ex_lua_clear_refs( ex_current_lua_state() );
 	
     // decrease reference count and destroy all entities
     ex_array_each ( world->entities, ex_ref_t *, ref ) {
@@ -422,4 +422,31 @@ void ex_world_resume ( ex_ref_t *_self ) {
     if ( world->state != EX_WORLD_STATE_PAUSED )
         return;
     world->state = EX_WORLD_STATE_RUNNING;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_world_is_running ( ex_ref_t *_self ) {
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
+    return world->state == EX_WORLD_STATE_RUNNING; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_world_is_paused ( ex_ref_t *_self ) {
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
+    return world->state == EX_WORLD_STATE_PAUSED; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_world_is_stopped ( ex_ref_t *_self ) {
+    ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
+    return world->state == EX_WORLD_STATE_STOPPED; 
 }

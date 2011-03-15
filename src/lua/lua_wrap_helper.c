@@ -275,7 +275,7 @@ int ex_lua_register_class ( lua_State *_l,
     lua_pushstring(_l, _typename);
     lua_setfield(_l,-2,"__typename");
 
-    // tp.__meta_for_child = { __call = _metacall_for_child }
+    // tp.__metaclass = { __call = _metacall_for_child }
     // NOTE: _metacall_for_child could be NULL
     if ( _metacall_for_child ) {
         lua_newtable(_l);

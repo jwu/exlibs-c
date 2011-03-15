@@ -26,7 +26,7 @@
 // ------------------------------------------------------------------ 
 
 static void init () {
-    struct lua_State *l = ex_lua_default_state();
+    struct lua_State *l = ex_current_lua_state();
     ex_lua_dofile( l, "script_world.lua" );
 }
 
@@ -42,7 +42,7 @@ static void update () {
 // ------------------------------------------------------------------ 
 
 static void render () {
-    struct lua_State *l = ex_lua_default_state();
+    struct lua_State *l = ex_current_lua_state();
 
     //
     // ex_world_render(g_world);

@@ -52,8 +52,10 @@ ref_proxy_t *ex_lua_push_generic_component ( lua_State *_l, const char *_lua_typ
     if ( !is_builtin ) {
         lua_newtable(_l);
 
-        lua_pushboolean(_l,true);
-        lua_setfield(_l,-2,"__isinstance");
+        // UNUSED { 
+        // lua_pushboolean(_l,true);
+        // lua_setfield(_l,-2,"__isinstance");
+        // } UNUSED end 
         lua_pushcfunction(_l,__child_meta_index);
         lua_setfield(_l,-2,"__index");
         lua_pushcfunction(_l,__child_meta_newindex);
@@ -104,8 +106,10 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
     lua_newtable(_l);
     // } TODO end 
 
-    lua_pushboolean(_l,true);
-    lua_setfield(_l,-2,"__isinstance");
+    // UNUSED { 
+    // lua_pushboolean(_l,true);
+    // lua_setfield(_l,-2,"__isinstance");
+    // } UNUSED end 
     lua_pushcfunction(_l,__child_meta_index);
     lua_setfield(_l,-2,"__index");
     lua_pushcfunction(_l,__child_meta_newindex);
@@ -137,6 +141,8 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
     if ( nargs > 1 ) {
         // TODO:
     }
+
+    // TODO: setup u, awake component
 
     return 1;
 }

@@ -115,7 +115,7 @@ EX_DEF_OBJECT_BEGIN( ex_simple_t,
 
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
     EX_MEMBER( ex_behavior_t, enabled, true )
-    EX_MEMBER( ex_behavior_t, awake, NULL )
+    EX_MEMBER( ex_behavior_t, awake, awake )
     EX_MEMBER( ex_behavior_t, start, start )
     EX_MEMBER( ex_behavior_t, update, update )
     EX_MEMBER( ex_behavior_t, post_update, post_update )

@@ -322,8 +322,8 @@ extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *
     #define ex_warning(msg,...) __EX_WARNING_BREAK(msg"\n", ##__VA_ARGS__)
 #else
     // TODO { 
-    #define ex_error(msg,...) log_error( __FILE__, __FUNCTION__, __LINE__, msg"\n", ##__VA_ARGS__ )
-    #define ex_warning(msg,...) log_warning( __FILE__, __FUNCTION__, __LINE__, msg"\n", ##__VA_ARGS__ )
+    #define ex_error(msg,...) ex_log( "error: %s(%d)::%s, "msg, __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__ )
+    #define ex_warning(msg,...) ex_log( "warning: %s(%d)::%s, "msg, __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__ )
     // } TODO end 
 #endif
 

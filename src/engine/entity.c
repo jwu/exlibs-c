@@ -11,6 +11,7 @@
 
 #include "exsdk.h"
 #include "entity.h"
+#include "world.h"
 
 #include "component/trans2d.h"
 #include "component/camera.h"
@@ -51,7 +52,6 @@ static void __rm_from_cache ( ex_entity_t *_ent, strid_t _typeID ) {
 static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_component_t *comp = EX_REF_CAST(ex_component_t,_comp_ref);
-    ex_behavior_t *be;
 
     comp->entity = _self; // set the entity of the component before init.
     ((ex_object_t *)comp)->init(_comp_ref);
@@ -59,15 +59,21 @@ static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref )
     ex_array_append( ent->comps, &_comp_ref );
     ex_incref(_comp_ref);
     __add_to_cache ( ent, _typeID, _comp_ref );
+}
 
-    // TODO: only awake when world is running { 
-    // awake behavior
-    if ( _typeID == EX_TYPEID(ex_behavior_t) ) {
-        be = EX_REF_CAST(ex_behavior_t,_comp_ref);
-        if ( be->awake )
-            be->awake(_comp_ref);
-    }
-    // } TODO end 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static ex_ref_t *__entity_get_comp ( const ex_ref_t *_self, ex_rtti_t *_rtti ) {
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+
+    ex_array_each ( ent->comps, ex_ref_t *, comp ) {
+        if ( ex_rtti_isa( ex_rtti_info(comp->ptr), _rtti ) )
+            return comp;
+    } ex_array_each_end
+
+    return NULL;
 }
 
 // ------------------------------------------------------------------ 
@@ -180,19 +186,13 @@ EX_DEF_TOSTRING_END
 
 ex_ref_t *ex_entity_get_comp ( const ex_ref_t *_self, strid_t _typeID ) {
     ex_rtti_t *rtti;
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
 
     rtti = ex_rtti_get(_typeID);
     ex_assert_return( rtti, 
                       NULL,
                       "can't find the rtti type: %s", ex_strid_to_cstr(_typeID) );
 
-    ex_array_each ( ent->comps, ex_ref_t *, comp ) {
-        if ( ex_rtti_isa( ex_rtti_info(comp->ptr), rtti ) )
-            return comp;
-    } ex_array_each_end
-
-    return NULL;
+    return __entity_get_comp( _self, rtti );
 }
 
 // ------------------------------------------------------------------ 
@@ -201,22 +201,49 @@ ex_ref_t *ex_entity_get_comp ( const ex_ref_t *_self, strid_t _typeID ) {
 
 ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
     ex_ref_t *compref;
+    ex_rtti_t *rtti;
+
+    rtti = ex_rtti_get(_typeID);
+    ex_assert_return( rtti, 
+                      NULL,
+                      "can't find the rtti type: %s", ex_strid_to_cstr(_typeID) );
     
     // if the component already exists, show a warning and return it.
-    compref = ex_entity_get_comp(_self,_typeID);
+    compref = __entity_get_comp( _self, rtti );
     if ( compref ) {
         ex_warning("the component %s already added in this entity", ex_strid_to_cstr(_typeID));
         return NULL;
     }
 
     // create a component and added to the component list, then return it.
-    compref = ex_create_object(ex_rtti_get(_typeID),ex_generate_uid());
+    compref = ex_create_object(rtti,ex_generate_uid());
     if ( compref ) {
         __add_comp( _self, _typeID, compref );
         return compref;
     }
 
     return NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeID ) {
+    ex_ref_t *compref;
+    ex_behavior_t *be;
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+
+    compref = ex_entity_add_comp( _self, _typeID );
+    if ( compref ) {
+        be = EX_REF_AS( ex_behavior_t, compref);
+        if ( be && be->awake && 
+             ( ex_world_is_running ( ent->world ) || ex_world_is_paused ( ent->world ) ) ) 
+        {
+            be->awake(compref);
+        }
+    }
+    return compref;
 }
 
 // ------------------------------------------------------------------ 

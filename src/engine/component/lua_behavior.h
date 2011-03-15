@@ -34,7 +34,8 @@ extern "C" {
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     void *l; // lua state
-    const char *lua_typename;
+    bool compile_failed;
+    int lua_refID;
 EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 
 // ######################### 

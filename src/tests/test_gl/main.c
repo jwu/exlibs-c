@@ -430,8 +430,8 @@ int main( int argc, const char *argv[] ) {
 
         // init game
         ex_app_init();
-        ex_lua_load_modules( ex_lua_default_state(), "comps" );
-        ex_lua_load_modules( ex_lua_default_state(), "scripts" );
+        ex_lua_load_modules( ex_current_lua_state(), "comps" );
+        ex_lua_load_modules( ex_current_lua_state(), "scripts" );
         initGame();
 
         //

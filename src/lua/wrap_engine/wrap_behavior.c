@@ -40,57 +40,6 @@ static int __behavior_new ( lua_State *_l ) {
     return 0;
 }
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __behavior_new_for_child ( lua_State *_l ) {
-    ref_proxy_t *u;
-    ex_ref_t *ent, *comp;
-    const char *tp_name;
-    int nargs = lua_gettop(_l);
-
-    // TODO: new table or from argument { 
-    lua_newtable(_l);
-    // } TODO end 
-
-    lua_pushboolean(_l,true);
-    lua_setfield(_l,-2,"__isinstance");
-    lua_pushcfunction(_l,__child_meta_index);
-    lua_setfield(_l,-2,"__index");
-    lua_pushcfunction(_l,__child_meta_newindex);
-    lua_setfield(_l,-2,"__newindex");
-    lua_pushcfunction(_l,ex_lua_ref_gc);
-    lua_setfield(_l,-2,"__gc");
-    lua_pushcfunction(_l,ex_lua_ref_eq);
-    lua_setfield(_l,-2,"__eq");
-    // TODO: should be lua class __tostring { 
-    lua_pushcfunction(_l,ex_lua_ref_tostring);
-    lua_setfield(_l,-2,"__tostring");
-    lua_pushcfunction(_l,ex_lua_ref_concat);
-    lua_setfield(_l,-2,"__concat");
-    // } TODO end 
-
-    lua_pushvalue(_l,1);
-    lua_setmetatable(_l,-2);
-
-    //
-    u = ex_lua_pushref(_l,lua_gettop(_l));
-    ent = ex_lua_checkentity(_l,2);
-
-    lua_getfield(_l,1,"__typename");
-    tp_name = luaL_checkstring(_l,-1);
-    comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
-    u->val = comp;
-    ex_incref(u->val);
-
-    if ( nargs > 1 ) {
-        // TODO:
-    }
-
-    return 1;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // meta method
 ///////////////////////////////////////////////////////////////////////////////
@@ -221,7 +170,7 @@ int luaopen_behavior ( lua_State *_l ) {
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
-                            __behavior_new_for_child );
+                            NULL );
     lua_pop(_l, 1); // pops ex
     return 0;
 }

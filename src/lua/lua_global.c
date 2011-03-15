@@ -229,7 +229,7 @@ bool ex_lua_initialized () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-lua_State *ex_lua_default_state () { return __L; }
+lua_State *ex_current_lua_state () { return __L; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // lua module op
@@ -1397,7 +1397,8 @@ void ex_lua_alert ( lua_State *_l ) {
         lua_call(_l, 1, 0);
     }
     else {  /* no _ALERT function; print it on stderr */
-        luaL_error( _l, "%s\n", lua_tostring(_l, -2) );
+        // luaL_error( _l, "%s\n", lua_tostring(_l, -2) ); // don't do this in unprotected scene
+        ex_warning( "%s\n", lua_tostring(_l, -2) );
         lua_pop(_l, 2);  /* remove error message and _ALERT */
     }
 }

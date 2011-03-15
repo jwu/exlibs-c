@@ -99,6 +99,14 @@ extern void ex_world_stop ( ex_ref_t *_self );
 extern void ex_world_pause ( ex_ref_t *_self );
 extern void ex_world_resume ( ex_ref_t *_self );
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern bool ex_world_is_running ( ex_ref_t *_self );
+extern bool ex_world_is_paused ( ex_ref_t *_self );
+extern bool ex_world_is_stopped ( ex_ref_t *_self );
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

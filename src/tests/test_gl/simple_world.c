@@ -47,7 +47,7 @@ static void init () {
             ex_debug2d_set_rect ( dbg2d, 0.0f, 0.0f, 100.0f, 100.0f );
 
             // simple
-            simple_ref = ex_entity_add_comp( ent, EX_TYPEID(ex_simple_t) );
+            simple_ref = ex_entity_add_comp_auto_awake( ent, EX_TYPEID(ex_simple_t) );
             simple = EX_REF_CAST(ex_simple_t,simple_ref);
 
             ex_vec2f_set ( &simple->move_dir, ex_range_randf(-1.0f,1.0f), ex_range_randf(-1.0f,1.0f) );

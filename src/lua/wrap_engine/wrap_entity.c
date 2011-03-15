@@ -66,53 +66,6 @@ static int __entity_new ( lua_State *_l ) {
     return 1;
 }
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __entity_new_for_child ( lua_State *_l ) {
-    ref_proxy_t *u;
-    const char *name;
-    int nargs = lua_gettop(_l);
-
-    // TODO: new table or from argument { 
-    lua_newtable(_l);
-    // } TODO end 
-
-    lua_pushboolean(_l,true);
-    lua_setfield(_l,-2,"__isinstance");
-    lua_pushcfunction(_l,__child_meta_index);
-    lua_setfield(_l,-2,"__index");
-    lua_pushcfunction(_l,__child_meta_newindex);
-    lua_setfield(_l,-2,"__newindex");
-    lua_pushcfunction(_l,ex_lua_ref_gc);
-    lua_setfield(_l,-2,"__gc");
-    lua_pushcfunction(_l,ex_lua_ref_eq);
-    lua_setfield(_l,-2,"__eq");
-    // TODO: should be lua class __tostring { 
-    lua_pushcfunction(_l,ex_lua_ref_tostring);
-    lua_setfield(_l,-2,"__tostring");
-    lua_pushcfunction(_l,ex_lua_ref_concat);
-    lua_setfield(_l,-2,"__concat");
-    // } TODO end 
-
-    lua_pushvalue(_l,1);
-    lua_setmetatable(_l,-2);
-    
-    u = ex_lua_pushref(_l,lua_gettop(_l));
-    name = luaL_checkstring(_l,2);
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name) );
-    ex_incref(u->val);
-
-    // add component if 3rd argument is a table
-    if ( nargs > 2 ) {
-        luaL_checktype(_l, 3, LUA_TTABLE);
-        // TODO:
-    }
-
-    return 1;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // meta method
 ///////////////////////////////////////////////////////////////////////////////
@@ -122,30 +75,49 @@ static int __entity_new_for_child ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __entity_add_comp ( lua_State *_l ) {
-    ex_ref_t *ent, *comp;
+    ex_ref_t *entref, *compref;
     const char *comp_typename;
     ref_proxy_t *u;
-    ex_lua_behavior_t *be;
+    ex_behavior_t *be;
+    ex_lua_behavior_t *lua_be;
     
-    ent = ex_lua_checkentity(_l,1);
-    ex_lua_check_nullref(_l,ent);
+    entref = ex_lua_checkentity(_l,1);
+    ex_lua_check_nullref(_l,entref);
     comp_typename = luaL_checkstring(_l,2); // TODO: could be table with default member values :)
 
-    comp = ex_entity_add_comp( ent, ex_strid(comp_typename) );
-    if ( comp == NULL ) {
+    compref = ex_entity_add_comp( entref, ex_strid(comp_typename) );
+    if ( compref == NULL ) {
         return luaL_error( _l, "can't add component by type %s", comp_typename );
     }
-    // HACK { 
-    be = EX_REF_AS(ex_lua_behavior_t,comp);
-    if ( be ) {
-        be->l = _l; 
-        be->lua_typename = comp_typename; 
-    }
-    // } HACK end 
 
+    //
     u = ex_lua_push_generic_component ( _l, comp_typename );
-    u->val = comp;
+    u->val = compref;
     ex_incref(u->val);
+
+    // TODO: if table.. should process before awake.
+    // if ( nargs > 1 ) {
+    //     // TODO:
+    // }
+
+    // awake behavior, and setup lua behavior
+    be = EX_REF_AS(ex_behavior_t,compref);
+    if ( be ) {
+        lua_be = EX_REF_AS( ex_lua_behavior_t,compref);
+        if ( lua_be ) {
+            lua_pushvalue(_l, -1);
+            lua_be->lua_refID = luaL_ref(_l, LUA_REGISTRYINDEX);
+            lua_be->l = _l;
+        }
+
+        // awake if the world is running
+        ex_entity_t *ent = EX_REF_CAST(ex_entity_t,entref);
+        if ( be->awake && 
+             ( ex_world_is_running ( ent->world ) || ex_world_is_paused ( ent->world ) ) ) 
+        {
+            be->awake(compref);
+        }
+    }
 
     return 1;
 }
@@ -287,7 +259,7 @@ int luaopen_entity ( lua_State *_l ) {
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
-                            __entity_new_for_child );
+                            NULL );
     lua_pop(_l, 1); // pops ex
     return 0;
 }

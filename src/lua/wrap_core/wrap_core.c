@@ -641,6 +641,7 @@ int ex_lua_class ( lua_State *_l,
                    bool _isbuiltin ) {
 
     const char *typename = NULL;
+    const char *super_typename = NULL;
 
     // local base,super = ...
     // assert( type(base) == "table", "the first parameter must be a table" )
@@ -655,10 +656,6 @@ int ex_lua_class ( lua_State *_l,
     }
     typename = luaL_checkstring(_l,-1);
     lua_pop(_l,1); // pos field __typename
-
-    // register the base table in metatable
-    lua_pushvalue(_l,_base_idx);
-    lua_setfield( _l, LUA_REGISTRYINDEX, typename );
 
     // if super == nil then
     if ( lua_isnil(_l,_super_idx) ) {
@@ -686,11 +683,33 @@ int ex_lua_class ( lua_State *_l,
             return luaL_error( _l, "super is not a class" );
         }
 
+        // get super.__typename
+        // if you don't define the __typename, report error!
+        lua_getfield(_l,_super_idx,"__typename");
+        if ( lua_isnil(_l,-1) ) {
+            return luaL_error ( _l, "can't find __typename in super class!" );
+        }
+        super_typename = luaL_checkstring(_l,-1);
+        lua_pop(_l,1); // pos field __typename
+
+        // NOTE: we only allow inherit from ex.lua_object or ex.lua_behavior if super class is builtin.
+        if ( ex_lua_isbuiltin(_l,_super_idx) ) {
+            if ( strcmp ( super_typename, "ex.lua_object" ) != 0 ||
+                 strcmp ( super_typename, "ex.lua_behavior" ) != 0 ) 
+            {
+                return luaL_error ( _l, "inherit from builtin class can only be ex.lua_object or ex.lua_behavior" );
+            }
+        }
+
         // rawset(base, "__super", super)
         lua_pushstring(_l,"__super");
         lua_pushvalue(_l,_super_idx);
         lua_rawset (_l,_base_idx);
     }
+
+    // register the base table in metatable
+    lua_pushvalue(_l,_base_idx);
+    lua_setfield( _l, LUA_REGISTRYINDEX, typename );
 
     // base.__isclass = true
     lua_pushboolean(_l,true);
@@ -761,8 +780,11 @@ int ex_lua_class ( lua_State *_l,
         // HACK: the create method should change to some closure like function,
         //       also, builtin also include other derived type, not just lua_behavior { 
         strid_t typeID = ex_strid(typename);
+        ex_rtti_t *super_rtti = ex_rtti_get( ex_strid(super_typename) );
+        ex_assert( super_rtti, "can't find super rtti for type %s", super_typename );
+
         ex_rtti_register_class ( typeID, 
-                                 NULL, // TODO: we should have super !!
+                                 super_rtti,
                                  0,
                                  // how can I create script class that inherit from c-type 
                                  // in runtime (answer: call the script class' constructor)

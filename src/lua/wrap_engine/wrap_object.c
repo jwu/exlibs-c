@@ -40,44 +40,6 @@ static int __object_new ( lua_State *_l ) {
     return 1;
 }
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static int __object_new_for_child ( lua_State *_l ) {
-    ref_proxy_t *u;
-
-    // TODO: new table or from argument { 
-    lua_newtable(_l);
-    // } TODO end 
-
-    lua_pushboolean(_l,true);
-    lua_setfield(_l,-2,"__isinstance");
-    lua_pushcfunction(_l,__child_meta_index);
-    lua_setfield(_l,-2,"__index");
-    lua_pushcfunction(_l,__child_meta_newindex);
-    lua_setfield(_l,-2,"__newindex");
-    lua_pushcfunction(_l,ex_lua_ref_gc);
-    lua_setfield(_l,-2,"__gc");
-    lua_pushcfunction(_l,ex_lua_ref_eq);
-    lua_setfield(_l,-2,"__eq");
-    // TODO: should be lua class __tostring { 
-    lua_pushcfunction(_l,ex_lua_ref_tostring);
-    lua_setfield(_l,-2,"__tostring");
-    lua_pushcfunction(_l,ex_lua_ref_concat);
-    lua_setfield(_l,-2,"__concat");
-    // } TODO end 
-
-    lua_pushvalue(_l,1);
-    lua_setmetatable(_l,-2);
-    
-    u = ex_lua_pushref(_l,lua_gettop(_l));
-    u->val = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_incref(u->val);
-
-    return 1;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // meta getset
 ///////////////////////////////////////////////////////////////////////////////
@@ -226,7 +188,7 @@ int luaopen_object ( lua_State *_l ) {
                             __typename,
                             __meta_funcs,
                             __type_meta_funcs,
-                            __object_new_for_child );
+                            NULL );
     lua_pop(_l, 1); // pops ex
     return 0;
 }

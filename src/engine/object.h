@@ -50,12 +50,12 @@ EX_DECL_CLASS_END(ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_DEF_OBJECT_BEGIN(_typename,_default_name,_init,_deinit) \
-    strid_t __TYPEID_##_typename##__ = EX_STRID_NULL; \
-    ex_rtti_t *__RTTI_##_typename##__ = NULL; \
-    void *__ex_create_##_typename() { \
-        void *__obj__ = ex_malloc(sizeof(_typename)); \
-        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_typename); \
+#define EX_DEF_OBJECT_BEGIN(_ctype,_default_name,_init,_deinit) \
+    strid_t __TYPEID_##_ctype##__ = EX_STRID_NULL; \
+    ex_rtti_t *__RTTI_##_ctype##__ = NULL; \
+    void *__ex_create_##_ctype() { \
+        void *__obj__ = ex_malloc(sizeof(_ctype)); \
+        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_ctype); \
         ((ex_object_t *)__obj__)->uid = EX_UID_INVALID; \
         ((ex_object_t *)__obj__)->name = ex_strid(_default_name); \
         ((ex_object_t *)__obj__)->flags = EX_OBJECT_NONE; \

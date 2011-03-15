@@ -57,6 +57,7 @@ extern ex_ref_t *ex_entity_get_comp ( const ex_ref_t *_self, strid_t _typeID );
 // ------------------------------------------------------------------ 
 
 extern ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID );
+extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeID );
 // TODO: extern int ex_entity_remove_comp ( ex_ref_t *_self, ex_ref_t *_comp );
 
 // ------------------------------------------------------------------ 

@@ -156,7 +156,7 @@ static void __verify_pattern ( alloc_unit_t *_au,
                             "FunctionName: %s\n"
                             "Alloc ThreadID: %d\n"
                             "Current ThreadID: %d\n", 
-                            _file_name, _line_nr, _func_name, _au->thread_id, ex_current_threadID() );
+                            _file_name, (int)_line_nr, _func_name, (int)(_au->thread_id), (int)ex_current_threadID() );
                 break;
             }
         }
@@ -178,7 +178,7 @@ static void __verify_pattern ( alloc_unit_t *_au,
                             "FunctionName: %s\n"
                             "Alloc ThreadID: %d\n"
                             "Current ThreadID: %d\n", 
-                            _file_name, _line_nr, _func_name, _au->thread_id, ex_current_threadID() );
+                            _file_name, (int)_line_nr, _func_name, (int)(_au->thread_id), (int)ex_current_threadID() );
                 break;
             }
         }
