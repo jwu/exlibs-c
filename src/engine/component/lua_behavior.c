@@ -24,11 +24,6 @@ extern void __behavior_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 static void init ( ex_ref_t *_self ) {
-    strid_t typeID = EX_STRID_NULL;
-    const char *typename = NULL;
-    ex_lua_behavior_t *self;
-    ref_proxy_t *u;
-
     __behavior_init(_self); // parent init
 }
 
@@ -64,7 +59,7 @@ static void awake ( ex_ref_t *_self ) {
 
     lua_getfield( self->l, -1, "awake" );
     if ( lua_isnil(self->l,-1) == 0 ) {
-        ex_incref(ref);
+        // ex_incref(ref); // TODO: looks like we don't need it
         lua_pushvalue(self->l,-2);
         status = lua_pcall( self->l, 1, 0, 0 );
         if ( status ) {
@@ -92,7 +87,7 @@ static void start ( ex_ref_t *_self ) {
 
     lua_getfield( self->l, -1, "start" );
     if ( lua_isnil(self->l,-1) == 0 ) {
-        ex_incref(ref);
+        // ex_incref(ref); // TODO: looks like we don't need it
         lua_pushvalue(self->l,-2);
         status = lua_pcall( self->l, 1, 0, 0 );
         if ( status ) {
@@ -120,7 +115,7 @@ static void update ( ex_ref_t *_self ) {
 
     lua_getfield( self->l, -1, "update" );
     if ( lua_isnil(self->l,-1) == 0 ) {
-        ex_incref(ref);
+        // ex_incref(ref); // TODO: looks like we don't need it
         lua_pushvalue(self->l,-2);
         status = lua_pcall( self->l, 1, 0, 0 );
         if ( status ) {
@@ -148,7 +143,7 @@ static void post_update ( ex_ref_t *_self ) {
 
     lua_getfield( self->l, -1, "post_update" );
     if ( lua_isnil(self->l,-1) == 0 ) {
-        ex_incref(ref);
+        // ex_incref(ref); // TODO: looks like we don't need it
         lua_pushvalue(self->l,-2);
         status = lua_pcall( self->l, 1, 0, 0 );
         if ( status ) {
