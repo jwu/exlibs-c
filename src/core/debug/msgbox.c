@@ -64,14 +64,6 @@ int ex_message_box ( int _msgType, const char *_caption, const char *_expr,  ...
         type = MB_ICONWARNING;
 
     ret = MessageBox( NULL, buffer, _caption, type );
-#elif (EX_PLATFORM == EX_MACOSX)
-    // TODO: use mac osx message box { 
-    ret = 1;
-    printf ( "%s", buffer );
-    // } TODO end 
-#else
-    ret = 1;
-    printf ( "%s", buffer );
 #endif
 
     // release buffer we allocate

@@ -241,9 +241,9 @@ extern void ex_log ( const char *_fmt, ... );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern bool assert_failed ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
-extern bool error_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
-extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
+extern bool assert_failed ( bool *_do_hw_break, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
+extern void log_error ( const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
+extern void log_warning ( const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
 
 ///////////////////////////////////////////////////////////////////////////////
 // help macors 
@@ -291,31 +291,23 @@ extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *
 // __EX_ERROR_BREAK
 #define __EX_ERROR_BREAK(msg,...) \
 	do { \
-		static bool s_AskBreak = true; \
-		if ( s_AskBreak ) { \
-            if( error_msg( &s_AskBreak, __FILE__, __FUNCTION__, __LINE__, msg, ##__VA_ARGS__ ) ) \
-			{ \
-				EX_HW_BREAK(); \
-			} \
+		static bool __do_hw_break = true; \
+        log_error( __FILE__, __FUNCTION__, __LINE__, msg, ##__VA_ARGS__ ); \
+		if ( __do_hw_break ) { \
+            EX_HW_BREAK(); \
+            __do_hw_break = false; \
 		} \
-        else { \
-            /*TODO: log_error( __FILE__, __FUNCTION__, __LINE__, msg, ##__VA_ARGS__ );*/ \
-        } \
 	} while( false )
 
 // __EX_WARNING_BREAK
 #define __EX_WARNING_BREAK(msg,...) \
 	do { \
-		static bool s_AskBreak = true; \
-		if ( s_AskBreak ) { \
-            if( warning_msg( &s_AskBreak, __FILE__, __FUNCTION__, __LINE__, msg, ##__VA_ARGS__ ) ) \
-			{ \
-				EX_HW_BREAK(); \
-			} \
+		static bool __do_hw_break = true; \
+        log_warning( __FILE__, __FUNCTION__, __LINE__, msg, ##__VA_ARGS__ ); \
+		if ( __do_hw_break ) { \
+            EX_HW_BREAK(); \
+            __do_hw_break = false; \
 		} \
-        else { \
-            /*TODO: log_warning( __FILE__, __FUNCTION__, __LINE__, msg, ##__VA_ARGS__ );*/ \
-        } \
 	} while( false )
 
 // ======================================================== 
@@ -353,10 +345,10 @@ extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *
 // __EX_ASSERT_BREAK
 #define __EX_ASSERT_BREAK(expr,msg,...) \
 	do { \
-		static bool s_DoAssert = true; \
+		static bool __do_hw_break = true; \
         bool eval = !(expr); \
-		if ( s_DoAssert ) { \
-            if( eval && assert_failed( &s_DoAssert, __FILE__, __FUNCTION__, __LINE__, #expr" : "msg, ##__VA_ARGS__ ) ) \
+		if ( __do_hw_break ) { \
+            if( eval && assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #expr" : "msg, ##__VA_ARGS__ ) ) \
 			{ \
 				EX_HW_BREAK(); \
 			} \
@@ -366,10 +358,10 @@ extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *
 // __EX_ASSERT_RETURN_BREAK
 #define __EX_ASSERT_RETURN_BREAK(expr,ret,msg,...) \
 	do { \
-		static bool s_DoAssert = true; \
+		static bool __do_hw_break = true; \
         bool eval = !(expr); \
-		if ( s_DoAssert ) { \
-            if( eval && assert_failed( &s_DoAssert, __FILE__, __FUNCTION__, __LINE__, #expr" : "msg, ##__VA_ARGS__ ) ) \
+		if ( __do_hw_break ) { \
+            if( eval && assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #expr" : "msg, ##__VA_ARGS__ ) ) \
 			{ \
 				EX_HW_BREAK(); \
 			} \
@@ -381,12 +373,12 @@ extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *
 // __EX_ASSERT_EXEC_BREAK
 #define __EX_ASSERT_EXEC_BREAK(expr,func,msg,...) \
 	do { \
-		static bool s_DoAssert = true; \
+		static bool __do_hw_break = true; \
         bool eval = !(expr); \
         if ( eval ) \
             func; \
-		if ( s_DoAssert ) { \
-            if( eval && assert_failed( &s_DoAssert, __FILE__, __FUNCTION__, __LINE__, #expr" : "msg, ##__VA_ARGS__ ) ) \
+		if ( __do_hw_break ) { \
+            if( eval && assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #expr" : "msg, ##__VA_ARGS__ ) ) \
 			{ \
 				EX_HW_BREAK(); \
 			} \

@@ -263,7 +263,7 @@ void ex_entity_update_behaviors ( ex_ref_t *_self ) {
                 be->state = EX_BEHAVIOR_STATE_STARTED;
             }
             else {
-                if ( be->enabled && be->update ) 
+                if ( be->update && be->enabled ) 
                     be->update(compref);
             }
         }
@@ -280,10 +280,8 @@ void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be ) {
-            if ( be->enabled && be->post_update ) 
-                be->post_update(compref);
-        }
+        if ( be && be->post_update && be->enabled )
+            be->post_update(compref);
     } ex_array_each_end
 }
 
@@ -297,9 +295,7 @@ void ex_entity_awake_behaviors ( ex_ref_t *_self ) {
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be ) {
-            if ( be->awake )
-                be->awake(compref);
-        }
+        if ( be && be->awake )
+            be->awake(compref);
     } ex_array_each_end
 }

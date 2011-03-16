@@ -133,7 +133,7 @@ void ex_log ( const char *_fmt, ... ) {
 // Desc: 
 // ------------------------------------------------------------------
 
-bool assert_failed( bool *_pDoAssert, 
+bool assert_failed( bool *_do_hw_break, 
                     const char *_file_name, 
                     const char *_function_name, 
                     size_t _line_nr, 
@@ -181,7 +181,7 @@ bool assert_failed( bool *_pDoAssert,
 
     //
 #if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
-    (*_pDoAssert) = (mbResult != IDIGNORE);
+    (*_do_hw_break) = (mbResult != IDIGNORE);
     return (mbResult == IDRETRY);
 #else
     return true;
@@ -192,11 +192,13 @@ bool assert_failed( bool *_pDoAssert,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
+void log_error( const char *_file_name, 
+                const char *_function_name, 
+                size_t _line_nr, 
+                const char *_expr, ... )
 {
     int     result = -1;
     char    short_name[64];
-    int     mbResult = -1;
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
 
@@ -221,30 +223,25 @@ bool error_msg( bool *_pDoAssert, const char *_file_name, const char *_function_
 
     //
     ex_log ( "Error: %s(%d)[%s], %s", _file_name, (int)_line_nr, short_name, buffer );
-    mbResult = ex_message_box( EX_MSG_BOX_ERROR, "Error", "Error: %s(%d)[%s], %s", _file_name, (int)_line_nr, short_name, buffer );
+
+    // TODO: push to error stack
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )
         ex_free_nomng ( buffer );
-
-    //
-#if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
-    (*_pDoAssert) = (mbResult != IDIGNORE);
-    return (mbResult == IDRETRY);
-#else
-    return true;
-#endif
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
+void log_warning ( const char *_file_name, 
+                   const char *_function_name, 
+                   size_t _line_nr, 
+                   const char *_expr, ... )
 {
     int     result = -1;
     char    short_name[64];
-    int     mbResult = -1;
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
 
@@ -269,18 +266,11 @@ bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_functi
 
     //
     ex_log ( "Warning: %s(%d)[%s], %s", _file_name, (int)_line_nr, _function_name, buffer );
-    mbResult = ex_message_box( EX_MSG_BOX_WARNING, "Warning", "Warning: %s(%d)[%s], %s", _file_name, (int)_line_nr, _function_name, buffer );
+
+    // TODO: push to warning stack
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )
         ex_free_nomng ( buffer );
-
-    //
-#if (EX_PLATFORM == EX_WIN32) || (EX_PLATFORM == EX_XENON)
-    (*_pDoAssert) = (mbResult != IDIGNORE);
-    return (mbResult == IDRETRY);
-#else
-    return true;
-#endif
 }
 
