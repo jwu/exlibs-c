@@ -28,11 +28,11 @@ extern "C" {
 
 //
 typedef struct ex_class_t {
-    ex_rtti_t *rtti;
+    const ex_rtti_t *rtti;
 } ex_class_t;
 extern strid_t __TYPEID_ex_class_t__;
 extern ex_rtti_t *__RTTI_ex_class_t__;
-extern void *__ex_create_ex_class_t();
+extern void *__ex_create_ex_class_t( const ex_rtti_t * );
 
 //
 static inline void __ex_register_class_ex_class_t ( strid_t _typeID ) { 
@@ -54,7 +54,7 @@ static inline void __ex_register_class_ex_class_t ( strid_t _typeID ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline ex_rtti_t *ex_rtti_info ( void *_obj ) {
+static inline const ex_rtti_t *ex_rtti_info ( void *_obj ) {
     return ((ex_class_t *)_obj)->rtti;
 }
 

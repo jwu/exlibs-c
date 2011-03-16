@@ -107,7 +107,7 @@ extern "C" {
     } _ctype; \
     extern strid_t __TYPEID_##_ctype##__; /*for EX_TYPEID*/ \
     extern ex_rtti_t *__RTTI_##_ctype##__; /*for EX_RTTI*/ \
-    extern void *__ex_create_##_ctype(); \
+    extern void *__ex_create_##_ctype(const ex_rtti_t *); \
     extern void __ex_register_properties_##_ctype (); \
     extern void __ex_serialize_##_ctype( struct ex_stream_t *, strid_t, void * ); \
     extern void __ex_tostring_##_ctype( struct ex_string_t *, void * ); \
@@ -139,7 +139,7 @@ extern "C" {
     } _ctype; \
     extern strid_t __TYPEID_##_ctype##__; /*for EX_TYPEID*/ \
     extern ex_rtti_t *__RTTI_##_ctype##__; /*for EX_RTTI*/ \
-    extern void *__ex_create_##_ctype(); \
+    extern void *__ex_create_##_ctype(const ex_rtti_t *); \
     extern void __ex_register_properties_##_ctype (); \
     extern void __ex_serialize_##_ctype( struct ex_stream_t *, strid_t, void * ); \
     extern void __ex_tostring_##_ctype( struct ex_string_t *, void * ); \
@@ -162,9 +162,9 @@ extern "C" {
 #define EX_DEF_CLASS_BEGIN(_ctype) \
     strid_t __TYPEID_##_ctype##__ = EX_STRID_NULL; \
     ex_rtti_t *__RTTI_##_ctype##__ = NULL; \
-    void *__ex_create_##_ctype() { \
+    void *__ex_create_##_ctype( const ex_rtti_t *_rtti ) { \
         void *__obj__ = ex_malloc(sizeof(_ctype)); \
-        ((ex_class_t *)__obj__)->rtti = EX_RTTI(_ctype);
+        ((ex_class_t *)__obj__)->rtti = _rtti;
 
 #define EX_DEF_CLASS_END \
         return __obj__; \

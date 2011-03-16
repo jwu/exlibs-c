@@ -665,9 +665,11 @@ int ex_lua_class ( lua_State *_l,
         lua_rawset ( _l, _base_idx );
     }
     else {
+        bool is_class = false;
+        bool is_super_builtin = false;
+
         // assert( type(super) == "table", "the super parameter must be a table" )
         // assert( rawget(_super,"__isclass"), "the super parameter must be a class" )
-        bool is_class = false;
         if ( lua_istable(_l,_super_idx) ) {
             // local r = rawget(super, "__isclass")
             lua_pushstring(_l,"__isclass");
@@ -692,12 +694,21 @@ int ex_lua_class ( lua_State *_l,
         super_typename = luaL_checkstring(_l,-1);
         lua_pop(_l,1); // pos field __typename
 
-        // NOTE: we only allow inherit from ex.lua_object or ex.lua_behavior if super class is builtin.
-        if ( ex_lua_isbuiltin(_l,_super_idx) ) {
-            if ( strcmp ( super_typename, "ex.lua_object" ) != 0 ||
+        // local is_super_builtin = rawget(tp, "__isbuiltin")
+        lua_pushstring(_l,"__isbuiltin");
+        lua_rawget ( _l, _super_idx );
+        is_super_builtin = lua_toboolean(_l,-1);
+        lua_pop(_l,1); // pops is_super_builtin
+
+        // NOTE: we only allow lua class inherit from ex.lua_object or ex.lua_behavior if super class is builtin.
+        if ( is_super_builtin && !_isbuiltin ) {
+            if ( strcmp ( super_typename, "ex.lua_object" ) != 0 &&
                  strcmp ( super_typename, "ex.lua_behavior" ) != 0 ) 
             {
-                return luaL_error ( _l, "inherit from builtin class can only be ex.lua_object or ex.lua_behavior" );
+                return luaL_error ( _l, 
+                                    "lua class can only inherit from lua classes," 
+                                    "ex.lua_object and ex.lua_behavior. [%s : %s]", 
+                                    typename, super_typename );
             }
         }
 

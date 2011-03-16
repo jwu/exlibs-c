@@ -174,11 +174,11 @@ static void simple_read_write () {
     // serialize read s1, s2 from simple_read.json
     stream_read = ex_create_json_read_stream( "json/simple_read.json" );
 
-    s1 = EX_RTTI(simple_t)->create();
+    s1 = ex_rtti_instantiate(EX_RTTI(simple_t));
     init_simple_t(s1);
     serialize_func(stream_read, ex_strid("simple_01"), s1 );
 
-    s2 = EX_RTTI(simple_t)->create();
+    s2 = ex_rtti_instantiate(EX_RTTI(simple_t));
     init_simple_t(s2);
     serialize_func(stream_read, ex_strid("simple_02"), s2 );
     ex_destroy_json_stream((ex_stream_json_t *)stream_read);
@@ -212,11 +212,11 @@ static void simple_read_write () {
     // try to serialize s1, s2 from simple_write.json
     stream_read = ex_create_json_read_stream( "json/simple_write.json" );
 
-    s1 = EX_RTTI(simple_t)->create();
+    s1 = ex_rtti_instantiate(EX_RTTI(simple_t));
     init_simple_t(s1);
     serialize_func(stream_read, ex_strid("simple_01"), s1 );
 
-    s2 = EX_RTTI(simple_t)->create();
+    s2 = ex_rtti_instantiate(EX_RTTI(simple_t));
     init_simple_t(s2);
     serialize_func(stream_read, ex_strid("simple_02"), s2 );
 
@@ -255,11 +255,11 @@ static void complex_read_write () {
     // serialize read c1, c2 from complex_read.json
     stream_read = ex_create_json_read_stream( "json/complex_read.json" );
 
-    c1 = EX_RTTI(complex_t)->create();
+    c1 = ex_rtti_instantiate(EX_RTTI(complex_t));
     init_complex_t(c1);
     serialize_func(stream_read, ex_strid("complex_01"), c1 );
 
-    c2 = EX_RTTI(complex_t)->create();
+    c2 = ex_rtti_instantiate(EX_RTTI(complex_t));
     init_complex_t(c2);
     serialize_func(stream_read, ex_strid("complex_02"), c2 );
 
@@ -285,11 +285,11 @@ static void complex_read_write () {
     // try to serialize c1, c2 from complex_write.json 
     stream_read = ex_create_json_read_stream( "json/complex_write.json" );
 
-    c1 = EX_RTTI(complex_t)->create();
+    c1 = ex_rtti_instantiate(EX_RTTI(complex_t));
     init_complex_t(c1);
     serialize_func(stream_read, ex_strid("complex_01"), c1 );
 
-    c2 = EX_RTTI(complex_t)->create();
+    c2 = ex_rtti_instantiate(EX_RTTI(complex_t));
     init_complex_t(c2);
     serialize_func(stream_read, ex_strid("complex_02"), c2 );
 

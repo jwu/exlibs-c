@@ -302,9 +302,9 @@ static void __dump () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_mem_init ()
-{
-    // if the core already initialized, don't init it second times.
+int ex_mem_init () {
+
+    // if the memmng already initialized, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "memory manager already initialized" );
         return 1;
@@ -341,8 +341,8 @@ int ex_mem_init ()
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_mem_deinit ()
-{
+void ex_mem_deinit () {
+
     if ( __initialized ) {
         if ( __access_mutex )
             ex_destroy_mutex(__access_mutex);

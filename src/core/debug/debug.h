@@ -232,6 +232,15 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern int ex_log_init ();
+extern void ex_log_deinit ();
+extern bool ex_log_initialized ();
+extern void ex_log ( const char *_fmt, ... );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern bool assert_failed ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
 extern bool error_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
 extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... );
@@ -312,10 +321,6 @@ extern bool warning_msg ( bool *_pDoAssert, const char *_file_name, const char *
 // ======================================================== 
 // macro defines 
 // ======================================================== 
-
-// TODO { 
-#define ex_log( msg, ... ) printf( msg"\n", ##__VA_ARGS__ ); fflush(stdout)
-// } TODO end 
 
 #if ( EX_DEBUG_LEVEL == SERIOUS )
     #define ex_error(msg,...) __EX_ERROR_BREAK(msg"\n", ##__VA_ARGS__) 

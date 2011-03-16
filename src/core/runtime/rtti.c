@@ -55,9 +55,9 @@ int ex_rtti_init ()
 void ex_rtti_deinit () {
     if ( __initialized ) {
         // free all allocated string
-        ex_hashmap_each ( __typeid_to_rtti, ex_rtti_t *, _info ) {
-            ex_free(_info->props);
-            ex_free(_info);
+        ex_hashmap_each ( __typeid_to_rtti, ex_rtti_t *, _rtti ) {
+            ex_free(_rtti->props);
+            ex_free(_rtti);
         } ex_hashmap_each_end;
         ex_hashmap_free(__typeid_to_rtti);
         __initialized = false;
@@ -115,16 +115,16 @@ ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_rtti_register_properties ( ex_rtti_t *_info, const ex_prop_t *_props, uint32 _count )
+void ex_rtti_register_properties ( ex_rtti_t *_rtti, const ex_prop_t *_props, uint32 _count )
 {
-    ex_assert_return( _info->props == NULL, /*dummy*/, "properties already registerd!" );
+    ex_assert_return( _rtti->props == NULL, /*dummy*/, "properties already registerd!" );
 
     // NOTE: you could have empty properties for a structure.
     if ( _count != 0 ) {
         ex_assert_return( _props != NULL, /*dummy*/, "incoming properties can't be NULL, or can't be empty!" );
 
-        _info->props = (ex_prop_t *)ex_malloc( sizeof(ex_prop_t) * _count );
-        memcpy( _info->props, _props, sizeof(ex_prop_t) * _count );
+        _rtti->props = (ex_prop_t *)ex_malloc( sizeof(ex_prop_t) * _count );
+        memcpy( _rtti->props, _props, sizeof(ex_prop_t) * _count );
     }
 }
 

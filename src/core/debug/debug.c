@@ -18,8 +18,11 @@
 #define BUF_SIZE 1024
 
 ///////////////////////////////////////////////////////////////////////////////
-// defines
+// static
 ///////////////////////////////////////////////////////////////////////////////
+
+static ex_text_file_t *__log_file = NULL;
+static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -41,11 +44,100 @@ static void __short_funcname ( char _short_name[], const char *_function_name, i
     } 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// defines
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_log_init () {
+
+    // if the log system already initialized, don't init it second times.
+    if ( __initialized ) {
+        ex_warning ( "log system already initialized" );
+        return 1;
+    }
+
+    //
+    __log_file = ex_text_fopen( "log.txt", false );
+
+    //
+    __initialized = true;
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_log_deinit () {
+    if ( __initialized ) {
+        ex_text_fclose(__log_file);
+        __initialized = false;
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_log_initialized () {
+    return __initialized;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_log ( const char *_fmt, ... ) {
+    int     result = -1;
+    char    buf[BUF_SIZE];
+    char   *buffer = NULL;
+
+    // keep get va string until success 
+    // NOTE: the buffer_count-1 will leave 1 character for '\n' and 1 character for null terminal
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-2, _fmt, &result );
+    buffer = buf;
+
+    // if we can't use BUF_SIZE store it. 
+    if ( result == -1 ) {
+        char *dyn_buf = NULL;
+        int buffer_count = BUF_SIZE*2;
+
+        do {
+            dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
+            // NOTE: the buffer_count-1 will leave 1 character for '\n' and 1 character for null terminal
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-2, _fmt, &result );
+            buffer_count *= 2;
+        } while ( result == -1 );
+        buffer = dyn_buf;
+    }
+    buffer[result] = '\n';
+    buffer[result+1] = '\0';
+
+    // print on stdout, also write to log file
+    printf( "%s", buffer ); 
+    fflush(stdout);
+    // NOTE: it is possible we log things before log system intialized
+    if ( __log_file )
+        ex_text_fwrite( __log_file, buffer, result+2 );
+
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
+}
+
 // ------------------------------------------------------------------
 // Desc: 
 // ------------------------------------------------------------------
 
-bool assert_failed( bool *_pDoAssert, const char *_file_name, const char *_function_name, size_t _line_nr, const char *_expr, ... )
+bool assert_failed( bool *_pDoAssert, 
+                    const char *_file_name, 
+                    const char *_function_name, 
+                    size_t _line_nr, 
+                    const char *_expr, ... )
 {
     int     result = -1;
     char    short_name[64];

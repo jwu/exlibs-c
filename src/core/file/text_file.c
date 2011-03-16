@@ -33,7 +33,7 @@ ex_text_file_t *ex_text_fopen ( const char *_filename, bool _readonly ) {
     if ( file == NULL ) 
         return NULL;
 
-    txtFile = (ex_text_file_t *)ex_malloc ( sizeof(ex_text_file_t) );
+    txtFile = (ex_text_file_t *)ex_malloc_nomng ( sizeof(ex_text_file_t) );
     txtFile->index = 0;
     txtFile->file = file;
     return txtFile;
@@ -49,7 +49,7 @@ void ex_text_fclose ( ex_text_file_t *_txtFile ) {
 
     _txtFile->index = 0;
     ex_fclose(_txtFile->file);
-    ex_free (_txtFile);
+    ex_free_nomng (_txtFile);
 }
 
 // ------------------------------------------------------------------ 

@@ -143,7 +143,7 @@ ex_ref_t *ex_create_object ( const ex_rtti_t *_rtti, ex_uid_t _uid ) {
 
     ex_assert_return( _uid != EX_UID_INVALID, NULL, "faield to create object. uid is invalid." );
 
-    obj = (ex_object_t *)(_rtti->create());
+    obj = (ex_object_t *)( ex_rtti_instantiate(_rtti) );
     obj->uid = _uid;
     return __reftable_add (obj);
 }
@@ -269,7 +269,7 @@ void ex_serialize_objects ( ex_stream_t *_stream ) {
     }
     else if ( _stream->type == EX_STREAM_WRITE ) {
         ex_hashmap_each ( &__uid_to_refptr, ex_ref_t *, ref ) {
-            ex_rtti_t *rtti = NULL;
+            const ex_rtti_t *rtti = NULL;
             obj = EX_REF_CAST(ex_object_t,ref);
 
             // do NOT save NULL objects

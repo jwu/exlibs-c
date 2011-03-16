@@ -29,7 +29,8 @@ extern "C" {
 // ------------------------------------------------------------------ 
 // Desc: 
 typedef struct ex_stream_t * ex_stream_ptr_t;
-typedef void *(*ex_create_pfn) ();
+typedef const struct ex_rtti_t * ex_rtti_ptr_t;
+typedef void *(*ex_create_pfn) ( ex_rtti_ptr_t );
 typedef void (*ex_serialize_pfn) ( ex_stream_ptr_t, strid_t, void * );
 typedef void (*ex_tostring_pfn) ( ex_string_t *, void * );
 // ------------------------------------------------------------------ 
@@ -64,6 +65,17 @@ extern bool ex_rtti_initialized ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static inline void *ex_rtti_instantiate ( const ex_rtti_t *_rtti ) { 
+    if ( _rtti->create )
+        return _rtti->create(_rtti); 
+    ex_warning ( "can't find creator for type %s", ex_strid_to_cstr(_rtti->typeID) );
+    return NULL;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern ex_rtti_t *ex_rtti_register_class ( strid_t _typeID, 
                                            ex_rtti_t *_super, 
                                            size_t _typeSize,
@@ -76,7 +88,7 @@ extern ex_rtti_t *ex_rtti_register_class ( strid_t _typeID,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_rtti_register_properties ( ex_rtti_t *_info, const ex_prop_t* _props, uint32 _count );
+extern void ex_rtti_register_properties ( ex_rtti_t *_rtti, const ex_prop_t* _props, uint32 _count );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -88,24 +100,24 @@ extern ex_rtti_t *ex_rtti_get ( strid_t _typeID );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline const char *ex_rtti_classname ( const ex_rtti_t *_info ) { 
-    return ex_strid_to_cstr(_info->typeID); 
+static inline const char *ex_rtti_classname ( const ex_rtti_t *_rtti ) { 
+    return ex_strid_to_cstr(_rtti->typeID); 
 } 
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline strid_t ex_rtti_typeid ( const ex_rtti_t *_info ) { 
-    return _info->typeID; 
+static inline strid_t ex_rtti_typeid ( const ex_rtti_t *_rtti ) { 
+    return _rtti->typeID; 
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static inline ex_rtti_t *ex_rtti_super ( const ex_rtti_t *_info ) { 
-    return _info->super; 
+static inline ex_rtti_t *ex_rtti_super ( const ex_rtti_t *_rtti ) { 
+    return _rtti->super; 
 }
 
 // ------------------------------------------------------------------ 

@@ -60,6 +60,13 @@ int ex_core_init ()
     }
 
     //
+    ex_log ("|- init log system...");
+    if ( ex_log_init() != 0 ) {
+        ex_log ("fatal error: failed to init log system");
+        return -1;
+    }
+
+    //
     ex_log ("|- init memory...");
     if ( ex_mem_init() != 0 ) {
         ex_log ("fatal error: failed to init memory");
@@ -139,8 +146,11 @@ void ex_core_deinit ()
         ex_log ("|- deinit memory...");
         ex_mem_deinit();
 
+        ex_log ("|- deinit log system...");
+        ex_log_deinit();
+
         ex_log ("|- deinit fsys...");
-        ex_fsys_init();
+        ex_fsys_deinit();
 
         ex_log ("|- deinit timer...");
         ex_timer_deinit();
