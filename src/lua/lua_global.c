@@ -1293,8 +1293,9 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 
         // new_table = { __readonly = true }
         lua_newtable(_l);
+        lua_pushstring(_l,"__readonly");
         lua_pushboolean(_l,true);
-        lua_setfield(_l,-2,"__readonly");
+        lua_rawset(_l,-3);
 
         // rawget(mt,"__super")
         lua_pushstring(_l,"__super");

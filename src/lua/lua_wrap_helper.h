@@ -207,6 +207,19 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
 // Desc: 
 // ------------------------------------------------------------------ 
 
+#define EX_DEF_LUA_BUILTIN_MODULE() \
+    static ex_hashmap_t __key_to_type_meta_getset; \
+    static int __type_meta_newindex ( lua_State *_l ) { \
+        return ex_lua_type_meta_newindex( _l, &__key_to_type_meta_getset ); \
+    } \
+    static int __type_meta_index ( lua_State *_l ) { \
+        return ex_lua_type_meta_index( _l, &__key_to_type_meta_getset ); \
+    }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 typedef struct ex_getset_t {
     const char *key;
     int (*get) ( struct lua_State * );

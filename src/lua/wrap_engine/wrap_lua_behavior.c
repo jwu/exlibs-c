@@ -53,22 +53,35 @@ ref_proxy_t *ex_lua_push_generic_component ( lua_State *_l, const char *_lua_typ
         lua_newtable(_l);
 
         // UNUSED { 
+        // lua_pushstring(_l,"__isinstance");
         // lua_pushboolean(_l,true);
-        // lua_setfield(_l,-2,"__isinstance");
+        // lua_rawset(_l,-3);
         // } UNUSED end 
+
+        lua_pushstring(_l,"__index");
         lua_pushcfunction(_l,__child_meta_index);
-        lua_setfield(_l,-2,"__index");
+        lua_rawset(_l,-3);
+
+        lua_pushstring(_l,"__newindex");
         lua_pushcfunction(_l,__child_meta_newindex);
-        lua_setfield(_l,-2,"__newindex");
+        lua_rawset(_l,-3);
+
+        lua_pushstring(_l,"__gc");
         lua_pushcfunction(_l,ex_lua_ref_gc);
-        lua_setfield(_l,-2,"__gc");
+        lua_rawset(_l,-3);
+
+        lua_pushstring(_l,"__eq");
         lua_pushcfunction(_l,ex_lua_ref_eq);
-        lua_setfield(_l,-2,"__eq");
+        lua_rawset(_l,-3);
+
         // TODO: should be lua class __tostring { 
+        lua_pushstring(_l,"__tostring");
         lua_pushcfunction(_l,ex_lua_ref_tostring);
-        lua_setfield(_l,-2,"__tostring");
+        lua_rawset(_l,-3);
+
+        lua_pushstring(_l,"__concat");
         lua_pushcfunction(_l,ex_lua_ref_concat);
-        lua_setfield(_l,-2,"__concat");
+        lua_rawset(_l,-3);
         // } TODO end 
 
         lua_pushvalue(_l,-2); // push luaL_newmetatable(_l,_lua_typename);
@@ -107,22 +120,35 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
     // } TODO end 
 
     // UNUSED { 
+    // lua_pushstring(_l,"__isinstance");
     // lua_pushboolean(_l,true);
-    // lua_setfield(_l,-2,"__isinstance");
+    // lua_rawset(_l,-3);
     // } UNUSED end 
+
+    lua_pushstring(_l,"__index");
     lua_pushcfunction(_l,__child_meta_index);
-    lua_setfield(_l,-2,"__index");
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__newindex");
     lua_pushcfunction(_l,__child_meta_newindex);
-    lua_setfield(_l,-2,"__newindex");
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__gc");
     lua_pushcfunction(_l,ex_lua_ref_gc);
-    lua_setfield(_l,-2,"__gc");
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__eq");
     lua_pushcfunction(_l,ex_lua_ref_eq);
-    lua_setfield(_l,-2,"__eq");
+    lua_rawset(_l,-3);
+
     // TODO: should be lua class __tostring { 
+    lua_pushstring(_l,"__tostring");
     lua_pushcfunction(_l,ex_lua_ref_tostring);
-    lua_setfield(_l,-2,"__tostring");
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__concat");
     lua_pushcfunction(_l,ex_lua_ref_concat);
-    lua_setfield(_l,-2,"__concat");
+    lua_rawset(_l,-3);
     // } TODO end 
 
     lua_pushvalue(_l,1);
@@ -132,7 +158,8 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
     u = ex_lua_pushref(_l,lua_gettop(_l));
     ent = ex_lua_checkentity(_l,2);
 
-    lua_getfield(_l,1,"__typename");
+    lua_pushstring(_l,"__typename");
+    lua_rawget(_l,1);
     tp_name = luaL_checkstring(_l,-1);
     comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
     u->val = comp;

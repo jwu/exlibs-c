@@ -218,12 +218,14 @@ int ex_lua_register_builtin ( lua_State *_l,
     // tp.__typename = _typename
     // NOTE: the __typename is for print (ex.typename(v1)), for faster typecheck, 
     //       use ex.typeof(v1) == ex.vec2f is faster instead.
+    lua_pushstring(_l, "__typename");
     lua_pushstring(_l, _typename);
-    lua_setfield(_l,-2,"__typename");
+    lua_rawset(_l,-3);
 
     //  tp.__isbuiltin = true, used in isbuiltin(v1)
+    lua_pushstring(_l, "__isbuiltin");
     lua_pushboolean(_l, true);
-    lua_setfield(_l,-2,"__isbuiltin");
+    lua_rawset(_l,-3);
 
     // setmetatable( tp, { _type_meta_funcs } )
     lua_newtable(_l);
@@ -272,16 +274,19 @@ int ex_lua_register_class ( lua_State *_l,
     luaL_register( _l, NULL, _meta_funcs );
 
     // tp.__typename = "object"
+    lua_pushstring(_l, "__typename");
     lua_pushstring(_l, _typename);
-    lua_setfield(_l,-2,"__typename");
+    lua_rawset(_l,-3);
 
     // tp.__metaclass = { __call = _metacall_for_child }
     // NOTE: _metacall_for_child could be NULL
     if ( _metacall_for_child ) {
-        lua_newtable(_l);
-        lua_pushcfunction(_l, _metacall_for_child);
-        lua_setfield(_l,-2,"__call");
-        lua_setfield(_l,-2,"__metaclass");
+        lua_pushstring(_l,"__metaclass");
+            lua_newtable(_l);
+            lua_pushstring(_l,"__call");
+            lua_pushcfunction(_l, _metacall_for_child);
+            lua_rawset(_l,-3);
+        lua_rawset(_l,-3);
     }
 
     // tp = ex.class ( tp )
