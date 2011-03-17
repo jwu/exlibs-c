@@ -331,7 +331,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2AF3A4E1330D210006414CE</string>
+										<string>B2AF3A571331A975006414CE</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -476,7 +476,7 @@
 											<string>B2597F9413306EE0000AE4E9</string>
 											<string>B2597F9513306EE0000AE4E9</string>
 											<string>B2AF3A4C1330D210006414CE</string>
-											<string>B2AF3A4D1330D210006414CE</string>
+											<string>B2AF3A4E1330D210006414CE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -488,14 +488,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {932, 333}}</string>
+								<string>{{0, 0}, {932, 322}}</string>
 								<key>RubberWindowFrame</key>
 								<string>1654 8 1230 723 1280 -400 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>333pt</string>
+							<string>322pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -508,14 +508,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 338}, {932, 344}}</string>
+								<string>{{0, 327}, {932, 355}}</string>
 								<key>RubberWindowFrame</key>
 								<string>1654 8 1230 723 1280 -400 1920 1200 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>344pt</string>
+							<string>355pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -534,9 +534,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>B2AF3A371330D1D1006414CE</string>
+				<string>B2AF3A581331A975006414CE</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>B2AF3A381330D1D1006414CE</string>
+				<string>B2AF3A591331A975006414CE</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -674,9 +674,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2AF3A4F1330D210006414CE</string>
-		<string>B2AF3A501330D210006414CE</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
@@ -698,14 +695,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>debug.c</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -761,7 +756,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>B2E0B7F112A6B277009FE3E8</string>
-				<string>B2AF3A391330D1D1006414CE</string>
+				<string>B2AF3A5A1331A975006414CE</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -883,13 +878,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>B2AF3A3A1330D1D1006414CE</string>
+				<string>B2AF3A5B1331A975006414CE</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>B2AF3A3B1330D1D1006414CE</string>
-				<string>B2AF3A3C1330D1D1006414CE</string>
-				<string>B2AF3A3D1330D1D1006414CE</string>
-				<string>B2AF3A3E1330D1D1006414CE</string>
-				<string>B2AF3A3F1330D1D1006414CE</string>
+				<string>B2AF3A5C1331A975006414CE</string>
+				<string>B2AF3A5D1331A975006414CE</string>
+				<string>B2AF3A5E1331A975006414CE</string>
+				<string>B2AF3A5F1331A975006414CE</string>
+				<string>B2AF3A601331A975006414CE</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>

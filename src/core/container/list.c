@@ -167,9 +167,6 @@ void ex_list_insert_back ( ex_list_t *_list, ex_list_node_t *_at, const void *_v
     ex_list_node_t *node = NULL;
 
     ex_assert_return ( _at != NULL, /*void*/, "the insert position can't be NULL!" );
-    // CHECK: this may not be true, I think { 
-    ex_assert_return ( _at >= _list->head && _at <= _list->tail, /*void*/, "the insert position is out of range!" );
-    // } CHECK end 
 
     // allocate the node
     node = __alloc_node ( _list, _value );
@@ -197,9 +194,6 @@ void ex_list_insert_front ( ex_list_t *_list, ex_list_node_t *_at, const void *_
     ex_list_node_t *node = NULL;
 
     ex_assert_return ( _at != NULL, /*void*/, "the insert position can't be NULL!" );
-    // CHECK: this may not be true, I think { 
-    ex_assert_return ( _at >= _list->head && _at <= _list->tail, /*void*/, "the insert position is out of range!" );
-    // } CHECK end 
 
     // allocate the node
     node = __alloc_node ( _list, _value );
@@ -227,9 +221,6 @@ ex_list_node_t *ex_list_remove_at ( ex_list_t *_list, ex_list_node_t *_at )
     ex_list_node_t *next_node;
 
     ex_assert_return ( _at != NULL, NULL, "the insert position can't be NULL!" );
-    // CHECK: this may not be true, I think { 
-    ex_assert_return ( _at >= _list->head && _at <= _list->tail, NULL, "the insert position is out of range!" );
-    // } CHECK end 
 
     next_node = _at->next;
 

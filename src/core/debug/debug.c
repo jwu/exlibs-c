@@ -17,12 +17,20 @@
 
 #define BUF_SIZE 1024
 
+typedef struct __error_info_t {
+    char message[BUF_SIZE];
+    const char *file_name; 
+    size_t line_nr; 
+    const char *function_name; 
+} __error_info_t;
+
 ///////////////////////////////////////////////////////////////////////////////
 // static
 ///////////////////////////////////////////////////////////////////////////////
 
 static ex_text_file_t *__log_file = NULL;
 static bool __initialized = false;
+static ex_list_t __error_stack;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -44,9 +52,51 @@ static void __short_funcname ( char _short_name[], const char *_function_name, i
     } 
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __push_error ( const char *_msg, 
+                           const char *_file_name,  
+                           size_t _line_nr,
+                           const char *_function_name )
+{
+    __error_info_t errorInfo;
+    strncpy ( errorInfo.message, _msg, BUF_SIZE );
+    errorInfo.message[BUF_SIZE-1] = '\0';
+    errorInfo.file_name = _file_name;
+    errorInfo.line_nr = _line_nr;
+    errorInfo.function_name = _function_name;
+
+    if ( ex_list_count( &__error_stack ) > 10 )
+        ex_list_pop_front ( &__error_stack );
+    ex_list_append ( &__error_stack, &errorInfo );
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: NOTE: only available in core.c 
+// ------------------------------------------------------------------ 
+
+void __init_error_stack () {
+    ex_list_init( &__error_stack,
+                  EX_STRID_NULL,
+                  sizeof(__error_info_t),
+                  __ex_list_alloc_nomng, 
+                  __ex_list_realloc_nomng,
+                  __ex_list_dealloc_nomng );
+} 
+
+// ------------------------------------------------------------------ 
+// Desc: NOTE: only available in core.c 
+// ------------------------------------------------------------------ 
+
+void __deinit_error_stack () {
+    ex_list_deinit ( &__error_stack ); 
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -60,7 +110,6 @@ int ex_log_init () {
         return 1;
     }
 
-    //
     __log_file = ex_text_fopen( "log.txt", false );
 
     //
@@ -129,15 +178,32 @@ void ex_log ( const char *_fmt, ... ) {
         ex_free_nomng ( buffer );
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_show_last_error () {
+    ex_list_node_t *node = ex_list_tail ( &__error_stack );
+    __error_info_t *info = (__error_info_t *)node->value;
+    ex_log ( "Last Error\n"
+             "|- message: %s\n"
+             "|- filename: %s\n"
+             "|- line: %d\n"
+             "|- function: %s\n",
+             info->message, info->file_name, info->line_nr, info->function_name );
+}
+
 // ------------------------------------------------------------------
 // Desc: 
 // ------------------------------------------------------------------
 
-bool assert_failed( bool *_do_hw_break, 
-                    const char *_file_name, 
-                    const char *_function_name, 
-                    size_t _line_nr, 
-                    const char *_expr, ... )
+bool __assert_failed ( bool *_do_hw_break, 
+                       const char *_file_name, 
+                       const char *_function_name, 
+                       size_t _line_nr, 
+                       const char *_expr,
+                       const char *_msg, 
+                       ... )
 {
     int     result = -1;
     char    short_name[64];
@@ -145,7 +211,7 @@ bool assert_failed( bool *_do_hw_break,
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
 
-    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _msg, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
     buffer = buf;
     if ( result == -1 ) {
         char *dyn_buf = NULL;
@@ -154,7 +220,7 @@ bool assert_failed( bool *_do_hw_break,
         // keep get va string until success 
         do {
             dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
-            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _msg, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
             buffer_count *= 2;
         } while ( result == -1 );
         buffer = dyn_buf;
@@ -166,14 +232,21 @@ bool assert_failed( bool *_do_hw_break,
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Assert Failed: %s(%d)::%s, %s", _file_name, (int)_line_nr, short_name, buffer );
+    ex_log ( "Assert Failed!\n"
+             "|- message: %s\n"
+             "|- expression: %s\n"
+             "|- filename: %s\n"
+             "|- line: %d\n"
+             "|- function: %s\n",
+             buffer, _expr, _file_name, (int)_line_nr, short_name );
     mbResult = ex_message_box( EX_MSG_BOX_FAILED, "Assert Failed", 
-                            "|ASSERT_FAILED|\n"
-                            "FileName: %s\n"
-                            "Line: %d\n"
-                            "FunctionName: %s\n" 
-                            "Expr: %s\n", 
-                            _file_name, (int)_line_nr, short_name, buffer );
+                            "Assert Failed!\n"
+                            "|- message: %s\n" 
+                            "|- expression: %s\n" 
+                            "|- filename: %s\n"
+                            "|- line: %d\n"
+                            "|- function: %s\n",
+                            buffer, _expr, _file_name, (int)_line_nr, short_name );
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )
@@ -192,17 +265,18 @@ bool assert_failed( bool *_do_hw_break,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void log_error( const char *_file_name, 
-                const char *_function_name, 
-                size_t _line_nr, 
-                const char *_expr, ... )
+void __log_error ( const char *_file_name, 
+                   const char *_function_name, 
+                   size_t _line_nr, 
+                   const char *_msg, 
+                   ... )
 {
     int     result = -1;
     char    short_name[64];
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
 
-    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _msg, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
     buffer = buf;
     if ( result == -1 ) {
         char *dyn_buf = NULL;
@@ -211,7 +285,7 @@ void log_error( const char *_file_name,
         // keep get va string until success 
         do {
             dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
-            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _msg, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
             buffer_count *= 2;
         } while ( result == -1 );
         buffer = dyn_buf;
@@ -222,9 +296,13 @@ void log_error( const char *_file_name,
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Error: %s(%d)[%s], %s", _file_name, (int)_line_nr, short_name, buffer );
-
-    // TODO: push to error stack
+    ex_log ( "Error!\n"
+             "|- message: %s\n"
+             "|- filename: %s\n"
+             "|- line: %d\n"
+             "|- function: %s\n",
+             buffer, _file_name, (int)_line_nr, short_name );
+    __push_error ( buffer, _file_name, _line_nr, short_name );
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )
@@ -235,17 +313,18 @@ void log_error( const char *_file_name,
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void log_warning ( const char *_file_name, 
-                   const char *_function_name, 
-                   size_t _line_nr, 
-                   const char *_expr, ... )
+void __log_warning ( const char *_file_name, 
+                     const char *_function_name, 
+                     size_t _line_nr, 
+                     const char *_msg, 
+                     ... )
 {
     int     result = -1;
     char    short_name[64];
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
 
-    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+    EX_GET_VA_STRING_WITH_RESULT( buf, BUF_SIZE-1, _msg, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
     buffer = buf;
     if ( result == -1 ) {
         char *dyn_buf = NULL;
@@ -254,7 +333,7 @@ void log_warning ( const char *_file_name,
         // keep get va string until success 
         do {
             dyn_buf = (char *)ex_realloc_nomng( dyn_buf, buffer_count * sizeof(char) );
-            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _expr, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
+            EX_GET_VA_STRING_WITH_RESULT( dyn_buf, buffer_count-1, _msg, &result ); // NOTE: the buffer_count-1 will leave 1 character for null terminal
             buffer_count *= 2;
         } while ( result == -1 );
         buffer = dyn_buf;
@@ -265,9 +344,12 @@ void log_warning ( const char *_file_name,
     __short_funcname( short_name, _function_name, 64 );
 
     //
-    ex_log ( "Warning: %s(%d)[%s], %s", _file_name, (int)_line_nr, _function_name, buffer );
-
-    // TODO: push to warning stack
+    ex_log ( "Warning!\n"
+             "|- message: %s\n"
+             "|- filename: %s\n"
+             "|- line: %d\n"
+             "|- function: %s\n",
+             buffer, _file_name, (int)_line_nr, short_name );
 
     // if we use dynamic buffer, free it
     if ( buffer != buf )

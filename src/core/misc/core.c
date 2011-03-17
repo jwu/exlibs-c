@@ -18,8 +18,13 @@
 
 static bool __initialized = false;
 
+///////////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////////
+
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __init_error_stack ();
 extern void ex_register_builtin_types ();
 extern void ex_register_classes ();
 extern void ex_uid_init ();
@@ -42,6 +47,7 @@ int ex_core_init ()
 
     // before we start, we need to change the rand seed 
     ex_srand((uint)time(0));
+    __init_error_stack();
 
     //
     ex_log ("ex_core initializing...");
@@ -126,6 +132,7 @@ int ex_core_init ()
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __deinit_error_stack ();
 // ------------------------------------------------------------------ 
 
 void ex_core_deinit ()
@@ -154,6 +161,9 @@ void ex_core_deinit ()
 
         ex_log ("|- deinit timer...");
         ex_timer_deinit();
+
+        //
+        __deinit_error_stack ();
 
         //
         ex_log ("ex_core de-initialized!");

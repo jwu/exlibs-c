@@ -204,6 +204,12 @@ extern void ex_list_insert_front ( ex_list_t *_list, ex_list_node_t *_at, const 
 // ------------------------------------------------------------------ 
 
 extern ex_list_node_t *ex_list_remove_at ( ex_list_t *_list, ex_list_node_t *_at );
+static inline ex_list_node_t *ex_list_pop_front ( ex_list_t *_list ) {
+    return ex_list_remove_at ( _list, _list->head );
+}
+static inline ex_list_node_t *ex_list_pop_back ( ex_list_t *_list ) {
+    return ex_list_remove_at ( _list, _list->tail );
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
