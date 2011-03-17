@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>exsdk.c</string>
+								<string>debug.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>exsdk.c</string>
+										<string>debug.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2AF3A571331A975006414CE</string>
+										<string>B2AF3A9E1331BDFC006414CE</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -475,8 +475,8 @@
 											<string>B2597F9313306EE0000AE4E9</string>
 											<string>B2597F9413306EE0000AE4E9</string>
 											<string>B2597F9513306EE0000AE4E9</string>
-											<string>B2AF3A4C1330D210006414CE</string>
-											<string>B2AF3A4E1330D210006414CE</string>
+											<string>B2AF3A9C1331BDFC006414CE</string>
+											<string>B2AF3A9D1331BDFC006414CE</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -674,8 +674,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>B2AF3AA01331BDFC006414CE</string>
+		<string>B2AF3AA11331BDFC006414CE</string>
+		<string>B2AF3AA21331BDFC006414CE</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -700,7 +704,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>debug.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -717,6 +721,8 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -769,7 +775,7 @@
 			<key>WindowToolGUID</key>
 			<string>B2E0B7F112A6B277009FE3E8</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -1040,7 +1046,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>B2AF3A4A1330D20E006414CE</string>
+				<string>B2AF3A9F1331BDFC006414CE</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -1050,7 +1056,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

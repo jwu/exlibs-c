@@ -24,16 +24,18 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern float ex_time (); // time in seconds since the engine start (affect by time-scale)
-extern float ex_worldtime (); // time in seconds since the world has been loaded
-extern float ex_realtime (); // time in seconds since the engine start (not affect by time-scale)
+extern float ex_time (); // the time this frame has started, time in seconds since the engine started (affect by time-scale)
+extern float ex_time_noscale (); // the time this frame has started, time in seconds since the engine started (not affect by time-scale)
+extern float ex_worldtime (); // the time this frame has started, time in seconds since the world has been loaded (affect by time-scale)
+extern float ex_realtime (); // the realtime in seconds since the engine started.
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern float ex_dt (); // the time in seconds it took to complete the last frame.
-extern float ex_dt_physics ();
+extern float ex_dt (); // the time in seconds it took to complete the last frame (affect by time-scale).
+extern float ex_dt_noscale (); // the time in seconds it took to complete the last frame (not affect by time-scale).
+extern float ex_dt_fixed ();
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -21,10 +21,11 @@ static uint32 __timer_world_loaded = 0;
 static uint32 __timer_frame_start = 0;
 
 static float __time = 0.0f;
+static float __time_noscale = 0.0f;
 static float __worldtime = 0.0f;
-static float __realtime = 0.0f;
 static float __dt = 0.0f;
-static float __dt_physics = 1.0f;
+static float __dt_noscale = 0.0f;
+static float __dt_fixed = 1.0f;
 static float __time_scale = 1.0f;
 static float __last_time_scale = 1.0f;
 
@@ -76,8 +77,9 @@ void __tick_engine_time () {
     uint32 now = ex_timer_get_ticks();
 
     ++__frame_count;
-    __dt = (float)(now-__timer_frame_start)/1000.0f * __time_scale;
-    __realtime = (float)(now-__timer_engine_start)/1000.0f;
+    __dt_noscale = (float)(now-__timer_frame_start)/1000.0f;
+    __dt = __dt_noscale * __time_scale;
+    __time_noscale = (float)(now-__timer_engine_start)/1000.0f;
     __time += __dt;
     __worldtime += __dt;
     __timer_frame_start = now;
@@ -97,13 +99,19 @@ float ex_time () { return __time; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
+float ex_time_noscale () { return __time_noscale; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 float ex_worldtime () { return __worldtime; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_realtime () { return __realtime; }
+float ex_realtime () { return (float)(ex_timer_get_ticks()-__timer_engine_start)/1000.0f; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -115,7 +123,13 @@ float ex_dt () { return __dt; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_dt_physics () { return __dt_physics; }
+float ex_dt_noscale () { return __dt_noscale; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+float ex_dt_fixed () { return __dt_fixed; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
