@@ -19,7 +19,7 @@ trans2d.scale = ex.vec2f(50.0,50.0)
 trans2d.position = ex.vec2f(200.0,200.0)
 trans2d.parent = ent1.trans2d
 ent2:add_comp("ex.debug2d")
-n = ent2:add_comp("ex.simple_update")
+n = ent2:add_comp("ex.simple")
 n.my_name = "no1"
 ex.log("haha no1")
 
@@ -29,7 +29,7 @@ trans2d.scale = ex.vec2f(50.0,50.0)
 trans2d.position = ex.vec2f(-200.0,200.0)
 trans2d.parent = ent2.trans2d.parent
 ent3:add_comp("ex.debug2d")
-n = ent3:add_comp("ex.simple_update")
+n = ent3:add_comp("ex.simple02")
 n.my_name = "no2"
 ex.log("haha no2")
 

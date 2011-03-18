@@ -1,7 +1,7 @@
 -- ======================================================================================
--- File         : simple_update.lua
+-- File         : simple.lua
 -- Author       : Wu Jie 
--- Last Change  : 03/01/2011 | 22:45:26 PM | Tuesday,March
+-- Last Change  : 03/18/2011 | 11:13:30 AM | Friday,March
 -- Description  : 
 -- ======================================================================================
 
@@ -10,7 +10,7 @@
 --/////////////////////////////////////////////////////////////////////////////
 
 local ex = ex
-module( "ex.simple_update", ex.lua_behavior.derive )
+module( "ex.simple", ex.lua_behavior.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
 --
@@ -40,6 +40,7 @@ end
 -- ------------------------------------------------------------------ 
 
 function update ( self )
-    local ang = self.entity.trans2d.local_angle
-    self.entity.trans2d.local_angle = ang + ex.angf(200.0) * ex.time.dt
+    -- local ang = self.trans2d.local_angle
+    -- self.trans2d.local_angle = ang + ex.angf(200.0) * ex.time.dt
+    self.trans2d:rotate( 2.0 * ex.time.dt )
 end

@@ -856,6 +856,7 @@ static const luaL_Reg __ex_funcs[] = {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern int wrap_enums ( lua_State * );
 // ------------------------------------------------------------------ 
 
 int luaopen_ex ( lua_State *_l ) {
@@ -876,6 +877,7 @@ int luaopen_ex ( lua_State *_l ) {
 
     ex_lua_global_module ( _l, "ex" );
     luaL_register( _l, 0, __ex_funcs );
+    wrap_enums(_l);
     lua_pop(_l, 1); // pops ex.
 
     return 0;

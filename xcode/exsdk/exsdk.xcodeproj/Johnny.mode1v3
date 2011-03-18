@@ -275,7 +275,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>18</integer>
 									<integer>17</integer>
 									<integer>11</integer>
 									<integer>4</integer>
@@ -330,7 +329,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B281F9AA1333028F0051E7E7</string>
+										<string>B281F9F3133312A90051E7E7</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -672,12 +671,12 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B281F9AB1333028F0051E7E7</string>
+		<string>B281F9F4133312A90051E7E7</string>
 		<string>B281F9321332F5F10051E7E7</string>
 		<string>B281F9261332F58D0051E7E7</string>
 		<string>B281F9271332F58D0051E7E7</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1C78EAAD065D492600B07095</string>
 	</array>
@@ -698,14 +697,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>wrap_time.c</string>
+								<string>wrap_trans2d.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -722,6 +719,8 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

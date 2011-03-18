@@ -390,6 +390,57 @@ int __trans2d_set_parent ( lua_State *_l ) {
     return 1;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// trans2d.move( self, x, y, [,space,trans2d] )
+// ------------------------------------------------------------------ 
+
+int __trans2d_move ( lua_State *_l ) {
+    ex_ref_t *r;
+    float x, y;
+    int nargs = lua_gettop(_l);
+    int space = EX_SPACE_LOCAL;
+
+    //
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+    x = luaL_checknumber(_l,2);
+    y = luaL_checknumber(_l,3);
+
+    //
+    if ( nargs == 4 ) {
+        if ( ex_lua_istrans2d(_l,4) ) {
+            ex_trans2d_translate_relative_to( r, x, y, ex_lua_totrans2d(_l,4) );
+        }
+        space = luaL_checknumber(_l,4);
+    }
+    ex_trans2d_translate( r, x, y, space );
+
+    //
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// trans2d.rotate( self, r )
+// ------------------------------------------------------------------ 
+
+int __trans2d_rotate ( lua_State *_l ) {
+    ex_ref_t *r;
+    float rad;
+
+    //
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+    rad = luaL_checknumber(_l,2);
+
+    ex_trans2d_rotate( r, rad );
+
+    //
+    return 0;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
@@ -425,6 +476,8 @@ static const luaL_Reg __meta_funcs[] = {
     { "__tostring", ex_lua_ref_tostring },
     { "__concat", ex_lua_ref_concat },
     { "__eq", ex_lua_ref_eq },
+    { "move", __trans2d_move },
+    { "rotate", __trans2d_rotate },
     { NULL, NULL },
 };
 
