@@ -399,7 +399,7 @@ int __trans2d_move ( lua_State *_l ) {
     ex_ref_t *r;
     float x, y;
     int nargs = lua_gettop(_l);
-    int space = EX_SPACE_LOCAL;
+    int space = EX_SPACE_SELF;
 
     //
     r = ex_lua_checktrans2d(_l,1);

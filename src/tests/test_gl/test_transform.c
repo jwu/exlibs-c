@@ -128,12 +128,12 @@ static void init () {
 
         trans2d_ref = ex_entity_get_comp( e2, EX_TYPEID(ex_trans2d_t) );
         ex_trans2d_set_local_rotation ( trans2d_ref, -EX_PI/8.0f );
-        ex_trans2d_translate( trans2d_ref, 40.0f, 0.0f, EX_SPACE_LOCAL );
+        ex_trans2d_translate( trans2d_ref, 40.0f, 0.0f, EX_SPACE_SELF );
 
         trans2d_ref = ex_entity_get_comp( e3, EX_TYPEID(ex_trans2d_t) );
         ex_trans2d_set_local_rotation ( trans2d_ref, -EX_PI/8.0f );
         ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_WORLD );
-        // ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_LOCAL );
+        // ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_SELF );
 
         // test entity get
         trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );

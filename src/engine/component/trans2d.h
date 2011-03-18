@@ -121,7 +121,7 @@ extern void ex_trans2d_inverse_transform_dir ( ex_ref_t *_self, const ex_vec2f_t
 
 // ------------------------------------------------------------------ 
 // Desc: 
-#define EX_SPACE_LOCAL 0
+#define EX_SPACE_SELF 0
 #define EX_SPACE_WORLD 1
 // ------------------------------------------------------------------ 
 

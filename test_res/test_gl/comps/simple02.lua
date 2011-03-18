@@ -25,6 +25,7 @@ my_name = "unknown"
 
 function awake ( self )
     ex.log("awake: " .. self.my_name)
+    self.trans2d.local_angle = ex.angf(15.0)
 end
 
 -- ------------------------------------------------------------------ 
@@ -46,5 +47,8 @@ function update ( self )
     --     pos.x + 0.1 * ex.time.dt,
     --     pos.y
     -- )
-    self.trans2d:move( 0.1 * ex.time.dt, 0.0 )
+    local t = self.trans2d.right * 0.1 * ex.time.dt
+    self.trans2d:move( t.x, t.y )
+    -- self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
+    -- self.trans2d:move( 100.0 * ex.time.dt, 0.0, ex.space.world )
 end

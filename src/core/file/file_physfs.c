@@ -20,7 +20,8 @@
 
 #define __PHYSFS_CHECK(_expr,_msg,...) \
     if ( (_expr) == 0 ) { \
-        /*ex_error ( _msg"\nphysFS error message: %s", ##__VA_ARGS__, PHYSFS_getLastError() );*/ \
+        /*__log_error( __FILE__, __FUNCTION__, __LINE__, _msg"\n|- physFS error message: %s", ##__VA_ARGS__, PHYSFS_getLastError() );*/ \
+        ex_error( _msg"\n|- physFS error message: %s", ##__VA_ARGS__, PHYSFS_getLastError() ); \
         return -1; \
     }
 
@@ -46,11 +47,13 @@ int ex_fsys_init () {
     if ( ex_fsys_set_write_dir(path) == 0 )
         ex_log("set default write dir: %s", path );
 
-    // we add ~/.exsdk as the first builtin search directory
-    strncpy ( path, ex_fsys_user_dir(), 1024 );
-    strcat ( path, ".exsdk/" );
-    if ( ex_fsys_mount( path, "/", true ) == 0 )
-        ex_log("mount dir: %s", path );
+    // TODO: need low-level api check if the path exists first!!! { 
+    // // we add ~/.exsdk as the first builtin search directory
+    // strncpy ( path, ex_fsys_user_dir(), 1024 );
+    // strcat ( path, ".exsdk/" );
+    // if ( ex_fsys_mount( path, "/", true ) == 0 )
+    //     ex_log("mount dir: %s", path );
+    // } TODO end 
 
     // we add app/builtin as the second builtin search directory
     strncpy ( path, ex_fsys_app_dir(), 1024 );

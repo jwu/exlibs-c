@@ -34,8 +34,8 @@ extern const char *exsdk_dev_path;
 // success: 0
 // already inited: 1
 // failed: -1
-int ex_core_init ()
-{
+int ex_core_init ( const char *_media_path ) {
+
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
         ex_warning ( "core already inited" );
@@ -63,6 +63,18 @@ int ex_core_init ()
     if ( ex_fsys_init() != 0 ) {
         ex_log ("fatal error: failed to init fsys");
         return -1;
+    }
+    // NOTE: this must be done before ex_log_init, so that log.txt can be open in the corrent path.
+    if ( _media_path ) {
+        // set write dir
+        if ( ex_fsys_set_write_dir(_media_path) != 0 )
+            return -1;
+        ex_log("set write dir: %s", _media_path );
+
+        // mount the write dir 
+        if ( ex_fsys_mount( _media_path, "/", true ) != 0 )
+            return -1;
+        ex_log("mount dir: %s", _media_path );
     }
 
     //
@@ -135,8 +147,8 @@ int ex_core_init ()
 extern void __deinit_error_stack ();
 // ------------------------------------------------------------------ 
 
-void ex_core_deinit ()
-{
+void ex_core_deinit () {
+
     if ( __initialized ) {
         ex_log ("");
         ex_log ("ex_core de-initializing...");

@@ -28,7 +28,7 @@ int wrap_enums ( lua_State *_l ) {
 
     lua_pushstring(_l,"space");
     lua_newtable(_l); {
-        lua_pushinteger( _l, EX_SPACE_LOCAL ); lua_setfield( _l, -2, "local" );
+        lua_pushinteger( _l, EX_SPACE_SELF ); lua_setfield( _l, -2, "self" ); // NOTE: can't use local, it is a keyworkd in lua
         lua_pushinteger( _l, EX_SPACE_WORLD ); lua_setfield( _l, -2, "world" );
     } lua_rawset( _l, -3 );
 

@@ -584,7 +584,7 @@ void ex_trans2d_inverse_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir,
 void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
-    if ( _space == EX_SPACE_LOCAL ) {
+    if ( _space == EX_SPACE_SELF ) {
         ex_vec2f_t v2;
 
         ex_vec2f_set ( &v2, _x, _y );

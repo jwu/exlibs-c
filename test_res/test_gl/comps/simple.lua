@@ -42,5 +42,7 @@ end
 function update ( self )
     -- local ang = self.trans2d.local_angle
     -- self.trans2d.local_angle = ang + ex.angf(200.0) * ex.time.dt
-    self.trans2d:rotate( 2.0 * ex.time.dt )
+    self.trans2d:rotate( 5.0 * ex.time.dt )
+    local t = self.trans2d.right * 2.0 * ex.time.dt
+    self.trans2d:move( t.x, t.y )
 end

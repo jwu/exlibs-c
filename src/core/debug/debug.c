@@ -123,7 +123,10 @@ int ex_log_init () {
 
 void ex_log_deinit () {
     if ( __initialized ) {
-        ex_text_fclose(__log_file);
+        if ( __log_file ) {
+            ex_text_fclose(__log_file);
+            __log_file = NULL;
+        }
         __initialized = false;
     }
 }

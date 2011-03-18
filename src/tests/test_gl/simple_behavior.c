@@ -53,7 +53,7 @@ static void update ( ex_ref_t *_self ) {
         // process movement
         new_pos = ex_vec2f_zero;
         ex_vec2f_mul_scalar ( &new_pos, &self->move_dir, self->move_speed * ex_dt() );
-        ex_trans2d_translate ( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, new_pos.x, new_pos.y, EX_SPACE_LOCAL );
+        ex_trans2d_translate ( EX_REF_CAST(ex_entity_t,comp->entity)->trans2d, new_pos.x, new_pos.y, EX_SPACE_SELF );
 
         // process rotate
         ex_angf_set_by_radians( &new_ang, self->rot_speed * ex_dt() );

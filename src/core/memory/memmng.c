@@ -17,7 +17,7 @@
 
 #define MAX_HASH            4096
 #define MAX_NEW_ALLOCINFO   256
-#define MEM_LOG             "./mem_dump.err"
+// DISABLE: #define MEM_LOG             "./mem_dump.err"
 
 #define VERIFY_PREFIX       1
 #define VERIFY_SUFFIX       1
@@ -228,29 +228,31 @@ static inline int __rearrange_au ( void *_ptr, alloc_unit_t *au ) {
     return __push_au ( au );
 }
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+// DISABLE: we use ex_log instead { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// // ------------------------------------------------------------------ 
 
-static void __log ( const char *_file_name, const char *_format, ... ) {
-    char buffer[2048];
-    FILE *fp;
+// static void __log ( const char *_file_name, const char *_format, ... ) {
+//     char buffer[2048];
+//     FILE *fp;
 
-    // The Buffer
-    EX_GET_VA_STRING( buffer, 2048, _format );
+//     // The Buffer
+//     EX_GET_VA_STRING( buffer, 2048, _format );
 
-    // open the log file
-    fp = fopen( _file_name, "ab" );
+//     // open the log file
+//     fp = fopen( _file_name, "ab" );
 
-    // The file must be opened
-    ex_assert( fp, "Can't not open the log file:%s", _file_name );
+//     // The file must be opened
+//     ex_assert( fp, "Can't not open the log file:%s", _file_name );
 
-    // print the log into the file
-    fprintf( fp, "%s", buffer );
+//     // print the log into the file
+//     fprintf( fp, "%s", buffer );
 
-    // close the file
-    fclose(fp);
-}
+//     // close the file
+//     fclose(fp);
+// }
+// } DISABLE end 
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -288,8 +290,12 @@ static void __dump () {
                      );
 
             // format log info
-            __log ( MEM_LOG, "%s", text );
-            printf ( "%s", text ); // also show on the console.
+            ex_log( "%s", text ); 
+            // DISABLE: use ex_log above instaed { 
+            // __log ( "%s", text );
+            // printf ( "%s", text ); // also show on the console.
+            // } DISABLE end 
+
         } ex_hashmap_each_end;
     }
 }
@@ -330,8 +336,10 @@ int ex_mem_init () {
                    __ex_list_dealloc_nomng
                  );
 
+    // DISABLE: we use ex_log instead { 
     // remove log file if it exists
-    unlink ( MEM_LOG );
+    // unlink ( MEM_LOG );
+    // } DISABLE end 
 
     __initialized = true;
     return 0;
