@@ -54,9 +54,9 @@ static void timescale () {
 
     ex_start_timer(id); ex_log("start!");
     ex_sleep(4000);
-    ex_set_time_scale(0.5f);
+    ex_set_timescale(0.5f);
     ex_sleep(5000);
-    ex_set_time_scale(1.0f);
+    ex_set_timescale(1.0f);
     ex_stop_timer(id); ex_log("stop!");
 }
 

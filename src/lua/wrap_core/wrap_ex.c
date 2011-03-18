@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : wrap_core.c
+// File         : wrap_ex.c
 // Author       : Wu Jie 
-// Last Change  : 11/15/2010 | 13:36:19 PM | Monday,November
+// Last Change  : 03/18/2011 | 10:25:32 AM | Friday,March
 // Description  : 
 // ======================================================================================
 
@@ -841,7 +841,7 @@ int ex_lua_class ( lua_State *_l,
 ///////////////////////////////////////////////////////////////////////////////
 
 // ex functions
-static const luaL_Reg __core_funcs[] = {
+static const luaL_Reg __ex_funcs[] = {
     { "dump_stack", __dump_stack }, // DEBUG:
     { "range_rand", __range_rand }, // TODO: go to ex.random.range
     { "log", __log },
@@ -851,25 +851,31 @@ static const luaL_Reg __core_funcs[] = {
     { "isbuiltin", __isbuiltin },
     { "typename", __typename },
     { "class", __class },
-    { 0, 0 }
+    { NULL, NULL },
 };
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int luaopen_core ( lua_State *_l ) {
+int luaopen_ex ( lua_State *_l ) {
 
+    // ======================================================== 
     // register metatable ex.class.meta
+    // ======================================================== 
+
     luaL_newmetatable(_l, "ex.class.meta"); // NOTE: this store a table in LUA_REGISTRYINDEX
     lua_pushstring(_l,"__call");
     lua_pushcfunction(_l, __class_new);
     lua_rawset(_l,-3);
     lua_pop(_l, 1); // pops ex.class.meta
 
-    // register core
+    // ======================================================== 
+    // register ex
+    // ======================================================== 
+
     ex_lua_global_module ( _l, "ex" );
-    luaL_register( _l, 0, __core_funcs );
+    luaL_register( _l, 0, __ex_funcs );
     lua_pop(_l, 1); // pops ex.
 
     return 0;
@@ -879,5 +885,5 @@ int luaopen_core ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void luaclose_core () {
+void luaclose_ex () {
 }

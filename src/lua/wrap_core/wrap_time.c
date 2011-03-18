@@ -10,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
+#include "../../engine/time.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -25,23 +26,130 @@ EX_DEF_LUA_BUILTIN_MODULE()
 // type meta getset
 ///////////////////////////////////////////////////////////////////////////////
 
-// // ------------------------------------------------------------------ 
-// // Desc: 
-// // ------------------------------------------------------------------ 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-// static int __angf_get_zero ( lua_State *_l ) {
-//     angf_proxy_t *u = ex_lua_pushangf(_l); 
-//     u->val = ex_angf_zero;
-//     return 1;
-// }
+static int __time_get_time ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_time() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_time_noscale ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_time_noscale() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_worldtime ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_worldtime() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_realtime ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_realtime() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_dt ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_dt() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_dt_noscale ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_dt_noscale() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_dt_fixed ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_dt_fixed() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_timescale ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_timescale() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_set_timescale ( lua_State *_l ) {
+    float r = luaL_checknumber(_l,1);
+    ex_set_timescale(r);
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_get_fps ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_fps() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_pause ( lua_State *_l ) {
+    ex_pause();
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __time_resume ( lua_State *_l ) {
+    ex_resume();
+    return 0;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
-// ex.angf.meta
+// ex.time.meta
 static const ex_getset_t __type_meta_getsets[] = {
-    // { "zero", __angf_get_zero, NULL },
+    { "time", __time_get_time, NULL },
+    { "time_noscale", __time_get_time_noscale, NULL },
+    { "worldtime", __time_get_worldtime, NULL },
+    { "realtime", __time_get_realtime, NULL },
+    { "dt", __time_get_dt, NULL },
+    { "dt_noscale", __time_get_dt_noscale, NULL },
+    { "dt_fixed", __time_get_dt_fixed, NULL },
+    { "timescale", __time_get_timescale, __time_set_timescale },
+    { "fps", __time_get_fps, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {
@@ -49,7 +157,11 @@ static const luaL_Reg __type_meta_funcs[] = {
     { "__index", __type_meta_index },
     { NULL, NULL },
 };
+
+// ex.time
 static const luaL_Reg __meta_funcs[] = {
+    { "pause", __time_pause },
+    { "resume", __time_resume },
     { NULL, NULL },
 };
 
@@ -77,15 +189,16 @@ int luaopen_time ( lua_State *_l ) {
     }
 
     // we create global ex table if it not exists.
-    // ex.time = {}
-    // setmetatable( ex.time, { __type_meta_funcs } )
+    // tp = {}
+    // setmetatable( tp, { __type_meta_funcs } )
     ex_lua_global_module ( _l, "ex" );
-    lua_newtable(_l);
-    luaL_register(_l, NULL, __meta_funcs);
-    lua_newtable(_l);
-    luaL_register(_l, NULL, __type_meta_funcs);
-    lua_setmetatable(_l,-2);
-    lua_setfield(_l,-2,"time"); // _G[_field] = _R[_typename]
+    lua_pushstring(_l,"time");
+        lua_newtable(_l);
+        luaL_register(_l, NULL, __meta_funcs);
+        lua_newtable(_l);
+        luaL_register(_l, NULL, __type_meta_funcs);
+        lua_setmetatable(_l,-2);
+    lua_rawset(_l,-3); // rawset( ex, "time", tp )
     lua_pop(_l, 1); // pops ex
     
     //

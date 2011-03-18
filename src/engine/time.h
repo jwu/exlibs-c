@@ -42,8 +42,8 @@ extern float ex_dt_fixed ();
 // NOTE: some game write code like yield waitForSeconds( 10.0f * timeScale )
 // ------------------------------------------------------------------ 
 
-extern float ex_time_scale ();
-extern void ex_set_time_scale ( float _scale );
+extern float ex_timescale ();
+extern void ex_set_timescale ( float _scale );
 extern void ex_pause ();
 extern void ex_resume ();
 

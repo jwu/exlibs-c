@@ -104,7 +104,8 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern int luaopen_core ( lua_State * );
+extern int luaopen_ex ( lua_State * );
+extern int luaopen_time ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
 extern int luaopen_angf ( lua_State * );
 
@@ -152,27 +153,28 @@ int ex_lua_init () {
     }
     // } OPTME end 
 
-    // we create global ex table if it not exists.
-    ex_lua_global_module ( __L, "ex" );
-
-    // init ex_core wraps
-    luaopen_core (__L);
-    luaopen_vec2f (__L);
-    luaopen_angf (__L);
-
     // init graphics wraps
     lua_settop ( __L, 0 ); // clear the stack
     luaopen_luagl (__L);
     luaopen_luaglu (__L);
 
-    // init engine wraps
-    luaopen_object (__L);
-        luaopen_world (__L);
-        luaopen_entity (__L);
-        luaopen_component (__L);
-            luaopen_trans2d (__L);
-            luaopen_behavior (__L);
-                luaopen_lua_behavior (__L);
+    // we create global ex table if it not exists.
+    ex_lua_global_module ( __L, "ex" );
+
+    // init core wraps
+    luaopen_ex (__L);
+        luaopen_time (__L);
+        luaopen_vec2f (__L);
+        luaopen_angf (__L);
+
+        // init engine wraps
+        luaopen_object (__L);
+            luaopen_world (__L);
+            luaopen_entity (__L);
+            luaopen_component (__L);
+                luaopen_trans2d (__L);
+                luaopen_behavior (__L);
+                    luaopen_lua_behavior (__L);
 
     __initialized = true;
 
@@ -181,7 +183,8 @@ int ex_lua_init () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void luaclose_core ();
+extern void luaclose_ex ();
+extern void luaclose_time ();
 extern void luaclose_vec2f ();
 extern void luaclose_angf ();
 
@@ -199,17 +202,18 @@ void ex_lua_deinit () {
         // before close modules, force a complete garbage collection in case of memory leak
         lua_gc(__L, LUA_GCCOLLECT, 0);
 
-        luaclose_core ();
-        luaclose_vec2f ();
-        luaclose_angf ();
+        luaclose_ex ();
+            luaclose_time ();
+            luaclose_vec2f ();
+            luaclose_angf ();
 
-        luaclose_object ();
-            luaclose_world ();
-            luaclose_entity ();
-            luaclose_component ();
-                luaclose_trans2d ();
-                luaclose_behavior ();
-                    luaclose_lua_behavior ();
+            luaclose_object ();
+                luaclose_world ();
+                luaclose_entity ();
+                luaclose_component ();
+                    luaclose_trans2d ();
+                    luaclose_behavior ();
+                        luaclose_lua_behavior ();
 
         lua_close(__L);
         __L = NULL;
@@ -283,14 +287,17 @@ int ex_lua_global_module ( lua_State *_l, const char *_key ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
-    lua_getfield(_l, _idx, _key);
+    lua_pushstring(_l,_key);
+    lua_rawget(_l, _idx);
 
     // create if necessary.
     if( !lua_istable(_l, -1) ) {
         lua_pop(_l, 1); // pop the non-table
         lua_newtable(_l);
+        lua_pushstring(_l,_key);
         lua_pushvalue(_l, -1); // duplicate the table to leave on top.
-        lua_setfield(_l, -2-_idx, _key); // _key[_idx] = table
+        // lua_setfield(_l, -2-_idx, _key); // _key[_idx] = table
+        lua_rawset(_l, -3-_idx); // _key[_idx] = table
     }
 
     return 1;

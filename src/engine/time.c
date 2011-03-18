@@ -26,8 +26,8 @@ static float __worldtime = 0.0f;
 static float __dt = 0.0f;
 static float __dt_noscale = 0.0f;
 static float __dt_fixed = 1.0f;
-static float __time_scale = 1.0f;
-static float __last_time_scale = 1.0f;
+static float __timescale = 1.0f;
+static float __last_timescale = 1.0f;
 
 static float __fps = 0.0f;
 static uint32 __frame_count = 0;
@@ -78,7 +78,7 @@ void __tick_engine_time () {
 
     ++__frame_count;
     __dt_noscale = (float)(now-__timer_frame_start)/1000.0f;
-    __dt = __dt_noscale * __time_scale;
+    __dt = __dt_noscale * __timescale;
     __time_noscale = (float)(now-__timer_engine_start)/1000.0f;
     __time += __dt;
     __worldtime += __dt;
@@ -135,25 +135,25 @@ float ex_dt_fixed () { return __dt_fixed; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-float ex_time_scale () { return __time_scale; }
+float ex_timescale () { return __timescale; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_set_time_scale ( float _scale ) { __time_scale = _scale; }
+void ex_set_timescale ( float _scale ) { __timescale = _scale; }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 void ex_pause () {
-    if ( ex_is_zerof(__time_scale,EX_FLOAT_EPS) ) {
+    if ( ex_is_zerof(__timescale,EX_FLOAT_EPS) ) {
         ex_warning("the engine already paused!");
         return;
     }
-    __last_time_scale = __time_scale;
-    __time_scale = 0.0f;
+    __last_timescale = __timescale;
+    __timescale = 0.0f;
 }
 
 // ------------------------------------------------------------------ 
@@ -161,7 +161,7 @@ void ex_pause () {
 // ------------------------------------------------------------------ 
 
 void ex_resume () {
-    __time_scale = __last_time_scale;
+    __timescale = __last_timescale;
 }
 
 // ------------------------------------------------------------------ 

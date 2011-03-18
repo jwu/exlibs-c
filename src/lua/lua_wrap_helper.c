@@ -182,6 +182,7 @@ int ex_lua_register_builtin ( lua_State *_l,
     ex_assert( _meta_funcs, "_meta_funcs can't be NULL" );
     ex_assert( _type_meta_funcs, "_type_meta_funcs can't be NULL" );
 
+
     /**
      * if
           _typename = "ex.vec2f"
@@ -209,6 +210,7 @@ int ex_lua_register_builtin ( lua_State *_l,
     // _R[_typename].__isbuiltin = true
     // setmetatable ( _R[_typename], { _type_meta_funcs } )
     // _G[_field] = _R[_typename] -- NOTE: _G depends on the table on the stack
+    lua_pushstring(_l,_field);
 
     // register metatable -- _typename
     // _R[_typename] = { _meta_funcs }
@@ -232,7 +234,10 @@ int ex_lua_register_builtin ( lua_State *_l,
     luaL_register(_l, NULL, _type_meta_funcs);
     lua_setmetatable(_l,-2);
 
-    lua_setfield(_l,-2,_field); // _G[_field] = _R[_typename]
+    // DISABLE: instead of doing this, we use rawset, 
+    //          this need lua_pushstring(_l,_field) at the beginning of the function 
+    // lua_setfield(_l,-2,_field);
+    lua_rawset(_l,-3); // _G[_field] = _R[_typename]
     return 0;
 }
 
@@ -304,9 +309,11 @@ int ex_lua_register_class ( lua_State *_l,
                   );
 
     // _G[_field] = ex.class(tp) -- NOTE: here _G depends on what is the current table on the stack
-    lua_pushvalue(_l,-1);
-    lua_setfield(_l,-6,_field);
+    lua_pushstring(_l,_field);
+    lua_pushvalue(_l,-2);
+    lua_rawset(_l,-7);
 
-    lua_pop(_l, 4); // pops base, type_meta, super, base
+    // pops base, type_meta, super, base
+    lua_pop(_l, 4);
     return 0;
 }

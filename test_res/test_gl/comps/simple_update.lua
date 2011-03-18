@@ -41,5 +41,5 @@ end
 
 function update ( self )
     local ang = self.entity.trans2d.local_angle
-    self.entity.trans2d.local_angle = ang + ex.angf(0.2)
+    self.entity.trans2d.local_angle = ang + ex.angf(200.0) * ex.time.dt
 end
