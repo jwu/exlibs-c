@@ -307,34 +307,34 @@ int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
+static int __load_modules ( lua_State *_l, const char *_base, const char *_dir ) {
     char **file_list, **i;
     char full_path[256];
-    int base_len, fname_len;
+    int dir_len, fname_len;
 
     //
-    base_len = strlen(_dir);
-    if ( base_len+2 > 256 ) {
+    dir_len = strlen(_dir);
+    if ( dir_len+2 > 256 ) {
         ex_error ( "directory path is too long! %s", _dir );
         return -1;
     }
 
     // append '/' at the end of the path if not exists.
-    strncpy ( full_path, _dir, base_len  );
-    if ( full_path[base_len-1] != '/' ) {
-        full_path[base_len] = '/';
-        full_path[base_len+1] = '\0';
-        base_len += 1;
+    strncpy ( full_path, _dir, dir_len  );
+    if ( full_path[dir_len-1] != '/' ) {
+        full_path[dir_len] = '/';
+        full_path[dir_len+1] = '\0';
+        dir_len += 1;
     }
     else {
-        full_path[base_len] = '\0';
+        full_path[dir_len] = '\0';
     }
 
     //
     file_list = ex_fsys_files_in(_dir);
     for ( i = file_list; *i != NULL; ++i ) {
         fname_len = strlen(*i);
-        if ( base_len + fname_len + 1 > 256 ) {
+        if ( dir_len + fname_len + 1 > 256 ) {
             ex_error ( "file path is too long! %s%s", _dir, *i );
             continue;
         }
@@ -352,25 +352,64 @@ int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
         }
 
         // get the full path
-        full_path[base_len] = '\0'; // the easist way to reset the full_path to base_path
+        full_path[dir_len] = '\0'; // the easist way to reset the full_path to base_path
         strncat ( full_path, *i, fname_len  );
-        full_path[base_len+fname_len] = '\0';
+        full_path[dir_len+fname_len] = '\0';
 
         // if this is a directory
         if ( ex_fsys_isdir( full_path ) ) {
-            ex_lua_load_modules ( _l, full_path );
+            __load_modules ( _l, _base, full_path );
         }
         // NOTE: it is possible that its a symbolic link
         else if ( ex_fsys_isfile( full_path ) ) {
             // if this is a file, check if it is a lua file.
             if ( strncmp (*i+fname_len-4, ".lua", 4 ) == 0 ) {
-                ex_lua_dofile(_l,full_path);
-                ex_log ("load lua module from file %s", full_path);
+                char modname[256];
+                int base_len = strlen(_base);
+                int modname_len = dir_len+fname_len-4-base_len;
+                char *j = modname;
+
+                strncpy(modname,full_path+base_len,modname_len);
+                modname[modname_len] = '\0';
+                while ( *j != '\0' ) {
+                    if ( *j == '/' )
+                        *j = '.';
+                    ++j;
+                }
+
+                ex_lua_dofile(_l,full_path,modname);
+                ex_log ("load lua module %s from file %s", modname, full_path);
             }
         }
     }
     ex_fsys_free_list(file_list);
     return 0;
+}
+
+int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
+    char dir[256];
+    int dir_len;
+
+    // NOTE: this will ensure that our dir always end with "/" { 
+    dir_len = strlen(_dir);
+    if ( dir_len+2 > 256 ) {
+        ex_error ( "directory path is too long! %s", _dir );
+        return -1;
+    }
+
+    // append '/' at the end of the path if not exists.
+    strncpy ( dir, _dir, dir_len  );
+    if ( dir[dir_len-1] != '/' ) {
+        dir[dir_len] = '/';
+        dir[dir_len+1] = '\0';
+        dir_len += 1;
+    }
+    else {
+        dir[dir_len] = '\0';
+    }
+    // } NOTE end 
+
+    return __load_modules ( _l, dir, dir );
 }
 
 // ------------------------------------------------------------------ 
@@ -463,7 +502,7 @@ int ex_lua_load_module_byfile2 ( lua_State *_l, const char *_filepath, const cha
     // } lua end 
 
     // now load the buffer
-    if ( ex_lua_dofile(_l, _filepath ) != 0 ) {
+    if ( ex_lua_dofile(_l, _filepath, _module_name ) != 0 ) {
         return -1;
     }
 
@@ -519,7 +558,7 @@ int ex_lua_get_function ( lua_State *_l, const char *_moduleName, const char *_f
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_dofile ( lua_State *_l, const char *_filepath ) {
+int ex_lua_dofile ( lua_State *_l, const char *_filepath, const char *_modname ) {
     int status;
     ex_file_t *file;
     size_t buf_size;
@@ -546,7 +585,13 @@ int ex_lua_dofile ( lua_State *_l, const char *_filepath ) {
     }
 
     // call the script 
-    status = lua_pcall(_l, 0, LUA_MULTRET, 0);
+    if ( _modname ) {
+        lua_pushstring(_l,_modname);
+        status = lua_pcall(_l, 1, LUA_MULTRET, 0);
+    }
+    else {
+        status = lua_pcall(_l, 0, LUA_MULTRET, 0);
+    }
     if ( status ) {
         ex_lua_alert(_l);
         goto PARSE_FAILED;

@@ -23,7 +23,7 @@ local getmetatable = getmetatable
 local debug = debug
 local string, io = string, io
 
-module ("ex.debug")
+module (...)
 
 --/////////////////////////////////////////////////////////////////////////////
 -- functions defines

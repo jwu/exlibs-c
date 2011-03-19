@@ -10,8 +10,8 @@
 --/////////////////////////////////////////////////////////////////////////////
 
 local ex = ex
-require ( "ex.simple" )
-module ( "ex.simple02", ex.simple.derive )
+require ( "comps.simple" )
+module ( ..., comps.simple.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
 --
@@ -42,9 +42,9 @@ end
 -- ------------------------------------------------------------------ 
 
 function update ( self )
-    self.super.update(self)
+    -- self.super.update(self)
     -- local t = self.trans2d.right * 0.1 * ex.time.dt
     -- self.trans2d:move( t.x, t.y )
-    -- self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
-    self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.world )
+    self.trans2d:move( 10.0 * ex.time.dt, 0.0, ex.space.self )
+    -- self.trans2d:move( 10.0 * ex.time.dt, 0.0, ex.space.world )
 end

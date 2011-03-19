@@ -12,7 +12,7 @@
 local assert, type = assert, type
 local math = math
 
-module("ex.math")
+module(...)
 
 --/////////////////////////////////////////////////////////////////////////////
 -- constants

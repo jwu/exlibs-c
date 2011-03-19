@@ -12,7 +12,7 @@
 local setmetatable = setmetatable
 local print = print
 
-module ("ex.simple")
+module (...)
 
 --/////////////////////////////////////////////////////////////////////////////
 --

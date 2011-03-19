@@ -27,7 +27,7 @@
 
 static void init () {
     struct lua_State *l = ex_current_lua_state();
-    ex_lua_dofile( l, "script_world.lua" );
+    ex_lua_dofile( l, "exec/create_world.lua", NULL );
 }
 
 // ------------------------------------------------------------------ 
@@ -49,8 +49,8 @@ static void render () {
 
     // test render lua
     ex_camera_apply ( ex_world_main_camera(g_world) );
-    if ( ex_fsys_file_exists( "render_3D.lua" ) )
-        ex_lua_dofile( l, "render_3D.lua" );
+    if ( ex_fsys_file_exists( "exec/render_3D.lua" ) )
+        ex_lua_dofile( l, "exec/render_3D.lua", NULL );
 
     // TODO { 
     // // draw 2D objects in screen space
@@ -59,8 +59,8 @@ static void render () {
     // glMatrixMode(GL_PROJECTION);
     // glLoadIdentity();
     // glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
-    // if ( ex_fsys_file_exists( "render_2D.lua" ) )
-    //     ex_lua_dofile( l, "render_2D.lua" );
+    // if ( ex_fsys_file_exists( "exec/render_2D.lua" ) )
+    //     ex_lua_dofile( l, "exec/render_2D.lua", NULL );
     // } TODO end 
 }
 

@@ -1,37 +1,57 @@
 -- ======================================================================================
--- File         : script_world.lua
+-- File         : create_world.lua
 -- Author       : Wu Jie 
--- Last Change  : 02/07/2011 | 22:15:30 PM | Monday,February
+-- Last Change  : 03/20/2011 | 01:48:12 AM | Sunday,March
 -- Description  : 
 -- ======================================================================================
 
 ex.log ("creating script world...")
 
+-- ======================================================== 
+-- ent1
+-- ======================================================== 
+
 ent1 = ex.entity("entity foo 01")
 trans2d = ent1:add_comp("ex.trans2d")
 trans2d.scale = ex.vec2f(100.0,100.0)
 trans2d.position = ex.vec2f(0.0,0.0)
-ent1:add_comp("ex.debug.shape")
+r = ent1:add_comp("ex.debug2d.rect")
+-- r.width = 100
+-- r.height = 20
+
+-- ======================================================== 
+-- ent2
+-- ======================================================== 
 
 ent2 = ex.entity("entity foo 02")
 trans2d = ent2:add_comp("ex.trans2d")
-trans2d.scale = ex.vec2f(50.0,50.0)
-trans2d.position = ex.vec2f(200.0,200.0)
+-- trans2d.scale = ex.vec2f(50.0,50.0)
+trans2d.position = ex.vec2f(100.0,100.0)
 trans2d.parent = ent1.trans2d
-ent2:add_comp("ex.debug.shape")
-n = ent2:add_comp("ex.simple")
+
+r = ent2:add_comp("ex.debug2d.rect")
+r.width = 10
+r.height = 10
+
+n = ent2:add_comp("comps.simple02")
 n.my_name = "no1"
-ex.log("haha no1")
+
+-- ======================================================== 
+-- ent3
+-- ======================================================== 
 
 ent3 = ex.entity("entity foo 03")
 trans2d = ent3:add_comp("ex.trans2d")
-trans2d.scale = ex.vec2f(50.0,50.0)
-trans2d.position = ex.vec2f(-200.0,200.0)
+-- trans2d.scale = ex.vec2f(50.0,50.0)
+trans2d.position = ex.vec2f(-100.0,100.0)
 trans2d.parent = ent2.trans2d.parent
-ent3:add_comp("ex.debug.shape")
-n = ent3:add_comp("ex.simple02")
+
+r = ent3:add_comp("ex.debug2d.rect")
+r.width = 10
+r.height = 10
+
+n = ent3:add_comp("comps.simple02")
 n.my_name = "no2"
-ex.log("haha no2")
 
 -- ex.debug.dump(getmetatable(ent),"ent")
 -- ent:destroy()

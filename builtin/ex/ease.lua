@@ -16,7 +16,7 @@ local pi,two_pi,half_pi = math.pi,ex.math.two_pi,ex.math.half_pi
 local sin,cos,asin,acos,sqrt,min,max,abs = math.sin,math.cos,math.asin,math.acos,math.sqrt,math.min,math.max,math.abs
 local os = os
 
-module("ex.ease")
+module(...)
 
 --/////////////////////////////////////////////////////////////////////////////
 -- functions

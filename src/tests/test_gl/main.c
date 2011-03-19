@@ -117,8 +117,8 @@ static void initGame () {
     // create test world
     // NOTE: choose your game { 
     // simple_world();
-    // test_transform();
-    test_script();
+    test_transform();
+    // test_script();
     // } NOTE end 
 
     // load/setup the world
@@ -424,7 +424,6 @@ int main( int argc, const char *argv[] ) {
 
         // init game
         ex_app_init();
-        ex_lua_load_modules( ex_current_lua_state(), "comps" );
         ex_lua_load_modules( ex_current_lua_state(), "scripts" );
         initGame();
 

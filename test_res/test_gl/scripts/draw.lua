@@ -7,7 +7,7 @@
 
 local ex = ex
 local gl = gl
-module ("draw")
+module (...)
 
 -- ------------------------------------------------------------------ 
 -- Desc: line

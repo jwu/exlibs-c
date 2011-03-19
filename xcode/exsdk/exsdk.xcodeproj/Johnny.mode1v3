@@ -311,14 +311,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>trans2d.c</string>
+								<string>rtti.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,11 +324,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>trans2d.c</string>
+										<string>rtti.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B28702731334F35F000C44FD</string>
+										<string>B2870371133526ED000C44FD</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -373,7 +371,6 @@
 											<string>B25923DD12E9429200B49C04</string>
 											<string>B25923DE12E9429200B49C04</string>
 											<string>B25923DF12E9429200B49C04</string>
-											<string>B25923E012E9429200B49C04</string>
 											<string>B25923E112E9429200B49C04</string>
 											<string>B259249812EA6FCC00B49C04</string>
 											<string>B259249912EA6FCC00B49C04</string>
@@ -479,7 +476,8 @@
 											<string>B27ECF1513346DD100D4C0C5</string>
 											<string>B27ECF1613346DD100D4C0C5</string>
 											<string>B27ECF1713346DD100D4C0C5</string>
-											<string>B28702101334D597000C44FD</string>
+											<string>B287033F13352463000C44FD</string>
+											<string>B287034013352463000C44FD</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -501,6 +499,8 @@
 							<string>292pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -677,13 +677,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B28702741334F35F000C44FD</string>
+		<string>B2870372133526ED000C44FD</string>
 		<string>B28701EC1334D267000C44FD</string>
 		<string>B28701ED1334D267000C44FD</string>
-		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 		<string>B2E0B7F112A6B277009FE3E8</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
+		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>1380 40 1230 723 1280 -400 1920 1200 </string>
@@ -702,14 +702,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>trans2d.c</string>
+								<string>lua_global.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -726,6 +724,8 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
