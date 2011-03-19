@@ -377,7 +377,14 @@ static int __load_modules ( lua_State *_l, const char *_base, const char *_dir )
                     ++j;
                 }
 
-                ex_lua_dofile(_l,full_path,modname);
+                // check if the module already loaded ( by require )
+                int loaded = lua_gettop(_l) + 1;  /* index of _LOADED table */
+                lua_getfield(_l, LUA_REGISTRYINDEX, "_LOADED");
+                lua_getfield(_l, loaded, modname);  /* get _LOADED[modname] */
+                if ( !lua_istable(_l,-1) ) 
+                    ex_lua_dofile( _l, full_path, modname );
+                // TODO: since require will change the order of module loading, 
+                // I think I need a correct way report module loading 
                 ex_log ("load lua module %s from file %s", modname, full_path);
             }
         }
