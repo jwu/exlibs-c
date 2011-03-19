@@ -40,7 +40,7 @@ static void init () {
             trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
             ex_trans2d_set_local_position( trans2d, ex_range_randf(-400.0f,400.0f), ex_range_randf(-400.0f,400.0f) );
             ex_trans2d_set_local_scale ( trans2d, ex_range_randf(0.0f,1.0f), ex_range_randf(0.0f,1.0f) );
-            ex_trans2d_set_local_rotation ( trans2d, ex_range_randf(0.0f,EX_TWO_PI) );
+            ex_trans2d_set_local_angle ( trans2d, ex_range_randf(0.0f,EX_TWO_PI) );
 
             // dbg2d
             dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );

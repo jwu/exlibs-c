@@ -11,14 +11,14 @@ ent1 = ex.entity("entity foo 01")
 trans2d = ent1:add_comp("ex.trans2d")
 trans2d.scale = ex.vec2f(100.0,100.0)
 trans2d.position = ex.vec2f(0.0,0.0)
-ent1:add_comp("ex.debug2d")
+ent1:add_comp("ex.debug.shape")
 
 ent2 = ex.entity("entity foo 02")
 trans2d = ent2:add_comp("ex.trans2d")
 trans2d.scale = ex.vec2f(50.0,50.0)
 trans2d.position = ex.vec2f(200.0,200.0)
 trans2d.parent = ent1.trans2d
-ent2:add_comp("ex.debug2d")
+ent2:add_comp("ex.debug.shape")
 n = ent2:add_comp("ex.simple")
 n.my_name = "no1"
 ex.log("haha no1")
@@ -28,7 +28,7 @@ trans2d = ent3:add_comp("ex.trans2d")
 trans2d.scale = ex.vec2f(50.0,50.0)
 trans2d.position = ex.vec2f(-200.0,200.0)
 trans2d.parent = ent2.trans2d.parent
-ent3:add_comp("ex.debug2d")
+ent3:add_comp("ex.debug.shape")
 n = ent3:add_comp("ex.simple02")
 n.my_name = "no2"
 ex.log("haha no2")

@@ -40,6 +40,10 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
     int state;
     bool enabled;
 
+    // ======================================================== 
+    // invokes 
+    // ======================================================== 
+
     // invoked in ex_world_start start
     void (*awake) ( ex_ref_t *_self );
 
@@ -51,6 +55,14 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
 
     // invoked in ex_world_update after animation, phsyics update if the behavior is started.
     void (*post_update) ( ex_ref_t *_self );
+
+    // ======================================================== 
+    // events
+    // ======================================================== 
+
+    // invoked after camera has rendered the scene
+    void (*on_render) ( ex_ref_t *_self );
+
 EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -250,6 +250,21 @@ extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeI
 // Desc: 
 // ------------------------------------------------------------------ 
 
+void ex_entity_awake_behaviors ( ex_ref_t *_self ) {
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+    ex_behavior_t *be;
+
+    ex_array_each ( ent->comps, ex_ref_t *, compref ) {
+        be = EX_REF_AS(ex_behavior_t,compref);
+        if ( be && be->awake )
+            be->awake(compref);
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 void ex_entity_update_behaviors ( ex_ref_t *_self ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
@@ -289,13 +304,13 @@ void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_entity_awake_behaviors ( ex_ref_t *_self ) {
+void ex_entity_on_render ( ex_ref_t *_self ) {
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
     ex_behavior_t *be;
 
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be && be->awake )
-            be->awake(compref);
+        if ( be && be->on_render )
+            be->on_render(compref);
     } ex_array_each_end
 }

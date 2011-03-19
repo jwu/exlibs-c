@@ -340,8 +340,13 @@ void ex_world_render ( ex_ref_t *_self ) {
 
     ex_array_each ( world->cameras, ex_ref_t *, cam ) {
         ex_camera_apply (cam);
-        // TODO: __render_scene(_world);
+        // TODO: __render_scene(world);
         __debug_draw(world); // TEMP
+
+        // invoke all on_render event in behavior
+        ex_array_each ( world->entities, ex_ref_t *, ref ) {
+            ex_entity_on_render(ref);
+        } ex_array_each_end;
     } ex_array_each_end;
 }
 

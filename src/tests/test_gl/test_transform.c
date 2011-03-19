@@ -34,7 +34,7 @@ static ex_ref_t *create_simple_entity ( const char *_name ) {
     trans2d = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
     ex_trans2d_set_local_position( trans2d, 0.0f, 0.0f );
     ex_trans2d_set_local_scale ( trans2d, 1.0f, 1.0f );
-    ex_trans2d_set_local_rotation ( trans2d, 0.0f );
+    ex_trans2d_set_local_angle ( trans2d, 0.0f );
 
     // dbg2d
     dbg2d = ex_entity_add_comp( ent, EX_TYPEID(ex_debug2d_t) );
@@ -124,14 +124,14 @@ static void init () {
                                 EX_REF_CAST(ex_entity_t,e2)->trans2d );
 
         trans2d_ref = ex_entity_get_comp( e1, EX_TYPEID(ex_trans2d_t) );
-        ex_trans2d_set_local_rotation ( trans2d_ref, EX_PI/4.0f );
+        ex_trans2d_set_local_angle ( trans2d_ref, EX_PI/4.0f );
 
         trans2d_ref = ex_entity_get_comp( e2, EX_TYPEID(ex_trans2d_t) );
-        ex_trans2d_set_local_rotation ( trans2d_ref, -EX_PI/8.0f );
+        ex_trans2d_set_local_angle ( trans2d_ref, -EX_PI/8.0f );
         ex_trans2d_translate( trans2d_ref, 40.0f, 0.0f, EX_SPACE_SELF );
 
         trans2d_ref = ex_entity_get_comp( e3, EX_TYPEID(ex_trans2d_t) );
-        ex_trans2d_set_local_rotation ( trans2d_ref, -EX_PI/8.0f );
+        ex_trans2d_set_local_angle ( trans2d_ref, -EX_PI/8.0f );
         ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_WORLD );
         // ex_trans2d_translate( trans2d_ref, 80.0f, 0.0f, EX_SPACE_SELF );
 

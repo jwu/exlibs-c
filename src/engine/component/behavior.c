@@ -52,6 +52,7 @@ EX_DEF_OBJECT_BEGIN( ex_behavior_t,
     EX_MEMBER( ex_behavior_t, update, NULL )
     EX_MEMBER( ex_behavior_t, post_update, NULL )
 
+    EX_MEMBER( ex_behavior_t, on_render, NULL )
 
 EX_DEF_OBJECT_END
 

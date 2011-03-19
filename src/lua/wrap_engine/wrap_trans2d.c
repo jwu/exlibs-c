@@ -112,7 +112,7 @@ int __trans2d_get_local_ang ( lua_State *_l ) {
     ex_lua_check_nullref(_l,r);
 
     u = ex_lua_pushangf(_l);
-    ex_trans2d_local_rotation( r, &u->val );
+    ex_trans2d_local_angle( r, &u->val );
 
     return 1;
 }
@@ -130,11 +130,11 @@ int __trans2d_set_local_ang ( lua_State *_l ) {
     // if pass vector
     if ( lua_isnumber(_l,3) ) {
         float rad = (float)lua_tonumber(_l,3);
-        ex_trans2d_set_local_rotation( r, rad );
+        ex_trans2d_set_local_angle( r, rad );
     }
     else if ( ex_lua_isangf(_l,3) ) {
         ex_angf_t *a = ex_lua_toangf(_l,3);
-        ex_trans2d_set_local_rotation( r, a->rad );
+        ex_trans2d_set_local_angle( r, a->rad );
     }
     else {
         luaL_error( _l, "invalid parameter type, expected ex.angf or number " );
@@ -221,7 +221,7 @@ int __trans2d_get_world_ang ( lua_State *_l ) {
     ex_lua_check_nullref(_l,r);
 
     u = ex_lua_pushangf(_l);
-    ex_trans2d_world_rotation( r, &u->val );
+    ex_trans2d_world_angle( r, &u->val );
 
     return 1;
 }
@@ -239,11 +239,11 @@ int __trans2d_set_world_ang ( lua_State *_l ) {
     // if pass vector
     if ( lua_isnumber(_l,3) ) {
         float rad = (float)lua_tonumber(_l,3);
-        ex_trans2d_set_world_rotation( r, rad );
+        ex_trans2d_set_world_angle( r, rad );
     }
     else if ( ex_lua_isangf(_l,3) ) {
         ex_angf_t *a = ex_lua_toangf(_l,3);
-        ex_trans2d_set_world_rotation( r, a->rad );
+        ex_trans2d_set_world_angle( r, a->rad );
     }
     else {
         luaL_error( _l, "invalid parameter type, expected ex.angf or number " );
@@ -356,15 +356,21 @@ int __trans2d_set_up ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 int __trans2d_get_parent ( lua_State *_l ) {
-    ex_ref_t *r;
+    ex_ref_t *r, *parent;
     ref_proxy_t *u;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    u = ex_lua_pushtrans2d(_l);
-    u->val = EX_REF_CAST(ex_trans2d_t,r)->parent;
-    ex_incref(u->val);
+    parent = EX_REF_CAST(ex_trans2d_t,r)->parent;
+    if ( parent ) {
+        u = ex_lua_pushtrans2d(_l);
+        u->val = parent;
+        ex_incref(u->val);
+    }
+    else {
+        lua_pushnil(_l);
+    }
 
     return 1;
 }

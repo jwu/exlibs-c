@@ -182,7 +182,7 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
     // get the world position under current parent
     ex_trans2d_world_position(_self,&self->local_pos);
     ex_trans2d_world_scale(_self,&self->local_scale);
-    ex_trans2d_world_rotation(_self,&self->local_ang);
+    ex_trans2d_world_angle(_self,&self->local_ang);
 
     // remove self from old parent
     if ( self->parent ) {
@@ -200,7 +200,7 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
 
         __update_matrix(_parent);
 
-        ex_trans2d_world_rotation( _parent, &parent_ang );
+        ex_trans2d_world_angle( _parent, &parent_ang );
         ex_angf_sub( &self->local_ang, &self->local_ang, &parent_ang );
 
         ex_trans2d_world_scale( _parent, &parent_scale );
@@ -229,7 +229,7 @@ void ex_trans2d_detach_children ( ex_ref_t *_self ) {
         // get the world position under current parent
         ex_trans2d_world_position(ref,&child->local_pos);
         ex_trans2d_world_scale(ref,&child->local_scale);
-        ex_trans2d_world_rotation(ref,&child->local_ang);
+        ex_trans2d_world_angle(ref,&child->local_ang);
         __matrix_dirty(ref);
 
         //
@@ -265,7 +265,7 @@ void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_world_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
+void ex_trans2d_world_angle ( ex_ref_t *_self, ex_angf_t *_ang ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
     __update_matrix(_self);
@@ -319,7 +319,7 @@ void ex_trans2d_local_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_local_rotation ( ex_ref_t *_self, ex_angf_t *_ang ) {
+void ex_trans2d_local_angle ( ex_ref_t *_self, ex_angf_t *_ang ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
     *_ang = self->local_ang; 
 } 
@@ -341,7 +341,7 @@ void ex_trans2d_right ( ex_ref_t *_self, ex_vec2f_t *_right ) {
     ex_angf_t ang;
     ex_mat22f_t rot;
 
-    ex_trans2d_world_rotation ( _self, &ang );
+    ex_trans2d_world_angle ( _self, &ang );
     ex_angf_to_rot22 ( &ang, &rot );
     ex_vec2f_set ( _right, 1.0f, 0.0f );
     ex_vec2f_mul_mat22f ( _right, _right, &rot );
@@ -355,7 +355,7 @@ void ex_trans2d_up ( ex_ref_t *_self, ex_vec2f_t *_up ) {
     ex_angf_t ang;
     ex_mat22f_t rot;
 
-    ex_trans2d_world_rotation ( _self, &ang );
+    ex_trans2d_world_angle ( _self, &ang );
     ex_angf_to_rot22 ( &ang, &rot );
     ex_vec2f_set ( _up, 0.0f, 1.0f );
     ex_vec2f_mul_mat22f ( _up, _up, &rot );
@@ -394,7 +394,7 @@ void ex_trans2d_set_local_position ( ex_ref_t *_self, float _x, float _y ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_set_local_rotation ( ex_ref_t *_self, float _radians ) {
+void ex_trans2d_set_local_angle ( ex_ref_t *_self, float _radians ) {
 	ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 	
     ex_angf_set_by_radians ( &self->local_ang, _radians );
@@ -441,7 +441,7 @@ void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
+void ex_trans2d_set_world_angle ( ex_ref_t *_self, float _radians ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
     ex_ref_t *parent_ref = self->parent;
 
@@ -449,7 +449,7 @@ void ex_trans2d_set_world_rotation ( ex_ref_t *_self, float _radians ) {
         ex_angf_t ang,parent_ang;
 
         ex_angf_set_by_radians( &ang, _radians );
-        ex_trans2d_world_rotation( parent_ref, &parent_ang );
+        ex_trans2d_world_angle( parent_ref, &parent_ang );
         ex_angf_sub( &self->local_ang, &ang, &parent_ang );
     }
     else {
@@ -496,7 +496,7 @@ void ex_trans2d_set_right ( ex_ref_t *_self, const ex_vec2f_t *_right ) {
 
     if ( ex_signf(cos_theta) < 0.0f )
         rad += EX_PI;
-    ex_trans2d_set_world_rotation( _self, rad );
+    ex_trans2d_set_world_angle( _self, rad );
 }
 
 // ------------------------------------------------------------------ 
@@ -514,7 +514,7 @@ void ex_trans2d_set_up ( ex_ref_t *_self, const ex_vec2f_t *_up ) {
 
     if ( ex_signf(cos_theta) < 0.0f )
         rad += EX_PI;
-    ex_trans2d_set_world_rotation( _self, rad );
+    ex_trans2d_set_world_angle( _self, rad );
 }
 
 // ------------------------------------------------------------------ 
@@ -591,15 +591,17 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
         ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
     }
     else if ( _space == EX_SPACE_WORLD ) {
-        ex_vec3f_t v3;
         ex_ref_t *parent_ref = self->parent;
 
         if ( parent_ref ) {
+            ex_vec2f_t s;
+            ex_vec3f_t v3;
             ex_trans2d_t *parent = EX_REF_CAST(ex_trans2d_t,parent_ref);
 
             __update_matrix(parent_ref);
 
-            ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
+            ex_trans2d_world_scale( parent_ref, &s ); // NOTE: without scale, we can't get the same speed when translating.
+            ex_vec3f_set ( &v3, _x * s.x, _y * s.y, 0.0f ); // NOTE: use 0.0f will only apply direction
             ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
             ex_vec2f_add ( &self->local_pos, &self->local_pos, (ex_vec2f_t *)(&v3) ); // NOTE: yes, we can directly cast v3 to v2.
         }
@@ -617,14 +619,14 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_transform ) {
-    ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
+void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_trans2d ) {
+    ex_trans2d_t *the_trans = EX_REF_CAST(ex_trans2d_t,_trans2d);
     ex_vec3f_t v3;
 
-    __update_matrix(_transform);
+    __update_matrix(_trans2d);
 
     ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
-    ex_vec3f_mul_mat33f( &v3, &v3, &self->localToWorld );
+    ex_vec3f_mul_mat33f( &v3, &v3, &the_trans->localToWorld );
     ex_trans2d_translate(_self, v3.x, v3.y, EX_SPACE_WORLD );
 }
 

@@ -23,7 +23,7 @@
 extern void __behavior_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-static void init ( ex_ref_t *_self ) {
+static void __lua_behavior_init ( ex_ref_t *_self ) {
     __behavior_init(_self); // parent init
 }
 
@@ -32,7 +32,7 @@ static void init ( ex_ref_t *_self ) {
 extern void __behavior_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-static void deinit ( ex_ref_t *_self ) {
+static void __lua_behavior_deinit ( ex_ref_t *_self ) {
     ex_lua_behavior_t *self;
 
     __behavior_deinit(_self); // parent deinint
@@ -45,7 +45,7 @@ static void deinit ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void awake ( ex_ref_t *_self ) {
+static void __lua_behavior_awake ( ex_ref_t *_self ) {
     int status;
     ex_lua_behavior_t *self;
     ex_ref_t *ref;
@@ -73,7 +73,7 @@ static void awake ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void start ( ex_ref_t *_self ) {
+static void __lua_behavior_start ( ex_ref_t *_self ) {
     int status;
     ex_lua_behavior_t *self;
     ex_ref_t *ref;
@@ -101,7 +101,7 @@ static void start ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void update ( ex_ref_t *_self ) {
+static void __lua_behavior_update ( ex_ref_t *_self ) {
     int status;
     ex_lua_behavior_t *self;
     ex_ref_t *ref;
@@ -129,7 +129,7 @@ static void update ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void post_update ( ex_ref_t *_self ) {
+static void __lua_behavior_post_update ( ex_ref_t *_self ) {
     int status;
     ex_lua_behavior_t *self;
     ex_ref_t *ref;
@@ -153,23 +153,54 @@ static void post_update ( ex_ref_t *_self ) {
     }
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __lua_behavior_on_render ( ex_ref_t *_self ) {
+    int status;
+    ex_lua_behavior_t *self;
+    ex_ref_t *ref;
+
+    self = EX_REF_CAST(ex_lua_behavior_t,_self);
+    if ( self->compile_failed )
+        return;
+
+    lua_rawgeti(self->l, LUA_REGISTRYINDEX, self->lua_refID);
+    ref = ex_lua_checkref(self->l,-1);
+
+    lua_getfield( self->l, -1, "on_render" );
+    if ( lua_isnil(self->l,-1) == 0 ) {
+        // ex_incref(ref); // TODO: looks like we don't need it
+        lua_pushvalue(self->l,-2);
+        status = lua_pcall( self->l, 1, 0, 0 );
+        if ( status ) {
+            ex_lua_alert(self->l);
+            self->compile_failed = true;
+        }
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
                      "Lua Behavior",
-                     init,
-                     deinit )
+                     __lua_behavior_init,
+                     __lua_behavior_deinit )
 
     EX_MEMBER( ex_component_t, entity, NULL )
 
+    // invokes
     EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
     EX_MEMBER( ex_behavior_t, enabled, true )
-    EX_MEMBER( ex_behavior_t, awake, awake )
-    EX_MEMBER( ex_behavior_t, start, start )
-    EX_MEMBER( ex_behavior_t, update, update )
-    EX_MEMBER( ex_behavior_t, post_update, post_update )
+    EX_MEMBER( ex_behavior_t, awake, __lua_behavior_awake )
+    EX_MEMBER( ex_behavior_t, start, __lua_behavior_start )
+    EX_MEMBER( ex_behavior_t, update, __lua_behavior_update )
+    EX_MEMBER( ex_behavior_t, post_update, __lua_behavior_post_update )
+    // events
+    EX_MEMBER( ex_behavior_t, on_render, __lua_behavior_on_render )
 
     EX_MEMBER( ex_lua_behavior_t, l, NULL )
     EX_MEMBER( ex_lua_behavior_t, compile_failed, false )
