@@ -11,6 +11,7 @@
 
 #include "exsdk.h"
 #include "../../engine/component/lua_behavior.h"
+#include "../../graphics/graphics_inc.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -453,6 +454,19 @@ static int __dump_stack ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __screen_print ( lua_State *_l ) {
+    int x = luaL_checknumber( _l, 1 );
+    int y = luaL_checknumber( _l, 2 );
+    const char *text = luaL_checkstring( _l, 3 );
+
+    ex_draw_string ( x, y, text );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int __range_rand ( lua_State *_l ) {
     float low = luaL_checknumber(_l,1); 
     float high = luaL_checknumber(_l,2); 
@@ -466,8 +480,12 @@ static int __range_rand ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __log ( lua_State *_l ) {
-    const char *msg = luaL_checkstring ( _l, 1 );
+    const char *msg = NULL;
+
+    ex_lua_tostring(_l,1);
+    msg = luaL_checkstring ( _l, -1 );
     ex_log ( "%s", msg );
+
     return 0;
 }
 
@@ -843,6 +861,7 @@ int ex_lua_class ( lua_State *_l,
 // ex functions
 static const luaL_Reg __ex_funcs[] = {
     { "dump_stack", __dump_stack }, // DEBUG:
+    { "screen_print", __screen_print }, // DEBUG:
     { "range_rand", __range_rand }, // TODO: go to ex.random.range
     { "log", __log },
     { "deepcopy", __deepcopy },

@@ -26,6 +26,7 @@ my_name = "unknown"
 function awake ( self )
     ex.log("awake: " .. self.my_name)
     self.trans2d.local_angle = ex.angf(15.0)
+    ex.log( self.trans2d )
 end
 
 -- ------------------------------------------------------------------ 

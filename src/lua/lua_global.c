@@ -689,6 +689,35 @@ int ex_lua_clear_refs ( lua_State *_l ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_tostring ( lua_State *_l, int _idx ) {
+    luaL_checkany( _l, _idx );
+    if ( luaL_callmeta(_l, _idx, "__tostring") )  /* is there a metafield? */
+        return 1;  /* use its value */
+    switch ( lua_type(_l, _idx) ) {
+    case LUA_TNUMBER:
+        lua_pushstring(_l, lua_tostring(_l, _idx));
+        break;
+    case LUA_TSTRING:
+        lua_pushvalue(_l, _idx);
+        break;
+    case LUA_TBOOLEAN:
+        lua_pushstring(_l, (lua_toboolean(_l, _idx) ? "true" : "false"));
+        break;
+    case LUA_TNIL:
+        lua_pushliteral(_l, "nil");
+        break;
+    default:
+        lua_pushfstring(_l, "%s: %p", luaL_typename(_l, _idx), lua_topointer(_l, _idx));
+        break;
+    }
+    return 1;
+}
+
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // function isclass (_object)
 //     local tp = typeof(_object)
 //     if type(tp) ~= "table" then 

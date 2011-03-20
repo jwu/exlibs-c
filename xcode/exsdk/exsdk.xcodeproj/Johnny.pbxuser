@@ -339,6 +339,10 @@
 			B28703B31335D69E000C44FD /* PBXTextBookmark */ = B28703B31335D69E000C44FD /* PBXTextBookmark */;
 			B28703B71335D6EF000C44FD /* PBXTextBookmark */ = B28703B71335D6EF000C44FD /* PBXTextBookmark */;
 			B28703BB1335D7C9000C44FD /* PBXTextBookmark */ = B28703BB1335D7C9000C44FD /* PBXTextBookmark */;
+			B28703BF1335DC08000C44FD /* PBXTextBookmark */ = B28703BF1335DC08000C44FD /* PBXTextBookmark */;
+			B28703C21335DC28000C44FD /* PBXTextBookmark */ = B28703C21335DC28000C44FD /* PBXTextBookmark */;
+			B28703C61335DCBB000C44FD /* PBXTextBookmark */ = B28703C61335DCBB000C44FD /* PBXTextBookmark */;
+			B28703CA1335DCC3000C44FD /* PBXTextBookmark */ = B28703CA1335DCC3000C44FD /* PBXTextBookmark */;
 			B29D839312EDF7D500AF7E1B = B29D839312EDF7D500AF7E1B /* PBXTextBookmark */;
 			B29D839612EDF7D500AF7E1B = B29D839612EDF7D500AF7E1B /* PBXTextBookmark */;
 			B29D839712EDF7D500AF7E1B = B29D839712EDF7D500AF7E1B /* PBXTextBookmark */;
@@ -1344,7 +1348,7 @@
 		ignoreCount = 0;
 		lineNumber = 290;
 		location = test_gl;
-		modificationTime = 322295751.776904;
+		modificationTime = 322297026.129705;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2478,6 +2482,46 @@
 		vrLen = 523;
 		vrLoc = 7838;
 	};
+	B28703BF1335DC08000C44FD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1532";
+		rLen = 0;
+		rLoc = 47561;
+		rType = 0;
+		vrLen = 646;
+		vrLoc = 6944;
+	};
+	B28703C21335DC28000C44FD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1532";
+		rLen = 0;
+		rLoc = 47561;
+		rType = 0;
+		vrLen = 610;
+		vrLoc = 6944;
+	};
+	B28703C61335DCBB000C44FD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1532";
+		rLen = 0;
+		rLoc = 47561;
+		rType = 0;
+		vrLen = 610;
+		vrLoc = 6944;
+	};
+	B28703CA1335DCC3000C44FD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = B2A23156130221C700F3C100 /* lua_global.c */;
+		name = "lua_global.c: 1532";
+		rLen = 0;
+		rLoc = 47561;
+		rType = 0;
+		vrLen = 610;
+		vrLoc = 6944;
+	};
 	B29D839312EDF7D500AF7E1B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = B200D2F612E42DF7003B4944 /* stream_json.h */;
@@ -2614,9 +2658,9 @@
 	};
 	B2A23156130221C700F3C100 /* lua_global.c */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {871, 19240}}";
-			sepNavSelRange = "{7967, 0}";
-			sepNavVisRange = "{7838, 523}";
+			sepNavIntBoundsRect = "{{0, 0}, {871, 19994}}";
+			sepNavSelRange = "{47561, 0}";
+			sepNavVisRange = "{6944, 610}";
 			sepNavWindowFrame = "{{1925, -334}, {877, 769}}";
 		};
 	};
