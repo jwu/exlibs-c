@@ -459,7 +459,21 @@ static int __screen_print ( lua_State *_l ) {
     int y = luaL_checknumber( _l, 2 );
     const char *text = luaL_checkstring( _l, 3 );
 
-    ex_draw_string ( x, y, text );
+    ex_screen_print ( x, y, text );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __draw_text ( lua_State *_l ) {
+    float x = luaL_checknumber( _l, 1 );
+    float y = luaL_checknumber( _l, 2 );
+    float z = luaL_checknumber( _l, 3 );
+    const char *text = luaL_checkstring( _l, 4 );
+
+    ex_draw_text ( x, y, z, text );
     return 0;
 }
 
@@ -862,6 +876,7 @@ int ex_lua_class ( lua_State *_l,
 static const luaL_Reg __ex_funcs[] = {
     { "dump_stack", __dump_stack }, // DEBUG:
     { "screen_print", __screen_print }, // DEBUG:
+    { "draw_text", __draw_text }, // DEBUG:
     { "range_rand", __range_rand }, // TODO: go to ex.random.range
     { "log", __log },
     { "deepcopy", __deepcopy },

@@ -16,10 +16,11 @@
 
 #include "main.h"
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // world
 ///////////////////////////////////////////////////////////////////////////////
+
+static const char *__script_file;
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -27,7 +28,7 @@
 
 static void init () {
     struct lua_State *l = ex_current_lua_state();
-    ex_lua_dofile( l, "exec/create_world.lua", NULL );
+    ex_lua_dofile( l, __script_file, NULL );
 }
 
 // ------------------------------------------------------------------ 
@@ -75,7 +76,9 @@ static void keyboard ( uint8 _key ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void test_script () {
+void test_script ( const char *_filename ) {
+    __script_file = _filename;
+
     g_game.init = init;
     g_game.update = update;
     // g_game.render = render;

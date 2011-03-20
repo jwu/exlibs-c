@@ -20,7 +20,12 @@ extern "C" {
 // declare
 ///////////////////////////////////////////////////////////////////////////////
 
-extern void ex_draw_string ( int _x, int _y, const char *_text );
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_screen_print ( int _x, int _y, const char *_fmt, ... );
+extern void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... );
 
 // ######################### 
 #ifdef __cplusplus

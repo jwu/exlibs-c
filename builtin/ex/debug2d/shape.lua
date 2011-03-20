@@ -20,6 +20,7 @@ module( ..., ex.lua_behavior.derive )
 show_coord = true
 show_parentlink = true
 show_trail = true
+show_text = true
 
 --/////////////////////////////////////////////////////////////////////////////
 -- functions
@@ -62,7 +63,7 @@ function on_render ( self )
     gl.Rotate( world_ang.degrees, 0.0, 0.0, 1.0 );
 
     -- show coordinate
-    if show_coord then
+    if self.show_coord then
         gl.Begin("LINES")
             gl.Scale( 1.0, 1.0, 1.0 )
 
@@ -77,7 +78,7 @@ function on_render ( self )
     end
 
     -- show parent link
-    if show_parentlink then
+    if self.show_parentlink then
         local parent = self.trans2d.parent
         if parent then
             local parent_world_pos = parent.position
@@ -94,8 +95,20 @@ function on_render ( self )
     end
 
     -- show trail
-    if show_trail then
+    if self.show_trail then
         -- TODO:
     end
+
+    -- show text
+    if self.show_text then
+        local wpos = self.trans2d.position
+        local y = wpos.y 
+        ex.draw_text( wpos.x, y, 0.0, "pos: " .. self.trans2d.position )
+        y = y - 15
+        ex.draw_text( wpos.x, y, 0.0, "ang: " .. self.trans2d.angle )
+        y = y - 15
+        ex.draw_text( wpos.x, y, 0.0, "scale: " .. self.trans2d.scale )
+    end
+
 end
 

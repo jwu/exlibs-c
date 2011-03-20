@@ -80,10 +80,11 @@ static int __entity_add_comp ( lua_State *_l ) {
     ref_proxy_t *u;
     ex_behavior_t *be;
     ex_lua_behavior_t *lua_be;
+    int nargs = lua_gettop(_l);
     
     entref = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,entref);
-    comp_typename = luaL_checkstring(_l,2); // TODO: could be table with default member values :)
+    comp_typename = luaL_checkstring(_l,2);
 
     compref = ex_entity_add_comp( entref, ex_strid(comp_typename) );
     if ( compref == NULL ) {
@@ -95,10 +96,21 @@ static int __entity_add_comp ( lua_State *_l ) {
     u->val = compref;
     ex_incref(u->val);
 
-    // TODO: if table.. should process before awake.
-    // if ( nargs > 1 ) {
-    //     // TODO:
-    // }
+    // if we have table parameters, setup them
+    if ( nargs > 2 ) {
+        if ( lua_istable(_l,3) == false ) {
+            return luaL_error( _l, "the third argument must be table" );
+        }
+        lua_pushnil(_l); /* first key */
+        while ( lua_next(_l,3) != 0 ) {
+            /* uses 'key' (at index -2) and 'value' (at index -1) */
+            lua_pushvalue(_l,-3); // push userdata
+            lua_pushvalue(_l,-3); // push key
+            lua_pushvalue(_l,-3); // push value
+            lua_settable(_l,-3);
+            lua_pop(_l,2); // pops value, pops userdata
+        }
+    }
 
     // awake behavior, and setup lua behavior
     be = EX_REF_AS(ex_behavior_t,compref);

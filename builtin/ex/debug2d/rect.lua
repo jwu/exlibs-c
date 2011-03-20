@@ -12,6 +12,7 @@
 local ex = ex
 local gl = gl
 local ex_debug2d_shape = require("ex.debug2d.shape")
+local tostring = tostring
 
 module( ..., ex_debug2d_shape.derive )
 

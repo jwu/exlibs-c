@@ -118,7 +118,8 @@ static void initGame () {
     // NOTE: choose your game { 
     // simple_world();
     // test_transform();
-    test_script();
+    // test_script("exec/create_world.lua");
+    test_script("exec/test_transform.lua");
     // } NOTE end 
 
     // load/setup the world
@@ -239,9 +240,9 @@ static void __display(void) {
         char text[128];
         int x = 10; int y = 10;
         snprintf( text, 128, "fps: %f", ex_fps() );
-        ex_draw_string( x, y, text );
-        y += 12; ex_draw_string( x, y, "press ESC to quit." );
-        y += 12; ex_draw_string( x, y, "this is a simple gl test." );
+        ex_screen_print( x, y, text );
+        y += 12; ex_screen_print( x, y, "press ESC to quit." );
+        y += 12; ex_screen_print( x, y, "this is a simple gl test." );
     }
 
     glutSwapBuffers();
