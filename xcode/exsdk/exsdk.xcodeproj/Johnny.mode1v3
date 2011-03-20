@@ -266,16 +266,15 @@
 								<string>08FB7794FE84155DC02AAC07</string>
 								<string>B2DD23F012A7C81B0053CA3F</string>
 								<string>B245483712B91F9E00EF7261</string>
-								<string>B2A23180130221F600F3C100</string>
-								<string>B2A23181130221F600F3C100</string>
+								<string>B2A23155130221C700F3C100</string>
+								<string>B2A2315B130221C700F3C100</string>
 								<string>1C37FBAC04509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>23</integer>
-									<integer>10</integer>
-									<integer>9</integer>
+									<integer>17</integer>
+									<integer>11</integer>
 									<integer>4</integer>
 									<integer>0</integer>
 								</array>
@@ -311,12 +310,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>rtti.c</string>
+								<string>lua_global.c</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -324,11 +325,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>rtti.c</string>
+										<string>lua_global.c</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B28703791335285F000C44FD</string>
+										<string>B28703971335B555000C44FD</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -457,7 +458,6 @@
 											<string>B2597F9513306EE0000AE4E9</string>
 											<string>B2AF3A9C1331BDFC006414CE</string>
 											<string>B281F9301332F5F10051E7E7</string>
-											<string>B281F9751332FA2E0051E7E7</string>
 											<string>B281F9761332FA2E0051E7E7</string>
 											<string>B281F9771332FA2E0051E7E7</string>
 											<string>B281F9881332FDCC0051E7E7</string>
@@ -477,7 +477,8 @@
 											<string>B27ECF1613346DD100D4C0C5</string>
 											<string>B27ECF1713346DD100D4C0C5</string>
 											<string>B287033F13352463000C44FD</string>
-											<string>B287034013352463000C44FD</string>
+											<string>B28703961335B555000C44FD</string>
+											<string>B281F9751332FA2E0051E7E7</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -499,8 +500,6 @@
 							<string>292pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -677,13 +676,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B287037A1335285F000C44FD</string>
+		<string>B28703981335B555000C44FD</string>
 		<string>B28701EC1334D267000C44FD</string>
 		<string>B28701ED1334D267000C44FD</string>
-		<string>B2E0B7F112A6B277009FE3E8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
+		<string>B2E0B7F112A6B277009FE3E8</string>
 	</array>
 	<key>WindowString</key>
 	<string>1380 40 1230 723 1280 -400 1920 1200 </string>
@@ -702,12 +701,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>lua_global.c</string>
+								<string>wrap_mat33f.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -724,8 +725,6 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

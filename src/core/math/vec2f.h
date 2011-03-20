@@ -118,14 +118,14 @@ static inline void ex_vec2f_neg ( ex_vec2f_t *_v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_vec2f_get_neg ( ex_vec2f_t *_r, const ex_vec2f_t *_v )
+ @fn static inline void ex_vec2f_get_neg ( const ex_vec2f_t *_v, ex_vec2f_t *_r )
  @retval _r the result vector2
  @param _v the in vector2
  @details get the negtive value from vector2 _v, set and return it to vector2 _v
  @sa ex_vec2f_neg
 */// ------------------------------------------------------------------ 
 
-static inline void ex_vec2f_get_neg ( ex_vec2f_t *_r, const ex_vec2f_t *_v ) { 
+static inline void ex_vec2f_get_neg ( const ex_vec2f_t *_v, ex_vec2f_t *_r ) { 
     ex_assert ( _r != _v, "can't use self as return value." );
     _r->x = -_v->x; 
     _r->y = -_v->y; 
@@ -518,7 +518,7 @@ static inline bool ex_vec2f_normalize ( ex_vec2f_t *_v ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool ex_vec2f_get_normalize ( ex_vec2f_t *_r, const ex_vec2f_t *_v )
+ @fn bool ex_vec2f_get_normalize ( const ex_vec2f_t *_v, ex_vec2f_t *_r )
  @retval _r the result vector2
  @param _v the in vector2
  @return if the inverse operation successed 
@@ -529,7 +529,7 @@ static inline bool ex_vec2f_normalize ( ex_vec2f_t *_v ) {
  @sa ex_vec2f_normalize
 */// ------------------------------------------------------------------ 
 
-static inline bool ex_vec2f_get_normalize ( ex_vec2f_t *_r, const ex_vec2f_t *_v ) {
+static inline bool ex_vec2f_get_normalize ( const ex_vec2f_t *_v, ex_vec2f_t *_r ) {
     float length_sqr, inv_length;
 
     ex_assert ( _r != _v, "can't use self as return value." );

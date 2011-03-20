@@ -333,7 +333,7 @@ static int __vec2f_unm ( lua_State *_l ) {
 
     // push
     r = ex_lua_pushvec2f(_l);
-    ex_vec2f_get_neg( &r->val, lhs );
+    ex_vec2f_get_neg( lhs, &r->val );
 
     return 1;
 }
@@ -452,7 +452,7 @@ static int __vec2f_get_normalized ( lua_State *_l ) {
     ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
 
     r = ex_lua_pushvec2f(_l);
-    ex_vec2f_get_normalize( &r->val, v );
+    ex_vec2f_get_normalize( v, &r->val );
     return 1;
 }
 
@@ -526,9 +526,9 @@ static const luaL_Reg __meta_funcs[] = {
     { "__mul", __vec2f_mul },
     { "__div", __vec2f_div },
     { "__unm", __vec2f_unm },
+    { "copy", __vec2f_copy },
     { "dot", __vec2f_dot },
     { "cross", __vec2f_cross },
-    { "copy", __vec2f_copy },
     { NULL, NULL },
 };
 

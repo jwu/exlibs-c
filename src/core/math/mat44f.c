@@ -155,7 +155,7 @@ bool ex_mat44f_inverse ( ex_mat44f_t *_m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_mat44f_get_inverse ( ex_mat44f_t *_r, const ex_mat44f_t *_m ) {
+bool ex_mat44f_get_inverse ( const ex_mat44f_t *_m, ex_mat44f_t *_r ) {
     float t0, t1, t2, t3;
     float t4, t5, t6, t7;
     float t8, t9, t10, t11;

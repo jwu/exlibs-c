@@ -89,7 +89,7 @@ bool ex_mat33f_inverse ( ex_mat33f_t *_m ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_mat33f_get_inverse ( ex_mat33f_t *_r, const ex_mat33f_t *_m ) {
+bool ex_mat33f_get_inverse ( const ex_mat33f_t *_m, ex_mat33f_t *_r ) {
     float det, inv;
 
     _r->m00 = _m->m11 * _m->m22 - _m->m12 * _m->m21;

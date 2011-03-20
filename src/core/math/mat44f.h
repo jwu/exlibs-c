@@ -114,7 +114,7 @@ static inline void ex_mat44f_set ( ex_mat44f_t *_m,
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline static inline float ex_mat44f_get ( ex_mat44f_t *_m, uint _row, uint _col ) 
+ @fn static inline static inline float ex_mat44f_m_get ( ex_mat44f_t *_m, uint _row, uint _col ) 
  @param _m the matrix
  @param _row the row index, range in [0,4)
  @param _col the col index, range in [0,4)
@@ -122,10 +122,27 @@ static inline void ex_mat44f_set ( ex_mat44f_t *_m,
  @details get the matrix element in (_row, _col)
 */// ------------------------------------------------------------------ 
 
-static inline float ex_mat44f_get ( ex_mat44f_t *_m, uint _row, uint _col ) { 
+static inline float ex_mat44f_m_get ( const ex_mat44f_t *_m, uint _row, uint _col ) { 
     ex_assert( _row >= 0 && _row < 4, "out of range" );
     ex_assert( _col >= 0 && _col < 4, "out of range" );
     return _m->m[4*_row+_col];
+}
+
+// ------------------------------------------------------------------ 
+/*! 
+ @fn static inline void ex_mat44f_m_set ( ex_mat33f_t *_m, uint _row, uint _col, float _v ) 
+ @param _m the matrix
+ @param _row the row index, range in [0,4)
+ @param _col the col index, range in [0,4)
+ @param _v the in value
+ @return result
+ @details get the matrix element in (_row, _col)
+*/// ------------------------------------------------------------------ 
+
+static inline void ex_mat44f_m_set ( ex_mat44f_t *_m, uint _row, uint _col, float _v ) { 
+    ex_assert( _row >= 0 && _row < 4, "out of range" );
+    ex_assert( _col >= 0 && _col < 4, "out of range" );
+    _m->m[4*_row+_col] = _v;
 }
 
 // ------------------------------------------------------------------ 
@@ -209,14 +226,14 @@ static inline void ex_mat44f_neg ( ex_mat44f_t *_m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat44f_get_neg ( ex_mat44f_t *_r, const ex_mat44f_t *_m )
+ @fn static inline void ex_mat44f_get_neg ( const ex_mat44f_t *_m, ex_mat44f_t *_r )
  @retval _r the result matrix
  @param _m in matrix
  @details get the negtive value from matrix _m and set it in matrix _r.
  @sa mat44f_neg
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat44f_get_neg ( ex_mat44f_t *_r, const ex_mat44f_t *_m ) {
+static inline void ex_mat44f_get_neg ( const ex_mat44f_t *_m, ex_mat44f_t *_r ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = -_m->m00, _r->m01 = -_m->m01, _r->m02 = -_m->m02, _r->m03 = -_m->m03; 
     _r->m10 = -_m->m10, _r->m11 = -_m->m11, _r->m12 = -_m->m12, _r->m13 = -_m->m13; 
@@ -259,14 +276,14 @@ static inline void ex_mat44f_abs ( ex_mat44f_t *_m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat44f_get_abs ( ex_mat44f_t *_r, const ex_mat44f_t *_m )
+ @fn static inline void ex_mat44f_get_abs ( const ex_mat44f_t *_m, ex_mat44f_t *_r )
  @retval _r the result matrix
  @param _m in matrix
  @details get the absolute value from matrix _m and set it in matrix _r as the result:
  @sa mat44f_abs
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat44f_get_abs ( ex_mat44f_t *_r, const ex_mat44f_t *_m ) {
+static inline void ex_mat44f_get_abs ( const ex_mat44f_t *_m, ex_mat44f_t *_r ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     _r->m00 = fabsf(_m->m00), _r->m01 = fabsf(_m->m01), _r->m02 = fabsf(_m->m02), _r->m03 = fabsf(_m->m03); 
     _r->m10 = fabsf(_m->m10), _r->m11 = fabsf(_m->m11), _r->m12 = fabsf(_m->m12), _r->m13 = fabsf(_m->m13); 
@@ -728,14 +745,14 @@ static inline void ex_mat44f_transpose ( ex_mat44f_t *_m ) {
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn static inline void ex_mat44f_get_transpose ( ex_mat44f_t *_r, const ex_mat44f_t *_m )
+ @fn static inline void ex_mat44f_get_transpose ( const ex_mat44f_t *_m, ex_mat44f_t *_r )
  @retval _r the result vector
  @param _m the in matrix
  @details get the transposed matrix from matrix _m, return it to matrix _r
  @sa ex_mat44f_transpose
 */// ------------------------------------------------------------------ 
 
-static inline void ex_mat44f_get_transpose ( ex_mat44f_t *_r, const ex_mat44f_t *_m ) {
+static inline void ex_mat44f_get_transpose ( const ex_mat44f_t *_m, ex_mat44f_t *_r ) {
     ex_assert ( _r != _m, "can't use self as return value." );
     ex_mat44f_set( _r,
                    _m->m00, _m->m10, _m->m20, _m->m30,
@@ -760,7 +777,7 @@ extern bool ex_mat44f_inverse ( ex_mat44f_t *_m );
 
 // ------------------------------------------------------------------ 
 /*! 
- @fn bool ex_mat44f_get_inverse ( ex_mat44f_t *_r, ex_mat44f_t *_m )
+ @fn bool ex_mat44f_get_inverse ( const ex_mat44f_t *_m, ex_mat44f_t *_r )
  @retval _r the result vector
  @param _m the in matrix
  @return if the inverse operation successed 
@@ -770,7 +787,7 @@ extern bool ex_mat44f_inverse ( ex_mat44f_t *_m );
  @sa mat44f_inverse
 */// ------------------------------------------------------------------ 
 
-extern bool ex_mat44f_get_inverse ( ex_mat44f_t *_r, const ex_mat44f_t *_m );
+extern bool ex_mat44f_get_inverse ( const ex_mat44f_t *_m, ex_mat44f_t *_r );
 
 //! @}
 

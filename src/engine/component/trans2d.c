@@ -155,7 +155,7 @@ static void __update_matrix ( ex_ref_t *_self ) {
         ex_mat33f_mul( &(self->localToWorld), &self->localToWorld, &matParent );
     }
 
-    ret = ex_mat33f_get_inverse( &self->worldToLocal, &self->localToWorld );
+    ret = ex_mat33f_get_inverse( &self->localToWorld, &self->worldToLocal );
     ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
     self->dirty = false;
 
@@ -673,7 +673,7 @@ void ex_trans2d_rotate_around ( ex_ref_t *_self, float _radians, const ex_vec2f_
     ex_vec3f_set( &wpos_v3, wpos_v2.x, wpos_v2.y, 1.0f );
 
     m3 = ex_mat33f_identity;
-    ex_vec2f_get_neg ( &wpos_v2, _worldpos );
+    ex_vec2f_get_neg ( _worldpos, &wpos_v2 );
     ex_mat33f_set_translate( &m3, &wpos_v2 );
     ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
 
@@ -709,7 +709,7 @@ void ex_trans2d_rotate_around_fix_orient ( ex_ref_t *_self, float _radians, cons
     ex_vec3f_set( &wpos_v3, wpos_v2.x, wpos_v2.y, 1.0f );
 
     m3 = ex_mat33f_identity;
-    ex_vec2f_get_neg ( &wpos_v2, _worldpos );
+    ex_vec2f_get_neg ( _worldpos, &wpos_v2 );
     ex_mat33f_set_translate( &m3, &wpos_v2 );
     ex_vec3f_mul_mat33f( &wpos_v3, &wpos_v3, &m3 );
 

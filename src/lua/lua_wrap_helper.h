@@ -63,8 +63,9 @@ typedef struct ref_proxy_t {
     extern ex_ref_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
 
 // defines
-EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
 EX_DECL_LUA_BUILTIN_TYPE_2(angf,ex_angf_t)
+EX_DECL_LUA_BUILTIN_TYPE_2(vec2f,ex_vec2f_t)
+EX_DECL_LUA_BUILTIN_TYPE_2(mat33f,ex_mat33f_t)
 
 EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     EX_DECL_LUA_BUILTIN_REF_2(world,ex_world_t)
