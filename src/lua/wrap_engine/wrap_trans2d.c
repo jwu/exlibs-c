@@ -398,6 +398,42 @@ int __trans2d_set_parent ( lua_State *_l ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_ltow ( lua_State *_l ) {
+    ex_ref_t *r;
+    mat33f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushmat33f(_l);
+    ex_trans2d_local_to_world_mat33f( r, &u->val );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __trans2d_get_wtol ( lua_State *_l ) {
+    ex_ref_t *r;
+    mat33f_proxy_t *u;
+
+    r = ex_lua_checktrans2d(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    u = ex_lua_pushmat33f(_l);
+    ex_trans2d_world_to_local_mat33f( r, &u->val );
+    return 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // trans2d.move( self, x, y, [,space,trans2d] )
 // ------------------------------------------------------------------ 
 
@@ -473,6 +509,8 @@ static const ex_getset_t __meta_getsets[] = {
     { "right", __trans2d_get_right, __trans2d_set_right },
     { "up", __trans2d_get_up, __trans2d_set_up },
     { "parent", __trans2d_get_parent, __trans2d_set_parent },
+    { "local_to_world", __trans2d_get_ltow, NULL },
+    { "world_to_local", __trans2d_get_wtol, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {

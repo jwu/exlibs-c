@@ -117,8 +117,8 @@ static void initGame () {
     // create test world
     // NOTE: choose your game { 
     // simple_world();
-    test_transform();
-    // test_script();
+    // test_transform();
+    test_script();
     // } NOTE end 
 
     // load/setup the world
