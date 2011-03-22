@@ -71,7 +71,9 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     EX_DECL_LUA_BUILTIN_REF_2(world,ex_world_t)
     EX_DECL_LUA_BUILTIN_REF_2(entity,ex_entity_t)
     EX_DECL_LUA_BUILTIN_REF_2(component,ex_component_t)
-    EX_DECL_LUA_BUILTIN_REF_2(trans2d,ex_trans2d_t)
+        EX_DECL_LUA_BUILTIN_REF_2(trans2d,ex_trans2d_t)
+        EX_DECL_LUA_BUILTIN_REF_2(behavior,ex_behavior_t)
+            EX_DECL_LUA_BUILTIN_REF_2(lua_behavior,ex_lua_behavior_t)
 
 // undef macros
 #undef EX_DECL_LUA_BUILTIN_TYPE
@@ -106,6 +108,10 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     } \
     static int __child_meta_index ( lua_State *_l ) { \
         return ex_lua_child_meta_index( _l, &__key_to_meta_getset ); \
+    } \
+    static int __##_typename##_get_null ( lua_State *_l ) { \
+        ex_lua_push##_typename(_l); \
+        return 1; \
     } \
     ref_proxy_t *ex_lua_push##_typename ( lua_State *_l ) { \
         ref_proxy_t *u; \

@@ -174,6 +174,17 @@ static void updateGame () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+static void __reshape ( int _width, int _height );
+// ------------------------------------------------------------------ 
+
+static void restartGame () {
+    quitGame();
+    initGame();
+    __reshape( win_width, win_height );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // ------------------------------------------------------------------ 
 
 static void __reshape ( int _width, int _height ) {
@@ -238,11 +249,12 @@ static void __display(void) {
     glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
     {
         char text[128];
-        int x = 10; int y = 10;
+        int x = 10; int y = 15;
         snprintf( text, 128, "fps: %f", ex_fps() );
         ex_screen_print( x, y, text );
-        y += 12; ex_screen_print( x, y, "press ESC to quit." );
-        y += 12; ex_screen_print( x, y, "this is a simple gl test." );
+        y += 15; ex_screen_print( x, y, "press \"ESC\" to quit." );
+        y += 15; ex_screen_print( x, y, "press \"r\" to restart the game." );
+        y += 15; ex_screen_print( x, y, "this is a simple gl test." );
     }
 
     glutSwapBuffers();
@@ -275,6 +287,9 @@ static void __keyboard ( unsigned char _key, int _x, int _y ) {
         if ( _key == EX_KEY_ESC ) {
             exit(0);
             return;
+        }
+        if ( _key == EX_KEY_r ) {
+            restartGame();
         }
     }
 

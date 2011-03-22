@@ -87,6 +87,7 @@ static int __behavior_set_enabled ( lua_State *_l ) {
 
 // ex.component.meta
 static const ex_getset_t __type_meta_getsets[] = {
+    { "null", __behavior_get_null, NULL },
     { "enabled", __behavior_get_enabled, __behavior_set_enabled },
     { NULL, NULL, NULL },
 };

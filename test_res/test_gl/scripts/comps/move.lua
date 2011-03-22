@@ -1,7 +1,7 @@
 -- ======================================================================================
--- File         : simple02.lua
+-- File         : move.lua
 -- Author       : Wu Jie 
--- Last Change  : 03/18/2011 | 11:13:26 AM | Friday,March
+-- Last Change  : 03/22/2011 | 12:38:11 PM | Tuesday,March
 -- Description  : 
 -- ======================================================================================
 
@@ -10,23 +10,17 @@
 --/////////////////////////////////////////////////////////////////////////////
 
 local ex = ex
-require ( "comps.simple" )
-module ( ..., comps.simple.derive )
+module( ..., ex.lua_behavior.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
 --
 --/////////////////////////////////////////////////////////////////////////////
-
-my_name = "unknown"
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
 function awake ( self )
-    ex.log("awake: " .. self.my_name)
-    self.trans2d.local_angle = ex.angf(15.0)
-    ex.log( self.trans2d )
 end
 
 -- ------------------------------------------------------------------ 
@@ -34,7 +28,6 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( self )
-    ex.log("start: " .. self.my_name )
 end
 
 
@@ -43,9 +36,19 @@ end
 -- ------------------------------------------------------------------ 
 
 function update ( self )
-    -- self.super.update(self)
-    -- local t = self.trans2d.right * 0.1 * ex.time.dt
+    -- self.trans2d:rotate( 5.0 * ex.time.dt )
+    -- local t = self.trans2d.right * 2.0 * ex.time.dt
     -- self.trans2d:move( t.x, t.y )
-    self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
-    -- self.trans2d:move( 10.0 * ex.time.dt, 0.0, ex.space.world )
+    -- self.trans2d.scale = ex.vec2f( ex.time.time % 4.0, ex.time.time % 4.0 )
+    -- self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
+    self.trans2d:move( ex.time.dt, 0.0, ex.space.world )
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function on_render ( self )
+    local wpos = self.trans2d.position
+    ex.draw_text( wpos.x - 30, wpos.y + 15, 0.0, self.entity.name )
 end

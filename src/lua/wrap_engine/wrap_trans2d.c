@@ -27,7 +27,6 @@ EX_DEF_LUA_BUILTIN_REF( ex_trans2d_t, trans2d, "ex.trans2d" )
 // type meta getset
 ///////////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // type meta method
 ///////////////////////////////////////////////////////////////////////////////
@@ -454,7 +453,9 @@ int __trans2d_move ( lua_State *_l ) {
         if ( ex_lua_istrans2d(_l,4) ) {
             ex_trans2d_translate_relative_to( r, x, y, ex_lua_totrans2d(_l,4) );
         }
-        space = luaL_checknumber(_l,4);
+        else {
+            space = luaL_checknumber(_l,4);
+        }
     }
     ex_trans2d_translate( r, x, y, space );
 
@@ -489,6 +490,7 @@ int __trans2d_rotate ( lua_State *_l ) {
 
 // ex.trans2d.meta
 static const ex_getset_t __type_meta_getsets[] = {
+    { "null", __trans2d_get_null, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {

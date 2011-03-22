@@ -104,7 +104,9 @@ int ex_lua_ref_gc ( lua_State *_l ) {
     //     ex_log( "DEBUG: object %s destroyed!!!", ex_strid_to_cstr(ex_object_name(r)) ); 
     // } 
     // } DEBUG end 
-    ex_decref(r);
+    // NOTE: it is possible we have null-reference.
+    if (r) 
+        ex_decref(r);
     return 0;
 }
 

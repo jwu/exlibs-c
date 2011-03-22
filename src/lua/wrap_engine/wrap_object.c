@@ -113,6 +113,7 @@ static int __object_destroy ( lua_State *_l ) {
 
 // ex.object.meta
 static const ex_getset_t __type_meta_getsets[] = {
+    { "null", __object_get_null, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {

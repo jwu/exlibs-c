@@ -101,7 +101,7 @@ function on_render ( self )
 
     -- show text
     if self.show_text then
-        local wpos = self.trans2d.position
+        local wpos = self.trans2d.position + ex.vec2f( -50.0, -15.0 )
         local y = wpos.y 
         ex.draw_text( wpos.x, y, 0.0, "pos: " .. self.trans2d.position )
         y = y - 15
@@ -109,6 +109,5 @@ function on_render ( self )
         y = y - 15
         ex.draw_text( wpos.x, y, 0.0, "scale: " .. self.trans2d.scale )
     end
-
 end
 

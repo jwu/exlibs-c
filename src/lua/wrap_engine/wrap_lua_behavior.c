@@ -184,6 +184,7 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
 
 // ex.lua_behavior.meta
 static const ex_getset_t __type_meta_getsets[] = {
+    { "null", __lua_behavior_get_null, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {

@@ -15,6 +15,7 @@ local assert,type = assert,type
 local pi,two_pi,half_pi = math.pi,ex.math.two_pi,ex.math.half_pi
 local sin,cos,asin,acos,sqrt,min,max,abs = math.sin,math.cos,math.asin,math.acos,math.sqrt,math.min,math.max,math.abs
 local os = os
+local ex_time = ex.time
 
 module(...)
 
@@ -364,12 +365,12 @@ function make_curve ( _from, _to, _duration, _curve )
     assert ( type(_to) == "number", "_to is not a number" )
 
     -- init startTime and curve
-    local startTime = os.clock()
+    local startTime = ex_time.time
     local curve = _curve or ex_ease.linear  
 
     -- create tick closure
     return function ()
-        local curTime = os.clock()
+        local curTime = ex_time.time
         local t = math.min( 1.0, (curTime - startTime) / _duration )
         local ratio = curve(t)
         return ex_math.lerp( _from, _to, ratio ), (t == 1.0) -- current value, finished

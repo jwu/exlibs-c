@@ -156,7 +156,14 @@ static void __update_matrix ( ex_ref_t *_self ) {
     }
 
     ret = ex_mat33f_get_inverse( &self->localToWorld, &self->worldToLocal );
-    ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
+    if ( ret == false ) {
+        ex_vec2f_t v;
+        v.x = -self->localToWorld.m20;
+        v.y = -self->localToWorld.m21;
+        self->worldToLocal = ex_mat33f_zero;
+        ex_mat33f_set_translate( &self->worldToLocal, &v ); 
+    }
+    // ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
     self->dirty = false;
 
     ex_mutex_unlock(self->dirty_mutex);
@@ -584,32 +591,32 @@ void ex_trans2d_inverse_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir,
 void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
-    if ( _space == EX_SPACE_SELF ) {
-        ex_vec2f_t v2;
-
-        ex_vec2f_set ( &v2, _x, _y );
-        ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
-    }
-    else if ( _space == EX_SPACE_WORLD ) {
-        ex_ref_t *parent_ref = self->parent;
-
-        if ( parent_ref ) {
+    if ( self->parent ) {
+        if ( _space == EX_SPACE_SELF ) {
             ex_vec2f_t s;
+            ex_vec2f_t v2;
+
+            // NOTE: without scale, we can't get the same speed when translating.
+            ex_trans2d_world_scale( self->parent, &s );
+            ex_vec2f_set ( &v2, _x / s.x, _y / s.y );
+            ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
+        }
+        else if ( _space == EX_SPACE_WORLD ) {
+            ex_trans2d_t *parent = EX_REF_CAST(ex_trans2d_t,self->parent);
             ex_vec3f_t v3;
-            ex_trans2d_t *parent = EX_REF_CAST(ex_trans2d_t,parent_ref);
 
-            __update_matrix(parent_ref);
+            __update_matrix(self->parent);
 
-            ex_trans2d_world_scale( parent_ref, &s ); // NOTE: without scale, we can't get the same speed when translating.
-            ex_vec3f_set ( &v3, _x * s.x, _y * s.y, 0.0f ); // NOTE: use 0.0f will only apply direction
+            // NOTE: use 0.0f will only apply direction
+            ex_vec3f_set ( &v3, _x, _y, 0.0f );
             ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
             ex_vec2f_add ( &self->local_pos, &self->local_pos, (ex_vec2f_t *)(&v3) ); // NOTE: yes, we can directly cast v3 to v2.
         }
-        else {
-            ex_vec2f_t v2;
-            ex_vec2f_set ( &v2, _x, _y );
-            ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
-        }
+    }
+    else {
+        ex_vec2f_t v2;
+        ex_vec2f_set ( &v2, _x, _y );
+        ex_vec2f_add ( &self->local_pos, &self->local_pos, &v2 );
     }
 
     __matrix_dirty(_self);
@@ -625,8 +632,10 @@ void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_
 
     __update_matrix(_trans2d);
 
+    // TODO: affect by scale!!! { 
     ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
     ex_vec3f_mul_mat33f( &v3, &v3, &the_trans->localToWorld );
+    // } TODO end 
     ex_trans2d_translate(_self, v3.x, v3.y, EX_SPACE_WORLD );
 }
 

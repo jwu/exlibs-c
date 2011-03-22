@@ -98,6 +98,7 @@ static int __world_new_entity ( lua_State *_l ) {
 
 // ex.world.meta
 static const ex_getset_t __type_meta_getsets[] = {
+    { "null", __world_get_null, NULL },
     { "current", __world_get_current, __world_set_current },
     { NULL, NULL, NULL },
 };
