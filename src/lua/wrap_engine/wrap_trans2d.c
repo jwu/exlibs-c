@@ -452,6 +452,7 @@ int __trans2d_move ( lua_State *_l ) {
     if ( nargs == 4 ) {
         if ( ex_lua_istrans2d(_l,4) ) {
             ex_trans2d_translate_relative_to( r, x, y, ex_lua_totrans2d(_l,4) );
+            return 0;
         }
         else {
             space = luaL_checknumber(_l,4);

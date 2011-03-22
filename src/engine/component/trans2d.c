@@ -627,16 +627,17 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
 // ------------------------------------------------------------------ 
 
 void ex_trans2d_translate_relative_to ( ex_ref_t *_self, float _x, float _y, ex_ref_t *_trans2d ) {
-    ex_trans2d_t *the_trans = EX_REF_CAST(ex_trans2d_t,_trans2d);
-    ex_vec3f_t v3;
+    ex_vec2f_t v2;
+    ex_angf_t ang;
+    ex_mat22f_t rot;
 
     __update_matrix(_trans2d);
 
-    // TODO: affect by scale!!! { 
-    ex_vec3f_set ( &v3, _x, _y, 0.0f ); // NOTE: use 0.0f will only apply direction
-    ex_vec3f_mul_mat33f( &v3, &v3, &the_trans->localToWorld );
-    // } TODO end 
-    ex_trans2d_translate(_self, v3.x, v3.y, EX_SPACE_WORLD );
+    ex_trans2d_world_angle(_trans2d,&ang);
+    ex_angf_to_rot22(&ang,&rot);
+    ex_vec2f_set ( &v2, _x, _y );
+    ex_vec2f_mul_mat22f( &v2, &v2, &rot );
+    ex_trans2d_translate(_self, v2.x, v2.y, EX_SPACE_WORLD );
 }
 
 // ------------------------------------------------------------------ 

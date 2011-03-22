@@ -44,6 +44,22 @@ ent2:add_comp("ex.debug2d.rect", {
 ent2:add_comp("comps.move")
 
 -- ======================================================== 
+-- ent3
+-- ======================================================== 
+
+local ent3 = ex.entity("self space")
+ent3:add_comp("ex.trans2d", {
+    parent = ent1.trans2d,
+    local_scale = ex.vec2f(1.0,1.0),
+    position = ex.vec2f(100.0,150.0),
+})
+ent3:add_comp("ex.debug2d.rect", {
+    width = 10,
+    height = 10,
+})
+ent3:add_comp("comps.move02")
+
+-- ======================================================== 
 -- rot
 -- ======================================================== 
 
@@ -61,21 +77,20 @@ rot:add_comp("ex.debug2d.rect", {
 -- rot:add_comp("comps.rotate")
 
 -- ======================================================== 
--- ent3
+-- ent4
 -- ======================================================== 
 
-local ent3 = ex.entity("self space")
-ent3:add_comp("ex.trans2d", {
+local ent4 = ex.entity("transform space")
+ent4:add_comp("ex.trans2d", {
     parent = ent1.trans2d,
     local_scale = ex.vec2f(1.0,1.0),
-    position = ex.vec2f(100.0,150.0),
+    position = ex.vec2f(100.0,250.0),
 })
-ent3:add_comp("ex.debug2d.rect", {
+ent4:add_comp("ex.debug2d.rect", {
     width = 10,
     height = 10,
 })
--- ent3:add_comp("comps.move02")
-ent3:add_comp("comps.move03", {
+ent4:add_comp("comps.move03", {
     ref_trans = rot.trans2d 
 })
 
