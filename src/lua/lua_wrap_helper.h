@@ -57,7 +57,6 @@ typedef struct ref_proxy_t {
 // EX_DECL_LUA_BUILTIN_REF, EX_DECL_LUA_BUILTIN_CLASS_2
 #define EX_DECL_LUA_BUILTIN_REF(_type) EX_DECL_LUA_BUILTIN_CLASS_2(_type,_type)
 #define EX_DECL_LUA_BUILTIN_REF_2(_typename,_type) \
-    extern ref_proxy_t *ex_lua_push##_typename ( struct lua_State *_l ); \
     extern bool ex_lua_is##_typename ( struct lua_State *_l, int _idx ); \
     extern ex_ref_t *ex_lua_to##_typename ( struct lua_State *_l, int _idx ); \
     extern ex_ref_t *ex_lua_check##_typename ( struct lua_State *_l, int _idx );
@@ -110,15 +109,8 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
         return ex_lua_child_meta_index( _l, &__key_to_meta_getset ); \
     } \
     static int __##_typename##_get_null ( lua_State *_l ) { \
-        ex_lua_push##_typename(_l); \
+        ex_lua_pushobject(_l,__typename); \
         return 1; \
-    } \
-    ref_proxy_t *ex_lua_push##_typename ( lua_State *_l ) { \
-        ref_proxy_t *u; \
-        luaL_newmetatable( _l, __typename ); /* NOTE: this find a table in LUA_REGISTRYINDEX */ \
-        u = ex_lua_pushref ( _l, lua_gettop(_l) ); \
-        lua_remove(_l,-2); \
-        return u; \
     } \
     bool ex_lua_is##_typename ( lua_State *_l, int _idx ) { \
         if ( ex_lua_isref(_l,_idx) ) { \
@@ -249,7 +241,8 @@ extern int ex_lua_ref_concat ( struct lua_State *_l );
 extern int ex_lua_ref_eq ( struct lua_State *_l );
 
 // NOTE: unlike ref, generic will create an user-data and apply proper metatable on it
-extern ref_proxy_t *ex_lua_push_generic_component ( struct lua_State *_l, const char *_lua_typename );
+extern ref_proxy_t *ex_lua_pushobject ( struct lua_State *_l, const char *_lua_typename );
+extern ref_proxy_t *ex_lua_pushluabehavior ( struct lua_State *_l, const char *_lua_typename );
 
 // ------------------------------------------------------------------ 
 // Desc: 

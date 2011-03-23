@@ -21,14 +21,17 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __object_init( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __component_init ( ex_ref_t *_self ) {
+    __object_init(_self);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void __entity_remove_comp( ex_ref_t *_ent, ex_ref_t *_comp );
+extern void __object_deinit( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __component_deinit ( ex_ref_t *_self ) {
@@ -38,6 +41,8 @@ void __component_deinit ( ex_ref_t *_self ) {
         __entity_remove_comp( self->entity, _self );
         self->entity = NULL;
     }
+
+    __object_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 

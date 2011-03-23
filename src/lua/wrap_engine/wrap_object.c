@@ -31,11 +31,10 @@ EX_DEF_LUA_BUILTIN_REF( ex_object_t, object, "ex.object" )
 // ------------------------------------------------------------------ 
 
 static int __object_new ( lua_State *_l ) {
-    ref_proxy_t *u;
+    ex_ref_t *r;
     
-    u = ex_lua_pushref(_l,1);
-    u->val = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_incref(u->val);
+    r = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
+    ex_object_pushref(r);
 
     return 1;
 }

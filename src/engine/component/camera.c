@@ -45,8 +45,9 @@ void __camera_deinit ( ex_ref_t *_self ) {
 
     if ( ent ) {
         ex_world_remove_camera( ent->world, _self );
-        __component_deinit(_self);
     }
+
+    __component_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 

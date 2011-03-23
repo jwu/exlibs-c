@@ -99,10 +99,13 @@ void __entity_remove_comp( ex_ref_t *_self, ex_ref_t *_comp ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __object_init( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __entity_init ( ex_ref_t *_self ) {
     ex_entity_t *self = EX_REF_CAST(ex_entity_t,_self);
+
+    __object_init(_self);
 
     ex_array_each ( self->comps, ex_ref_t *, comp ) {
         EX_REF_CAST(ex_component_t,comp)->entity = _self;
@@ -113,6 +116,7 @@ void __entity_init ( ex_ref_t *_self ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __object_deinit( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __entity_deinit ( ex_ref_t *_self ) {
@@ -148,6 +152,8 @@ void __entity_deinit ( ex_ref_t *_self ) {
     self->world = NULL;
     self->trans2d = NULL;
     self->camera = NULL;
+
+    __object_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 

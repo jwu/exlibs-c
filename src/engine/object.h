@@ -40,6 +40,8 @@ EX_DECL_CLASS_BEGIN(ex_object_t)
     ex_uid_t uid; 
     strid_t name;
     uint32 flags;
+    void *l; // lua state
+    int luaRefID;
 
     // override functions
     void (*init) ( ex_ref_t *_self ); // invoked when object created.
@@ -59,6 +61,8 @@ EX_DECL_CLASS_END(ex_object_t)
         ((ex_object_t *)__obj__)->uid = EX_UID_INVALID; \
         ((ex_object_t *)__obj__)->name = ex_strid(_default_name); \
         ((ex_object_t *)__obj__)->flags = EX_OBJECT_NONE; \
+        ((ex_object_t *)__obj__)->l = NULL; \
+        ((ex_object_t *)__obj__)->luaRefID = -1; \
         ((ex_object_t *)__obj__)->init = _init; \
         ((ex_object_t *)__obj__)->deinit = _deinit;
 
@@ -81,6 +85,12 @@ extern void ex_destroy_object_immediately ( ex_ref_t *_ref, bool _no_error );
 extern ex_ref_t *ex_getref ( ex_uid_t _uid );
 
 extern void ex_object_gc ();
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_object_pushref ( ex_ref_t *_self );
 
 // ------------------------------------------------------------------ 
 // Desc: 

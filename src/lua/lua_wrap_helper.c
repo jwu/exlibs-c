@@ -170,6 +170,20 @@ int ex_lua_ref_eq ( lua_State *_l ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+// ------------------------------------------------------------------ 
+
+ref_proxy_t *ex_lua_pushobject ( lua_State *_l, const char *_lua_typename ) {
+    ref_proxy_t *u;
+
+    luaL_newmetatable( _l, _lua_typename );
+    u = ex_lua_pushref ( _l, lua_gettop(_l) );
+    lua_remove(_l,-2);
+
+    return u;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // TODO: we could do it even bettern if we can anlysis _field by split them by "."
 // ------------------------------------------------------------------ 
 

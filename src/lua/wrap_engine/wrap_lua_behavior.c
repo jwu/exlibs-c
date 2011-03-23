@@ -23,13 +23,16 @@
 
 EX_DEF_LUA_BUILTIN_REF( ex_lua_behavior_t, lua_behavior, "ex.lua_behavior" )
 
+///////////////////////////////////////////////////////////////////////////////
+// type meta getset
+///////////////////////////////////////////////////////////////////////////////
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ref_proxy_t *ex_lua_push_generic_component ( lua_State *_l, const char *_lua_typename ) {
+ref_proxy_t *ex_lua_pushluabehavior ( lua_State *_l, const char *_lua_typename ) {
     ref_proxy_t *u;
-    bool is_builtin = true;
 
     // DEBUG { 
     // ex_log( "get typename %s", _lua_typename );
@@ -43,58 +46,49 @@ ref_proxy_t *ex_lua_push_generic_component ( lua_State *_l, const char *_lua_typ
     luaL_newmetatable( _l, _lua_typename );
 
     //
-    lua_pushstring(_l,"__isbuiltin");
-    lua_rawget ( _l, -2 );
-    is_builtin = lua_toboolean(_l,-1);
-    lua_pop(_l,1);
+    lua_newtable(_l);
+
+    // UNUSED { 
+    // lua_pushstring(_l,"__isinstance");
+    // lua_pushboolean(_l,true);
+    // lua_rawset(_l,-3);
+    // } UNUSED end 
+
+    lua_pushstring(_l,"__index");
+    lua_pushcfunction(_l,__child_meta_index);
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__newindex");
+    lua_pushcfunction(_l,__child_meta_newindex);
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__gc");
+    lua_pushcfunction(_l,ex_lua_ref_gc);
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__eq");
+    lua_pushcfunction(_l,ex_lua_ref_eq);
+    lua_rawset(_l,-3);
+
+    // TODO: should be lua class __tostring { 
+    lua_pushstring(_l,"__tostring");
+    lua_pushcfunction(_l,ex_lua_ref_tostring);
+    lua_rawset(_l,-3);
+
+    lua_pushstring(_l,"__concat");
+    lua_pushcfunction(_l,ex_lua_ref_concat);
+    lua_rawset(_l,-3);
+    // } TODO end 
+
+    lua_pushvalue(_l,-2); // push luaL_newmetatable(_l,_lua_typename);
+    lua_setmetatable(_l,-2);
 
     //
-    if ( !is_builtin ) {
-        lua_newtable(_l);
-
-        // UNUSED { 
-        // lua_pushstring(_l,"__isinstance");
-        // lua_pushboolean(_l,true);
-        // lua_rawset(_l,-3);
-        // } UNUSED end 
-
-        lua_pushstring(_l,"__index");
-        lua_pushcfunction(_l,__child_meta_index);
-        lua_rawset(_l,-3);
-
-        lua_pushstring(_l,"__newindex");
-        lua_pushcfunction(_l,__child_meta_newindex);
-        lua_rawset(_l,-3);
-
-        lua_pushstring(_l,"__gc");
-        lua_pushcfunction(_l,ex_lua_ref_gc);
-        lua_rawset(_l,-3);
-
-        lua_pushstring(_l,"__eq");
-        lua_pushcfunction(_l,ex_lua_ref_eq);
-        lua_rawset(_l,-3);
-
-        // TODO: should be lua class __tostring { 
-        lua_pushstring(_l,"__tostring");
-        lua_pushcfunction(_l,ex_lua_ref_tostring);
-        lua_rawset(_l,-3);
-
-        lua_pushstring(_l,"__concat");
-        lua_pushcfunction(_l,ex_lua_ref_concat);
-        lua_rawset(_l,-3);
-        // } TODO end 
-
-        lua_pushvalue(_l,-2); // push luaL_newmetatable(_l,_lua_typename);
-        lua_setmetatable(_l,-2);
-    }
     u = ex_lua_pushref ( _l, lua_gettop(_l) );
+    lua_remove(_l,-2);
 
     return u;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// type meta getset
-///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -110,7 +104,6 @@ static int __lua_behavior_new ( lua_State *_l ) {
 // ------------------------------------------------------------------ 
 
 static int __lua_behavior_new_for_child ( lua_State *_l ) {
-    ref_proxy_t *u;
     ex_ref_t *ent, *comp;
     const char *tp_name;
     int nargs = lua_gettop(_l);
@@ -155,21 +148,19 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
     lua_setmetatable(_l,-2);
     
     //
-    u = ex_lua_pushref(_l,lua_gettop(_l));
     ent = ex_lua_checkentity(_l,2);
 
     lua_pushstring(_l,"__typename");
     lua_rawget(_l,1);
     tp_name = luaL_checkstring(_l,-1);
     comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
-    u->val = comp;
-    ex_incref(u->val);
+    ex_object_pushref(comp);
 
     if ( nargs > 1 ) {
         // TODO:
     }
 
-    // TODO: setup u, awake component
+    // TODO: setup awake component
 
     return 1;
 }

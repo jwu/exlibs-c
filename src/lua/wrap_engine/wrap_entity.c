@@ -48,14 +48,13 @@ EX_DEF_LUA_BUILTIN_REF( ex_entity_t, entity, "ex.entity" )
 // ------------------------------------------------------------------ 
 
 static int __entity_new ( lua_State *_l ) {
-    ref_proxy_t *u;
+    ex_ref_t *r;
     const char *name;
     int nargs = lua_gettop(_l);
     
-    u = ex_lua_pushref(_l,1);
     name = luaL_checkstring(_l,2);
-    u->val = ex_world_create_entity( ex_current_world(), ex_strid(name) );
-    ex_incref(u->val);
+    r = ex_world_create_entity( ex_current_world(), ex_strid(name) );
+    ex_object_pushref(r);
 
     // add component if 3rd argument is a table
     if ( nargs > 2 ) {
@@ -77,9 +76,7 @@ static int __entity_new ( lua_State *_l ) {
 static int __entity_add_comp ( lua_State *_l ) {
     ex_ref_t *entref, *compref;
     const char *comp_typename;
-    ref_proxy_t *u;
     ex_behavior_t *be;
-    ex_lua_behavior_t *lua_be;
     int nargs = lua_gettop(_l);
     
     entref = ex_lua_checkentity(_l,1);
@@ -92,9 +89,7 @@ static int __entity_add_comp ( lua_State *_l ) {
     }
 
     //
-    u = ex_lua_push_generic_component ( _l, comp_typename );
-    u->val = compref;
-    ex_incref(u->val);
+    ex_object_pushref(compref);
 
     // if we have table parameters, setup them
     if ( nargs > 2 ) {
@@ -115,13 +110,6 @@ static int __entity_add_comp ( lua_State *_l ) {
     // awake behavior, and setup lua behavior
     be = EX_REF_AS(ex_behavior_t,compref);
     if ( be ) {
-        lua_be = EX_REF_AS( ex_lua_behavior_t,compref);
-        if ( lua_be ) {
-            lua_pushvalue(_l, -1);
-            lua_be->lua_refID = luaL_ref(_l, LUA_REGISTRYINDEX);
-            lua_be->l = _l;
-        }
-
         // awake if the world is running
         ex_entity_t *ent = EX_REF_CAST(ex_entity_t,entref);
         if ( be->awake && 
@@ -141,7 +129,6 @@ static int __entity_add_comp ( lua_State *_l ) {
 static int __entity_get_comp ( lua_State *_l ) {
     ex_ref_t *ent, *comp;
     const char *comp_typename;
-    ref_proxy_t *u;
     
     ent = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,ent);
@@ -154,11 +141,37 @@ static int __entity_get_comp ( lua_State *_l ) {
         return 1;
     }
 
-    u = ex_lua_push_generic_component ( _l, comp_typename );
-    u->val = comp;
-    ex_incref(u->val);
-
+    ex_object_pushref(comp);
     return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __entity_send_msg ( lua_State *_l ) {
+    // TODO { 
+    // ex_ref_t *ent, *comp;
+    // const char *msg_name;
+    // 
+    // ent = ex_lua_checkentity(_l,1);
+    // ex_lua_check_nullref(_l,ent);
+    // msg_name = luaL_checkstring(_l,2);
+
+    // ex_array_each ( ent->comps, ex_ref_t *, comp ) {
+    //     ref_proxy_t *u = ex_lua_push_generic_object ( _l, comp_typename );
+    // } ex_array_each_end
+    // } TODO end 
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __entity_send_msg_noreply ( lua_State *_l ) {
+    // TODO:
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -171,15 +184,11 @@ static int __entity_get_comp ( lua_State *_l ) {
 
 static int __entity_get_trans2d ( lua_State *_l ) {
     ex_ref_t *r;
-    ref_proxy_t *u;
 
     r = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    u = ex_lua_pushtrans2d(_l);
-    u->val = EX_REF_CAST(ex_entity_t,r)->trans2d; 
-    ex_incref(u->val);
-
+    ex_object_pushref( EX_REF_CAST(ex_entity_t,r)->trans2d );
     return 1;
 }
 
@@ -213,6 +222,8 @@ static const luaL_Reg __meta_funcs[] = {
     { "__eq", ex_lua_ref_eq },
     { "add_comp", __entity_add_comp },
     { "get_comp", __entity_get_comp },
+    { "send_msg", __entity_send_msg },
+    { "send_msg_noreply", __entity_send_msg_noreply },
     { NULL, NULL },
 };
 

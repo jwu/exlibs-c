@@ -12,35 +12,9 @@
 #include "exsdk.h"
 #include "object.h"
 
-///////////////////////////////////////////////////////////////////////////////
-// properties
-///////////////////////////////////////////////////////////////////////////////
-
-EX_DEF_CLASS_BEGIN(ex_object_t)
-    EX_MEMBER(ex_object_t, uid, EX_UID_INVALID)
-    EX_MEMBER(ex_object_t, name, EX_STRID_NULL)
-    EX_MEMBER(ex_object_t, flags, EX_OBJECT_NONE)
-    EX_MEMBER(ex_object_t, init, NULL)
-    EX_MEMBER(ex_object_t, deinit, NULL)
-EX_DEF_CLASS_END
-
-EX_DEF_PROPS_BEGIN(ex_object_t)
-    EX_PROP( ex_object_t, uid, uid, "uid",  EX_PROP_ATTR_HIDE )
-    EX_PROP( ex_object_t, strid, name, "name",  EX_PROP_ATTR_HIDE )
-    EX_PROP( ex_object_t, uint32, flags, "flags",  EX_PROP_ATTR_HIDE )
-EX_DEF_PROPS_END
-
-EX_SERIALIZE_BEGIN(ex_object_t)
-    EX_MEMBER_SERIALIZE(uid,uid)
-    EX_MEMBER_SERIALIZE(strid,name)
-    EX_MEMBER_SERIALIZE(uint32,flags)
-EX_SERIALIZE_END
-
-EX_DEF_TOSTRING_BEGIN(ex_object_t)
-    EX_MEMBER_TOSTRING( uid, "uid", self->uid )
-    EX_MEMBER_TOSTRING( strid, "name", self->name )
-    EX_MEMBER_TOSTRING( uint32, "flags", self->flags )
-EX_DEF_TOSTRING_END
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // internal defines
@@ -129,6 +103,62 @@ static ex_ref_t *__reftable_add ( void *_obj ) {
     //
     return newref;
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __object_init( ex_ref_t *_self ) {
+    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
+    lua_State *l = ex_current_lua_state();
+    ref_proxy_t *u = ex_lua_pushobject ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
+
+    u->val = _self;
+    ex_incref(u->val);
+    self->l = l;
+    self->luaRefID = luaL_ref(l, LUA_REGISTRYINDEX);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void __object_deinit( ex_ref_t *_self ) {
+    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
+    luaL_unref(self->l, LUA_REGISTRYINDEX, self->luaRefID);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// properties
+///////////////////////////////////////////////////////////////////////////////
+
+EX_DEF_CLASS_BEGIN(ex_object_t)
+    EX_MEMBER(ex_object_t, uid, EX_UID_INVALID)
+    EX_MEMBER(ex_object_t, name, EX_STRID_NULL)
+    EX_MEMBER(ex_object_t, flags, EX_OBJECT_NONE)
+    EX_MEMBER(ex_object_t, l, NULL )
+    EX_MEMBER(ex_object_t, luaRefID, LUA_REFNIL )
+    EX_MEMBER(ex_object_t, init, __object_init)
+    EX_MEMBER(ex_object_t, deinit, __object_deinit)
+EX_DEF_CLASS_END
+
+EX_DEF_PROPS_BEGIN(ex_object_t)
+    EX_PROP( ex_object_t, uid, uid, "uid",  EX_PROP_ATTR_HIDE )
+    EX_PROP( ex_object_t, strid, name, "name",  EX_PROP_ATTR_HIDE )
+    EX_PROP( ex_object_t, uint32, flags, "flags",  EX_PROP_ATTR_HIDE )
+EX_DEF_PROPS_END
+
+EX_SERIALIZE_BEGIN(ex_object_t)
+    EX_MEMBER_SERIALIZE(uid,uid)
+    EX_MEMBER_SERIALIZE(strid,name)
+    EX_MEMBER_SERIALIZE(uint32,flags)
+EX_SERIALIZE_END
+
+EX_DEF_TOSTRING_BEGIN(ex_object_t)
+    EX_MEMBER_TOSTRING( uid, "uid", self->uid )
+    EX_MEMBER_TOSTRING( strid, "name", self->name )
+    EX_MEMBER_TOSTRING( uint32, "flags", self->flags )
+EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -244,6 +274,16 @@ void ex_object_gc () {
     // ex_log("total objects in loop: %d", obj_counter );
     // ex_log("garbage collected objects : %d", obj_gc_counter );
     // ex_log("remain objects: %ld", ex_hashmap_count(&__uid_to_refptr) );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_object_pushref ( ex_ref_t *_self ) {
+    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
+    lua_rawgeti( self->l, LUA_REGISTRYINDEX, self->luaRefID );
+    ex_incref(_self);
 }
 
 // ------------------------------------------------------------------ 

@@ -31,10 +31,13 @@ static ex_ref_t *__cur_world = NULL;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __object_init( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __world_init ( ex_ref_t *_self ) {
     ex_world_t *self = (ex_world_t *)_self->ptr;
+
+    __object_init(_self);
 
     ex_array_each ( self->entities, ex_ref_t *, ref ) {
         EX_REF_CAST(ex_entity_t,ref)->world = _self;
@@ -49,6 +52,7 @@ void __world_init ( ex_ref_t *_self ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __object_deinit( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __world_deinit ( ex_ref_t *_self ) {
@@ -73,6 +77,8 @@ void __world_deinit ( ex_ref_t *_self ) {
     if ( __cur_world == _self ) {
         __cur_world = NULL;
     }
+
+    __object_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 

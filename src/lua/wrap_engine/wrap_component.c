@@ -51,16 +51,12 @@ static int __component_new ( lua_State *_l ) {
 static int __component_get_entity ( lua_State *_l ) {
     ex_ref_t *r;
     ex_component_t *self;
-    ref_proxy_t *u;
 
     r = ex_lua_checkcomponent(_l,1); 
     ex_lua_check_nullref(_l,r);
     self = EX_REF_CAST(ex_component_t,r);
 
-    u = ex_lua_pushentity(_l);
-    u->val = self->entity;
-    ex_incref(u->val);
-
+    ex_object_pushref(self->entity);
     return 1;
 }
 
@@ -71,16 +67,12 @@ static int __component_get_entity ( lua_State *_l ) {
 static int __component_get_trans2d ( lua_State *_l ) {
     ex_ref_t *r;
     ex_component_t *self;
-    ref_proxy_t *u;
 
     r = ex_lua_checkcomponent(_l,1); 
     ex_lua_check_nullref(_l,r);
     self = EX_REF_CAST(ex_component_t,r);
 
-    u = ex_lua_pushtrans2d(_l);
-    u->val = EX_REF_CAST(ex_entity_t,self->entity)->trans2d;
-    ex_incref(u->val);
-
+    ex_object_pushref(EX_REF_CAST(ex_entity_t,self->entity)->trans2d);
     return 1;
 }
 

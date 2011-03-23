@@ -44,16 +44,13 @@ EX_DEF_LUA_BUILTIN_REF( ex_trans2d_t, trans2d, "ex.trans2d" )
 // ------------------------------------------------------------------ 
 
 static int __trans2d_new ( lua_State *_l ) {
-    ref_proxy_t *u;
     ex_ref_t *ent, *comp;
     int nargs = lua_gettop(_l);
     
     //
-    u = ex_lua_pushref(_l,1);
     ent = ex_lua_checkentity(_l,2);
     comp = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
-    u->val = comp;
-    ex_incref(u->val);
+    ex_object_pushref(comp);
 
     if ( nargs > 1 ) {
         // TODO:
@@ -356,20 +353,15 @@ int __trans2d_set_up ( lua_State *_l ) {
 
 int __trans2d_get_parent ( lua_State *_l ) {
     ex_ref_t *r, *parent;
-    ref_proxy_t *u;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
     parent = EX_REF_CAST(ex_trans2d_t,r)->parent;
-    if ( parent ) {
-        u = ex_lua_pushtrans2d(_l);
-        u->val = parent;
-        ex_incref(u->val);
-    }
-    else {
+    if ( parent )
+        ex_object_pushref(parent);
+    else
         lua_pushnil(_l);
-    }
 
     return 1;
 }
