@@ -149,19 +149,45 @@ static int __entity_get_comp ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __entity_send_msg ( lua_State *_l ) {
-    // TODO { 
-    // ex_ref_t *ent, *comp;
-    // const char *msg_name;
-    // 
-    // ent = ex_lua_checkentity(_l,1);
-    // ex_lua_check_nullref(_l,ent);
-    // msg_name = luaL_checkstring(_l,2);
+static int __send_msg ( lua_State *_l, bool _need_receiver ) {
+    ex_ref_t *entref;
+    ex_entity_t *ent;
+    const char *msg_name;
+    int nargs = lua_gettop(_l);
+    bool hasReceiver = false;
+    
+    entref = ex_lua_checkentity(_l,1);
+    ex_lua_check_nullref(_l,entref);
+    msg_name = luaL_checkstring(_l,2);
+    ent = EX_REF_CAST(ex_entity_t,entref);
 
-    // ex_array_each ( ent->comps, ex_ref_t *, comp ) {
-    //     ref_proxy_t *u = ex_lua_push_generic_object ( _l, comp_typename );
-    // } ex_array_each_end
-    // } TODO end 
+    ex_array_each ( ent->comps, ex_ref_t *, comp ) {
+        ex_object_t *obj = EX_REF_CAST(ex_object_t,comp);
+        int argidx = 3;
+        int status;
+
+        lua_rawgeti(_l, LUA_REGISTRYINDEX, obj->luaRefID);
+        lua_getfield( _l, -1, msg_name );
+        if ( lua_isnil(_l,-1) == 0 && lua_isfunction(_l,-1) ) {
+            lua_pushvalue(_l,-2);
+            while ( argidx <= nargs ) {
+                lua_pushvalue(_l,argidx);
+                ++argidx;
+            }
+            // NOTE: func args = nargs - 2 + 1
+            status = lua_pcall( _l, nargs - 1, 0, 0 );
+            if ( status )
+                ex_lua_alert(_l);
+
+            hasReceiver = true;
+        }
+    } ex_array_each_end
+
+    //
+    if ( _need_receiver && hasReceiver == false ) {
+        luaL_error( _l, "none of the component have interface %s", msg_name );
+    }
+
     return 0;
 }
 
@@ -169,9 +195,16 @@ static int __entity_send_msg ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __entity_send_msg ( lua_State *_l ) {
+    return __send_msg( _l, true );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int __entity_send_msg_noreply ( lua_State *_l ) {
-    // TODO:
-    return 0;
+    return __send_msg( _l, false );
 }
 
 ///////////////////////////////////////////////////////////////////////////////

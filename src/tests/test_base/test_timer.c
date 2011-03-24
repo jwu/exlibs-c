@@ -28,7 +28,7 @@ static int32 _callback1 ( uint32 _interval, void *_param ) {
 
 static void normal () {
     uint32 start,counter;
-    int id = ex_add_timer( _callback1, NULL, 0, ex_timespan_from(0,500), EX_TIMESPAN_INFINITY );
+    int id = ex_add_timer( _callback1, NULL, NULL, 0, (timespan_t)0, ex_timespan_from(0,500), EX_TIMESPAN_INFINITY );
     ex_start_timer(id);
 
     ex_sleep(2000);
@@ -50,7 +50,7 @@ static void normal () {
 
 static void timescale () {
     // timer with timescale
-    int id = ex_add_timer( _callback1, NULL, 0, ex_timespan_from(0,2000), EX_TIMESPAN_INFINITY );
+    int id = ex_add_timer( _callback1, NULL, NULL, 0, (timespan_t)0, ex_timespan_from(0,2000), EX_TIMESPAN_INFINITY );
 
     ex_start_timer(id); ex_log("start!");
     ex_sleep(4000);
@@ -66,7 +66,7 @@ static void timescale () {
 
 static void lifetime () {
     uint32 start,counter;
-    int id = ex_add_timer( _callback1, NULL, 0, ex_timespan_from(0,500), ex_timespan_from(0,2000) );
+    int id = ex_add_timer( _callback1, NULL, NULL, 0, (timespan_t)0, ex_timespan_from(0,500), ex_timespan_from(0,2000) );
     ex_start_timer(id);
 
     start = counter = ex_timer_get_ticks();

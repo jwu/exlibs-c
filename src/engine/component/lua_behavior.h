@@ -34,7 +34,22 @@ extern "C" {
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     bool compile_failed;
+    ex_hashmap_t *name_to_timer;
 EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
+
+///////////////////////////////////////////////////////////////////////////////
+// functions
+///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_lua_behavior_invoke ( ex_ref_t *_self, 
+                                     float _secs_delay, 
+                                     float _secs_repeat,
+                                     const char *_name,
+                                     int _refID );
 
 // ######################### 
 #ifdef __cplusplus

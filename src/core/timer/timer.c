@@ -26,7 +26,9 @@ typedef struct timer_t {
     int state;
     bool affect_by_timescale;
 
-    uint32 interval;    // msecs
+    // start delay for msecs
+    uint32 delay;    // msecs
+    uint32 interval; // msecs
     // if reach lifetime, the timer will stopped but not removed
     uint32 lifetime;    // msecs
 
@@ -34,10 +36,12 @@ typedef struct timer_t {
     uint32 last_alarm;  // msecs
 
     // NOTE: it is possible the counter be minus
+    int32 start_counter; // msecs
     int32 interval_counter; // msecs
     int32 lifetime_counter; // msecs
 
     ex_timer_pfn cb;
+    ex_timer_stop_pfn on_stop;
     void *params;
 } timer_t;
 
@@ -60,10 +64,20 @@ void __threaded_timer_tick () {
     ex_mutex_lock(__timer_mutex);
     now = ex_timer_get_ticks();
     ex_pool_raw_each ( &__timers, timer_t *, t ) {
+        int32 time_since_start;
         int32 time_since_lastAlarm;
 
         if ( t->state != EX_TIMER_STATE_RUNNING )
             ex_pool_continue;
+
+        // process start
+        if ( t->start_counter != 0 ) {
+            ms = t->start_counter - EX_TIMER_SLICE;
+            time_since_start = (int32)(now - t->start); 
+            // if we still wait for start
+            if ( time_since_start <= ms )
+                ex_pool_continue;
+        }
 
         // process internval
         ms = t->interval_counter - EX_TIMER_SLICE;
@@ -212,8 +226,10 @@ bool ex_timer_initialized () {
 // ------------------------------------------------------------------ 
 
 int ex_add_timer ( ex_timer_pfn _cb, 
+                   ex_timer_stop_pfn _on_stop,
                    void *_params, 
                    size_t _size, /*parameter byte-size*/ 
+                   timespan_t _delay,
                    timespan_t _interval,
                    timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ ) {
 
@@ -222,16 +238,19 @@ int ex_add_timer ( ex_timer_pfn _cb,
 
     // check the inputs
     ex_assert_return ( _cb != NULL, -1, "callback function can't not be NULL" );
+    ex_assert_return ( _delay != EX_TIMESPAN_INFINITY, -1, "delay can't be EX_TIMESPAN_INFINITY, if you don't need delay, put it to 0" );
     ex_assert_return ( _interval != 0, -1, "interval can't be 0, the minimum value is 1" );
     ex_assert_return ( _interval != EX_TIMESPAN_INFINITY, -1, "interval can't be infinity, the minimum value is 1" );
     ex_assert_return ( _lifetime != 0, -1, "lifetime can't be 0, the minimum value is 1, if you don't need lifetime, put it to EX_TIMESPAN_INFINITY" );
 
     // init new timer
     newTimer.state = EX_TIMER_STATE_STOPPED;
+    newTimer.start_counter = newTimer.delay = _delay;
     newTimer.interval_counter = newTimer.interval = __ROUND_RESOLUTION(ex_timespan_to_msecs(_interval));
     newTimer.lifetime_counter = newTimer.lifetime = (_lifetime == EX_TIMESPAN_INFINITY) ? -1 : __ROUND_RESOLUTION(ex_timespan_to_msecs(_lifetime));
     newTimer.start = newTimer.last_alarm = -1; // start and counter should assign in ex_start_timer
     newTimer.cb = _cb;
+    newTimer.on_stop = _on_stop;
     if ( _params ) {
         newTimer.params = ex_malloc_nomng(_size);
         memcpy( newTimer.params, _params, _size );
@@ -274,6 +293,7 @@ void ex_start_timer ( int _id ) {
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = ex_timer_get_ticks();
+            t->start_counter = t->delay;
             t->interval_counter = t->interval; 
             t->lifetime_counter = t->lifetime;
             t->state = EX_TIMER_STATE_RUNNING;
@@ -294,6 +314,8 @@ void ex_stop_timer ( int _id ) {
     t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
+            if ( t->on_stop )
+                t->on_stop(t->params);
             t->start = t->last_alarm = -1;
             t->state = EX_TIMER_STATE_STOPPED;
         ex_mutex_unlock(__timer_mutex);
@@ -319,6 +341,7 @@ void ex_pause_timer ( int _id ) {
             now = ex_timer_get_ticks();
             time_since_lastAlarm = (int32)(now - t->last_alarm);
             time_since_start = (int32)(now - t->start);
+            t->start_counter = t->start_counter - time_since_start;
             t->interval_counter = t->interval_counter - time_since_lastAlarm;
             t->lifetime_counter = t->lifetime_counter - time_since_start;
             t->state = EX_TIMER_STATE_PAUSED;
@@ -362,6 +385,7 @@ void ex_reset_timer ( int _id ) {
     if (t) {
         ex_mutex_lock(__timer_mutex);
             t->start = t->last_alarm = ex_timer_get_ticks();
+            t->start_counter = t->delay; 
             t->interval_counter = t->interval; 
             t->lifetime_counter = t->lifetime;
             t->state = EX_TIMER_STATE_RUNNING;

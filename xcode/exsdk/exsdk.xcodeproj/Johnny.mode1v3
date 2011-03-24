@@ -330,7 +330,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B2B5F30A133A54990084399F</string>
+										<string>B2B5F387133B075D0084399F</string>
 										<key>history</key>
 										<array>
 											<string>B2DD24FC12A910EB0053CA3F</string>
@@ -678,7 +678,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>B2B5F30B133A54990084399F</string>
+		<string>B2B5F388133B075D0084399F</string>
 		<string>B2B5F1C1133918CD0084399F</string>
 		<string>B2B5F1C2133918CD0084399F</string>
 		<string>/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/exsdk.xcodeproj</string>
@@ -708,7 +708,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>wrap_object.c</string>
+								<string>lua_behavior.c</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

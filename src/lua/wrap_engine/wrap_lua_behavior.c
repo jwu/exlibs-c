@@ -169,6 +169,47 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
 // meta method
 ///////////////////////////////////////////////////////////////////////////////
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __lua_behavior_invoke ( lua_State *_l ) {
+    ex_ref_t *r;
+    const char *name;
+    float delay_secs, repeat_secs;
+    int refID = LUA_REFNIL;
+    int nargs = lua_gettop(_l);
+
+    // get self
+    r = ex_lua_checklua_behavior(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // get name
+    name = luaL_checkstring(_l,2);
+
+    // get delay seconds
+    delay_secs = luaL_checknumber(_l,3);
+
+    // get repeat seconds
+    repeat_secs = luaL_checknumber(_l,4);
+
+    // get refID
+    if ( nargs == 5 ) {
+        lua_pushvalue(_l,5);
+        refID = luaL_ref(_l, LUA_REGISTRYINDEX);
+    }
+    else {
+        lua_getfield(_l, 1, name);
+        if ( lua_isnil(_l,-1) )
+            return luaL_error( _l, "can't find function %s", name );
+        refID = luaL_ref(_l, LUA_REGISTRYINDEX);
+    }
+
+    // do invoke.
+    ex_lua_behavior_invoke ( r, delay_secs, repeat_secs, name, refID );
+    return 0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
@@ -196,6 +237,7 @@ static const luaL_Reg __meta_funcs[] = {
     { "__tostring", ex_lua_ref_tostring },
     { "__concat", ex_lua_ref_concat },
     { "__eq", ex_lua_ref_eq },
+    { "invoke", __lua_behavior_invoke },
     { NULL, NULL },
 };
 

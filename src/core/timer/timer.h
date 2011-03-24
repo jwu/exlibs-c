@@ -30,6 +30,7 @@ extern "C" {
 // ------------------------------------------------------------------ 
 
 typedef int32 (*ex_timer_pfn) ( uint32 _interval, void *_param );
+typedef void (*ex_timer_stop_pfn) ( void *_param );
 
 ///////////////////////////////////////////////////////////////////////////////
 // decls
@@ -118,8 +119,10 @@ extern uint32 ex_timer_get_ticks ();
 // ------------------------------------------------------------------ 
 
 extern int ex_add_timer ( ex_timer_pfn _cb, 
+                          ex_timer_stop_pfn _on_stop,
                           void *_params, 
                           size_t _size, /*parameter byte-size*/ 
+                          timespan_t _delay,
                           timespan_t _interval,
                           timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ );
 extern bool ex_remove_timer ( int _id );

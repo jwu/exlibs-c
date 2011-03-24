@@ -261,8 +261,10 @@ void __debug2d_start ( ex_ref_t *_self ) {
         self->trails[i] = worldPos;
 
     self->trail_timer = ex_add_timer( __add_trail, 
+                                      NULL,
                                       &_self, 
                                       sizeof(ex_ref_t *), 
+                                      (timespan_t)0, 
                                       ex_timespan_from(0,50), 
                                       EX_TIMESPAN_INFINITY );
     ex_start_timer(self->trail_timer);
