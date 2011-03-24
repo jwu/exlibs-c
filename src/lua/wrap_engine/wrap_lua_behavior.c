@@ -31,7 +31,7 @@ EX_DEF_LUA_BUILTIN_REF( ex_lua_behavior_t, lua_behavior, "ex.lua_behavior" )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ref_proxy_t *ex_lua_pushluabehavior ( lua_State *_l, const char *_lua_typename ) {
+ref_proxy_t *ex_lua_newluabehavior ( lua_State *_l, const char *_lua_typename ) {
     ref_proxy_t *u;
 
     // DEBUG { 
@@ -154,7 +154,7 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
     lua_rawget(_l,1);
     tp_name = luaL_checkstring(_l,-1);
     comp = ex_entity_add_comp( ent, ex_strid(tp_name) ); // NOTE: because it is derived class
-    ex_object_pushref(comp);
+    ex_lua_pushobject(_l,comp);
 
     if ( nargs > 1 ) {
         // TODO:
@@ -177,7 +177,6 @@ static int __lua_behavior_invoke ( lua_State *_l ) {
     ex_ref_t *r;
     const char *name;
     float delay_secs, repeat_secs;
-    int refID = LUA_REFNIL;
     int nargs = lua_gettop(_l);
 
     // get self
@@ -193,20 +192,38 @@ static int __lua_behavior_invoke ( lua_State *_l ) {
     // get repeat seconds
     repeat_secs = luaL_checknumber(_l,4);
 
-    // get refID
+    // get the invoke functions
     if ( nargs == 5 ) {
         lua_pushvalue(_l,5);
-        refID = luaL_ref(_l, LUA_REGISTRYINDEX);
     }
     else {
         lua_getfield(_l, 1, name);
         if ( lua_isnil(_l,-1) )
             return luaL_error( _l, "can't find function %s", name );
-        refID = luaL_ref(_l, LUA_REGISTRYINDEX);
     }
 
     // do invoke.
-    ex_lua_behavior_invoke ( r, delay_secs, repeat_secs, name, refID );
+    ex_lua_behavior_invoke ( r, delay_secs, repeat_secs, name, _l );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __lua_behavior_cancle_invoke ( lua_State *_l ) {
+    ex_ref_t *r;
+    const char *name;
+
+    // get self
+    r = ex_lua_checklua_behavior(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // get name
+    name = luaL_checkstring(_l,2);
+
+    // do cancle invoke.
+    ex_lua_behavior_cancle_invoke ( r, name );
     return 0;
 }
 
@@ -238,6 +255,7 @@ static const luaL_Reg __meta_funcs[] = {
     { "__concat", ex_lua_ref_concat },
     { "__eq", ex_lua_ref_eq },
     { "invoke", __lua_behavior_invoke },
+    { "cancle_invoke", __lua_behavior_cancle_invoke },
     { NULL, NULL },
 };
 

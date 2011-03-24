@@ -28,7 +28,7 @@ extern int ex_lua_init ();
 extern void ex_lua_deinit ();
 extern bool ex_lua_initialized ();
 
-extern struct lua_State *ex_current_lua_state ();
+extern struct lua_State *ex_lua_main_state ();
 
 ///////////////////////////////////////////////////////////////////////////////
 // lua module op

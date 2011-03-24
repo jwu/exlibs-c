@@ -189,7 +189,7 @@ void ex_world_clear ( ex_ref_t *_self ) {
 	ex_world_t *world;
     
     world = EX_REF_CAST(ex_world_t,_self);
-    ex_lua_clear_refs( ex_current_lua_state() );
+    ex_lua_clear_refs( ex_lua_main_state() );
 	
     // decrease reference count and destroy all entities
     ex_array_each ( world->entities, ex_ref_t *, ref ) {

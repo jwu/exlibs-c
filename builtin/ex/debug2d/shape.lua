@@ -13,6 +13,13 @@ local ex = ex
 local gl = gl
 module( ..., ex.lua_behavior.derive )
 
+-- static
+local MAX_TRAIL_VERTS = 16
+
+-- private
+_trail_idx = 0
+_trails = {}
+
 --/////////////////////////////////////////////////////////////////////////////
 -- properties
 --/////////////////////////////////////////////////////////////////////////////
@@ -38,7 +45,7 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( self )
-    -- TODO: invoke_repeat ( add_trail, 0.0, 0.5, self )
+    self:invoke ( "_add_trail", 0.0, 0.5 )
 end
 
 
@@ -96,7 +103,20 @@ function on_render ( self )
 
     -- show trail
     if self.show_trail then
-        -- TODO:
+        gl.MatrixMode( "MODELVIEW" )
+        gl.LoadIdentity()
+        gl.Begin("LINE_STRIP")
+            gl.Color( 1.0, 0.5, 1.0, 1.0 )
+
+            local cnt = 0
+            local i = (self._trail_idx+1)%MAX_TRAIL_VERTS
+            while ( cnt < MAX_TRAIL_VERTS ) do
+                local v2 = self._trails[i]
+                if v2 ~= nil then gl.Vertex( v2.x, v2.y, 0.0 ) end
+                i = (i+1)%MAX_TRAIL_VERTS 
+                cnt = cnt + 1
+            end
+        gl.End()
     end
 
     -- show text
@@ -111,3 +131,11 @@ function on_render ( self )
     end
 end
 
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function _add_trail ( self )
+    self._trail_idx = (self._trail_idx + 1) % MAX_TRAIL_VERTS
+    self._trails[self._trail_idx] = self.trans2d.position
+end

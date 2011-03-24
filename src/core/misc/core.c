@@ -119,7 +119,7 @@ int ex_core_init ( const char *_media_path ) {
     }
     // TODO: parse .exrc by lua
 #if 0
-    ex_lua_load_modules( ex_current_lua_state(), "builtin" );
+    ex_lua_load_modules( ex_lua_main_state(), "builtin" );
 #else
     // for development
     ex_fsys_mount( exsdk_dev_path, "/", true );
@@ -128,11 +128,11 @@ int ex_core_init ( const char *_media_path ) {
         strcpy( path, exsdk_dev_path );
         strcat( path, "builtin/" );
             
-        ex_lua_add_path( ex_current_lua_state(), path );
-        ex_lua_add_cpath( ex_current_lua_state(), path );
+        ex_lua_add_path( ex_lua_main_state(), path );
+        ex_lua_add_cpath( ex_lua_main_state(), path );
     }
 
-    ex_lua_load_modules( ex_current_lua_state(), "builtin" );
+    ex_lua_load_modules( ex_lua_main_state(), "builtin" );
 #endif
 
     //

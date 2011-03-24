@@ -75,8 +75,18 @@ void __threaded_timer_tick () {
             ms = t->start_counter - EX_TIMER_SLICE;
             time_since_start = (int32)(now - t->start); 
             // if we still wait for start
-            if ( time_since_start <= ms )
+            if ( time_since_start <= ms ) {
                 ex_pool_continue;
+            } 
+            // when timer start, it will invoke first
+            else {
+                t->start_counter = 0;
+
+                // execute the timer callback
+                ex_mutex_unlock(__timer_mutex);
+                ms = t->cb(t->interval, t->params);
+                ex_mutex_lock(__timer_mutex);
+            }
         }
 
         // process internval
@@ -297,6 +307,31 @@ void ex_start_timer ( int _id ) {
             t->interval_counter = t->interval; 
             t->lifetime_counter = t->lifetime;
             t->state = EX_TIMER_STATE_RUNNING;
+
+            // ======================================================== 
+            // execute timer when start time is zero
+            // ======================================================== 
+
+            // if the start counter is zero
+            if ( t->start_counter == 0 ) {
+                int32 ms;
+
+                // execute the timer callback
+                ms = t->cb(t->interval, t->params);
+
+                // process return interval
+                if (ms != t->interval) {
+                    // if ms not zero round it and set as the next interval.
+                    if ( ms > 0 ) {
+                        t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
+                    }
+                    else {
+                        // it still possible we remove the timer ....
+                        ex_free_nomng (t->params);
+                        ex_pool_remove_at_safe ( &__timers, _id ); // this can work around if we got several same id to remove.
+                    }
+                }
+            }
         ex_mutex_unlock(__timer_mutex);
     }
 }

@@ -172,7 +172,17 @@ int ex_lua_ref_eq ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ref_proxy_t *ex_lua_pushobject ( lua_State *_l, const char *_lua_typename ) {
+void ex_lua_pushobject ( lua_State *_l, ex_ref_t *_self ) {
+    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
+    lua_rawgeti( _l, LUA_REGISTRYINDEX, self->luaRefID );
+    ex_incref(_self);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ref_proxy_t *ex_lua_newobject ( lua_State *_l, const char *_lua_typename ) {
     ref_proxy_t *u;
 
     luaL_newmetatable( _l, _lua_typename );

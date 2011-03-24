@@ -110,8 +110,8 @@ static ex_ref_t *__reftable_add ( void *_obj ) {
 
 void __object_init( ex_ref_t *_self ) {
     ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
-    lua_State *l = ex_current_lua_state();
-    ref_proxy_t *u = ex_lua_pushobject ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
+    lua_State *l = ex_lua_main_state();
+    ref_proxy_t *u = ex_lua_newobject ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
 
     u->val = _self;
     ex_incref(u->val);
@@ -274,16 +274,6 @@ void ex_object_gc () {
     // ex_log("total objects in loop: %d", obj_counter );
     // ex_log("garbage collected objects : %d", obj_gc_counter );
     // ex_log("remain objects: %ld", ex_hashmap_count(&__uid_to_refptr) );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_object_pushref ( ex_ref_t *_self ) {
-    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
-    lua_rawgeti( self->l, LUA_REGISTRYINDEX, self->luaRefID );
-    ex_incref(_self);
 }
 
 // ------------------------------------------------------------------ 

@@ -34,7 +34,7 @@ static int __object_new ( lua_State *_l ) {
     ex_ref_t *r;
     
     r = ex_create_object( EX_RTTI(ex_object_t), ex_generate_uid() );
-    ex_object_pushref(r);
+    ex_lua_pushobject(_l,r);
 
     return 1;
 }

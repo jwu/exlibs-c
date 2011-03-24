@@ -50,7 +50,7 @@ static int __trans2d_new ( lua_State *_l ) {
     //
     ent = ex_lua_checkentity(_l,2);
     comp = ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
-    ex_object_pushref(comp);
+    ex_lua_pushobject(_l,comp);
 
     if ( nargs > 1 ) {
         // TODO:
@@ -359,7 +359,7 @@ int __trans2d_get_parent ( lua_State *_l ) {
 
     parent = EX_REF_CAST(ex_trans2d_t,r)->parent;
     if ( parent )
-        ex_object_pushref(parent);
+        ex_lua_pushobject(_l,parent);
     else
         lua_pushnil(_l);
 

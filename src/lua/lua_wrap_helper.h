@@ -109,7 +109,7 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
         return ex_lua_child_meta_index( _l, &__key_to_meta_getset ); \
     } \
     static int __##_typename##_get_null ( lua_State *_l ) { \
-        ex_lua_pushobject(_l,__typename); \
+        ex_lua_newobject(_l,__typename); \
         return 1; \
     } \
     bool ex_lua_is##_typename ( lua_State *_l, int _idx ) { \
@@ -240,9 +240,12 @@ extern int ex_lua_ref_tostring ( struct lua_State *_l );
 extern int ex_lua_ref_concat ( struct lua_State *_l );
 extern int ex_lua_ref_eq ( struct lua_State *_l );
 
+//
+extern void ex_lua_pushobject ( struct lua_State *_l, ex_ref_t *_self );
+
 // NOTE: unlike ref, generic will create an user-data and apply proper metatable on it
-extern ref_proxy_t *ex_lua_pushobject ( struct lua_State *_l, const char *_lua_typename );
-extern ref_proxy_t *ex_lua_pushluabehavior ( struct lua_State *_l, const char *_lua_typename );
+extern ref_proxy_t *ex_lua_newobject ( struct lua_State *_l, const char *_lua_typename );
+extern ref_proxy_t *ex_lua_newluabehavior ( struct lua_State *_l, const char *_lua_typename );
 
 // ------------------------------------------------------------------ 
 // Desc: 

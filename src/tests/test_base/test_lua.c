@@ -55,7 +55,7 @@ int register_foobar ( lua_State *_l ) {
 
 static void normal () {
     char path[256];
-    struct lua_State *l = ex_current_lua_state();
+    struct lua_State *l = ex_lua_main_state();
 
     // test call from require
     strcpy( path, ex_fsys_realpath("lua/modules") );
@@ -75,7 +75,7 @@ static void normal () {
 // ------------------------------------------------------------------ 
 
 static void wrap () {
-    struct lua_State *l = ex_current_lua_state();
+    struct lua_State *l = ex_lua_main_state();
 
     ex_lua_dofile( l, "lua/test_rapid.lua", NULL );
     ex_lua_dofile( l, "lua/unit_tests/test_class.lua", NULL );

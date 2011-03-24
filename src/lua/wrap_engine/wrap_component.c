@@ -56,7 +56,7 @@ static int __component_get_entity ( lua_State *_l ) {
     ex_lua_check_nullref(_l,r);
     self = EX_REF_CAST(ex_component_t,r);
 
-    ex_object_pushref(self->entity);
+    ex_lua_pushobject(_l,self->entity);
     return 1;
 }
 
@@ -72,7 +72,7 @@ static int __component_get_trans2d ( lua_State *_l ) {
     ex_lua_check_nullref(_l,r);
     self = EX_REF_CAST(ex_component_t,r);
 
-    ex_object_pushref(EX_REF_CAST(ex_entity_t,self->entity)->trans2d);
+    ex_lua_pushobject(_l,EX_REF_CAST(ex_entity_t,self->entity)->trans2d);
     return 1;
 }
 

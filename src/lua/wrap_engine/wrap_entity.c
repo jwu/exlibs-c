@@ -54,7 +54,7 @@ static int __entity_new ( lua_State *_l ) {
     
     name = luaL_checkstring(_l,2);
     r = ex_world_create_entity( ex_current_world(), ex_strid(name) );
-    ex_object_pushref(r);
+    ex_lua_pushobject(_l,r);
 
     // add component if 3rd argument is a table
     if ( nargs > 2 ) {
@@ -89,7 +89,7 @@ static int __entity_add_comp ( lua_State *_l ) {
     }
 
     //
-    ex_object_pushref(compref);
+    ex_lua_pushobject(_l,compref);
 
     // if we have table parameters, setup them
     if ( nargs > 2 ) {
@@ -141,7 +141,7 @@ static int __entity_get_comp ( lua_State *_l ) {
         return 1;
     }
 
-    ex_object_pushref(comp);
+    ex_lua_pushobject(_l,comp);
     return 1;
 }
 
@@ -221,7 +221,7 @@ static int __entity_get_trans2d ( lua_State *_l ) {
     r = ex_lua_checkentity(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_object_pushref( EX_REF_CAST(ex_entity_t,r)->trans2d );
+    ex_lua_pushobject( _l, EX_REF_CAST(ex_entity_t,r)->trans2d );
     return 1;
 }
 

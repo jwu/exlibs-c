@@ -32,7 +32,7 @@ EX_DEF_LUA_BUILTIN_REF( ex_world_t, world, "ex.world" )
 
 static int __world_get_current ( lua_State *_l ) {
     ex_ref_t *cur = ex_current_world();
-    ex_object_pushref(cur);
+    ex_lua_pushobject(_l,cur);
     return 1;
 }
 
@@ -58,7 +58,7 @@ static int __world_new ( lua_State *_l ) {
     ex_ref_t *r;
     
     r = ex_create_object( EX_RTTI(ex_world_t), ex_generate_uid() );
-    ex_object_pushref(r);
+    ex_lua_pushobject(_l,r);
     EX_REF_CAST(ex_object_t,r)->init(r);
 
     return 1;
@@ -82,7 +82,7 @@ static int __world_new_entity ( lua_State *_l ) {
     name = luaL_checkstring(_l,2);
     ent = ex_world_create_entity( r, ex_strid(name) );
 
-    ex_object_pushref(ent);
+    ex_lua_pushobject(_l,ent);
     return 1;
 }
 

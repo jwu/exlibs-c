@@ -237,7 +237,7 @@ bool ex_lua_initialized () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-lua_State *ex_current_lua_state () { return __L; }
+lua_State *ex_lua_main_state () { return __L; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // lua module op

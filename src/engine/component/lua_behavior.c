@@ -20,13 +20,13 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// NOTE: we don't invoke __object_init here, we use ex_lua_pushluabehavior instead of ex_lua_pushobject 
+// NOTE: we don't invoke __object_init here, we use ex_lua_newluabehavior instead of ex_lua_newobject 
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_init ( ex_ref_t *_self ) {
     ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
-    lua_State *l = ex_current_lua_state();
-    ref_proxy_t *u = ex_lua_pushluabehavior ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
+    lua_State *l = ex_lua_main_state();
+    ref_proxy_t *u = ex_lua_newluabehavior ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
 
     u->val = _self;
     ex_incref(u->val);
@@ -186,19 +186,22 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
 
 static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
     int status;
-    typedef struct param_t {
+    typedef struct params_t {
         ex_ref_t *self;
-        int refID;
-        char name[256];
-    } param_t;
-    param_t *param = *((param_t **)_params);
-    lua_State *l = ex_current_lua_state();
+        lua_State *thread_state;
+        int lua_threadID;
+        int lua_funcID;
+        strid_t nameID;
+    } params_t;
+    params_t *params = (params_t *)_params;
 
     //
-    lua_rawgeti( l, LUA_REGISTRYINDEX, param->refID );
-    status = lua_pcall( l, 0, 0, 0 );
-    if ( status )
-        ex_lua_alert(l);
+    lua_rawgeti( params->thread_state, LUA_REGISTRYINDEX, params->lua_funcID );
+    ex_lua_pushobject( params->thread_state, params->self );
+    status = lua_pcall( params->thread_state, 1, 0, 0 );
+    if ( status ) {
+        ex_lua_alert(ex_lua_main_state());
+    }
 
     return _interval;
 }
@@ -208,18 +211,21 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_on_invoke_stop ( void *_params ) {
-    typedef struct param_t {
+    typedef struct params_t {
         ex_ref_t *self;
-        int refID;
-        char name[256];
-    } param_t;
-    param_t *param = *((param_t **)_params);
-    lua_State *l = ex_current_lua_state();
-    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,param->self);
+        lua_State *thread_state;
+        int lua_threadID;
+        int lua_funcID;
+        strid_t nameID;
+    } params_t;
+    params_t *params = (params_t *)_params;
+
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
 
     //
-    luaL_unref( l, LUA_REGISTRYINDEX, param->refID );
-    ex_hashmap_remove_at ( self->name_to_timer, param->name );
+    luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_funcID );
+    luaL_unref( ex_lua_main_state(), LUA_REGISTRYINDEX, params->lua_threadID );
+    ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -245,7 +251,7 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
 
     // 
     EX_MEMBER( ex_lua_behavior_t, compile_failed, false )
-    EX_MEMBER( ex_lua_behavior_t, name_to_timer, ex_hashmap(cstr, int, 8) )
+    EX_MEMBER( ex_lua_behavior_t, name_to_timer, ex_hashmap(strid, int, 8) )
 
 EX_DEF_OBJECT_END
 
@@ -270,42 +276,73 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
                               float _secs_delay, 
                               float _secs_repeat,
                               const char *_name,
-                              int _refID ) 
+                              lua_State *_cur_state ) 
 {
     size_t idx = -1;
     size_t hash_idx = -1;
     int timerID = -1;
+    strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-    ex_assert_return ( strlen(_name)+1 < 256, /**/, "the name is too long, only 256 support" );
+
+    lua_State *l1;
+    int lua_threadID,lua_funcID; 
+
+    // create new thread first
+    l1 = lua_newthread(ex_lua_main_state());
+    lua_threadID = luaL_ref(ex_lua_main_state(), LUA_REGISTRYINDEX); // keep the thread in registry index.
+    lua_xmove( _cur_state, l1, 1 ); // move the pushed func from l to l1.
+    lua_funcID = luaL_ref( l1, LUA_REGISTRYINDEX );
 
     //
-    hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &_name, &idx ); 
+    hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
     if ( idx != -1 ) {
-        luaL_error( EX_REF_CAST(ex_object_t,_self)->l, "The %s is already invoked! please cancle_invoke it first", _name );
+        luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
         return;
     }
 
     //
-    struct param_t {
+    struct params_t {
         ex_ref_t *self;
-        int refID;
-        char name[256];
-    } param;
-    param.self = _self;
-    param.refID = _refID;
-    strcpy( param.name, _name );
+        lua_State *thread_state;
+        int lua_threadID;
+        int lua_funcID;
+        strid_t nameID;
+    } params;
+    params.self = _self;
+    params.thread_state = l1;
+    params.lua_threadID = lua_threadID;
+    params.lua_funcID = lua_funcID;
+    params.nameID = nameID;
 
     // create timer
     timerID = ex_add_timer( __lua_behavior_invoke, 
                             __lua_behavior_on_invoke_stop,
-                            &param, 
-                            sizeof(param), 
+                            &params, 
+                            sizeof(params), 
                             ex_timespan_from_secs_f32(_secs_delay), 
                             ex_timespan_from_secs_f32(_secs_repeat), 
                             EX_TIMESPAN_INFINITY );
     // add timer to hashmap 
-    ex_hashmap_insert_new ( self->name_to_timer, &_name, &timerID, hash_idx, &idx );
+    ex_hashmap_insert_new ( self->name_to_timer, &nameID, &timerID, hash_idx, &idx );
 
     // now start it
     ex_start_timer(timerID);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
+    strid_t nameID = ex_strid(_name);
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+
+    int *timerID = ex_hashmap_get ( self->name_to_timer, &nameID, NULL ); 
+    if ( timerID ) {
+        ex_stop_timer(*timerID);
+    }
+    else {
+        luaL_error( ex_lua_main_state(), "can't find %s in invoke list", _name );
+        return;
+    }
 }

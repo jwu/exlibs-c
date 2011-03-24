@@ -49,7 +49,13 @@ extern void ex_lua_behavior_invoke ( ex_ref_t *_self,
                                      float _secs_delay, 
                                      float _secs_repeat,
                                      const char *_name,
-                                     int _refID );
+                                     struct lua_State *_cur_state );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name );
 
 // ######################### 
 #ifdef __cplusplus
