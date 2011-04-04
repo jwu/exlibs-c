@@ -10,6 +10,7 @@
 #define MISC_INC_H_1277863963
 // #################################################################################
 
+#include "os.h"
 #include "core.h"
 #include "ptr.h"
 #include "flags.h"

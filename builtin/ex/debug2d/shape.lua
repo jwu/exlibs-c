@@ -11,7 +11,9 @@
 
 local ex = ex
 local gl = gl
-module( ..., ex.lua_behavior.derive )
+
+local super = ex.lua_behavior
+module( ..., super.derive )
 
 -- static
 local MAX_TRAIL_VERTS = 16
@@ -47,7 +49,6 @@ end
 function start ( self )
     self:invoke ( "_add_trail", 0.0, 0.5 )
 end
-
 
 -- ------------------------------------------------------------------ 
 -- Desc: 

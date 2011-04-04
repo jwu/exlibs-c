@@ -10,7 +10,8 @@
 --/////////////////////////////////////////////////////////////////////////////
 
 local ex = ex
-module( ..., ex.lua_behavior.derive )
+local super = ex.lua_behavior
+module( ..., super.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
 --
@@ -30,7 +31,6 @@ end
 function start ( self )
 end
 
-
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
@@ -41,7 +41,7 @@ function update ( self )
     -- self.trans2d:move( t.x, t.y )
     -- self.trans2d.scale = ex.vec2f( ex.time.time % 4.0, ex.time.time % 4.0 )
     -- self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
-    self.trans2d:move( 10.0 * ex.time.dt, 0.0, ex.space.world )
+    self.trans2d:move( ex.time.dt, 0.0, ex.space.world )
 end
 
 -- ------------------------------------------------------------------ 

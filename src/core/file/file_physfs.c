@@ -47,19 +47,21 @@ int ex_fsys_init () {
     if ( ex_fsys_set_write_dir(path) == 0 )
         ex_log("set default write dir: %s", path );
 
-    // TODO: need low-level api check if the path exists first!!! { 
-    // // we add ~/.exsdk as the first builtin search directory
-    // strncpy ( path, ex_fsys_user_dir(), 1024 );
-    // strcat ( path, ".exsdk/" );
-    // if ( ex_fsys_mount( path, "/", true ) == 0 )
-    //     ex_log("mount dir: %s", path );
-    // } TODO end 
+    // if ~/.exsdk/ exists we add it as the primary builtin search directory
+    strncpy ( path, ex_fsys_user_dir(), 1024 );
+    strcat ( path, ".exsdk/" );
+    if ( ex_os_exists(path) && ex_os_isdir(path) ) {
+        if ( ex_fsys_mount( path, "/", true ) == 0 )
+            ex_log("mount dir: %s", path );
+    }
 
-    // we add app/builtin as the second builtin search directory
+    // if app/builtin/ exists, we add it as the second builtin search directory.
     strncpy ( path, ex_fsys_app_dir(), 1024 );
     strcat ( path, "builtin/" );
-    if ( ex_fsys_mount( path, "/", true ) == 0 )
-        ex_log("mount dir: %s", path );
+    if ( ex_os_exists(path) && ex_os_isdir(path) ) {
+        if ( ex_fsys_mount( path, "/", true ) == 0 )
+            ex_log("mount dir: %s", path );
+    }
 
     return 0;
 }

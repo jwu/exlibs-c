@@ -11,10 +11,10 @@
 
 local ex = ex
 local gl = gl
-local ex_debug2d_shape = require("ex.debug2d.shape")
 local tostring = tostring
 
-module( ..., ex_debug2d_shape.derive )
+local super = require("ex.debug2d.shape")
+module( ..., super.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
 -- properties
@@ -33,7 +33,7 @@ height = 1.0
 -- ------------------------------------------------------------------ 
 
 function awake ( self )
-    self.super.awake(self)
+    super.awake(self)
 end
 
 -- ------------------------------------------------------------------ 
@@ -41,7 +41,7 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( self )
-    self.super.start(self)
+    super.start(self)
 end
 
 
@@ -50,7 +50,7 @@ end
 -- ------------------------------------------------------------------ 
 
 function update ( self )
-    self.super.update(self)
+    super.update(self)
 end
 
 -- ------------------------------------------------------------------ 
@@ -58,7 +58,7 @@ end
 -- ------------------------------------------------------------------ 
 
 function on_render ( self )
-    self.super.on_render(self)
+    super.on_render(self)
 
     gl.MatrixMode( "MODELVIEW" )
     gl.LoadIdentity()
