@@ -85,10 +85,9 @@ static int __behavior_set_enabled ( lua_State *_l ) {
 // register
 ///////////////////////////////////////////////////////////////////////////////
 
-// ex.component.meta
+// ex.behavior.meta
 static const ex_getset_t __type_meta_getsets[] = {
     { "null", __behavior_get_null, NULL },
-    { "enabled", __behavior_get_enabled, __behavior_set_enabled },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {
@@ -98,8 +97,9 @@ static const luaL_Reg __type_meta_funcs[] = {
     { NULL, NULL },
 };
 
-// ex.component
+// ex.behavior
 static const ex_getset_t __meta_getsets[] = {
+    { "enabled", __behavior_get_enabled, __behavior_set_enabled },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __meta_funcs[] = {

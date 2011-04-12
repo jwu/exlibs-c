@@ -11,6 +11,7 @@
 
 local ex = ex
 local super = ex.lua_behavior
+local getmetatable = getmetatable
 module( ..., super.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -22,6 +23,7 @@ module( ..., super.derive )
 -- ------------------------------------------------------------------ 
 
 function awake ( self )
+    ex.debug.dump ( getmetatable(self), "move" )
 end
 
 -- ------------------------------------------------------------------ 

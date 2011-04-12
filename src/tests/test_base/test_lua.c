@@ -77,11 +77,11 @@ static void normal () {
 static void wrap () {
     struct lua_State *l = ex_lua_main_state();
 
-    ex_lua_dofile( l, "lua/test_rapid.lua", NULL );
+    // ex_lua_dofile( l, "lua/test_rapid.lua", NULL );
     ex_lua_dofile( l, "lua/unit_tests/test_class.lua", NULL );
-    ex_lua_dofile( l, "lua/unit_tests/test_deepcopy.lua", NULL );
-    ex_lua_dofile( l, "lua/unit_tests/test_vec2f.lua", NULL );
-    ex_lua_dofile( l, "lua/unit_tests/test_angf.lua", NULL );
+    // ex_lua_dofile( l, "lua/unit_tests/test_deepcopy.lua", NULL );
+    // ex_lua_dofile( l, "lua/unit_tests/test_vec2f.lua", NULL );
+    // ex_lua_dofile( l, "lua/unit_tests/test_angf.lua", NULL );
 
     // since object is an runtime class, if we would like to test it, we have to start engine
     ex_app_init();

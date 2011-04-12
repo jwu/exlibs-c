@@ -11,24 +11,12 @@
 
 require ("ex.debug")
 
-local do_test = false
+local do_test = true
 if not do_test then return end
 
 --/////////////////////////////////////////////////////////////////////////////
 --
 --/////////////////////////////////////////////////////////////////////////////
-
--- ======================================================== 
--- test ex.object
--- ======================================================== 
-
--- ex.debug.dump(ex.object,"ex.object") 
-
--- local obj = ex.object()
--- ex.debug.dump(getmetatable(obj),"obj") 
--- ex.debug.dump(obj,"obj") 
--- obj:destroy()
--- obj = nil
 
 -- ======================================================== 
 -- test foo that derived from ex.object
@@ -37,21 +25,16 @@ if not do_test then return end
 
 foo = ex.class( {
     __typename = "foo",
-    text = "hello foo",
+    text = "Hello, I'm foo!",
+    array = { "one", "two", "three", "four" },
+    table = {
+        a = "I'm a",
+        b = "I'm b",
+    },
     say = function (_self) 
         ex.log("foo said: " .. _self.text)
     end
-}, ex.object )
-
--- foo_obj = foo()
--- foo_obj.name = "foobar object"
--- foo_obj.text = "hello foo, mu ha ha ha!"
--- ex.log ( "the name is: " .. foo_obj.name)
--- ex.log ( "the text is: " .. foo_obj.text)
-
--- ex.debug.dump(foo,"foo") 
--- ex.debug.dump(foo_obj,"foo_obj") 
--- ex.debug.dump(getmetatable(foo_obj),"foo_obj_meta") 
+} )
 
 -- ======================================================== 
 -- test bar that derived from foo
@@ -59,27 +42,34 @@ foo = ex.class( {
 
 bar = ex.class( {
     __typename = "bar",
-    text2 = "hello bar",
+    text = "Hello, I'm bar!",
+    text2 = "foo is my parent.", 
     say = function (_self) 
-        ex.log("bar said: " .. _self.text2)
+        bar.__super.say (_self)
+        ex.log( _self.text2 )
     end,
-    destroy = function (_self)
-        ex.log("haha, my destroy")
-        _self.super.destroy(_self)
-    end
 }, foo )
 
-bar_obj = bar()
-assert ( bar_obj.destroy ~= nil, "destory can't be nil" )
-bar_obj.text = "hello foo from bar, mu ha ha ha!"
-bar_obj.text2 = "hello bar, mu ha ha ha!"
-ex.log ( "the text is: " .. bar_obj.text)
-ex.log ( "the text2 is: " .. bar_obj.text2)
-bar_obj:say()
-bar_obj.super.say(bar_obj)
--- bar_obj.super.text = "yes"
+-- ======================================================== 
+-- test foo_obj 
+-- ======================================================== 
 
-ex.debug.dump(bar,"bar") 
-ex.debug.dump(bar_obj,"bar_obj") 
-ex.debug.dump(getmetatable(bar_obj),"bar_obj_meta") 
--- bar_obj:destroy()
+ex.debug.dump(foo,"foo") 
+foo_obj = foo()
+ex.debug.dump(foo_obj,"foo_obj") 
+
+if foo_obj.array ~= nil then ex.log("foo.array is copied from metatable.") end
+ex.debug.dump(foo_obj,"foo_obj") 
+foo_obj:say()
+
+-- ======================================================== 
+-- test bar_obj
+-- ======================================================== 
+
+-- ex.debug.dump(bar,"bar") 
+bar_obj = bar()
+-- ex.debug.dump(bar_obj,"bar_obj") 
+
+-- bar_obj.array
+-- ex.debug.dump(bar_obj,"bar_obj") 
+bar_obj:say()

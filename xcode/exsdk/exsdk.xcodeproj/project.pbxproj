@@ -215,6 +215,7 @@
 		B2B8B1B6131D217600D11A44 /* lua_behavior.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B8B1B4131D217600D11A44 /* lua_behavior.c */; };
 		B2B8B1B7131D217600D11A44 /* lua_behavior.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B8B1B5131D217600D11A44 /* lua_behavior.h */; };
 		B2BD881B12E6F86A001F9D38 /* test_cstr.c in Sources */ = {isa = PBXBuildFile; fileRef = B2BD881A12E6F86A001F9D38 /* test_cstr.c */; };
+		B2C344DA13503A0800D9E793 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
 		B2D8CA5612F1099D00584C38 /* test_uid.c in Sources */ = {isa = PBXBuildFile; fileRef = B2D8CA5512F1099D00584C38 /* test_uid.c */; };
 		B2D8CAC112F1480A00584C38 /* simple_behavior.c in Sources */ = {isa = PBXBuildFile; fileRef = B2D8CAC012F1480A00584C38 /* simple_behavior.c */; };
 		B2DD23FE12A7C86E0053CA3F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2DD23F212A7C86E0053CA3F /* main.c */; };
@@ -508,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2A22DC012FEEC3000F3C100 /* OpenGL.framework in Frameworks */,
+				B2C344DA13503A0800D9E793 /* GLUT.framework in Frameworks */,
 				B2B7B32912FD74D400FA2EC0 /* libphysfs.a in Frameworks */,
 				B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */,
 				B200D3E412E48F51003B4944 /* libyajl_s.a in Frameworks */,

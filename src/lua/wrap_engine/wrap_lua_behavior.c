@@ -84,7 +84,7 @@ ref_proxy_t *ex_lua_newluabehavior ( lua_State *_l, const char *_lua_typename ) 
     lua_setmetatable(_l,-2);
 
     //
-    u = ex_lua_pushref ( _l, lua_gettop(_l) );
+    u = ex_lua_pushref ( _l, -1 );
     lua_remove(_l,-2);
 
     return u;

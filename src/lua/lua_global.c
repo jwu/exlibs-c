@@ -98,6 +98,22 @@ The third field, x, tells whether the function may throw errors:
 static lua_State *__L = NULL;
 static bool __initialized = false;
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int __lua_index ( lua_State *_l, int _idx ) {
+    if ( _idx > 0 ) {
+        return _idx;
+    }
+    else if ( _idx > LUA_REGISTRYINDEX ) {
+        return lua_gettop(_l) + _idx + 1;
+    }
+    else {
+        return _idx;
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // lua core
 ///////////////////////////////////////////////////////////////////////////////
@@ -291,8 +307,10 @@ int ex_lua_global_module ( lua_State *_l, const char *_key ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
+    int idx = __lua_index(_l,_idx);
+
     lua_pushstring(_l,_key);
-    lua_rawget(_l, _idx);
+    lua_rawget(_l, idx);
 
     // create if necessary.
     if( !lua_istable(_l, -1) ) {
@@ -300,8 +318,8 @@ int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
         lua_newtable(_l);
         lua_pushstring(_l,_key);
         lua_pushvalue(_l, -1); // duplicate the table to leave on top.
-        // lua_setfield(_l, -2-_idx, _key); // _key[_idx] = table
-        lua_rawset(_l, -3-_idx); // _key[_idx] = table
+        // lua_setfield(_l, idx, _key);
+        lua_rawset(_l, idx);
     }
 
     return 1;
@@ -382,9 +400,8 @@ static int __load_modules ( lua_State *_l, const char *_base, const char *_dir )
                 }
 
                 // check if the module already loaded ( by require )
-                int loaded = lua_gettop(_l) + 1;  /* index of _LOADED table */
                 lua_getfield(_l, LUA_REGISTRYINDEX, "_LOADED");
-                lua_getfield(_l, loaded, modname);  /* get _LOADED[modname] */
+                lua_getfield(_l, -1, modname);  /* get _LOADED[modname] */
                 if ( !lua_istable(_l,-1) ) 
                     ex_lua_dofile( _l, full_path, modname );
                 // TODO: since require will change the order of module loading, 
@@ -530,8 +547,8 @@ int ex_lua_load_module_byfile2 ( lua_State *_l, const char *_filepath, const cha
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_get_module ( lua_State *_l, const char *_moduleName )
-{
+int ex_lua_get_module ( lua_State *_l, const char *_moduleName ) {
+
     // FIXME: this is wrong, should recursively load the module by . { 
     lua_getglobal( _l, _moduleName );
     if( !lua_istable(_l, -1) ) {
@@ -540,14 +557,15 @@ int ex_lua_get_module ( lua_State *_l, const char *_moduleName )
     }
     return 0;
     // } FIXME end 
+
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_get_function ( lua_State *_l, const char *_moduleName, const char *_funcName )
-{
+int ex_lua_get_function ( lua_State *_l, const char *_moduleName, const char *_funcName ) {
+
     // FIXME: same as above { 
     lua_getglobal( _l, _moduleName );
     lua_getfield( _l, -1, _funcName );
@@ -559,6 +577,7 @@ int ex_lua_get_function ( lua_State *_l, const char *_moduleName, const char *_f
     lua_remove(_l, -2); // remove mod
     return 0;
     // } FIXME end 
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -668,7 +687,7 @@ int ex_lua_clear_refs ( lua_State *_l ) {
 
         // TODO: should recursively check the table....
 
-        if ( ex_lua_isclass( _l, lua_gettop(_l) ) ) {
+        if ( ex_lua_isclass( _l, -1 ) ) {
             lua_pushvalue(_l,-3); // push table
             lua_pushvalue(_l,-3); // push key
             lua_pushnil(_l); // push key
@@ -806,11 +825,13 @@ bool ex_lua_isbuiltin ( lua_State *_l, int _idx ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_typename ( lua_State *_l, int _idx ) {
+    int idx = __lua_index(_l,_idx);
+
     // local tp = type(_object) 
     // if tp == "userdata" or tp == "table" then 
-    if ( lua_isuserdata(_l,_idx) || lua_istable(_l,_idx) ) {
+    if ( lua_isuserdata(_l,idx) || lua_istable(_l,idx) ) {
         // local name = rawget(typeof(_object), "__typename")
-        if ( lua_getmetatable(_l,_idx) == 0 ) {
+        if ( lua_getmetatable(_l,idx) == 0 ) {
             return luaL_error (_l,"can't find metatable in the class.");
         }
         lua_pushstring(_l,"__typename");
@@ -827,7 +848,7 @@ int ex_lua_typename ( lua_State *_l, int _idx ) {
     }
 
     // return type(_object)
-    lua_pushstring(_l, luaL_typename(_l,_idx) );
+    lua_pushstring(_l, luaL_typename(_l,idx) );
     return 1;
 }
 
@@ -989,6 +1010,8 @@ static int __copy ( lua_State *_l ) {
 #undef OBJ_IDX
 
 int ex_lua_deepcopy ( lua_State *_l, int _idx ) {
+    int idx = __lua_index(_l,_idx);
+
     // local lookup_table = {}
     lua_newtable(_l);
 
@@ -996,7 +1019,7 @@ int ex_lua_deepcopy ( lua_State *_l, int _idx ) {
     lua_pushcclosure(_l,__copy,1);
 
     // return _copy(_obj)
-    lua_pushvalue(_l,_idx); // push first args to stack
+    lua_pushvalue(_l,idx); // push first args to stack
     lua_call(_l,1,1); // call _copy with 1 args, 1 result.
     return 1;
 }
@@ -1221,11 +1244,13 @@ int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 // ------------------------------------------------------------------ 
 
 static inline int __copy_v ( lua_State *_l, int _idx ) {
+    int idx = __lua_index(_l,_idx);
+
     // if type(v) == "table" and getmetatable(v) == nil then
     if ( lua_istable(_l,-1) ) {
         if ( lua_getmetatable(_l,-1) == 0 ) {
             // vv = deepcopy(v)
-            ex_lua_deepcopy(_l, lua_gettop(_l) );
+            ex_lua_deepcopy(_l, -1 );
             lua_remove(_l,-2); // remove v
         }
         else {
@@ -1236,7 +1261,7 @@ static inline int __copy_v ( lua_State *_l, int _idx ) {
     // rawset(mt,_k,vv)
     lua_pushvalue(_l,2); // push key
     lua_pushvalue(_l,-2); // push vv
-    lua_rawset ( _l, _idx );
+    lua_rawset ( _l, idx );
 
     // return vv
     return 1;
@@ -1441,7 +1466,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 
     // if v ~= nil then 
     if ( lua_isnil(_l,-1) == 0 ) {
-        return __copy_v(_l,lua_gettop(_l)-2);
+        return __copy_v(_l,-3);
     }
     lua_pop(_l,1); // pops v
 
@@ -1458,7 +1483,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
         lua_rawget(_l,-2);
         // if v ~= nil then 
         if ( lua_isnil(_l,-1) == 0 ) {
-            return __copy_v(_l,lua_gettop(_l)-3);
+            return __copy_v(_l,-4);
         }
         lua_pop(_l,1); // pops v
 

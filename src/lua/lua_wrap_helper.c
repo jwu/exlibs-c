@@ -15,6 +15,8 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+extern int __lua_index( lua_State *, int );
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,11 +36,12 @@ typedef struct __generic_proxy_t {
 
 ref_proxy_t *ex_lua_pushref ( lua_State *_l, int _meta_idx ) {
     ref_proxy_t *u;
+    int meta_idx = __lua_index(_l,_meta_idx);
 
     u = (ref_proxy_t *)lua_newuserdata(_l, sizeof(ref_proxy_t));
     u->typeid = EX_TYPEID(ref);
     u->val = NULL;
-    lua_pushvalue(_l,_meta_idx);
+    lua_pushvalue(_l,meta_idx);
     lua_setmetatable(_l,-2);
 
     return u;
@@ -76,11 +79,16 @@ ex_ref_t *ex_lua_toref ( lua_State *_l, int _idx ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_lua_checkref ( lua_State *_l, int _idx ) {
-    if ( ex_lua_isref(_l,_idx) == false ) {
-        luaL_error( _l, "invalid parameter type, expected ref" );
-    }
+    ref_proxy_t *u;
 
-    return ex_lua_toref(_l,_idx);
+    if ( lua_isuserdata(_l, _idx) == 0 )
+        luaL_error( _l, "invalid parameter type, expected ref" );
+
+    u = (ref_proxy_t *)lua_touserdata(_l,_idx);
+    if ( u->typeid != EX_TYPEID(ref) )
+        luaL_error( _l, "invalid parameter type, expected ref" );
+
+    return u->val;
 }
 
 // ------------------------------------------------------------------ 
@@ -186,7 +194,7 @@ ref_proxy_t *ex_lua_newobject ( lua_State *_l, const char *_lua_typename ) {
     ref_proxy_t *u;
 
     luaL_newmetatable( _l, _lua_typename );
-    u = ex_lua_pushref ( _l, lua_gettop(_l) );
+    u = ex_lua_pushref ( _l, -1 );
     lua_remove(_l,-2);
 
     return u;
@@ -328,10 +336,10 @@ int ex_lua_register_class ( lua_State *_l,
     lua_newtable(_l);
     luaL_register(_l, NULL, _type_meta_funcs);
     ex_lua_class( _l, 
-                  lua_gettop(_l)-2, // base idx
-                  lua_gettop(_l)-1, // super idx
-                  lua_gettop(_l),   // meta idx
-                  true // is builtin
+                  -3,   // base idx
+                  -2,   // super idx
+                  -1,   // meta idx
+                  true  // is builtin
                   );
 
     // _G[_field] = ex.class(tp) -- NOTE: here _G depends on what is the current table on the stack
