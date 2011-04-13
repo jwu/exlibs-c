@@ -740,7 +740,7 @@ int ex_lua_class ( lua_State *_l,
         // lua_pushvalue(_l,super_idx); // push super
         // while ( lua_isnil(_l,-1) == 0 ) {
         //     // merge member from super
-        //     ex_lua_merge_from ( _l, base_idx, -1 );
+        //     ex_lua_merge ( _l, base_idx, -1 );
 
         //     // get super's super from super's metatable
         //     // super = rawget(super,"__super")

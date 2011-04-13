@@ -1071,7 +1071,7 @@ int ex_lua_deepcopy_to ( lua_State *_l, int _idx_to ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_merge_from ( lua_State *_l, int _idx_to, int _idx_from ) {
+int ex_lua_merge ( lua_State *_l, int _idx_to, int _idx_from ) {
     return 0;
 
     int idx_to = __lua_index ( _l, _idx_to ); 
