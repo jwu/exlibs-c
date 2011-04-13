@@ -1121,15 +1121,16 @@ int ex_lua_type_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
         return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
-    key = luaL_checkstring(_l, 2);
-    lua_pushstring ( _l, key );
+    lua_pushvalue(_l,2);
     lua_rawget ( _l, -2 );
     // if this is not nil
     if ( lua_isnil( _l, -1 ) == 0 ) {
         return luaL_error(_l,"the key %s is readonly", key);
     }
+    lua_pop(_l,2); // pops mt,v
 
     // get and check the key
+    key = luaL_checkstring(_l, 2);
     key_id = ex_strid(key);
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset == NULL ) {
@@ -1163,7 +1164,7 @@ int ex_lua_type_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     lua_rawget ( _l, -2 );
     if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
         return 1;
-    lua_pop(_l,2);
+    lua_pop(_l,2); // pops v,mt
 
     // check the key
     key = luaL_checkstring(_l, 2);
@@ -1197,16 +1198,16 @@ int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) 
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
         return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
-    key = luaL_checkstring(_l, 2);
-    lua_pushstring ( _l, key );
+    lua_pushvalue (_l,2);
     lua_rawget ( _l, -2 );
     // if this is not nil
     if ( lua_isnil( _l, -1 ) == 0 ) {
         return luaL_error(_l,"the key %s is readonly", key);
     }
-    lua_pop(_l,1); // pops v
+    lua_pop(_l,2); // pops mt,v
 
     // get and check the key
+    key = luaL_checkstring(_l, 2);
     key_id = ex_strid(key);
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset ) {
@@ -1237,7 +1238,7 @@ int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     lua_rawget ( _l, -2 );
     if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
         return 1;
-    lua_pop(_l,1); // pops v
+    lua_pop(_l,2); // pops v,mt
 
     // check the key
     key = luaL_checkstring(_l, 2);
@@ -1298,7 +1299,7 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
         lua_rawset ( _l, -3 );
         return 0;
     }
-    lua_pop(_l,2);
+    lua_pop(_l,2); // pops mt,v
 
     // get and check the key
     key = luaL_checkstring(_l, 2);
@@ -1363,7 +1364,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     lua_rawget ( _l, -2 );
     if ( lua_isnil( _l, -1 ) == 0 ) // if this is not nil
         return 1;
-    lua_pop(_l,2);
+    lua_pop(_l,2); // pops v,mt
 
     // check the key
     key = luaL_checkstring(_l, 2);
