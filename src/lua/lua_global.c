@@ -876,6 +876,10 @@ int ex_lua_typename ( lua_State *_l, int _idx ) {
 // end
 // ------------------------------------------------------------------ 
 
+// ======================================================== 
+// __copy 
+// ======================================================== 
+
 #define OBJ_IDX 1
 static int __copy ( lua_State *_l ) {
     // if isbuiltin( _obj ) then
@@ -1022,6 +1026,84 @@ int ex_lua_deepcopy ( lua_State *_l, int _idx ) {
     lua_pushvalue(_l,idx); // push first args to stack
     lua_call(_l,1,1); // call _copy with 1 args, 1 result.
     return 1;
+}
+
+// ------------------------------------------------------------------ 
+// if v ~= nil then 
+//     local vv = v
+//     if type(vv) == "table" and getmetatable(vv) == nil then
+//         vv = deepcopy(v)
+//     end
+//     rawset(mt,_k,vv)
+//     return vv
+// end
+// ------------------------------------------------------------------ 
+
+int ex_lua_deepcopy_to ( lua_State *_l, int _idx_to ) {
+    // -2 is the key
+    // -1 is the value 
+    int idx_to = __lua_index(_l,_idx_to);
+    int idx_vv;
+
+    // if type(v) == "table" and getmetatable(v) == nil then
+    if ( lua_istable(_l,-1) ) {
+        if ( lua_getmetatable(_l,-1) == 0 ) {
+            ex_lua_deepcopy(_l,-1); // vv = deepcopy(v)
+            lua_remove(_l,-2); // remove v
+        }
+        else {
+            lua_pop(_l,1); // pops mt
+        }
+    }
+
+    // stack: k,vv,top
+    lua_pushvalue( _l, -1 );
+    idx_vv = __lua_index(_l,-3);
+    lua_insert(_l,idx_vv);
+    // stack: vv,k,vv,top
+    lua_rawset(_l,idx_to); // rawset(mt,_k,vv)
+
+    // return vv
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_merge_from ( lua_State *_l, int _idx_to, int _idx_from ) {
+    return 0;
+
+    int idx_to = __lua_index ( _l, _idx_to ); 
+    int idx_from = __lua_index ( _l, _idx_from ); 
+
+    lua_pushnil(_l); /* first key */
+    while ( lua_next(_l,idx_from) != 0 ) {
+        /* uses 'key' (at index -2) and 'value' (at index -1) */
+
+        // ======================================================== 
+        // stack: fk, fv, top
+        // ======================================================== 
+
+        // check if to table has the fk
+        lua_pushvalue (_l,-2); // push fk
+        lua_rawget (_l,idx_to); // tv = rawget(to,fk)
+
+        // ======================================================== 
+        // stack: fk, fv, tv, top
+        // ======================================================== 
+
+        // if tv == nil
+        if ( lua_isnil(_l,-1) ) {
+            lua_pushvalue (_l,-3); // push fk
+            lua_pushvalue (_l,-3); // push fv
+            ex_lua_deepcopy_to ( _l, idx_to );
+        }
+        lua_pop(_l,-1); // pop tv
+
+        /* removes 'value'; keeps 'key' for next iteration */
+        lua_pop(_l, 1);
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -1232,42 +1314,6 @@ int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: NOTE: this function only used in __class_index 
-// if v ~= nil then 
-//     local vv = v
-//     if type(vv) == "table" and getmetatable(vv) == nil then
-//         vv = deepcopy(v)
-//     end
-//     rawset(mt,_k,vv)
-//     return vv
-// end
-// ------------------------------------------------------------------ 
-
-static inline int __copy_v ( lua_State *_l, int _idx ) {
-    int idx = __lua_index(_l,_idx);
-
-    // if type(v) == "table" and getmetatable(v) == nil then
-    if ( lua_istable(_l,-1) ) {
-        if ( lua_getmetatable(_l,-1) == 0 ) {
-            // vv = deepcopy(v)
-            ex_lua_deepcopy(_l, -1 );
-            lua_remove(_l,-2); // remove v
-        }
-        else {
-            // local vv = v
-            lua_pop(_l,1); // pops mt
-        }
-    }
-    // rawset(mt,_k,vv)
-    lua_pushvalue(_l,2); // push key
-    lua_pushvalue(_l,-2); // push vv
-    lua_rawset ( _l, idx );
-
-    // return vv
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
@@ -1460,15 +1506,17 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     if ( lua_getmetatable(_l,-1) == 0 ) {
         return luaL_error ( _l, "can't find the meta-meta-table of _t" );
     }
+
     // v = rawget(mt,_k)
+    lua_pushvalue(_l,2); // leaves for copy_to
     lua_pushvalue(_l,2);
-    lua_rawget(_l,-2);
+    lua_rawget(_l,-3);
 
     // if v ~= nil then 
     if ( lua_isnil(_l,-1) == 0 ) {
-        return __copy_v(_l,-3);
+        return ex_lua_deepcopy_to(_l,-4);
     }
-    lua_pop(_l,1); // pops v
+    lua_pop(_l,2); // pops k,v
 
     // check if the super have the key
     // local super = rawget(mt,"__super")
@@ -1479,13 +1527,14 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     while ( lua_isnil(_l,-1) == 0 ) {
         // get key from super's metatable
         // v = rawget(super,_k)
+        lua_pushvalue(_l,2); // leaves for copy_to
         lua_pushvalue(_l,2); // push key
-        lua_rawget(_l,-2);
+        lua_rawget(_l,-3);
         // if v ~= nil then 
         if ( lua_isnil(_l,-1) == 0 ) {
-            return __copy_v(_l,-4);
+            return ex_lua_deepcopy_to(_l,-5);
         }
-        lua_pop(_l,1); // pops v
+        lua_pop(_l,2); // pops k,v
 
         // get super's super from super's metatable
         // super = rawget(super,"__super")

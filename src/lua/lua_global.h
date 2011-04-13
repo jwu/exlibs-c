@@ -100,6 +100,9 @@ extern bool ex_lua_isclass ( struct lua_State *_l, int _idx );
 extern bool ex_lua_isbuiltin ( struct lua_State *_l, int _idx );
 extern int ex_lua_typename ( struct lua_State *_l, int _idx );
 extern int ex_lua_deepcopy ( struct lua_State *_l, int _idx );
+// Desc: this function use -1 value, -2 key, return vv on the top of the stack
+extern int ex_lua_deepcopy_to ( struct lua_State *_l, int _idx );
+extern int ex_lua_merge_from ( struct lua_State *_l, int _idx_to, int _idx_from );
 
 typedef int (*lua_pfn) ( struct lua_State * );
 extern int ex_lua_class ( struct lua_State *_l, 

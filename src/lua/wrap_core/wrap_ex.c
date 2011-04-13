@@ -47,40 +47,6 @@ static int __class_new ( lua_State *_l ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: NOTE: this function only used in __class_index 
-// if v ~= nil then 
-//     local vv = v
-//     if type(vv) == "table" and getmetatable(vv) == nil then
-//         vv = deepcopy(v)
-//     end
-//     rawset(_t,_k,vv)
-//     return vv
-// end
-// ------------------------------------------------------------------ 
-
-static inline int __copy_v ( lua_State *_l ) {
-    // if type(v) == "table" and getmetatable(v) == nil then
-    if ( lua_istable(_l,-1) ) {
-        if ( lua_getmetatable(_l,-1) == 0 ) {
-            // vv = deepcopy(v)
-            ex_lua_deepcopy(_l, -1 );
-            lua_remove(_l,-2); // remove v
-        }
-        else {
-            // local vv = v
-            lua_pop(_l,1); // pops mt
-        }
-    }
-    // rawset(_t,_k,vv)
-    lua_pushvalue(_l,2); // push key
-    lua_pushvalue(_l,-2); // push vv
-    lua_rawset ( _l, 1 );
-
-    // return vv
-    return 1;
-}
-
-// ------------------------------------------------------------------ 
 // Desc: 
 // local function class_index ( _t, _k )
 //     -- NOTE: the _t can only be object instance, 
@@ -167,14 +133,15 @@ static int __class_index ( lua_State *_l ) {
         return luaL_error ( _l, "can't find the metatable of _t" );
     }
     // v = rawget(mt,_k)
+    lua_pushvalue(_l,2); // leaves for copy_to
     lua_pushvalue(_l,2);
-    lua_rawget(_l,-2);
+    lua_rawget(_l,-3);
 
     // if v ~= nil then 
     if ( lua_isnil(_l,-1) == 0 ) {
-        return __copy_v(_l);
+        return ex_lua_deepcopy_to(_l,1);
     }
-    lua_pop(_l,1); // pops v
+    lua_pop(_l,2); // pops k,v
 
     // check if the super have the key
     // local super = rawget(mt,"__super")
@@ -185,13 +152,14 @@ static int __class_index ( lua_State *_l ) {
     while ( lua_isnil(_l,-1) == 0 ) {
         // get key from super's metatable
         // v = rawget(super,_k)
+        lua_pushvalue(_l,2); // leaves for copy_to
         lua_pushvalue(_l,2); // push key
-        lua_rawget(_l,-2);
+        lua_rawget(_l,-3);
         // if v ~= nil then 
         if ( lua_isnil(_l,-1) == 0 ) {
-            return __copy_v(_l);
+            return ex_lua_deepcopy_to(_l,1);
         }
-        lua_pop(_l,1); // pops v
+        lua_pop(_l,2); // pops k,v
 
         // get super's super from super's metatable
         // super = rawget(super,"__super")
@@ -766,6 +734,22 @@ int ex_lua_class ( lua_State *_l,
         lua_pushstring(_l,"__super");
         lua_pushvalue(_l,super_idx);
         lua_rawset (_l,base_idx);
+
+        // ADD, TESTME { 
+        // // recursively merge member from super
+        // lua_pushvalue(_l,super_idx); // push super
+        // while ( lua_isnil(_l,-1) == 0 ) {
+        //     // merge member from super
+        //     ex_lua_merge_from ( _l, base_idx, -1 );
+
+        //     // get super's super from super's metatable
+        //     // super = rawget(super,"__super")
+        //     lua_pushstring(_l,"__super");
+        //     lua_rawget(_l,-2);
+        //     lua_remove(_l,-2); // pops prev rawget
+        // }
+        // lua_pop(_l,1); // pops rawget
+        // } ADD end 
     }
 
     // register the base table in metatable

@@ -135,6 +135,7 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
 // ------------------------------------------------------------------ 
 
 #define EX_DEF_LUA_BUILTIN_TYPE(_type,_typename,_lua_typename) \
+    extern int __lua_index( lua_State *, int ); \
     static ex_hashmap_t __key_to_type_meta_getset; \
     static ex_hashmap_t __key_to_meta_getset; \
     static const char *__typename = _lua_typename; \
@@ -170,16 +171,17 @@ EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     } \
     static _typename##_proxy_t *__push##_typename ( lua_State *_l, int _meta_idx ) { \
         _typename##_proxy_t *u; \
+        int meta_idx = __lua_index(_l,_meta_idx); \
         u = (_typename##_proxy_t *)lua_newuserdata(_l, sizeof(_typename##_proxy_t)); \
         u->typeid = EX_TYPEID(_typename); \
-        lua_pushvalue(_l,_meta_idx); \
+        lua_pushvalue(_l,meta_idx); \
         lua_setmetatable(_l,-2); \
         return u; \
     } \
     _typename##_proxy_t *ex_lua_push##_typename ( lua_State *_l ) { \
         _typename##_proxy_t *u; \
         luaL_newmetatable( _l, __typename ); /*NOTE: this find a table in LUA_REGISTRYINDEX*/ \
-        u = __push##_typename ( _l, lua_gettop(_l) ); \
+        u = __push##_typename ( _l, -1 ); \
         lua_remove(_l,-2); \
         return u; \
     } \
