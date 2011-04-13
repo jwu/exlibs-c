@@ -1072,8 +1072,6 @@ int ex_lua_deepcopy_to ( lua_State *_l, int _idx_to ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_merge ( lua_State *_l, int _idx_to, int _idx_from ) {
-    return 0;
-
     int idx_to = __lua_index ( _l, _idx_to ); 
     int idx_from = __lua_index ( _l, _idx_from ); 
 
@@ -1097,13 +1095,16 @@ int ex_lua_merge ( lua_State *_l, int _idx_to, int _idx_from ) {
         if ( lua_isnil(_l,-1) ) {
             lua_pushvalue (_l,-3); // push fk
             lua_pushvalue (_l,-3); // push fv
-            ex_lua_deepcopy_to ( _l, idx_to );
+            ex_lua_deepcopy_to ( _l, idx_to ); // push vv
+            lua_pop(_l,1); // pop vv
         }
-        lua_pop(_l,-1); // pop tv
+        lua_pop(_l,1); // pop tv
 
         /* removes 'value'; keeps 'key' for next iteration */
         lua_pop(_l, 1);
     }
+
+    return 0;
 }
 
 // ------------------------------------------------------------------ 
@@ -1216,37 +1217,6 @@ int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) 
         return getset->set(_l);
     }
     
-    // process super
-
-    // check if the super have the key
-    // local super = rawget(mt,"__super")
-    lua_pushstring(_l,"__super");
-    lua_rawget(_l,-2);
-
-    // while super ~= nil do
-    while ( lua_isnil(_l,-1) == 0 ) {
-        // get key from super's metatable
-        // v = rawget(super,_k)
-        lua_pushvalue(_l,2); // push key
-        lua_rawget(_l,-2);
-        // if v ~= nil then 
-        if ( lua_isnil(_l,-1) == 0 ) {
-            // rawset(_t,_k,_v)
-            lua_pushvalue(_l,2); // push _k
-            lua_pushvalue(_l,3); // push _v
-            lua_rawset (_l,1);
-            return 0;
-        }
-        lua_pop(_l,1); // pops v
-
-        // get super's super from super's metatable
-        // super = rawget(super,"__super")
-        lua_pushstring(_l,"__super");
-        lua_rawget(_l,-2);
-        lua_remove(_l,-2); // pops prev rawget
-    }
-    lua_pop(_l,1); // pops rawget
-
     return luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
 }
 
@@ -1280,33 +1250,6 @@ int ex_lua_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) {
         // process
         return getset->get(_l);
     }
-
-    // process in super
-
-    // check if the super have the key
-    // local super = rawget(mt,"__super")
-    lua_pushstring(_l,"__super");
-    lua_rawget(_l,-2);
-
-    // while super ~= nil do
-    while ( lua_isnil(_l,-1) == 0 ) {
-        // get key from super's metatable
-        // v = rawget(super,_k)
-        lua_pushvalue(_l,2); // push key
-        lua_rawget(_l,-2);
-        // if v ~= nil then 
-        if ( lua_isnil(_l,-1) == 0 ) {
-            return 1;
-        }
-        lua_pop(_l,1); // pops v
-
-        // get super's super from super's metatable
-        // super = rawget(super,"__super")
-        lua_pushstring(_l,"__super");
-        lua_rawget(_l,-2);
-        lua_remove(_l,-2); // pops prev rawget
-    }
-    lua_pop(_l,1); // pops rawget
 
     // return nil
     lua_pushnil(_l);
@@ -1393,37 +1336,6 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     }
     lua_pop(_l,1); // pops v
 
-    //
-    // check if the super have the key
-    // local super = rawget(mt,"__super")
-    lua_pushstring(_l,"__super");
-    lua_rawget(_l,-2);
-
-    // while super ~= nil do
-    while ( lua_isnil(_l,-1) == 0 ) {
-        // get key from super's metatable
-        // v = rawget(super,_k)
-        lua_pushvalue(_l,2); // push key
-        lua_rawget(_l,-2);
-        // if v ~= nil then 
-        if ( lua_isnil(_l,-1) == 0 ) {
-            // rawset(_t,_k,_v)
-            lua_pop(_l,1); // pops v
-            lua_pushvalue(_l,2); // push _k
-            lua_pushvalue(_l,3); // push _v
-            lua_rawset (_l,-5);
-            return 0;
-        }
-        lua_pop(_l,1); // pops v
-
-        // get super's super from super's metatable
-        // super = rawget(super,"__super")
-        lua_pushstring(_l,"__super");
-        lua_rawget(_l,-2);
-        lua_remove(_l,-2); // pops prev rawget
-    }
-    lua_pop(_l,1); // pops rawget
-
     return luaL_error ( _l, "can't find the key %s", lua_tostring(_l,2) );
 }
 
@@ -1446,37 +1358,6 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
         return luaL_error ( _l, "fatal error: can't find the metatable!" );
     }
 
-    // new an userdata, setup and return it.
-    // if _k == "super" then
-    key = luaL_checkstring(_l, 2);
-    if ( strcmp( key, "super" ) == 0 ) {
-        if ( lua_getmetatable(_l,-1) == 0 ) {
-            return luaL_error ( _l, "can't find the meta-meta-table of _t" );
-        }
-
-        // new_table = { __readonly = true }
-        lua_newtable(_l);
-        lua_pushstring(_l,"__readonly");
-        lua_pushboolean(_l,true);
-        lua_rawset(_l,-3);
-
-        // rawget(mt,"__super")
-        lua_pushstring(_l,"__super");
-        // top <--
-        // "__super"
-        // new_table
-        // mt
-        lua_rawget(_l,-3);
-
-        // top <--
-        // rawget(mt,"__super")
-        // new_table
-        // mt
-        // return setmetatable( { __readonly = true }, rawget(mt,"__super") )
-        lua_setmetatable(_l, -2 );
-        return 1;
-    }
-
     // first use rawget check if we have value in metatable.
     lua_pushvalue ( _l, 2 );
     lua_rawget ( _l, -2 );
@@ -1485,6 +1366,7 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     lua_pop(_l,2);
 
     // check the key
+    key = luaL_checkstring(_l, 2);
     key_id = ex_strid(key);
     getset = ex_hashmap_get( _key_to_getset, &key_id, NULL );
     if ( getset ) {
@@ -1517,32 +1399,6 @@ int ex_lua_child_meta_index ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
         return ex_lua_deepcopy_to(_l,-4);
     }
     lua_pop(_l,2); // pops k,v
-
-    // check if the super have the key
-    // local super = rawget(mt,"__super")
-    lua_pushstring(_l,"__super");
-    lua_rawget(_l,-2);
-
-    // while super ~= nil do
-    while ( lua_isnil(_l,-1) == 0 ) {
-        // get key from super's metatable
-        // v = rawget(super,_k)
-        lua_pushvalue(_l,2); // leaves for copy_to
-        lua_pushvalue(_l,2); // push key
-        lua_rawget(_l,-3);
-        // if v ~= nil then 
-        if ( lua_isnil(_l,-1) == 0 ) {
-            return ex_lua_deepcopy_to(_l,-5);
-        }
-        lua_pop(_l,2); // pops k,v
-
-        // get super's super from super's metatable
-        // super = rawget(super,"__super")
-        lua_pushstring(_l,"__super");
-        lua_rawget(_l,-2);
-        lua_remove(_l,-2); // pops prev rawget
-    }
-    lua_pop(_l,1); // pops rawget
 
     // return nil
     lua_pushnil(_l);

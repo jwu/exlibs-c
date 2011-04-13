@@ -223,27 +223,29 @@ local function class_newindex ( _t, _k, _v )
         return
     end
 
-    -- check if the super have the key
-    local super = rawget(mt,"__super")
-    while super ~= nil do
-        -- get key from super's metatable
-        v = rawget(super,_k)
+    -- DISABLE { 
+    -- -- check if the super have the key
+    -- local super = rawget(mt,"__super")
+    -- while super ~= nil do
+    --     -- get key from super's metatable
+    --     v = rawget(super,_k)
 
-        --
-        if v ~= nil then 
-            -- DISABLE: the new index can only garantee 'new' value, but old one still not protected. { 
-            -- if type(v) ~= type(_v) then
-            --     assert( false, "can't set the key ".._k..", the type is not the same" )
-            --     return
-            -- end
-            -- } DISABLE end 
-            rawset(_t,_k,_v)
-            return
-        end
+    --     --
+    --     if v ~= nil then 
+    --         -- DISABLE: the new index can only garantee 'new' value, but old one still not protected. { 
+    --         -- if type(v) ~= type(_v) then
+    --         --     assert( false, "can't set the key ".._k..", the type is not the same" )
+    --         --     return
+    --         -- end
+    --         -- } DISABLE end 
+    --         rawset(_t,_k,_v)
+    --         return
+    --     end
 
-        -- get super's super from super's metatable
-        super = rawget(super,"__super")
-    end
+    --     -- get super's super from super's metatable
+    --     super = rawget(super,"__super")
+    -- end
+    -- } DISABLE end 
 
     -- 
     assert( false, "can't find the key " .. _k )
@@ -255,24 +257,26 @@ end
 -- ------------------------------------------------------------------ 
 
 local function class_index ( _t, _k )
-    -- NOTE: the _t can only be object instance, 
-    --       we can garantee this, case if it is a class, 
-    --       it never use class_index as __index method. 
-    --       it use metaclass.__index
+    -- DISABLE { 
+    -- -- NOTE: the _t can only be object instance, 
+    -- --       we can garantee this, case if it is a class, 
+    -- --       it never use class_index as __index method. 
+    -- --       it use metaclass.__index
 
-    -- speical case
-    if _k == "super" then
-        local mt = getmetatable(_t) 
-        assert( mt, "can't find the metatable of _t" )
-        local super = rawget(mt,"__super")
+    -- -- speical case
+    -- if _k == "super" then
+    --     local mt = getmetatable(_t) 
+    --     assert( mt, "can't find the metatable of _t" )
+    --     local super = rawget(mt,"__super")
 
-        if super and rawget(super, "__isbuiltin") then
-            return rawget(_t, "__cobject")
-        else
-            -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
-            return setmetatable( { __readonly = true }, super )
-        end
-    end
+    --     if super and rawget(super, "__isbuiltin") then
+    --         return rawget(_t, "__cobject")
+    --     else
+    --         -- NOTE: in class_newindex, it will check if table have __readonly, and prevent setting things.
+    --         return setmetatable( { __readonly = true }, super )
+    --     end
+    -- end
+    -- } DISABLE end 
 
     -- check if the metatable have the key
     local mt = getmetatable(_t) 
@@ -287,25 +291,27 @@ local function class_index ( _t, _k )
         return vv
     end
 
-    -- check if the super have the key
-    local super = rawget(mt,"__super")
-    while super ~= nil do
-        -- get key from super's metatable
-        v = rawget(super,_k)
+    -- DISABLE { 
+    -- -- check if the super have the key
+    -- local super = rawget(mt,"__super")
+    -- while super ~= nil do
+    --     -- get key from super's metatable
+    --     v = rawget(super,_k)
 
-        --
-        if v ~= nil then 
-            local vv = v
-            if type(vv) == "table" and getmetatable(vv) == nil then
-                vv = deepcopy(v)
-            end
-            rawset(_t,_k,vv)
-            return vv
-        end
+    --     --
+    --     if v ~= nil then 
+    --         local vv = v
+    --         if type(vv) == "table" and getmetatable(vv) == nil then
+    --             vv = deepcopy(v)
+    --         end
+    --         rawset(_t,_k,vv)
+    --         return vv
+    --     end
 
-        -- get super's super from super's metatable
-        super = rawget(super,"__super")
-    end
+    --     -- get super's super from super's metatable
+    --     super = rawget(super,"__super")
+    -- end
+    -- } DISABLE end 
 
     -- return
     return nil
@@ -358,133 +364,3 @@ function class(...)
         return setmetatable(base,metaclass)
     end
 end
-
--- foo = {
---    [metatable] = {
---       [__call] = "function: 0x10021f6c0, defined in (66-69)builtin/ex/core.lua";
---    };
---    [isa] = "function: 0x100223200, defined in (162-165)builtin/ex/core.lua";
---    [__typename] = "foo";
---    [__super] = {
---       [metatable] = {
---          [__newindex] = "function: 0x10100f6d0, C function";
---          [__index] = "function: 0x10100f730, C function";
---          [__call] = "function: 0x10100f700, C function";
---       };
---       [destroy] = "function: 0x10100f400, C function";
---       [__typename] = "ex.object";
---       [__eq] = "function: 0x10100f520, C function";
---       [childof] = "function: 0x10100f630, C function";
---       [derive] = "function: 0x10100fa80, C function";
---       [__gc] = "function: 0x10100f370, C function";
---       [isa] = "function: 0x10100fa30, C function";
---       [superof] = "function: 0x10100f5e0, C function";
---       [instanceof] = "function: 0x10100f580, C function";
---       [__isclass] = "true";
---       [__newindex] = "function: 0x10100f3d0, C function";
---       [__tostring] = "function: 0x10100f4f0, C function";
---       [__index] = "function: 0x10100f3a0, C function";
---       [__isbuiltin] = "true";
---    };
---    [childof] = "function: 0x100223170, defined in (148-150)builtin/ex/core.lua";
---    [text] = "hello world";
---    [instanceof] = "function: 0x100223110, defined in (127-129)builtin/ex/core.lua";
---    [derive] = "function: 0x10021fa90, defined in (328-330)builtin/ex/core.lua";
---    [__index] = "function: 0x100223310, defined in (247-302)builtin/ex/core.lua";
---    [__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
---    [__isclass] = "true";
---    [superof] = "function: 0x1002231d0, defined in (154-156)builtin/ex/core.lua";
--- };
-
--- foo_obj = {
---    [metatable] = {
---       [metatable] = {
---          [__call] = "function: 0x10021f6c0, defined in (66-69)builtin/ex/core.lua";
---       };
---       [isa] = "function: 0x100223200, defined in (162-165)builtin/ex/core.lua";
---       [__typename] = "foo";
---       [__super] = {
---          [metatable] = {
---             [__newindex] = "function: 0x10100f6d0, C function";
---             [__index] = "function: 0x10100f730, C function";
---             [__call] = "function: 0x10100f700, C function";
---          };
---          [destroy] = "function: 0x10100f400, C function";
---          [__typename] = "ex.object";
---          [__eq] = "function: 0x10100f520, C function";
---          [childof] = "function: 0x10100f630, C function";
---          [derive] = "function: 0x10100fa80, C function";
---          [__gc] = "function: 0x10100f370, C function";
---          [isa] = "function: 0x10100fa30, C function";
---          [superof] = "function: 0x10100f5e0, C function";
---          [instanceof] = "function: 0x10100f580, C function";
---          [__isclass] = "true";
---          [__newindex] = "function: 0x10100f3d0, C function";
---          [__tostring] = "function: 0x10100f4f0, C function";
---          [__index] = "function: 0x10100f3a0, C function";
---          [__isbuiltin] = "true";
---       };
---       [childof] = "function: 0x100223170, defined in (148-150)builtin/ex/core.lua";
---       [text] = "hello world";
---       [instanceof] = "function: 0x100223110, defined in (127-129)builtin/ex/core.lua";
---       [derive] = "function: 0x10021fa90, defined in (328-330)builtin/ex/core.lua";
---       [__index] = "function: 0x100223310, defined in (247-302)builtin/ex/core.lua";
---       [__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
---       [__isclass] = "true";
---       [superof] = "function: 0x1002231d0, defined in (154-156)builtin/ex/core.lua";
---    };
---    [text] = "hello foo";
--- };
-
--- foo_obj = userdata = {
---     [metatable] = {
---         [metatable] = {
---             [metatable] = {
---                 [__call] = "function: 0x10021f6c0, defined in (66-69)builtin/ex/core.lua";
---             };
---             [isa] = "function: 0x100223200, defined in (162-165)builtin/ex/core.lua";
---             [__typename] = "foo";
---             [__super] = {
---                 [metatable] = {
---                     [__newindex] = "function: 0x10100f6d0, C function";
---                     [__index] = "function: 0x10100f730, C function";
---                     [__call] = "function: 0x10100f700, C function";
---                 };
---                 [destroy] = "function: 0x10100f400, C function";
---                 [__typename] = "ex.object";
---                 [__eq] = "function: 0x10100f520, C function";
---                 [childof] = "function: 0x10100f630, C function";
---                 [derive] = "function: 0x10100fa80, C function";
---                 [__gc] = "function: 0x10100f370, C function";
---                 [isa] = "function: 0x10100fa30, C function";
---                 [superof] = "function: 0x10100f5e0, C function";
---                 [instanceof] = "function: 0x10100f580, C function";
---                 [__isclass] = "true";
---                 [__newindex] = "function: 0x10100f3d0, C function";
---                 [__tostring] = "function: 0x10100f4f0, C function";
---                 [__index] = "function: 0x10100f3a0, C function";
---                 [__isbuiltin] = "true";
---             };
---             [childof] = "function: 0x100223170, defined in (148-150)builtin/ex/core.lua";
---             [text] = "hello world";
---             [instanceof] = "function: 0x100223110, defined in (127-129)builtin/ex/core.lua";
---             [derive] = "function: 0x10021fa90, defined in (328-330)builtin/ex/core.lua";
---             [__index] = "function: 0x100223310, defined in (247-302)builtin/ex/core.lua";
---             [__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
---             [__isclass] = "true";
---             [superof] = "function: 0x1002231d0, defined in (154-156)builtin/ex/core.lua";
---         };
---         [__isinstance] = true
---         [text] = "hello foo";
---         *[__index] = -- search object member data, getraw in this table, get in super
---         *[__newindex] = "function: 0x100223290, defined in (188-241)builtin/ex/core.lua";
---         [__gc] = copy from derived builtin
---         [__tostring] = ....
---     };
--- };
-
--- foo_obj.x
--- if foo_obj.x not found then -- this through foo_obj.metatable.__index
---     foo_obj.metatable.x -- this use our old class method
--- end
-

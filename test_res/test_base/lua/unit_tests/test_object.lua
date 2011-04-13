@@ -66,10 +66,10 @@ foo_obj:say()
 -- test bar_obj
 -- ======================================================== 
 
--- ex.debug.dump(bar,"bar") 
+ex.debug.dump(bar,"bar") 
 bar_obj = bar()
--- ex.debug.dump(bar_obj,"bar_obj") 
+ex.debug.dump(bar_obj,"bar_obj") 
 
--- bar_obj.array
--- ex.debug.dump(bar_obj,"bar_obj") 
+if bar_obj.array ~= nil then ex.log("bar.array is copied from metatable.") end
+ex.debug.dump(bar_obj,"bar_obj") 
 bar_obj:say()
