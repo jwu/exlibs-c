@@ -1,0 +1,4345 @@
+{
+    "num_objects": { "ex.int": 404 },
+    "type": { "ex.strid": "ex.world" },
+    "object": { "ex.world": {
+        "uid": { "ex.uid": "20164915300973" },
+        "name": { "ex.strid": "World" },
+        "flags": { "ex.uint32": 0 },
+        "entities": { "ex.array": [
+             { "ex.ref": "20164915300974" },
+             { "ex.ref": "864589845432942" },
+             { "ex.ref": "1990489752275566" },
+             { "ex.ref": "3116389659118190" },
+             { "ex.ref": "4242289565960814" },
+             { "ex.ref": "5368189472803438" },
+             { "ex.ref": "6494089379646062" },
+             { "ex.ref": "7619989286488686" },
+             { "ex.ref": "8745889193331310" },
+             { "ex.ref": "9871789100173934" },
+             { "ex.ref": "10997689007016558" },
+             { "ex.ref": "12123588913859182" },
+             { "ex.ref": "13249488820701806" },
+             { "ex.ref": "14375388727544430" },
+             { "ex.ref": "15501288634387054" },
+             { "ex.ref": "16627188541229678" },
+             { "ex.ref": "17753088448072302" },
+             { "ex.ref": "20164915300975" },
+             { "ex.ref": "1146064822143599" },
+             { "ex.ref": "2271964728986223" },
+             { "ex.ref": "3397864635828847" },
+             { "ex.ref": "4523764542671471" },
+             { "ex.ref": "5649664449514095" },
+             { "ex.ref": "6775564356356719" },
+             { "ex.ref": "7901464263199343" },
+             { "ex.ref": "9027364170041967" },
+             { "ex.ref": "10153264076884591" },
+             { "ex.ref": "11279163983727215" },
+             { "ex.ref": "12405063890569839" },
+             { "ex.ref": "13530963797412463" },
+             { "ex.ref": "14656863704255087" },
+             { "ex.ref": "15782763611097711" },
+             { "ex.ref": "16908663517940335" },
+             { "ex.ref": "18034563424782959" },
+             { "ex.ref": "19160463331625583" },
+             { "ex.ref": "20286363238468207" },
+             { "ex.ref": "21412263145310831" },
+             { "ex.ref": "22538163052153455" },
+             { "ex.ref": "23664062958996079" },
+             { "ex.ref": "24789962865838703" },
+             { "ex.ref": "25915862772681327" },
+             { "ex.ref": "27041762679523951" },
+             { "ex.ref": "28167662586366575" },
+             { "ex.ref": "864589845432944" },
+             { "ex.ref": "1990489752275568" },
+             { "ex.ref": "3116389659118192" },
+             { "ex.ref": "4242289565960816" },
+             { "ex.ref": "5368189472803440" },
+             { "ex.ref": "6494089379646064" },
+             { "ex.ref": "7619989286488688" },
+             { "ex.ref": "8745889193331312" },
+             { "ex.ref": "9871789100173936" },
+             { "ex.ref": "10997689007016560" },
+             { "ex.ref": "12123588913859184" },
+             { "ex.ref": "13249488820701808" },
+             { "ex.ref": "14375388727544432" },
+             { "ex.ref": "15501288634387056" },
+             { "ex.ref": "16627188541229680" },
+             { "ex.ref": "17753088448072304" },
+             { "ex.ref": "18878988354914928" },
+             { "ex.ref": "20004888261757552" },
+             { "ex.ref": "21130788168600176" },
+             { "ex.ref": "22256688075442800" },
+             { "ex.ref": "23382587982285424" },
+             { "ex.ref": "24508487889128048" },
+             { "ex.ref": "864589845432945" },
+             { "ex.ref": "1990489752275569" },
+             { "ex.ref": "3116389659118193" },
+             { "ex.ref": "4242289565960817" },
+             { "ex.ref": "5368189472803441" },
+             { "ex.ref": "6494089379646065" },
+             { "ex.ref": "7619989286488689" },
+             { "ex.ref": "8745889193331313" },
+             { "ex.ref": "9871789100173937" },
+             { "ex.ref": "10997689007016561" },
+             { "ex.ref": "12123588913859185" },
+             { "ex.ref": "13249488820701809" },
+             { "ex.ref": "14375388727544433" },
+             { "ex.ref": "15501288634387057" },
+             { "ex.ref": "16627188541229681" },
+             { "ex.ref": "17753088448072305" },
+             { "ex.ref": "18878988354914929" },
+             { "ex.ref": "20004888261757553" },
+             { "ex.ref": "21130788168600177" },
+             { "ex.ref": "22256688075442801" },
+             { "ex.ref": "23382587982285425" },
+             { "ex.ref": "24508487889128049" },
+             { "ex.ref": "25634387795970673" },
+             { "ex.ref": "26760287702813297" },
+             { "ex.ref": "864589845432946" },
+             { "ex.ref": "1990489752275570" },
+             { "ex.ref": "3116389659118194" },
+             { "ex.ref": "4242289565960818" },
+             { "ex.ref": "5368189472803442" },
+             { "ex.ref": "6494089379646066" },
+             { "ex.ref": "7619989286488690" },
+             { "ex.ref": "8745889193331314" },
+             { "ex.ref": "9871789100173938" },
+             { "ex.ref": "10997689007016562" },
+             { "ex.ref": "12123588913859186" },
+             { "ex.ref": "13249488820701810" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "20164915300974" },
+        "name": { "ex.strid": "main_camera" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "301639892011630" },
+             { "ex.ref": "583114868722286" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "301639892011630" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [0.000000, 0.000000] },
+        "local_ang": { "ex.angf": 0.000000 },
+        "local_scale": { "ex.vec2f": [1.000000, 1.000000] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.camera" },
+    "object": { "ex.camera": {
+        "uid": { "ex.uid": "583114868722286" },
+        "name": { "ex.strid": "Camera" },
+        "flags": { "ex.uint32": 0 },
+        "isOrtho": { "ex.bool": true },
+        "orthoSize": { "ex.float": 240.000000 },
+        "aspect": { "ex.float": 1.333333 },
+        "clearFlags": { "ex.uint32": 3 },
+        "bgColor": { "ex.color3f": [0.000000, 0.500000, 1.000000] }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "864589845432942" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "1146064822143598" },
+             { "ex.ref": "1427539798854254" },
+             { "ex.ref": "1709014775564910" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "1146064822143598" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-320.561005, 72.091492] },
+        "local_ang": { "ex.angf": 3.716653 },
+        "local_scale": { "ex.vec2f": [0.704482, 0.334010] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "1427539798854254" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "1709014775564910" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.992786, 0.119900] },
+        "move_speed": { "ex.float": 59.653839 },
+        "rot_speed": { "ex.float": 0.263536 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "1990489752275566" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "2271964728986222" },
+             { "ex.ref": "2553439705696878" },
+             { "ex.ref": "2834914682407534" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "2271964728986222" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [435.413879, -450.164764] },
+        "local_ang": { "ex.angf": 1.161937 },
+        "local_scale": { "ex.vec2f": [0.501683, 0.208574] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "2553439705696878" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "2834914682407534" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.099087, -0.995079] },
+        "move_speed": { "ex.float": 44.812160 },
+        "rot_speed": { "ex.float": 3.886615 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "3116389659118190" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "3397864635828846" },
+             { "ex.ref": "3679339612539502" },
+             { "ex.ref": "3960814589250158" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "3397864635828846" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [186.994614, 583.019348] },
+        "local_ang": { "ex.angf": 3.445323 },
+        "local_scale": { "ex.vec2f": [0.540148, 0.241063] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "3679339612539502" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "3960814589250158" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.213020, 0.977048] },
+        "move_speed": { "ex.float": 46.483288 },
+        "rot_speed": { "ex.float": 0.919331 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "4242289565960814" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "4523764542671470" },
+             { "ex.ref": "4805239519382126" },
+             { "ex.ref": "5086714496092782" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "4523764542671470" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [164.164215, 171.229477] },
+        "local_ang": { "ex.angf": 6.033355 },
+        "local_scale": { "ex.vec2f": [0.952082, 0.334144] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "4805239519382126" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "5086714496092782" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.955113, 0.296241] },
+        "move_speed": { "ex.float": 29.314474 },
+        "rot_speed": { "ex.float": 3.823608 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "5368189472803438" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "5649664449514094" },
+             { "ex.ref": "5931139426224750" },
+             { "ex.ref": "6212614402935406" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "5649664449514094" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [567.912720, 812.777527] },
+        "local_ang": { "ex.angf": 2.172231 },
+        "local_scale": { "ex.vec2f": [0.411618, 0.588291] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "5931139426224750" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "6212614402935406" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.766339, 0.642437] },
+        "move_speed": { "ex.float": 96.531502 },
+        "rot_speed": { "ex.float": -3.386016 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "6494089379646062" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "6775564356356718" },
+             { "ex.ref": "7057039333067374" },
+             { "ex.ref": "7338514309778030" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "6775564356356718" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [392.684052, 403.096008] },
+        "local_ang": { "ex.angf": 0.990719 },
+        "local_scale": { "ex.vec2f": [0.996979, 0.029273] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "7057039333067374" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "7338514309778030" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.767232, 0.641370] },
+        "move_speed": { "ex.float": 54.326618 },
+        "rot_speed": { "ex.float": -3.642015 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "7619989286488686" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "7901464263199342" },
+             { "ex.ref": "8182939239909998" },
+             { "ex.ref": "8464414216620654" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "7901464263199342" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-590.777710, 76.367310] },
+        "local_ang": { "ex.angf": 2.722193 },
+        "local_scale": { "ex.vec2f": [0.361432, 0.087366] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "8182939239909998" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "8464414216620654" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.938373, 0.345624] },
+        "move_speed": { "ex.float": 60.957939 },
+        "rot_speed": { "ex.float": 4.204403 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "8745889193331310" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "9027364170041966" },
+             { "ex.ref": "9308839146752622" },
+             { "ex.ref": "9590314123463278" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "9027364170041966" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [290.818878, 485.672791] },
+        "local_ang": { "ex.angf": 5.376848 },
+        "local_scale": { "ex.vec2f": [0.453459, 0.878054] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "9308839146752622" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "9590314123463278" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.694632, 0.719365] },
+        "move_speed": { "ex.float": 33.991558 },
+        "rot_speed": { "ex.float": 4.002442 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "9871789100173934" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "10153264076884590" },
+             { "ex.ref": "10434739053595246" },
+             { "ex.ref": "10716214030305902" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "10153264076884590" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [82.768806, 339.330811] },
+        "local_ang": { "ex.angf": 4.170681 },
+        "local_scale": { "ex.vec2f": [0.146902, 0.088127] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "10434739053595246" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "10716214030305902" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.150854, 0.988556] },
+        "move_speed": { "ex.float": 48.060818 },
+        "rot_speed": { "ex.float": -0.944067 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "10997689007016558" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "11279163983727214" },
+             { "ex.ref": "11560638960437870" },
+             { "ex.ref": "11842113937148526" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "11279163983727214" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [190.528961, -181.058777] },
+        "local_ang": { "ex.angf": 0.630714 },
+        "local_scale": { "ex.vec2f": [0.155984, 0.658485] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "11560638960437870" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "11842113937148526" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.734226, -0.678905] },
+        "move_speed": { "ex.float": 71.873123 },
+        "rot_speed": { "ex.float": 4.657184 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "12123588913859182" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "12405063890569838" },
+             { "ex.ref": "12686538867280494" },
+             { "ex.ref": "12968013843991150" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "12405063890569838" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-150.921371, 220.886978] },
+        "local_ang": { "ex.angf": 4.055727 },
+        "local_scale": { "ex.vec2f": [0.290601, 0.153049] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "12686538867280494" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "12968013843991150" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.985549, -0.169389] },
+        "move_speed": { "ex.float": 28.541643 },
+        "rot_speed": { "ex.float": 1.808405 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "13249488820701806" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "13530963797412462" },
+             { "ex.ref": "13812438774123118" },
+             { "ex.ref": "14093913750833774" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "13530963797412462" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-392.025970, -494.875977] },
+        "local_ang": { "ex.angf": 1.481959 },
+        "local_scale": { "ex.vec2f": [0.329554, 0.182622] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "13812438774123118" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "14093913750833774" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.079293, -0.996851] },
+        "move_speed": { "ex.float": 92.222748 },
+        "rot_speed": { "ex.float": 1.742879 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "14375388727544430" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "14656863704255086" },
+             { "ex.ref": "14938338680965742" },
+             { "ex.ref": "15219813657676398" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "14656863704255086" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [814.161743, 735.403320] },
+        "local_ang": { "ex.angf": 2.608446 },
+        "local_scale": { "ex.vec2f": [0.960645, 0.714224] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "14938338680965742" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "15219813657676398" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.728296, 0.685263] },
+        "move_speed": { "ex.float": 88.443794 },
+        "rot_speed": { "ex.float": -3.695887 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "15501288634387054" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "15782763611097710" },
+             { "ex.ref": "16064238587808366" },
+             { "ex.ref": "16345713564519022" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "15782763611097710" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-160.628845, 207.948853] },
+        "local_ang": { "ex.angf": 2.664662 },
+        "local_scale": { "ex.vec2f": [0.895374, 0.987082] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "16064238587808366" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "16345713564519022" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.259358, -0.965781] },
+        "move_speed": { "ex.float": 5.966806 },
+        "rot_speed": { "ex.float": -2.967824 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "16627188541229678" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "16908663517940334" },
+             { "ex.ref": "17190138494650990" },
+             { "ex.ref": "17471613471361646" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "16908663517940334" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [482.016754, -401.986328] },
+        "local_ang": { "ex.angf": 3.287371 },
+        "local_scale": { "ex.vec2f": [0.601439, 0.524817] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "17190138494650990" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "17471613471361646" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.693880, -0.720091] },
+        "move_speed": { "ex.float": 61.037567 },
+        "rot_speed": { "ex.float": -0.615338 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "17753088448072302" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "18034563424782958" },
+             { "ex.ref": "18316038401493614" },
+             { "ex.ref": "18597513378204270" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "18034563424782958" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [41.716305, -893.539978] },
+        "local_ang": { "ex.angf": 4.029432 },
+        "local_scale": { "ex.vec2f": [0.869374, 0.190568] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "18316038401493614" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "18597513378204270" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.443663, -0.896194] },
+        "move_speed": { "ex.float": 93.719612 },
+        "rot_speed": { "ex.float": 2.925220 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "20164915300975" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "301639892011631" },
+             { "ex.ref": "583114868722287" },
+             { "ex.ref": "864589845432943" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "301639892011631" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [129.831436, 347.302124] },
+        "local_ang": { "ex.angf": 0.121426 },
+        "local_scale": { "ex.vec2f": [0.513661, 0.503511] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "583114868722287" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "864589845432943" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.989181, 0.146704] },
+        "move_speed": { "ex.float": 10.722920 },
+        "rot_speed": { "ex.float": 1.376188 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "1146064822143599" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "1427539798854255" },
+             { "ex.ref": "1709014775564911" },
+             { "ex.ref": "1990489752275567" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "1427539798854255" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-168.271393, -147.680237] },
+        "local_ang": { "ex.angf": 1.175962 },
+        "local_scale": { "ex.vec2f": [0.761569, 0.644955] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "1709014775564911" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "1990489752275567" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.852785, -0.522262] },
+        "move_speed": { "ex.float": 25.330946 },
+        "rot_speed": { "ex.float": 1.080784 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "2271964728986223" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "2553439705696879" },
+             { "ex.ref": "2834914682407535" },
+             { "ex.ref": "3116389659118191" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "2553439705696879" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [65.943390, -318.686005] },
+        "local_ang": { "ex.angf": 0.057280 },
+        "local_scale": { "ex.vec2f": [0.994865, 0.614625] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "2834914682407535" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "3116389659118191" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.446081, -0.894993] },
+        "move_speed": { "ex.float": 89.226181 },
+        "rot_speed": { "ex.float": 4.534771 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "3397864635828847" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "3679339612539503" },
+             { "ex.ref": "3960814589250159" },
+             { "ex.ref": "4242289565960815" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "3679339612539503" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [85.761261, 118.182983] },
+        "local_ang": { "ex.angf": 5.601880 },
+        "local_scale": { "ex.vec2f": [0.021357, 0.113585] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "3960814589250159" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "4242289565960815" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.197733, 0.980256] },
+        "move_speed": { "ex.float": 52.085762 },
+        "rot_speed": { "ex.float": 2.114381 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "4523764542671471" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "4805239519382127" },
+             { "ex.ref": "5086714496092783" },
+             { "ex.ref": "5368189472803439" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "4805239519382127" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-188.154327, -65.314049] },
+        "local_ang": { "ex.angf": 2.723176 },
+        "local_scale": { "ex.vec2f": [0.633353, 0.549928] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "5086714496092783" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "5368189472803439" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.090506, 0.995896] },
+        "move_speed": { "ex.float": 25.653294 },
+        "rot_speed": { "ex.float": -1.674668 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "5649664449514095" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "5931139426224751" },
+             { "ex.ref": "6212614402935407" },
+             { "ex.ref": "6494089379646063" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "5931139426224751" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-780.000183, 724.666138] },
+        "local_ang": { "ex.angf": 2.592389 },
+        "local_scale": { "ex.vec2f": [0.406065, 0.729125] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "6212614402935407" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "6494089379646063" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.734433, 0.678681] },
+        "move_speed": { "ex.float": 70.076637 },
+        "rot_speed": { "ex.float": 4.795434 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "6775564356356719" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "7057039333067375" },
+             { "ex.ref": "7338514309778031" },
+             { "ex.ref": "7619989286488687" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "7057039333067375" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [515.550476, -384.553894] },
+        "local_ang": { "ex.angf": 2.710370 },
+        "local_scale": { "ex.vec2f": [0.177524, 0.229617] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "7338514309778031" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "7619989286488687" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.974341, -0.225078] },
+        "move_speed": { "ex.float": 67.758789 },
+        "rot_speed": { "ex.float": -0.157225 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "7901464263199343" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "8182939239909999" },
+             { "ex.ref": "8464414216620655" },
+             { "ex.ref": "8745889193331311" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "8182939239909999" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [191.217667, 585.398254] },
+        "local_ang": { "ex.angf": 5.377310 },
+        "local_scale": { "ex.vec2f": [0.025804, 0.061702] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "8464414216620655" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "8745889193331311" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.222239, 0.974992] },
+        "move_speed": { "ex.float": 91.888969 },
+        "rot_speed": { "ex.float": -4.907621 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "9027364170041967" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "9308839146752623" },
+             { "ex.ref": "9590314123463279" },
+             { "ex.ref": "9871789100173935" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "9308839146752623" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-113.384048, 94.810715] },
+        "local_ang": { "ex.angf": 4.887019 },
+        "local_scale": { "ex.vec2f": [0.716325, 0.547612] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "9590314123463279" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "9871789100173935" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.706973, 0.707240] },
+        "move_speed": { "ex.float": 46.252388 },
+        "rot_speed": { "ex.float": -1.073609 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "10153264076884591" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "10434739053595247" },
+             { "ex.ref": "10716214030305903" },
+             { "ex.ref": "10997689007016559" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "10434739053595247" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [403.854584, -407.445587] },
+        "local_ang": { "ex.angf": 5.119852 },
+        "local_scale": { "ex.vec2f": [0.376969, 0.027689] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "10716214030305903" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "10997689007016559" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.236681, -0.971587] },
+        "move_speed": { "ex.float": 8.959226 },
+        "rot_speed": { "ex.float": -2.807205 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "11279163983727215" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "11560638960437871" },
+             { "ex.ref": "11842113937148527" },
+             { "ex.ref": "12123588913859183" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "11560638960437871" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [249.307510, 314.400604] },
+        "local_ang": { "ex.angf": 6.144549 },
+        "local_scale": { "ex.vec2f": [0.916532, 0.598377] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "11842113937148527" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "12123588913859183" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.792049, 0.610457] },
+        "move_speed": { "ex.float": 69.403076 },
+        "rot_speed": { "ex.float": 1.315457 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "12405063890569839" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "12686538867280495" },
+             { "ex.ref": "12968013843991151" },
+             { "ex.ref": "13249488820701807" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "12686538867280495" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [535.921265, -430.288879] },
+        "local_ang": { "ex.angf": 0.795306 },
+        "local_scale": { "ex.vec2f": [0.981987, 0.860236] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "12968013843991151" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "13249488820701807" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.684333, -0.729170] },
+        "move_speed": { "ex.float": 53.612198 },
+        "rot_speed": { "ex.float": 3.506871 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "13530963797412463" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "13812438774123119" },
+             { "ex.ref": "14093913750833775" },
+             { "ex.ref": "14375388727544431" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "13812438774123119" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-173.922119, 621.977234] },
+        "local_ang": { "ex.angf": 5.447505 },
+        "local_scale": { "ex.vec2f": [0.540298, 0.790001] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "14093913750833775" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "14375388727544431" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.328698, 0.944435] },
+        "move_speed": { "ex.float": 75.490044 },
+        "rot_speed": { "ex.float": -4.981755 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "14656863704255087" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "14938338680965743" },
+             { "ex.ref": "15219813657676399" },
+             { "ex.ref": "15501288634387055" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "14938338680965743" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-107.929138, 523.212769] },
+        "local_ang": { "ex.angf": 2.365757 },
+        "local_scale": { "ex.vec2f": [0.044341, 0.035762] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "15219813657676399" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "15501288634387055" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.748638, 0.662979] },
+        "move_speed": { "ex.float": 67.567909 },
+        "rot_speed": { "ex.float": -4.214383 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "15782763611097711" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "16064238587808367" },
+             { "ex.ref": "16345713564519023" },
+             { "ex.ref": "16627188541229679" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "16064238587808367" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-112.444450, -17.147568] },
+        "local_ang": { "ex.angf": 3.371172 },
+        "local_scale": { "ex.vec2f": [0.125152, 0.039812] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "16345713564519023" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "16627188541229679" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.783322, 0.621616] },
+        "move_speed": { "ex.float": 13.542809 },
+        "rot_speed": { "ex.float": -1.365297 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "16908663517940335" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "17190138494650991" },
+             { "ex.ref": "17471613471361647" },
+             { "ex.ref": "17753088448072303" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "17190138494650991" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-63.495049, -159.005890] },
+        "local_ang": { "ex.angf": 4.318888 },
+        "local_scale": { "ex.vec2f": [0.092345, 0.223841] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "17471613471361647" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "17753088448072303" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.035134, -0.999383] },
+        "move_speed": { "ex.float": 49.859913 },
+        "rot_speed": { "ex.float": 3.340208 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "18034563424782959" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "18316038401493615" },
+             { "ex.ref": "18597513378204271" },
+             { "ex.ref": "18878988354914927" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "18316038401493615" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-19.169607, -91.056892] },
+        "local_ang": { "ex.angf": 0.378041 },
+        "local_scale": { "ex.vec2f": [0.880112, 0.983571] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "18597513378204271" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "18878988354914927" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.996865, -0.079118] },
+        "move_speed": { "ex.float": 1.104781 },
+        "rot_speed": { "ex.float": 2.884451 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "19160463331625583" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "19441938308336239" },
+             { "ex.ref": "19723413285046895" },
+             { "ex.ref": "20004888261757551" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "19441938308336239" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [36.536655, -279.219482] },
+        "local_ang": { "ex.angf": 5.297469 },
+        "local_scale": { "ex.vec2f": [0.195173, 0.463747] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "19723413285046895" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "20004888261757551" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.653743, -0.756717] },
+        "move_speed": { "ex.float": 29.776958 },
+        "rot_speed": { "ex.float": -1.025167 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "20286363238468207" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "20567838215178863" },
+             { "ex.ref": "20849313191889519" },
+             { "ex.ref": "21130788168600175" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "20567838215178863" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-315.729523, -54.730270] },
+        "local_ang": { "ex.angf": 0.928954 },
+        "local_scale": { "ex.vec2f": [0.466008, 0.501664] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "20849313191889519" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "21130788168600175" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.799496, -0.600671] },
+        "move_speed": { "ex.float": 10.866806 },
+        "rot_speed": { "ex.float": -4.352183 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "21412263145310831" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "21693738122021487" },
+             { "ex.ref": "21975213098732143" },
+             { "ex.ref": "22256688075442799" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "21693738122021487" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-860.701477, 627.251709] },
+        "local_ang": { "ex.angf": 4.199263 },
+        "local_scale": { "ex.vec2f": [0.765876, 0.083106] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "21975213098732143" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "22256688075442799" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.770632, 0.637281] },
+        "move_speed": { "ex.float": 71.556747 },
+        "rot_speed": { "ex.float": -2.454564 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "22538163052153455" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "22819638028864111" },
+             { "ex.ref": "23101113005574767" },
+             { "ex.ref": "23382587982285423" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "22819638028864111" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-1001.211121, -512.844971] },
+        "local_ang": { "ex.angf": 3.550786 },
+        "local_scale": { "ex.vec2f": [0.253629, 0.471128] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "23101113005574767" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "23382587982285423" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.971020, -0.238997] },
+        "move_speed": { "ex.float": 97.751892 },
+        "rot_speed": { "ex.float": -1.559884 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "23664062958996079" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "23945537935706735" },
+             { "ex.ref": "24227012912417391" },
+             { "ex.ref": "24508487889128047" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "23945537935706735" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [755.699158, 415.045410] },
+        "local_ang": { "ex.angf": 5.843774 },
+        "local_scale": { "ex.vec2f": [0.224537, 0.149951] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "24227012912417391" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "24508487889128047" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.900617, 0.434614] },
+        "move_speed": { "ex.float": 45.282433 },
+        "rot_speed": { "ex.float": 2.257516 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "24789962865838703" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "25071437842549359" },
+             { "ex.ref": "25352912819260015" },
+             { "ex.ref": "25634387795970671" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "25071437842549359" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-585.811707, 746.773621] },
+        "local_ang": { "ex.angf": 0.304786 },
+        "local_scale": { "ex.vec2f": [0.374145, 0.665519] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "25352912819260015" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "25634387795970671" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.683229, 0.730205] },
+        "move_speed": { "ex.float": 90.954353 },
+        "rot_speed": { "ex.float": -1.582445 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "25915862772681327" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "26197337749391983" },
+             { "ex.ref": "26478812726102639" },
+             { "ex.ref": "26760287702813295" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "26197337749391983" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-609.269897, 101.330528] },
+        "local_ang": { "ex.angf": 5.584072 },
+        "local_scale": { "ex.vec2f": [0.365313, 0.406519] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "26478812726102639" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "26760287702813295" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.952831, -0.303501] },
+        "move_speed": { "ex.float": 77.831505 },
+        "rot_speed": { "ex.float": 0.055062 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "27041762679523951" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "27323237656234607" },
+             { "ex.ref": "27604712632945263" },
+             { "ex.ref": "27886187609655919" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "27323237656234607" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-70.305206, -529.053040] },
+        "local_ang": { "ex.angf": 5.876456 },
+        "local_scale": { "ex.vec2f": [0.526512, 0.124444] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "27604712632945263" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "27886187609655919" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.806701, -0.590959] },
+        "move_speed": { "ex.float": 31.714592 },
+        "rot_speed": { "ex.float": -1.552704 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "28167662586366575" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "20164915300976" },
+             { "ex.ref": "301639892011632" },
+             { "ex.ref": "583114868722288" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "20164915300976" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-266.283142, 67.157494] },
+        "local_ang": { "ex.angf": 0.696612 },
+        "local_scale": { "ex.vec2f": [0.163336, 0.413290] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "301639892011632" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "583114868722288" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.682495, -0.730890] },
+        "move_speed": { "ex.float": 35.878296 },
+        "rot_speed": { "ex.float": -2.929151 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "864589845432944" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "1146064822143600" },
+             { "ex.ref": "1427539798854256" },
+             { "ex.ref": "1709014775564912" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "1146064822143600" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [165.250839, 180.724182] },
+        "local_ang": { "ex.angf": 4.054007 },
+        "local_scale": { "ex.vec2f": [0.420919, 0.750308] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "1427539798854256" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "1709014775564912" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.758589, 0.651569] },
+        "move_speed": { "ex.float": 35.095860 },
+        "rot_speed": { "ex.float": -1.255369 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "1990489752275568" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "2271964728986224" },
+             { "ex.ref": "2553439705696880" },
+             { "ex.ref": "2834914682407536" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "2271964728986224" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [482.865692, 248.646591] },
+        "local_ang": { "ex.angf": 0.764872 },
+        "local_scale": { "ex.vec2f": [0.786139, 0.611994] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "2553439705696880" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "2834914682407536" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.910308, 0.413932] },
+        "move_speed": { "ex.float": 46.306660 },
+        "rot_speed": { "ex.float": 1.062167 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "3116389659118192" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "3397864635828848" },
+             { "ex.ref": "3679339612539504" },
+             { "ex.ref": "3960814589250160" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "3397864635828848" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [508.597656, -132.539932] },
+        "local_ang": { "ex.angf": 5.285679 },
+        "local_scale": { "ex.vec2f": [0.541678, 0.978196] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "3679339612539504" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "3960814589250160" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.650986, -0.759089] },
+        "move_speed": { "ex.float": 42.141880 },
+        "rot_speed": { "ex.float": 0.616400 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "4242289565960816" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "4523764542671472" },
+             { "ex.ref": "4805239519382128" },
+             { "ex.ref": "5086714496092784" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "4523764542671472" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-595.582153, -189.488724] },
+        "local_ang": { "ex.angf": 5.437981 },
+        "local_scale": { "ex.vec2f": [0.864506, 0.890157] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "4805239519382128" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "5086714496092784" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.839315, -0.543645] },
+        "move_speed": { "ex.float": 37.160828 },
+        "rot_speed": { "ex.float": 4.395657 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "5368189472803440" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "5649664449514096" },
+             { "ex.ref": "5931139426224752" },
+             { "ex.ref": "6212614402935408" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "5649664449514096" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-143.068008, -187.208847] },
+        "local_ang": { "ex.angf": 4.494769 },
+        "local_scale": { "ex.vec2f": [0.556836, 0.662317] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "5931139426224752" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "6212614402935408" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.865356, -0.501158] },
+        "move_speed": { "ex.float": 2.499939 },
+        "rot_speed": { "ex.float": 1.412155 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "6494089379646064" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "6775564356356720" },
+             { "ex.ref": "7057039333067376" },
+             { "ex.ref": "7338514309778032" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "6775564356356720" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-496.104034, 177.880264] },
+        "local_ang": { "ex.angf": 5.828309 },
+        "local_scale": { "ex.vec2f": [0.658122, 0.167053] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "7057039333067376" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "7338514309778032" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.979014, -0.203794] },
+        "move_speed": { "ex.float": 84.028122 },
+        "rot_speed": { "ex.float": -0.094070 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "7619989286488688" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "7901464263199344" },
+             { "ex.ref": "8182939239910000" },
+             { "ex.ref": "8464414216620656" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "7901464263199344" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [626.332764, -347.712555] },
+        "local_ang": { "ex.angf": 0.331402 },
+        "local_scale": { "ex.vec2f": [0.078336, 0.255196] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "8182939239910000" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "8464414216620656" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.870392, -0.492360] },
+        "move_speed": { "ex.float": 61.537960 },
+        "rot_speed": { "ex.float": -1.111088 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "8745889193331312" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "9027364170041968" },
+             { "ex.ref": "9308839146752624" },
+             { "ex.ref": "9590314123463280" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "9027364170041968" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [313.108246, -347.563660] },
+        "local_ang": { "ex.angf": 4.271438 },
+        "local_scale": { "ex.vec2f": [0.579632, 0.302765] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "9308839146752624" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "9590314123463280" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.999150, -0.041218] },
+        "move_speed": { "ex.float": 65.808220 },
+        "rot_speed": { "ex.float": -1.581713 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "9871789100173936" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "10153264076884592" },
+             { "ex.ref": "10434739053595248" },
+             { "ex.ref": "10716214030305904" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "10153264076884592" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-508.858643, -354.438934] },
+        "local_ang": { "ex.angf": 2.622594 },
+        "local_scale": { "ex.vec2f": [0.511589, 0.291873] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "10434739053595248" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "10716214030305904" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.958136, -0.286312] },
+        "move_speed": { "ex.float": 18.339731 },
+        "rot_speed": { "ex.float": 2.259380 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "10997689007016560" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "11279163983727216" },
+             { "ex.ref": "11560638960437872" },
+             { "ex.ref": "11842113937148528" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "11279163983727216" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [534.993469, 151.246384] },
+        "local_ang": { "ex.angf": 3.528006 },
+        "local_scale": { "ex.vec2f": [0.999144, 0.072410] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "11560638960437872" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "11842113937148528" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.971204, -0.238248] },
+        "move_speed": { "ex.float": 58.076729 },
+        "rot_speed": { "ex.float": 2.836707 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "12123588913859184" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "12405063890569840" },
+             { "ex.ref": "12686538867280496" },
+             { "ex.ref": "12968013843991152" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "12405063890569840" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [629.226257, -587.213257] },
+        "local_ang": { "ex.angf": 0.176699 },
+        "local_scale": { "ex.vec2f": [0.963857, 0.382279] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "12686538867280496" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "12968013843991152" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.770890, -0.636969] },
+        "move_speed": { "ex.float": 55.624855 },
+        "rot_speed": { "ex.float": 0.351772 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "13249488820701808" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "13530963797412464" },
+             { "ex.ref": "13812438774123120" },
+             { "ex.ref": "14093913750833776" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "13530963797412464" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [736.877502, 870.758240] },
+        "local_ang": { "ex.angf": 5.189354 },
+        "local_scale": { "ex.vec2f": [0.195635, 0.701029] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "13812438774123120" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "14093913750833776" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.565940, 0.824447] },
+        "move_speed": { "ex.float": 96.143372 },
+        "rot_speed": { "ex.float": -2.309723 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "14375388727544432" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "14656863704255088" },
+             { "ex.ref": "14938338680965744" },
+             { "ex.ref": "15219813657676400" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "14656863704255088" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [98.300591, -622.005554] },
+        "local_ang": { "ex.angf": 2.830371 },
+        "local_scale": { "ex.vec2f": [0.048681, 0.522523] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "14938338680965744" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "15219813657676400" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.585998, -0.810313] },
+        "move_speed": { "ex.float": 93.348175 },
+        "rot_speed": { "ex.float": 2.349405 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "15501288634387056" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "15782763611097712" },
+             { "ex.ref": "16064238587808368" },
+             { "ex.ref": "16345713564519024" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "15782763611097712" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-140.251068, 52.154930] },
+        "local_ang": { "ex.angf": 1.208963 },
+        "local_scale": { "ex.vec2f": [0.186427, 0.661045] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "16064238587808368" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "16345713564519024" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.515661, 0.856793] },
+        "move_speed": { "ex.float": 44.909126 },
+        "rot_speed": { "ex.float": -1.494004 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "16627188541229680" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "16908663517940336" },
+             { "ex.ref": "17190138494650992" },
+             { "ex.ref": "17471613471361648" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "16908663517940336" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-157.658401, -320.905334] },
+        "local_ang": { "ex.angf": 0.293276 },
+        "local_scale": { "ex.vec2f": [0.950717, 0.176650] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "17190138494650992" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "17471613471361648" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.489141, -0.872205] },
+        "move_speed": { "ex.float": 44.924858 },
+        "rot_speed": { "ex.float": -4.789024 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "17753088448072304" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "18034563424782960" },
+             { "ex.ref": "18316038401493616" },
+             { "ex.ref": "18597513378204272" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "18034563424782960" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-234.377380, 444.410248] },
+        "local_ang": { "ex.angf": 2.680396 },
+        "local_scale": { "ex.vec2f": [0.721933, 0.857364] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "18316038401493616" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "18597513378204272" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.711030, 0.703162] },
+        "move_speed": { "ex.float": 60.864529 },
+        "rot_speed": { "ex.float": -4.383352 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "18878988354914928" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "19160463331625584" },
+             { "ex.ref": "19441938308336240" },
+             { "ex.ref": "19723413285046896" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "19160463331625584" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [310.884857, 243.850769] },
+        "local_ang": { "ex.angf": 6.102702 },
+        "local_scale": { "ex.vec2f": [0.348343, 0.190834] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "19441938308336240" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "19723413285046896" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.016906, 0.999857] },
+        "move_speed": { "ex.float": 37.075085 },
+        "rot_speed": { "ex.float": -1.168159 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "20004888261757552" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "20286363238468208" },
+             { "ex.ref": "20567838215178864" },
+             { "ex.ref": "20849313191889520" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "20286363238468208" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-273.211273, -373.992035] },
+        "local_ang": { "ex.angf": 3.423478 },
+        "local_scale": { "ex.vec2f": [0.780465, 0.402200] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "20567838215178864" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "20849313191889520" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.956649, -0.291243] },
+        "move_speed": { "ex.float": 44.608440 },
+        "rot_speed": { "ex.float": -1.963383 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "21130788168600176" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "21412263145310832" },
+             { "ex.ref": "21693738122021488" },
+             { "ex.ref": "21975213098732144" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "21412263145310832" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-89.981293, -640.864258] },
+        "local_ang": { "ex.angf": 3.182940 },
+        "local_scale": { "ex.vec2f": [0.471170, 0.255338] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "21693738122021488" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "21975213098732144" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.094314, -0.995543] },
+        "move_speed": { "ex.float": 86.799431 },
+        "rot_speed": { "ex.float": 4.705192 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "22256688075442800" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "22538163052153456" },
+             { "ex.ref": "22819638028864112" },
+             { "ex.ref": "23101113005574768" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "22538163052153456" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-693.542603, 401.561859] },
+        "local_ang": { "ex.angf": 3.875188 },
+        "local_scale": { "ex.vec2f": [0.585637, 0.385886] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "22819638028864112" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "23101113005574768" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.795852, 0.605491] },
+        "move_speed": { "ex.float": 73.438416 },
+        "rot_speed": { "ex.float": 2.021272 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "23382587982285424" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "23664062958996080" },
+             { "ex.ref": "23945537935706736" },
+             { "ex.ref": "24227012912417392" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "23664062958996080" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [595.238831, 174.927643] },
+        "local_ang": { "ex.angf": 5.961258 },
+        "local_scale": { "ex.vec2f": [0.012651, 0.935325] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "23945537935706736" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "24227012912417392" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.997632, 0.068781] },
+        "move_speed": { "ex.float": 89.499649 },
+        "rot_speed": { "ex.float": -1.201639 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "24508487889128048" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "20164915300977" },
+             { "ex.ref": "301639892011633" },
+             { "ex.ref": "583114868722289" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "20164915300977" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [192.594589, 321.699860] },
+        "local_ang": { "ex.angf": 3.497670 },
+        "local_scale": { "ex.vec2f": [0.182677, 0.418110] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "301639892011633" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "583114868722289" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.981341, -0.192276] },
+        "move_speed": { "ex.float": 1.513419 },
+        "rot_speed": { "ex.float": -3.380464 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "864589845432945" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "1146064822143601" },
+             { "ex.ref": "1427539798854257" },
+             { "ex.ref": "1709014775564913" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "1146064822143601" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [2.681422, 562.309143] },
+        "local_ang": { "ex.angf": 5.780749 },
+        "local_scale": { "ex.vec2f": [0.879603, 0.714576] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "1427539798854257" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "1709014775564913" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.039603, 0.999215] },
+        "move_speed": { "ex.float": 22.844320 },
+        "rot_speed": { "ex.float": -0.403157 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "1990489752275569" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "2271964728986225" },
+             { "ex.ref": "2553439705696881" },
+             { "ex.ref": "2834914682407537" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "2271964728986225" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-32.984188, 177.254303] },
+        "local_ang": { "ex.angf": 2.525269 },
+        "local_scale": { "ex.vec2f": [0.177488, 0.990074] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "2553439705696881" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "2834914682407537" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.893104, -0.449849] },
+        "move_speed": { "ex.float": 39.036583 },
+        "rot_speed": { "ex.float": -1.175844 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "3116389659118193" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "3397864635828849" },
+             { "ex.ref": "3679339612539505" },
+             { "ex.ref": "3960814589250161" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "3397864635828849" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-364.158478, -28.458624] },
+        "local_ang": { "ex.angf": 3.095243 },
+        "local_scale": { "ex.vec2f": [0.723454, 0.539878] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "3679339612539505" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "3960814589250161" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.550900, 0.834571] },
+        "move_speed": { "ex.float": 22.562836 },
+        "rot_speed": { "ex.float": 1.724449 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "4242289565960817" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "4523764542671473" },
+             { "ex.ref": "4805239519382129" },
+             { "ex.ref": "5086714496092785" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "4523764542671473" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [417.592041, 168.874451] },
+        "local_ang": { "ex.angf": 1.865689 },
+        "local_scale": { "ex.vec2f": [0.317857, 0.766009] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "4805239519382129" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "5086714496092785" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.864046, -0.503413] },
+        "move_speed": { "ex.float": 12.761911 },
+        "rot_speed": { "ex.float": 2.923823 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "5368189472803441" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "5649664449514097" },
+             { "ex.ref": "5931139426224753" },
+             { "ex.ref": "6212614402935409" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "5649664449514097" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-321.684509, -218.685455] },
+        "local_ang": { "ex.angf": 0.069707 },
+        "local_scale": { "ex.vec2f": [0.940338, 0.796986] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "5931139426224753" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "6212614402935409" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.879242, -0.476376] },
+        "move_speed": { "ex.float": 65.822105 },
+        "rot_speed": { "ex.float": 1.982780 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "6494089379646065" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "6775564356356721" },
+             { "ex.ref": "7057039333067377" },
+             { "ex.ref": "7338514309778033" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "6775564356356721" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-513.131531, 226.127426] },
+        "local_ang": { "ex.angf": 4.738972 },
+        "local_scale": { "ex.vec2f": [0.931869, 0.718744] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "7057039333067377" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "7338514309778033" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.671630, -0.740887] },
+        "move_speed": { "ex.float": 21.718576 },
+        "rot_speed": { "ex.float": -1.553303 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "7619989286488689" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "7901464263199345" },
+             { "ex.ref": "8182939239910001" },
+             { "ex.ref": "8464414216620657" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "7901464263199345" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [78.719528, 166.618622] },
+        "local_ang": { "ex.angf": 2.527871 },
+        "local_scale": { "ex.vec2f": [0.350475, 0.259437] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "8182939239910001" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "8464414216620657" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.945093, -0.326801] },
+        "move_speed": { "ex.float": 43.680595 },
+        "rot_speed": { "ex.float": 2.853722 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "8745889193331313" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "9027364170041969" },
+             { "ex.ref": "9308839146752625" },
+             { "ex.ref": "9590314123463281" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "9027364170041969" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-594.389832, 30.301712] },
+        "local_ang": { "ex.angf": 4.224897 },
+        "local_scale": { "ex.vec2f": [0.530231, 0.465016] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "9308839146752625" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "9590314123463281" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.842554, -0.538612] },
+        "move_speed": { "ex.float": 35.916245 },
+        "rot_speed": { "ex.float": 1.494546 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "9871789100173937" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "10153264076884593" },
+             { "ex.ref": "10434739053595249" },
+             { "ex.ref": "10716214030305905" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "10153264076884593" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-428.434967, -386.804840] },
+        "local_ang": { "ex.angf": 6.200192 },
+        "local_scale": { "ex.vec2f": [0.165602, 0.110202] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "10434739053595249" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "10716214030305905" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.106601, -0.994302] },
+        "move_speed": { "ex.float": 33.909962 },
+        "rot_speed": { "ex.float": -4.519285 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "10997689007016561" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "11279163983727217" },
+             { "ex.ref": "11560638960437873" },
+             { "ex.ref": "11842113937148529" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "11279163983727217" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-139.903687, 606.857666] },
+        "local_ang": { "ex.angf": 2.547229 },
+        "local_scale": { "ex.vec2f": [0.233785, 0.708231] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "11560638960437873" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "11842113937148529" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.394939, 0.918708] },
+        "move_speed": { "ex.float": 31.888096 },
+        "rot_speed": { "ex.float": 3.001234 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "12123588913859185" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "12405063890569841" },
+             { "ex.ref": "12686538867280497" },
+             { "ex.ref": "12968013843991153" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "12405063890569841" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-85.639389, 509.315765] },
+        "local_ang": { "ex.angf": 0.988354 },
+        "local_scale": { "ex.vec2f": [0.732965, 0.177648] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "12686538867280497" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "12968013843991153" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.070617, 0.997504] },
+        "move_speed": { "ex.float": 42.479053 },
+        "rot_speed": { "ex.float": 3.024838 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "13249488820701809" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "13530963797412465" },
+             { "ex.ref": "13812438774123121" },
+             { "ex.ref": "14093913750833777" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "13530963797412465" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [178.457596, -359.270386] },
+        "local_ang": { "ex.angf": 3.754299 },
+        "local_scale": { "ex.vec2f": [0.327249, 0.405624] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "13812438774123121" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "14093913750833777" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.508903, -0.860824] },
+        "move_speed": { "ex.float": 31.423744 },
+        "rot_speed": { "ex.float": 4.683851 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "14375388727544433" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "14656863704255089" },
+             { "ex.ref": "14938338680965745" },
+             { "ex.ref": "15219813657676401" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "14656863704255089" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [185.898926, 413.640839] },
+        "local_ang": { "ex.angf": 2.173321 },
+        "local_scale": { "ex.vec2f": [0.579985, 0.573189] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "14938338680965745" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "15219813657676401" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.305769, 0.952106] },
+        "move_speed": { "ex.float": 35.470036 },
+        "rot_speed": { "ex.float": 3.979953 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "15501288634387057" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "15782763611097713" },
+             { "ex.ref": "16064238587808369" },
+             { "ex.ref": "16345713564519025" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "15782763611097713" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-745.637939, -384.166168] },
+        "local_ang": { "ex.angf": 1.140372 },
+        "local_scale": { "ex.vec2f": [0.943621, 0.648714] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "16064238587808369" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "16345713564519025" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.648142, -0.761519] },
+        "move_speed": { "ex.float": 70.611420 },
+        "rot_speed": { "ex.float": 2.694887 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "16627188541229681" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "16908663517940337" },
+             { "ex.ref": "17190138494650993" },
+             { "ex.ref": "17471613471361649" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "16908663517940337" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [308.767426, 99.936668] },
+        "local_ang": { "ex.angf": 2.758448 },
+        "local_scale": { "ex.vec2f": [0.637702, 0.799348] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "17190138494650993" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "17471613471361649" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.957027, -0.289999] },
+        "move_speed": { "ex.float": 54.150185 },
+        "rot_speed": { "ex.float": -3.171958 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "17753088448072305" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "18034563424782961" },
+             { "ex.ref": "18316038401493617" },
+             { "ex.ref": "18597513378204273" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "18034563424782961" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-14.814174, 576.089966] },
+        "local_ang": { "ex.angf": 0.634421 },
+        "local_scale": { "ex.vec2f": [0.450848, 0.347620] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "18316038401493617" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "18597513378204273" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.494404, 0.869232] },
+        "move_speed": { "ex.float": 87.474358 },
+        "rot_speed": { "ex.float": 0.507174 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "18878988354914929" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "19160463331625585" },
+             { "ex.ref": "19441938308336241" },
+             { "ex.ref": "19723413285046897" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "19160463331625585" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-69.342873, 990.615234] },
+        "local_ang": { "ex.angf": 5.244701 },
+        "local_scale": { "ex.vec2f": [0.452342, 0.446032] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "19441938308336241" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "19723413285046897" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.563490, 0.826123] },
+        "move_speed": { "ex.float": 92.046417 },
+        "rot_speed": { "ex.float": 2.392473 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "20004888261757553" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "20286363238468209" },
+             { "ex.ref": "20567838215178865" },
+             { "ex.ref": "20849313191889521" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "20286363238468209" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [236.734985, -381.079376] },
+        "local_ang": { "ex.angf": 5.440296 },
+        "local_scale": { "ex.vec2f": [0.218103, 0.117881] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "20567838215178865" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "20849313191889521" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.001511, -0.999999] },
+        "move_speed": { "ex.float": 46.249760 },
+        "rot_speed": { "ex.float": 4.461917 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "21130788168600177" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "21412263145310833" },
+             { "ex.ref": "21693738122021489" },
+             { "ex.ref": "21975213098732145" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "21412263145310833" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-350.268402, -112.362160] },
+        "local_ang": { "ex.angf": 4.845282 },
+        "local_scale": { "ex.vec2f": [0.202678, 0.789564] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "21693738122021489" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "21975213098732145" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.511652, -0.859193] },
+        "move_speed": { "ex.float": 30.325945 },
+        "rot_speed": { "ex.float": 0.977234 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "22256688075442801" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "22538163052153457" },
+             { "ex.ref": "22819638028864113" },
+             { "ex.ref": "23101113005574769" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "22538163052153457" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [588.219238, 340.317902] },
+        "local_ang": { "ex.angf": 3.076300 },
+        "local_scale": { "ex.vec2f": [0.785059, 0.011173] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "22819638028864113" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "23101113005574769" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.999800, -0.020013] },
+        "move_speed": { "ex.float": 56.004990 },
+        "rot_speed": { "ex.float": -4.308359 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "23382587982285425" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "23664062958996081" },
+             { "ex.ref": "23945537935706737" },
+             { "ex.ref": "24227012912417393" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "23664062958996081" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [525.534668, -271.767090] },
+        "local_ang": { "ex.angf": 1.099201 },
+        "local_scale": { "ex.vec2f": [0.398371, 0.597632] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "23945537935706737" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "24227012912417393" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.852793, -0.522249] },
+        "move_speed": { "ex.float": 49.134590 },
+        "rot_speed": { "ex.float": 1.974018 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "24508487889128049" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "24789962865838705" },
+             { "ex.ref": "25071437842549361" },
+             { "ex.ref": "25352912819260017" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "24789962865838705" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-463.126434, -622.538086] },
+        "local_ang": { "ex.angf": 0.924004 },
+        "local_scale": { "ex.vec2f": [0.715323, 0.448546] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "25071437842549361" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "25352912819260017" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.874016, -0.485898] },
+        "move_speed": { "ex.float": 95.963707 },
+        "rot_speed": { "ex.float": 2.673579 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "25634387795970673" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "25915862772681329" },
+             { "ex.ref": "26197337749391985" },
+             { "ex.ref": "26478812726102641" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "25915862772681329" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [91.438644, 197.594467] },
+        "local_ang": { "ex.angf": 3.804410 },
+        "local_scale": { "ex.vec2f": [0.958151, 0.656629] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "26197337749391985" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "26478812726102641" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.876573, -0.481270] },
+        "move_speed": { "ex.float": 45.235661 },
+        "rot_speed": { "ex.float": 2.850548 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "26760287702813297" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "20164915300978" },
+             { "ex.ref": "301639892011634" },
+             { "ex.ref": "583114868722290" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "20164915300978" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-141.455276, 229.247208] },
+        "local_ang": { "ex.angf": 5.276620 },
+        "local_scale": { "ex.vec2f": [0.472928, 0.572468] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "301639892011634" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "583114868722290" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.214095, 0.976813] },
+        "move_speed": { "ex.float": 34.748779 },
+        "rot_speed": { "ex.float": -0.480092 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "864589845432946" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "1146064822143602" },
+             { "ex.ref": "1427539798854258" },
+             { "ex.ref": "1709014775564914" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "1146064822143602" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [27.560247, -38.082024] },
+        "local_ang": { "ex.angf": 0.231601 },
+        "local_scale": { "ex.vec2f": [0.225395, 0.318631] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "1427539798854258" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "1709014775564914" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.049307, -0.998784] },
+        "move_speed": { "ex.float": 14.341285 },
+        "rot_speed": { "ex.float": 4.189251 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "1990489752275570" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "2271964728986226" },
+             { "ex.ref": "2553439705696882" },
+             { "ex.ref": "2834914682407538" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "2271964728986226" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [533.026367, -22.737267] },
+        "local_ang": { "ex.angf": 5.178489 },
+        "local_scale": { "ex.vec2f": [0.112857, 0.036301] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "2553439705696882" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "2834914682407538" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.996015, 0.089190] },
+        "move_speed": { "ex.float": 99.640297 },
+        "rot_speed": { "ex.float": 4.342295 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "3116389659118194" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "3397864635828850" },
+             { "ex.ref": "3679339612539506" },
+             { "ex.ref": "3960814589250162" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "3397864635828850" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [335.317413, -169.028183] },
+        "local_ang": { "ex.angf": 0.556105 },
+        "local_scale": { "ex.vec2f": [0.934687, 0.616108] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "3679339612539506" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "3960814589250162" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.226197, -0.974082] },
+        "move_speed": { "ex.float": 28.779463 },
+        "rot_speed": { "ex.float": -4.450023 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "4242289565960818" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "4523764542671474" },
+             { "ex.ref": "4805239519382130" },
+             { "ex.ref": "5086714496092786" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "4523764542671474" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [666.297546, 40.164768] },
+        "local_ang": { "ex.angf": 4.642871 },
+        "local_scale": { "ex.vec2f": [0.791278, 0.212280] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "4805239519382130" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "5086714496092786" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.878972, 0.476874] },
+        "move_speed": { "ex.float": 39.244598 },
+        "rot_speed": { "ex.float": 1.961364 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "5368189472803442" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "5649664449514098" },
+             { "ex.ref": "5931139426224754" },
+             { "ex.ref": "6212614402935410" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "5649664449514098" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [684.259460, -77.640945] },
+        "local_ang": { "ex.angf": 4.331616 },
+        "local_scale": { "ex.vec2f": [0.282675, 0.898036] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "5931139426224754" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "6212614402935410" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.753672, -0.657251] },
+        "move_speed": { "ex.float": 78.043434 },
+        "rot_speed": { "ex.float": -0.159073 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "6494089379646066" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "6775564356356722" },
+             { "ex.ref": "7057039333067378" },
+             { "ex.ref": "7338514309778034" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "6775564356356722" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [138.402924, 62.569469] },
+        "local_ang": { "ex.angf": 3.659884 },
+        "local_scale": { "ex.vec2f": [0.728085, 0.728609] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "7057039333067378" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "7338514309778034" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.524212, 0.851588] },
+        "move_speed": { "ex.float": 46.433781 },
+        "rot_speed": { "ex.float": -3.127266 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "7619989286488690" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "7901464263199346" },
+             { "ex.ref": "8182939239910002" },
+             { "ex.ref": "8464414216620658" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "7901464263199346" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [139.295715, 547.946228] },
+        "local_ang": { "ex.angf": 6.001476 },
+        "local_scale": { "ex.vec2f": [0.543497, 0.543972] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "8182939239910002" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "8464414216620658" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.373532, 0.927617] },
+        "move_speed": { "ex.float": 67.205353 },
+        "rot_speed": { "ex.float": 0.283389 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "8745889193331314" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "9027364170041970" },
+             { "ex.ref": "9308839146752626" },
+             { "ex.ref": "9590314123463282" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "9027364170041970" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-746.990479, 788.242249] },
+        "local_ang": { "ex.angf": 0.609042 },
+        "local_scale": { "ex.vec2f": [0.767843, 0.212755] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "9308839146752626" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "9590314123463282" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.750866, 0.660455] },
+        "move_speed": { "ex.float": 96.017662 },
+        "rot_speed": { "ex.float": 4.282092 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "9871789100173938" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "10153264076884594" },
+             { "ex.ref": "10434739053595250" },
+             { "ex.ref": "10716214030305906" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "10153264076884594" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-244.106308, 117.503868] },
+        "local_ang": { "ex.angf": 1.454441 },
+        "local_scale": { "ex.vec2f": [0.869981, 0.681197] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "10434739053595250" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "10716214030305906" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.813544, 0.581504] },
+        "move_speed": { "ex.float": 36.849586 },
+        "rot_speed": { "ex.float": -3.986246 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "10997689007016562" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "11279163983727218" },
+             { "ex.ref": "11560638960437874" },
+             { "ex.ref": "11842113937148530" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "11279163983727218" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [204.428452, 384.000977] },
+        "local_ang": { "ex.angf": 3.551945 },
+        "local_scale": { "ex.vec2f": [0.508594, 0.650712] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "11560638960437874" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "11842113937148530" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.360685, 0.932688] },
+        "move_speed": { "ex.float": 16.101158 },
+        "rot_speed": { "ex.float": 1.887715 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "12123588913859186" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "12405063890569842" },
+             { "ex.ref": "12686538867280498" },
+             { "ex.ref": "12968013843991154" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "12405063890569842" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [-35.170906, -201.410019] },
+        "local_ang": { "ex.angf": 6.200354 },
+        "local_scale": { "ex.vec2f": [0.864602, 0.332948] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "12686538867280498" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "12968013843991154" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [-0.175329, 0.984510] },
+        "move_speed": { "ex.float": 6.049592 },
+        "rot_speed": { "ex.float": -2.425955 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "type": { "ex.strid": "ex.entity" },
+    "object": { "ex.entity": {
+        "uid": { "ex.uid": "13249488820701810" },
+        "name": { "ex.strid": "my_entity" },
+        "flags": { "ex.uint32": 0 },
+        "components": { "ex.array": [
+             { "ex.ref": "13530963797412466" },
+             { "ex.ref": "13812438774123122" },
+             { "ex.ref": "14093913750833778" }
+        ] }
+    } },
+    "type": { "ex.strid": "ex.trans2d" },
+    "object": { "ex.trans2d": {
+        "uid": { "ex.uid": "13530963797412466" },
+        "name": { "ex.strid": "Transform 2D" },
+        "flags": { "ex.uint32": 0 },
+        "local_pos": { "ex.vec2f": [509.914520, -546.198730] },
+        "local_ang": { "ex.angf": 3.972671 },
+        "local_scale": { "ex.vec2f": [0.302487, 0.581918] },
+        "parent": { "ex.ref": "18446744073709551615" },
+        "children": { "ex.array": [ ] }
+    } },
+    "type": { "ex.strid": "ex.debug2d" },
+    "object": { "ex.debug2d": {
+        "uid": { "ex.uid": "13812438774123122" },
+        "name": { "ex.strid": "Debug 2D" },
+        "flags": { "ex.uint32": 0 },
+        "shapeType": { "ex.int": 0 },
+        "rect_center": { "ex.vec2f": [0.000000, 0.000000] },
+        "rect_width": { "ex.float": 100.000000 },
+        "rect_height": { "ex.float": 100.000000 }
+    } },
+    "type": { "ex.strid": "ex_simple_t" },
+    "object": { "ex_simple_t": {
+        "uid": { "ex.uid": "14093913750833778" },
+        "name": { "ex.strid": "Simple Behavior" },
+        "flags": { "ex.uint32": 0 },
+        "move_dir": { "ex.vec2f": [0.892176, -0.451687] },
+        "move_speed": { "ex.float": 77.094208 },
+        "rot_speed": { "ex.float": -1.630339 },
+        "rot_around": { "ex.int": 0 }
+    } },
+    "uid": { "ex.uid": "20164915300973" }
+}

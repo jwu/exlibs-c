@@ -363,27 +363,25 @@ extern void __log_warning ( const char *_file_name,
 // __EX_ASSERT_BREAK
 #define __EX_ASSERT_BREAK(_expr,_msg,...) \
 	do { \
-		static bool __do_hw_break = true; \
+        static bool __do_hw_break = true; \
         bool eval = !(_expr); \
-		if ( __do_hw_break ) { \
-            if ( eval && __assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #_expr, _msg, ##__VA_ARGS__ ) ) \
-			{ \
-				EX_HW_BREAK(); \
-			} \
-		} \
+        if ( eval && __assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #_expr, _msg, ##__VA_ARGS__ ) ) \
+        { \
+            if ( __do_hw_break ) \
+                EX_HW_BREAK(); \
+        } \
 	} while( false )
 
 // __EX_ASSERT_RETURN_BREAK
 #define __EX_ASSERT_RETURN_BREAK(_expr,_ret,_msg,...) \
 	do { \
-		static bool __do_hw_break = true; \
+        static bool __do_hw_break = true; \
         bool eval = !(_expr); \
-		if ( __do_hw_break ) { \
-            if ( eval && __assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #_expr, _msg, ##__VA_ARGS__ ) ) \
-			{ \
-				EX_HW_BREAK(); \
-			} \
-		} \
+        if ( eval && __assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #_expr, _msg, ##__VA_ARGS__ ) ) \
+        { \
+            if ( __do_hw_break ) \
+                EX_HW_BREAK(); \
+        } \
         if ( eval ) \
             return _ret; \
 	} while( false )
@@ -391,16 +389,15 @@ extern void __log_warning ( const char *_file_name,
 // __EX_ASSERT_EXEC_BREAK
 #define __EX_ASSERT_EXEC_BREAK(_expr,_func,_msg,...) \
 	do { \
-		static bool __do_hw_break = true; \
+        static bool __do_hw_break = true; \
         bool eval = !(_expr); \
         if ( eval ) \
-            _func; \
-		if ( __do_hw_break ) { \
-            if( eval && __assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #_expr, _msg, ##__VA_ARGS__ ) ) \
-			{ \
-				EX_HW_BREAK(); \
-			} \
-		} \
+        _func; \
+        if( eval && __assert_failed( &__do_hw_break, __FILE__, __FUNCTION__, __LINE__, #_expr, _msg, ##__VA_ARGS__ ) ) \
+        { \
+            if ( __do_hw_break ) \
+                EX_HW_BREAK(); \
+        } \
 	} while( false )
 
 // ========================================================

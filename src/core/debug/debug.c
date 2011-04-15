@@ -260,6 +260,7 @@ bool __assert_failed ( bool *_do_hw_break,
     (*_do_hw_break) = (mbResult != IDIGNORE);
     return (mbResult == IDRETRY);
 #else
+    (*_do_hw_break) = true;
     return true;
 #endif
 }

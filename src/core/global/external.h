@@ -81,6 +81,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h> 
+#include <setjmp.h>
 #include <wchar.h>
 #include <math.h>
 

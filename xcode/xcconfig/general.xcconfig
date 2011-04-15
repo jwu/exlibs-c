@@ -1,0 +1,10 @@
+// ======================================================================================
+// File         : general.xcconfig
+// Author       : Wu Jie 
+// Last Change  : 04/14/2011 | 11:00:54 AM | Thursday,April
+// Description  : 
+// ======================================================================================
+
+HEADER_SEARCH_PATHS = "../../src/" "../../ext/yajl-1.0.11/include" "../../ext/physfs-2.0.1/include" "../../ext/lua-5.1.4/include" 
+LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx" "$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx" "$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx"
+USE_HEADERMAP = NO

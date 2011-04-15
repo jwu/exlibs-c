@@ -92,10 +92,10 @@ void ex_array_deinit ( ex_array_t *_array ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void *ex_array_get ( const ex_array_t *_array, size_t _idx )
-{
+void *ex_array_get ( const ex_array_t *_array, size_t _idx ) {
     ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->count, NULL, "error: _idx out of range" );
+
     return (char *)(_array->data) + _idx * _array->element_bytes;
 }
 
@@ -106,7 +106,6 @@ void *ex_array_get ( const ex_array_t *_array, size_t _idx )
 // managed
 void *ex_array_append ( ex_array_t *_array, const void *_value ) {
     void *val_addr;
-
     ex_assert_return( _array != NULL, NULL, "error: invalid _array, can not be NULL" );
 
     if ( _array->count >= _array->capacity ) {
@@ -142,8 +141,7 @@ void ex_array_ncpy ( ex_array_t *_to, const void *_buf, size_t _count ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_remove_at ( ex_array_t *_array, size_t _idx )
-{
+void ex_array_remove_at ( ex_array_t *_array, size_t _idx ) {
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->count, /*dummy*/, "error: _idx out of range" );
 
@@ -162,8 +160,7 @@ void ex_array_remove_at ( ex_array_t *_array, size_t _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_remove_at_fast ( ex_array_t *_array, size_t _idx )
-{
+void ex_array_remove_at_fast ( ex_array_t *_array, size_t _idx ) {
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->count, /*dummy*/, "error: _idx out of range" );
 
@@ -183,8 +180,7 @@ void ex_array_remove_at_fast ( ex_array_t *_array, size_t _idx )
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_array_remove_range ( ex_array_t *_array, size_t _idx, size_t _count )
-{
+void ex_array_remove_range ( ex_array_t *_array, size_t _idx, size_t _count ) {
     ex_assert_return( _array != NULL, /*dummy*/, "error: invalid _array, can not be NULL" );
     ex_assert_return( _idx < _array->count, /*dummy*/, "error: _idx out of range" );
     ex_assert_return( _idx + _count <= _array->count, /*dummy*/, "error: the remove count is exceed from index" );

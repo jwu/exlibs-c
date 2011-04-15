@@ -1270,18 +1270,6 @@ int ex_lua_child_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     // process in meta 
     // ======================================================== 
 
-    // DISABLE: the __readonly table should never come to here I guess { 
-    // // make sure only get __readonly in table _t, not invoke __index method.
-    // // local is_readonly = rawget(_t,"__readonly")
-    // lua_pushstring(_l,"__readonly");
-    // lua_rawget(_l,1);
-    // // if is_readonly then -- this equals to (is_readonly ~= nil and is_readonly == true)
-    // if ( lua_isboolean(_l,-1) && lua_toboolean(_l,-1) ) {
-    //     return luaL_error (_l,"the table is readonly");
-    // }
-    // lua_pop(_l,1); // pop is_readonly
-    // } DISABLE end 
-
     // assume the userdata must have the metatable
     if ( lua_getmetatable( _l, 1 ) == 0 ) {
         return luaL_error ( _l, "fatal error: can't find the metatable!" );

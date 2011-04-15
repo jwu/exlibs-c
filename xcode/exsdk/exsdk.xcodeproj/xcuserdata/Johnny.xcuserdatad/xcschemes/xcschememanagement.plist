@@ -4,20 +4,120 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>array test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>bitarray test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>cstr test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>encoding test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>exsdk.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>test_base.xcscheme</key>
+		<key>gl render test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>hashmap test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>list test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>lua test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>memmng test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>pool test copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
+		<key>pool test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
+		<key>rapid test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>rtti test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>scripted world.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>simple world - debug.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>test_gl.xcscheme</key>
+		<key>simple world - release.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>3</integer>
+		</dict>
+		<key>stream test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
+		<key>string test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
+		<key>stringID test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
+		<key>thread test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
+		<key>timer test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
+		<key>uid test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -27,7 +127,122 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>B26C7E531357EC0D00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7E661357ED0200BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7E791357EDBE00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7E8B1357EDC000BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7E9F1357EED000BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7EB21357EF3300BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7EC51357EF6600BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7ED81357EFD800BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7EEB1357F09900BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7EFE1357F0F100BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F111357F12B00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F241357F16000BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F371357F19200BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F4A1357F1BD00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F5D1357F1F100BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F701357F21F00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7F8F13580C6F00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7FA213580CB500BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B26C7FB713580E8B00BDADA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B2DD23E912A7C7CE0053CA3F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2E3D9B81356A7B400FDAE41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2E3D9C51356A88C00FDAE41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2E3D9D11356A8FD00FDAE41</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2E3D9DD1356B9F000FDAE41</key>
 		<dict>
 			<key>primary</key>
 			<true/>
