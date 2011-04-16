@@ -43,12 +43,13 @@ int main( int argc, char *argv[] ) {
     printf ("start test in terminal...\n");
     printf ("================\n");
 
-    // setup media path
+    // setup default media path
     strncpy ( media_path, exsdk_dev_path, 1024 );
     strcat ( media_path, "tests/terminal/res/" );
+    ex_core_set_default_path ( media_path );
     
     // init
-    if ( ex_core_init(media_path) != -1 ) {
+    if ( ex_core_init( &argc, &argv ) != -1 ) {
 
         // register exit function
         atexit(exit_fn);

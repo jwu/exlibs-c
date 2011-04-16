@@ -17,6 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // world
 extern ex_ref_t *g_world;
+extern char *g_world_path;
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -27,7 +28,9 @@ void init () {
     struct lua_State *l = ex_lua_main_state();
 
     // create test world
-    ex_lua_dofile( l, "scripted_world/test_transform.lua", NULL );
+    // ex_lua_dofile( l, "scripted_world/test_transform.lua", NULL );
+    ex_assert_return ( g_world_path, /*void*/, "can't find a world! please specific it by --world=" );
+    ex_lua_dofile( l, g_world_path, NULL );
 }
 
 // ------------------------------------------------------------------ 
@@ -49,27 +52,7 @@ void update () {
 // ------------------------------------------------------------------ 
 
 void render () {
-    //
     ex_world_render(g_world);
-
-    // TODO: to test rendering { 
-    // struct lua_State *l = ex_lua_main_state();
-    // // test render lua
-    // ex_camera_apply ( ex_world_main_camera(g_world) );
-    // if ( ex_fsys_file_exists( "exec/render_3D.lua" ) )
-    //     ex_lua_dofile( l, "exec/render_3D.lua", NULL );
-
-    // TODO { 
-    // // draw 2D objects in screen space
-    // glMatrixMode( GL_MODELVIEW );
-    // glLoadIdentity();
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();
-    // glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
-    // if ( ex_fsys_file_exists( "exec/render_2D.lua" ) )
-    //     ex_lua_dofile( l, "exec/render_2D.lua", NULL );
-    // } TODO end 
-    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 

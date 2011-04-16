@@ -20,9 +20,11 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_core_init ( const char *_media_path );
+extern int ex_core_init ( int *_argc_p, char ***_argv_p );
 extern void ex_core_deinit ();
 extern bool ex_core_initialized ();
+
+extern void ex_core_set_default_path ( const char *_media_path );
 
 // ######################### 
 #ifdef __cplusplus

@@ -35,10 +35,54 @@ int __win_height = 480;
 
 // game
 ex_ref_t *g_world = NULL;
+char *g_world_path = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
+
+static void __parse_world ( int *_argc_p, char ***_argv_p ) {
+    int argc = *_argc_p;
+    char **argv = *_argv_p;
+    int i, e;
+
+    for ( i = 1; i < argc; ++i ) {
+        if ( strcmp ( "--world", argv[i] ) == 0 ||
+             strncmp ( "--world=", argv[i], 8 ) == 0 ) 
+        {
+            char *equal = argv[i] + 7;
+
+            if ( *equal == '=' ) {
+                int slen = strlen(equal+1);
+                g_world_path = malloc ( slen + 1 );
+                strcpy ( g_world_path, equal+1 );
+            }
+            else if ( i + 1 < argc ) {
+                g_world_path = malloc ( strlen(argv[i+1]) + 1 );
+                strcpy ( g_world_path, argv[i+1] ); 
+
+                argv[i] = NULL;
+                i += 1;
+            }
+            argv[i] = NULL;
+        }
+    }
+
+    // reset the argv and argc
+    e = 0;
+    for (i = 1; i < argc; i++) {
+        if (e) {
+            if (argv[i]) {
+                argv[e++] = argv[i];
+                argv[i] = NULL;
+            }
+        }
+        else if (!argv[i])
+            e = i;
+    }
+    if (e)
+        *_argc_p = e;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -301,7 +345,7 @@ static void __idle(void) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __create_window ( int argc, const char *argv[] ) {
+static void __create_window ( int argc, char *argv[] ) {
 	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH );
 	glutInitWindowSize(__win_width, __win_height);
@@ -369,6 +413,11 @@ static void exit_fn (void) {
     ex_app_deinit();
     ex_core_deinit();
 
+    if ( g_world_path ) {
+        free(g_world_path);
+        g_world_path = NULL;
+    }
+
     printf ("================\n");
     printf ("exit glut test\n");
     printf ("================\n");
@@ -379,7 +428,7 @@ static void exit_fn (void) {
 extern const char *exsdk_dev_path;
 // ------------------------------------------------------------------ 
 
-int main( int argc, const char *argv[] ) {
+int main( int argc, char *argv[] ) {
     char media_path[1024];
 
     printf ("================\n");
@@ -389,9 +438,11 @@ int main( int argc, const char *argv[] ) {
     // setup media path
     strncpy ( media_path, exsdk_dev_path, 1024 );
     strcat ( media_path, "tests/glut/res/" );
+    ex_core_set_default_path ( media_path );
 
     // init
-    if ( ex_core_init(media_path) != -1 ) {
+    if ( ex_core_init( &argc, &argv ) != -1 ) {
+        __parse_world ( &argc, &argv );
 
         // register exit function
         atexit(exit_fn);

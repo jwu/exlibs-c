@@ -17,6 +17,105 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 static bool __initialized = false;
+static char *__media_path = NULL;
+static const char *__default_media_path = NULL;
+
+// version
+static int __ver_major = 1;
+static int __ver_minor = 1;
+static int __ver_patch = 0;
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __print_help ( FILE *_out ) {
+    fprintf ( _out, "exsdk v%d.%d.%d\n", __ver_major, __ver_minor, __ver_patch );
+    fprintf ( _out, "Usage:\n" );
+    fprintf ( _out, "  exsdk [OPTION...]\n\n" );
+    fprintf ( _out, "Help Options:\n" );
+    fprintf ( _out, "  -h, --help, -?                            Show this help message\n\n" );
+    fprintf ( _out, "Utility Options:\n" );
+    fprintf ( _out, "  --project=file path                       The path of the project\n" );
+    fprintf ( _out, "  -v, --version                             Print version informations\n" );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __print_version ( FILE *_out ) {
+    fprintf ( _out, "exsdk v%d.%d.%d\n", __ver_major, __ver_minor, __ver_patch );
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __parse_args ( int *_argc_p, char ***_argv_p ) {
+    int argc = *_argc_p;
+    char **argv = *_argv_p;
+    int i, e;
+
+    // process arguments
+    for ( i = 1; i < argc; ++i ) {
+        if ( strcmp ( "--project", argv[i] ) == 0 ||
+             strncmp ( "--project=", argv[i], 10 ) == 0 ) 
+        {
+            char *equal = argv[i] + 9;
+
+            if ( *equal == '=' ) {
+                int slen = strlen(equal+1);
+                __media_path = malloc ( slen + 1 ); // NOTE: we do the free in ex_core_init
+                strcpy ( __media_path, equal+1 ); 
+            }
+            else if ( i + 1 < argc ) {
+                __media_path = malloc ( strlen(argv[i+1]) + 1 ); // NOTE: we do the free in ex_core_init
+                strcpy ( __media_path, argv[i+1] ); 
+
+                argv[i] = NULL;
+                i += 1;
+            }
+            argv[i] = NULL;
+        }
+        else if ( strcmp ("-h", argv[i]) == 0 ||
+                  strcmp ("-?", argv[i]) == 0 ||
+                  strcmp ("--help", argv[i]) == 0 )
+        {
+            __print_help (stderr);
+            argv[i] = NULL;
+            exit (0);
+        }
+        else if ( strcmp ("-v", argv[i]) == 0 ||
+                  strcmp ("--version", argv[i]) == 0 )
+        {
+            __print_version (stderr);
+            argv[i] = NULL;
+            exit (0);
+        }
+    }
+
+    // reset the argv and argc
+    e = 0;
+    for (i = 1; i < argc; i++) {
+        if (e) {
+            if (argv[i]) {
+                argv[e++] = argv[i];
+                argv[i] = NULL;
+            }
+        }
+        else if (!argv[i])
+            e = i;
+    }
+    if (e)
+        *_argc_p = e;
+
+    // if we still don't find media_path, use default media_path
+    if ( !__media_path && __default_media_path ) {
+        __media_path = malloc ( strlen(__default_media_path) + 1 ); // NOTE: we do the free in ex_core_init
+        strcpy( __media_path, __default_media_path );
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,7 +133,10 @@ extern const char *exsdk_dev_path;
 // success: 0
 // already inited: 1
 // failed: -1
-int ex_core_init ( const char *_media_path ) {
+int ex_core_init ( int *_argc_p, char ***_argv_p ) {
+
+    // parse arguments
+    __parse_args ( _argc_p, _argv_p );
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
@@ -65,16 +167,17 @@ int ex_core_init ( const char *_media_path ) {
         return -1;
     }
     // NOTE: this must be done before ex_log_init, so that log.txt can be open in the corrent path.
-    if ( _media_path ) {
+    if ( __media_path ) {
         // set write dir
-        if ( ex_fsys_set_write_dir(_media_path) != 0 )
+        if ( ex_fsys_set_write_dir(__media_path) != 0 )
             return -1;
-        ex_log("set write dir: %s", _media_path );
+        ex_log("set write dir: %s", __media_path );
 
         // mount the write dir 
-        if ( ex_fsys_mount( _media_path, "/", true ) != 0 )
+        if ( ex_fsys_mount( __media_path, "/", true ) != 0 )
             return -1;
-        ex_log("mount dir: %s", _media_path );
+        ex_log("mount dir: %s", __media_path );
+        free(__media_path); // do the free. 
     }
 
     //
@@ -188,3 +291,11 @@ void ex_core_deinit () {
 // ------------------------------------------------------------------ 
 
 bool ex_core_initialized () { return __initialized; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_core_set_default_path ( const char *_media_path ) {
+    __default_media_path = _media_path;
+}

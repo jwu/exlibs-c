@@ -23,7 +23,9 @@ module( ..., super.derive )
 -- ------------------------------------------------------------------ 
 
 function awake ( self )
-    ex.debug.dump ( getmetatable(self), "move" )
+    ex.log( "the super type name is: " .. __super.__typename )
+    ex.log( "the super type name is: " .. super.__typename )
+    -- ex.debug.dump ( getmetatable(self), "move" )
 end
 
 -- ------------------------------------------------------------------ 
