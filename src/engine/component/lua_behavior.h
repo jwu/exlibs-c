@@ -35,6 +35,7 @@ extern "C" {
 EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     bool compile_failed;
     ex_hashmap_t *name_to_timer;
+    ex_mutex_t *timer_mutex;
 EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -190,6 +190,7 @@ static int __lua_behavior_invoke ( lua_State *_l ) {
     delay_secs = luaL_checknumber(_l,3);
 
     // get repeat seconds
+    // NOTE: repeat seconds < 0 means no-repeat
     repeat_secs = luaL_checknumber(_l,4);
 
     // get the invoke functions

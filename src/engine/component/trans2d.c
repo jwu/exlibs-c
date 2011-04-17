@@ -121,13 +121,17 @@ static void __add_child ( ex_ref_t *_self, ex_ref_t *_child ) {
 // ------------------------------------------------------------------ 
 
 static void __matrix_dirty ( ex_ref_t *_self ) {
-    ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
-    self->dirty = true;
+    ex_trans2d_t *self;
 
-    ex_array_each ( self->children, ex_ref_t *, ref ) {
-        ex_trans2d_t *child = EX_REF_CAST(ex_trans2d_t,ref);
-        child->dirty = true;
-    } ex_array_each_end
+    ex_mutex_lock(self->dirty_mutex);
+        self = EX_REF_CAST(ex_trans2d_t,_self);
+        self->dirty = true;
+
+        ex_array_each ( self->children, ex_ref_t *, ref ) {
+            ex_trans2d_t *child = EX_REF_CAST(ex_trans2d_t,ref);
+            child->dirty = true;
+        } ex_array_each_end
+    ex_mutex_unlock(self->dirty_mutex);
 }
 
 // ------------------------------------------------------------------ 
@@ -144,28 +148,26 @@ static void __update_matrix ( ex_ref_t *_self ) {
     }
 
     ex_mutex_lock(self->dirty_mutex);
+        // calculate the local to world matrix.
+        // ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &ex_vec2f_one );
+        ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &self->local_scale );
 
-    // calculate the local to world matrix.
-    // ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &ex_vec2f_one );
-    ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &self->local_scale );
+        if ( parent ) {
+            ex_mat33f_t matParent;
+            ex_trans2d_local_to_world_mat33f ( self->parent, &matParent );
+            ex_mat33f_mul( &(self->localToWorld), &self->localToWorld, &matParent );
+        }
 
-    if ( parent ) {
-        ex_mat33f_t matParent;
-        ex_trans2d_local_to_world_mat33f ( self->parent, &matParent );
-        ex_mat33f_mul( &(self->localToWorld), &self->localToWorld, &matParent );
-    }
-
-    ret = ex_mat33f_get_inverse( &self->localToWorld, &self->worldToLocal );
-    if ( ret == false ) {
-        ex_vec2f_t v;
-        v.x = -self->localToWorld.m20;
-        v.y = -self->localToWorld.m21;
-        self->worldToLocal = ex_mat33f_zero;
-        ex_mat33f_set_translate( &self->worldToLocal, &v ); 
-    }
-    // ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
-    self->dirty = false;
-
+        ret = ex_mat33f_get_inverse( &self->localToWorld, &self->worldToLocal );
+        if ( ret == false ) {
+            ex_vec2f_t v;
+            v.x = -self->localToWorld.m20;
+            v.y = -self->localToWorld.m21;
+            self->worldToLocal = ex_mat33f_zero;
+            ex_mat33f_set_translate( &self->worldToLocal, &v ); 
+        }
+        // ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
+        self->dirty = false;
     ex_mutex_unlock(self->dirty_mutex);
 }
 

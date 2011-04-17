@@ -21,29 +21,29 @@ module( ..., super.derive )
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function awake ( self )
+function awake ( _self )
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function start ( self )
+function start ( _self )
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function update ( self )
-    self.trans2d:rotate( ex.time.dt )
+function update ( _self )
+    _self.trans2d:rotate( ex.time.dt )
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function on_render ( self )
-    local wpos = self.trans2d.position
-    ex.draw_text( wpos.x - 30, wpos.y + 15, 0.0, self.entity.name )
+function on_render ( _self )
+    local wpos = _self.trans2d.position
+    ex.draw_text( wpos.x - 30, wpos.y + 15, 0.0, _self.entity.name )
 end

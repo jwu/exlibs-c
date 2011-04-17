@@ -26,7 +26,9 @@
 #define MALLOC_280_H
 
 // jwu ADD { 
-#define USE_DL_PREFIX
+#define USE_DL_PREFIX 1
+// for thread-safty
+#define USE_LOCKS 1
 // } jwu ADD end 
 
 #ifdef __cplusplus

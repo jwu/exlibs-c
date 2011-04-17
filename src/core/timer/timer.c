@@ -137,7 +137,14 @@ void __threaded_timer_tick () {
     // remove all timer here
     ex_array_each ( &__unused_timers, int, id ) {
         timer_t *t = (timer_t *)ex_pool_get ( &__timers, id );
-        if (t) ex_free_nomng (t->params);
+        if (t) {
+            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop )
+                t->on_stop(t->params);
+            if ( t->params ) {
+                ex_free_nomng (t->params);
+                t->params = NULL;
+            }
+        }
         ex_pool_remove_at_safe ( &__timers, id ); // this can work around if we got several same id to remove.
     } ex_array_each_end
     ex_array_remove_all(&__unused_timers);
@@ -206,7 +213,10 @@ void ex_timer_deinit () {
 
         // free params in timer
         ex_pool_raw_each ( &__timers, timer_t *, t ) {
-            ex_free_nomng (t->params);
+            if ( t->params ) {
+                ex_free_nomng (t->params);
+                t->params = NULL;
+            }
         } ex_pool_each_end
 
         // clear all timers
@@ -255,7 +265,7 @@ int ex_add_timer ( ex_timer_pfn _cb,
 
     // init new timer
     newTimer.state = EX_TIMER_STATE_STOPPED;
-    newTimer.start_counter = newTimer.delay = _delay;
+    newTimer.start_counter = newTimer.delay = __ROUND_RESOLUTION(ex_timespan_to_msecs(_delay));
     newTimer.interval_counter = newTimer.interval = __ROUND_RESOLUTION(ex_timespan_to_msecs(_interval));
     newTimer.lifetime_counter = newTimer.lifetime = (_lifetime == EX_TIMESPAN_INFINITY) ? -1 : __ROUND_RESOLUTION(ex_timespan_to_msecs(_lifetime));
     newTimer.start = newTimer.last_alarm = -1; // start and counter should assign in ex_start_timer
@@ -284,8 +294,10 @@ bool ex_remove_timer ( int _id ) {
     if ( !validTimer )
         return false;
 
-    ex_stop_timer(_id); // mark timer as stopped
-    ex_array_append_int32(&__unused_timers, _id);
+    ex_mutex_lock(__timer_mutex);
+        ex_stop_timer(_id); // mark timer as stopped
+        ex_array_append_int32(&__unused_timers, _id);
+    ex_mutex_unlock(__timer_mutex);
     return true;
 }
 
@@ -326,8 +338,15 @@ void ex_start_timer ( int _id ) {
                         t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
                     }
                     else {
+                        if ( t->on_stop )
+                            t->on_stop(t->params);
+                        t->start = t->last_alarm = -1;
+                        t->state = EX_TIMER_STATE_STOPPED;
                         // it still possible we remove the timer ....
-                        ex_free_nomng (t->params);
+                        if ( t->params ) {
+                            ex_free_nomng (t->params);
+                            t->params = NULL;
+                        }
                         ex_pool_remove_at_safe ( &__timers, _id ); // this can work around if we got several same id to remove.
                     }
                 }
@@ -349,7 +368,7 @@ void ex_stop_timer ( int _id ) {
     t = (timer_t *)ex_pool_get ( &__timers, _id );
     if (t) {
         ex_mutex_lock(__timer_mutex);
-            if ( t->on_stop )
+            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop )
                 t->on_stop(t->params);
             t->start = t->last_alarm = -1;
             t->state = EX_TIMER_STATE_STOPPED;

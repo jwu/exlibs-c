@@ -47,6 +47,8 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
     } ex_hashmap_each_end;
     ex_hashmap_free(self->name_to_timer);
 
+    ex_destroy_mutex(self->timer_mutex);
+
     __behavior_deinit(_self); // parent deinint
 }
 
@@ -219,13 +221,13 @@ static void __lua_behavior_on_invoke_stop ( void *_params ) {
         strid_t nameID;
     } params_t;
     params_t *params = (params_t *)_params;
-
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
 
-    //
     luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_funcID );
     luaL_unref( ex_lua_main_state(), LUA_REGISTRYINDEX, params->lua_threadID );
-    ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
+    ex_mutex_lock(self->timer_mutex);
+        ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
+    ex_mutex_unlock(self->timer_mutex);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -252,6 +254,7 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
     // 
     EX_MEMBER( ex_lua_behavior_t, compile_failed, false )
     EX_MEMBER( ex_lua_behavior_t, name_to_timer, ex_hashmap(strid, int, 8) )
+    EX_MEMBER( ex_lua_behavior_t, timer_mutex, ex_create_mutex() )
 
 EX_DEF_OBJECT_END
 
@@ -283,22 +286,27 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
     int timerID = -1;
     strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+    timespan_t lifetime = EX_TIMESPAN_INFINITY;
 
     lua_State *l1;
     int lua_threadID,lua_funcID; 
+
+    //
+    ex_mutex_lock(self->timer_mutex);
+        hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
+    ex_mutex_unlock(self->timer_mutex);
+    if ( idx != -1 ) {
+        // TEMP DISABLE { 
+        // luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
+        // } TEMP DISABLE end 
+        return;
+    }
 
     // create new thread first
     l1 = lua_newthread(ex_lua_main_state());
     lua_threadID = luaL_ref(ex_lua_main_state(), LUA_REGISTRYINDEX); // keep the thread in registry index.
     lua_xmove( _cur_state, l1, 1 ); // move the pushed func from l to l1.
     lua_funcID = luaL_ref( l1, LUA_REGISTRYINDEX );
-
-    //
-    hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
-    if ( idx != -1 ) {
-        luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
-        return;
-    }
 
     //
     struct params_t {
@@ -314,6 +322,12 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
     params.lua_funcID = lua_funcID;
     params.nameID = nameID;
 
+    //
+    if ( _secs_repeat < 0.0 ) {
+        _secs_repeat = _secs_delay;
+        lifetime = ex_timespan_from_secs_f32(_secs_delay);
+    }
+
     // create timer
     timerID = ex_add_timer( __lua_behavior_invoke, 
                             __lua_behavior_on_invoke_stop,
@@ -321,9 +335,11 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
                             sizeof(params), 
                             ex_timespan_from_secs_f32(_secs_delay), 
                             ex_timespan_from_secs_f32(_secs_repeat), 
-                            EX_TIMESPAN_INFINITY );
+                            lifetime );
     // add timer to hashmap 
-    ex_hashmap_insert_new ( self->name_to_timer, &nameID, &timerID, hash_idx, &idx );
+    ex_mutex_lock(self->timer_mutex);
+        ex_hashmap_insert_new ( self->name_to_timer, &nameID, &timerID, hash_idx, &idx );
+    ex_mutex_unlock(self->timer_mutex);
 
     // now start it
     ex_start_timer(timerID);
@@ -336,8 +352,11 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
 void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
     strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+    int *timerID = NULL;
 
-    int *timerID = ex_hashmap_get ( self->name_to_timer, &nameID, NULL ); 
+    ex_mutex_lock(self->timer_mutex);
+        timerID = ex_hashmap_get ( self->name_to_timer, &nameID, NULL ); 
+    ex_mutex_unlock(self->timer_mutex);
     if ( timerID ) {
         ex_stop_timer(*timerID);
     }

@@ -60,6 +60,10 @@ void ex_screen_print ( int _x, int _y, const char *_fmt, ... ) {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, buffer[i]);
         }
 	}
+
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 }
 
 // ------------------------------------------------------------------ 
@@ -112,5 +116,9 @@ void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... ) {
             }
         }
     glPopAttrib();
+
+    // if we use dynamic buffer, free it
+    if ( buffer != buf )
+        ex_free_nomng ( buffer );
 }
 
