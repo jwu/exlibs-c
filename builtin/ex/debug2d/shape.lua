@@ -47,7 +47,7 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( self )
-    -- self:invoke ( "_add_trail", 0.0, 0.5 )
+    self:invoke ( "_add_trail", 0.0, 0.5 )
 end
 
 -- ------------------------------------------------------------------ 
@@ -103,8 +103,7 @@ function on_render ( self )
     end
 
     -- show trail
-    -- if self.show_trail then
-    if false then
+    if self.show_trail then
         gl.MatrixMode( "MODELVIEW" )
         gl.LoadIdentity()
         gl.Begin("LINE_STRIP")

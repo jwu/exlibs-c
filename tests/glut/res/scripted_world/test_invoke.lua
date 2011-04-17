@@ -11,23 +11,26 @@ ex.log ("test invoke...")
 --
 --/////////////////////////////////////////////////////////////////////////////
 
+function create_ent ( _pos )
+    local ent = ex.entity("foobar")
+    ent:add_comp("ex.trans2d", {
+        -- local_angle = ex.angf(15),
+        local_scale = ex.vec2f(1.0,1.0),
+        local_position = _pos
+    })
+    ent:add_comp("ex.debug2d.rect", {
+        -- show_text = false,
+        width = 10,
+        height = 10,
+    })
+    ent:add_comp("comps.invoke", {
+        interval = 1.0,
+        scale_for_seconds = 0.5
+    })
+end
+
 -- ======================================================== 
--- ent1
+-- 
 -- ======================================================== 
 
-local ent1 = ex.entity("foobar")
-ent1:add_comp("ex.trans2d", {
-    -- local_angle = ex.angf(15),
-    local_scale = ex.vec2f(1.0,1.0),
-    local_position = ex.vec2f(0.0,0.0),
-})
-ent1:add_comp("ex.debug2d.rect", {
-    -- show_text = false,
-    width = 10,
-    height = 10,
-})
-ent1:add_comp("comps.invoke", {
-    interval = 1.0,
-    scale_for_seconds = 0.5
-})
-
+create_ent ( ex.vec2f( 0.0, 0.0 ) )

@@ -190,6 +190,7 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
     int status;
     typedef struct params_t {
         ex_ref_t *self;
+        lua_State *parent_state;
         lua_State *thread_state;
         int lua_threadID;
         int lua_funcID;
@@ -215,6 +216,7 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
 static void __lua_behavior_on_invoke_stop ( void *_params ) {
     typedef struct params_t {
         ex_ref_t *self;
+        lua_State *parent_state;
         lua_State *thread_state;
         int lua_threadID;
         int lua_funcID;
@@ -223,8 +225,12 @@ static void __lua_behavior_on_invoke_stop ( void *_params ) {
     params_t *params = (params_t *)_params;
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
 
+    // FIXME: what it parent state unrefed... { 
+    // FIXME: what it parent is main thread, and this will make parent invoke called... { 
+    // FIXME: we can do the remove at the end of the frame... { 
     luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_funcID );
-    luaL_unref( ex_lua_main_state(), LUA_REGISTRYINDEX, params->lua_threadID );
+    luaL_unref( params->parent_state, LUA_REGISTRYINDEX, params->lua_threadID );
+    // } FIXME end 
     ex_mutex_lock(self->timer_mutex);
         ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
     ex_mutex_unlock(self->timer_mutex);
@@ -303,20 +309,30 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
     }
 
     // create new thread first
+// FIXME: it looks like thread can create other thread, so think a better way manage them when end one thread { 
+// TODO: what if we create thread at the end of the frame ??? this can avoid create thread in other thread state
+#if 0
     l1 = lua_newthread(ex_lua_main_state());
     lua_threadID = luaL_ref(ex_lua_main_state(), LUA_REGISTRYINDEX); // keep the thread in registry index.
+#else
+    l1 = lua_newthread(_cur_state);
+    lua_threadID = luaL_ref(_cur_state, LUA_REGISTRYINDEX); // keep the thread in registry index.
+#endif
+// } FIXME end 
     lua_xmove( _cur_state, l1, 1 ); // move the pushed func from l to l1.
     lua_funcID = luaL_ref( l1, LUA_REGISTRYINDEX );
 
     //
     struct params_t {
         ex_ref_t *self;
+        lua_State *parent_state;
         lua_State *thread_state;
         int lua_threadID;
         int lua_funcID;
         strid_t nameID;
     } params;
     params.self = _self;
+    params.parent_state = _cur_state;
     params.thread_state = l1;
     params.lua_threadID = lua_threadID;
     params.lua_funcID = lua_funcID;
