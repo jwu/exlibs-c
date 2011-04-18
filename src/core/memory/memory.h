@@ -169,6 +169,15 @@ static inline void *ex_memzero ( void *_ptr, size_t _size ) {
 // }
 // } TODO end 
 
+///////////////////////////////////////////////////////////////////////////////
+// debugs
+///////////////////////////////////////////////////////////////////////////////
+
+size_t ex_total_org_memory ();
+size_t ex_total_dbg_memory ();
+size_t ex_accumulate_org_memory ();
+size_t ex_accumulate_dbg_memory ();
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern "C"

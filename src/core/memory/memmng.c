@@ -586,3 +586,12 @@ void ex_free_mng( void *_ptr, const char *_file_name, const char *_func_name, si
     ex_mutex_unlock(__access_mutex);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// debugs
+///////////////////////////////////////////////////////////////////////////////
+
+size_t ex_total_org_memory () { return __total_org_memory; }
+size_t ex_total_dbg_memory () { return __total_dbg_memory; }
+size_t ex_accumulate_org_memory () { return __accumulate_org_memory; }
+size_t ex_accumulate_dbg_memory () { return __accumulate_dbg_memory; }
+

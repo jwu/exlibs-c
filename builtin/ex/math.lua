@@ -33,8 +33,8 @@ rad_to_deg = 180.0/math.pi
 -- ------------------------------------------------------------------ 
 
 function lerp ( _src, _dest, _ratio )
-    assert ( type(_src) == "number", "_src is not a number" )
-    assert ( type(_dest) == "number", "_dest is not a number" )
+    -- assert ( type(_src) == "number", "_src is not a number" )
+    -- assert ( type(_dest) == "number", "_dest is not a number" )
     assert ( type(_ratio) == "number", "_ratio is not a number" )
     return _src * (1.0 - _ratio) + _dest * _ratio 
 end

@@ -306,6 +306,24 @@ void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
     } ex_array_each_end
 }
 
+// DELME { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// extern void ex_lua_behavior_process_coroutine ( ex_ref_t * );
+// // ------------------------------------------------------------------ 
+
+// void ex_entity_process_coroutine ( ex_ref_t *_self ) {
+//     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+//     ex_behavior_t *be;
+
+//     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
+//         be = EX_REF_AS(ex_behavior_t,compref);
+//         if ( be && be->enabled )
+//             ex_lua_behavior_process_coroutine(compref);
+//     } ex_array_each_end
+// }
+// } DELME end 
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 

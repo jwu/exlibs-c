@@ -363,8 +363,8 @@ end
 -- ------------------------------------------------------------------ 
 
 function make_curve ( _from, _to, _duration, _curve )
-    assert ( type(_from) == "number", "_from is not a number" )
-    assert ( type(_to) == "number", "_to is not a number" )
+    -- assert ( type(_from) == "number", "_from is not a number" )
+    -- assert ( type(_to) == "number", "_to is not a number" )
 
     -- init startTime and curve
     local startTime = ex_time.time

@@ -20,12 +20,20 @@ module( ..., super.derive )
 --/////////////////////////////////////////////////////////////////////////////
 
 -- public
-interval = 0.5
+scale_interval = 0.5
 scale_for_seconds = 0.3
+move_interval = 0.5
+move_for_seconds = 5.0
+rot_speed = 5.0
+scale_to = 3.0
 
 -- private
-_curve = function () end
-_state_update = function () end -- update function
+_scale_curve = function () end
+_scale_state_update = function () end -- update function
+
+_move_curve = function () end
+_move_state_update = function () end -- update function
+_move_to = ex.vec2f.zero
 
 --/////////////////////////////////////////////////////////////////////////////
 --
@@ -36,7 +44,7 @@ _state_update = function () end -- update function
 -- ------------------------------------------------------------------ 
 
 function awake ( _self )
-    ex.log( "awaked component invoked in: " .. _self.entity )
+    -- ex.log( "awaked component invoked in: " .. _self.entity )
 end
 
 -- ------------------------------------------------------------------ 
@@ -44,9 +52,8 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( _self )
-    -- _self:invoke ( "scale_me_01", 0.0, _self.interval, _self.scale_me )
-    _self:invoke ( "scale_me_01", 0.0, 0.5, _self.scale_me )
-    -- _self:invoke ( "scale_me_02", 0.0, _self.interval + 0.1, _self.scale_me )
+    _self:invoke ( "scale_me_01", 0.0, _self.scale_interval, _self.scale_me )
+    _self:invoke ( "move_me", 0.0, _self.move_interval ) 
 end
 
 -- ------------------------------------------------------------------ 
@@ -54,8 +61,9 @@ end
 -- ------------------------------------------------------------------ 
 
 function update ( _self )
-    _self.trans2d:rotate( 5.0 * ex.time.dt )
-    if _self._state_update then _self:_state_update () end
+    _self.trans2d:rotate( _self.rot_speed * ex.time.dt )
+    if _self._scale_state_update then _self:_scale_state_update () end
+    if _self._move_state_update then _self:_move_state_update () end
 end
 
 -- -- ------------------------------------------------------------------ 
@@ -72,14 +80,14 @@ end
 -- ------------------------------------------------------------------ 
 
 function _enter_scale_state ( _self )
-    _self._curve = ex_ease.make_curve ( 
+    _self._scale_curve = ex_ease.make_curve ( 
         -- ex.range_rand( 2.0, 10.0 ), 
-        2.0, 
+        _self.scale_to, 
         1.0, 
         _self.scale_for_seconds, 
         ex_ease.out_expo 
     )
-    _self._state_update = _update_scale_state
+    _self._scale_state_update = _update_scale_state
 end
 
 -- ------------------------------------------------------------------ 
@@ -87,11 +95,38 @@ end
 -- ------------------------------------------------------------------ 
 
 function _update_scale_state ( _self )
-    local v, finished = _self._curve()
+    local v, finished = _self._scale_curve()
     _self.trans2d.local_scale = ex.vec2f( v, v ) 
 
     if finished then 
-        _self._state_update = nil 
+        _self._scale_state_update = nil 
+    end
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function _enter_move_state ( _self )
+    _self._move_curve = ex_ease.make_curve ( 
+        _self.trans2d.position, 
+        _self._move_to, 
+        _self.move_for_seconds, 
+        ex_ease.out_expo 
+    )
+    _self._move_state_update = _update_move_state
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function _update_move_state ( _self )
+    local v, finished = _self._move_curve()
+    _self.trans2d.position = v
+
+    if finished then 
+        _self._move_state_update = nil 
     end
 end
 
@@ -100,7 +135,20 @@ end
 -- ------------------------------------------------------------------ 
 
 function scale_me ( _self )
-    _self._state_update = _enter_scale_state
+    _self._scale_state_update = _enter_scale_state
+
     -- _self:cancle_invoke ( "scale_me_02" )
-    _self:invoke ( "scale_me_02", 0.1, -1, _self.scale_me )
+    _self:invoke ( "scale_me_02", 0.1, -1, 
+        function (_self) 
+            _self._scale_state_update = _enter_scale_state
+        end )
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function move_me ( _self )
+    _self._move_to = ex.vec2f( ex.range_rand(-100.0,100.0), ex.range_rand(-100.0,100.0) )
+    _self._move_state_update = _enter_move_state
 end

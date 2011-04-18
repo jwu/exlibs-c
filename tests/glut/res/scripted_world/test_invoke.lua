@@ -19,13 +19,18 @@ function create_ent ( _pos )
         local_position = _pos
     })
     ent:add_comp("ex.debug2d.rect", {
-        -- show_text = false,
+        show_coord = false,
+        show_text = false,
         width = 10,
         height = 10,
     })
     ent:add_comp("comps.invoke", {
-        interval = 1.0,
-        scale_for_seconds = 0.5
+        rot_speed = ex.range_rand( -20, 20 ),
+        scale_interval = ex.range_rand( 0.5, 1.5 ),
+        move_interval = ex.range_rand( 0.5, 1.5 ),
+        -- scale_interval = 0.5,
+        -- move_interval = 0.5,
+        move_for_seconds = ex.range_rand( 1.0, 5.0 ),
     })
 end
 
@@ -33,4 +38,7 @@ end
 -- 
 -- ======================================================== 
 
-create_ent ( ex.vec2f( 0.0, 0.0 ) )
+-- create_ent ( ex.vec2f( 0.0, 0.0 ) )
+for i=1,50 do
+    create_ent ( ex.vec2f( 0.0, 0.0 ) )
+end

@@ -219,6 +219,7 @@ static void __display(void) {
         y += 15; ex_screen_print( x, y, "press \"ESC\" to quit." );
         y += 15; ex_screen_print( x, y, "press \"r\" to restart the game." );
         y += 15; ex_screen_print( x, y, "this is a simple gl test." );
+        y += 15; ex_screen_print( x, y, "total memory used: %f MB", (float)ex_total_org_memory() / (float)(1024 * 1024) );
     }
 
     glutSwapBuffers();

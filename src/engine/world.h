@@ -26,6 +26,15 @@ extern "C" {
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
+#define MAX_INVOKES 256
+typedef struct invoke_params_t {
+    ex_ref_t *self;
+    void *thread_state;
+    int lua_threadID;
+    int lua_funcID;
+    strid_t nameID;
+} invoke_params_t;
+
 #define EX_WORLD_STATE_STOPPED 1
 #define EX_WORLD_STATE_RUNNING 2
 #define EX_WORLD_STATE_PAUSED  3
@@ -35,6 +44,13 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_world_t,ex_object_t)
     ex_array_t *entities; // array<entity_ref>
     ex_array_t *cameras; // array<camera_ref>
     ex_ref_t *mainCamera; // camera_ref
+
+    // for invokes
+    ex_mutex_t *invoke_mutex;
+    int num_invokes_to_call;
+    invoke_params_t invokes_to_call[MAX_INVOKES]; // we accept MAX_INVOKES invokes in one frame
+    int num_invokes_to_stop;
+    invoke_params_t invokes_to_stop[MAX_INVOKES]; // we accept MAX_INVOKES invokes in one frame
 EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -106,6 +122,13 @@ extern void ex_world_resume ( ex_ref_t *_self );
 extern bool ex_world_is_running ( ex_ref_t *_self );
 extern bool ex_world_is_paused ( ex_ref_t *_self );
 extern bool ex_world_is_stopped ( ex_ref_t *_self );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_world_add_invoke_to_call ( ex_ref_t *_self, invoke_params_t *_params );
+extern void ex_world_add_invoke_to_stop ( ex_ref_t *_self, invoke_params_t *_params );
 
 // ######################### 
 #ifdef __cplusplus

@@ -39,31 +39,32 @@ show_text = true
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function awake ( self )
+function awake ( _self )
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function start ( self )
-    self:invoke ( "_add_trail", 0.0, 0.5 )
+function start ( _self )
+    -- _self:invoke ( "_add_trail", 0.0, 0.05 )
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function update ( self )
+function update ( _self )
+    _self:_add_trail ()
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function on_render ( self )
-    local world_pos = self.trans2d.position
-    local world_ang = self.trans2d.angle
+function on_render ( _self )
+    local world_pos = _self.trans2d.position
+    local world_ang = _self.trans2d.angle
 
     gl.MatrixMode("MODELVIEW")
     gl.LoadIdentity()
@@ -71,7 +72,7 @@ function on_render ( self )
     gl.Rotate( world_ang.degrees, 0.0, 0.0, 1.0 );
 
     -- show coordinate
-    if self.show_coord then
+    if _self.show_coord then
         gl.Begin("LINES")
             gl.Scale( 1.0, 1.0, 1.0 )
 
@@ -86,8 +87,8 @@ function on_render ( self )
     end
 
     -- show parent link
-    if self.show_parentlink then
-        local parent = self.trans2d.parent
+    if _self.show_parentlink then
+        local parent = _self.trans2d.parent
         if parent then
             local parent_world_pos = parent.position
             gl.PushMatrix()
@@ -103,16 +104,16 @@ function on_render ( self )
     end
 
     -- show trail
-    if self.show_trail then
+    if _self.show_trail then
         gl.MatrixMode( "MODELVIEW" )
         gl.LoadIdentity()
         gl.Begin("LINE_STRIP")
             gl.Color( 1.0, 0.5, 1.0, 1.0 )
 
             local cnt = 0
-            local i = (self._trail_idx+1)%MAX_TRAIL_VERTS
+            local i = (_self._trail_idx+1)%MAX_TRAIL_VERTS
             while ( cnt < MAX_TRAIL_VERTS ) do
-                local v2 = self._trails[i]
+                local v2 = _self._trails[i]
                 if v2 ~= nil then gl.Vertex( v2.x, v2.y, 0.0 ) end
                 i = (i+1)%MAX_TRAIL_VERTS 
                 cnt = cnt + 1
@@ -121,14 +122,14 @@ function on_render ( self )
     end
 
     -- show text
-    if self.show_text then
-        local wpos = self.trans2d.position + ex.vec2f( -50.0, -15.0 )
+    if _self.show_text then
+        local wpos = _self.trans2d.position + ex.vec2f( -50.0, -15.0 )
         local y = wpos.y 
-        ex.draw_text( wpos.x, y, 0.0, "pos: " .. self.trans2d.position )
+        ex.draw_text( wpos.x, y, 0.0, "pos: " .. _self.trans2d.position )
         y = y - 15
-        ex.draw_text( wpos.x, y, 0.0, "ang: " .. self.trans2d.angle )
+        ex.draw_text( wpos.x, y, 0.0, "ang: " .. _self.trans2d.angle )
         y = y - 15
-        ex.draw_text( wpos.x, y, 0.0, "scale: " .. self.trans2d.scale )
+        ex.draw_text( wpos.x, y, 0.0, "scale: " .. _self.trans2d.scale )
     end
 end
 
@@ -136,7 +137,7 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function _add_trail ( self )
-    self._trail_idx = (self._trail_idx + 1) % MAX_TRAIL_VERTS
-    self._trails[self._trail_idx] = self.trans2d.position
+function _add_trail ( _self )
+    _self._trail_idx = (_self._trail_idx + 1) % MAX_TRAIL_VERTS
+    _self._trails[_self._trail_idx] = _self.trans2d.position
 end

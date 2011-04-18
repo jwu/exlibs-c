@@ -15,9 +15,14 @@
 
 #include "component/trans2d.h"
 #include "component/camera.h"
+#include "component/lua_behavior.h"
 // TEMP { 
 #include "component/debug2d.h"
 // } TEMP end 
+
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // static defines
@@ -95,6 +100,10 @@ EX_DEF_OBJECT_BEGIN( ex_world_t,
     EX_MEMBER( ex_world_t, cameras, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
     EX_MEMBER( ex_world_t, mainCamera, NULL )
 
+    // invokes
+    EX_MEMBER( ex_world_t, invoke_mutex, ex_create_mutex() )
+    EX_MEMBER( ex_world_t, num_invokes_to_call, 0 )
+    EX_MEMBER( ex_world_t, num_invokes_to_stop, 0 )
 EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_world_t)
@@ -121,6 +130,57 @@ static void __debug_draw ( ex_world_t *_world ) {
         if ( dbg2d )
             ex_debug2d_draw(dbg2d);
     } ex_array_each_end;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __invoke_to_call ( invoke_params_t *_params ) {
+    int status;
+    lua_State *thread_state = (lua_State *)_params->thread_state;
+
+    //
+    lua_rawgeti( thread_state, LUA_REGISTRYINDEX, _params->lua_funcID );
+    ex_lua_pushobject( thread_state, _params->self );
+    status = lua_pcall( thread_state, 1, 0, 0 );
+    if ( status ) {
+        ex_lua_alert(thread_state);
+    }
+}
+
+//
+static void __invoke_to_stop ( invoke_params_t *_params ) {
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_params->self);
+    lua_State *thread_state = (lua_State *)_params->thread_state;
+
+    luaL_unref( thread_state, LUA_REGISTRYINDEX, _params->lua_funcID );
+    luaL_unref( thread_state, LUA_REGISTRYINDEX, _params->lua_threadID );
+
+    // remove invoke name from name_to_timer table
+    ex_mutex_lock(self->timer_mutex);
+        ex_hashmap_remove_at ( self->name_to_timer, &(_params->nameID) );
+    ex_mutex_unlock(self->timer_mutex);
+}
+
+//
+static void __process_coroutine ( ex_world_t *_world ) {
+    ex_world_t *self = _world;
+    int i;
+
+    // TODO: use double buffer that makes lock-free....
+    ex_mutex_lock(self->invoke_mutex);
+        ex_log ( "num invokes to call %d", self->num_invokes_to_call );
+        // call triggered invokes
+        for ( i = 0; i < self->num_invokes_to_call; ++i )
+            __invoke_to_call( &(self->invokes_to_call[i]) );
+        self->num_invokes_to_call = 0;
+
+        // process stopped invokes
+        for ( i = 0; i < self->num_invokes_to_stop; ++i )
+            __invoke_to_stop( &(self->invokes_to_stop[i]) );
+        self->num_invokes_to_stop = 0;
+    ex_mutex_unlock(self->invoke_mutex);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -327,6 +387,17 @@ void ex_world_update ( ex_ref_t *_self ) {
         ex_entity_post_update_behaviors(ent);
     } ex_array_each_end
 
+    // DELME { 
+    // // coroutine
+    // ex_array_each ( world->entities, ex_ref_t *, ent ) {
+    //     if ( ent->ptr == NULL || ex_object_is_dead(ent) )
+    //         ex_array_continue;
+
+    //     ex_entity_process_coroutine(ent);
+    // } ex_array_each_end
+    // } DELME end 
+    __process_coroutine (world);
+
     // at the end of the update, we do a garbage collection
     ex_array_each ( world->entities, ex_ref_t *, ent ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) ) {
@@ -460,4 +531,39 @@ bool ex_world_is_paused ( ex_ref_t *_self ) {
 bool ex_world_is_stopped ( ex_ref_t *_self ) {
     ex_world_t *world = EX_REF_CAST(ex_world_t,_self);
     return world->state == EX_WORLD_STATE_STOPPED; 
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_add_invoke_to_call ( ex_ref_t *_self, invoke_params_t *_params ) {
+    int cur_idx;
+    invoke_params_t *params = (invoke_params_t *)_params;
+    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+
+    ex_mutex_lock(self->invoke_mutex);
+        cur_idx = self->num_invokes_to_call; 
+        ex_assert( cur_idx <= MAX_INVOKES, "ERROR: invokes exceed the max value %d", MAX_INVOKES );
+        self->invokes_to_call[cur_idx] = *params; 
+        self->num_invokes_to_call += 1;
+    ex_mutex_unlock(self->invoke_mutex);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_world_add_invoke_to_stop ( ex_ref_t *_self, invoke_params_t *_params ) {
+    int cur_idx;
+    invoke_params_t *params = (invoke_params_t *)_params;
+    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+
+    // add lua_funcID, lua_threadID to invokes_to_stop array, process them later
+    ex_mutex_lock(self->invoke_mutex);
+        cur_idx = self->num_invokes_to_stop; 
+        ex_assert( cur_idx <= MAX_INVOKES, "ERROR: invokes exceed the max value %d", MAX_INVOKES );
+        self->invokes_to_stop[cur_idx] = *params; 
+        self->num_invokes_to_stop += 1;
+    ex_mutex_unlock(self->invoke_mutex);
 }

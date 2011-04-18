@@ -138,8 +138,11 @@ void __threaded_timer_tick () {
     ex_array_each ( &__unused_timers, int, id ) {
         timer_t *t = (timer_t *)ex_pool_get ( &__timers, id );
         if (t) {
-            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop )
+            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop ) {
+                ex_mutex_unlock(__timer_mutex);
                 t->on_stop(t->params);
+                ex_mutex_lock(__timer_mutex);
+            }
             if ( t->params ) {
                 ex_free_nomng (t->params);
                 t->params = NULL;
@@ -279,7 +282,9 @@ int ex_add_timer ( ex_timer_pfn _cb,
     }
 
     //
-    id = ex_pool_insert ( &__timers, &newTimer );
+    ex_mutex_lock(__timer_mutex);
+        id = ex_pool_insert ( &__timers, &newTimer );
+    ex_mutex_unlock(__timer_mutex);
     return id;
 }
 
@@ -311,9 +316,9 @@ void ex_start_timer ( int _id ) {
     if ( _id == EX_INVALID_TIMER_ID )
         return;
 
-    t = (timer_t *)ex_pool_get ( &__timers, _id );
-    if (t) {
-        ex_mutex_lock(__timer_mutex);
+    ex_mutex_lock(__timer_mutex);
+        t = (timer_t *)ex_pool_get ( &__timers, _id );
+        if (t) {
             t->start = t->last_alarm = ex_timer_get_ticks();
             t->start_counter = t->delay;
             t->interval_counter = t->interval; 
@@ -329,7 +334,9 @@ void ex_start_timer ( int _id ) {
                 int32 ms;
 
                 // execute the timer callback
+                ex_mutex_unlock(__timer_mutex);
                 ms = t->cb(t->interval, t->params);
+                ex_mutex_lock(__timer_mutex);
 
                 // process return interval
                 if (ms != t->interval) {
@@ -338,8 +345,11 @@ void ex_start_timer ( int _id ) {
                         t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
                     }
                     else {
-                        if ( t->on_stop )
+                        if ( t->on_stop ) {
+                            ex_mutex_unlock(__timer_mutex);
                             t->on_stop(t->params);
+                            ex_mutex_lock(__timer_mutex);
+                        }
                         t->start = t->last_alarm = -1;
                         t->state = EX_TIMER_STATE_STOPPED;
                         // it still possible we remove the timer ....
@@ -351,8 +361,8 @@ void ex_start_timer ( int _id ) {
                     }
                 }
             }
-        ex_mutex_unlock(__timer_mutex);
-    }
+        }
+    ex_mutex_unlock(__timer_mutex);
 }
 
 // ------------------------------------------------------------------ 
@@ -365,15 +375,18 @@ void ex_stop_timer ( int _id ) {
     if ( _id == EX_INVALID_TIMER_ID )
         return;
 
-    t = (timer_t *)ex_pool_get ( &__timers, _id );
-    if (t) {
-        ex_mutex_lock(__timer_mutex);
-            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop )
+    ex_mutex_lock(__timer_mutex);
+        t = (timer_t *)ex_pool_get ( &__timers, _id );
+        if (t) {
+            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop ) {
+                ex_mutex_unlock(__timer_mutex);
                 t->on_stop(t->params);
+                ex_mutex_lock(__timer_mutex);
+            }
             t->start = t->last_alarm = -1;
             t->state = EX_TIMER_STATE_STOPPED;
-        ex_mutex_unlock(__timer_mutex);
-    }
+        }
+    ex_mutex_unlock(__timer_mutex);
 }
 
 // ------------------------------------------------------------------ 
@@ -386,12 +399,12 @@ void ex_pause_timer ( int _id ) {
     if ( _id == EX_INVALID_TIMER_ID )
         return;
     
-    t = (timer_t *)ex_pool_get ( &__timers, _id );
-    if (t) {
-        uint32 now;
-        int32 time_since_lastAlarm,time_since_start;
+    ex_mutex_lock(__timer_mutex);
+        t = (timer_t *)ex_pool_get ( &__timers, _id );
+        if (t) {
+            uint32 now;
+            int32 time_since_lastAlarm,time_since_start;
 
-        ex_mutex_lock(__timer_mutex);
             now = ex_timer_get_ticks();
             time_since_lastAlarm = (int32)(now - t->last_alarm);
             time_since_start = (int32)(now - t->start);
@@ -399,8 +412,8 @@ void ex_pause_timer ( int _id ) {
             t->interval_counter = t->interval_counter - time_since_lastAlarm;
             t->lifetime_counter = t->lifetime_counter - time_since_start;
             t->state = EX_TIMER_STATE_PAUSED;
-        ex_mutex_unlock(__timer_mutex);
-    }
+        }
+    ex_mutex_unlock(__timer_mutex);
 }
 
 // ------------------------------------------------------------------ 
@@ -413,16 +426,16 @@ void ex_resume_timer ( int _id ) {
     if ( _id == EX_INVALID_TIMER_ID )
         return;
 
-    t = (timer_t *)ex_pool_get ( &__timers, _id );
-    if (t) {
-        uint32 now;
+    ex_mutex_lock(__timer_mutex);
+        t = (timer_t *)ex_pool_get ( &__timers, _id );
+        if (t) {
+            uint32 now;
 
-        ex_mutex_lock(__timer_mutex);
             now = ex_timer_get_ticks();
             t->start = t->last_alarm = now;
             t->state = EX_TIMER_STATE_RUNNING;
-        ex_mutex_unlock(__timer_mutex);
-    }
+        }
+    ex_mutex_unlock(__timer_mutex);
 }
 
 // ------------------------------------------------------------------ 
@@ -435,14 +448,14 @@ void ex_reset_timer ( int _id ) {
     if ( _id == EX_INVALID_TIMER_ID )
         return;
 
-    t = (timer_t *)ex_pool_get ( &__timers, _id );
-    if (t) {
-        ex_mutex_lock(__timer_mutex);
+    ex_mutex_lock(__timer_mutex);
+        t = (timer_t *)ex_pool_get ( &__timers, _id );
+        if (t) {
             t->start = t->last_alarm = ex_timer_get_ticks();
             t->start_counter = t->delay; 
             t->interval_counter = t->interval; 
             t->lifetime_counter = t->lifetime;
             t->state = EX_TIMER_STATE_RUNNING;
-        ex_mutex_unlock(__timer_mutex);
-    }
+        }
+    ex_mutex_unlock(__timer_mutex);
 }

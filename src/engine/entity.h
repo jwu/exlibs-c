@@ -67,6 +67,9 @@ extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeI
 extern void ex_entity_awake_behaviors ( ex_ref_t *_self );
 extern void ex_entity_update_behaviors ( ex_ref_t *_self );
 extern void ex_entity_post_update_behaviors ( ex_ref_t *_self );
+// DELME { 
+// extern void ex_entity_process_coroutine ( ex_ref_t *_self );
+// } DELME end 
 extern void ex_entity_on_render ( ex_ref_t *_self );
 
 // ######################### 
