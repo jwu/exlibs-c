@@ -30,7 +30,7 @@ typedef struct ex_invoke_params_t {
 } ex_invoke_params_t;
 
 // ex_invoke_queue_t
-#define MAX_INVOKES 1024
+#define MAX_INVOKES 256
 typedef struct ex_invoke_queue_t {
     int count;
     int head;

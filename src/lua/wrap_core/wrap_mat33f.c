@@ -190,8 +190,10 @@ static int __mat33f_div ( lua_State *_l ) {
 
     //
     if ( ex_lua_ismat33f(_l,1) ) {
+		float rhs;
+
         lhs = ex_lua_tomat33f(_l,1);
-        float rhs = (float)luaL_checknumber(_l,2);
+        rhs = (float)luaL_checknumber(_l,2);
         r = ex_lua_pushmat33f(_l);
         ex_mat33f_div_scalar( &r->val, lhs, rhs );
         return 1;
@@ -199,7 +201,9 @@ static int __mat33f_div ( lua_State *_l ) {
 
     //
     if ( ex_lua_ismat33f(_l,2) ) {
-        float lhs = (float)luaL_checknumber(_l,1);
+        float lhs;
+
+        lhs = (float)luaL_checknumber(_l,1);
         rhs = ex_lua_tomat33f(_l,2);
         r = ex_lua_pushmat33f(_l);
         ex_scalar_div_mat33f( &r->val, lhs, rhs );

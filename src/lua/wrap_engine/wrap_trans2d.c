@@ -86,11 +86,12 @@ static int __trans2d_get_local_pos ( lua_State *_l ) {
 
 static int __trans2d_set_local_pos ( lua_State *_l ) {
     ex_ref_t *r;
+    ex_vec2f_t *v;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    v = ex_lua_checkvec2f(_l,3);
     ex_trans2d_set_local_position( r, v->x, v->y );
 
     return 0;
@@ -162,11 +163,12 @@ int __trans2d_get_local_scale ( lua_State *_l ) {
 
 int __trans2d_set_local_scale ( lua_State *_l ) {
     ex_ref_t *r;
+    ex_vec2f_t *v;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    v = ex_lua_checkvec2f(_l,3);
     ex_trans2d_set_local_scale( r, v->x, v->y );
 
     return 0;
@@ -195,11 +197,12 @@ int __trans2d_get_world_pos ( lua_State *_l ) {
 
 int __trans2d_set_world_pos ( lua_State *_l ) {
     ex_ref_t *r;
+    ex_vec2f_t *v;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    v = ex_lua_checkvec2f(_l,3);
     ex_trans2d_set_world_position( r, v->x, v->y );
 
     return 0;
@@ -271,11 +274,12 @@ int __trans2d_get_world_scale ( lua_State *_l ) {
 
 int __trans2d_set_world_scale ( lua_State *_l ) {
     ex_ref_t *r;
+    ex_vec2f_t *v;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    v = ex_lua_checkvec2f(_l,3);
     ex_trans2d_set_world_scale( r, v->x, v->y );
 
     return 0;
@@ -304,11 +308,12 @@ int __trans2d_get_right ( lua_State *_l ) {
 
 int __trans2d_set_right ( lua_State *_l ) {
     ex_ref_t *r;
+    ex_vec2f_t *v;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    v = ex_lua_checkvec2f(_l,3);
     ex_trans2d_set_right( r, v );
 
     return 0;
@@ -337,11 +342,12 @@ int __trans2d_get_up ( lua_State *_l ) {
 
 int __trans2d_set_up ( lua_State *_l ) {
     ex_ref_t *r;
+    ex_vec2f_t *v;
 
     r = ex_lua_checktrans2d(_l,1);
     ex_lua_check_nullref(_l,r);
 
-    ex_vec2f_t *v = ex_lua_checkvec2f(_l,3);
+    v = ex_lua_checkvec2f(_l,3);
     ex_trans2d_set_up( r, v );
 
     return 0;

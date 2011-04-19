@@ -36,7 +36,7 @@
 int ex_fsys_init () {
     char path[1024];
 
-    __PHYSFS_CHECK( PHYSFS_init(NULL), "failed to init fsys" );
+    __PHYSFS_CHECK( PHYSFS_init(NULL), "%s: failed to init fsys", "ERROR" ); // NOTE: we write like this to prevent compile error 
     PHYSFS_permitSymbolicLinks(1); // yes, we permit symbolic links
 
     ex_log("user dir: %s", ex_fsys_user_dir() );

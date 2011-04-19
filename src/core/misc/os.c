@@ -38,6 +38,7 @@ int ex_os_mkdir ( const char *_path ) {
     int rc;
 
 #if (EX_PLATFORM == EX_WIN32)
+    return -1;
 #else
     rc = mkdir(_path, S_IRWXU);
     if ( rc == -1 )
@@ -54,6 +55,7 @@ bool ex_os_isdir ( const char *_path ) {
     struct stat statbuf;
 
 #if (EX_PLATFORM == EX_WIN32)
+    return false;
 #else
     if ( lstat(_path, &statbuf) == -1 )
         return false;
@@ -69,6 +71,7 @@ bool ex_os_issymlink ( const char *_path ) {
     struct stat statbuf;
 
 #if (EX_PLATFORM == EX_WIN32)
+    return false;
 #else
     if ( lstat(_path, &statbuf) == -1 )
         return false;
@@ -84,6 +87,7 @@ bool ex_os_isfile ( const char *_path ) {
     struct stat statbuf;
 
 #if (EX_PLATFORM == EX_WIN32)
+    return false;
 #else
     if ( lstat(_path, &statbuf) == -1 )
         return false;
@@ -99,6 +103,7 @@ bool ex_os_exists ( const char *_path ) {
     struct stat statbuf;
 
 #if (EX_PLATFORM == EX_WIN32)
+    return false;
 #else
     if ( lstat(_path, &statbuf) == -1 )
         return false;
