@@ -41,8 +41,8 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
 
     ex_mutex_t *dirty_mutex; // NOTE: it is possible user use timer change things
     bool dirty;
-    ex_mat33f_t localToWorld;
-    ex_mat33f_t worldToLocal;
+    ex_mat33f_t local_to_world;
+    ex_mat33f_t world_to_local;
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
 ///////////////////////////////////////////////////////////////////////////////

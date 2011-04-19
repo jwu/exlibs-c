@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B200D3E412E48F51003B4944 /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
 		B20715BF12C7A4AC00071C29 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B20A1BE4135D5ADD008F3EF7 /* invoke_mng.c in Sources */ = {isa = PBXBuildFile; fileRef = B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */; };
+		B20A1BE5135D5ADD008F3EF7 /* invoke_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */; };
 		B215FE0D131B688500DAAFDD /* wrap_angf.c in Sources */ = {isa = PBXBuildFile; fileRef = B215FE0B131B688500DAAFDD /* wrap_angf.c */; };
 		B215FE0E131B688500DAAFDD /* wrap_class.c in Sources */ = {isa = PBXBuildFile; fileRef = B215FE0C131B688500DAAFDD /* wrap_class.c */; };
 		B226FED51317D9780011A8A7 /* wrap_component.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FED41317D9780011A8A7 /* wrap_component.c */; };
@@ -508,6 +510,9 @@
 
 /* Begin PBXFileReference section */
 		B200D3E312E48F51003B4944 /* libyajl_s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyajl_s.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/yajl-1.0.11/lib/macosx/libyajl_s.a"; sourceTree = "<absolute>"; };
+		B20A1BE0135D284E008F3EF7 /* rtti test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rtti test copy"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = invoke_mng.c; sourceTree = "<group>"; };
+		B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = invoke_mng.h; sourceTree = "<group>"; };
 		B215FE0B131B688500DAAFDD /* wrap_angf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_angf.c; sourceTree = "<group>"; };
 		B215FE0C131B688500DAAFDD /* wrap_class.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_class.c; sourceTree = "<group>"; };
 		B226FED41317D9780011A8A7 /* wrap_component.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_component.c; sourceTree = "<group>"; };
@@ -545,7 +550,6 @@
 		B26C7EC21357EF3300BDADA1 /* pool test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "pool test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26C7ED51357EF6600BDADA1 /* rapid test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rapid test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26C7EE81357EFD800BDADA1 /* lua test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "lua test"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B26C7F0E1357F0F100BDADA1 /* rtti test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "rtti test copy"; path = "/Users/Johnny/dev/projects/exdev/exsdk/xcode/exsdk/build/Release/rtti test copy"; sourceTree = "<absolute>"; };
 		B26C7F211357F12B00BDADA1 /* stream test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "stream test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26C7F341357F16000BDADA1 /* string test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "string test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26C7F471357F19200BDADA1 /* stringID test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "stringID test"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1196,6 +1200,8 @@
 		B2A23180130221F600F3C100 /* engine */ = {
 			isa = PBXGroup;
 			children = (
+				B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */,
+				B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */,
 				B2A23181130221F600F3C100 /* component */,
 				B2A2318E130221F600F3C100 /* engine_inc.h */,
 				B2A2318F130221F600F3C100 /* entity.c */,
@@ -1535,6 +1541,7 @@
 				B26C7F9F13580C6F00BDADA1 /* rtti test */,
 				B26C7FB413580CB500BDADA1 /* scripted world.app */,
 				B26C7FC813580E8B00BDADA1 /* gl render test.app */,
+				B20A1BE0135D284E008F3EF7 /* rtti test copy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1674,6 +1681,7 @@
 				B2F4088F1302C04F00FCF2B5 /* probability.h in Headers */,
 				B2B8B1B7131D217600D11A44 /* lua_behavior.h in Headers */,
 				B2A051CB1349DFDF00BCBC45 /* os.h in Headers */,
+				B20A1BE5135D5ADD008F3EF7 /* invoke_mng.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1848,7 +1856,7 @@
 			);
 			name = "memmng test";
 			productName = test.base;
-			productReference = B26C7F0E1357F0F100BDADA1 /* rtti test copy */;
+			productReference = B20A1BE0135D284E008F3EF7 /* rtti test copy */;
 			productType = "com.apple.product-type.tool";
 		};
 		B26C7F111357F12B00BDADA1 /* stream test */ = {
@@ -2376,6 +2384,7 @@
 				B281F9C613330D620051E7E7 /* wrap_enums.c in Sources */,
 				B28703871335B389000C44FD /* wrap_mat33f.c in Sources */,
 				B2A051CA1349DFDF00BCBC45 /* os.c in Sources */,
+				B20A1BE4135D5ADD008F3EF7 /* invoke_mng.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,13 +32,13 @@ extern "C" {
 
 // DELME { 
 // #define MAX_INVOKES 4
-// typedef struct invoke_params_t {
+// typedef struct ex_invoke_params_t {
 //     ex_ref_t *self;
 //     void *thread_state;
 //     int lua_threadID;
 //     int lua_funcID;
 //     strid_t nameID;
-// } invoke_params_t;
+// } ex_invoke_params_t;
 // } DELME end 
 
 // ------------------------------------------------------------------ 
@@ -56,9 +56,9 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     // // for invokes
     // ex_mutex_t *invoke_mutex;
     // int num_invokes_to_call;
-    // invoke_params_t invokes_to_call[MAX_INVOKES]; // we accept MAX_INVOKES invokes in one frame
+    // ex_invoke_params_t invokes_to_call[MAX_INVOKES]; // we accept MAX_INVOKES invokes in one frame
     // int num_invokes_to_stop;
-    // invoke_params_t invokes_to_stop[MAX_INVOKES]; // we accept MAX_INVOKES invokes in one frame
+    // ex_invoke_params_t invokes_to_stop[MAX_INVOKES]; // we accept MAX_INVOKES invokes in one frame
     // } DELME end 
 EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 

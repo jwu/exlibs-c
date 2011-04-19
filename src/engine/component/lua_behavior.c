@@ -204,7 +204,7 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
 static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
     // DELME { 
     // int status;
-    // invoke_params_t *params = (invoke_params_t *)_params;
+    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
     // lua_State *thread_state = (lua_State *)params->thread_state;
 
     // //
@@ -218,7 +218,7 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
 
     // DELME { 
     // int cur_idx;
-    // invoke_params_t *params = (invoke_params_t *)_params;
+    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
     // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
 
     // ex_mutex_lock(self->invoke_mutex);
@@ -229,7 +229,7 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
     // ex_mutex_unlock(self->invoke_mutex);
     // } DELME end 
 
-    invoke_params_t *params = (invoke_params_t *)_params;
+    ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
     ex_component_t *self = EX_REF_CAST(ex_component_t,params->self);
     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,self->entity);
     ex_world_add_invoke_to_call ( ent->world, _params );
@@ -243,7 +243,7 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
 
 static void __lua_behavior_on_invoke_stop ( void *_params ) {
     // DELME { 
-    // invoke_params_t *params = (invoke_params_t *)_params;
+    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
     // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
     // lua_State *thread_state = (lua_State *)params->thread_state;
 
@@ -257,7 +257,7 @@ static void __lua_behavior_on_invoke_stop ( void *_params ) {
 
     // DELME { 
     // int cur_idx;
-    // invoke_params_t *params = (invoke_params_t *)_params;
+    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
     // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
 
     // // add lua_funcID, lua_threadID to invokes_to_stop array, process them later
@@ -269,10 +269,16 @@ static void __lua_behavior_on_invoke_stop ( void *_params ) {
     // ex_mutex_unlock(self->invoke_mutex);
     // } DELME end 
 
-    invoke_params_t *params = (invoke_params_t *)_params;
-    ex_component_t *self = EX_REF_CAST(ex_component_t,params->self);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,self->entity);
+    ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
+    ex_component_t *comp = EX_REF_CAST(ex_component_t,params->self);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
     ex_world_add_invoke_to_stop ( ent->world, _params );
+
+    // remove invoke name from name_to_timer table
+    ex_mutex_lock(self->timer_mutex);
+        ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
+    ex_mutex_unlock(self->timer_mutex);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -341,12 +347,10 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
 
     lua_State *l1;
     int lua_threadID,lua_funcID; 
-    invoke_params_t params;
+    ex_invoke_params_t params;
 
     //
-    ex_mutex_lock(self->timer_mutex);
-        hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
-    ex_mutex_unlock(self->timer_mutex);
+    hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
     if ( idx != -1 ) {
         // TEMP DISABLE { 
         // luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
@@ -356,8 +360,10 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
 
     // create new thread first
     l1 = lua_newthread(_cur_state);
+    ex_assert ( lua_isthread(_cur_state,-1), "it is not a thread" );
     lua_xmove( _cur_state, l1, 1 ); // move the thread_state from _cur_state to l1.
     lua_threadID = luaL_ref(l1, LUA_REGISTRYINDEX); // keep thread_state reference by itself to prevent gc.
+    ex_assert ( lua_isfunction(_cur_state,-1), "it is not a function" );
     lua_xmove( _cur_state, l1, 1 ); // move the pushed func from _cur_state to l1.
     lua_funcID = luaL_ref( l1, LUA_REGISTRYINDEX );
 
@@ -418,7 +424,7 @@ void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
 // // ------------------------------------------------------------------ 
 
 // //
-// static void __invoke_to_call ( invoke_params_t *_params ) {
+// static void __invoke_to_call ( ex_invoke_params_t *_params ) {
 //     int status;
 //     lua_State *thread_state = (lua_State *)_params->thread_state;
 
@@ -432,7 +438,7 @@ void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
 // }
 
 // //
-// static void __invoke_to_stop ( invoke_params_t *_params ) {
+// static void __invoke_to_stop ( ex_invoke_params_t *_params ) {
 //     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_params->self);
 //     lua_State *thread_state = (lua_State *)_params->thread_state;
 

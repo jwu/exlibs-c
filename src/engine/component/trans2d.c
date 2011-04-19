@@ -60,7 +60,7 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, parent, NULL )
     EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
     EX_MEMBER( ex_trans2d_t, dirty, true )
-    EX_MEMBER( ex_trans2d_t, localToWorld, ex_mat33f_identity )
+    EX_MEMBER( ex_trans2d_t, local_to_world, ex_mat33f_identity )
     EX_MEMBER( ex_trans2d_t, dirty_mutex, ex_create_mutex() )
 
 EX_DEF_OBJECT_END
@@ -149,22 +149,22 @@ static void __update_matrix ( ex_ref_t *_self ) {
 
     ex_mutex_lock(self->dirty_mutex);
         // calculate the local to world matrix.
-        // ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &ex_vec2f_one );
-        ex_mat33f_from_TRS( &(self->localToWorld), &self->local_pos, &self->local_ang, &self->local_scale );
+        // ex_mat33f_from_TRS( &(self->local_to_world), &self->local_pos, &self->local_ang, &ex_vec2f_one );
+        ex_mat33f_from_TRS( &(self->local_to_world), &self->local_pos, &self->local_ang, &self->local_scale );
 
         if ( parent ) {
             ex_mat33f_t matParent;
             ex_trans2d_local_to_world_mat33f ( self->parent, &matParent );
-            ex_mat33f_mul( &(self->localToWorld), &self->localToWorld, &matParent );
+            ex_mat33f_mul( &(self->local_to_world), &self->local_to_world, &matParent );
         }
 
-        ret = ex_mat33f_get_inverse( &self->localToWorld, &self->worldToLocal );
+        ret = ex_mat33f_get_inverse( &self->local_to_world, &self->world_to_local );
         if ( ret == false ) {
             ex_vec2f_t v;
-            v.x = -self->localToWorld.m20;
-            v.y = -self->localToWorld.m21;
-            self->worldToLocal = ex_mat33f_zero;
-            ex_mat33f_set_translate( &self->worldToLocal, &v ); 
+            v.x = -self->local_to_world.m20;
+            v.y = -self->local_to_world.m21;
+            self->world_to_local = ex_mat33f_zero;
+            ex_mat33f_set_translate( &self->world_to_local, &v ); 
         }
         // ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
         self->dirty = false;
@@ -216,7 +216,7 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
         ex_vec2f_div( &self->local_scale, &self->local_scale, &parent_scale );
 
         ex_vec3f_set(&pos3, self->local_pos.x, self->local_pos.y, 1.0f );
-        ex_vec3f_mul_mat33f( &pos3, &pos3, &parent->worldToLocal );
+        ex_vec3f_mul_mat33f( &pos3, &pos3, &parent->world_to_local );
         ex_vec2f_set( &self->local_pos, pos3.x, pos3.y );
     }
 
@@ -255,7 +255,7 @@ void ex_trans2d_world_position ( ex_ref_t *_self, ex_vec2f_t *_pos ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
     __update_matrix(_self);
-    ex_mat33f_get_translate( _pos, &self->localToWorld );
+    ex_mat33f_get_translate( _pos, &self->local_to_world );
 
     // KEEPME: the old method { 
     // ex_mat22f_t rot;
@@ -278,7 +278,7 @@ void ex_trans2d_world_angle ( ex_ref_t *_self, ex_angf_t *_ang ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
     __update_matrix(_self);
-    ex_mat33f_get_rotation( _ang, &self->localToWorld );
+    ex_mat33f_get_rotation( _ang, &self->local_to_world );
 
     // KEEPME { 
     // ex_trans2d_t *parent = self->parent ? EX_REF_CAST(ex_trans2d_t,self->parent) : NULL;
@@ -301,7 +301,7 @@ void ex_trans2d_world_scale ( ex_ref_t *_self, ex_vec2f_t *_scale ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
     __update_matrix(_self);
-    ex_mat33f_get_scale( _scale, &self->localToWorld );
+    ex_mat33f_get_scale( _scale, &self->local_to_world );
 
     // KEEPME { 
     // ex_trans2d_t *parent = self->parent ? EX_REF_CAST(ex_trans2d_t,self->parent) : NULL;
@@ -376,7 +376,7 @@ void ex_trans2d_up ( ex_ref_t *_self, ex_vec2f_t *_up ) {
 
 void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ) {
     __update_matrix (_self);
-    *_result = EX_REF_CAST(ex_trans2d_t,_self)->localToWorld;
+    *_result = EX_REF_CAST(ex_trans2d_t,_self)->local_to_world;
 }
 
 // ------------------------------------------------------------------ 
@@ -385,7 +385,7 @@ void ex_trans2d_local_to_world_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ) 
 
 void ex_trans2d_world_to_local_mat33f ( ex_ref_t *_self, ex_mat33f_t *_result ) {
     __update_matrix (_self);
-    *_result = EX_REF_CAST(ex_trans2d_t,_self)->worldToLocal;
+    *_result = EX_REF_CAST(ex_trans2d_t,_self)->world_to_local;
 } 
 
 // ------------------------------------------------------------------ 
@@ -436,7 +436,7 @@ void ex_trans2d_set_world_position ( ex_ref_t *_self, float _x, float _y ) {
         __update_matrix(parent_ref);
 
         ex_vec3f_set ( &v3, _x, _y, 1.0f );
-        ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
+        ex_vec3f_mul_mat33f( &v3, &v3, &parent->world_to_local );
         ex_vec2f_set ( &self->local_pos, v3.x, v3.y );
     }
     else {
@@ -537,7 +537,7 @@ void ex_trans2d_transform_point ( ex_ref_t *_self, const ex_vec2f_t *_pos, ex_ve
     __update_matrix(_self);
 
     ex_vec3f_set ( &v3, _pos->x, _pos->y, 1.0f );
-    ex_vec3f_mul_mat33f ( &v3, &v3, &self->localToWorld );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->local_to_world );
     ex_vec2f_set ( _oPos, v3.x, v3.y );
 }
 
@@ -552,7 +552,7 @@ void ex_trans2d_inverse_transform_point ( ex_ref_t *_self, const ex_vec2f_t *_po
     __update_matrix(_self);
 
     ex_vec3f_set ( &v3, _pos->x, _pos->y, 1.0f );
-    ex_vec3f_mul_mat33f ( &v3, &v3, &self->worldToLocal );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->world_to_local );
     ex_vec2f_set ( _oPos, v3.x, v3.y );
 }
 
@@ -567,7 +567,7 @@ void ex_trans2d_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir, ex_vec2
     __update_matrix(_self);
 
     ex_vec3f_set ( &v3, _dir->x, _dir->y, 0.0f );
-    ex_vec3f_mul_mat33f ( &v3, &v3, &self->localToWorld );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->local_to_world );
     ex_vec2f_set ( _oDir, v3.x, v3.y );
 }
 
@@ -582,7 +582,7 @@ void ex_trans2d_inverse_transform_dir ( ex_ref_t *_self, const ex_vec2f_t *_dir,
     __update_matrix(_self);
 
     ex_vec3f_set ( &v3, _dir->x, _dir->y, 0.0f );
-    ex_vec3f_mul_mat33f ( &v3, &v3, &self->worldToLocal );
+    ex_vec3f_mul_mat33f ( &v3, &v3, &self->world_to_local );
     ex_vec2f_set ( _oDir, v3.x, v3.y );
 }
 
@@ -611,7 +611,7 @@ void ex_trans2d_translate ( ex_ref_t *_self, float _x, float _y, int _space ) {
 
             // NOTE: use 0.0f will only apply direction
             ex_vec3f_set ( &v3, _x, _y, 0.0f );
-            ex_vec3f_mul_mat33f( &v3, &v3, &parent->worldToLocal );
+            ex_vec3f_mul_mat33f( &v3, &v3, &parent->world_to_local );
             ex_vec2f_add ( &self->local_pos, &self->local_pos, (ex_vec2f_t *)(&v3) ); // NOTE: yes, we can directly cast v3 to v2.
         }
     }
