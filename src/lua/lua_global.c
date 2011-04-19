@@ -1459,3 +1459,11 @@ void ex_lua_dump_stack ( lua_State *_l ) {
     }
     ex_log("|__________");
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_totoal_memory ( struct lua_State *_l ) {
+    return lua_gc(_l, LUA_GCCOUNT, 0);
+}

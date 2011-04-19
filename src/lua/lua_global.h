@@ -131,6 +131,7 @@ extern int ex_lua_child_meta_index ( struct lua_State *_l, ex_hashmap_t *_key_to
 
 extern void ex_lua_alert ( struct lua_State *_l );
 extern void ex_lua_dump_stack ( struct lua_State *_l );
+extern int ex_lua_totoal_memory ( struct lua_State *_l );
 
 // ######################### 
 #ifdef __cplusplus

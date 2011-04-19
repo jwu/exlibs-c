@@ -91,6 +91,7 @@ static void __lua_behavior_awake ( ex_ref_t *_self ) {
             self->compile_failed = true;
         }
     }
+    lua_settop(obj->l, 0);
 }
 
 // ------------------------------------------------------------------ 
@@ -117,6 +118,7 @@ static void __lua_behavior_start ( ex_ref_t *_self ) {
             self->compile_failed = true;
         }
     }
+    lua_settop(obj->l, 0);
 }
 
 // ------------------------------------------------------------------ 
@@ -143,6 +145,7 @@ static void __lua_behavior_update ( ex_ref_t *_self ) {
             self->compile_failed = true;
         }
     }
+    lua_settop(obj->l, 0);
 }
 
 // ------------------------------------------------------------------ 
@@ -169,6 +172,7 @@ static void __lua_behavior_post_update ( ex_ref_t *_self ) {
             self->compile_failed = true;
         }
     }
+    lua_settop(obj->l, 0);
 }
 
 // ------------------------------------------------------------------ 
@@ -195,6 +199,7 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
             self->compile_failed = true;
         }
     }
+    lua_settop(obj->l, 0);
 }
 
 // ------------------------------------------------------------------ 
