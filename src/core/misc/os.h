@@ -18,12 +18,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_os_mkdir ( const char *_path );
+extern int ex_os_mkdir ( const char *_path );
 
-bool ex_os_isdir ( const char *_path );
-bool ex_os_issymlink ( const char *_path );
-bool ex_os_isfile ( const char *_path );
-bool ex_os_exists ( const char *_path );
+extern bool ex_os_isdir ( const char *_path );
+extern bool ex_os_issymlink ( const char *_path );
+extern bool ex_os_isfile ( const char *_path );
+extern bool ex_os_exists ( const char *_path );
 
 
 // #################################################################################

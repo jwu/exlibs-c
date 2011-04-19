@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;;&quot;..\..\ext\lua-5.1.4\include\&quot;"
 				PreprocessorDefinitions="WIN32;__EX_WIN32;__EX_DEBUG__;DEBUG;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -273,6 +273,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\core\misc\misc_inc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\misc\os.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\misc\os.h"
 					>
 				</File>
 				<File
@@ -725,6 +733,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\engine\invoke_mng.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\invoke_mng.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\engine\object.c"
 				>
 			</File>
@@ -792,6 +808,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\engine\component\lua_behavior.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\component\lua_behavior.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\engine\component\sprite.c"
 					>
 				</File>
@@ -832,6 +856,142 @@
 		<Filter
 			Name="lua"
 			>
+			<File
+				RelativePath="..\..\src\lua\lua_global.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\lua\lua_global.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\lua\lua_inc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\lua\lua_wrap_helper.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\lua\lua_wrap_helper.h"
+				>
+			</File>
+			<Filter
+				Name="wrap_engine"
+				>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_behavior.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_component.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_entity.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_lua_behavior.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_object.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_trans2d.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_engine\wrap_world.c"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="wrap_core"
+				>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_angf.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_class.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_enums.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_ex.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_mat33f.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_time.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_vec2f.c"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="wrap_gl"
+				>
+				<File
+					RelativePath="..\..\src\lua\wrap_gl\luagl.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_gl\luagl.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_gl\luagl_util.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_gl\luagl_util.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_gl\luaglu.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_gl\luaglu.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="autogen"

@@ -125,7 +125,6 @@ static void __matrix_dirty ( ex_ref_t *_self ) {
 
     ex_mutex_lock(self->dirty_mutex);
         self->dirty = true;
-
         ex_array_each ( self->children, ex_ref_t *, ref ) {
             ex_trans2d_t *child = EX_REF_CAST(ex_trans2d_t,ref);
             child->dirty = true;

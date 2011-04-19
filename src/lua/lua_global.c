@@ -1125,6 +1125,7 @@ int ex_lua_type_meta_newindex ( lua_State *_l, ex_hashmap_t *_key_to_getset ) {
     lua_rawget ( _l, -2 );
     // if this is not nil
     if ( lua_isnil( _l, -1 ) == 0 ) {
+        key = luaL_checkstring(_l, 2);
         return luaL_error(_l,"the key %s is readonly", key);
     }
     lua_pop(_l,2); // pops mt,v
@@ -1202,6 +1203,7 @@ int ex_lua_meta_newindex ( struct lua_State *_l, ex_hashmap_t *_key_to_getset ) 
     lua_rawget ( _l, -2 );
     // if this is not nil
     if ( lua_isnil( _l, -1 ) == 0 ) {
+        key = luaL_checkstring(_l, 2);
         return luaL_error(_l,"the key %s is readonly", key);
     }
     lua_pop(_l,2); // pops mt,v

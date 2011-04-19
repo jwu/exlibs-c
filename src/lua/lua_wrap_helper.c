@@ -323,7 +323,7 @@ int ex_lua_register_class ( lua_State *_l,
         lua_pushstring(_l,"__metaclass");
             lua_newtable(_l);
             lua_pushstring(_l,"__call");
-            lua_pushcfunction(_l, _metacall_for_child);
+            lua_pushcfunction(_l, (void *)_metacall_for_child);
             lua_rawset(_l,-3);
         lua_rawset(_l,-3);
     }
