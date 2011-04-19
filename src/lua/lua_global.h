@@ -90,6 +90,7 @@ extern int ex_lua_get_function ( struct lua_State *_l, const char *_moduleName, 
 extern int ex_lua_dofile ( struct lua_State *_l, const char *_filepath, const char *_modname );
 extern int ex_lua_dostring ( struct lua_State *_l, const char *_fmt, ... );
 extern int ex_lua_clear_refs ( struct lua_State *_l );
+extern int ex_lua_gc ( struct lua_State *_l );
 
 ///////////////////////////////////////////////////////////////////////////////
 // lua module functions in c

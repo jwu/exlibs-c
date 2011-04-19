@@ -130,24 +130,24 @@ void ex_invoke_mng_process ( ex_invoke_mng_t *_self ) {
     int i, num_call, num_stop;
 
     // process invokes to call
-    // ex_mutex_lock(_self->invoke_to_call_mutex);
+    ex_mutex_lock(_self->invoke_to_call_mutex);
         num_call = _self->invokes_to_call.count;
         for ( i = 0; i < num_call; ++i ) {
             __invoke_to_call( &(_self->invokes_to_call.params_list[_self->invokes_to_call.head]) );
             _self->invokes_to_call.head = (_self->invokes_to_call.head + 1) % MAX_INVOKES; 
             _self->invokes_to_call.count -= 1;
         }
-    // ex_mutex_unlock(_self->invoke_to_call_mutex);
+    ex_mutex_unlock(_self->invoke_to_call_mutex);
 
     // process invokes to stop
     num_stop = _self->invokes_to_stop.count;
-    if ( num_stop >= MAX_INVOKES - 50 ) {
-        // ex_mutex_lock(_self->invoke_to_stop_mutex);
+    // if ( num_stop >= MAX_INVOKES - 50 ) {
+        ex_mutex_lock(_self->invoke_to_stop_mutex);
         for ( i = 0; i < num_stop; ++i ) {
             __invoke_to_stop( &(_self->invokes_to_stop.params_list[_self->invokes_to_stop.head]) );
             _self->invokes_to_stop.head = (_self->invokes_to_stop.head + 1) % MAX_INVOKES; 
             _self->invokes_to_stop.count -= 1;
         }
-        // ex_mutex_unlock(_self->invoke_to_stop_mutex);
-    }
+        ex_mutex_unlock(_self->invoke_to_stop_mutex);
+    // }
 }

@@ -121,9 +121,9 @@ EX_DEF_OBJECT_BEGIN( ex_simple_t,
     EX_MEMBER( ex_behavior_t, post_update, post_update )
     EX_MEMBER( ex_behavior_t, on_render, NULL )
 
-    EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_zero )
-    EX_MEMBER( ex_simple_t, move_speed, 1.0f )
-    EX_MEMBER( ex_simple_t, rot_speed, 1.0f )
+    EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_one )
+    EX_MEMBER( ex_simple_t, move_speed, 10.0f )
+    EX_MEMBER( ex_simple_t, rot_speed, 10.0f )
     EX_MEMBER( ex_simple_t, rot_around, ROT_AROUND_PARENT )
 
 EX_DEF_OBJECT_END

@@ -18,9 +18,12 @@ function create_ent ( _pos )
         local_scale = ex.vec2f(1.0,1.0),
         local_position = _pos
     })
+    -- ent:add_comp("ex.debug2d")
+    -- ent:add_comp("ex.simple")
     ent:add_comp("ex.debug2d.rect", {
         show_coord = false,
         show_text = false,
+        show_trail = true,
         width = 10,
         height = 10,
     })
@@ -32,6 +35,7 @@ function create_ent ( _pos )
         -- move_interval = 0.5,
         move_for_seconds = ex.range_rand( 1.0, 5.0 ),
     })
+    return ent
 end
 
 -- ======================================================== 
@@ -40,5 +44,6 @@ end
 
 -- create_ent ( ex.vec2f( 0.0, 0.0 ) )
 for i=1,50 do
-    create_ent ( ex.vec2f( 0.0, 0.0 ) )
+    ent = create_ent ( ex.vec2f( 0.0, 0.0 ) )
+    ent.trans2d.local_position = ex.vec2f( ex.range_rand( -100.0, 100.0 ), ex.range_rand( -100.0, 100.0 ) )
 end

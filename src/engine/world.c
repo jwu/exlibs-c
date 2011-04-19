@@ -344,6 +344,9 @@ void ex_world_update ( ex_ref_t *_self ) {
             --__idx__;
         }
     } ex_array_each_end
+
+    //
+    ex_lua_gc( ex_lua_main_state() );
     ex_object_gc();
 }
 

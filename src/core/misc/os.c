@@ -35,11 +35,10 @@
 // ------------------------------------------------------------------ 
 
 int ex_os_mkdir ( const char *_path ) {
-    int rc;
-
 #if (EX_PLATFORM == EX_WIN32)
     return -1;
 #else
+    int rc;
     rc = mkdir(_path, S_IRWXU);
     if ( rc == -1 )
         return -1;
@@ -52,11 +51,11 @@ int ex_os_mkdir ( const char *_path ) {
 // ------------------------------------------------------------------ 
 
 bool ex_os_isdir ( const char *_path ) {
-    struct stat statbuf;
-
 #if (EX_PLATFORM == EX_WIN32)
     return false;
 #else
+    struct stat statbuf;
+
     if ( lstat(_path, &statbuf) == -1 )
         return false;
     return S_ISDIR(statbuf.st_mode) ? true : false;
@@ -68,11 +67,11 @@ bool ex_os_isdir ( const char *_path ) {
 // ------------------------------------------------------------------ 
 
 bool ex_os_issymlink ( const char *_path ) {
-    struct stat statbuf;
-
 #if (EX_PLATFORM == EX_WIN32)
     return false;
 #else
+    struct stat statbuf;
+
     if ( lstat(_path, &statbuf) == -1 )
         return false;
     return S_ISLNK(statbuf.st_mode) ? true : false;
@@ -84,11 +83,11 @@ bool ex_os_issymlink ( const char *_path ) {
 // ------------------------------------------------------------------ 
 
 bool ex_os_isfile ( const char *_path ) {
-    struct stat statbuf;
-
 #if (EX_PLATFORM == EX_WIN32)
     return false;
 #else
+    struct stat statbuf;
+
     if ( lstat(_path, &statbuf) == -1 )
         return false;
     return (S_ISDIR(statbuf.st_mode) || S_ISLNK(statbuf.st_mode)) ? false : true;
@@ -100,11 +99,11 @@ bool ex_os_isfile ( const char *_path ) {
 // ------------------------------------------------------------------ 
 
 bool ex_os_exists ( const char *_path ) {
-    struct stat statbuf;
-
 #if (EX_PLATFORM == EX_WIN32)
     return false;
 #else
+    struct stat statbuf;
+
     if ( lstat(_path, &statbuf) == -1 )
         return false;
     return true;

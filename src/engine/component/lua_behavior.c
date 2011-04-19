@@ -350,7 +350,9 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
     ex_invoke_params_t params;
 
     //
-    hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
+    ex_mutex_lock(self->timer_mutex);
+        hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
+    ex_mutex_unlock(self->timer_mutex);
     if ( idx != -1 ) {
         // TEMP DISABLE { 
         // luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );

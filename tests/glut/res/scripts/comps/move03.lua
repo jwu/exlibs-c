@@ -43,6 +43,6 @@ function update ( _self )
     -- _self.super.update(_self)
     -- local t = _self.trans2d.right * 0.1 * ex.time.dt
     -- _self.trans2d:move( t.x, t.y )
-    -- _self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space._self )
+    -- _self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
     _self.trans2d:move( ex.time.dt, 0.0, _self.ref_trans )
 end
