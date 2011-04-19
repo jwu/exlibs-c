@@ -698,7 +698,16 @@ int ex_lua_clear_refs ( lua_State *_l ) {
         // removes 'value'; keeps 'key' for next iteration
         lua_pop(_l, 1);
     }
-    lua_gc(__L, LUA_GCCOLLECT, 0);
+    lua_gc(_l, LUA_GCCOLLECT, 0);
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_lua_gc ( struct lua_State *_l ) {
+    lua_gc(_l, LUA_GCCOLLECT, 0);
     return 0;
 }
 

@@ -14,6 +14,8 @@
 #include "graphics/graphics_inc.h"
 #include "engine/engine_inc.h"
 
+#include "simple_behavior.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 // world
 extern ex_ref_t *g_world;
@@ -26,6 +28,8 @@ extern char *g_world_path;
 
 void init () {
     struct lua_State *l = ex_lua_main_state();
+
+    EX_REGISTER_CLASS_2( ex_simple_t, ex.simple );
 
     // create test world
     // ex_lua_dofile( l, "scripted_world/test_transform.lua", NULL );

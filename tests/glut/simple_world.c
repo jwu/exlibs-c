@@ -27,11 +27,11 @@ extern ex_ref_t *g_world;
 void init () {
     int i;
 
-    EX_REGISTER_CLASS(ex_simple_t);
+    EX_REGISTER_CLASS_2( ex_simple_t, ex.simple );
 
     ex_log ("create simple world...");
     ex_log ("create simple entities...");
-    for ( i = 0; i < 100; ++i ) {
+    for ( i = 0; i < 1000; ++i ) {
         ex_ref_t *ent = ex_world_create_entity ( g_world, ex_strid("my_entity") ); 
         {
             ex_ref_t *trans2d, *dbg2d, *simple_ref;

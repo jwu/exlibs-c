@@ -171,6 +171,14 @@
 			RelativePath="..\..\tests\glut\scripted_world.c"
 			>
 		</File>
+		<File
+			RelativePath="..\..\tests\glut\simple_behavior.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\tests\glut\simple_behavior.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -120,7 +120,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
 
     static const bool show_coord = true;
     static const bool show_parentlink = true;
-    static const bool show_trails = true;
+    static const bool show_trail = true;
 
     //
     if ( self->shapeType == EX_DEBUG_SHAPE_RECT ) {
@@ -182,7 +182,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         }
 
         //
-        if ( show_trails ) {
+        if ( show_trail ) {
             ex_vec2f_t my_worldpos;
             ex_trans2d_world_position( ent->trans2d, &my_worldpos );
 

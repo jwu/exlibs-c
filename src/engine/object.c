@@ -242,6 +242,7 @@ void ex_object_gc () {
     int obj_counter = 0;
     int obj_gc_counter = 0;
 
+    //
     ex_hashmap_each ( &__uid_to_refptr, ex_ref_t *, ref ) {
         ex_uid_t uid = *((ex_uid_t *)__key__);
         ex_object_t *obj = (ex_object_t *)ref->ptr;
