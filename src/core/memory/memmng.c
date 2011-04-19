@@ -595,3 +595,21 @@ size_t ex_total_dbg_memory () { return __total_dbg_memory; }
 size_t ex_accumulate_org_memory () { return __accumulate_org_memory; }
 size_t ex_accumulate_dbg_memory () { return __accumulate_dbg_memory; }
 
+size_t ex_total_dl_memory () {
+    // struct mallinfo {
+    //     MALLINFO_FIELD_TYPE arena;    /* non-mmapped space allocated from system */
+    //     MALLINFO_FIELD_TYPE ordblks;  /* number of free chunks */
+    //     MALLINFO_FIELD_TYPE smblks;   /* always 0 */
+    //     MALLINFO_FIELD_TYPE hblks;    /* always 0 */
+    //     MALLINFO_FIELD_TYPE hblkhd;   /* space in mmapped regions */
+    //     MALLINFO_FIELD_TYPE usmblks;  /* maximum total allocated space */
+    //     MALLINFO_FIELD_TYPE fsmblks;  /* always 0 */
+    //     MALLINFO_FIELD_TYPE uordblks; /* total allocated space */
+    //     MALLINFO_FIELD_TYPE fordblks; /* total free space */
+    //     MALLINFO_FIELD_TYPE keepcost; /* releasable (via malloc_trim) space */
+    // } info;
+
+    // info = dlmallinfo();
+    // return info.uordblks;
+    return dlmalloc_footprint();
+}

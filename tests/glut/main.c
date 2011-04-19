@@ -219,7 +219,8 @@ static void __display(void) {
         y += 15; ex_screen_print( x, y, "press \"ESC\" to quit." );
         y += 15; ex_screen_print( x, y, "press \"r\" to restart the game." );
         y += 15; ex_screen_print( x, y, "this is a simple gl test." );
-        y += 15; ex_screen_print( x, y, "total memory used: %f MB", (float)ex_total_org_memory() / (float)(1024 * 1024) );
+        y += 15; ex_screen_print( x, y, "total memory used by ex: %f MB", (float)ex_total_org_memory() / (float)(1024 * 1024) );
+        y += 15; ex_screen_print( x, y, "total memory used by dl: %f MB", (float)ex_total_dl_memory() / (float)(1024 * 1024) );
         y += 15; ex_screen_print( x, y, "total memory used by lua: %f MB", (float)ex_lua_totoal_memory(ex_lua_main_state()) / (float)(1024) );
     }
 

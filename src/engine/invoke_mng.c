@@ -99,20 +99,9 @@ void ex_invoke_mng_add_to_call ( ex_invoke_mng_t *_self, ex_invoke_params_t *_pa
 // ------------------------------------------------------------------ 
 
 void ex_invoke_mng_add_to_stop ( ex_invoke_mng_t *_self, ex_invoke_params_t *_params ) {
-    int cur_idx, num_stop, i;
+    int cur_idx;
 
     ex_mutex_lock(_self->invoke_to_stop_mutex);
-
-        //
-        // num_stop = _self->invokes_to_stop.count;
-        // if ( num_stop >= MAX_INVOKES ) {
-        //     for ( i = 0; i < num_stop; ++i ) {
-        //         __invoke_to_stop( &(_self->invokes_to_stop.params_list[_self->invokes_to_stop.head]) );
-        //         _self->invokes_to_stop.head = (_self->invokes_to_stop.head + 1) % MAX_INVOKES; 
-        //         _self->invokes_to_stop.count -= 1;
-        //     }
-        // }
-
         ex_assert ( _self->invokes_to_stop.count + 1 <= MAX_INVOKES, "invokes_to_stop list out of range." );
         cur_idx = _self->invokes_to_stop.trail;
         _self->invokes_to_stop.trail = (_self->invokes_to_stop.trail + 1) % MAX_INVOKES;
@@ -140,14 +129,12 @@ void ex_invoke_mng_process ( ex_invoke_mng_t *_self ) {
     ex_mutex_unlock(_self->invoke_to_call_mutex);
 
     // process invokes to stop
-    num_stop = _self->invokes_to_stop.count;
-    // if ( num_stop >= MAX_INVOKES - 50 ) {
-        ex_mutex_lock(_self->invoke_to_stop_mutex);
+    ex_mutex_lock(_self->invoke_to_stop_mutex);
+        num_stop = _self->invokes_to_stop.count;
         for ( i = 0; i < num_stop; ++i ) {
             __invoke_to_stop( &(_self->invokes_to_stop.params_list[_self->invokes_to_stop.head]) );
             _self->invokes_to_stop.head = (_self->invokes_to_stop.head + 1) % MAX_INVOKES; 
             _self->invokes_to_stop.count -= 1;
         }
-        ex_mutex_unlock(_self->invoke_to_stop_mutex);
-    // }
+    ex_mutex_unlock(_self->invoke_to_stop_mutex);
 }
