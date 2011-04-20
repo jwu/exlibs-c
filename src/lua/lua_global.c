@@ -194,6 +194,7 @@ int ex_lua_init () {
                 luaopen_behavior (__L);
                     luaopen_lua_behavior (__L);
 
+    lua_settop ( __L, 0 ); // clear the stack
     __initialized = true;
 
     return 0;
