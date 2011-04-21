@@ -347,9 +347,7 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
         hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
     ex_mutex_unlock(self->timer_mutex);
     if ( idx != -1 ) {
-        // TEMP DISABLE { 
-        // luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
-        // } TEMP DISABLE end 
+        luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
         return;
     }
 
@@ -411,4 +409,24 @@ void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
         luaL_error( ex_lua_main_state(), "can't find %s in invoke list", _name );
         return;
     }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_lua_behavior_is_invoking ( ex_ref_t *_self, const char *_name ) {
+    size_t idx = -1;
+    size_t hash_idx = -1;
+    strid_t nameID = ex_strid(_name);
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+
+    //
+    ex_mutex_lock(self->timer_mutex);
+        hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
+    ex_mutex_unlock(self->timer_mutex);
+    if ( idx != -1 ) {
+        return true;
+    }
+    return false;
 }

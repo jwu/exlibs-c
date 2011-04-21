@@ -71,11 +71,23 @@ void ex_invoke_mng_init ( ex_invoke_mng_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_invoke_mng_deinit ( ex_invoke_mng_t *_self ) {
-    ex_destroy_mutex(_self->invoke_to_call_mutex);
-    ex_destroy_mutex(_self->invoke_to_stop_mutex);
+    int i, num_stop;
 
+    //
+    num_stop = _self->invokes_to_stop.count;
+    for ( i = 0; i < num_stop; ++i ) {
+        __invoke_to_stop( &(_self->invokes_to_stop.params_list[_self->invokes_to_stop.head]) );
+        _self->invokes_to_stop.head = (_self->invokes_to_stop.head + 1) % MAX_INVOKES; 
+        _self->invokes_to_stop.count -= 1;
+    }
+
+    //
     _self->invokes_to_call.head = _self->invokes_to_call.trail = _self->invokes_to_call.count = 0;
     _self->invokes_to_stop.head = _self->invokes_to_stop.trail = _self->invokes_to_stop.count = 0;
+
+    //
+    ex_destroy_mutex(_self->invoke_to_call_mutex);
+    ex_destroy_mutex(_self->invoke_to_stop_mutex);
 }
 
 // ------------------------------------------------------------------ 

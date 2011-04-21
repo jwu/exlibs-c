@@ -132,23 +132,37 @@ end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
+-- NOTE: this test if invoking, do nothing
 -- ------------------------------------------------------------------ 
 
 function scale_me ( _self )
     _self._scale_state_update = _enter_scale_state
-
-    -- _self:cancle_invoke ( "scale_me_02" )
-    _self:invoke ( "scale_me_02", 0.1, -1, 
-        function (_self) 
-            _self._scale_state_update = _enter_scale_state
-        end )
+    if _self:is_invoking("scale_me_02") == false then
+        _self:invoke ( "scale_me_02", 0.1, -1, 
+            function (_self) 
+                _self._scale_state_update = _enter_scale_state
+            end 
+        )
+    end
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
+-- NOTE: this test if invoking, cancle invoke
 -- ------------------------------------------------------------------ 
 
 function move_me ( _self )
     _self._move_to = ex.vec2f( ex.range_rand(-100.0,100.0), ex.range_rand(-100.0,100.0) )
     _self._move_state_update = _enter_move_state
+
+    -- move me 02
+    if _self:is_invoking("move_me_02") then
+        _self:cancle_invoke ( "move_me_02" )
+    end
+    _self:invoke ( "move_me_02", 0.1, -1, 
+        function (_self) 
+            _self._move_to = ex.vec2f( ex.range_rand(-100.0,100.0), ex.range_rand(-100.0,100.0) )
+            _self._move_state_update = _enter_move_state
+        end 
+    )
 end

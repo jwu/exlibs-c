@@ -123,13 +123,13 @@ static void __add_child ( ex_ref_t *_self, ex_ref_t *_child ) {
 static void __matrix_dirty ( ex_ref_t *_self ) {
     ex_trans2d_t *self = EX_REF_CAST(ex_trans2d_t,_self);
 
-    ex_mutex_lock(self->dirty_mutex);
+    // ex_mutex_lock(self->dirty_mutex); // DISABLE: since we use coroutine, not thread
         self->dirty = true;
         ex_array_each ( self->children, ex_ref_t *, ref ) {
             ex_trans2d_t *child = EX_REF_CAST(ex_trans2d_t,ref);
             child->dirty = true;
         } ex_array_each_end
-    ex_mutex_unlock(self->dirty_mutex);
+    // ex_mutex_unlock(self->dirty_mutex); // DISABLE: since we use coroutine, not thread
 }
 
 // ------------------------------------------------------------------ 
@@ -145,7 +145,7 @@ static void __update_matrix ( ex_ref_t *_self ) {
         return;
     }
 
-    ex_mutex_lock(self->dirty_mutex);
+    // ex_mutex_lock(self->dirty_mutex); // DISABLE: since we use coroutine, not thread
         // calculate the local to world matrix.
         // ex_mat33f_from_TRS( &(self->local_to_world), &self->local_pos, &self->local_ang, &ex_vec2f_one );
         ex_mat33f_from_TRS( &(self->local_to_world), &self->local_pos, &self->local_ang, &self->local_scale );
@@ -166,7 +166,7 @@ static void __update_matrix ( ex_ref_t *_self ) {
         }
         // ex_assert( ret == true, "failed to get inverse matrix, the determinant is zero" );
         self->dirty = false;
-    ex_mutex_unlock(self->dirty_mutex);
+    // ex_mutex_unlock(self->dirty_mutex); // DISABLE: since we use coroutine, not thread
 }
 
 ///////////////////////////////////////////////////////////////////////////////

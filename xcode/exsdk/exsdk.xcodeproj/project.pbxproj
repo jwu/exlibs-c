@@ -175,6 +175,7 @@
 		B29D84BD12EFC8ED00AF7E1B /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B200D3E312E48F51003B4944 /* libyajl_s.a */; };
 		B2A051CA1349DFDF00BCBC45 /* os.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A051C81349DFDF00BCBC45 /* os.c */; };
 		B2A051CB1349DFDF00BCBC45 /* os.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A051C91349DFDF00BCBC45 /* os.h */; };
+		B2A14DB0135FEAA600B96113 /* wrap_yield.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A14DAF135FEAA600B96113 /* wrap_yield.c */; };
 		B2A22DAA12FEEBF900F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
 		B2A22DBD12FEEC1200F3C100 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A22DA912FEEBF900F3C100 /* liblua.a */; };
 		B2A22DC012FEEC3000F3C100 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
@@ -571,6 +572,7 @@
 		B28703861335B389000C44FD /* wrap_mat33f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_mat33f.c; sourceTree = "<group>"; };
 		B2A051C81349DFDF00BCBC45 /* os.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = os.c; sourceTree = "<group>"; };
 		B2A051C91349DFDF00BCBC45 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os.h; sourceTree = "<group>"; };
+		B2A14DAF135FEAA600B96113 /* wrap_yield.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_yield.c; sourceTree = "<group>"; };
 		B2A22DA912FEEBF900F3C100 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/lua-5.1.4/lib/macosx/liblua.a"; sourceTree = "<absolute>"; };
 		B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "editor-Info.plist"; sourceTree = "<group>"; };
 		B2A23156130221C700F3C100 /* lua_global.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_global.c; sourceTree = "<group>"; };
@@ -1149,6 +1151,7 @@
 		B2A2315B130221C700F3C100 /* wrap_core */ = {
 			isa = PBXGroup;
 			children = (
+				B2A14DAF135FEAA600B96113 /* wrap_yield.c */,
 				B28703861335B389000C44FD /* wrap_mat33f.c */,
 				B281F9C513330D620051E7E7 /* wrap_enums.c */,
 				B281F9841332FD380051E7E7 /* wrap_time.c */,
@@ -2387,6 +2390,7 @@
 				B28703871335B389000C44FD /* wrap_mat33f.c in Sources */,
 				B2A051CA1349DFDF00BCBC45 /* os.c in Sources */,
 				B20A1BE4135D5ADD008F3EF7 /* invoke_mng.c in Sources */,
+				B2A14DB0135FEAA600B96113 /* wrap_yield.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

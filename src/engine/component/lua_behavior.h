@@ -58,6 +58,12 @@ extern void ex_lua_behavior_invoke ( ex_ref_t *_self,
 
 extern void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name );
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern bool ex_lua_behavior_is_invoking ( ex_ref_t *_self, const char *_name );
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

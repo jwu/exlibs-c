@@ -121,6 +121,7 @@ int __lua_index ( lua_State *_l, int _idx ) {
 // ------------------------------------------------------------------ 
 // Desc: 
 extern int luaopen_ex ( lua_State * );
+extern int luaopen_yield ( lua_State * );
 extern int luaopen_time ( lua_State * );
 extern int luaopen_angf ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
@@ -180,6 +181,7 @@ int ex_lua_init () {
 
     // init core wraps
     luaopen_ex (__L);
+        luaopen_yield (__L);
         luaopen_time (__L);
         luaopen_angf (__L);
         luaopen_vec2f (__L);
@@ -203,6 +205,7 @@ int ex_lua_init () {
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void luaclose_ex ();
+extern void luaclose_yield ();
 extern void luaclose_time ();
 extern void luaclose_angf ();
 extern void luaclose_vec2f ();
@@ -223,6 +226,7 @@ void ex_lua_deinit () {
         lua_gc(__L, LUA_GCCOLLECT, 0);
 
         luaclose_ex ();
+            luaclose_yield ();
             luaclose_time ();
             luaclose_angf ();
             luaclose_vec2f ();

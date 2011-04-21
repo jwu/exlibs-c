@@ -13,13 +13,15 @@ ex.log ("test invoke...")
 
 function create_ent ( _pos )
     local ent = ex.entity("foobar")
+    -- pure-c { 
+    -- ent:add_comp("ex.debug2d")
+    -- ent:add_comp("ex.simple")
+    -- } pure-c end 
     ent:add_comp("ex.trans2d", {
         -- local_angle = ex.angf(15),
         local_scale = ex.vec2f(1.0,1.0),
         local_position = _pos
     })
-    -- ent:add_comp("ex.debug2d")
-    -- ent:add_comp("ex.simple")
     ent:add_comp("ex.debug2d.rect", {
         show_coord = false,
         show_text = false,

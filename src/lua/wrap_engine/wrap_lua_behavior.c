@@ -228,6 +228,28 @@ static int __lua_behavior_cancle_invoke ( lua_State *_l ) {
     return 0;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __lua_behavior_is_invoking ( lua_State *_l ) {
+    ex_ref_t *r;
+    const char *name;
+    bool result;
+
+    // get self
+    r = ex_lua_checklua_behavior(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // get name
+    name = luaL_checkstring(_l,2);
+
+    // do cancle invoke.
+    result = ex_lua_behavior_is_invoking ( r, name );
+    lua_pushboolean( _l, result );
+    return 1;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // register
 ///////////////////////////////////////////////////////////////////////////////
@@ -257,6 +279,7 @@ static const luaL_Reg __meta_funcs[] = {
     { "__eq", ex_lua_ref_eq },
     { "invoke", __lua_behavior_invoke },
     { "cancle_invoke", __lua_behavior_cancle_invoke },
+    { "is_invoking", __lua_behavior_is_invoking },
     { NULL, NULL },
 };
 
