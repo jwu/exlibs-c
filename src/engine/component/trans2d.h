@@ -39,7 +39,10 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_ref_t   *parent; // ex_trans2d_t *
     ex_array_t *children; // ex_trans2d_t * [] 
 
-    ex_mutex_t *dirty_mutex; // NOTE: it is possible user use timer change things
+    // DISABLE: since we use coroutine, not thread. { 
+    // NOTE(not true if we use coroutine): it is possible user use timer change things
+    // ex_mutex_t *dirty_mutex;
+    // } DISABLE end 
     bool dirty;
     ex_mat33f_t local_to_world;
     ex_mat33f_t world_to_local;

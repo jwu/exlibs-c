@@ -37,7 +37,7 @@ void __trans2d_deinit ( ex_ref_t *_self ) {
     ex_array_free(self->children);
 
     // destroy dirty mutex
-    ex_destroy_mutex(self->dirty_mutex);
+    // ex_destroy_mutex(self->dirty_mutex); // DISABLE: since we use coroutine, not thread
 
     // parent deinint
     __component_deinit(_self);
@@ -61,7 +61,7 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
     EX_MEMBER( ex_trans2d_t, dirty, true )
     EX_MEMBER( ex_trans2d_t, local_to_world, ex_mat33f_identity )
-    EX_MEMBER( ex_trans2d_t, dirty_mutex, ex_create_mutex() )
+    // EX_MEMBER( ex_trans2d_t, dirty_mutex, ex_create_mutex() ) // DISABLE: since we use coroutine, not thread
 
 EX_DEF_OBJECT_END
 
