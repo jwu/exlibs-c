@@ -346,7 +346,7 @@ void ex_world_update ( ex_ref_t *_self ) {
     } ex_array_each_end
 
     //
-    // ex_lua_gc( ex_lua_main_state() ); // DISABLE: we let lua do the gc automatically 
+    ex_lua_gc( ex_lua_main_state() ); // NOTE: this makes frame-rate stable in Windows
     ex_object_gc();
 }
 
