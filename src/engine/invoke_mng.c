@@ -141,9 +141,11 @@ void ex_invoke_mng_process ( ex_invoke_mng_t *_self ) {
     ex_mutex_unlock(_self->invoke_to_call_mutex);
 
     // process invokes to stop
-    // NOTE: this prevent us stop latest invokes_to_stop which may still exists in invokes_to_call  
     ex_mutex_lock(_self->invoke_to_stop_mutex);
-        num_stop = _self->invokes_to_stop.count - num_call;
+        // DISABLE: num_stop = _self->invokes_to_stop.count - num_call;
+        // NOTE: this prevent us stop latest invokes_to_stop which may still exists in invokes_to_call, 
+        //       we leave 100 latest stop not process immediately.   
+        num_stop = _self->invokes_to_stop.count - 100;
         if ( num_stop > 0 ) {
             for ( i = 0; i < num_stop; ++i ) {
                 __invoke_to_stop( &(_self->invokes_to_stop.params_list[_self->invokes_to_stop.head]) );

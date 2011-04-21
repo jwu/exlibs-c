@@ -939,6 +939,10 @@
 					RelativePath="..\..\src\lua\wrap_core\wrap_vec2f.c"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\lua\wrap_core\wrap_yield.c"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="wrap_gl"

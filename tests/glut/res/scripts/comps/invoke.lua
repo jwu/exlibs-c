@@ -13,6 +13,7 @@ local ex = ex
 local super = ex.lua_behavior
 local getmetatable = getmetatable
 local ex_ease = ex.ease
+local math = math
 module( ..., super.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -152,6 +153,10 @@ end
 -- ------------------------------------------------------------------ 
 
 function move_me ( _self )
+    -- if _self.trans2d.parent ~= nil then
+    --     return
+    -- end
+
     _self._move_to = ex.vec2f( ex.range_rand(-100.0,100.0), ex.range_rand(-100.0,100.0) )
     _self._move_state_update = _enter_move_state
 
@@ -161,6 +166,12 @@ function move_me ( _self )
     end
     _self:invoke ( "move_me_02", 0.1, -1, 
         function (_self) 
+            -- -- _self.trans2d.parent = ex.ents[ex.range_rand(0,#ex.ents)]
+            -- -- local parent = ex.ents[math.floor(ex.range_rand(1,#ex.ents))].trans2d
+            -- local parent = ex.ents[1].trans2d
+            -- if parent ~= _self.trans2d then
+            --     _self.trans2d.parent = parent
+            -- end
             _self._move_to = ex.vec2f( ex.range_rand(-100.0,100.0), ex.range_rand(-100.0,100.0) )
             _self._move_state_update = _enter_move_state
         end 

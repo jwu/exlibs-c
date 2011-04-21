@@ -26,6 +26,7 @@ function create_ent ( _pos )
         show_coord = false,
         show_text = false,
         show_trail = true,
+        show_parentlink = true,
         width = 10,
         height = 10,
     })
@@ -45,7 +46,10 @@ end
 -- ======================================================== 
 
 -- create_ent ( ex.vec2f( 0.0, 0.0 ) )
+ex.ents = {}
 for i=1,50 do
     ent = create_ent ( ex.vec2f( 0.0, 0.0 ) )
     ent.trans2d.local_position = ex.vec2f( ex.range_rand( -100.0, 100.0 ), ex.range_rand( -100.0, 100.0 ) )
+    ex.ents[#ex.ents+1] = ent
 end
+-- ex.debug.dump(ex.ents,"ex.ents")
