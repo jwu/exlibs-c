@@ -97,6 +97,7 @@ static inline double ex_range_rand( double _low_bound, double _high_bound ) {
 
 // TODO:
 
+// ex_range_randi	 Returns randome integer in range of [_low_bound,_high_bound)
 // insideUnitSphere	 Returns a random point inside a sphere with radius 1 (Read Only).
 // insideUnitCircle	 Returns a random point inside a circle with radius 1 (Read Only).
 // onUnitSphere	 Returns a random point on the surface of a sphere with radius 1 (Read Only).

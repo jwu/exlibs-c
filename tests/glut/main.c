@@ -216,6 +216,7 @@ static void __display(void) {
         int x = 10; int y = 15;
         snprintf( text, 128, "fps: %f", ex_fps() );
         ex_screen_print( x, y, text );
+        y += 15; ex_screen_print( x, y, "world time %f", ex_worldtime() );
         y += 15; ex_screen_print( x, y, "press \"ESC\" to quit." );
         y += 15; ex_screen_print( x, y, "press \"r\" to restart the game." );
         y += 15; ex_screen_print( x, y, "this is a simple gl test." );

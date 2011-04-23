@@ -720,11 +720,14 @@ int ex_lua_class ( lua_State *_l,
 
 // ex functions
 static const luaL_Reg __ex_funcs[] = {
-    { "dump_stack", __dump_stack }, // DEBUG:
-    { "screen_print", __screen_print }, // DEBUG:
-    { "draw_text", __draw_text }, // DEBUG:
-    { "range_rand", __range_rand }, // TODO: go to ex.random.range
+    // debug
+    { "dump_stack", __dump_stack },     // for DEBUG:
+    { "screen_print", __screen_print }, // for DEBUG:
+    { "draw_text", __draw_text },       // for DEBUG:
     { "log", __log },
+    // randome
+    { "range_rand", __range_rand }, // TODO: move to ex.random.range
+    // class op
     { "deepcopy", __deepcopy },
     { "typeof", __type_of }, // NOTE: c don't allow function named __typeof or typeof
     { "isclass", __isclass },

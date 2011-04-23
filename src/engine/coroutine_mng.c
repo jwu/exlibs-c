@@ -77,7 +77,7 @@ void ex_coroutine_mng_deinit ( ex_coroutine_mng_t *_self ) {
     num_stop = _self->coroutines_to_stop.count;
     for ( i = 0; i < num_stop; ++i ) {
         __coroutine_to_stop( &(_self->coroutines_to_stop.params_list[_self->coroutines_to_stop.head]) );
-        _self->coroutines_to_stop.head = (_self->coroutines_to_stop.head + 1) % MAX_coroutineS; 
+        _self->coroutines_to_stop.head = (_self->coroutines_to_stop.head + 1) % MAX_COROUTINES; 
         _self->coroutines_to_stop.count -= 1;
     }
 
@@ -98,9 +98,9 @@ void ex_coroutine_mng_add_to_call ( ex_coroutine_mng_t *_self, ex_coroutine_para
     int cur_idx;
 
     ex_mutex_lock(_self->coroutine_to_call_mutex);
-        ex_assert ( _self->coroutines_to_call.count + 1 <= MAX_coroutineS, "coroutines_to_call list out of range." );
+        ex_assert ( _self->coroutines_to_call.count + 1 <= MAX_COROUTINES, "coroutines_to_call list out of range." );
         cur_idx = _self->coroutines_to_call.trail;
-        _self->coroutines_to_call.trail = (_self->coroutines_to_call.trail + 1) % MAX_coroutineS;
+        _self->coroutines_to_call.trail = (_self->coroutines_to_call.trail + 1) % MAX_COROUTINES;
         _self->coroutines_to_call.params_list[cur_idx] = *_params;
         _self->coroutines_to_call.count += 1;
     ex_mutex_unlock(_self->coroutine_to_call_mutex);
@@ -114,9 +114,9 @@ void ex_coroutine_mng_add_to_stop ( ex_coroutine_mng_t *_self, ex_coroutine_para
     int cur_idx;
 
     ex_mutex_lock(_self->coroutine_to_stop_mutex);
-        ex_assert ( _self->coroutines_to_stop.count + 1 <= MAX_coroutineS, "coroutines_to_stop list out of range." );
+        ex_assert ( _self->coroutines_to_stop.count + 1 <= MAX_COROUTINES, "coroutines_to_stop list out of range." );
         cur_idx = _self->coroutines_to_stop.trail;
-        _self->coroutines_to_stop.trail = (_self->coroutines_to_stop.trail + 1) % MAX_coroutineS;
+        _self->coroutines_to_stop.trail = (_self->coroutines_to_stop.trail + 1) % MAX_COROUTINES;
         _self->coroutines_to_stop.params_list[cur_idx] = *_params;
         _self->coroutines_to_stop.count += 1;
     ex_mutex_unlock(_self->coroutine_to_stop_mutex);
@@ -135,7 +135,7 @@ void ex_coroutine_mng_process ( ex_coroutine_mng_t *_self ) {
         num_call = _self->coroutines_to_call.count;
         for ( i = 0; i < num_call; ++i ) {
             __coroutine_to_call( &(_self->coroutines_to_call.params_list[_self->coroutines_to_call.head]) );
-            _self->coroutines_to_call.head = (_self->coroutines_to_call.head + 1) % MAX_coroutineS; 
+            _self->coroutines_to_call.head = (_self->coroutines_to_call.head + 1) % MAX_COROUTINES; 
             _self->coroutines_to_call.count -= 1;
         }
     ex_mutex_unlock(_self->coroutine_to_call_mutex);
@@ -147,7 +147,7 @@ void ex_coroutine_mng_process ( ex_coroutine_mng_t *_self ) {
         if ( num_stop > 0 ) {
             for ( i = 0; i < num_stop; ++i ) {
                 __coroutine_to_stop( &(_self->coroutines_to_stop.params_list[_self->coroutines_to_stop.head]) );
-                _self->coroutines_to_stop.head = (_self->coroutines_to_stop.head + 1) % MAX_coroutineS; 
+                _self->coroutines_to_stop.head = (_self->coroutines_to_stop.head + 1) % MAX_COROUTINES; 
                 _self->coroutines_to_stop.count -= 1;
             }
         }

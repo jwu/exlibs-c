@@ -22,6 +22,7 @@ extern "C" {
 
 #include "object.h"
 #include "invoke_mng.h"
+#include "coroutine_mng.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -108,13 +109,6 @@ extern void ex_world_resume ( ex_ref_t *_self );
 extern bool ex_world_is_running ( ex_ref_t *_self );
 extern bool ex_world_is_paused ( ex_ref_t *_self );
 extern bool ex_world_is_stopped ( ex_ref_t *_self );
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-extern void ex_world_add_invoke_to_call ( ex_ref_t *_self, ex_invoke_params_t *_params );
-extern void ex_world_add_invoke_to_stop ( ex_ref_t *_self, ex_invoke_params_t *_params );
 
 // ######################### 
 #ifdef __cplusplus

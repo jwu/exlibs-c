@@ -35,7 +35,9 @@ extern "C" {
 EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     bool compile_failed;
     ex_hashmap_t *name_to_timer;
+    ex_hashmap_t *name_to_co;
     ex_mutex_t *timer_mutex;
+    ex_mutex_t *co_mutex;
 EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,10 +49,10 @@ EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 // ------------------------------------------------------------------ 
 
 extern void ex_lua_behavior_invoke ( ex_ref_t *_self, 
+                                     struct lua_State *_cur_state,
                                      float _secs_delay, 
                                      float _secs_repeat,
-                                     const char *_name,
-                                     struct lua_State *_cur_state );
+                                     const char *_name );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -63,6 +65,21 @@ extern void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name )
 // ------------------------------------------------------------------ 
 
 extern bool ex_lua_behavior_is_invoking ( ex_ref_t *_self, const char *_name );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_lua_behavior_start_coroutine ( ex_ref_t *_self, 
+                                              struct lua_State *_cur_state,
+                                              const char *_name,
+                                              int _nargs );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern void ex_lua_behavior_stop_coroutine ( ex_ref_t *_self, const char *_name );
 
 // ######################### 
 #ifdef __cplusplus

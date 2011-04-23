@@ -96,7 +96,8 @@ extern int ex_lua_gc ( struct lua_State *_l );
 // lua module functions in c
 ///////////////////////////////////////////////////////////////////////////////
 
-extern int ex_lua_tostring( struct lua_State *_l, int _idx );
+//
+extern int ex_lua_tostring ( struct lua_State *_l, int _idx );
 extern bool ex_lua_isclass ( struct lua_State *_l, int _idx );
 extern bool ex_lua_isbuiltin ( struct lua_State *_l, int _idx );
 extern int ex_lua_typename ( struct lua_State *_l, int _idx );
@@ -105,7 +106,13 @@ extern int ex_lua_deepcopy ( struct lua_State *_l, int _idx );
 extern int ex_lua_deepcopy_to ( struct lua_State *_l, int _idx );
 extern int ex_lua_merge ( struct lua_State *_l, int _idx_to, int _idx_from );
 
-typedef int (*lua_pfn) ( struct lua_State * );
+//
+extern int ex_lua_yield ( struct lua_State *_l, 
+                          ex_ref_t *_self, 
+                          int _lua_threadID, 
+                          strid_t _nameID );
+
+//
 extern int ex_lua_class ( struct lua_State *_l, 
                           int _base_idx,
                           int _super_idx,

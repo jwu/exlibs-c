@@ -10,6 +10,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
+#include "engine/coroutine_mng.h"
+#include "engine/component/lua_behavior.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -22,7 +24,7 @@
 EX_DEF_LUA_BUILTIN_MODULE()
 
 ///////////////////////////////////////////////////////////////////////////////
-// type meta getset
+// internal define
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -30,8 +32,72 @@ EX_DEF_LUA_BUILTIN_MODULE()
 // ------------------------------------------------------------------ 
 
 static int32 __yield_time_up ( uint32 _interval, void *_params ) {
+    // TODO: add to coroutine_mng stop resume ???? do we need to process there ????
+    // TODO: yes we do!
+    int status;
+    ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
+    lua_State *thread_state = (lua_State *)params->thread_state;
+
+    status = lua_resume(thread_state,0);
+    if ( status == LUA_YIELD ) {
+        ex_lua_yield ( thread_state, 
+                       params->beref,
+                       params->lua_threadID,
+                       params->nameID );
+    }
+    else if ( status != 0 ) {
+        // it is possible the threadID unrefed by __yield_stop call from stop_coroutine
+        if ( params->lua_threadID != LUA_REFNIL ) {
+            ex_lua_behavior_t *be;
+
+            //
+            luaL_unref( thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
+            params->lua_threadID = LUA_REFNIL;
+
+            //
+            be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
+            if ( params->nameID != EX_STRID_NULL ) {
+                ex_mutex_lock(be->co_mutex);
+                    ex_hashmap_remove_at ( be->name_to_co, &(params->nameID) );
+                ex_mutex_unlock(be->co_mutex);
+            }
+        }
+    }
+
     return _interval;
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __yield_stop ( void *_params ) {
+    ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
+    lua_State *thread_state = (lua_State *)params->thread_state;
+
+    // FIXME { 
+    // // it is possible the threadID unrefed by __yield_time_up
+    // if ( params->lua_threadID != LUA_REFNIL ) {
+    //     ex_lua_behavior_t *be;
+
+    //     //
+    //     luaL_unref( thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
+    //     params->lua_threadID = LUA_REFNIL;
+
+    //     //
+    //     be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
+    //     if ( params->nameID != EX_STRID_NULL ) {
+    //         ex_mutex_lock(be->co_mutex);
+    //             ex_hashmap_remove_at ( be->name_to_co, &(params->nameID) );
+    //         ex_mutex_unlock(be->co_mutex);
+    //     }
+    // }
+    // } FIXME end 
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// type meta getset
+///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -45,22 +111,12 @@ static int __yield_wait ( lua_State *_l ) {
     if ( lua_isfunction(_l,1) ) {
         // TODO: ex.start_coroutine( func(nargs...) )
         // return lua_yield(_l,...)
+        // TODO: this will return value from lua_resume(_l);
     }
     // yield wait for seconds
     else if ( lua_isnumber(_l,1) ) {
-        float secs = (float)lua_tonumber(_l,1);
-        timespan_t ts = ex_timespan_from_secs_f32(secs);
-
-        // looks we have to do this in start_coroutine, so stop_coroutine can get the nameID.
-        // timerID = ex_add_timer( __yield_time_up,
-        //                         NULL,
-        //                         &params, 
-        //                         sizeof(params), 
-        //                         ts,
-        //                         ts, 
-        //                         ts );
-
-        return lua_yield(_l,0);
+        lua_pushnumber(_l,EX_YIELD_WAIT_FOR_SECONDS);
+        return lua_yield(_l,2);
     }
     else {
         return luaL_error( _l, "invalid parameter type, expected function or number" );
@@ -151,4 +207,53 @@ void luaclose_yield () {
     ex_hashmap_deinit ( &__key_to_type_meta_getset );
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
+int ex_lua_yield ( lua_State *_l, ex_ref_t *_beref, int _lua_threadID, strid_t _nameID ) {
+    int yield_status = luaL_checknumber(_l,2);
+    ex_lua_behavior_t *be = EX_REF_CAST(ex_lua_behavior_t,_beref);
+
+    switch ( yield_status ) {
+    case EX_YIELD_WAIT_FOR_SECONDS:
+        {
+            float secs;
+            timespan_t ts;
+            int timerID;
+            ex_coroutine_params_t params;
+            ex_coroutine_info_t info;
+
+            // keep thread_state reference by itself to prevent gc.
+            params.beref = _beref;
+            params.thread_state = _l;
+            params.lua_threadID = _lua_threadID;
+            params.nameID = _nameID;
+
+            //
+            secs = (float)lua_tonumber(_l,1);
+            ts = ex_timespan_from_secs_f32(secs);
+            timerID = ex_add_timer( __yield_time_up,
+                                    __yield_stop,
+                                    &params, 
+                                    sizeof(params), 
+                                    ts,
+                                    ts * 2, // NOTE: this prevent interval invoked before lifetime 
+                                    ts );
+            // FIXME: this is wrong for second time yield {
+            // add timer to hashmap 
+            info.timerID = timerID;
+            info.threadID = -1;
+            if ( _nameID != EX_STRID_NULL ) {
+                ex_mutex_lock(be->co_mutex);
+                    ex_hashmap_insert ( be->name_to_co, &_nameID, &info, NULL );
+                ex_mutex_unlock(be->co_mutex);
+            }
+            // } FIXME end 
+
+            ex_start_timer(timerID);
+        }
+        break;
+    }
+    return 0;
+}

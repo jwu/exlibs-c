@@ -173,6 +173,56 @@ static int __lua_behavior_new_for_child ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __lua_behavior_start_coroutine ( lua_State *_l ) {
+    ex_ref_t *r;
+    const char *name = NULL;
+    int nargs = lua_gettop(_l);
+    int func_idx = 2;
+
+    // get self
+    r = ex_lua_checklua_behavior(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // check if string, get the name
+    if ( lua_isstring(_l,2) ) {
+        name = lua_tostring(_l,2);
+        func_idx = 3;
+    }
+
+    // check if we provide the function
+    if ( lua_isfunction(_l,func_idx) == false ) {
+        return luaL_error( _l, "invalid parameter type for argument #%d, expected string or function", func_idx );
+    }
+
+    //
+    ex_lua_behavior_start_coroutine( r, _l, name, nargs - func_idx );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __lua_behavior_stop_coroutine ( lua_State *_l ) {
+    ex_ref_t *r;
+    const char *name;
+
+    // get self
+    r = ex_lua_checklua_behavior(_l,1);
+    ex_lua_check_nullref(_l,r);
+
+    // get name
+    name = luaL_checkstring(_l,2);
+
+    // do cancle invoke.
+    ex_lua_behavior_stop_coroutine ( r, name );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int __lua_behavior_invoke ( lua_State *_l ) {
     ex_ref_t *r;
     const char *name;
@@ -190,7 +240,7 @@ static int __lua_behavior_invoke ( lua_State *_l ) {
     delay_secs = luaL_checknumber(_l,3);
 
     // get repeat seconds
-    // NOTE: repeat seconds < 0 means no-repeat
+    // NOTE: repeat seconds <= 0 means no-repeat
     repeat_secs = luaL_checknumber(_l,4);
 
     // get the invoke functions
@@ -204,7 +254,7 @@ static int __lua_behavior_invoke ( lua_State *_l ) {
     }
 
     // do invoke.
-    ex_lua_behavior_invoke ( r, delay_secs, repeat_secs, name, _l );
+    ex_lua_behavior_invoke ( r, _l, delay_secs, repeat_secs, name );
     return 0;
 }
 
@@ -280,6 +330,8 @@ static const luaL_Reg __meta_funcs[] = {
     { "invoke", __lua_behavior_invoke },
     { "cancle_invoke", __lua_behavior_cancle_invoke },
     { "is_invoking", __lua_behavior_is_invoking },
+    { "coroutine", __lua_behavior_start_coroutine },
+    { "stop_coroutine", __lua_behavior_stop_coroutine },
     { NULL, NULL },
 };
 

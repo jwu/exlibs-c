@@ -83,7 +83,7 @@ void __threaded_timer_tick () {
                 t->start_counter = 0;
 
                 // execute the timer callback
-                ex_mutex_unlock(__timer_mutex);
+                ex_mutex_unlock(__timer_mutex); // NOTE: this help us do ex_add_timer in another timer thread.
                 ms = t->cb(t->interval, t->params);
                 ex_mutex_lock(__timer_mutex);
             }

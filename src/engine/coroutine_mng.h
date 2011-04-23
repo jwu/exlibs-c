@@ -17,25 +17,39 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
+// yield status
+///////////////////////////////////////////////////////////////////////////////
+
+#define EX_YIELD_WAIT_FOR_SECONDS       1
+#define EX_YIELD_WAIT_FOR_FINISH        2
+#define EX_YIELD_WAIT_FOR_END_OF_FRAME  3
+#define EX_YIELD_WAIT_FOR_ONE_FRAME     4
+
+///////////////////////////////////////////////////////////////////////////////
 // structure
 ///////////////////////////////////////////////////////////////////////////////
 
+// ex_coroutine_info_t
+typedef struct ex_coroutine_info_t {
+    int timerID;
+    int threadID;
+} ex_coroutine_info_t;
+
 // ex_coroutine_params_t
 typedef struct ex_coroutine_params_t {
-    ex_ref_t *self;
+    ex_ref_t *beref;
     void *thread_state;
     int lua_threadID;
-    int lua_funcID;
     strid_t nameID;
 } ex_coroutine_params_t;
 
 // ex_coroutine_queue_t
-#define MAX_coroutineS 1024
+#define MAX_COROUTINES 1024
 typedef struct ex_coroutine_queue_t {
     int count;
     int head;
     int trail;
-    ex_coroutine_params_t params_list[MAX_coroutineS];
+    ex_coroutine_params_t params_list[MAX_COROUTINES];
 } ex_coroutine_queue_t;
 
 // ex_coroutine_mng_t

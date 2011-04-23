@@ -474,21 +474,3 @@ bool ex_world_is_stopped ( ex_ref_t *_self ) {
     ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
     return self->state == EX_WORLD_STATE_STOPPED; 
 }
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_world_add_invoke_to_call ( ex_ref_t *_self, ex_invoke_params_t *_params ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
-    ex_invoke_mng_add_to_call( &self->invoke_mng, _params );
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_world_add_invoke_to_stop ( ex_ref_t *_self, ex_invoke_params_t *_params ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
-    ex_invoke_mng_add_to_stop( &self->invoke_mng, _params );
-}
