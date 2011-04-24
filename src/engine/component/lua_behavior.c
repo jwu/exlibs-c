@@ -397,7 +397,24 @@ void ex_lua_behavior_stop_coroutine ( ex_ref_t *_self, const char *_name ) {
         info = ex_hashmap_get ( self->name_to_co, &nameID, NULL ); 
     ex_mutex_unlock(self->co_mutex);
     if ( info ) {
-        if ( info->timerID != -1 ) {
+        if ( info->timerID != EX_INVALID_TIMER_ID ) {
+            ex_coroutine_params_t *params = (ex_coroutine_params_t *)ex_get_timer_params(info->timerID);
+
+            // NOTE: this is the same code in __yield_time_up
+            if ( params->lua_threadID != LUA_REFNIL ) {
+                //
+                luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
+                params->lua_threadID = LUA_REFNIL;
+
+                //
+                if ( params->nameID != EX_STRID_NULL ) {
+                    ex_mutex_lock(self->co_mutex);
+                        ex_hashmap_remove_at ( self->name_to_co, &(params->nameID) );
+                    ex_mutex_unlock(self->co_mutex);
+                }
+            }
+
+            //
             ex_stop_timer(info->timerID);
         }
     }
@@ -419,7 +436,7 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
 {
     size_t idx = -1;
     size_t hash_idx = -1;
-    int timerID = -1;
+    int timerID = EX_INVALID_TIMER_ID;
     strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
     timespan_t lifetime = EX_TIMESPAN_INFINITY;

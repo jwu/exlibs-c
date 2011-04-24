@@ -132,6 +132,7 @@ extern void ex_stop_timer ( int _id );
 extern void ex_pause_timer ( int _id );
 extern void ex_resume_timer ( int _id );
 extern void ex_reset_timer ( int _id );
+extern void *ex_get_timer_params ( int _id );
 
 // ######################### 
 #ifdef __cplusplus

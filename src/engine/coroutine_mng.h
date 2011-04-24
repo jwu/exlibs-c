@@ -37,6 +37,7 @@ typedef struct ex_coroutine_info_t {
 
 // ex_coroutine_params_t
 typedef struct ex_coroutine_params_t {
+    bool do_stop;
     ex_ref_t *beref;
     void *thread_state;
     int lua_threadID;
@@ -55,11 +56,7 @@ typedef struct ex_coroutine_queue_t {
 // ex_coroutine_mng_t
 typedef struct ex_coroutine_mng_t {
 
-    ex_mutex_t *coroutine_to_call_mutex;
     ex_mutex_t *coroutine_to_stop_mutex;
-
-    // coroutines queue
-    ex_coroutine_queue_t coroutines_to_call;
     ex_coroutine_queue_t coroutines_to_stop;
 
 } ex_coroutine_mng_t;
@@ -75,7 +72,6 @@ extern void ex_coroutine_mng_deinit ( ex_coroutine_mng_t *_self );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_coroutine_mng_add_to_call ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
 extern void ex_coroutine_mng_add_to_stop ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
 
 // ------------------------------------------------------------------ 

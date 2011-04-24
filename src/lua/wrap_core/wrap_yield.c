@@ -46,7 +46,7 @@ static int32 __yield_time_up ( uint32 _interval, void *_params ) {
                        params->nameID );
     }
     else if ( status != 0 ) {
-        // it is possible the threadID unrefed by __yield_stop call from stop_coroutine
+        // it is possible the threadID unrefed by stop_coroutine
         if ( params->lua_threadID != LUA_REFNIL ) {
             ex_lua_behavior_t *be;
 
@@ -65,34 +65,6 @@ static int32 __yield_time_up ( uint32 _interval, void *_params ) {
     }
 
     return _interval;
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __yield_stop ( void *_params ) {
-    ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
-    lua_State *thread_state = (lua_State *)params->thread_state;
-
-    // FIXME { 
-    // // it is possible the threadID unrefed by __yield_time_up
-    // if ( params->lua_threadID != LUA_REFNIL ) {
-    //     ex_lua_behavior_t *be;
-
-    //     //
-    //     luaL_unref( thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
-    //     params->lua_threadID = LUA_REFNIL;
-
-    //     //
-    //     be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
-    //     if ( params->nameID != EX_STRID_NULL ) {
-    //         ex_mutex_lock(be->co_mutex);
-    //             ex_hashmap_remove_at ( be->name_to_co, &(params->nameID) );
-    //         ex_mutex_unlock(be->co_mutex);
-    //     }
-    // }
-    // } FIXME end 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -222,7 +194,7 @@ int ex_lua_yield ( lua_State *_l, ex_ref_t *_beref, int _lua_threadID, strid_t _
             timespan_t ts;
             int timerID;
             ex_coroutine_params_t params;
-            ex_coroutine_info_t info;
+            ex_coroutine_info_t new_info;
 
             // keep thread_state reference by itself to prevent gc.
             params.beref = _beref;
@@ -234,23 +206,27 @@ int ex_lua_yield ( lua_State *_l, ex_ref_t *_beref, int _lua_threadID, strid_t _
             secs = (float)lua_tonumber(_l,1);
             ts = ex_timespan_from_secs_f32(secs);
             timerID = ex_add_timer( __yield_time_up,
-                                    __yield_stop,
+                                    NULL,
                                     &params, 
                                     sizeof(params), 
                                     ts,
                                     ts * 2, // NOTE: this prevent interval invoked before lifetime 
                                     ts );
-            // FIXME: this is wrong for second time yield {
             // add timer to hashmap 
-            info.timerID = timerID;
-            info.threadID = -1;
+            new_info.timerID = timerID;
+            new_info.threadID = -1;
             if ( _nameID != EX_STRID_NULL ) {
+                // if we already have the coroutine info, update the value in it.
+                size_t idx;
                 ex_mutex_lock(be->co_mutex);
-                    ex_hashmap_insert ( be->name_to_co, &_nameID, &info, NULL );
+                    if ( ex_hashmap_insert ( be->name_to_co, &_nameID, &new_info, &idx ) == false ) {
+                        ex_coroutine_info_t *my_info = ex_hashmap_get_by_idx ( be->name_to_co, idx );
+                        *my_info = new_info; 
+                    }
                 ex_mutex_unlock(be->co_mutex);
             }
-            // } FIXME end 
 
+            //
             ex_start_timer(timerID);
         }
         break;

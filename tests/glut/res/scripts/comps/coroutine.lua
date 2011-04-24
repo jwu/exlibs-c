@@ -14,6 +14,7 @@ local super = ex.lua_behavior
 local getmetatable = getmetatable
 local ex_ease = ex.ease
 local math = math
+local string = string
 module( ..., super.derive )
 
 --/////////////////////////////////////////////////////////////////////////////
@@ -22,6 +23,8 @@ module( ..., super.derive )
 
 rot_speed = 0.0
 move = true
+secs = 0.0
+_start_at = 0.0
 
 --/////////////////////////////////////////////////////////////////////////////
 --
@@ -39,8 +42,6 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( _self )
-    -- _self:invoke ( "scale_me_01", 0.0, _self.scale_interval, _self.scale_me )
-    -- _self:invoke ( "move_me", 0.0, _self.move_interval ) 
     _self:coroutine ( late_rotate, _self )
     ex.log( _self.entity.name .. " started!" );
 end
@@ -60,16 +61,30 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
+function on_render ( _self )
+    if _self.move == false then
+        local wpos = _self.trans2d.position
+        local remain = _self.secs - (ex.time.time - _self._start_at) 
+        ex.draw_text( wpos.x, wpos.y+15, 0.0, string.format("%.2f", remain) )
+    end
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
 function late_rotate ( _self )
-    local secs =  ex.range_rand( 1.0, 10.0 )
-    ex.log( _self.entity.name .. " step 1 wait for " .. secs );
-    ex.yield.wait(secs)
+    _self.secs =  ex.range_rand( 1.0, 10.0 )
+    ex.log( _self.entity.name .. " step 1 wait for " .. _self.secs );
+    _self._start_at = ex.time.time
+    ex.yield.wait(_self.secs)
     _self.rot_speed = ex.range_rand( 10.0, 20.0 )
     _self.move = false
 
-    local secs =  ex.range_rand( 1.0, 10.0 )
-    ex.log( _self.entity.name .. " step 2 wait for " .. secs );
-    ex.yield.wait(secs)
+    _self.secs =  ex.range_rand( 1.0, 10.0 )
+    ex.log( _self.entity.name .. " step 2 wait for " .. _self.secs );
+    _self._start_at = ex.time.time
+    ex.yield.wait(_self.secs)
     _self.rot_speed = 0.0
     _self.move = true
 end

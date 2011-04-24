@@ -459,3 +459,21 @@ void ex_reset_timer ( int _id ) {
         }
     ex_mutex_unlock(__timer_mutex);
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void *ex_get_timer_params ( int _id ) {
+    timer_t *t;
+
+    if ( _id == EX_INVALID_TIMER_ID )
+        return NULL;
+
+    ex_mutex_lock(__timer_mutex);
+        t = (timer_t *)ex_pool_get ( &__timers, _id );
+        if (t)
+            return t->params;
+    ex_mutex_unlock(__timer_mutex);
+    return NULL;
+}
