@@ -195,8 +195,7 @@ static int __lua_behavior_start_coroutine ( lua_State *_l ) {
     }
 
     //
-    ex_lua_behavior_start_coroutine( r, _l, name, nargs - func_idx );
-    return 0;
+    return ex_lua_behavior_start_coroutine( r, _l, name, nargs - func_idx );
 }
 
 // ------------------------------------------------------------------ 

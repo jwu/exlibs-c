@@ -20,6 +20,7 @@ extern "C" {
 // yield status
 ///////////////////////////////////////////////////////////////////////////////
 
+#define EX_YIELD_FINISHED               0
 #define EX_YIELD_WAIT_FOR_SECONDS       1
 #define EX_YIELD_WAIT_FOR_FINISH        2
 #define EX_YIELD_WAIT_FOR_END_OF_FRAME  3
@@ -37,8 +38,8 @@ typedef struct ex_coroutine_info_t {
 
 // ex_coroutine_params_t
 typedef struct ex_coroutine_params_t {
-    bool do_stop;
     ex_ref_t *beref;
+    void *parent_state;
     void *thread_state;
     int lua_threadID;
     strid_t nameID;

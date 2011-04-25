@@ -70,10 +70,10 @@ extern bool ex_lua_behavior_is_invoking ( ex_ref_t *_self, const char *_name );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_lua_behavior_start_coroutine ( ex_ref_t *_self, 
-                                              struct lua_State *_cur_state,
-                                              const char *_name,
-                                              int _nargs );
+extern int ex_lua_behavior_start_coroutine ( ex_ref_t *_self, 
+                                             struct lua_State *_cur_state,
+                                             const char *_name,
+                                             int _nargs );
 
 // ------------------------------------------------------------------ 
 // Desc: 

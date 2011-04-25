@@ -63,6 +63,8 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
     ex_mutex_unlock(self->co_mutex);
     // } TODO end 
 
+    // TODO: we still have anoying invokes and coroutines, what will they do.
+
     // destroy all mutex
     ex_destroy_mutex(self->timer_mutex);
     ex_destroy_mutex(self->co_mutex);
@@ -338,11 +340,12 @@ EX_DEF_TOSTRING_END
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_lua_behavior_start_coroutine ( ex_ref_t *_self, 
-                                       lua_State *_cur_state,
-                                       const char *_name,
-                                       int _nargs ) {
+int ex_lua_behavior_start_coroutine ( ex_ref_t *_self, 
+                                      lua_State *_cur_state,
+                                      const char *_name,
+                                      int _nargs ) {
     size_t idx = -1;
+    int nret = 0;
     lua_State *l1;
     int status;
     strid_t nameID = ex_strid(_name);
@@ -353,8 +356,7 @@ void ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
         ex_hashmap_get_hashidx ( self->name_to_co, &nameID, &idx ); 
     ex_mutex_unlock(self->co_mutex);
     if ( idx != -1 ) {
-        luaL_error( ex_lua_main_state(), "The %s is already used for other corouine! please stop it first", _name );
-        return;
+        return luaL_error( ex_lua_main_state(), "The %s is already used for other corouine! please stop it first", _name );
     }
 
     // create new thread first
@@ -374,7 +376,12 @@ void ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
         //
         lua_pushthread(l1);
         lua_threadID = luaL_ref( l1, LUA_REGISTRYINDEX );
-        ex_lua_yield ( l1, _self, lua_threadID, nameID );
+        ex_lua_process_yield ( l1, _cur_state, _self, lua_threadID, nameID );
+        // TODO: I'm not sure { 
+        nret = lua_gettop(l1);
+        lua_xmove ( l1, _cur_state, nret );
+        return nret;
+        // } TODO end 
     } 
     else if ( status != 0 ) {
         ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
@@ -382,6 +389,13 @@ void ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
         ex_lua_alert(l1);
         self->compile_failed = true;
     }
+
+    // TODO: I'm not sure { 
+    nret = lua_gettop(l1);
+    lua_xmove ( l1, _cur_state, nret );
+    lua_pushnumber( _cur_state, EX_YIELD_FINISHED );
+    return nret+1;
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 

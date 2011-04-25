@@ -107,10 +107,11 @@ extern int ex_lua_deepcopy_to ( struct lua_State *_l, int _idx );
 extern int ex_lua_merge ( struct lua_State *_l, int _idx_to, int _idx_from );
 
 //
-extern int ex_lua_yield ( struct lua_State *_l, 
-                          ex_ref_t *_self, 
-                          int _lua_threadID, 
-                          strid_t _nameID );
+extern int ex_lua_process_yield ( struct lua_State *_l, 
+                                  struct lua_State *_parent_state,
+                                  ex_ref_t *_self, 
+                                  int _lua_threadID, 
+                                  strid_t _nameID );
 
 //
 extern int ex_lua_class ( struct lua_State *_l, 

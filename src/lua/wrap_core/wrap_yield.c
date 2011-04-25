@@ -31,6 +31,15 @@ EX_DEF_LUA_BUILTIN_MODULE()
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int32 __yield_resume ( void *_params ) {
+    // TODO:
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int32 __yield_time_up ( uint32 _interval, void *_params ) {
     // TODO: add to coroutine_mng stop resume ???? do we need to process there ????
     // TODO: yes we do!
@@ -38,14 +47,22 @@ static int32 __yield_time_up ( uint32 _interval, void *_params ) {
     ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
     lua_State *thread_state = (lua_State *)params->thread_state;
 
+    // TODO: all this move to __yield_resume(_params); { 
     status = lua_resume(thread_state,0);
     if ( status == LUA_YIELD ) {
-        ex_lua_yield ( thread_state, 
-                       params->beref,
-                       params->lua_threadID,
-                       params->nameID );
+        ex_lua_process_yield ( thread_state, 
+                               params->parent_state,
+                               params->beref,
+                               params->lua_threadID,
+                               params->nameID );
     }
     else if ( status != 0 ) {
+        ex_lua_behavior_t *be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
+
+        ex_lua_alert(thread_state);
+        be->compile_failed = true;
+    }
+    else {
         // it is possible the threadID unrefed by stop_coroutine
         if ( params->lua_threadID != LUA_REFNIL ) {
             ex_lua_behavior_t *be;
@@ -62,7 +79,14 @@ static int32 __yield_time_up ( uint32 _interval, void *_params ) {
                 ex_mutex_unlock(be->co_mutex);
             }
         }
+
+        // TODO: recursivly process it { 
+        if ( lua_status(params->parent_state) == LUA_YIELD ) {
+            status = lua_resume(params->parent_state,0);
+        }
+        // } TODO end 
     }
+    // } TODO end 
 
     return _interval;
 }
@@ -75,23 +99,44 @@ static int32 __yield_time_up ( uint32 _interval, void *_params ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __yield ( lua_State *_l ) {
+    if ( _l == ex_lua_main_state() )
+        return luaL_error( _l, "the yield instruction only run in coroutine." );
+
+    // NOTE: the argument#1 is ex.yield table
+
+    // yield wait for function finished
+    if ( lua_isnumber(_l,-1) ) {
+        if ( lua_tonumber(_l,-1) == EX_YIELD_FINISHED ) {
+            lua_pop(_l,1);
+            return lua_gettop(_l)-1;
+        }
+        else {
+            lua_pushnumber(_l,EX_YIELD_WAIT_FOR_FINISH);
+            return lua_yield(_l,2);
+        }
+    }
+    else {
+        return luaL_error( _l, "invalid parameter type for last argument, expected number" );
+    }
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int __yield_wait ( lua_State *_l ) {
     if ( _l == ex_lua_main_state() )
         return luaL_error( _l, "the yield instruction only run in coroutine." );
 
-    // yield wait for function finished
-    if ( lua_isfunction(_l,1) ) {
-        // TODO: ex.start_coroutine( func(nargs...) )
-        // return lua_yield(_l,...)
-        // TODO: this will return value from lua_resume(_l);
-    }
     // yield wait for seconds
-    else if ( lua_isnumber(_l,1) ) {
+    if ( lua_isnumber(_l,1) ) {
         lua_pushnumber(_l,EX_YIELD_WAIT_FOR_SECONDS);
         return lua_yield(_l,2);
     }
     else {
-        return luaL_error( _l, "invalid parameter type, expected function or number" );
+        return luaL_error( _l, "invalid parameter type, expected number" );
     }
 
     return 0;
@@ -101,9 +146,24 @@ static int __yield_wait ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int __yield_wait_for_end_of_frame ( lua_State *_l ) {
+static int __yield_one_frame ( lua_State *_l ) {
     if ( _l == ex_lua_main_state() )
         return luaL_error( _l, "the yield instruction only run in coroutine." );
+
+    // TODO:
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __yield_end_of_frame ( lua_State *_l ) {
+    if ( _l == ex_lua_main_state() )
+        return luaL_error( _l, "the yield instruction only run in coroutine." );
+
+    // TODO:
 
     return 0;
 }
@@ -119,13 +179,15 @@ static const ex_getset_t __type_meta_getsets[] = {
 static const luaL_Reg __type_meta_funcs[] = {
     { "__newindex", __type_meta_newindex },
     { "__index", __type_meta_index },
+    { "__call", __yield }, // wait for function finish
     { NULL, NULL },
 };
 
 // ex.yield
 static const luaL_Reg __meta_funcs[] = {
-    { "wait", __yield_wait },
-    { "wait_for_end_of_frame", __yield_wait_for_end_of_frame },
+    { "wait", __yield_wait }, // wait for seconds
+    { "one_frame", __yield_one_frame }, // wait for next frame
+    { "end_of_frame", __yield_end_of_frame }, // wait for end of frame
     // TODO: { "wait_for_fixed_update", __yield_wait_for_fixed_update },
     { NULL, NULL },
 };
@@ -183,12 +245,15 @@ void luaclose_yield () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_lua_yield ( lua_State *_l, ex_ref_t *_beref, int _lua_threadID, strid_t _nameID ) {
-    int yield_status = luaL_checknumber(_l,2);
+int ex_lua_process_yield ( lua_State *_l, lua_State *_parent_state, ex_ref_t *_beref, int _lua_threadID, strid_t _nameID ) {
+    int yield_status = luaL_checknumber(_l,-1);
     ex_lua_behavior_t *be = EX_REF_CAST(ex_lua_behavior_t,_beref);
 
     switch ( yield_status ) {
+
+    // ======================================================== 
     case EX_YIELD_WAIT_FOR_SECONDS:
+    // ======================================================== 
         {
             float secs;
             timespan_t ts;
@@ -198,6 +263,7 @@ int ex_lua_yield ( lua_State *_l, ex_ref_t *_beref, int _lua_threadID, strid_t _
 
             // keep thread_state reference by itself to prevent gc.
             params.beref = _beref;
+            params.parent_state = _parent_state;
             params.thread_state = _l;
             params.lua_threadID = _lua_threadID;
             params.nameID = _nameID;
@@ -228,6 +294,13 @@ int ex_lua_yield ( lua_State *_l, ex_ref_t *_beref, int _lua_threadID, strid_t _
 
             //
             ex_start_timer(timerID);
+        }
+        break;
+
+    // ======================================================== 
+    case EX_YIELD_WAIT_FOR_FINISH:
+    // ======================================================== 
+        {
         }
         break;
     }
