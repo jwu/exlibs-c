@@ -32,8 +32,10 @@ extern "C" {
 
 // ex_coroutine_info_t
 typedef struct ex_coroutine_info_t {
+    void *thread_state;
+    int yield_status;
     int timerID;
-    int threadID;
+    uint32 cur_frame;
 } ex_coroutine_info_t;
 
 // ex_coroutine_params_t
@@ -56,10 +58,21 @@ typedef struct ex_coroutine_queue_t {
 
 // ex_coroutine_mng_t
 typedef struct ex_coroutine_mng_t {
+    // TODO: give a proper name { 
+    // time up
+    ex_mutex_t *coroutine_timeup_mutex;
+    ex_coroutine_queue_t coroutines_timeup;
+    // } TODO end 
 
-    ex_mutex_t *coroutine_to_stop_mutex;
-    ex_coroutine_queue_t coroutines_to_stop;
+    // TODO { 
+    // // next frame
+    // ex_mutex_t *coroutine_to_call_nf_mutex;
+    // ex_coroutine_queue_t coroutines_to_call_nf;
 
+    // // end of frame
+    // ex_mutex_t *coroutine_to_call_eof_mutex;
+    // ex_coroutine_queue_t coroutines_to_call_eof;
+    // } TODO end 
 } ex_coroutine_mng_t;
 
 // ------------------------------------------------------------------ 
@@ -73,7 +86,7 @@ extern void ex_coroutine_mng_deinit ( ex_coroutine_mng_t *_self );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_coroutine_mng_add_to_stop ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
+extern void ex_coroutine_mng_add_timeup ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -86,7 +99,6 @@ extern void ex_coroutine_mng_process ( ex_coroutine_mng_t *_self );
 } // end extern C 
 #endif
 // ######################### 
-
 
 // #################################################################################
 #endif // END COROUTINE_MNG_H_1303370836

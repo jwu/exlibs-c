@@ -52,6 +52,7 @@ extern void ex_resume ();
 // ------------------------------------------------------------------ 
 
 extern float ex_fps ();
+extern uint32 ex_frames ();
 
 // ######################### 
 #ifdef __cplusplus

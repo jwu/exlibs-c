@@ -38,6 +38,7 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_world_t,ex_object_t)
     ex_array_t *cameras; // array<camera_ref>
     ex_ref_t *main_camera; // camera_ref
     ex_invoke_mng_t invoke_mng;
+    ex_coroutine_mng_t coroutine_mng;
 EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 
 ///////////////////////////////////////////////////////////////////////////////

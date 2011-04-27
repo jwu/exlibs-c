@@ -214,8 +214,7 @@ static int __lua_behavior_stop_coroutine ( lua_State *_l ) {
     name = luaL_checkstring(_l,2);
 
     // do cancle invoke.
-    ex_lua_behavior_stop_coroutine ( r, name );
-    return 0;
+    return ex_lua_behavior_stop_coroutine ( r, name );
 }
 
 // ------------------------------------------------------------------ 

@@ -42,9 +42,9 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( _self )
-    _self:coroutine ( wait_for_co_rotate, _self )
-    -- _self:coroutine ( co_rotate, _self )
-    ex.log( _self.entity.name .. " started!" );
+    _self:coroutine ( wait_for_stop, _self )
+    -- _self:coroutine ( rotate, _self )
+    ex.log( _self.entity.name .. " started!" )
 end
 
 -- ------------------------------------------------------------------ 
@@ -74,25 +74,33 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function wait_for_co_rotate ( _self )
-    ex.yield( _self:coroutine(co_rotate,_self) )
-    ex.log("co_rotate finished");
+function wait_for_stop ( _self )
+    ex.yield( _self:coroutine(rotate,_self) )
+    ex.log("rotate finished")
 end
 
 -- ------------------------------------------------------------------ 
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function co_rotate ( _self )
+function rotate ( _self )
     _self.secs =  ex.range_rand( 1.0, 10.0 )
-    ex.log( _self.entity.name .. " step 1 wait for " .. _self.secs );
+    ex.log( _self.entity.name .. " step 1 wait for " .. _self.secs )
     _self._start_at = ex.time.time
     ex.yield.wait(_self.secs)
     _self.rot_speed = ex.range_rand( 10.0, 20.0 )
     _self.move = false
 
+    ex.yield( _self:coroutine(stop_rotate,_self) )
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
+function stop_rotate ( _self )
     _self.secs =  ex.range_rand( 1.0, 10.0 )
-    ex.log( _self.entity.name .. " step 2 wait for " .. _self.secs );
+    ex.log( _self.entity.name .. " step 2 wait for " .. _self.secs )
     _self._start_at = ex.time.time
     ex.yield.wait(_self.secs)
     _self.rot_speed = 0.0

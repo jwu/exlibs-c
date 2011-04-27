@@ -175,3 +175,4 @@ void ex_resume () {
 // ------------------------------------------------------------------ 
 
 float ex_fps () { return __fps; }
+uint32 ex_frames () { return __frame_count; }

@@ -13,6 +13,8 @@
 		B20A1BE5135D5ADD008F3EF7 /* invoke_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */; };
 		B215FE0D131B688500DAAFDD /* wrap_angf.c in Sources */ = {isa = PBXBuildFile; fileRef = B215FE0B131B688500DAAFDD /* wrap_angf.c */; };
 		B215FE0E131B688500DAAFDD /* wrap_class.c in Sources */ = {isa = PBXBuildFile; fileRef = B215FE0C131B688500DAAFDD /* wrap_class.c */; };
+		B21711D01367ED3D00716123 /* coroutine_mng.c in Sources */ = {isa = PBXBuildFile; fileRef = B21711CE1367ED3D00716123 /* coroutine_mng.c */; };
+		B21711D11367ED3D00716123 /* coroutine_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B21711CF1367ED3D00716123 /* coroutine_mng.h */; };
 		B226FED51317D9780011A8A7 /* wrap_component.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FED41317D9780011A8A7 /* wrap_component.c */; };
 		B226FEE113181A160011A8A7 /* wrap_trans2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FEE013181A160011A8A7 /* wrap_trans2d.c */; };
 		B243C0BC130D86170056158F /* wrap_object.c in Sources */ = {isa = PBXBuildFile; fileRef = B243C0BB130D86170056158F /* wrap_object.c */; };
@@ -517,6 +519,8 @@
 		B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = invoke_mng.h; sourceTree = "<group>"; };
 		B215FE0B131B688500DAAFDD /* wrap_angf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_angf.c; sourceTree = "<group>"; };
 		B215FE0C131B688500DAAFDD /* wrap_class.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_class.c; sourceTree = "<group>"; };
+		B21711CE1367ED3D00716123 /* coroutine_mng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = coroutine_mng.c; sourceTree = "<group>"; };
+		B21711CF1367ED3D00716123 /* coroutine_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutine_mng.h; sourceTree = "<group>"; };
 		B226FED41317D9780011A8A7 /* wrap_component.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_component.c; sourceTree = "<group>"; };
 		B226FEE013181A160011A8A7 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
 		B243C0BB130D86170056158F /* wrap_object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_object.c; sourceTree = "<group>"; };
@@ -1204,6 +1208,8 @@
 		B2A23180130221F600F3C100 /* engine */ = {
 			isa = PBXGroup;
 			children = (
+				B21711CE1367ED3D00716123 /* coroutine_mng.c */,
+				B21711CF1367ED3D00716123 /* coroutine_mng.h */,
 				B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */,
 				B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */,
 				B2A23181130221F600F3C100 /* component */,
@@ -1686,6 +1692,7 @@
 				B2B8B1B7131D217600D11A44 /* lua_behavior.h in Headers */,
 				B2A051CB1349DFDF00BCBC45 /* os.h in Headers */,
 				B20A1BE5135D5ADD008F3EF7 /* invoke_mng.h in Headers */,
+				B21711D11367ED3D00716123 /* coroutine_mng.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2391,6 +2398,7 @@
 				B2A051CA1349DFDF00BCBC45 /* os.c in Sources */,
 				B20A1BE4135D5ADD008F3EF7 /* invoke_mng.c in Sources */,
 				B2A14DB0135FEAA600B96113 /* wrap_yield.c in Sources */,
+				B21711D01367ED3D00716123 /* coroutine_mng.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

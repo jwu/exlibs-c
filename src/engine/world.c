@@ -42,6 +42,7 @@ void __world_init ( ex_ref_t *_self ) {
 
     //
     ex_invoke_mng_init( &self->invoke_mng );
+    ex_coroutine_mng_init( &self->coroutine_mng );
 
     //
     ex_array_each ( self->entities, ex_ref_t *, ref ) {
@@ -80,6 +81,7 @@ void __world_deinit ( ex_ref_t *_self ) {
 
     //
     ex_invoke_mng_deinit( &self->invoke_mng );
+    ex_coroutine_mng_deinit( &self->coroutine_mng );
 
     //
     if ( __cur_world == _self ) {
@@ -336,6 +338,7 @@ void ex_world_update ( ex_ref_t *_self ) {
 
     // 
     ex_invoke_mng_process(&self->invoke_mng);
+    ex_coroutine_mng_process(&self->coroutine_mng);
 
     // at the end of the update, we do a garbage collection
     ex_array_each ( self->entities, ex_ref_t *, ent ) {
