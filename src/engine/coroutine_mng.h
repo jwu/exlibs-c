@@ -30,14 +30,6 @@ extern "C" {
 // structure
 ///////////////////////////////////////////////////////////////////////////////
 
-// ex_coroutine_info_t
-typedef struct ex_coroutine_info_t {
-    void *thread_state;
-    int yield_status;
-    int timerID;
-    uint32 cur_frame;
-} ex_coroutine_info_t;
-
 // ex_coroutine_params_t
 typedef struct ex_coroutine_params_t {
     ex_ref_t *beref;
@@ -45,6 +37,10 @@ typedef struct ex_coroutine_params_t {
     void *thread_state;
     int lua_threadID;
     strid_t nameID;
+    //
+    int yield_status;
+    int timerID;
+    uint32 cur_frame;
 } ex_coroutine_params_t;
 
 // ex_coroutine_queue_t
@@ -58,21 +54,17 @@ typedef struct ex_coroutine_queue_t {
 
 // ex_coroutine_mng_t
 typedef struct ex_coroutine_mng_t {
-    // TODO: give a proper name { 
     // time up
-    ex_mutex_t *coroutine_timeup_mutex;
-    ex_coroutine_queue_t coroutines_timeup;
-    // } TODO end 
+    ex_mutex_t *mutex;
+    ex_coroutine_queue_t coroutines; // coroutines to resume
 
-    // TODO { 
-    // // next frame
-    // ex_mutex_t *coroutine_to_call_nf_mutex;
-    // ex_coroutine_queue_t coroutines_to_call_nf;
+    // next frame
+    int num_cur_frame;
+    int num_next_frame;
+    ex_coroutine_queue_t coroutines_nf; // coroutines to resume in the next frame
 
-    // // end of frame
-    // ex_mutex_t *coroutine_to_call_eof_mutex;
-    // ex_coroutine_queue_t coroutines_to_call_eof;
-    // } TODO end 
+    // end of frame
+    ex_coroutine_queue_t coroutines_eof; // coroutines to resume at the end of the frame 
 } ex_coroutine_mng_t;
 
 // ------------------------------------------------------------------ 
@@ -86,13 +78,16 @@ extern void ex_coroutine_mng_deinit ( ex_coroutine_mng_t *_self );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_coroutine_mng_add_timeup ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
+extern void ex_coroutine_mng_add_to_resume ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
+extern void ex_coroutine_mng_add_to_resume_nf ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
+extern void ex_coroutine_mng_add_to_resume_eof ( ex_coroutine_mng_t *_self, ex_coroutine_params_t *_params );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_coroutine_mng_process ( ex_coroutine_mng_t *_self );
+extern void ex_coroutine_mng_resume ( ex_coroutine_mng_t *_self );
+extern void ex_coroutine_mng_resume_eof ( ex_coroutine_mng_t *_self );
 
 // ######################### 
 #ifdef __cplusplus

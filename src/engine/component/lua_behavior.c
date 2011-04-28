@@ -59,17 +59,17 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
 
     // TODO: this should be done in on_destroy { 
     // TODO: stop all coroutines 
-    ex_mutex_lock(self->co_mutex);
-        ex_hashmap_free(self->name_to_co);
-        ex_hashmap_free(self->state_to_params);
-    ex_mutex_unlock(self->co_mutex);
+    // ex_hashmap_each ( self->state_to_co_params, ex_coroutine_params_t, el ) {
+    //     if ( el.timerID != EX_INVALID_TIMER_ID ) {
+    //         ex_stop_timer(el.timerID);
+    //     }
+    // } ex_hashmap_each_end;
+    ex_hashmap_free(self->name_to_co_params);
+    ex_hashmap_free(self->state_to_co_params);
     // } TODO end 
-
-    // TODO: we still have anoying invokes and coroutines, what will they do.
 
     // destroy all mutex
     ex_destroy_mutex(self->timer_mutex);
-    ex_destroy_mutex(self->co_mutex);
 
     __behavior_deinit(_self); // parent deinint
 }
@@ -319,10 +319,9 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
     // 
     EX_MEMBER( ex_lua_behavior_t, compile_failed, false )
     EX_MEMBER( ex_lua_behavior_t, name_to_timer, ex_hashmap(strid, int, 8) )
-    EX_MEMBER( ex_lua_behavior_t, name_to_co, ex_hashmap_notype(sizeof(strid_t), sizeof(ex_coroutine_info_t), 8, ex_hashkey_strid, ex_keycmp_strid ) )
-    EX_MEMBER( ex_lua_behavior_t, state_to_params, ex_hashmap_notype(sizeof(void *), sizeof(ex_coroutine_params_t), 8, ex_hashkey_ptr, ex_keycmp_ptr ) )
+    EX_MEMBER( ex_lua_behavior_t, name_to_co_params, ex_hashmap_notype(sizeof(strid_t), sizeof(ex_coroutine_params_t), 8, ex_hashkey_strid, ex_keycmp_strid ) )
+    EX_MEMBER( ex_lua_behavior_t, state_to_co_params, ex_hashmap_notype(sizeof(void *), sizeof(ex_coroutine_params_t), 8, ex_hashkey_ptr, ex_keycmp_ptr ) )
     EX_MEMBER( ex_lua_behavior_t, timer_mutex, ex_create_mutex() )
-    EX_MEMBER( ex_lua_behavior_t, co_mutex, ex_create_mutex() )
 
 EX_DEF_OBJECT_END
 
@@ -355,9 +354,7 @@ int ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
 
     //
-    ex_mutex_lock(self->co_mutex);
-        ex_hashmap_get_hashidx ( self->name_to_co, &nameID, &idx ); 
-    ex_mutex_unlock(self->co_mutex);
+    ex_hashmap_get_hashidx ( self->name_to_co_params, &nameID, &idx ); 
     if ( idx != -1 ) {
         return luaL_error( ex_lua_main_state(), "The %s is already used for other coroutine! please stop it first", _name );
     }
@@ -387,9 +384,6 @@ int ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
         params.thread_state = l1;
         params.lua_threadID = lua_threadID;
         params.nameID = nameID;
-        ex_mutex_lock(self->co_mutex);
-            ex_hashmap_insert( self->state_to_params, &l1, &params, NULL );
-        ex_mutex_unlock(self->co_mutex);
         ex_lua_process_yield ( &params );
 
         //
@@ -412,37 +406,50 @@ int ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
 // Desc: 
 // NOTE: stop coroutine only stop the specific coroutine function, and 
 //       will not stop coroutine invoked by this coroutine function. 
+extern void ex_lua_process_resume ( void *_params );
 // ------------------------------------------------------------------ 
 
 int ex_lua_behavior_stop_coroutine ( ex_ref_t *_self, const char *_name ) {
 
     strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-    ex_coroutine_info_t *info = NULL;
+    ex_coroutine_params_t *params = NULL;
 
-    ex_mutex_lock(self->co_mutex);
-        info = ex_hashmap_get ( self->name_to_co, &nameID, NULL ); 
-        if ( info ) {
-            // get the params by threadID
-            ex_coroutine_params_t *params = ex_hashmap_get( self->state_to_params, &info->thread_state, NULL ); 
-            if ( params == NULL )
-                return luaL_error( ex_lua_main_state(), "failed in stop coroutine %s. can't find the params by threadID.", _name );
+    params = ex_hashmap_get ( self->name_to_co_params, &nameID, NULL ); 
+    if ( params ) {
+        ex_coroutine_params_t *parent_params = NULL;
 
-            //
-            if ( info->timerID != EX_INVALID_TIMER_ID ) {
-                luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
-                ex_stop_timer(info->timerID);
+        // get the params by threadID
+        if ( ex_hashmap_get( self->state_to_co_params, &params->thread_state, NULL ) == NULL )
+            return luaL_error( ex_lua_main_state(), "failed in stop coroutine %s. can't find the params by threadID.", _name );
+
+        luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
+
+        //
+        // FIXME: it is possible the timer stop, and add timeup process { 
+        if ( params->timerID != EX_INVALID_TIMER_ID ) {
+            ex_stop_timer(params->timerID);
+        }
+        // } FIXME end 
+
+        // recursivly resume the parent when stop
+        parent_params = ex_hashmap_get( self->state_to_co_params, &(params->parent_state), NULL ); 
+        if ( parent_params ) {
+            if ( lua_status(parent_params->thread_state) == LUA_YIELD ) {
+                ex_component_t *comp = EX_REF_CAST(ex_component_t,_self);
+                ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
+                ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
+                ex_coroutine_mng_add_to_resume( &world->coroutine_mng, parent_params );
             }
+        }
 
-            // remove from hashmap 
-            ex_hashmap_remove_at ( self->name_to_co, &nameID );
-            ex_hashmap_remove_at ( self->state_to_params, &(params->thread_state) );
-        }
-        else {
-            ex_mutex_unlock(self->co_mutex);
-            return luaL_error( ex_lua_main_state(), "can't find %s in invoke list", _name );
-        }
-    ex_mutex_unlock(self->co_mutex);
+        // remove from hashmap 
+        ex_hashmap_remove_at ( self->name_to_co_params, &nameID );
+        ex_hashmap_remove_at ( self->state_to_co_params, &params->thread_state );
+    }
+    else {
+        return luaL_error( ex_lua_main_state(), "can't find %s in invoke list", _name );
+    }
     return 0;
 }
 

@@ -196,7 +196,7 @@ ex_ref_t *ex_world_create_rect ( ex_ref_t *_self, strid_t _name ) {
 
 void ex_world_clear ( ex_ref_t *_self ) {
 	ex_world_t *self;
-    
+
     self = EX_REF_CAST(ex_world_t,_self);
     ex_lua_clear_refs( ex_lua_main_state() );
 	
@@ -336,9 +336,11 @@ void ex_world_update ( ex_ref_t *_self ) {
         ex_entity_post_update_behaviors(ent);
     } ex_array_each_end
 
-    // 
+    // stop/call invokes
     ex_invoke_mng_process(&self->invoke_mng);
-    ex_coroutine_mng_process(&self->coroutine_mng);
+
+    // resume coroutines
+    ex_coroutine_mng_resume(&self->coroutine_mng);
 
     // at the end of the update, we do a garbage collection
     ex_array_each ( self->entities, ex_ref_t *, ent ) {
@@ -370,6 +372,9 @@ void ex_world_render ( ex_ref_t *_self ) {
             ex_entity_on_render(ref);
         } ex_array_each_end;
     } ex_array_each_end;
+
+    // before buffer swapped resume coroutine yield by "end_of_frame"
+    ex_coroutine_mng_resume_eof(&self->coroutine_mng);
 }
 
 // ------------------------------------------------------------------ 

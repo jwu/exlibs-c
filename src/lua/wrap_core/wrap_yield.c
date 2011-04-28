@@ -32,16 +32,15 @@ EX_DEF_LUA_BUILTIN_MODULE()
 
 // ------------------------------------------------------------------ 
 // Desc: 
-// extern void ex_lua_process_resume ( void *_params );
 // ------------------------------------------------------------------ 
 
 static int32 __yield_time_up ( uint32 _interval, void *_params ) {
 
     ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
-    ex_component_t *be = EX_REF_CAST(ex_component_t,params->beref);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,be->entity);
+    ex_component_t *comp = EX_REF_CAST(ex_component_t,params->beref);
+    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
     ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
-    ex_coroutine_mng_add_timeup( &world->coroutine_mng, _params );
+    ex_coroutine_mng_add_to_resume( &world->coroutine_mng, _params );
 
     return _interval;
 }
@@ -104,9 +103,8 @@ static int __yield_one_frame ( lua_State *_l ) {
     if ( _l == ex_lua_main_state() )
         return luaL_error( _l, "the yield instruction only run in coroutine." );
 
-    // TODO:
-
-    return 0;
+    lua_pushnumber(_l,EX_YIELD_WAIT_FOR_ONE_FRAME);
+    return lua_yield(_l,2);
 }
 
 // ------------------------------------------------------------------ 
@@ -117,9 +115,8 @@ static int __yield_end_of_frame ( lua_State *_l ) {
     if ( _l == ex_lua_main_state() )
         return luaL_error( _l, "the yield instruction only run in coroutine." );
 
-    // TODO:
-
-    return 0;
+    lua_pushnumber(_l,EX_YIELD_WAIT_FOR_END_OF_FRAME);
+    return lua_yield(_l,2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -200,10 +197,11 @@ void luaclose_yield () {
 // ------------------------------------------------------------------ 
 
 void ex_lua_process_yield ( void *_params ) {
-    ex_coroutine_info_t new_info;
     ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
     ex_lua_behavior_t *be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
     int yield_status = luaL_checknumber(params->thread_state,-1);
+    int timerID = EX_INVALID_TIMER_ID;
+    size_t idx;
 
     switch ( yield_status ) {
 
@@ -213,7 +211,6 @@ void ex_lua_process_yield ( void *_params ) {
         {
             float secs;
             timespan_t ts;
-            int timerID;
 
             //
             secs = (float)lua_tonumber(params->thread_state,1);
@@ -225,11 +222,28 @@ void ex_lua_process_yield ( void *_params ) {
                                     ts,
                                     ts * 2, // NOTE: this prevent interval invoked before lifetime 
                                     ts );
-            // add timer to hashmap 
-            new_info.thread_state = params->thread_state;
-            new_info.yield_status = EX_YIELD_WAIT_FOR_SECONDS;
-            new_info.timerID = timerID;
-            new_info.cur_frame = ex_frames();
+        }
+        break;
+
+    // ======================================================== 
+    case EX_YIELD_WAIT_FOR_ONE_FRAME:
+    // ======================================================== 
+        {
+            ex_component_t *be = EX_REF_CAST(ex_component_t,params->beref);
+            ex_entity_t *ent = EX_REF_CAST(ex_entity_t,be->entity);
+            ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
+            ex_coroutine_mng_add_to_resume_nf( &world->coroutine_mng, params );
+        }
+        break;
+
+    // ======================================================== 
+    case EX_YIELD_WAIT_FOR_END_OF_FRAME:
+    // ======================================================== 
+        {
+            ex_component_t *be = EX_REF_CAST(ex_component_t,params->beref);
+            ex_entity_t *ent = EX_REF_CAST(ex_entity_t,be->entity);
+            ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
+            ex_coroutine_mng_add_to_resume_eof( &world->coroutine_mng, params );
         }
         break;
 
@@ -237,29 +251,35 @@ void ex_lua_process_yield ( void *_params ) {
     case EX_YIELD_WAIT_FOR_FINISH:
     // ======================================================== 
         {
-            new_info.thread_state = params->thread_state;
-            new_info.yield_status = EX_YIELD_WAIT_FOR_SECONDS;
-            new_info.timerID = EX_INVALID_TIMER_ID;
-            new_info.cur_frame = ex_frames();
+            // do nothing
         }
         break;
     }
 
-    // if we have nameID, update the coroutine info
+    //
+    params->yield_status = yield_status;
+    params->timerID = timerID;
+    params->cur_frame = ex_frames();
+
+    // update the state_to_co_params
+    // if we already have the coroutine params, update the value in it.
+    if ( ex_hashmap_insert( be->state_to_co_params, &params->thread_state, params, &idx ) == false ) {
+        ex_coroutine_params_t *my_params = ex_hashmap_get_by_idx ( be->state_to_co_params, idx );
+        *my_params = *params; 
+    }
+
+    // if we have nameID, update the name_to_co_params
     if ( params->nameID != EX_STRID_NULL ) {
-        // if we already have the coroutine info, update the value in it.
-        size_t idx;
-        ex_mutex_lock(be->co_mutex);
-            if ( ex_hashmap_insert ( be->name_to_co, &params->nameID, &new_info, &idx ) == false ) {
-                ex_coroutine_info_t *my_info = ex_hashmap_get_by_idx ( be->name_to_co, idx );
-                *my_info = new_info; 
-            }
-        ex_mutex_unlock(be->co_mutex);
+        // if we already have the coroutine params, update the value in it.
+        if ( ex_hashmap_insert ( be->name_to_co_params, &params->nameID, params, &idx ) == false ) {
+            ex_coroutine_params_t *my_params = ex_hashmap_get_by_idx ( be->name_to_co_params, idx );
+            *my_params = *params; 
+        }
     }
 
     // after we update the coroutine info, if we have timer, start it!
-    if ( new_info.timerID != EX_INVALID_TIMER_ID )
-        ex_start_timer(new_info.timerID);
+    if ( params->timerID != EX_INVALID_TIMER_ID )
+        ex_start_timer(params->timerID);
 }
 
 // ------------------------------------------------------------------ 
@@ -283,18 +303,16 @@ void ex_lua_process_resume ( void *_params ) {
     else {
         luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
 
-        //
-        ex_mutex_lock(be->co_mutex);
-            // get parent params before hash remove it
-            parent_params = ex_hashmap_get( be->state_to_params, &(params->parent_state), NULL ); 
-            if ( params->nameID != EX_STRID_NULL ) {
-                ex_hashmap_remove_at ( be->name_to_co, &(params->nameID) );
-            }
-            ex_hashmap_remove_at ( be->state_to_params, &(params->thread_state) );
-        ex_mutex_unlock(be->co_mutex);
+        // get parent params before hash remove it
+        parent_params = ex_hashmap_get( be->state_to_co_params, &(params->parent_state), NULL ); 
+        if ( params->nameID != EX_STRID_NULL ) {
+            ex_hashmap_remove_at ( be->name_to_co_params, &(params->nameID) );
+        }
+        ex_hashmap_remove_at ( be->state_to_co_params, &(params->thread_state) );
 
         // recursivly process it
-        if ( parent_params ) {
+        // to prevent it parent state resume by other yield_status, we only allow resume from wait for finish 
+        if ( parent_params && parent_params->yield_status == EX_YIELD_WAIT_FOR_FINISH ) {
             if ( lua_status(parent_params->thread_state) == LUA_YIELD ) {
                 ex_lua_process_resume ( parent_params );
             }

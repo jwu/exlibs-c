@@ -121,6 +121,15 @@ static int __time_get_fps ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __time_get_frames ( lua_State *_l ) {
+    lua_pushnumber( _l, ex_frames() );
+    return 1;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int __time_pause ( lua_State *_l ) {
     ex_pause();
     return 0;
@@ -150,6 +159,7 @@ static const ex_getset_t __type_meta_getsets[] = {
     { "dt_fixed", __time_get_dt_fixed, NULL },
     { "timescale", __time_get_timescale, __time_set_timescale },
     { "fps", __time_get_fps, NULL },
+    { "frames", __time_get_frames, NULL },
     { NULL, NULL, NULL },
 };
 static const luaL_Reg __type_meta_funcs[] = {

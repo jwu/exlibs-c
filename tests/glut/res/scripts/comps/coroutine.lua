@@ -74,9 +74,36 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
+function wait_for_eof ( _self )
+    local ent_name = _self.entity.name
+    ex.log( ent_name .. ": yield end of frame in " .. ex.time.frames )
+    ex.yield.end_of_frame()
+    ex.log( ent_name .. ": reported at the end of the frame " .. ex.time.frames )
+    ex.log( ent_name .. ": yield one frame in " .. ex.time.frames )
+    ex.yield.one_frame()
+    ex.log( ent_name .. ": reported in the frame " .. ex.time.frames )
+end
+
+-- ------------------------------------------------------------------ 
+-- Desc: 
+-- ------------------------------------------------------------------ 
+
 function wait_for_stop ( _self )
+    -- step 1, rotate, stop_rotate
     ex.yield( _self:coroutine(rotate,_self) )
-    ex.log("rotate finished")
+
+    -- step 2
+    _self:coroutine(wait_for_eof,_self)
+
+    ex.yield.wait(2.0)
+
+    -- step 3
+    ex.log( _self.entity.name .. ": coroutine finished")
+
+    -- while true do
+    --     _self.trans2d:move( 10.0, 0.0 )
+    --     ex.yield.wait(2.0)
+    -- end
 end
 
 -- ------------------------------------------------------------------ 
@@ -84,8 +111,8 @@ end
 -- ------------------------------------------------------------------ 
 
 function rotate ( _self )
-    _self.secs =  ex.range_rand( 1.0, 10.0 )
-    ex.log( _self.entity.name .. " step 1 wait for " .. _self.secs )
+    _self.secs =  ex.range_rand( 1.0, 2.0 )
+    ex.log( _self.entity.name .. ": step 1 wait for " .. _self.secs )
     _self._start_at = ex.time.time
     ex.yield.wait(_self.secs)
     _self.rot_speed = ex.range_rand( 10.0, 20.0 )
@@ -99,8 +126,8 @@ end
 -- ------------------------------------------------------------------ 
 
 function stop_rotate ( _self )
-    _self.secs =  ex.range_rand( 1.0, 10.0 )
-    ex.log( _self.entity.name .. " step 2 wait for " .. _self.secs )
+    _self.secs =  ex.range_rand( 2.0, 3.0 )
+    ex.log( _self.entity.name .. ": step 2 wait for " .. _self.secs )
     _self._start_at = ex.time.time
     ex.yield.wait(_self.secs)
     _self.rot_speed = 0.0
