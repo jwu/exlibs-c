@@ -35,11 +35,15 @@ EX_DEF_LUA_BUILTIN_MODULE()
 // ------------------------------------------------------------------ 
 
 static int32 __yield_time_up ( uint32 _interval, void *_params ) {
+    ex_coroutine_params_t *params;
+    ex_component_t *comp;
+    ex_entity_t *ent;
+    ex_world_t *world;
 
-    ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
-    ex_component_t *comp = EX_REF_CAST(ex_component_t,params->beref);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
-    ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
+    params = (ex_coroutine_params_t *)_params;
+    comp = EX_REF_CAST(ex_component_t,params->beref);
+    ent = EX_REF_CAST(ex_entity_t,comp->entity);
+    world = EX_REF_CAST(ex_world_t,ent->world);
     ex_coroutine_mng_add_to_resume( &world->coroutine_mng, _params );
 
     return _interval;

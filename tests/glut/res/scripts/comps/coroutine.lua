@@ -42,9 +42,22 @@ end
 -- ------------------------------------------------------------------ 
 
 function start ( _self )
-    _self:coroutine ( wait_for_stop, _self )
-    -- _self:coroutine ( rotate, _self )
     ex.log( _self.entity.name .. " started!" )
+
+    -- step 1, rotate, stop_rotate
+    ex.yield( _self:coroutine(rotate,_self) )
+
+    -- step 2
+    _self:coroutine(wait_for_eof,_self)
+
+    -- step 3
+    ex.yield.wait(2.0)
+    ex.log( _self.entity.name .. ": coroutine finished")
+
+    -- while true do
+    --     _self.trans2d:move( 10.0, 0.0 )
+    --     ex.yield.wait(2.0)
+    -- end
 end
 
 -- ------------------------------------------------------------------ 
@@ -52,10 +65,12 @@ end
 -- ------------------------------------------------------------------ 
 
 function update ( _self )
+    local t2d = _self.trans2d
     if _self.move then
-        _self.trans2d:move( 10.0 * ex.time.dt, 0.0 )
+        local v = t2d.position.normalized * ex.time.dt * 20.0
+        t2d:move( v.x, v.y )
     end
-    _self.trans2d:rotate( _self.rot_speed * ex.time.dt )
+    t2d:rotate( _self.rot_speed * ex.time.dt )
 end
 
 -- ------------------------------------------------------------------ 
@@ -88,34 +103,12 @@ end
 -- Desc: 
 -- ------------------------------------------------------------------ 
 
-function wait_for_stop ( _self )
-    -- step 1, rotate, stop_rotate
-    ex.yield( _self:coroutine(rotate,_self) )
-
-    -- step 2
-    _self:coroutine(wait_for_eof,_self)
-
-    ex.yield.wait(2.0)
-
-    -- step 3
-    ex.log( _self.entity.name .. ": coroutine finished")
-
-    -- while true do
-    --     _self.trans2d:move( 10.0, 0.0 )
-    --     ex.yield.wait(2.0)
-    -- end
-end
-
--- ------------------------------------------------------------------ 
--- Desc: 
--- ------------------------------------------------------------------ 
-
 function rotate ( _self )
     _self.secs =  ex.range_rand( 1.0, 2.0 )
     ex.log( _self.entity.name .. ": step 1 wait for " .. _self.secs )
     _self._start_at = ex.time.time
     ex.yield.wait(_self.secs)
-    _self.rot_speed = ex.range_rand( 10.0, 20.0 )
+    _self.rot_speed = ex.range_rand( -20.0, 20.0 )
     _self.move = false
 
     ex.yield( _self:coroutine(stop_rotate,_self) )

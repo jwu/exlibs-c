@@ -383,7 +383,9 @@ void *ex_pool_remove_at_safe ( ex_pool_t *_pool, int _idx ) {
 void *ex_pool_get ( const ex_pool_t *_pool, int _idx )
 {
     ex_assert_return( _idx >= 0 && (size_t)_idx < _pool->capacity, NULL, "error: _idx out of range" );
-    ex_assert_return( ex_bitarray_get(_pool->used_bits, _idx) == 1, NULL, "error: the node is not in used." );
+    // ex_assert_return( ex_bitarray_get(_pool->used_bits, _idx) == 1, NULL, "error: the node is not in used." );
+    if ( ex_bitarray_get(_pool->used_bits, _idx) != 1 )
+        return NULL;
 
     return (char *)(_pool->data) + _idx * _pool->element_bytes;
 }

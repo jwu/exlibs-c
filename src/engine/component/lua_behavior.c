@@ -58,12 +58,12 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
     // } TODO end 
 
     // TODO: this should be done in on_destroy { 
-    // TODO: stop all coroutines 
-    // ex_hashmap_each ( self->state_to_co_params, ex_coroutine_params_t, el ) {
-    //     if ( el.timerID != EX_INVALID_TIMER_ID ) {
-    //         ex_stop_timer(el.timerID);
-    //     }
-    // } ex_hashmap_each_end;
+    // stop all coroutines 
+    ex_hashmap_each ( self->state_to_co_params, ex_coroutine_params_t, el ) {
+        if ( el.timerID != EX_INVALID_TIMER_ID ) {
+            ex_stop_timer(el.timerID);
+        }
+    } ex_hashmap_each_end;
     ex_hashmap_free(self->name_to_co_params);
     ex_hashmap_free(self->state_to_co_params);
     // } TODO end 
@@ -106,7 +106,6 @@ static void __lua_behavior_awake ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_start ( ex_ref_t *_self ) {
-    int status;
     ex_object_t *obj;
     ex_lua_behavior_t *self;
 
@@ -117,13 +116,10 @@ static void __lua_behavior_start ( ex_ref_t *_self ) {
 
     lua_rawgeti(obj->l, LUA_REGISTRYINDEX, obj->luaRefID);
     lua_getfield( obj->l, -1, "start" );
+    // we call start as a coroutine
     if ( lua_isnil(obj->l,-1) == 0 && lua_isfunction(obj->l,-1) ) {
         lua_pushvalue(obj->l,-2);
-        status = lua_pcall( obj->l, 1, 0, 0 );
-        if ( status ) {
-            ex_lua_alert(obj->l);
-            self->compile_failed = true;
-        }
+        ex_lua_behavior_start_coroutine( _self, obj->l, NULL, 1 );
     }
     lua_settop(obj->l, 0);
 }

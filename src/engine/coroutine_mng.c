@@ -42,33 +42,7 @@ void ex_coroutine_mng_init ( ex_coroutine_mng_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_coroutine_mng_deinit ( ex_coroutine_mng_t *_self ) {
-    int i, num_stop;
-
-    // deinit coroutines
-    num_stop = _self->coroutines.count;
-    for ( i = 0; i < num_stop; ++i ) {
-        ex_lua_process_resume ( &(_self->coroutines.params_list[_self->coroutines.head]) );
-        _self->coroutines.head = (_self->coroutines.head + 1) % MAX_COROUTINES; 
-        _self->coroutines.count -= 1;
-    }
-
-    // deinit coroutines next frame
-    num_stop = _self->coroutines_nf.count;
-    for ( i = 0; i < num_stop; ++i ) {
-        ex_lua_process_resume ( &(_self->coroutines_nf.params_list[_self->coroutines_nf.head]) );
-        _self->coroutines_nf.head = (_self->coroutines_nf.head + 1) % MAX_COROUTINES; 
-        _self->coroutines_nf.count -= 1;
-    }
-    _self->num_cur_frame = 0;
-    _self->num_next_frame = 0;
-
-    // deinit coroutines end of frame
-    num_stop = _self->coroutines_eof.count;
-    for ( i = 0; i < num_stop; ++i ) {
-        ex_lua_process_resume ( &(_self->coroutines_eof.params_list[_self->coroutines_eof.head]) );
-        _self->coroutines_eof.head = (_self->coroutines_eof.head + 1) % MAX_COROUTINES; 
-        _self->coroutines_eof.count -= 1;
-    }
+    // NOTE: no need to process reset resume here
 
     //
     _self->coroutines.head = _self->coroutines.trail = _self->coroutines.count = 0;
