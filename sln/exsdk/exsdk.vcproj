@@ -721,6 +721,14 @@
 			Name="engine"
 			>
 			<File
+				RelativePath="..\..\src\engine\coroutine_mng.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\engine\coroutine_mng.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\engine\engine_inc.h"
 				>
 			</File>
