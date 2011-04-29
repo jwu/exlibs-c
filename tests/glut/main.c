@@ -10,8 +10,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-
-#include "graphics/graphics_inc.h"
 #include "engine/engine_inc.h"
 #include "app/app.h"
 

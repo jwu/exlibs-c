@@ -199,6 +199,20 @@
 		B23CD86C136AC34400CF3131 /* wrap_trans2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B23CD79E136AC34400CF3131 /* wrap_trans2d.c */; };
 		B23CD86D136AC34400CF3131 /* wrap_world.c in Sources */ = {isa = PBXBuildFile; fileRef = B23CD79F136AC34400CF3131 /* wrap_world.c */; };
 		B23CD8A1136ACAC300CF3131 /* exgl.h in Headers */ = {isa = PBXBuildFile; fileRef = B23CD8A0136ACAC300CF3131 /* exgl.h */; };
+		B258D3A4136B12190026F4D4 /* libexsdk_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B23CD6B0136AC27900CF3131 /* libexsdk_ios.a */; };
+		B258D3A8136B16240026F4D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B258D3A5136B16240026F4D4 /* main.m */; };
+		B258D3A9136B16240026F4D4 /* SimpleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B258D3A7136B16240026F4D4 /* SimpleAppDelegate.m */; };
+		B258D3B1136B2E920026F4D4 /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D3AF136B2E6F0026F4D4 /* libyajl_s.a */; };
+		B258D3B2136B2E950026F4D4 /* libphysfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D3AD136B2E530026F4D4 /* libphysfs.a */; };
+		B258D3B3136B2E970026F4D4 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D3AB136B2E400026F4D4 /* liblua.a */; };
+		B2B39FAF136AD9340049350C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39FA4136AD8A20049350C /* OpenGLES.framework */; };
+		B2B39FB0136AD9340049350C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39FA5136AD8A20049350C /* QuartzCore.framework */; };
+		B2B39FB1136AD9340049350C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39F68136AD5850049350C /* UIKit.framework */; };
+		B2B39FB2136AD9340049350C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39F6A136AD5850049350C /* Foundation.framework */; };
+		B2B39FB3136AD9340049350C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39F6C136AD5850049350C /* CoreGraphics.framework */; };
+		B2B39FB5136AD9340049350C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2B39F71136AD5850049350C /* InfoPlist.strings */; };
+		B2B39FC0136AE3F20049350C /* glview.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B39FBE136AE3F20049350C /* glview.h */; };
+		B2B39FC1136AE3F20049350C /* glview.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B39FBF136AE3F20049350C /* glview.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -402,6 +416,23 @@
 		B23CD79E136AC34400CF3131 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
 		B23CD79F136AC34400CF3131 /* wrap_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_world.c; sourceTree = "<group>"; };
 		B23CD8A0136ACAC300CF3131 /* exgl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exgl.h; sourceTree = "<group>"; };
+		B258D3A5136B16240026F4D4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../../tests/ios/main.m; sourceTree = "<group>"; };
+		B258D3A6136B16240026F4D4 /* SimpleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleAppDelegate.h; path = ../../../tests/ios/SimpleAppDelegate.h; sourceTree = "<group>"; };
+		B258D3A7136B16240026F4D4 /* SimpleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleAppDelegate.m; path = ../../../tests/ios/SimpleAppDelegate.m; sourceTree = "<group>"; };
+		B258D3AB136B2E400026F4D4 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "../../ext/lua-5.1.4/lib/macosx/liblua.a"; sourceTree = "<group>"; };
+		B258D3AD136B2E530026F4D4 /* libphysfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libphysfs.a; path = "../../ext/physfs-2.0.1/lib/macosx/libphysfs.a"; sourceTree = "<group>"; };
+		B258D3AF136B2E6F0026F4D4 /* libyajl_s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyajl_s.a; path = "../../ext/yajl-1.0.11/lib/macosx/libyajl_s.a"; sourceTree = "<group>"; };
+		B2B39F68136AD5850049350C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B2B39F6A136AD5850049350C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B2B39F6C136AD5850049350C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B2B39F70136AD5850049350C /* ios_simple-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ios_simple-Info.plist"; sourceTree = "<group>"; };
+		B2B39F72136AD5850049350C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B2B39F74136AD5850049350C /* ios_simple-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ios_simple-Prefix.pch"; sourceTree = "<group>"; };
+		B2B39FA4136AD8A20049350C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B2B39FA5136AD8A20049350C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B2B39FBB136AD9340049350C /* ios_simple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_simple.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2B39FBE136AE3F20049350C /* glview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glview.h; sourceTree = "<group>"; };
+		B2B39FBF136AE3F20049350C /* glview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = glview.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -412,14 +443,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2B39FAE136AD9340049350C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B39FAF136AD9340049350C /* OpenGLES.framework in Frameworks */,
+				B2B39FB0136AD9340049350C /* QuartzCore.framework in Frameworks */,
+				B2B39FB1136AD9340049350C /* UIKit.framework in Frameworks */,
+				B2B39FB2136AD9340049350C /* Foundation.framework in Frameworks */,
+				B2B39FB3136AD9340049350C /* CoreGraphics.framework in Frameworks */,
+				B258D3A4136B12190026F4D4 /* libexsdk_ios.a in Frameworks */,
+				B258D3B1136B2E920026F4D4 /* libyajl_s.a in Frameworks */,
+				B258D3B2136B2E950026F4D4 /* libphysfs.a in Frameworks */,
+				B258D3B3136B2E970026F4D4 /* liblua.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		B23CD6A5136AC27900CF3131 = {
 			isa = PBXGroup;
 			children = (
+				B258D3AA136B2E260026F4D4 /* libs */,
 				B23CD6B8136AC29400CF3131 /* xcconfig */,
 				B23CD6B7136AC28900CF3131 /* exsdk_ios */,
+				B2B39F6E136AD5850049350C /* tests */,
+				B2B39F67136AD5850049350C /* Frameworks */,
 				B23CD6B1136AC27900CF3131 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -428,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				B23CD6B0136AC27900CF3131 /* libexsdk_ios.a */,
+				B2B39FBB136AD9340049350C /* ios_simple.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -791,6 +842,7 @@
 		B23CD785136AC34400CF3131 /* graphics */ = {
 			isa = PBXGroup;
 			children = (
+				B2B39FBD136AE3F20049350C /* ios */,
 				B23CD8A0136ACAC300CF3131 /* exgl.h */,
 				B23CD786136AC34400CF3131 /* debug_draw.c */,
 				B23CD787136AC34400CF3131 /* debug_draw.h */,
@@ -842,6 +894,59 @@
 				B23CD79F136AC34400CF3131 /* wrap_world.c */,
 			);
 			path = wrap_engine;
+			sourceTree = "<group>";
+		};
+		B258D3AA136B2E260026F4D4 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B258D3AF136B2E6F0026F4D4 /* libyajl_s.a */,
+				B258D3AD136B2E530026F4D4 /* libphysfs.a */,
+				B258D3AB136B2E400026F4D4 /* liblua.a */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		B2B39F67136AD5850049350C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2B39FA4136AD8A20049350C /* OpenGLES.framework */,
+				B2B39FA5136AD8A20049350C /* QuartzCore.framework */,
+				B2B39F68136AD5850049350C /* UIKit.framework */,
+				B2B39F6A136AD5850049350C /* Foundation.framework */,
+				B2B39F6C136AD5850049350C /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2B39F6E136AD5850049350C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				B258D3A5136B16240026F4D4 /* main.m */,
+				B258D3A6136B16240026F4D4 /* SimpleAppDelegate.h */,
+				B258D3A7136B16240026F4D4 /* SimpleAppDelegate.m */,
+				B2B39F6F136AD5850049350C /* Supporting Files */,
+			);
+			name = tests;
+			path = ios_simple;
+			sourceTree = "<group>";
+		};
+		B2B39F6F136AD5850049350C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2B39F70136AD5850049350C /* ios_simple-Info.plist */,
+				B2B39F71136AD5850049350C /* InfoPlist.strings */,
+				B2B39F74136AD5850049350C /* ios_simple-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B2B39FBD136AE3F20049350C /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B2B39FBE136AE3F20049350C /* glview.h */,
+				B2B39FBF136AE3F20049350C /* glview.m */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -962,6 +1067,7 @@
 				B23CD85C136AC34400CF3131 /* lua_inc.h in Headers */,
 				B23CD85E136AC34400CF3131 /* lua_wrap_helper.h in Headers */,
 				B23CD8A1136ACAC300CF3131 /* exgl.h in Headers */,
+				B2B39FC0136AE3F20049350C /* glview.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,6 +1091,23 @@
 			productReference = B23CD6B0136AC27900CF3131 /* libexsdk_ios.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		B2B39FA8136AD9340049350C /* ios_simple */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2B39FB8136AD9340049350C /* Build configuration list for PBXNativeTarget "ios_simple" */;
+			buildPhases = (
+				B2B39FA9136AD9340049350C /* Sources */,
+				B2B39FAE136AD9340049350C /* Frameworks */,
+				B2B39FB4136AD9340049350C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ios_simple;
+			productName = ios_simple;
+			productReference = B2B39FBB136AD9340049350C /* ios_simple.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1003,9 +1126,21 @@
 			projectRoot = "";
 			targets = (
 				B23CD6AF136AC27900CF3131 /* exsdk_ios */,
+				B2B39FA8136AD9340049350C /* ios_simple */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B2B39FB4136AD9340049350C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2B39FB5136AD9340049350C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B23CD6AC136AC27900CF3131 /* Sources */ = {
@@ -1093,10 +1228,31 @@
 				B23CD86B136AC34400CF3131 /* wrap_object.c in Sources */,
 				B23CD86C136AC34400CF3131 /* wrap_trans2d.c in Sources */,
 				B23CD86D136AC34400CF3131 /* wrap_world.c in Sources */,
+				B2B39FC1136AE3F20049350C /* glview.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2B39FA9136AD9340049350C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B258D3A8136B16240026F4D4 /* main.m in Sources */,
+				B258D3A9136B16240026F4D4 /* SimpleAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B2B39F71136AD5850049350C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2B39F72136AD5850049350C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B23CD6B2136AC27900CF3131 /* Debug */ = {
@@ -1143,6 +1299,12 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../src/exsdk.h;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
+				);
 				OTHER_CFLAGS = "-DTARGET_OS_IPHONE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1158,8 +1320,65 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../src/exsdk.h;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
+				);
 				OTHER_CFLAGS = "-DTARGET_OS_IPHONE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B2B39FB9136AD9340049350C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ios_simple/ios_simple-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = "ios_simple/ios_simple-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
+				);
+				PRODUCT_NAME = ios_simple;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B2B39FBA136AD9340049350C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ios_simple/ios_simple-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = "ios_simple/ios_simple-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
+				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = ios_simple;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -1180,6 +1399,15 @@
 			buildConfigurations = (
 				B23CD6B5136AC27900CF3131 /* Debug */,
 				B23CD6B6136AC27900CF3131 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2B39FB8136AD9340049350C /* Build configuration list for PBXNativeTarget "ios_simple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2B39FB9136AD9340049350C /* Debug */,
+				B2B39FBA136AD9340049350C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
