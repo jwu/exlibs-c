@@ -21,23 +21,23 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( ex_ref_t * );
+extern void __behavior_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __debug2d_init ( ex_ref_t *_self ) {
-    __component_init(_self); // parent init
+    __behavior_init(_self); // parent init
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( ex_ref_t * );
+extern void __behavior_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __debug2d_deinit ( ex_ref_t *_self ) {
     ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
     ex_stop_timer(self->trail_timer);
 
-    __component_deinit(_self); // parent deinint
+    __behavior_deinit(_self); // parent deinint
 }
 
 // ------------------------------------------------------------------ 
