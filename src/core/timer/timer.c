@@ -16,7 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define __ROUND_RESOLUTION(_x) \
-	(((_x+EX_TIMER_RESOLUTION-1)/EX_TIMER_RESOLUTION)*EX_TIMER_RESOLUTION)
+	(uint32)(((_x+EX_TIMER_RESOLUTION-1)/EX_TIMER_RESOLUTION)*EX_TIMER_RESOLUTION)
 
 // ------------------------------------------------------------------ 
 // Desc: timer_t 

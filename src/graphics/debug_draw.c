@@ -27,6 +27,8 @@
 // ------------------------------------------------------------------ 
 
 void ex_screen_print ( int _x, int _y, const char *_fmt, ... ) {
+
+#if ( EX_PLATFORM != EX_IOS )
     int     result = -1;
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
@@ -64,6 +66,8 @@ void ex_screen_print ( int _x, int _y, const char *_fmt, ... ) {
     // if we use dynamic buffer, free it
     if ( buffer != buf )
         ex_free_nomng ( buffer );
+#endif
+
 }
 
 // ------------------------------------------------------------------ 
@@ -71,6 +75,8 @@ void ex_screen_print ( int _x, int _y, const char *_fmt, ... ) {
 // ------------------------------------------------------------------ 
 
 void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... ) {
+
+#if ( EX_PLATFORM != EX_IOS )
     int     result = -1;
     char    buf[BUF_SIZE];
     char   *buffer = NULL;
@@ -120,5 +126,7 @@ void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... ) {
     // if we use dynamic buffer, free it
     if ( buffer != buf )
         ex_free_nomng ( buffer );
+#endif
+
 }
 

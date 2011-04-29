@@ -69,7 +69,7 @@ int ex_fseek ( ex_file_t *_file, size_t _offset, int _whence ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_fread ( ex_file_t *_file, void *_buf, size_t _size, size_t _count ) {
+size_t ex_fread ( ex_file_t *_file, void *_buf, size_t _size, size_t _count ) {
     size_t nread;
 
     nread = fread( _buf, _size, _count, _file->fp );
@@ -84,7 +84,7 @@ int ex_fread ( ex_file_t *_file, void *_buf, size_t _size, size_t _count ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_fwrite ( ex_file_t *_file, const void *_buf, size_t _size, size_t _count ) {
+size_t ex_fwrite ( ex_file_t *_file, const void *_buf, size_t _size, size_t _count ) {
     size_t nwrote;
     nwrote = fwrite( _buf, _size, _count, _file->fp );
     if ( nwrote == 0 && ferror(_file->fp) ) {

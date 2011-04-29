@@ -223,7 +223,7 @@ extern "C" {
 #define EX_DEF_PROPS_END \
             { "", "", 0, -1, NULL, NULL } \
         }; /*end of __props__*/ \
-        (void *)__typename__; /*prevent release version unused warning*/ \
+        (void)__typename__; /*prevent release version unused warning*/ \
         ex_assert_return( __rtti__, /**/, "failed to register class %s", __typename__ ); \
         ex_rtti_register_properties ( __rtti__, __props__, EX_ARRAY_COUNT(__props__)-1 ); \
     }
@@ -277,7 +277,7 @@ extern "C" {
 #define EX_SERIALIZE_END \
         } \
         if ( _stream->pop ) _stream->pop(_stream); \
-        (void *)self; /*to avoid unused compile warning*/ \
+        (void)self; /*to avoid unused compile warning*/ \
     }
 
 // ------------------------------------------------------------------ 
@@ -367,7 +367,7 @@ extern "C" {
 
 #define EX_DEF_TOSTRING_END \
         ex_string_cat( _string, "}\n" ); \
-        (void *)self; \
+        (void)self; \
     }
 
 // ------------------------------------------------------------------ 

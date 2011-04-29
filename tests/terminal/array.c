@@ -39,7 +39,7 @@ static void invalid() {
     ex_array_t *array = ex_array ( uint32, 20 );
     {
         void *pval = ex_array_get( array, 40 );
-		(void *)pval;
+		(void)pval;
     }
     ex_array_free ( array );
 }

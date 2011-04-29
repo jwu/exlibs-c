@@ -56,7 +56,7 @@ static int __object_get_uid ( lua_State *_l ) {
     self = EX_REF_CAST(ex_object_t,r);
 
     // CHECK: i don't know could this be done in 32-bit system (such as win32.) { 
-    lua_pushinteger( _l, self->uid ); 
+    lua_pushinteger( _l, (int)self->uid ); 
     // } CHECK end 
     return 1;
 }

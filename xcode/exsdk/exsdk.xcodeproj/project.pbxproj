@@ -514,7 +514,6 @@
 
 /* Begin PBXFileReference section */
 		B200D3E312E48F51003B4944 /* libyajl_s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyajl_s.a; path = "/Users/Johnny/dev/projects/exdev/exsdk/ext/yajl-1.0.11/lib/macosx/libyajl_s.a"; sourceTree = "<absolute>"; };
-		B20A1BE0135D284E008F3EF7 /* rtti test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rtti test copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = invoke_mng.c; sourceTree = "<group>"; };
 		B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = invoke_mng.h; sourceTree = "<group>"; };
 		B215FE0B131B688500DAAFDD /* wrap_angf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_angf.c; sourceTree = "<group>"; };
@@ -528,6 +527,7 @@
 		B245482A12B91E9900EF7261 /* simple_world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "simple_world-Info.plist"; sourceTree = "<group>"; };
 		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		B2582AEB136AB7E70009CEFF /* rtti test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rtti test copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B25D6E651316D28B006E1328 /* wrap_entity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_entity.c; sourceTree = "<group>"; };
 		B26C7E3E1357E06A00BDADA1 /* array.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = array.c; path = ../../tests/terminal/array.c; sourceTree = "<group>"; };
 		B26C7E3F1357E06A00BDADA1 /* bitarry.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = bitarry.c; path = ../../tests/terminal/bitarry.c; sourceTree = "<group>"; };
@@ -1047,29 +1047,15 @@
 		08FB7794FE84155DC02AAC07 /* exsdk */ = {
 			isa = PBXGroup;
 			children = (
+				B2582AED136AB8240009CEFF /* libs */,
 				B26C7E3C1357E05000BDADA1 /* tests */,
-				D2AAC046055464E500DB518D /* libexsdk.a */,
 				B2E3D9B11356982900FDAE41 /* xcconfig */,
 				B245483712B91F9E00EF7261 /* exsdk */,
-				C6A0FF2B0290797F04C91782 /* doc */,
-				1AB674ADFE9D54B511CA2CBB /* bin */,
 				B2DD23EB12A7C7CE0053CA3F /* Products */,
 				B245482A12B91E9900EF7261 /* simple_world-Info.plist */,
 				B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */,
-				B245484712B9207800EF7261 /* OpenGL.framework */,
-				B245484B12B9209000EF7261 /* GLUT.framework */,
-				B200D3E312E48F51003B4944 /* libyajl_s.a */,
-				B2B7B31912FD71CD00FA2EC0 /* libphysfs.a */,
-				B2A22DA912FEEBF900F3C100 /* liblua.a */,
 			);
 			name = exsdk;
-			sourceTree = "<group>";
-		};
-		1AB674ADFE9D54B511CA2CBB /* bin */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = bin;
 			sourceTree = "<group>";
 		};
 		B245483712B91F9E00EF7261 /* exsdk */ = {
@@ -1087,6 +1073,19 @@
 			);
 			name = exsdk;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		B2582AED136AB8240009CEFF /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B245484712B9207800EF7261 /* OpenGL.framework */,
+				B245484B12B9209000EF7261 /* GLUT.framework */,
+				B200D3E312E48F51003B4944 /* libyajl_s.a */,
+				B2B7B31912FD71CD00FA2EC0 /* libphysfs.a */,
+				B2A22DA912FEEBF900F3C100 /* liblua.a */,
+				D2AAC046055464E500DB518D /* libexsdk.a */,
+			);
+			name = libs;
 			sourceTree = "<group>";
 		};
 		B26C7E3C1357E05000BDADA1 /* tests */ = {
@@ -1551,7 +1550,7 @@
 				B26C7F9F13580C6F00BDADA1 /* rtti test */,
 				B26C7FB413580CB500BDADA1 /* scripted world.app */,
 				B26C7FC813580E8B00BDADA1 /* gl render test.app */,
-				B20A1BE0135D284E008F3EF7 /* rtti test copy */,
+				B2582AEB136AB7E70009CEFF /* rtti test copy */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1564,13 +1563,6 @@
 				B2E3D9B41356A0CB00FDAE41 /* general_release.xcconfig */,
 			);
 			name = xcconfig;
-			sourceTree = "<group>";
-		};
-		C6A0FF2B0290797F04C91782 /* doc */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = doc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1867,7 +1859,7 @@
 			);
 			name = "memmng test";
 			productName = test.base;
-			productReference = B20A1BE0135D284E008F3EF7 /* rtti test copy */;
+			productReference = B2582AEB136AB7E70009CEFF /* rtti test copy */;
 			productType = "com.apple.product-type.tool";
 		};
 		B26C7F111357F12B00BDADA1 /* stream test */ = {
@@ -2073,6 +2065,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* exsdk */;
 			productRefGroup = B2DD23EB12A7C7CE0053CA3F /* Products */;

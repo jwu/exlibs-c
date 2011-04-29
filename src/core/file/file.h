@@ -146,8 +146,8 @@ extern size_t ex_ftell ( ex_file_t *_file );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int64 ex_fread ( ex_file_t *_file, void *_buf, uint64 _size );
-extern int64 ex_fwrite ( ex_file_t *_file, const void *_buf, uint64 _size );
+extern size_t ex_fread ( ex_file_t *_file, void *_buf, uint64 _size );
+extern size_t ex_fwrite ( ex_file_t *_file, const void *_buf, uint64 _size );
 extern int ex_fflush ( ex_file_t *_file ); 
 extern int ex_feof ( ex_file_t *_file ); 
 

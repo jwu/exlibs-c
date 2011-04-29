@@ -313,7 +313,7 @@ int ex_fseek ( ex_file_t *_file, size_t _pos ) {
 // ------------------------------------------------------------------ 
 
 size_t ex_fsize ( ex_file_t *_file ) {
-    return PHYSFS_fileLength(_file);
+    return (size_t)PHYSFS_fileLength(_file);
 }
 
 // ------------------------------------------------------------------ 
@@ -321,18 +321,18 @@ size_t ex_fsize ( ex_file_t *_file ) {
 // ------------------------------------------------------------------ 
 
 size_t ex_ftell ( ex_file_t *_file ) {
-    return PHYSFS_tell(_file);
+    return (size_t)PHYSFS_tell(_file);
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int64 ex_fread ( ex_file_t *_file, void *_buf, uint64 _size ) {
+size_t ex_fread ( ex_file_t *_file, void *_buf, uint64 _size ) {
 #if 0
-    return PHYSFS_readBytes( _file, _buf, _size );
+    return (size_t)PHYSFS_readBytes( _file, _buf, _size );
 #else
-    return PHYSFS_read( _file, _buf, 1, _size );
+    return (size_t)PHYSFS_read( _file, _buf, 1, (uint)_size );
 #endif
 }
 
@@ -340,11 +340,11 @@ int64 ex_fread ( ex_file_t *_file, void *_buf, uint64 _size ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int64 ex_fwrite ( ex_file_t *_file, const void *_buf, uint64 _size ) {
+size_t ex_fwrite ( ex_file_t *_file, const void *_buf, uint64 _size ) {
 #if 0
-    return PHYSFS_writeBytes( _file, _buf, _size );
+    return (size_t)PHYSFS_writeBytes( _file, _buf, _size );
 #else
-    return PHYSFS_write( _file, _buf, 1, _size );
+    return (size_t)PHYSFS_write( _file, _buf, 1, (uint)_size );
 #endif
 }
 

@@ -347,7 +347,7 @@ void *ex_hashmap_remove_at ( ex_hashmap_t *_hashmap, const void *_key ) {
 
     if ( hash_next == -1 ) {
         ex_warning ( "the key is not found!" );
-        NULL;
+        return NULL;
     }
 
     return ex_hashmap_remove_by_idx(_hashmap,hash_idx,hash_next);

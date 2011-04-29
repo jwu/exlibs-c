@@ -172,7 +172,7 @@ void ex_camera_apply ( ex_ref_t *_self ) {
 
     if ( ex_flags_has( self->clearFlags, EX_CLEAR_DEPTH ) ) {
         clearFlags |= GL_DEPTH_BUFFER_BIT;
-        glClearDepth(1.0f);
+        ex_glClearDepth(1.0f);
     }
     glClear(clearFlags);
 
@@ -180,8 +180,8 @@ void ex_camera_apply ( ex_ref_t *_self ) {
     if ( self->isOrtho ) {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
-        glTranslated(0.5, 0.5, 0.0);
+        ex_glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
+        ex_glTranslate(0.5, 0.5, 0.0);
     }
     else {
         // TODO:

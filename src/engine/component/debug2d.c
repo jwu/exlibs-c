@@ -112,6 +112,7 @@ void ex_debug2d_set_rect ( ex_ref_t *_self,
 // ------------------------------------------------------------------ 
 
 void ex_debug2d_draw ( ex_ref_t *_self ) {
+#if ( EX_PLATFORM != EX_IOS )
     ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
     ex_entity_t *ent = EX_REF_CAST( ex_entity_t, ((ex_component_t *)self)->entity );
     ex_vec2f_t worldPos;
@@ -227,6 +228,7 @@ void ex_debug2d_draw ( ex_ref_t *_self ) {
         }
 
     }
+#endif
 }
 
 // ------------------------------------------------------------------ 

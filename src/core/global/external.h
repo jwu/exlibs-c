@@ -51,11 +51,25 @@
     #include <signal.h>
     #include <semaphore.h>
     #include <errno.h>
+    #include <sys/time.h>
 
 	#include <OpenGL/gl.h>
 	#include <OpenGL/glu.h>
 	#include <GLUT/glut.h>
+
+#elif (EX_PLATFORM == EX_IOS)
+
+    #include <unistd.h> 
+    #include <pthread.h>
+    #include <signal.h>
+    #include <semaphore.h>
+    #include <errno.h>
     #include <sys/time.h>
+
+    #include <OpenGLES/ES1/gl.h>
+    #include <OpenGLES/ES1/glext.h>
+    // #include <OpenGLES/EAGL.h>
+
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
