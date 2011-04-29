@@ -44,7 +44,7 @@ typedef struct ex_coroutine_params_t {
 } ex_coroutine_params_t;
 
 // ex_coroutine_queue_t
-#define MAX_COROUTINES 1024
+#define MAX_COROUTINES 32
 typedef struct ex_coroutine_queue_t {
     int count;
     int head;

@@ -25,12 +25,12 @@
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __add_to_cache ( ex_entity_t *_ent, strid_t _typeID, ex_ref_t *_comp_ref ) {
+static void __add_to_cache ( ex_entity_t *_ent, strid_t _typeID, ex_ref_t *_compref ) {
     // cache internal component
     if ( _typeID == EX_TYPEID(ex_trans2d_t) )
-        _ent->trans2d = _comp_ref;
+        _ent->trans2d = _compref;
     else if ( _typeID == EX_TYPEID(ex_camera_t) )
-        _ent->camera = _comp_ref;
+        _ent->camera = _compref;
 }
 
 // ------------------------------------------------------------------ 
@@ -49,16 +49,18 @@ static void __rm_from_cache ( ex_entity_t *_ent, strid_t _typeID ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-    ex_component_t *comp = EX_REF_CAST(ex_component_t,_comp_ref);
+static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_compref ) {
+    ex_entity_t *ent;
+    ex_component_t *comp;
 
+    ent = EX_REF_CAST(ex_entity_t,_self);
+    comp = EX_REF_CAST(ex_component_t,_compref);
     comp->entity = _self; // set the entity of the component before init.
-    ((ex_object_t *)comp)->init(_comp_ref);
+    ((ex_object_t *)comp)->init(_compref);
 
-    ex_array_append( ent->comps, &_comp_ref );
-    ex_incref(_comp_ref);
-    __add_to_cache ( ent, _typeID, _comp_ref );
+    ex_array_append( ent->comps, &_compref );
+    ex_incref(_compref);
+    __add_to_cache ( ent, _typeID, _compref );
 }
 
 // ------------------------------------------------------------------ 
@@ -66,8 +68,9 @@ static void __add_comp ( ex_ref_t *_self, strid_t _typeID, ex_ref_t *_comp_ref )
 // ------------------------------------------------------------------ 
 
 static ex_ref_t *__entity_get_comp ( const ex_ref_t *_self, ex_rtti_t *_rtti ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-
+    ex_entity_t *ent;
+    
+    ent = EX_REF_CAST(ex_entity_t,_self);
     ex_array_each ( ent->comps, ex_ref_t *, comp ) {
         if ( ex_rtti_isa( ex_rtti_info(comp->ptr), _rtti ) )
             return comp;
@@ -81,8 +84,9 @@ static ex_ref_t *__entity_get_comp ( const ex_ref_t *_self, ex_rtti_t *_rtti ) {
 // ------------------------------------------------------------------ 
 
 void __entity_remove_comp( ex_ref_t *_self, ex_ref_t *_comp ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-
+    ex_entity_t *ent;
+    
+    ent = EX_REF_CAST(ex_entity_t,_self);
     ex_array_each ( ent->comps, ex_ref_t *, comp ) {
         if ( comp == _comp ) {
             ex_array_remove_at_fast( ent->comps, __idx__ );
@@ -103,8 +107,9 @@ extern void __object_init( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __entity_init ( ex_ref_t *_self ) {
-    ex_entity_t *self = EX_REF_CAST(ex_entity_t,_self);
-
+    ex_entity_t *self;
+    
+    self = EX_REF_CAST(ex_entity_t,_self);
     __object_init(_self);
 
     ex_array_each ( self->comps, ex_ref_t *, comp ) {
@@ -120,10 +125,13 @@ extern void __object_deinit( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __entity_deinit ( ex_ref_t *_self ) {
-    ex_entity_t *self = EX_REF_CAST(ex_entity_t,_self);
-    ex_trans2d_t *trans2d = EX_REF_CAST(ex_trans2d_t,self->trans2d);
+    ex_entity_t *self;
+    ex_trans2d_t *trans2d;
     ex_ref_t *comp;
     int i;
+
+    self = EX_REF_CAST(ex_entity_t,_self);
+    trans2d = EX_REF_CAST(ex_trans2d_t,self->trans2d);
 
     // do children-parent deinit.
     if ( trans2d ) {
@@ -238,8 +246,9 @@ ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID ) {
 extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeID ) {
     ex_ref_t *compref;
     ex_behavior_t *be;
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-
+    ex_entity_t *ent;
+    
+    ent = EX_REF_CAST(ex_entity_t,_self);
     compref = ex_entity_add_comp( _self, _typeID );
     if ( compref ) {
         be = EX_REF_AS( ex_behavior_t, compref);
@@ -257,9 +266,10 @@ extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeI
 // ------------------------------------------------------------------ 
 
 void ex_entity_awake_behaviors ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+    ex_entity_t *ent;
     ex_behavior_t *be;
 
+    ent = EX_REF_CAST(ex_entity_t,_self);
     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
         be = EX_REF_AS(ex_behavior_t,compref);
         if ( be && be->awake )
@@ -267,74 +277,65 @@ void ex_entity_awake_behaviors ( ex_ref_t *_self ) {
     } ex_array_each_end
 }
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_entity_update_behaviors ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-    ex_behavior_t *be;
-
-    ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be ) {
-            if ( be->state == EX_BEHAVIOR_STATE_NEW ) {
-                if ( be->start )
-                    be->start(compref);
-                be->state = EX_BEHAVIOR_STATE_STARTED;
-            }
-            else {
-                if ( be->update && be->enabled ) 
-                    be->update(compref);
-            }
-        }
-    } ex_array_each_end
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-    ex_behavior_t *be;
-
-    ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be && be->post_update && be->enabled )
-            be->post_update(compref);
-    } ex_array_each_end
-}
-
 // DELME { 
 // // ------------------------------------------------------------------ 
 // // Desc: 
-// extern void ex_lua_behavior_process_coroutine ( ex_ref_t * );
 // // ------------------------------------------------------------------ 
 
-// void ex_entity_process_coroutine ( ex_ref_t *_self ) {
-//     ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
+// void ex_entity_update_behaviors ( ex_ref_t *_self ) {
+//     ex_entity_t *ent;
 //     ex_behavior_t *be;
 
+//     ent = EX_REF_CAST(ex_entity_t,_self);
 //     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
 //         be = EX_REF_AS(ex_behavior_t,compref);
-//         if ( be && be->enabled )
-//             ex_lua_behavior_process_coroutine(compref);
+//         if ( be ) {
+//             if ( be->state == EX_BEHAVIOR_STATE_NEW ) {
+//                 if ( be->start )
+//                     be->start(compref);
+//                 be->state = EX_BEHAVIOR_STATE_STARTED;
+//             }
+//             else {
+//                 if ( be->update && be->enabled ) 
+//                     be->update(compref);
+//             }
+//         }
 //     } ex_array_each_end
 // }
 // } DELME end 
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+// DELME { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// // ------------------------------------------------------------------ 
 
-void ex_entity_on_render ( ex_ref_t *_self ) {
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,_self);
-    ex_behavior_t *be;
+// void ex_entity_post_update_behaviors ( ex_ref_t *_self ) {
+//     ex_entity_t *ent;
+//     ex_behavior_t *be;
 
-    ex_array_each ( ent->comps, ex_ref_t *, compref ) {
-        be = EX_REF_AS(ex_behavior_t,compref);
-        if ( be && be->on_render )
-            be->on_render(compref);
-    } ex_array_each_end
-}
+//     ent = EX_REF_CAST(ex_entity_t,_self);
+//     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
+//         be = EX_REF_AS(ex_behavior_t,compref);
+//         if ( be && be->post_update && be->enabled )
+//             be->post_update(compref);
+//     } ex_array_each_end
+// }
+// } DELME end 
+
+// DELME { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// // ------------------------------------------------------------------ 
+
+// void ex_entity_on_render ( ex_ref_t *_self ) {
+//     ex_entity_t *ent;
+//     ex_behavior_t *be;
+
+//     ent = EX_REF_CAST(ex_entity_t,_self);
+//     ex_array_each ( ent->comps, ex_ref_t *, compref ) {
+//         be = EX_REF_AS(ex_behavior_t,compref);
+//         if ( be && be->on_render )
+//             be->on_render(compref);
+//     } ex_array_each_end
+// }
+// } DELME end 

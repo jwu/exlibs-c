@@ -58,19 +58,19 @@ extern ex_ref_t *ex_entity_get_comp ( const ex_ref_t *_self, strid_t _typeID );
 
 extern ex_ref_t *ex_entity_add_comp ( ex_ref_t *_self, strid_t _typeID );
 extern ex_ref_t *ex_entity_add_comp_auto_awake ( ex_ref_t *_self, strid_t _typeID );
-// TODO: extern int ex_entity_remove_comp ( ex_ref_t *_self, ex_ref_t *_comp );
+// TODO: extern int ex_entity_remove_comp ( ex_ref_t *_self, ex_ref_t *_compref );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 extern void ex_entity_awake_behaviors ( ex_ref_t *_self );
-extern void ex_entity_update_behaviors ( ex_ref_t *_self );
-extern void ex_entity_post_update_behaviors ( ex_ref_t *_self );
+
 // DELME { 
-// extern void ex_entity_process_coroutine ( ex_ref_t *_self );
+// extern void ex_entity_update_behaviors ( ex_ref_t *_self );
+// extern void ex_entity_post_update_behaviors ( ex_ref_t *_self );
+// extern void ex_entity_on_render ( ex_ref_t *_self );
 // } DELME end 
-extern void ex_entity_on_render ( ex_ref_t *_self );
 
 // ######################### 
 #ifdef __cplusplus

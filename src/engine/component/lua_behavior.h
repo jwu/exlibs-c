@@ -34,6 +34,8 @@ extern "C" {
 
 EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     bool compile_failed;
+
+    //
     ex_hashmap_t *name_to_timer;
     ex_hashmap_t *name_to_co_params;
     ex_hashmap_t *state_to_co_params;

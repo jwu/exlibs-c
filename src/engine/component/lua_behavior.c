@@ -29,14 +29,24 @@
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_init ( ex_ref_t *_self ) {
-    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
-    lua_State *l = ex_lua_main_state();
-    ref_proxy_t *u = ex_lua_newluabehavior ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
+    ex_behavior_t *be;
+    ex_object_t *obj;
+    lua_State *l;
+    ref_proxy_t *u;
+
+    obj = EX_REF_CAST(ex_object_t,_self);
+    l = ex_lua_main_state();
+    u = ex_lua_newluabehavior ( l, ex_strid_to_cstr(ex_rtti_info(obj)->typeID) );
 
     u->val = _self;
     ex_incref(u->val);
-    self->l = l;
-    self->luaRefID = luaL_ref(l, LUA_REGISTRYINDEX);
+    obj->l = l;
+    obj->luaRefID = luaL_ref(l, LUA_REGISTRYINDEX);
+
+    // init invoke_mng and coroutine_mng
+    be = EX_REF_CAST(ex_behavior_t,_self);
+    ex_invoke_mng_init( &be->invoke_mng );
+    ex_coroutine_mng_init( &be->coroutine_mng );
 }
 
 // ------------------------------------------------------------------ 
@@ -45,7 +55,9 @@ extern void __behavior_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_deinit ( ex_ref_t *_self ) {
-    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+    ex_lua_behavior_t *self;
+    
+    self = EX_REF_CAST(ex_lua_behavior_t,_self);
 
     // TODO: this should be done in on_destroy { 
     // stop all invokes.
@@ -71,7 +83,8 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
     // destroy all mutex
     ex_destroy_mutex(self->timer_mutex);
 
-    __behavior_deinit(_self); // parent deinint
+    // parent deinint
+    __behavior_deinit(_self);
 }
 
 // ------------------------------------------------------------------ 
@@ -210,38 +223,12 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
-    // DELME { 
-    // int status;
-    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
-    // lua_State *thread_state = (lua_State *)params->thread_state;
-
-    // //
-    // lua_rawgeti( thread_state, LUA_REGISTRYINDEX, params->lua_funcID );
-    // ex_lua_pushobject( thread_state, params->self );
-    // status = lua_pcall( thread_state, 1, 0, 0 );
-    // if ( status ) {
-    //     ex_lua_alert(thread_state);
-    // }
-    // } DELME end 
-
-    // DELME { 
-    // int cur_idx;
-    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
-    // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
-
-    // ex_mutex_lock(self->invoke_mutex);
-    //     cur_idx = self->num_invokes_to_call; 
-    //     ex_assert( cur_idx <= MAX_INVOKES, "ERROR: invokes exceed the max value %d", MAX_INVOKES );
-    //     self->invokes_to_call[cur_idx] = *params; 
-    //     self->num_invokes_to_call += 1;
-    // ex_mutex_unlock(self->invoke_mutex);
-    // } DELME end 
-
-    ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
-    ex_component_t *self = EX_REF_CAST(ex_component_t,params->self);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,self->entity);
-    ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
-    ex_invoke_mng_add_to_call( &world->invoke_mng, _params );
+    ex_invoke_params_t *params;
+    ex_behavior_t *be;
+    
+    params = (ex_invoke_params_t *)_params;
+    be = EX_REF_CAST(ex_behavior_t,params->self);
+    ex_invoke_mng_add_to_call( &be->invoke_mng, _params );
 
     return _interval;
 }
@@ -251,41 +238,16 @@ static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_on_invoke_stop ( void *_params ) {
-    // DELME { 
-    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
-    // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
-    // lua_State *thread_state = (lua_State *)params->thread_state;
+    ex_invoke_params_t *params;
+    ex_lua_behavior_t *self;
+    ex_behavior_t *be;
 
-    // luaL_unref( thread_state, LUA_REGISTRYINDEX, params->lua_funcID );
-    // luaL_unref( thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
-
-    // ex_mutex_lock(self->timer_mutex);
-    //     ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
-    // ex_mutex_unlock(self->timer_mutex);
-    // } DELME end 
-
-    // DELME { 
-    // int cur_idx;
-    // ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
-    // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
-
-    // // add lua_funcID, lua_threadID to invokes_to_stop array, process them later
-    // ex_mutex_lock(self->invoke_mutex);
-    //     cur_idx = self->num_invokes_to_stop; 
-    //     ex_assert( cur_idx <= MAX_INVOKES, "ERROR: invokes exceed the max value %d", MAX_INVOKES );
-    //     self->invokes_to_stop[cur_idx] = *params; 
-    //     self->num_invokes_to_stop += 1;
-    // ex_mutex_unlock(self->invoke_mutex);
-    // } DELME end 
-
-    ex_invoke_params_t *params = (ex_invoke_params_t *)_params;
-    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,params->self);
-    ex_component_t *comp = EX_REF_CAST(ex_component_t,params->self);
-    ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
-    ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
-    ex_invoke_mng_add_to_stop( &world->invoke_mng, _params );
+    params = (ex_invoke_params_t *)_params;
+    be = EX_REF_CAST(ex_behavior_t,params->self);
+    ex_invoke_mng_add_to_stop( &be->invoke_mng, _params );
 
     // remove invoke name from name_to_timer table
+    self = EX_REF_CAST(ex_lua_behavior_t,params->self);
     ex_mutex_lock(self->timer_mutex);
         ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
     ex_mutex_unlock(self->timer_mutex);
@@ -432,10 +394,8 @@ int ex_lua_behavior_stop_coroutine ( ex_ref_t *_self, const char *_name ) {
         parent_params = ex_hashmap_get( self->state_to_co_params, &(params->parent_state), NULL ); 
         if ( parent_params ) {
             if ( lua_status(parent_params->thread_state) == LUA_YIELD ) {
-                ex_component_t *comp = EX_REF_CAST(ex_component_t,_self);
-                ex_entity_t *ent = EX_REF_CAST(ex_entity_t,comp->entity);
-                ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
-                ex_coroutine_mng_add_to_resume( &world->coroutine_mng, parent_params );
+                ex_behavior_t *be = (ex_behavior_t *)self;
+                ex_coroutine_mng_add_to_resume( &be->coroutine_mng, parent_params );
             }
         }
 

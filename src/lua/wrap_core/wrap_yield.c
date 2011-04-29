@@ -36,15 +36,11 @@ EX_DEF_LUA_BUILTIN_MODULE()
 
 static int32 __yield_time_up ( uint32 _interval, void *_params ) {
     ex_coroutine_params_t *params;
-    ex_component_t *comp;
-    ex_entity_t *ent;
-    ex_world_t *world;
+    ex_behavior_t *be;
 
     params = (ex_coroutine_params_t *)_params;
-    comp = EX_REF_CAST(ex_component_t,params->beref);
-    ent = EX_REF_CAST(ex_entity_t,comp->entity);
-    world = EX_REF_CAST(ex_world_t,ent->world);
-    ex_coroutine_mng_add_to_resume( &world->coroutine_mng, _params );
+    be = EX_REF_CAST(ex_behavior_t,params->beref);
+    ex_coroutine_mng_add_to_resume( &be->coroutine_mng, _params );
 
     return _interval;
 }
@@ -201,12 +197,18 @@ void luaclose_yield () {
 // ------------------------------------------------------------------ 
 
 void ex_lua_process_yield ( void *_params ) {
-    ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
-    ex_lua_behavior_t *be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
-    int yield_status = luaL_checknumber(params->thread_state,-1);
-    int timerID = EX_INVALID_TIMER_ID;
+
+    ex_coroutine_params_t *params;
+    ex_lua_behavior_t *be;
+    int yield_status, timerID;
     size_t idx;
 
+    //
+    params = (ex_coroutine_params_t *)_params;
+    yield_status = luaL_checknumber(params->thread_state,-1);
+    timerID = EX_INVALID_TIMER_ID;
+
+    //
     switch ( yield_status ) {
 
     // ======================================================== 
@@ -233,10 +235,12 @@ void ex_lua_process_yield ( void *_params ) {
     case EX_YIELD_WAIT_FOR_ONE_FRAME:
     // ======================================================== 
         {
-            ex_component_t *be = EX_REF_CAST(ex_component_t,params->beref);
-            ex_entity_t *ent = EX_REF_CAST(ex_entity_t,be->entity);
-            ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
-            ex_coroutine_mng_add_to_resume_nf( &world->coroutine_mng, params );
+            ex_coroutine_params_t *params;
+            ex_behavior_t *be;
+
+            params = (ex_coroutine_params_t *)_params;
+            be = EX_REF_CAST(ex_behavior_t,params->beref);
+            ex_coroutine_mng_add_to_resume_nf( &be->coroutine_mng, _params );
         }
         break;
 
@@ -244,10 +248,12 @@ void ex_lua_process_yield ( void *_params ) {
     case EX_YIELD_WAIT_FOR_END_OF_FRAME:
     // ======================================================== 
         {
-            ex_component_t *be = EX_REF_CAST(ex_component_t,params->beref);
-            ex_entity_t *ent = EX_REF_CAST(ex_entity_t,be->entity);
-            ex_world_t *world = EX_REF_CAST(ex_world_t,ent->world);
-            ex_coroutine_mng_add_to_resume_eof( &world->coroutine_mng, params );
+            ex_coroutine_params_t *params;
+            ex_behavior_t *be;
+
+            params = (ex_coroutine_params_t *)_params;
+            be = EX_REF_CAST(ex_behavior_t,params->beref);
+            ex_coroutine_mng_add_to_resume_eof( &be->coroutine_mng, _params );
         }
         break;
 
@@ -267,6 +273,7 @@ void ex_lua_process_yield ( void *_params ) {
 
     // update the state_to_co_params
     // if we already have the coroutine params, update the value in it.
+    be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
     if ( ex_hashmap_insert( be->state_to_co_params, &params->thread_state, params, &idx ) == false ) {
         ex_coroutine_params_t *my_params = ex_hashmap_get_by_idx ( be->state_to_co_params, idx );
         *my_params = *params; 
@@ -292,11 +299,20 @@ void ex_lua_process_yield ( void *_params ) {
 
 void ex_lua_process_resume ( void *_params ) {
     int status;
-    ex_coroutine_params_t *parent_params = NULL;
-    ex_coroutine_params_t *params = (ex_coroutine_params_t *)_params;
-    ex_lua_behavior_t *be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
+    ex_coroutine_params_t *parent_params, *params;
+    ex_lua_behavior_t *be;
 
-    status = lua_resume(params->thread_state,0);
+    parent_params = NULL;
+    params = (ex_coroutine_params_t *)_params;
+    be = EX_REF_CAST(ex_lua_behavior_t,params->beref);
+
+    // TESTME { 
+    // // NOTE: it is possible be destroyed first
+    // if ( be == NULL )
+    //     return;
+    // } TESTME end 
+
+    status = lua_resume(params->thread_state,0); // resume lua script
     if ( status == LUA_YIELD ) {
         ex_lua_process_yield ( params );
     }

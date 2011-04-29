@@ -27,9 +27,10 @@
 
 static void __invoke_to_call ( ex_invoke_params_t *_params ) {
     int status;
-    lua_State *thread_state = (lua_State *)_params->thread_state;
-
+    lua_State *thread_state;
+    
     //
+    thread_state = (lua_State *)_params->thread_state;
     lua_rawgeti( thread_state, LUA_REGISTRYINDEX, _params->lua_funcID );
     ex_lua_pushobject( thread_state, _params->self );
     status = lua_pcall( thread_state, 1, 0, 0 );
@@ -44,8 +45,9 @@ static void __invoke_to_call ( ex_invoke_params_t *_params ) {
 
 static void __invoke_to_stop ( ex_invoke_params_t *_params ) {
     // ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_params->self);
-    lua_State *thread_state = (lua_State *)_params->thread_state;
-
+    lua_State *thread_state;
+    
+    thread_state = (lua_State *)_params->thread_state;
     luaL_unref( thread_state, LUA_REGISTRYINDEX, _params->lua_funcID );
     luaL_unref( thread_state, LUA_REGISTRYINDEX, _params->lua_threadID );
 }
@@ -145,7 +147,8 @@ void ex_invoke_mng_process ( ex_invoke_mng_t *_self ) {
         // DISABLE: num_stop = _self->invokes_to_stop.count - num_call;
         // NOTE: this prevent us stop latest invokes_to_stop which may still exists in invokes_to_call, 
         //       we leave 100 latest stop not process immediately.   
-        num_stop = _self->invokes_to_stop.count - 100;
+        // num_stop = _self->invokes_to_stop.count - 100;
+        num_stop = _self->invokes_to_stop.count;
         if ( num_stop > 0 ) {
             for ( i = 0; i < num_stop; ++i ) {
                 __invoke_to_stop( &(_self->invokes_to_stop.params_list[_self->invokes_to_stop.head]) );

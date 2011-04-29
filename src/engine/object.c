@@ -78,11 +78,12 @@ void __deinit_ref_table () {
 // ------------------------------------------------------------------ 
 
 static ex_ref_t *__reftable_add ( void *_obj ) {
-    ex_object_t *obj = (ex_object_t *)_obj; 
+    ex_object_t *obj;
     ex_ref_t *newref;
     size_t idx, hash_idx; 
 
     //
+    obj = (ex_object_t *)_obj; 
     hash_idx = ex_hashmap_get_hashidx ( &__uid_to_refptr, &(obj->uid), &idx ); 
     if ( idx == -1 ) {
         newref = ex_newref(obj);
@@ -109,9 +110,13 @@ static ex_ref_t *__reftable_add ( void *_obj ) {
 // ------------------------------------------------------------------ 
 
 void __object_init( ex_ref_t *_self ) {
-    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
-    lua_State *l = ex_lua_main_state();
-    ref_proxy_t *u = ex_lua_newobject ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
+    ex_object_t *self;
+    lua_State *l;
+    ref_proxy_t *u;
+
+    self = EX_REF_CAST(ex_object_t,_self);
+    l = ex_lua_main_state();
+    u = ex_lua_newobject ( l, ex_strid_to_cstr(ex_rtti_info(self)->typeID) );
 
     u->val = _self;
     ex_incref(u->val);
@@ -124,7 +129,9 @@ void __object_init( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void __object_deinit( ex_ref_t *_self ) {
-    ex_object_t *self = EX_REF_CAST(ex_object_t,_self);
+    ex_object_t *self;
+    
+    self = EX_REF_CAST(ex_object_t,_self);
     luaL_unref(self->l, LUA_REGISTRYINDEX, self->luaRefID);
 }
 
@@ -183,7 +190,9 @@ ex_ref_t *ex_create_object ( const ex_rtti_t *_rtti, ex_uid_t _uid ) {
 // ------------------------------------------------------------------ 
 
 void ex_destroy_object ( ex_ref_t *_ref ) {
-    ex_object_t *obj = (ex_object_t *)(_ref->ptr);
+    ex_object_t *obj;
+    
+    obj = (ex_object_t *)(_ref->ptr);
     ex_assert_return ( obj != NULL, /*dummy*/, "the object already been destroyed!" );
 
     obj->flags = ex_flags_add ( obj->flags, EX_OBJECT_DEAD );
@@ -194,7 +203,9 @@ void ex_destroy_object ( ex_ref_t *_ref ) {
 // ------------------------------------------------------------------ 
 
 void ex_destroy_object_immediately ( ex_ref_t *_ref, bool _no_error ) {
-    ex_object_t *obj = (ex_object_t *)(_ref->ptr);
+    ex_object_t *obj;
+    
+    obj = (ex_object_t *)(_ref->ptr);
     ex_assert_return ( obj != NULL, /*dummy*/, "the object already been destroyed!" );
 
     if ( _no_error == false ) {

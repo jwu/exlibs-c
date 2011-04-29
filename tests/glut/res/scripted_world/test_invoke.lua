@@ -45,7 +45,7 @@ end
 -- 
 -- ======================================================== 
 
--- create_ent ( ex.vec2f( 0.0, 0.0 ) )
+-- create_ent ( "ent", ex.vec2f( 0.0, 0.0 ) )
 ex.ents = {}
 for i=1,50 do
     ent = create_ent ( "ent_"..i, ex.vec2f( 0.0, 0.0 ) )

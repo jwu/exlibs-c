@@ -13,6 +13,9 @@
 #include "world.h"
 #include "entity.h"
 
+#include "invoke_mng.h"
+#include "coroutine_mng.h"
+
 #include "component/trans2d.h"
 #include "component/camera.h"
 // TEMP { 
@@ -35,14 +38,12 @@ extern void __object_init( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __world_init ( ex_ref_t *_self ) {
-    ex_world_t *self = (ex_world_t *)_self->ptr;
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     //
     __object_init(_self);
-
-    //
-    ex_invoke_mng_init( &self->invoke_mng );
-    ex_coroutine_mng_init( &self->coroutine_mng );
 
     //
     ex_array_each ( self->entities, ex_ref_t *, ref ) {
@@ -62,8 +63,9 @@ extern void __object_deinit( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __world_deinit ( ex_ref_t *_self ) {
-    ex_world_t *self = (ex_world_t *)_self->ptr;
+    ex_world_t *self;
 
+    self = EX_REF_CAST(ex_world_t,_self);
     self->main_camera = NULL;
 
     // decrease reference count for all cameras
@@ -80,8 +82,7 @@ void __world_deinit ( ex_ref_t *_self ) {
     ex_array_free ( self->entities );
 
     //
-    ex_invoke_mng_deinit( &self->invoke_mng );
-    ex_coroutine_mng_deinit( &self->coroutine_mng );
+    ex_array_free ( self->be_list );
 
     //
     if ( __cur_world == _self ) {
@@ -104,6 +105,7 @@ EX_DEF_OBJECT_BEGIN( ex_world_t,
     EX_MEMBER( ex_world_t, entities, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
     EX_MEMBER( ex_world_t, cameras, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
     EX_MEMBER( ex_world_t, main_camera, NULL )
+    EX_MEMBER( ex_world_t, be_list, ex_array_notype( sizeof(ex_ref_t *), 1024 ) )
 EX_DEF_OBJECT_END
 
 EX_DEF_PROPS_BEGIN(ex_world_t)
@@ -132,6 +134,248 @@ static void __debug_draw ( ex_world_t *_world ) {
     } ex_array_each_end;
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __prepare_update_list ( ex_world_t *_world ) {
+    // clear all list first
+    ex_array_remove_all( _world->be_list );
+
+    //
+    ex_array_each ( _world->entities, ex_ref_t *, entref ) {
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+        }
+        else {
+            ex_entity_t *ent;
+
+            ent = EX_REF_CAST(ex_entity_t,entref);
+            ex_array_each ( ent->comps, ex_ref_t *, compref ) {
+                ex_behavior_t *be;
+                
+                // add behavior to the be_list
+                be = EX_REF_AS(ex_behavior_t,compref);
+                if ( be ) {
+                    ex_array_append( _world->be_list, &compref );
+                }
+
+                // TODO: add animation...
+                // TODO: add physics...
+                // TODO: add renderer...
+            } ex_array_each_end
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __update_behaviors ( ex_world_t *_world ) {
+    ex_array_each ( _world->be_list, ex_ref_t *, beref ) {
+        ex_behavior_t *be;
+        ex_ref_t *entref;
+
+        //
+        be = EX_REF_CAST(ex_behavior_t,beref);
+
+        // NOTE: it is possible that we remove behaviors in other behaivor script.
+        if ( be == NULL ) {
+            ex_array_remove_at_fast( _world->be_list, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // NOTE: it is possible the entity was dead.
+        entref = ((ex_component_t *)be)->entity;
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // do start/update
+        if ( be->state == EX_BEHAVIOR_STATE_NEW ) {
+            if ( be->start )
+                be->start(beref);
+            // DISABLE: we do this in __post_update_behaviors so that the update & post_update will exec after start 
+            // be->state = EX_BEHAVIOR_STATE_STARTED;
+        }
+        else if ( be->update && be->enabled ) {
+            be->update(beref);
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __post_update_behaviors ( ex_world_t *_world ) {
+    ex_array_each ( _world->be_list, ex_ref_t *, beref ) {
+        ex_behavior_t *be;
+        ex_ref_t *entref;
+
+        //
+        be = EX_REF_CAST(ex_behavior_t,beref);
+
+        // NOTE: it is possible that we remove behaviors in other behaivor script.
+        if ( be == NULL ) {
+            ex_array_remove_at_fast( _world->be_list, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // NOTE: it is possible the entity was dead.
+        entref = ((ex_component_t *)be)->entity;
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // do post_update
+        if ( be->state == EX_BEHAVIOR_STATE_NEW ) {
+            be->state = EX_BEHAVIOR_STATE_STARTED;
+        }
+        else if ( be->post_update && be->enabled ) {
+            be->post_update(beref);
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __on_render_behaviors ( ex_world_t *_world ) {
+    ex_array_each ( _world->be_list, ex_ref_t *, beref ) {
+        ex_behavior_t *be;
+        ex_ref_t *entref;
+
+        //
+        be = EX_REF_CAST(ex_behavior_t,beref);
+
+        // NOTE: it is possible that we remove behaviors in other behaivor script.
+        if ( be == NULL ) {
+            ex_array_remove_at_fast( _world->be_list, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // NOTE: it is possible the entity was dead.
+        entref = ((ex_component_t *)be)->entity;
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // do post_update
+        if ( be->on_render ) {
+            be->on_render(beref);
+        }
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __invoke_behaviors ( ex_world_t *_world ) {
+    ex_array_each ( _world->be_list, ex_ref_t *, beref ) {
+        ex_behavior_t *be;
+        ex_ref_t *entref;
+
+        //
+        be = EX_REF_CAST(ex_behavior_t,beref);
+
+        // NOTE: it is possible that we remove behaviors in other behaivor script.
+        if ( be == NULL ) {
+            ex_array_remove_at_fast( _world->be_list, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // NOTE: it is possible the entity was dead.
+        entref = ((ex_component_t *)be)->entity;
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // call,stop invokes
+        ex_invoke_mng_process(&be->invoke_mng);
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __resume_co_behaviors ( ex_world_t *_world ) {
+    ex_array_each ( _world->be_list, ex_ref_t *, beref ) {
+        ex_behavior_t *be;
+        ex_ref_t *entref;
+
+        //
+        be = EX_REF_CAST(ex_behavior_t,beref);
+
+        // NOTE: it is possible that we remove behaviors in other behaivor script.
+        if ( be == NULL ) {
+            ex_array_remove_at_fast( _world->be_list, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // NOTE: it is possible the entity was dead.
+        entref = ((ex_component_t *)be)->entity;
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // resume coroutine 
+        ex_coroutine_mng_resume(&be->coroutine_mng);
+    } ex_array_each_end
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __resume_co_eof_behaviors ( ex_world_t *_world ) {
+    ex_array_each ( _world->be_list, ex_ref_t *, beref ) {
+        ex_behavior_t *be;
+        ex_ref_t *entref;
+
+        //
+        be = EX_REF_CAST(ex_behavior_t,beref);
+
+        // NOTE: it is possible that we remove behaviors in other behaivor script.
+        if ( be == NULL ) {
+            ex_array_remove_at_fast( _world->be_list, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // NOTE: it is possible the entity was dead.
+        entref = ((ex_component_t *)be)->entity;
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
+            ex_array_remove_at_fast( _world->entities, __idx__ );
+            --__idx__;
+            continue;
+        }
+
+        // resume coroutine end_of_frame
+        ex_coroutine_mng_resume_eof(&be->coroutine_mng);
+    } ex_array_each_end
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -153,8 +397,11 @@ void ex_set_current_world ( ex_ref_t *_world ) { __cur_world = _world; }
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_world_create_entity ( ex_ref_t *_self, strid_t _name ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
-    ex_ref_t *ref = ex_create_object( EX_RTTI(ex_entity_t), ex_generate_uid() );
+    ex_world_t *self;
+    ex_ref_t *ref;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
+    ref = ex_create_object( EX_RTTI(ex_entity_t), ex_generate_uid() );
 
     EX_REF_CAST(ex_object_t,ref)->name = _name;
     EX_REF_CAST(ex_entity_t,ref)->world = _self;
@@ -172,8 +419,9 @@ ex_ref_t *ex_world_create_entity ( ex_ref_t *_self, strid_t _name ) {
 
 ex_ref_t *ex_world_create_camera2d ( ex_ref_t *_self, strid_t _name ) {
     ex_ref_t *cam;
-    ex_ref_t *ent = ex_world_create_entity( _self, _name );
+    ex_ref_t *ent;
 
+    ent = ex_world_create_entity( _self, _name );
     ex_entity_add_comp( ent, EX_TYPEID(ex_trans2d_t) );
     cam = ex_entity_add_comp( ent, EX_TYPEID(ex_camera_t) );
     ex_camera_set_ortho( cam, true );
@@ -209,6 +457,7 @@ void ex_world_clear ( ex_ref_t *_self ) {
         ex_decref(ref);
     } ex_array_each_end;
     ex_array_remove_all ( self->entities );
+    ex_array_remove_all ( self->be_list );
     ex_object_gc();
 }
 
@@ -216,13 +465,14 @@ void ex_world_clear ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
-
-    ex_array_append( self->cameras, &_cam );
-    ex_incref(_cam);
+void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_camref ) {
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
+    ex_array_append( self->cameras, &_camref );
+    ex_incref(_camref);
     if ( ex_array_count(self->cameras) == 1 ) {
-        self->main_camera = _cam;
+        self->main_camera = _camref;
     }
 }
 
@@ -230,12 +480,13 @@ void ex_world_add_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_camref ) {
+    ex_world_t *self;
     int result_idx = -1;
 
+    self = EX_REF_CAST(ex_world_t,_self);
     ex_array_each ( self->cameras, ex_ref_t *, cam ) {
-        if ( cam == _cam ) {
+        if ( cam == _camref ) {
             result_idx = __idx__;
             break;
         }
@@ -244,10 +495,13 @@ void ex_world_remove_camera ( ex_ref_t *_self, ex_ref_t *_cam ) {
     //
     if ( result_idx != -1 ) {
         ex_array_remove_at_fast( self->cameras, result_idx );
-        ex_decref(_cam);
+        ex_decref(_camref);
     }
     else {
-        ex_warning ( "can't find camera %s", ex_strid_to_cstr( ex_object_name( ((ex_component_t *)_cam)->entity->ptr ) ) );
+        ex_component_t *comp;
+        
+        comp = EX_REF_CAST( ex_component_t, _camref );
+        ex_warning ( "can't find camera %s", ex_strid_to_cstr( ex_object_name( comp->entity ) ) );
         return;
     }
 
@@ -269,7 +523,9 @@ ex_ref_t *ex_world_main_camera ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_world_find_entity_byname ( ex_ref_t *_self, strid_t _name ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( self->entities, ex_ref_t *, ent ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) )
@@ -286,7 +542,9 @@ ex_ref_t *ex_world_find_entity_byname ( ex_ref_t *_self, strid_t _name ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_find_entities_byname ( ex_ref_t *_self, strid_t _name, ex_array_t *_result ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( self->entities, ex_ref_t *, ent ) {
         if ( ent->ptr == NULL || ex_object_is_dead(ent) )
@@ -303,7 +561,9 @@ extern void __tick_engine_time ();
 // ------------------------------------------------------------------ 
 
 void ex_world_update ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     // the self is stopped, don't do anything, even the timer tick
     if ( self->state == EX_WORLD_STATE_STOPPED )
@@ -315,36 +575,29 @@ void ex_world_update ( ex_ref_t *_self ) {
     if ( self->state == EX_WORLD_STATE_PAUSED )
         return;
 
+    // prepare update list
+    __prepare_update_list ( self );
+
     // TODO: __handle_input();
 
     // update behavior
-    ex_array_each ( self->entities, ex_ref_t *, ent ) {
-        if ( ent->ptr == NULL || ex_object_is_dead(ent) )
-            ex_array_continue;
-
-        ex_entity_update_behaviors(ent);
-    } ex_array_each_end
+    __update_behaviors ( self );
 
     // TODO: __update_animation(self);
     // TODO: __update_physics(self);
 
     // post-update behavior
-    ex_array_each ( self->entities, ex_ref_t *, ent ) {
-        if ( ent->ptr == NULL || ex_object_is_dead(ent) )
-            ex_array_continue;
-
-        ex_entity_post_update_behaviors(ent);
-    } ex_array_each_end
+    __post_update_behaviors ( self );
 
     // stop/call invokes
-    ex_invoke_mng_process(&self->invoke_mng);
+    __invoke_behaviors ( self );
 
     // resume coroutines
-    ex_coroutine_mng_resume(&self->coroutine_mng);
+    __resume_co_behaviors ( self );
 
     // at the end of the update, we do a garbage collection
-    ex_array_each ( self->entities, ex_ref_t *, ent ) {
-        if ( ent->ptr == NULL || ex_object_is_dead(ent) ) {
+    ex_array_each ( self->entities, ex_ref_t *, entref ) {
+        if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( self->entities, __idx__ );
             --__idx__;
         }
@@ -360,7 +613,9 @@ void ex_world_update ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_render ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( self->cameras, ex_ref_t *, cam ) {
         ex_camera_apply (cam);
@@ -368,13 +623,11 @@ void ex_world_render ( ex_ref_t *_self ) {
         __debug_draw(self); // TEMP
 
         // invoke all on_render event in behavior
-        ex_array_each ( self->entities, ex_ref_t *, ref ) {
-            ex_entity_on_render(ref);
-        } ex_array_each_end;
+        __on_render_behaviors (self);
     } ex_array_each_end;
 
     // before buffer swapped resume coroutine yield by "end_of_frame"
-    ex_coroutine_mng_resume_eof(&self->coroutine_mng);
+    __resume_co_eof_behaviors ( self );
 }
 
 // ------------------------------------------------------------------ 
@@ -406,7 +659,9 @@ ex_ref_t *ex_world_load ( ex_stream_t *_stream ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_run ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     if ( self->state != EX_WORLD_STATE_STOPPED )
         return;
@@ -425,7 +680,9 @@ void ex_world_run ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_stop ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     if ( self->state == EX_WORLD_STATE_STOPPED )
         return;
@@ -437,7 +694,9 @@ void ex_world_stop ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_pause ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     if ( self->state != EX_WORLD_STATE_RUNNING )
         return;
@@ -449,7 +708,9 @@ void ex_world_pause ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_resume ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
 
     if ( self->state != EX_WORLD_STATE_PAUSED )
         return;
@@ -461,7 +722,9 @@ void ex_world_resume ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 bool ex_world_is_running ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
     return self->state == EX_WORLD_STATE_RUNNING; 
 }
 
@@ -470,7 +733,9 @@ bool ex_world_is_running ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 bool ex_world_is_paused ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
     return self->state == EX_WORLD_STATE_PAUSED; 
 }
 
@@ -479,6 +744,8 @@ bool ex_world_is_paused ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 bool ex_world_is_stopped ( ex_ref_t *_self ) {
-    ex_world_t *self = EX_REF_CAST(ex_world_t,_self);
+    ex_world_t *self;
+    
+    self = EX_REF_CAST(ex_world_t,_self);
     return self->state == EX_WORLD_STATE_STOPPED; 
 }

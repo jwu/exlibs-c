@@ -42,7 +42,7 @@ extern int ex_decref ( ex_ref_t *_ref );
 
 // this is for performance quick test, in release version, the ex_cast already optimize to static cast. 
 #if 1
-    #define EX_REF_CAST(_type,_ref) (_ref ? ex_cast(_type,(_ref)->ptr) : NULL)
+    #define EX_REF_CAST(_type,_ref) ((_ref && _ref->ptr) ? ex_cast(_type,(_ref)->ptr) : NULL)
 #else
     #define EX_REF_CAST(_type,_ref) ((_type *)((_ref)->ptr))
 #endif
