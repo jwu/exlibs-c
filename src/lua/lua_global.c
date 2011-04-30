@@ -127,8 +127,10 @@ extern int luaopen_angf ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
 extern int luaopen_mat33f ( lua_State * );
 
+#if ( EX_PLATFORM != EX_IOS )
 extern int luaopen_luagl ( lua_State * );
 extern int luaopen_luaglu ( lua_State * );
+#endif
 
 extern int luaopen_object ( lua_State * );
 extern int luaopen_world ( lua_State * );
@@ -172,9 +174,11 @@ int ex_lua_init () {
     // } OPTME end 
 
     // init graphics wraps
+#if ( EX_PLATFORM != EX_IOS )
     lua_settop ( __L, 0 ); // clear the stack
     luaopen_luagl (__L);
     luaopen_luaglu (__L);
+#endif
 
     // we create global ex table if it not exists.
     ex_lua_global_module ( __L, "ex" );

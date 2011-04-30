@@ -36,31 +36,37 @@
 int ex_fsys_init () {
     char path[1024];
 
-    __PHYSFS_CHECK( PHYSFS_init(NULL), "%s: failed to init fsys", "ERROR" ); // NOTE: we write like this to prevent compile error 
+    __PHYSFS_CHECK( PHYSFS_init("."), "%s: failed to init fsys", "ERROR" ); // NOTE: we write like this to prevent compile error 
     PHYSFS_permitSymbolicLinks(1); // yes, we permit symbolic links
 
     ex_log("user dir: %s", ex_fsys_user_dir() );
     ex_log("app dir: %s", ex_fsys_app_dir() );
 
     // we add app/ as the default write directory
-    strncpy ( path, ex_fsys_app_dir(), 1024 );
-    if ( ex_fsys_set_write_dir(path) == 0 )
-        ex_log("set default write dir: %s", path );
+    if ( ex_fsys_app_dir() ) {
+        strncpy ( path, ex_fsys_app_dir(), 1024 );
+        if ( ex_fsys_set_write_dir(path) == 0 )
+            ex_log("set default write dir: %s", path );
+    }
 
     // if ~/.exsdk/ exists we add it as the primary builtin search directory
-    strncpy ( path, ex_fsys_user_dir(), 1024 );
-    strcat ( path, ".exsdk/" );
-    if ( ex_os_exists(path) && ex_os_isdir(path) ) {
-        if ( ex_fsys_mount( path, "/", true ) == 0 )
-            ex_log("mount dir: %s", path );
+    if ( ex_fsys_user_dir() ) {
+        strncpy ( path, ex_fsys_user_dir(), 1024 );
+        strcat ( path, ".exsdk/" );
+        if ( ex_os_exists(path) && ex_os_isdir(path) ) {
+            if ( ex_fsys_mount( path, "/", true ) == 0 )
+                ex_log("mount dir: %s", path );
+        }
     }
 
     // if app/builtin/ exists, we add it as the second builtin search directory.
-    strncpy ( path, ex_fsys_app_dir(), 1024 );
-    strcat ( path, "builtin/" );
-    if ( ex_os_exists(path) && ex_os_isdir(path) ) {
-        if ( ex_fsys_mount( path, "/", true ) == 0 )
-            ex_log("mount dir: %s", path );
+    if ( ex_fsys_app_dir() ) {
+        strncpy ( path, ex_fsys_app_dir(), 1024 );
+        strcat ( path, "builtin/" );
+        if ( ex_os_exists(path) && ex_os_isdir(path) ) {
+            if ( ex_fsys_mount( path, "/", true ) == 0 )
+                ex_log("mount dir: %s", path );
+        }
     }
 
     return 0;

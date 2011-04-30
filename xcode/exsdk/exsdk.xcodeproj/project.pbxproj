@@ -129,6 +129,13 @@
 		B258D5A1136BC2330026F4D4 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
 		B258D5A5136BC63A0026F4D4 /* dlmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D5A3136BC63A0026F4D4 /* dlmalloc.c */; };
 		B258D5A6136BC63A0026F4D4 /* dlmalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D5A4136BC63A0026F4D4 /* dlmalloc.h */; };
+		B258D5AE136BD06A0026F4D4 /* luagl_util.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D5A8136BD06A0026F4D4 /* luagl_util.c */; };
+		B258D5AF136BD06A0026F4D4 /* luagl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D5A9136BD06A0026F4D4 /* luagl_util.h */; };
+		B258D5B0136BD06A0026F4D4 /* luagl.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D5AA136BD06A0026F4D4 /* luagl.c */; };
+		B258D5B1136BD06A0026F4D4 /* luagl.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D5AB136BD06A0026F4D4 /* luagl.h */; };
+		B258D5B2136BD06A0026F4D4 /* luaglu.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D5AC136BD06A0026F4D4 /* luaglu.c */; };
+		B258D5B3136BD06A0026F4D4 /* luaglu.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D5AD136BD06A0026F4D4 /* luaglu.h */; };
+		B258D5B5136BD22B0026F4D4 /* yajl_version.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D5B4136BD22B0026F4D4 /* yajl_version.h */; };
 		B25D6E661316D28B006E1328 /* wrap_entity.c in Sources */ = {isa = PBXBuildFile; fileRef = B25D6E651316D28B006E1328 /* wrap_entity.c */; };
 		B26C7E511357E07800BDADA1 /* array.c in Sources */ = {isa = PBXBuildFile; fileRef = B26C7E3E1357E06A00BDADA1 /* array.c */; };
 		B26C7E521357E07A00BDADA1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B26C7E461357E06A00BDADA1 /* main.c */; };
@@ -238,12 +245,6 @@
 		B2A2316D130221C700F3C100 /* wrap_ex.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2315C130221C700F3C100 /* wrap_ex.c */; };
 		B2A2316E130221C700F3C100 /* wrap_vec2f.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2315D130221C700F3C100 /* wrap_vec2f.c */; };
 		B2A2316F130221C700F3C100 /* wrap_world.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2315F130221C700F3C100 /* wrap_world.c */; };
-		B2A23170130221C700F3C100 /* luagl.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23161130221C700F3C100 /* luagl.c */; };
-		B2A23171130221C700F3C100 /* luagl.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A23162130221C700F3C100 /* luagl.h */; };
-		B2A23172130221C700F3C100 /* luagl_util.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23163130221C700F3C100 /* luagl_util.c */; };
-		B2A23173130221C700F3C100 /* luagl_util.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A23164130221C700F3C100 /* luagl_util.h */; };
-		B2A23174130221C700F3C100 /* luaglu.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23165130221C700F3C100 /* luaglu.c */; };
-		B2A23175130221C700F3C100 /* luaglu.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A23166130221C700F3C100 /* luaglu.h */; };
 		B2A2317C130221E000F3C100 /* app.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23178130221E000F3C100 /* app.c */; };
 		B2A2317D130221E000F3C100 /* app.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A23179130221E000F3C100 /* app.h */; };
 		B2A2317E130221E000F3C100 /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2317A130221E000F3C100 /* editor.c */; };
@@ -630,7 +631,6 @@
 		B258D530136BB43F0026F4D4 /* yajl_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_common.h; sourceTree = "<group>"; };
 		B258D531136BB43F0026F4D4 /* yajl_gen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_gen.h; sourceTree = "<group>"; };
 		B258D532136BB43F0026F4D4 /* yajl_parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_parse.h; sourceTree = "<group>"; };
-		B258D533136BB43F0026F4D4 /* yajl_version.h.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = yajl_version.h.cmake; sourceTree = "<group>"; };
 		B258D534136BB43F0026F4D4 /* yajl_alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yajl_alloc.c; path = "../../ext/yajl-1.0.11/yajl_alloc.c"; sourceTree = "<group>"; };
 		B258D535136BB43F0026F4D4 /* yajl_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yajl_alloc.h; path = "../../ext/yajl-1.0.11/yajl_alloc.h"; sourceTree = "<group>"; };
 		B258D536136BB43F0026F4D4 /* yajl_buf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yajl_buf.c; path = "../../ext/yajl-1.0.11/yajl_buf.c"; sourceTree = "<group>"; };
@@ -677,6 +677,13 @@
 		B258D59C136BC2140026F4D4 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B258D5A3136BC63A0026F4D4 /* dlmalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dlmalloc.c; path = "../../ext/dlmalloc-2.8.4/dlmalloc.c"; sourceTree = "<group>"; };
 		B258D5A4136BC63A0026F4D4 /* dlmalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dlmalloc.h; path = "../../ext/dlmalloc-2.8.4/dlmalloc.h"; sourceTree = "<group>"; };
+		B258D5A8136BD06A0026F4D4 /* luagl_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luagl_util.c; path = ../../ext/luagl/luagl_util.c; sourceTree = "<group>"; };
+		B258D5A9136BD06A0026F4D4 /* luagl_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luagl_util.h; path = ../../ext/luagl/luagl_util.h; sourceTree = "<group>"; };
+		B258D5AA136BD06A0026F4D4 /* luagl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luagl.c; path = ../../ext/luagl/luagl.c; sourceTree = "<group>"; };
+		B258D5AB136BD06A0026F4D4 /* luagl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luagl.h; path = ../../ext/luagl/luagl.h; sourceTree = "<group>"; };
+		B258D5AC136BD06A0026F4D4 /* luaglu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luaglu.c; path = ../../ext/luagl/luaglu.c; sourceTree = "<group>"; };
+		B258D5AD136BD06A0026F4D4 /* luaglu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luaglu.h; path = ../../ext/luagl/luaglu.h; sourceTree = "<group>"; };
+		B258D5B4136BD22B0026F4D4 /* yajl_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yajl_version.h; sourceTree = "<group>"; };
 		B25D6E651316D28B006E1328 /* wrap_entity.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_entity.c; sourceTree = "<group>"; };
 		B26C7E3E1357E06A00BDADA1 /* array.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = array.c; path = ../../tests/terminal/array.c; sourceTree = "<group>"; };
 		B26C7E3F1357E06A00BDADA1 /* bitarry.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = bitarry.c; path = ../../tests/terminal/bitarry.c; sourceTree = "<group>"; };
@@ -735,12 +742,6 @@
 		B2A2315C130221C700F3C100 /* wrap_ex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_ex.c; sourceTree = "<group>"; };
 		B2A2315D130221C700F3C100 /* wrap_vec2f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_vec2f.c; sourceTree = "<group>"; };
 		B2A2315F130221C700F3C100 /* wrap_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_world.c; sourceTree = "<group>"; };
-		B2A23161130221C700F3C100 /* luagl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luagl.c; sourceTree = "<group>"; };
-		B2A23162130221C700F3C100 /* luagl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luagl.h; sourceTree = "<group>"; };
-		B2A23163130221C700F3C100 /* luagl_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luagl_util.c; sourceTree = "<group>"; };
-		B2A23164130221C700F3C100 /* luagl_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luagl_util.h; sourceTree = "<group>"; };
-		B2A23165130221C700F3C100 /* luaglu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luaglu.c; sourceTree = "<group>"; };
-		B2A23166130221C700F3C100 /* luaglu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaglu.h; sourceTree = "<group>"; };
 		B2A23178130221E000F3C100 /* app.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = app.c; sourceTree = "<group>"; };
 		B2A23179130221E000F3C100 /* app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app.h; sourceTree = "<group>"; };
 		B2A2317A130221E000F3C100 /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = editor.c; sourceTree = "<group>"; };
@@ -1181,6 +1182,7 @@
 		B258D4BB136BB3D30026F4D4 /* ext */ = {
 			isa = PBXGroup;
 			children = (
+				B258D5A7136BCFC70026F4D4 /* luagl */,
 				B258D5A2136BC6260026F4D4 /* dlmalloc-2.8.4 */,
 				B258D4BE136BB41B0026F4D4 /* physfs-2.0.2 */,
 				B258D4BD136BB4130026F4D4 /* yajl-1.0.11 */,
@@ -1311,10 +1313,10 @@
 		B258D52F136BB43F0026F4D4 /* api */ = {
 			isa = PBXGroup;
 			children = (
+				B258D5B4136BD22B0026F4D4 /* yajl_version.h */,
 				B258D530136BB43F0026F4D4 /* yajl_common.h */,
 				B258D531136BB43F0026F4D4 /* yajl_gen.h */,
 				B258D532136BB43F0026F4D4 /* yajl_parse.h */,
-				B258D533136BB43F0026F4D4 /* yajl_version.h.cmake */,
 			);
 			name = api;
 			path = "../../ext/yajl-1.0.11/api";
@@ -1327,6 +1329,19 @@
 				B258D5A4136BC63A0026F4D4 /* dlmalloc.h */,
 			);
 			name = "dlmalloc-2.8.4";
+			sourceTree = "<group>";
+		};
+		B258D5A7136BCFC70026F4D4 /* luagl */ = {
+			isa = PBXGroup;
+			children = (
+				B258D5A8136BD06A0026F4D4 /* luagl_util.c */,
+				B258D5A9136BD06A0026F4D4 /* luagl_util.h */,
+				B258D5AA136BD06A0026F4D4 /* luagl.c */,
+				B258D5AB136BD06A0026F4D4 /* luagl.h */,
+				B258D5AC136BD06A0026F4D4 /* luaglu.c */,
+				B258D5AD136BD06A0026F4D4 /* luaglu.h */,
+			);
+			name = luagl;
 			sourceTree = "<group>";
 		};
 		B26C7E3C1357E05000BDADA1 /* tests */ = {
@@ -1387,7 +1402,6 @@
 				B2A2315A130221C700F3C100 /* lua_wrap_helper.h */,
 				B2A2315B130221C700F3C100 /* wrap_core */,
 				B2A2315E130221C700F3C100 /* wrap_engine */,
-				B2A23160130221C700F3C100 /* wrap_gl */,
 			);
 			path = lua;
 			sourceTree = "<group>";
@@ -1419,19 +1433,6 @@
 				B2A2315F130221C700F3C100 /* wrap_world.c */,
 			);
 			path = wrap_engine;
-			sourceTree = "<group>";
-		};
-		B2A23160130221C700F3C100 /* wrap_gl */ = {
-			isa = PBXGroup;
-			children = (
-				B2A23161130221C700F3C100 /* luagl.c */,
-				B2A23162130221C700F3C100 /* luagl.h */,
-				B2A23163130221C700F3C100 /* luagl_util.c */,
-				B2A23164130221C700F3C100 /* luagl_util.h */,
-				B2A23165130221C700F3C100 /* luaglu.c */,
-				B2A23166130221C700F3C100 /* luaglu.h */,
-			);
-			path = wrap_gl;
 			sourceTree = "<group>";
 		};
 		B2A23177130221E000F3C100 /* app */ = {
@@ -1815,9 +1816,6 @@
 				B2A23169130221C700F3C100 /* lua_global.h in Headers */,
 				B2A2316A130221C700F3C100 /* lua_inc.h in Headers */,
 				B2A2316C130221C700F3C100 /* lua_wrap_helper.h in Headers */,
-				B2A23171130221C700F3C100 /* luagl.h in Headers */,
-				B2A23173130221C700F3C100 /* luagl_util.h in Headers */,
-				B2A23175130221C700F3C100 /* luaglu.h in Headers */,
 				B2A2317D130221E000F3C100 /* app.h in Headers */,
 				B2A2317F130221E000F3C100 /* editor.h in Headers */,
 				B2A2319A130221F600F3C100 /* behavior.h in Headers */,
@@ -1956,6 +1954,10 @@
 				B258D54E136BB43F0026F4D4 /* yajl_lex.h in Headers */,
 				B258D550136BB43F0026F4D4 /* yajl_parser.h in Headers */,
 				B258D5A6136BC63A0026F4D4 /* dlmalloc.h in Headers */,
+				B258D5AF136BD06A0026F4D4 /* luagl_util.h in Headers */,
+				B258D5B1136BD06A0026F4D4 /* luagl.h in Headers */,
+				B258D5B3136BD06A0026F4D4 /* luaglu.h in Headers */,
+				B258D5B5136BD22B0026F4D4 /* yajl_version.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2585,9 +2587,6 @@
 				B2A2316D130221C700F3C100 /* wrap_ex.c in Sources */,
 				B2A2316E130221C700F3C100 /* wrap_vec2f.c in Sources */,
 				B2A2316F130221C700F3C100 /* wrap_world.c in Sources */,
-				B2A23170130221C700F3C100 /* luagl.c in Sources */,
-				B2A23172130221C700F3C100 /* luagl_util.c in Sources */,
-				B2A23174130221C700F3C100 /* luaglu.c in Sources */,
 				B2A2317C130221E000F3C100 /* app.c in Sources */,
 				B2A2317E130221E000F3C100 /* editor.c in Sources */,
 				B2A23199130221F600F3C100 /* behavior.c in Sources */,
@@ -2731,6 +2730,9 @@
 				B258D593136BB6190026F4D4 /* wad.c in Sources */,
 				B258D594136BB6190026F4D4 /* zip.c in Sources */,
 				B258D5A5136BC63A0026F4D4 /* dlmalloc.c in Sources */,
+				B258D5AE136BD06A0026F4D4 /* luagl_util.c in Sources */,
+				B258D5B0136BD06A0026F4D4 /* luagl.c in Sources */,
+				B258D5B2136BD06A0026F4D4 /* luaglu.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

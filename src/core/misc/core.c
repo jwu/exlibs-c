@@ -136,7 +136,8 @@ extern const char *exsdk_dev_path;
 int ex_core_init ( int *_argc_p, char ***_argv_p ) {
 
     // parse arguments
-    __parse_args ( _argc_p, _argv_p );
+    if ( _argc_p && *_argc_p != 0 )
+        __parse_args ( _argc_p, _argv_p );
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
