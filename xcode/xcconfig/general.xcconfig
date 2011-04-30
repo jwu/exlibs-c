@@ -5,6 +5,7 @@
 // Description  : 
 // ======================================================================================
 
-HEADER_SEARCH_PATHS = "../../src/" "../../ext/yajl-1.0.11/include" "../../ext/physfs-2.0.1/include" "../../ext/lua-5.1.4/include" 
-LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx" "$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx" "$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx"
+HEADER_SEARCH_PATHS = "../../src/" "../../ext/yajl-1.0.11/" "../../ext/physfs-2.0.2/" "../../ext/lua-5.1.4/" "../../ext/dlmalloc-2.8.4/" 
+LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../ext/"
 USE_HEADERMAP = NO
+GCC_PREPROCESSOR_DEFINITIONS_SHARED = PHYSFS_HAVE_SYS_UCRED_H=1 _REENTRANT _THREAD_SAFE HAVE_ASSERT_H=1 PHYSFS_SUPPORTS_ZIP=1 PHYSFS_SUPPORTS_7Z=1 PHYSFS_SUPPORTS_GRP=1 PHYSFS_SUPPORTS_WAD=1 PHYSFS_SUPPORTS_HOG=1 PHYSFS_SUPPORTS_MVL=1 PHYSFS_SUPPORTS_QPAK=1 PHYSFS_HAVE_READLINE=1 _FILE_OFFSET_BITS=64 _LARGE_FILES

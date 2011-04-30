@@ -12,10 +12,10 @@
 #include "exsdk.h"
 
 // yajl
-#include <yajl/yajl_version.h>
-#include <yajl/yajl_common.h>
-#include <yajl/yajl_parse.h>
-#include <yajl/yajl_gen.h>
+#include <api/yajl_version.h>
+#include <api/yajl_common.h>
+#include <api/yajl_parse.h>
+#include <api/yajl_gen.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // static defines

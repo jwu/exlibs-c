@@ -1,0 +1,10 @@
+// ======================================================================================
+// File         : general_release.xcconfig
+// Author       : Wu Jie 
+// Last Change  : 04/14/2011 | 11:27:16 AM | Thursday,April
+// Description  : 
+// ======================================================================================
+
+#include "general_ios.xcconfig"
+
+GCC_PREPROCESSOR_DEFINITIONS = $(GCC_PREPROCESSOR_DEFINITIONS_SHARED) __EX_RELEASE__

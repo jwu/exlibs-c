@@ -202,9 +202,7 @@
 		B258D3A4136B12190026F4D4 /* libexsdk_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B23CD6B0136AC27900CF3131 /* libexsdk_ios.a */; };
 		B258D3A8136B16240026F4D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B258D3A5136B16240026F4D4 /* main.m */; };
 		B258D3A9136B16240026F4D4 /* SimpleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B258D3A7136B16240026F4D4 /* SimpleAppDelegate.m */; };
-		B258D3B1136B2E920026F4D4 /* libyajl_s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D3AF136B2E6F0026F4D4 /* libyajl_s.a */; };
-		B258D3B2136B2E950026F4D4 /* libphysfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D3AD136B2E530026F4D4 /* libphysfs.a */; };
-		B258D3B3136B2E970026F4D4 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D3AB136B2E400026F4D4 /* liblua.a */; };
+		B258D48E136BB0210026F4D4 /* libphysfs-sip4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D48D136BB0210026F4D4 /* libphysfs-sip4.a */; };
 		B2B39FAF136AD9340049350C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39FA4136AD8A20049350C /* OpenGLES.framework */; };
 		B2B39FB0136AD9340049350C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39FA5136AD8A20049350C /* QuartzCore.framework */; };
 		B2B39FB1136AD9340049350C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B39F68136AD5850049350C /* UIKit.framework */; };
@@ -217,9 +215,6 @@
 
 /* Begin PBXFileReference section */
 		B23CD6B0136AC27900CF3131 /* libexsdk_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexsdk_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B23CD6B9136AC2AB00CF3131 /* general_debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = general_debug.xcconfig; path = ../xcconfig/general_debug.xcconfig; sourceTree = "<group>"; };
-		B23CD6BA136AC2AB00CF3131 /* general_release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = general_release.xcconfig; path = ../xcconfig/general_release.xcconfig; sourceTree = "<group>"; };
-		B23CD6BB136AC2AB00CF3131 /* general.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = general.xcconfig; path = ../xcconfig/general.xcconfig; sourceTree = "<group>"; };
 		B23CD6BE136AC34400CF3131 /* btree_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btree_inc.h; sourceTree = "<group>"; };
 		B23CD6BF136AC34400CF3131 /* node.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = node.c; sourceTree = "<group>"; };
 		B23CD6C0136AC34400CF3131 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
@@ -419,9 +414,11 @@
 		B258D3A5136B16240026F4D4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../../tests/ios/main.m; sourceTree = "<group>"; };
 		B258D3A6136B16240026F4D4 /* SimpleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleAppDelegate.h; path = ../../../tests/ios/SimpleAppDelegate.h; sourceTree = "<group>"; };
 		B258D3A7136B16240026F4D4 /* SimpleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleAppDelegate.m; path = ../../../tests/ios/SimpleAppDelegate.m; sourceTree = "<group>"; };
-		B258D3AB136B2E400026F4D4 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "../../ext/lua-5.1.4/lib/macosx/liblua.a"; sourceTree = "<group>"; };
-		B258D3AD136B2E530026F4D4 /* libphysfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libphysfs.a; path = "../../ext/physfs-2.0.1/lib/macosx/libphysfs.a"; sourceTree = "<group>"; };
-		B258D3AF136B2E6F0026F4D4 /* libyajl_s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyajl_s.a; path = "../../ext/yajl-1.0.11/lib/macosx/libyajl_s.a"; sourceTree = "<group>"; };
+		B258D47E136BADA50026F4D4 /* general_ios_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_ios_debug.xcconfig; path = ../xcconfig/general_ios_debug.xcconfig; sourceTree = "<group>"; };
+		B258D47F136BADA50026F4D4 /* general_ios_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_ios_release.xcconfig; path = ../xcconfig/general_ios_release.xcconfig; sourceTree = "<group>"; };
+		B258D480136BADA50026F4D4 /* general_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_ios.xcconfig; path = ../xcconfig/general_ios.xcconfig; sourceTree = "<group>"; };
+		B258D481136BADD10026F4D4 /* libphysfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libphysfs.a; path = "../../ext/physfs-2.0.2/lib/ios/libphysfs.a"; sourceTree = "<group>"; };
+		B258D48D136BB0210026F4D4 /* libphysfs-sip4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libphysfs-sip4.a"; path = "../../ext/physfs-2.0.2/lib/ios/libphysfs-sip4.a"; sourceTree = "<group>"; };
 		B2B39F68136AD5850049350C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B2B39F6A136AD5850049350C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B2B39F6C136AD5850049350C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -453,9 +450,7 @@
 				B2B39FB2136AD9340049350C /* Foundation.framework in Frameworks */,
 				B2B39FB3136AD9340049350C /* CoreGraphics.framework in Frameworks */,
 				B258D3A4136B12190026F4D4 /* libexsdk_ios.a in Frameworks */,
-				B258D3B1136B2E920026F4D4 /* libyajl_s.a in Frameworks */,
-				B258D3B2136B2E950026F4D4 /* libphysfs.a in Frameworks */,
-				B258D3B3136B2E970026F4D4 /* liblua.a in Frameworks */,
+				B258D48E136BB0210026F4D4 /* libphysfs-sip4.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,9 +497,9 @@
 		B23CD6B8136AC29400CF3131 /* xcconfig */ = {
 			isa = PBXGroup;
 			children = (
-				B23CD6B9136AC2AB00CF3131 /* general_debug.xcconfig */,
-				B23CD6BA136AC2AB00CF3131 /* general_release.xcconfig */,
-				B23CD6BB136AC2AB00CF3131 /* general.xcconfig */,
+				B258D47E136BADA50026F4D4 /* general_ios_debug.xcconfig */,
+				B258D47F136BADA50026F4D4 /* general_ios_release.xcconfig */,
+				B258D480136BADA50026F4D4 /* general_ios.xcconfig */,
 			);
 			name = xcconfig;
 			sourceTree = "<group>";
@@ -899,9 +894,8 @@
 		B258D3AA136B2E260026F4D4 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				B258D3AF136B2E6F0026F4D4 /* libyajl_s.a */,
-				B258D3AD136B2E530026F4D4 /* libphysfs.a */,
-				B258D3AB136B2E400026F4D4 /* liblua.a */,
+				B258D48D136BB0210026F4D4 /* libphysfs-sip4.a */,
+				B258D481136BADD10026F4D4 /* libphysfs.a */,
 			);
 			name = libs;
 			sourceTree = "<group>";
@@ -1257,7 +1251,7 @@
 /* Begin XCBuildConfiguration section */
 		B23CD6B2136AC27900CF3131 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B23CD6B9136AC2AB00CF3131 /* general_debug.xcconfig */;
+			baseConfigurationReference = B258D47E136BADA50026F4D4 /* general_ios_debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1276,7 +1270,7 @@
 		};
 		B23CD6B3136AC27900CF3131 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B23CD6BA136AC2AB00CF3131 /* general_release.xcconfig */;
+			baseConfigurationReference = B258D47F136BADA50026F4D4 /* general_ios_release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1340,14 +1334,12 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ios_simple/ios_simple-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ios_simple/ios_simple-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
-					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
-					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/physfs-2.0.2/lib/ios\"",
 				);
 				PRODUCT_NAME = ios_simple;
 				SDKROOT = iphoneos;
@@ -1364,14 +1356,12 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ios_simple/ios_simple-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ios_simple/ios_simple-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../ext/yajl-1.0.11/lib/macosx\"",
-					"\"$(SRCROOT)/../../ext/physfs-2.0.1/lib/macosx\"",
-					"\"$(SRCROOT)/../../ext/lua-5.1.4/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext/physfs-2.0.2/lib/ios\"",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = ios_simple;
