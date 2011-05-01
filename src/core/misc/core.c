@@ -221,7 +221,7 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
         return -1;
     }
     // TODO: parse .exrc by lua
-#if 0
+#if 1
     // for development
     if ( ex_fsys_mount( exsdk_dev_path, "/", true ) == 0 ) {
 
