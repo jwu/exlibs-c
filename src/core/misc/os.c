@@ -28,6 +28,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
+extern int __PHYSFS_platformExists( const char * );
+extern int __PHYSFS_platformIsSymLink( const char * );
+extern int __PHYSFS_platformIsDirectory( const char * );
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
@@ -52,7 +55,7 @@ int ex_os_mkdir ( const char *_path ) {
 
 bool ex_os_isdir ( const char *_path ) {
 #if (EX_PLATFORM == EX_WIN32)
-    return false;
+    return __PHYSFS_platformIsDirectory(_path);
 #else
     struct stat statbuf;
 
@@ -68,7 +71,7 @@ bool ex_os_isdir ( const char *_path ) {
 
 bool ex_os_issymlink ( const char *_path ) {
 #if (EX_PLATFORM == EX_WIN32)
-    return false;
+    return __PHYSFS_platformIsSymLink(_path);
 #else
     struct stat statbuf;
 
@@ -84,7 +87,10 @@ bool ex_os_issymlink ( const char *_path ) {
 
 bool ex_os_isfile ( const char *_path ) {
 #if (EX_PLATFORM == EX_WIN32)
-    return false;
+    if ( __PHYSFS_platformExists(_path) == false ) {
+        return false;
+    }
+    return (__PHYSFS_platformIsSymLink(_path) || __PHYSFS_platformIsDirectory(_path)) ? false : true;
 #else
     struct stat statbuf;
 
@@ -100,7 +106,7 @@ bool ex_os_isfile ( const char *_path ) {
 
 bool ex_os_exists ( const char *_path ) {
 #if (EX_PLATFORM == EX_WIN32)
-    return false;
+    return __PHYSFS_platformExists(_path);
 #else
     struct stat statbuf;
 

@@ -442,9 +442,9 @@ int main( int argc, char *argv[] ) {
     printf ("================\n");
 
     // setup media path
-    strncpy ( media_path, exsdk_dev_path, 1024 );
-    strcat ( media_path, "tests/glut/res/" );
-    ex_core_set_default_path ( media_path );
+    ex_memzero ( media_path, 1024 );
+    // strncpy ( media_path, exsdk_dev_path, 1024 );
+    // strcat ( media_path, "tests/glut/res/" );
 
     // init
     if ( ex_core_init( &argc, &argv ) != -1 ) {

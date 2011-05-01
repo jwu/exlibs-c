@@ -162,23 +162,11 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
 
     //
     ex_log ("|- init fsys...");
-    if ( ex_fsys_init() != 0 ) {
+    if ( ex_fsys_init( __media_path ) != 0 ) {
         ex_log ("fatal error: failed to init fsys");
         return -1;
     }
-    // NOTE: this must be done before ex_log_init, so that log.txt can be open in the corrent path.
-    if ( __media_path ) {
-        // set write dir
-        if ( ex_fsys_set_write_dir(__media_path) != 0 )
-            return -1;
-        ex_log("set write dir: %s", __media_path );
-
-        // mount the write dir 
-        if ( ex_fsys_mount( __media_path, "/", true ) != 0 )
-            return -1;
-        ex_log("mount dir: %s", __media_path );
-        free(__media_path); // do the free. 
-    }
+    free(__media_path); // free the unused __media_path. 
 
     //
     ex_log ("|- init log system...");
@@ -221,11 +209,11 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
         return -1;
     }
     // TODO: parse .exrc by lua
-#if 1
+#if 0
     // for development
-    if ( ex_fsys_mount( exsdk_dev_path, "/", true ) == 0 ) {
+    if ( ex_fsys_mount( exsdk_dev_path, "builtin/", true ) == 0 ) {
 
-        char path[256];
+        char path[MAX_PATH];
         strcpy( path, exsdk_dev_path );
         strcat( path, "builtin/" );
 
@@ -235,9 +223,14 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
         ex_lua_load_modules( ex_lua_main_state(), "builtin" );
     }
 #else
-    if ( ex_fsys_mount( "./", "resources/", true ) == 0 ) {
-        ex_lua_add_path( ex_lua_main_state(), "builtin" );
-        ex_lua_add_cpath( ex_lua_main_state(), "builtin" );
+    {
+        // NOTE: we've already mount the app/builtin/ in ex_fsys_init
+        char path[MAX_PATH];
+        strcpy( path, ex_fsys_app_dir() );
+        strcat( path, "builtin/" );
+
+        ex_lua_add_path( ex_lua_main_state(), path );
+        ex_lua_add_cpath( ex_lua_main_state(), path );
         ex_lua_load_modules( ex_lua_main_state(), "builtin" );
     }
 #endif

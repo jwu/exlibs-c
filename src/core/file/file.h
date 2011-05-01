@@ -46,7 +46,7 @@ typedef void ex_file_t;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_fsys_init ();
+extern int ex_fsys_init ( const char *_media_path );
 extern void ex_fsys_deinit ();
 extern bool ex_fsys_initialized ();
 extern void ex_fsys_free_list( void *_list );

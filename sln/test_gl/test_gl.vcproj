@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;;&quot;..\..\ext\lua-5.1.4\include\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
 				PreprocessorDefinitions="__EX_DEBUG__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,8 +59,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glut32.lib physfs.lib yajl_s.lib lua51.lib"
-				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32;&quot;..\..\ext\physfs-2.0.1\lib\win32&quot;;&quot;..\..\ext\yajl-1.0.11\lib\win32&quot;;&quot;..\..\ext\lua-5.1.4\lib\win32&quot;"
+				AdditionalDependencies="glut32.lib"
+				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -113,7 +113,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\include\&quot;;&quot;..\..\ext\physfs-2.0.1\include\&quot;;&quot;..\..\ext\lua-5.1.4\include\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
 				PreprocessorDefinitions="__EX_RELEASE__"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -131,8 +131,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glut32.lib physfs.lib yajl_s.lib lua51.lib"
-				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32;&quot;..\..\ext\physfs-2.0.1\lib\win32&quot;;&quot;..\..\ext\yajl-1.0.11\lib\win32&quot;;&quot;..\..\ext\lua-5.1.4\lib\win32&quot;"
+				AdditionalDependencies="glut32.lib"
+				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"

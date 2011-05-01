@@ -51,10 +51,10 @@ Example:
      lua_pushboolean(L, 1);      // true |    |      |         |      |     |                    
      lua_pushnumber(L, 10);      // true | 10 |      |         |      |     |      
      lua_pushnil(L);             // true | 10 | nil  |         |      |     |         
-     lua_pushstring(L, "hello"); // true | 10 | nil  | ’hello’ |      |     |            
-     lua_pushvalue(L, -4);       // true | 10 | nil  | ’hello’ | true |     |           
-     lua_replace(L, 3);          // true | 10 | true | ’hello’ |      |     |              
-     lua_settop(L, 6);           // true | 10 | true | ’hello’ | nil  | nil |           
+     lua_pushstring(L, "hello"); // true | 10 | nil  | 'hello' |      |     |            
+     lua_pushvalue(L, -4);       // true | 10 | nil  | 'hello' | true |     |           
+     lua_replace(L, 3);          // true | 10 | true | 'hello' |      |     |              
+     lua_settop(L, 6);           // true | 10 | true | 'hello' | nil  | nil |           
      lua_remove(L, -3);          // true | 10 | true |  nil    | nil  |     |            
      lua_settop(L, -5);          // true |    |      |         |      |     |          
                                  // -----+----+------+---------+------+-----+
@@ -273,9 +273,20 @@ lua_State *ex_lua_main_state () { return __L; }
 // ------------------------------------------------------------------ 
 
 int ex_lua_add_path ( lua_State *_l, const char *_path ) {
+    // TEMP: temp change win32 path to unix { 
+    int i = 0; 
+    char path[1024];
+
+    strncpy( path, _path, 1024 );
+    for ( i = 0; i < 1024; ++i ) {
+        if ( path[i] == '\\' )
+            path[i] = '/';
+    }
+    // } TEMP end 
+
     return ex_lua_dostring ( _l, 
                              "package.path = package.path .. \";%s?.lua\"", 
-                             _path );
+                             path );
 }
 
 // ------------------------------------------------------------------ 
@@ -283,9 +294,20 @@ int ex_lua_add_path ( lua_State *_l, const char *_path ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_add_cpath ( lua_State *_l, const char *_path ) {
+    // TEMP: temp change win32 path to unix { 
+    int i = 0; 
+    char path[1024];
+
+    strncpy( path, _path, 1024 );
+    for ( i = 0; i < 1024; ++i ) {
+        if ( path[i] == '\\' )
+            path[i] = '/';
+    }
+    // } TEMP end 
+
     return ex_lua_dostring ( _l, 
                              "package.cpath = package.cpath .. \";%s?.so;%s?.dll\"", 
-                             _path, _path );
+                             path, path );
 }
 
 // ------------------------------------------------------------------ 
@@ -340,12 +362,12 @@ int ex_lua_module ( lua_State *_l, int _idx, const char *_key ) {
 
 static int __load_modules ( lua_State *_l, const char *_base, const char *_dir ) {
     char **file_list, **i;
-    char full_path[256];
+    char full_path[MAX_PATH];
     int dir_len, fname_len;
 
     //
     dir_len = strlen(_dir);
-    if ( dir_len+2 > 256 ) {
+    if ( dir_len+2 > MAX_PATH ) {
         ex_error ( "directory path is too long! %s", _dir );
         return -1;
     }
@@ -365,7 +387,7 @@ static int __load_modules ( lua_State *_l, const char *_base, const char *_dir )
     file_list = ex_fsys_files_in(_dir);
     for ( i = file_list; *i != NULL; ++i ) {
         fname_len = strlen(*i);
-        if ( dir_len + fname_len + 1 > 256 ) {
+        if ( dir_len + fname_len + 1 > MAX_PATH ) {
             ex_error ( "file path is too long! %s%s", _dir, *i );
             continue;
         }
@@ -395,7 +417,7 @@ static int __load_modules ( lua_State *_l, const char *_base, const char *_dir )
         else if ( ex_fsys_isfile( full_path ) ) {
             // if this is a file, check if it is a lua file.
             if ( strncmp (*i+fname_len-4, ".lua", 4 ) == 0 ) {
-                char modname[256];
+                char modname[MAX_PATH];
                 int base_len = strlen(_base);
                 int modname_len = dir_len+fname_len-4-base_len;
                 char *j = modname;
@@ -424,12 +446,12 @@ static int __load_modules ( lua_State *_l, const char *_base, const char *_dir )
 }
 
 int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
-    char dir[256];
+    char dir[MAX_PATH];
     int dir_len;
 
     // NOTE: this will ensure that our dir always end with "/" { 
     dir_len = strlen(_dir);
-    if ( dir_len+2 > 256 ) {
+    if ( dir_len+2 > MAX_PATH ) {
         ex_error ( "directory path is too long! %s", _dir );
         return -1;
     }
@@ -454,7 +476,7 @@ int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
 // ------------------------------------------------------------------ 
 
 int ex_lua_load_module_byfile ( lua_State *_l, const char *_base_path, const char *_file_name ) {
-    char full_path[256];
+    char full_path[MAX_PATH];
     char modname[128];
     int modname_len;
     int i, base_len, fname_len;
@@ -471,7 +493,7 @@ int ex_lua_load_module_byfile ( lua_State *_l, const char *_base_path, const cha
         ex_error ( "failed to load lua module by file %s, module file name too long!", _file_name );
         return -1;
     }
-    if ( base_len + fname_len + 1 > 256 ) {
+    if ( base_len + fname_len + 1 > MAX_PATH ) {
         ex_error ( "failed to load lua module by file %s%s, file name too long!", _base_path, _file_name );
         return -1;
     }
@@ -1436,7 +1458,7 @@ void ex_lua_alert ( lua_State *_l ) {
 }
 
 // ------------------------------------------------------------------ 
-// Desc: r
+// Desc:
 // ------------------------------------------------------------------ 
 
 void ex_lua_dump_stack ( lua_State *_l ) {
