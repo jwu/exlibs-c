@@ -631,6 +631,13 @@
 		B2B39FBB136AD9340049350C /* ios_simple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_simple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B39FBE136AE3F20049350C /* glview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glview.h; sourceTree = "<group>"; };
 		B2B39FBF136AE3F20049350C /* glview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = glview.m; sourceTree = "<group>"; };
+		B2D78A8E136C00B800F88CD3 /* __core.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = __core.lua; sourceTree = "<group>"; };
+		B2D78A8F136C00B800F88CD3 /* debug.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = debug.lua; sourceTree = "<group>"; };
+		B2D78A91136C00B800F88CD3 /* rect.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = rect.lua; sourceTree = "<group>"; };
+		B2D78A92136C00B800F88CD3 /* shape.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = shape.lua; sourceTree = "<group>"; };
+		B2D78A93136C00B800F88CD3 /* ease.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = ease.lua; sourceTree = "<group>"; };
+		B2D78A94136C00B800F88CD3 /* math.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = math.lua; sourceTree = "<group>"; };
+		B2D78A95136C00B800F88CD3 /* rapid_test.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = rapid_test.lua; path = ../../builtin/rapid_test.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -663,6 +670,7 @@
 			children = (
 				B23CD6B8136AC29400CF3131 /* xcconfig */,
 				B23CD6B7136AC28900CF3131 /* exsdk */,
+				B2D78A97136C07B400F88CD3 /* resources */,
 				B258D5BF136BD3550026F4D4 /* ext */,
 				B2B39F6E136AD5850049350C /* tests */,
 				B2B39F67136AD5850049350C /* Frameworks */,
@@ -1358,6 +1366,45 @@
 				B2B39FBF136AE3F20049350C /* glview.m */,
 			);
 			path = ios;
+			sourceTree = "<group>";
+		};
+		B2D78A8B136C00A300F88CD3 /* builtin */ = {
+			isa = PBXGroup;
+			children = (
+				B2D78A8D136C00B800F88CD3 /* ex */,
+				B2D78A95136C00B800F88CD3 /* rapid_test.lua */,
+			);
+			name = builtin;
+			sourceTree = "<group>";
+		};
+		B2D78A8D136C00B800F88CD3 /* ex */ = {
+			isa = PBXGroup;
+			children = (
+				B2D78A8E136C00B800F88CD3 /* __core.lua */,
+				B2D78A8F136C00B800F88CD3 /* debug.lua */,
+				B2D78A90136C00B800F88CD3 /* debug2d */,
+				B2D78A93136C00B800F88CD3 /* ease.lua */,
+				B2D78A94136C00B800F88CD3 /* math.lua */,
+			);
+			name = ex;
+			path = ../../builtin/ex;
+			sourceTree = "<group>";
+		};
+		B2D78A90136C00B800F88CD3 /* debug2d */ = {
+			isa = PBXGroup;
+			children = (
+				B2D78A91136C00B800F88CD3 /* rect.lua */,
+				B2D78A92136C00B800F88CD3 /* shape.lua */,
+			);
+			path = debug2d;
+			sourceTree = "<group>";
+		};
+		B2D78A97136C07B400F88CD3 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				B2D78A8B136C00A300F88CD3 /* builtin */,
+			);
+			name = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

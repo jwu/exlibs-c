@@ -9,8 +9,9 @@
 #import "exsdk.h"
 #import <UIKit/UIKit.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+
+    ex_core_set_default_path ( "./resources" );
     if ( ex_core_init( &argc, &argv ) != -1 ) {
 
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];

@@ -136,8 +136,7 @@ extern const char *exsdk_dev_path;
 int ex_core_init ( int *_argc_p, char ***_argv_p ) {
 
     // parse arguments
-    if ( _argc_p && *_argc_p != 0 )
-        __parse_args ( _argc_p, _argv_p );
+    __parse_args ( _argc_p, _argv_p );
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
@@ -223,20 +222,24 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
     }
     // TODO: parse .exrc by lua
 #if 0
-    ex_lua_load_modules( ex_lua_main_state(), "builtin" );
-#else
     // for development
-    ex_fsys_mount( exsdk_dev_path, "/", true );
-    {
+    if ( ex_fsys_mount( exsdk_dev_path, "/", true ) == 0 ) {
+
         char path[256];
         strcpy( path, exsdk_dev_path );
         strcat( path, "builtin/" );
-            
+
+        ex_log("mount dir: %s", exsdk_dev_path );
         ex_lua_add_path( ex_lua_main_state(), path );
         ex_lua_add_cpath( ex_lua_main_state(), path );
+        ex_lua_load_modules( ex_lua_main_state(), "builtin" );
     }
-
-    ex_lua_load_modules( ex_lua_main_state(), "builtin" );
+#else
+    if ( ex_fsys_mount( "./", "resources/", true ) == 0 ) {
+        ex_lua_add_path( ex_lua_main_state(), "builtin" );
+        ex_lua_add_cpath( ex_lua_main_state(), "builtin" );
+        ex_lua_load_modules( ex_lua_main_state(), "builtin" );
+    }
 #endif
 
     //
