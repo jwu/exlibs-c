@@ -12,24 +12,6 @@
 #include "exsdk.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// for developing
-///////////////////////////////////////////////////////////////////////////////
-
-// NOTE: we add global configuration variables here for two reasons:
-// 1: visual-studio c-compiler will warn those .o files with no public symbol ( such as this file. )
-// 2: not a bad place.
-
-// ------------------------------------------------------------------ 
-// Desc: exsdk_dev_path
-// ------------------------------------------------------------------ 
-
-#if (EX_PLATFORM == EX_WIN32)
-    const char *exsdk_dev_path = "e:/dev/projects/exdev/exsdk/";
-#else
-    const char *exsdk_dev_path = "/Users/Johnny/dev/projects/exdev/exsdk/";
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
 // compile message 
 ///////////////////////////////////////////////////////////////////////////////
 

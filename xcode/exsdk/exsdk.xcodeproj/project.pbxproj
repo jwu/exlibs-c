@@ -2279,6 +2279,7 @@
 			buildConfigurationList = B26C7FB113580CB500BDADA1 /* Build configuration list for PBXNativeTarget "scripted world" */;
 			buildPhases = (
 				B26C7FA513580CB500BDADA1 /* Resources */,
+				B2780E75136EFBA500A7A91D /* ShellScript */,
 				B26C7FA613580CB500BDADA1 /* Sources */,
 				B26C7FAA13580CB500BDADA1 /* Frameworks */,
 			);
@@ -2413,6 +2414,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2780E75136EFBA500A7A91D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\nrm -rf \"$TARGET_BUILD_DIR/res\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/res\" \"$TARGET_BUILD_DIR/res\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B245482512B91E9900EF7261 /* Sources */ = {

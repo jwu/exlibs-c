@@ -619,11 +619,12 @@ void ex_world_render ( ex_ref_t *_self ) {
 
     ex_array_each ( self->cameras, ex_ref_t *, cam ) {
         ex_camera_apply (cam);
-        // TODO: __render_scene(self);
-        __debug_draw(self); // TEMP
 
         // invoke all on_render event in behavior
         __on_render_behaviors (self);
+
+        // TODO: __render_scene(self);
+        __debug_draw(self); // TEMP
     } ex_array_each_end;
 
     // before buffer swapped resume coroutine yield by "end_of_frame"

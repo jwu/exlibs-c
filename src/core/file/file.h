@@ -62,6 +62,13 @@ extern const char *ex_fsys_user_dir (); // current user's home directory
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern void ex_fsys_set_main_bundle_path ( const char *_path );
+extern const char *ex_fsys_main_bundle_path (); // main bundle path in iOS device
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 extern int ex_fsys_set_write_dir ( const char *_new_dir );
 extern const char *ex_fsys_write_dir ();
 

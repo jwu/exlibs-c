@@ -126,6 +126,8 @@ extern int luaopen_time ( lua_State * );
 extern int luaopen_angf ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
 extern int luaopen_mat33f ( lua_State * );
+extern int luaopen_color3f ( lua_State * );
+extern int luaopen_color4f ( lua_State * );
 
 #if ( EX_PLATFORM != EX_IOS )
 extern int luaopen_luagl ( lua_State * );
@@ -190,6 +192,8 @@ int ex_lua_init () {
         luaopen_angf (__L);
         luaopen_vec2f (__L);
         luaopen_mat33f (__L);
+        luaopen_color3f (__L);
+        luaopen_color4f (__L);
 
         // init engine wraps
         luaopen_object (__L);
@@ -214,6 +218,8 @@ extern void luaclose_time ();
 extern void luaclose_angf ();
 extern void luaclose_vec2f ();
 extern void luaclose_mat33f ();
+extern void luaclose_color3f ();
+extern void luaclose_color4f ();
 
 extern void luaclose_object ();
 extern void luaclose_world ();
@@ -235,6 +241,8 @@ void ex_lua_deinit () {
             luaclose_angf ();
             luaclose_vec2f ();
             luaclose_mat33f ();
+            luaclose_color3f ();
+            luaclose_color4f ();
 
             luaclose_object ();
                 luaclose_world ();
@@ -447,6 +455,7 @@ static int __load_modules ( lua_State *_l, const char *_base, const char *_dir )
 
 int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
     char dir[MAX_PATH];
+    char path[MAX_PATH];
     int dir_len;
 
     // NOTE: this will ensure that our dir always end with "/" { 
@@ -468,6 +477,13 @@ int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
     }
     // } NOTE end 
 
+    // add the fullpath dir as search path in lua.
+    strcpy( path, ex_fsys_realpath(dir) );
+    strcat( path, dir );
+    ex_lua_add_path( _l, path );
+    ex_lua_add_cpath( _l, path );
+
+    //
     return __load_modules ( _l, dir, dir );
 }
 

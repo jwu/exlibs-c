@@ -18,7 +18,16 @@
 
 static bool __initialized = false;
 static char *__media_path = NULL;
-static const char *__default_media_path = NULL;
+
+// for dev { 
+#if (EX_PLATFORM == EX_WIN32)
+static const char *__dev_path = "e:/dev/projects/exdev/exsdk/";
+#else
+static const char *__dev_path = "/Users/Johnny/dev/projects/exdev/exsdk/";
+#endif
+static bool __is_dev_mode = false;
+static char __dev_media_path[MAX_PATH];
+// } for dev end 
 
 // version
 static int __ver_major = 1;
@@ -109,12 +118,6 @@ static void __parse_args ( int *_argc_p, char ***_argv_p ) {
     }
     if (e)
         *_argc_p = e;
-
-    // if we still don't find media_path, use default media_path
-    if ( !__media_path && __default_media_path ) {
-        __media_path = malloc ( strlen(__default_media_path) + 1 ); // NOTE: we do the free in ex_core_init
-        strcpy( __media_path, __default_media_path );
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,16 +130,12 @@ extern void __init_error_stack ();
 extern void ex_register_builtin_types ();
 extern void ex_register_classes ();
 extern void ex_uid_init ();
-extern const char *exsdk_dev_path;
 // ------------------------------------------------------------------ 
 
 // success: 0
 // already inited: 1
 // failed: -1
 int ex_core_init ( int *_argc_p, char ***_argv_p ) {
-
-    // parse arguments
-    __parse_args ( _argc_p, _argv_p );
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
@@ -150,6 +149,12 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
     // before we start, we need to change the rand seed 
     ex_srand((uint)time(0));
     __init_error_stack();
+
+    // parse arguments
+    __parse_args ( _argc_p, _argv_p );
+
+    if ( ex_is_dev_mode() )
+        ex_log("NOTE: you are in dev mode" );
 
     //
     ex_log ("ex_core initializing...");
@@ -166,7 +171,11 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
         ex_log ("fatal error: failed to init fsys");
         return -1;
     }
-    free(__media_path); // free the unused __media_path. 
+    // free the __media_path after we use it. 
+    if ( __media_path ) {
+        free(__media_path);
+        __media_path = NULL;
+    }
 
     //
     ex_log ("|- init log system...");
@@ -208,32 +217,8 @@ int ex_core_init ( int *_argc_p, char ***_argv_p ) {
         ex_log ("fatal error: failed to init lua interpreter");
         return -1;
     }
+
     // TODO: parse .exrc by lua
-#if 0
-    // for development
-    if ( ex_fsys_mount( exsdk_dev_path, "builtin/", true ) == 0 ) {
-
-        char path[MAX_PATH];
-        strcpy( path, exsdk_dev_path );
-        strcat( path, "builtin/" );
-
-        ex_log("mount dir: %s", exsdk_dev_path );
-        ex_lua_add_path( ex_lua_main_state(), path );
-        ex_lua_add_cpath( ex_lua_main_state(), path );
-        ex_lua_load_modules( ex_lua_main_state(), "builtin" );
-    }
-#else
-    {
-        // NOTE: we've already mount the app/builtin/ in ex_fsys_init
-        char path[MAX_PATH];
-        strcpy( path, ex_fsys_app_dir() );
-        strcat( path, "builtin/" );
-
-        ex_lua_add_path( ex_lua_main_state(), path );
-        ex_lua_add_cpath( ex_lua_main_state(), path );
-        ex_lua_load_modules( ex_lua_main_state(), "builtin" );
-    }
-#endif
 
     //
     ex_log ("ex_core initialized!");
@@ -293,6 +278,12 @@ bool ex_core_initialized () { return __initialized; }
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_core_set_default_path ( const char *_media_path ) {
-    __default_media_path = _media_path;
+void ex_init_dev_mode ( const char *_media_path ) {
+    __is_dev_mode = true;
+    ex_memzero ( __dev_media_path, MAX_PATH );
+    strncpy ( __dev_media_path, __dev_path, MAX_PATH );
+    strcat ( __dev_media_path, _media_path );
 }
+bool ex_is_dev_mode () { return __is_dev_mode; }
+const char *ex_dev_path () { return __dev_path; }
+const char *ex_dev_media_path () { return __dev_media_path; }

@@ -77,11 +77,18 @@
 
 #if ( EX_COMPILER == EX_MSVC ) // msvc
 
+    #ifndef MAX_PATH
+    #define MAX_PATH 260
+    #endif
 
 #elif ( EX_COMPILER == EX_GCC ) // gcc
 
     #ifndef CHAR_BIT
     #define CHAR_BIT __CHAR_BIT__
+    #endif
+
+    #ifndef MAX_PATH
+    #define MAX_PATH 260
     #endif
 
 #endif

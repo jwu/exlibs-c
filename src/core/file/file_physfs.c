@@ -25,6 +25,8 @@
         return -1; \
     }
 
+static char __main_bundle_path[MAX_PATH]; 
+
 ///////////////////////////////////////////////////////////////////////////////
 // fsys
 ///////////////////////////////////////////////////////////////////////////////
@@ -35,73 +37,111 @@
 
 int ex_fsys_init ( const char *_media_path ) {
     char path[MAX_PATH];
+    const char *app_path = NULL;
 
     __PHYSFS_CHECK( PHYSFS_init("."), "%s: failed to init fsys", "ERROR" ); // NOTE: we write like this to prevent compile error 
     PHYSFS_permitSymbolicLinks(1); // yes, we permit symbolic links
 
+#if (EX_PLATFORM == EX_IOS)
+    app_path = ex_fsys_main_bundle_path();
+#else
+    app_path = ex_fsys_app_dir();
+#endif
+
     ex_log("user dir: %s", ex_fsys_user_dir() );
-    ex_log("app dir: %s", ex_fsys_app_dir() );
+    ex_log("app dir: %s", app_path );
 
     // NOTE: this must be done before ex_log_init, so that log.txt can be open in the corrent path.
-    if ( _media_path ) {
 
-        // if the media_path exists, use it. if not, try to search it in the app/ directory
-        if ( ex_os_exists (_media_path) == false ) {
-            strncpy ( path, ex_fsys_app_dir(), MAX_PATH );
-            strcat ( path, _media_path );
+    // ======================================================== 
+    if ( ex_is_dev_mode() ) { // dev mode
+    // ======================================================== 
+
+        // we are in dev_mode, set the dev_media_path, mount the dev_media_path and dev_path
+
+        // set write dir as dev_media_path
+        if ( ex_fsys_set_write_dir( ex_dev_media_path() ) != 0 )
+            return -1;
+        ex_log("set write dir: %s", ex_dev_media_path() );
+
+        // mount dev_media_path
+        if ( ex_fsys_mount( ex_dev_media_path(), NULL, true ) != 0 )
+            return -1;
+        ex_log("mount dir: %s", ex_dev_media_path() );
+
+        // mount dev_path
+        if ( ex_fsys_mount( ex_dev_path(), NULL, true ) != 0 )
+            return -1;
+        ex_log("mount dir: %s", ex_dev_path() );
+
+    }
+
+    // ======================================================== 
+    else { // normal mode
+    // ======================================================== 
+
+        if ( _media_path ) {
+
+            // if the media_path exists, use it. if not, try to search it in the app/ directory
+            if ( ex_os_exists (_media_path) == false ) {
+                strncpy ( path, app_path, MAX_PATH );
+                strcat ( path, _media_path );
+            }
+            else {
+                strncpy ( path, _media_path, MAX_PATH );
+            }
+
+            //
+            if ( ex_os_exists (path) ) {
+
+                // set write dir
+                if ( ex_fsys_set_write_dir(path) != 0 )
+                    return -1;
+                ex_log("set write dir: %s", path );
+
+                // mount the write dir 
+                // NOTE: set write dir doesn't means you mount it.
+                if ( ex_fsys_mount( path, NULL, true ) != 0 )
+                    return -1;
+                ex_log("mount dir: %s", path );
+            }
+            else {
+                ex_error ( "can't find the media path %s", _media_path );
+                return -1;
+            }
         }
-        else {
-            strncpy ( path, _media_path, MAX_PATH );
-        }
+        else if ( app_path ) {
+            // we add app/ as the default write directory
+            strncpy ( path, app_path, MAX_PATH );
 
-        //
-        if ( ex_os_exists (path) ) {
-
-            // set write dir
+            // NOTE: set write dir doesn't means you mount it.
+            // we mount the app/ directory below
             if ( ex_fsys_set_write_dir(path) != 0 )
                 return -1;
-            ex_log("set write dir: %s", path );
-
-            // mount the write dir 
-            if ( ex_fsys_mount( path, "/", true ) != 0 )
-                return -1;
-            ex_log("mount dir: %s", path );
+            ex_log("set default write dir: %s", path );
         }
         else {
-            ex_error ( "can't find the media path %s", _media_path );
+            ex_error ( "can't set a write directory" );
             return -1;
         }
-    }
-    else if ( ex_fsys_app_dir() ) {
-        // we add app/ as the default write directory
-        strncpy ( path, ex_fsys_app_dir(), MAX_PATH );
-        if ( ex_fsys_set_write_dir(path) == 0 )
-            ex_log("set default write dir: %s", path );
-        if ( ex_fsys_mount( path, "/", true ) == 0 ) // NOTE: set write dir doesn't means you mount it.
-            ex_log("mount app dir: %s", path );
-    }
-    else {
-        ex_error ( "can't set a write directory" );
-        return -1;
-    }
 
-    // if ~/.exsdk/ exists we add it as the primary builtin search directory
-    if ( ex_fsys_user_dir() ) {
-        strncpy ( path, ex_fsys_user_dir(), MAX_PATH );
-        strcat ( path, ".exsdk/" );
-        if ( ex_os_exists(path) && ex_os_isdir(path) ) {
-            if ( ex_fsys_mount( path, "/", true ) == 0 )
+        // if ~/.exsdk/ exists we add it as the primary builtin search directory
+        if ( ex_fsys_user_dir() ) {
+            strncpy ( path, ex_fsys_user_dir(), MAX_PATH );
+            strcat ( path, ".exsdk/" );
+            if ( ex_os_exists(path) && ex_os_isdir(path) ) {
+                if ( ex_fsys_mount( path, NULL, true ) != 0 )
+                    return -1;
                 ex_log("mount dir: %s", path );
+            }
         }
-    }
 
-    // if app/builtin/ exists, we add it as the second builtin search directory.
-    if ( ex_fsys_app_dir() ) {
-        strncpy ( path, ex_fsys_app_dir(), MAX_PATH );
-        // strcat ( path, "builtin/" );
-        if ( ex_os_exists(path) && ex_os_isdir(path) ) {
-            if ( ex_fsys_mount( path, "/", true ) == 0 )
-                ex_log("mount dir: %s", path );
+        // if app/ exists, we add it as the second builtin search directory.
+        if ( app_path ) {
+            strncpy ( path, app_path, MAX_PATH );
+            if ( ex_fsys_mount( path, NULL, true ) != 0 )
+                return -1;
+            ex_log("mount dir: %s", path );
         }
     }
 
@@ -138,6 +178,15 @@ void ex_fsys_free_list( void *_list ) {
 
 const char *ex_fsys_app_dir () { return PHYSFS_getBaseDir(); }
 const char *ex_fsys_user_dir () { return PHYSFS_getUserDir(); }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_fsys_set_main_bundle_path ( const char *_path ) {
+    strncpy( __main_bundle_path, _path, MAX_PATH );
+}
+const char *ex_fsys_main_bundle_path () { return __main_bundle_path; }
 
 // ------------------------------------------------------------------ 
 // Desc: 

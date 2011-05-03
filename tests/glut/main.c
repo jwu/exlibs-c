@@ -141,23 +141,21 @@ extern void init ();
 // ------------------------------------------------------------------ 
 
 static void __init_game () {
+    ex_ref_t *mainCam;
+
     // load/setup the world
     g_world = ex_create_object( EX_RTTI(ex_world_t), ex_generate_uid() );
     ex_incref(g_world);
     EX_REF_CAST(ex_object_t,g_world)->init(g_world);
 
     // create main camera
-    {
-        ex_ref_t *mainCam;
-
-        ex_log ("create main camera...");
-        ex_world_create_camera2d ( g_world, ex_strid("main_camera") );
-        mainCam = ex_world_main_camera (g_world);
-        ex_assert ( mainCam, "can't find main camera" );
-        ex_camera_set_ortho( mainCam, true );
-        ex_camera_set_aspect( mainCam, (float)__win_width/(float)__win_height );
-        ex_camera_set_ortho_size( mainCam, (float)__win_width/2.0f );
-    }
+    ex_log ("create main camera...");
+    ex_world_create_camera2d ( g_world, ex_strid("main_camera") );
+    mainCam = ex_world_main_camera (g_world);
+    ex_assert ( mainCam, "can't find main camera" );
+    ex_camera_set_ortho( mainCam, true );
+    ex_camera_set_aspect( mainCam, (float)__win_width/(float)__win_height );
+    ex_camera_set_ortho_size( mainCam, (float)__win_width/2.0f );
 
     // test init
     init ();
@@ -187,7 +185,6 @@ extern void update ();
 
 static void __update_game () {
     update ();
-    ex_world_update(g_world);
 }
 
 // ------------------------------------------------------------------ 
@@ -435,16 +432,13 @@ extern const char *exsdk_dev_path;
 // ------------------------------------------------------------------ 
 
 int main( int argc, char *argv[] ) {
-    char media_path[1024];
 
     printf ("================\n");
     printf ("start glut test\n");
     printf ("================\n");
 
-    // setup media path
-    ex_memzero ( media_path, 1024 );
-    // strncpy ( media_path, exsdk_dev_path, 1024 );
-    // strcat ( media_path, "tests/glut/res/" );
+    // setup dev media path
+    // ex_init_dev_mode ( "tests/glut/res/" );
 
     // init
     if ( ex_core_init( &argc, &argv ) != -1 ) {
@@ -460,6 +454,7 @@ int main( int argc, char *argv[] ) {
 
         // init game
         ex_app_init();
+        ex_lua_load_modules( ex_lua_main_state(), "builtin" );
         ex_lua_load_modules( ex_lua_main_state(), "scripts" );
         __init_game();
 

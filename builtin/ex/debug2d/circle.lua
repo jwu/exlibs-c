@@ -1,7 +1,7 @@
 -- ======================================================================================
--- File         : rect.lua
+-- File         : circle.lua
 -- Author       : Wu Jie 
--- Last Change  : 03/20/2011 | 00:37:23 AM | Sunday,March
+-- Last Change  : 05/03/2011 | 18:39:01 PM | Tuesday,May
 -- Description  : 
 -- ======================================================================================
 
@@ -21,8 +21,7 @@ module( ..., super.derive )
 --/////////////////////////////////////////////////////////////////////////////
 
 center = ex.vec2f.zero
-width = 1.0
-height = 1.0
+r = 10.0
 
 --/////////////////////////////////////////////////////////////////////////////
 -- functions
@@ -62,18 +61,9 @@ function on_render ( _self )
 
     local trans2d = _self.trans2d
     local world_pos = trans2d.position
-    local world_ang = trans2d.angle
-    local world_scale = trans2d.scale
-
+    -- local world_ang = trans2d.angle
+    -- local world_scale = trans2d.scale
     local center = _self.center + world_pos
-    local half_width = _self.width/2
-    local half_height = _self.height/2
-    local verts = {
-        center - trans2d.right * half_width + trans2d.up * half_height, 
-        center + trans2d.right * half_width + trans2d.up * half_height, 
-        center + trans2d.right * half_width - trans2d.up * half_height, 
-        center - trans2d.right * half_width - trans2d.up * half_height, 
-    }
 
-    ex.draw_poly ( verts, ex.color4f.white, true );
+    ex.draw_circle ( center, r, r, 32, ex.color4f.white, true );
 end

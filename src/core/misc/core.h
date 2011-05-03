@@ -24,7 +24,10 @@ extern int ex_core_init ( int *_argc_p, char ***_argv_p );
 extern void ex_core_deinit ();
 extern bool ex_core_initialized ();
 
-extern void ex_core_set_default_path ( const char *_media_path );
+extern void ex_init_dev_mode ( const char *_media_path );
+extern bool ex_is_dev_mode ();
+extern const char *ex_dev_path ();
+extern const char *ex_dev_media_path ();
 
 // ######################### 
 #ifdef __cplusplus

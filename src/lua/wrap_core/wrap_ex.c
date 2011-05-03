@@ -311,6 +311,135 @@ static int __draw_text ( lua_State *_l ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
+static int __draw_point ( lua_State *_l ) {
+    int nargs = lua_gettop(_l);
+    float x, y;
+
+    if ( nargs == 1 ) {
+        ex_vec2f_t *v = ex_lua_checkvec2f(_l,1);
+        x = v->x;
+        y = v->y;
+    }
+    else {
+        x = luaL_checknumber( _l, 1 );
+        y = luaL_checknumber( _l, 2 );
+    }
+
+    ex_draw_point ( x, y );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __draw_line ( lua_State *_l ) {
+    int nargs = lua_gettop(_l);
+    ex_vec2f_t *s, *e;
+    const ex_color4f_t *c;
+
+    if ( nargs == 2 ) {
+        s = ex_lua_checkvec2f(_l,1);
+        e = ex_lua_checkvec2f(_l,2);
+        c = &ex_color4f_white;
+    }
+    else if ( nargs == 3 ) {
+        s = ex_lua_checkvec2f(_l,1);
+        e = ex_lua_checkvec2f(_l,2);
+        c = ex_lua_checkcolor4f(_l,3);
+    }
+    else {
+        return luaL_error( _l, "invalid number of arguments." );
+    }
+
+    ex_draw_line ( s, e, c );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __draw_poly ( lua_State *_l ) {
+    int nargs = lua_gettop(_l);
+    int i, num;
+    ex_vec2f_t *verts;
+    const ex_color4f_t *c;
+    bool close;
+
+    // check if the first arguments is table
+    luaL_checktype(_l, 1, LUA_TTABLE);
+    num = luaL_getn(_l,1);
+    verts = (ex_vec2f_t *)ex_malloc( sizeof(ex_vec2f_t) * num );
+
+    for ( i = 0; i < num; ++i ) {
+        lua_rawgeti(_l, 1, i+1);
+        verts[i] = *ex_lua_tovec2f(_l,-1);
+        lua_remove(_l, -1);
+    }
+
+    //
+    c = &ex_color4f_white;
+    close = true;
+    if ( nargs == 2 ) {
+        c = ex_lua_checkcolor4f(_l,2);
+    }
+    else if ( nargs == 3 ) {
+        c = ex_lua_checkcolor4f(_l,2);
+        close = lua_toboolean(_l,3);
+    }
+
+    //
+    ex_draw_poly ( verts, num, c, close );
+    ex_free( verts );
+
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static int __draw_circle ( lua_State *_l ) {
+    int nargs = lua_gettop(_l);
+    ex_vec2f_t *center;
+    float r, a;
+    int segs;
+    const ex_color4f_t *c;
+    bool lineToCenter;
+
+    // check if the first arguments is table
+    center = ex_lua_checkvec2f(_l,1);
+    r = luaL_checknumber(_l,2);
+    a = luaL_checknumber(_l,3);
+
+    segs = 32;
+    c = &ex_color4f_white;
+    lineToCenter = true;
+
+    //
+    if ( nargs == 4 ) {
+        segs = luaL_checknumber(_l,4);
+    }
+    else if ( nargs == 5 ) {
+        segs = luaL_checknumber(_l,4);
+        c = ex_lua_checkcolor4f(_l,5);
+    }
+    else if ( nargs == 6 ) {
+        segs = luaL_checknumber(_l,4);
+        c = ex_lua_checkcolor4f(_l,5);
+        lineToCenter = lua_toboolean(_l,6);
+    }
+
+    //
+    ex_draw_circle ( center, r, a, segs, c, lineToCenter );
+    return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
 static int __range_rand ( lua_State *_l ) {
     float low = luaL_checknumber(_l,1); 
     float high = luaL_checknumber(_l,2); 
@@ -724,6 +853,10 @@ static const luaL_Reg __ex_funcs[] = {
     { "dump_stack", __dump_stack },     // for DEBUG:
     { "screen_print", __screen_print }, // for DEBUG:
     { "draw_text", __draw_text },       // for DEBUG:
+    { "draw_point", __draw_point },       // for DEBUG:
+    { "draw_line", __draw_line },       // for DEBUG:
+    { "draw_poly", __draw_poly },       // for DEBUG:
+    { "draw_circle", __draw_circle },       // for DEBUG:
     { "log", __log },
     // randome
     { "range_rand", __range_rand }, // TODO: move to ex.random.range

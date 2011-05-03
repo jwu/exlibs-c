@@ -22,4 +22,8 @@
     GLView *view;
 }
 
+- (void) startGame;
+- (void) startTick:(UIApplication*)application; 
+- (void) tick;
+
 @end

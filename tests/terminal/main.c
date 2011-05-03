@@ -33,20 +33,16 @@ static void exit_fn (void) {
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void run_test ();
-extern const char *exsdk_dev_path;
 // ------------------------------------------------------------------ 
 
 int main( int argc, char *argv[] ) {
-    char media_path[1024];
 
     printf ("================\n");
     printf ("start test in terminal...\n");
     printf ("================\n");
 
     // setup default media path
-    strncpy ( media_path, exsdk_dev_path, 1024 );
-    strcat ( media_path, "tests/terminal/res/" );
-    ex_core_set_default_path ( media_path );
+    ex_init_dev_mode ( "tests/terminal/res/" );
     
     // init
     if ( ex_core_init( &argc, &argv ) != -1 ) {

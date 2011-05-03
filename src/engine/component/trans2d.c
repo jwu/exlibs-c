@@ -186,6 +186,10 @@ void ex_trans2d_set_parent ( ex_ref_t *_self, ex_ref_t *_parent ) {
     if ( self->parent == _parent )
         return;
 
+    // TODO: add a function can recursively search trans2d reference
+    // TODO: recursively search the child, find if have _parent
+    // return -1; if the _parent exists in the child 
+
     // get the world position under current parent
     ex_trans2d_world_position(_self,&self->local_pos);
     ex_trans2d_world_scale(_self,&self->local_scale);

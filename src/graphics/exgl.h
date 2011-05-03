@@ -10,6 +10,12 @@
 #define EXGL_H_1304072615
 // #################################################################################
 
+
+#define EX_GL_CHECK_ERROR() ({ \
+    GLenum __error = glGetError(); \
+    if(__error) ex_error("OpenGL Error: 0x%04X in %s\n", __error, __FUNCTION__); \
+    })
+
 // use macro generic some interface for OpenGLES and OpenGL
 #if ( EX_PLATFORM == EX_IOS )
 

@@ -303,6 +303,8 @@
 		B258DA58136BD38B0026F4D4 /* yajl_version.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D84D136BD38A0026F4D4 /* yajl_version.c */; };
 		B258DA65136BD59C0026F4D4 /* BranchX86_2.c in Sources */ = {isa = PBXBuildFile; fileRef = B258DA63136BD59C0026F4D4 /* BranchX86_2.c */; };
 		B258DA66136BD59C0026F4D4 /* BranchX86.c in Sources */ = {isa = PBXBuildFile; fileRef = B258DA64136BD59C0026F4D4 /* BranchX86.c */; };
+		B2780F31136FF70A00A7A91D /* wrap_color3f.c in Sources */ = {isa = PBXBuildFile; fileRef = B2780F30136FF70A00A7A91D /* wrap_color3f.c */; };
+		B2780F34136FFDA200A7A91D /* wrap_color4f.c in Sources */ = {isa = PBXBuildFile; fileRef = B2780F33136FFDA100A7A91D /* wrap_color4f.c */; };
 		B2B1D5D3136D26B3008F6F57 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B1D5BC136D26B3008F6F57 /* adler32.c */; };
 		B2B1D5D4136D26B3008F6F57 /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B1D5BD136D26B3008F6F57 /* compress.c */; };
 		B2B1D5D5136D26B3008F6F57 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B1D5BE136D26B3008F6F57 /* crc32.c */; };
@@ -641,6 +643,8 @@
 		B258DA61136BD5510026F4D4 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		B258DA63136BD59C0026F4D4 /* BranchX86_2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BranchX86_2.c; sourceTree = "<group>"; };
 		B258DA64136BD59C0026F4D4 /* BranchX86.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BranchX86.c; sourceTree = "<group>"; };
+		B2780F30136FF70A00A7A91D /* wrap_color3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color3f.c; sourceTree = "<group>"; };
+		B2780F33136FFDA100A7A91D /* wrap_color4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color4f.c; sourceTree = "<group>"; };
 		B2B1D5BC136D26B3008F6F57 /* adler32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = adler32.c; sourceTree = "<group>"; };
 		B2B1D5BD136D26B3008F6F57 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
 		B2B1D5BE136D26B3008F6F57 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
@@ -1114,6 +1118,8 @@
 		B23CD78F136AC34400CF3131 /* wrap_core */ = {
 			isa = PBXGroup;
 			children = (
+				B2780F30136FF70A00A7A91D /* wrap_color3f.c */,
+				B2780F33136FFDA100A7A91D /* wrap_color4f.c */,
 				B23CD790136AC34400CF3131 /* wrap_angf.c */,
 				B23CD791136AC34400CF3131 /* wrap_class.c */,
 				B23CD792136AC34400CF3131 /* wrap_enums.c */,
@@ -1671,6 +1677,7 @@
 				B2B39FA9136AD9340049350C /* Sources */,
 				B2B39FAE136AD9340049350C /* Frameworks */,
 				B2B39FB4136AD9340049350C /* Resources */,
+				B2780E7E136F02E000A7A91D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1714,6 +1721,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2780E7E136F02E000A7A91D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/builtin\"\nrm -rf \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/res\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/res\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/res\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B23CD6AC136AC27900CF3131 /* Sources */ = {
@@ -1882,6 +1905,8 @@
 				B2B1D5E2136D26B3008F6F57 /* trees.c in Sources */,
 				B2B1D5E4136D26B3008F6F57 /* uncompr.c in Sources */,
 				B2B1D5E7136D26B3008F6F57 /* zutil.c in Sources */,
+				B2780F31136FF70A00A7A91D /* wrap_color3f.c in Sources */,
+				B2780F34136FFDA200A7A91D /* wrap_color4f.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

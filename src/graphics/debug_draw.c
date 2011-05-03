@@ -130,3 +130,132 @@ void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... ) {
 
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_draw_point ( float _x, float _y ) {
+    float *p = (float[2]){ _x, _y };
+
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	
+	glVertexPointer(2, GL_FLOAT, 0, p);	
+	glDrawArrays(GL_POINTS, 0, 1);
+
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_draw_line ( const ex_vec2f_t *_start, 
+                    const ex_vec2f_t *_end, 
+                    const ex_color4f_t *_color ) 
+{
+    ex_vec2f_t *p = (ex_vec2f_t[2]){ *_start, *_end };
+    ex_color4f_t *c = (ex_color4f_t[2]){ *_color, *_color };
+
+    glDisable(GL_TEXTURE_2D);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, p);	
+    glColorPointer(4, GL_FLOAT, 0, c); // NOTE: in OpenGLES, glColorPointer can't accept 3 as first parameter
+    glDrawArrays(GL_LINES, 0, 2);
+
+    // restore default state
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnable(GL_TEXTURE_2D);		
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_draw_poly ( const ex_vec2f_t *_verts, int _num, const ex_color4f_t *_color, bool _close ) {
+    int i = 0;
+    ex_color4f_t *c = (ex_color4f_t *)ex_malloc( sizeof(ex_color4f_t) * _num );
+    while ( i < _num ) {
+        c[i] = *_color;
+        ++i;
+    }
+
+    glDisable(GL_TEXTURE_2D);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, _verts);	
+    glColorPointer(4, GL_FLOAT, 0, c); // NOTE: in OpenGLES, glColorPointer can't accept 3 as first parameter
+
+    if ( _close )
+        glDrawArrays(GL_LINE_LOOP, 0, _num);
+    else
+        glDrawArrays(GL_LINE_STRIP, 0, _num);
+
+    // restore default state
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnable(GL_TEXTURE_2D);		
+
+    ex_free(c);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_draw_circle ( const ex_vec2f_t *_center, 
+                      float _r, float _a, int _segs, 
+                      const ex_color4f_t *_color, 
+                      bool _lineToCenter )
+{
+	int additionalSegment = 1;
+	int i,num;
+    ex_vec2f_t *verts;
+    ex_color4f_t *c;
+    const float coef = 2.0f * (float)EX_PI/_segs;
+
+	if ( _lineToCenter )
+		++additionalSegment;
+
+    //
+    i = 0;
+    num = (_segs + additionalSegment);
+    verts = (ex_vec2f_t *)ex_malloc ( sizeof(ex_vec2f_t) * num );
+    c = (ex_color4f_t *)ex_malloc ( sizeof(ex_color4f_t) * num );
+    while ( i < num ) {
+        c[i] = *_color;
+        ++i;
+    }
+
+    //
+	for( i = 0; i <= _segs; ++i ) {
+		float rads = i*coef;
+		float j = _r * cosf(rads + _a) + _center->x;
+		float k = _r * sinf(rads + _a) + _center->y;
+		
+		verts[i].x = j;
+		verts[i].y = k;
+	}
+	verts[(_segs+1)].x = _center->x;
+	verts[(_segs+1)].y = _center->y;
+
+    //
+    glDisable(GL_TEXTURE_2D);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glVertexPointer(2, GL_FLOAT, 0, verts);	
+    glColorPointer(4, GL_FLOAT, 0, c); // NOTE: in OpenGLES, glColorPointer can't accept 3 as first parameter
+    glDrawArrays(GL_LINE_STRIP, 0, num);
+
+    // restore default state
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnable(GL_TEXTURE_2D);		
+
+    //
+    ex_free( verts );
+    ex_free( c );
+}

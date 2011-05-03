@@ -5,6 +5,7 @@
 // Description  : 
 // ======================================================================================
 
+// TARGET_BUILD_DIR = $PROJECT_DIR/_bin
 HEADER_SEARCH_PATHS = "../../src/" "../../ext/yajl-1.0.11/" "../../ext/physfs-2.0.2/" "../../ext/physfs-2.0.2/zlib123" "../../ext/lua-5.1.4/" "../../ext/dlmalloc-2.8.4/" "../../ext/luagl/"
 LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../ext/"
 USE_HEADERMAP = NO

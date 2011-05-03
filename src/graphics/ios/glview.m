@@ -62,36 +62,89 @@
                                       renderBuffer );
 
         glViewport ( 0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame) );
-
-        [self drawView];
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
     }
 
     return self;
 }
 
+// DELME { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// // ------------------------------------------------------------------ 
+
+// - (void) didRotate: (NSNotification *) notification
+// {
+//     // UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+//     // TODO { 
+//     // m_renderingEngine->OnRotate((DeviceOrientation) orientation);
+//     // } TODO end 
+//     [self drawView];
+// }
+// } DELME end 
+
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-- (void) drawView {
+-(void) swapBuffers {
 
-    glClearColor(0.5f, 0.5f, 0.5f, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    [context presentRenderbuffer:GL_RENDERBUFFER_OES];
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-- (void) didRotate: (NSNotification *) notification
-{
-    // UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+#ifdef __IPHONE_4_0
+	
     // TODO { 
-    // m_renderingEngine->OnRotate((DeviceOrientation) orientation);
+    // if (multiSampling_)
+    // {
+    //     /* Resolve from msaaFramebuffer to resolveFramebuffer */
+    //     //glDisable(GL_SCISSOR_TEST);     
+    //     glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
+    //     glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+    //     glResolveMultisampleFramebufferAPPLE();
+    // }
+    // 
+    // if( discardFramebufferSupported_)
+    // {	
+    //     if (multiSampling_)
+    //     {
+    //         if (depthFormat_)
+    //         {
+    //             GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES};
+    //             glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
+    //         }
+    //         else
+    //         {
+    //             GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
+    //             glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
+    //         }
+    //         
+    //         glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
+    // 
+    //     }	
+    //     
+    //     // not MSAA
+    //     else if (depthFormat_ ) {
+    //         GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
+    //         glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
+    //     }
+    // }
     // } TODO end 
-    [self drawView];
+	
+#endif // __IPHONE_4_0
+	
+	if( ![context presentRenderbuffer:GL_RENDERBUFFER_OES] )
+		ex_error ( "Failed to swap renderbuffer" );
+
+#ifdef EX_DEBUG
+	EX_GL_CHECK_ERROR();
+#endif
+	
+    // TODO { 
+    // // We can safely re-bind the framebuffer here, since this will be the
+    // // 1st instruction of the new main loop
+    // if( multiSampling_ )
+    //     glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 

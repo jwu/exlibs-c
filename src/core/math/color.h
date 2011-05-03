@@ -214,6 +214,16 @@ static inline void ex_color3u_div_scalar ( ex_color3u_t *_c, const ex_color3u_t 
     _c->b = EX_MIN ((uint8)((float)_lhs->b/_scalar), 255);
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline bool ex_color3u_is_equal ( const ex_color3u_t *_lhs, const ex_color3u_t *_rhs ) { 
+    return (_lhs->r == _rhs->r)
+        && (_lhs->g == _rhs->g)
+        && (_lhs->b == _rhs->b);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // color4u function defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -301,6 +311,17 @@ static inline void ex_color4u_div_scalar ( ex_color4u_t *_c, const ex_color4u_t 
     _c->a = EX_MIN ((uint8)((float)_lhs->a/_scalar), 255);
 }
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline bool ex_color4u_is_equal ( const ex_color4u_t *_lhs, const ex_color4u_t *_rhs ) { 
+    return (_lhs->r == _rhs->r)
+        && (_lhs->g == _rhs->g)
+        && (_lhs->b == _rhs->b)
+        && (_lhs->a == _rhs->a);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // color3f
 ///////////////////////////////////////////////////////////////////////////////
@@ -379,6 +400,16 @@ static inline void ex_color3f_div_scalar ( ex_color3f_t *_c, const ex_color3f_t 
     _c->r = EX_MIN (_lhs->r/_scalar, 1.0f);
     _c->g = EX_MIN (_lhs->g/_scalar, 1.0f);
     _c->b = EX_MIN (_lhs->b/_scalar, 1.0f);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline bool ex_color3f_is_equal ( const ex_color3f_t *_lhs, const ex_color3f_t *_rhs ) { 
+    return ex_is_equalf(_lhs->r,_rhs->r,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->g,_rhs->g,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->b,_rhs->b,EX_FLOAT_EPS);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -466,6 +497,17 @@ static inline void ex_color4f_div_scalar ( ex_color4f_t *_c, const ex_color4f_t 
     _c->g = EX_MIN (_lhs->g/_scalar, 1.0f);
     _c->b = EX_MIN (_lhs->b/_scalar, 1.0f);
     _c->a = EX_MIN (_lhs->a/_scalar, 1.0f);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static inline bool ex_color4f_is_equal ( const ex_color4f_t *_lhs, const ex_color4f_t *_rhs ) { 
+    return ex_is_equalf(_lhs->r,_rhs->r,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->g,_rhs->g,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->b,_rhs->b,EX_FLOAT_EPS)
+        && ex_is_equalf(_lhs->a,_rhs->a,EX_FLOAT_EPS);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -33,7 +33,9 @@
 // public methods
 ///////////////////////////////////////////////////////////////////////////////
 
-- (void) drawView;
-- (void) didRotate: (NSNotification *) notification;
+// DELME { 
+// - (void) didRotate: (NSNotification *) notification;
+// } DELME end 
+-(void) swapBuffers;
 
 @end

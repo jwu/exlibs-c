@@ -86,6 +86,8 @@ static void update ( ex_ref_t *_self ) {
             break;
         }
     }
+
+    ex_world_update(g_world);
 }
 
 // ------------------------------------------------------------------ 
