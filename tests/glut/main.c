@@ -380,6 +380,11 @@ static void __init_gl () {
     glDepthFunc(GL_LEQUAL);
     glDepthMask(true);
     // } enable depath end 
+
+    //
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
 }
 
 // ------------------------------------------------------------------ 

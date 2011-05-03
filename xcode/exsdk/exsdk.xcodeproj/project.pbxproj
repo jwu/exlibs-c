@@ -15,6 +15,8 @@
 		B21711D11367ED3D00716123 /* coroutine_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B21711CF1367ED3D00716123 /* coroutine_mng.h */; };
 		B226FED51317D9780011A8A7 /* wrap_component.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FED41317D9780011A8A7 /* wrap_component.c */; };
 		B226FEE113181A160011A8A7 /* wrap_trans2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FEE013181A160011A8A7 /* wrap_trans2d.c */; };
+		B22BBC461370437000AB2471 /* wrap_color3f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC441370437000AB2471 /* wrap_color3f.c */; };
+		B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC451370437000AB2471 /* wrap_color4f.c */; };
 		B243C0BC130D86170056158F /* wrap_object.c in Sources */ = {isa = PBXBuildFile; fileRef = B243C0BB130D86170056158F /* wrap_object.c */; };
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
@@ -573,6 +575,8 @@
 		B21711CF1367ED3D00716123 /* coroutine_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutine_mng.h; sourceTree = "<group>"; };
 		B226FED41317D9780011A8A7 /* wrap_component.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_component.c; sourceTree = "<group>"; };
 		B226FEE013181A160011A8A7 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
+		B22BBC441370437000AB2471 /* wrap_color3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color3f.c; sourceTree = "<group>"; };
+		B22BBC451370437000AB2471 /* wrap_color4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color4f.c; sourceTree = "<group>"; };
 		B243C0BB130D86170056158F /* wrap_object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_object.c; sourceTree = "<group>"; };
 		B245482812B91E9900EF7261 /* simple world.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple world.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B245482A12B91E9900EF7261 /* simple_world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "simple_world-Info.plist"; sourceTree = "<group>"; };
@@ -1430,6 +1434,8 @@
 		B2A2315B130221C700F3C100 /* wrap_core */ = {
 			isa = PBXGroup;
 			children = (
+				B22BBC441370437000AB2471 /* wrap_color3f.c */,
+				B22BBC451370437000AB2471 /* wrap_color4f.c */,
 				B2A14DAF135FEAA600B96113 /* wrap_yield.c */,
 				B28703861335B389000C44FD /* wrap_mat33f.c */,
 				B281F9C513330D620051E7E7 /* wrap_enums.c */,
@@ -2780,6 +2786,8 @@
 				B2B1D5B0136D1037008F6F57 /* trees.c in Sources */,
 				B2B1D5B1136D1037008F6F57 /* uncompr.c in Sources */,
 				B2B1D5B2136D1037008F6F57 /* zutil.c in Sources */,
+				B22BBC461370437000AB2471 /* wrap_color3f.c in Sources */,
+				B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

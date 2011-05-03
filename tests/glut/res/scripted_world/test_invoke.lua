@@ -22,21 +22,21 @@ function create_ent ( _name, _pos )
         local_scale = ex.vec2f(1.0,1.0),
         local_position = _pos
     })
-    -- ent:add_comp("ex.debug2d.rect", {
-    --     show_coord = false,
-    --     show_text = false,
-    --     show_trail = true,
-    --     show_parentlink = true,
-    --     width = 10,
-    --     height = 10,
-    -- })
-    ent:add_comp("ex.debug2d.circle", {
+    ent:add_comp("ex.debug2d.rect", {
         show_coord = false,
         show_text = false,
         show_trail = true,
         show_parentlink = true,
-        r = 10,
+        width = 10,
+        height = 10,
     })
+    -- ent:add_comp("ex.debug2d.circle", {
+    --     show_coord = false,
+    --     show_text = false,
+    --     show_trail = true,
+    --     show_parentlink = true,
+    --     r = 10,
+    -- })
     ent:add_comp("comps.invoke", {
         rot_speed = ex.range_rand( -20, 20 ),
         scale_interval = ex.range_rand( 0.5, 1.5 ),

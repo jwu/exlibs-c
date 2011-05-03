@@ -74,6 +74,5 @@ function on_render ( _self )
         center + trans2d.right * half_width - trans2d.up * half_height, 
         center - trans2d.right * half_width - trans2d.up * half_height, 
     }
-
     ex.draw_poly ( verts, ex.color4f.white, true );
 end
