@@ -155,7 +155,7 @@ static void __init_game () {
     ex_assert ( mainCam, "can't find main camera" );
     ex_camera_set_ortho( mainCam, true );
     ex_camera_set_aspect( mainCam, (float)__win_width/(float)__win_height );
-    ex_camera_set_ortho_size( mainCam, (float)__win_width/2.0f );
+    ex_camera_set_ortho_size( mainCam, (float)__win_height/2.0f );
 
     // test init
     init ();

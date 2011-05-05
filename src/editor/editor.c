@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "editor.h"
-#include "../engine/component/trans2d.h"
+#include "engine/engine_inc.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -21,7 +21,8 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __eng_time_start ();
+extern void __start_engine_time ();
+extern void __init_ref_table ();
 // ------------------------------------------------------------------ 
 
 int ex_editor_init () {
@@ -38,7 +39,8 @@ int ex_editor_init () {
     }
 
     // start editor timer
-    __eng_time_start ();
+    __init_ref_table ();
+    __start_engine_time ();
 
     //
     ex_log ("ex_editor inited");
@@ -48,10 +50,13 @@ int ex_editor_init () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __deinit_ref_table ();
 // ------------------------------------------------------------------ 
 
 void ex_editor_deinit () {
     if ( __initialized ) {
+        __deinit_ref_table();
+
         ex_log ( "ex_editor deinitied" );
         __initialized = false;
     }

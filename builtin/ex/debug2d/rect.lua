@@ -58,8 +58,6 @@ end
 -- ------------------------------------------------------------------ 
 
 function on_render ( _self )
-    super.on_render(_self)
-
     local trans2d = _self.trans2d
     local world_pos = trans2d.position
     local world_ang = trans2d.angle
@@ -75,4 +73,6 @@ function on_render ( _self )
         center - trans2d.right * half_width - trans2d.up * half_height, 
     }
     ex.draw_poly ( verts, ex.color4f.white, true );
+
+    super.on_render(_self)
 end

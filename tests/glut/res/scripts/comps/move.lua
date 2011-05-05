@@ -45,7 +45,7 @@ function update ( _self )
     -- _self.trans2d:move( t.x, t.y )
     -- _self.trans2d.scale = ex.vec2f( ex.time.time % 4.0, ex.time.time % 4.0 )
     -- _self.trans2d:move( 0.1 * ex.time.dt, 0.0, ex.space.self )
-    _self.trans2d:move( ex.time.dt, 0.0, ex.space.world )
+    _self.trans2d:move( 10.0 * ex.time.dt, 0.0, ex.space.world )
 end
 
 -- ------------------------------------------------------------------ 
@@ -54,5 +54,5 @@ end
 
 function on_render ( _self )
     local wpos = _self.trans2d.position
-    ex.draw_text( wpos.x - 30, wpos.y + 15, 0.0, _self.entity.name )
+    -- ex.draw_text( wpos.x - 30, wpos.y + 15, 0.0, _self.entity.name )
 end

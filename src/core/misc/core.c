@@ -19,6 +19,11 @@
 static bool __initialized = false;
 static char *__media_path = NULL;
 
+// for editor { 
+static bool __is_edit_mode = false;
+static bool __is_editor = false;
+// } for editor end 
+
 // for dev { 
 #if (EX_PLATFORM == EX_WIN32)
 static const char *__dev_path = "e:/dev/projects/exdev/exsdk/";
@@ -273,6 +278,20 @@ void ex_core_deinit () {
 // ------------------------------------------------------------------ 
 
 bool ex_core_initialized () { return __initialized; }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+bool ex_is_editor () { return __is_editor; }
+void ex_set_editor ( bool _enable ) {
+    __is_editor = _enable;
+}
+
+bool ex_is_edit_mode () { return __is_edit_mode; }
+void ex_set_edit_mode ( bool _enable ) { 
+    __is_edit_mode = _enable; 
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 

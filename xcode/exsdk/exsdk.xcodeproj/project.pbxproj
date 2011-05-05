@@ -17,6 +17,12 @@
 		B226FEE113181A160011A8A7 /* wrap_trans2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FEE013181A160011A8A7 /* wrap_trans2d.c */; };
 		B22BBC461370437000AB2471 /* wrap_color3f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC441370437000AB2471 /* wrap_color3f.c */; };
 		B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC451370437000AB2471 /* wrap_color4f.c */; };
+		B22BBE9D13712BC300AB2471 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B22BBE9E13712BC300AB2471 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
+		B22BBE9F13712BC300AB2471 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B22BBEA013712BC300AB2471 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
+		B22BBEAC13712BFC00AB2471 /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBEA913712BFC00AB2471 /* editor.c */; };
+		B22BBEAD13712BFC00AB2471 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBEAB13712BFC00AB2471 /* main.c */; };
 		B243C0BC130D86170056158F /* wrap_object.c in Sources */ = {isa = PBXBuildFile; fileRef = B243C0BB130D86170056158F /* wrap_object.c */; };
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
@@ -243,8 +249,6 @@
 		B2A2316F130221C700F3C100 /* wrap_world.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2315F130221C700F3C100 /* wrap_world.c */; };
 		B2A2317C130221E000F3C100 /* app.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23178130221E000F3C100 /* app.c */; };
 		B2A2317D130221E000F3C100 /* app.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A23179130221E000F3C100 /* app.h */; };
-		B2A2317E130221E000F3C100 /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2317A130221E000F3C100 /* editor.c */; };
-		B2A2317F130221E000F3C100 /* editor.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A2317B130221E000F3C100 /* editor.h */; };
 		B2A23199130221F600F3C100 /* behavior.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23182130221F600F3C100 /* behavior.c */; };
 		B2A2319A130221F600F3C100 /* behavior.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A23183130221F600F3C100 /* behavior.h */; };
 		B2A2319B130221F600F3C100 /* camera.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A23184130221F600F3C100 /* camera.c */; };
@@ -419,11 +423,22 @@
 		B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */; };
 		B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B77012A6B144009FE3E8 /* exsdk.h */; };
+		B2F1790C1371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */; };
+		B2F1790D1371559B00C5F4A2 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */; };
+		B2F1790E1371559B00C5F4A2 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */; };
+		B2F1793E137269D500C5F4A2 /* clutter_main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F1793D137269D500C5F4A2 /* clutter_main.c */; };
 		B2F4088E1302C04F00FCF2B5 /* probability.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F4088C1302C04F00FCF2B5 /* probability.c */; };
 		B2F4088F1302C04F00FCF2B5 /* probability.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F4088D1302C04F00FCF2B5 /* probability.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B22BBE9513712BC300AB2471 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = exsdk;
+		};
 		B245484512B9205C00EF7261 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
@@ -577,6 +592,16 @@
 		B226FEE013181A160011A8A7 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
 		B22BBC441370437000AB2471 /* wrap_color3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color3f.c; sourceTree = "<group>"; };
 		B22BBC451370437000AB2471 /* wrap_color4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color4f.c; sourceTree = "<group>"; };
+		B22BBEA713712BC300AB2471 /* Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Editor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22BBEA913712BFC00AB2471 /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = editor.c; path = ../../src/editor/editor.c; sourceTree = "<group>"; };
+		B22BBEAA13712BFC00AB2471 /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = editor.h; path = ../../src/editor/editor.h; sourceTree = "<group>"; };
+		B22BBEAB13712BFC00AB2471 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../src/editor/main.c; sourceTree = "<group>"; };
+		B23B686013713F660038852A /* general_editor_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_editor_debug.xcconfig; path = ../xcconfig/general_editor_debug.xcconfig; sourceTree = "<group>"; };
+		B23B686113713F660038852A /* general_editor_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_editor_release.xcconfig; path = ../xcconfig/general_editor_release.xcconfig; sourceTree = "<group>"; };
+		B23B686213713F660038852A /* general_exsdk_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_exsdk_debug.xcconfig; path = ../xcconfig/general_exsdk_debug.xcconfig; sourceTree = "<group>"; };
+		B23B686313713F660038852A /* general_exsdk_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_exsdk_release.xcconfig; path = ../xcconfig/general_exsdk_release.xcconfig; sourceTree = "<group>"; };
+		B23B686413714B790038852A /* general_editor.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_editor.xcconfig; path = ../xcconfig/general_editor.xcconfig; sourceTree = "<group>"; };
+		B23B686513714B790038852A /* general_exsdk.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_exsdk.xcconfig; path = ../xcconfig/general_exsdk.xcconfig; sourceTree = "<group>"; };
 		B243C0BB130D86170056158F /* wrap_object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_object.c; sourceTree = "<group>"; };
 		B245482812B91E9900EF7261 /* simple world.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple world.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B245482A12B91E9900EF7261 /* simple_world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "simple_world-Info.plist"; sourceTree = "<group>"; };
@@ -680,7 +705,6 @@
 		B258D58A136BB6190026F4D4 /* qpak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = qpak.c; path = "../../ext/physfs-2.0.2/archivers/qpak.c"; sourceTree = "<group>"; };
 		B258D58B136BB6190026F4D4 /* wad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = wad.c; path = "../../ext/physfs-2.0.2/archivers/wad.c"; sourceTree = "<group>"; };
 		B258D58C136BB6190026F4D4 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zip.c; path = "../../ext/physfs-2.0.2/archivers/zip.c"; sourceTree = "<group>"; };
-		B258D598136BC17F0026F4D4 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		B258D59C136BC2140026F4D4 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B258D5A3136BC63A0026F4D4 /* dlmalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dlmalloc.c; path = "../../ext/dlmalloc-2.8.4/dlmalloc.c"; sourceTree = "<group>"; };
 		B258D5A4136BC63A0026F4D4 /* dlmalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dlmalloc.h; path = "../../ext/dlmalloc-2.8.4/dlmalloc.h"; sourceTree = "<group>"; };
@@ -751,8 +775,6 @@
 		B2A2315F130221C700F3C100 /* wrap_world.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_world.c; sourceTree = "<group>"; };
 		B2A23178130221E000F3C100 /* app.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = app.c; sourceTree = "<group>"; };
 		B2A23179130221E000F3C100 /* app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = app.h; sourceTree = "<group>"; };
-		B2A2317A130221E000F3C100 /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = editor.c; sourceTree = "<group>"; };
-		B2A2317B130221E000F3C100 /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editor.h; sourceTree = "<group>"; };
 		B2A23182130221F600F3C100 /* behavior.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = behavior.c; sourceTree = "<group>"; };
 		B2A23183130221F600F3C100 /* behavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = behavior.h; sourceTree = "<group>"; };
 		B2A23184130221F600F3C100 /* camera.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = camera.c; sourceTree = "<group>"; };
@@ -929,15 +951,30 @@
 		B2DD23EA12A7C7CE0053CA3F /* array test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "array test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0B76F12A6B144009FE3E8 /* exsdk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = exsdk.c; path = ../../src/exsdk.c; sourceTree = SOURCE_ROOT; };
 		B2E0B77012A6B144009FE3E8 /* exsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = exsdk.h; path = ../../src/exsdk.h; sourceTree = SOURCE_ROOT; };
-		B2E3D9B21356986200FDAE41 /* general.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general.xcconfig; path = ../xcconfig/general.xcconfig; sourceTree = "<group>"; };
-		B2E3D9B31356A0B200FDAE41 /* general_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_debug.xcconfig; path = ../xcconfig/general_debug.xcconfig; sourceTree = "<group>"; };
-		B2E3D9B41356A0CB00FDAE41 /* general_release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = general_release.xcconfig; path = ../xcconfig/general_release.xcconfig; sourceTree = "<group>"; };
+		B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libclutter-osx-1.0.0.dylib"; path = "../../ext_build/libs/macosx/libclutter-osx-1.0.0.dylib"; sourceTree = "<group>"; };
+		B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "../../ext_build/libs/macosx/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
+		B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "../../ext_build/libs/macosx/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
+		B2F1793D137269D500C5F4A2 /* clutter_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = clutter_main.c; path = ../../src/editor/clutter_main.c; sourceTree = "<group>"; };
 		B2F4088C1302C04F00FCF2B5 /* probability.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = probability.c; sourceTree = "<group>"; };
 		B2F4088D1302C04F00FCF2B5 /* probability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = probability.h; sourceTree = "<group>"; };
 		D2AAC046055464E500DB518D /* libexsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexsdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B22BBE9C13712BC300AB2471 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22BBE9D13712BC300AB2471 /* IOKit.framework in Frameworks */,
+				B22BBE9E13712BC300AB2471 /* libexsdk.a in Frameworks */,
+				B22BBE9F13712BC300AB2471 /* OpenGL.framework in Frameworks */,
+				B22BBEA013712BC300AB2471 /* GLUT.framework in Frameworks */,
+				B2F1790C1371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib in Frameworks */,
+				B2F1790D1371559B00C5F4A2 /* libglib-2.0.0.dylib in Frameworks */,
+				B2F1790E1371559B00C5F4A2 /* libgobject-2.0.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B245482612B91E9900EF7261 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1158,12 +1195,24 @@
 				B26C7E3C1357E05000BDADA1 /* tests */,
 				B2E3D9B11356982900FDAE41 /* xcconfig */,
 				B245483712B91F9E00EF7261 /* exsdk */,
+				B22BBE9213712B9F00AB2471 /* editor */,
 				B258D4BB136BB3D30026F4D4 /* ext */,
 				B2DD23EB12A7C7CE0053CA3F /* Products */,
 				B245482A12B91E9900EF7261 /* simple_world-Info.plist */,
 				B2A22DFC12FEF2AC00F3C100 /* editor-Info.plist */,
 			);
 			name = exsdk;
+			sourceTree = "<group>";
+		};
+		B22BBE9213712B9F00AB2471 /* editor */ = {
+			isa = PBXGroup;
+			children = (
+				B2F1793D137269D500C5F4A2 /* clutter_main.c */,
+				B22BBEA913712BFC00AB2471 /* editor.c */,
+				B22BBEAA13712BFC00AB2471 /* editor.h */,
+				B22BBEAB13712BFC00AB2471 /* main.c */,
+			);
+			name = editor;
 			sourceTree = "<group>";
 		};
 		B245483712B91F9E00EF7261 /* exsdk */ = {
@@ -1186,8 +1235,10 @@
 		B2582AED136AB8240009CEFF /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */,
+				B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */,
+				B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */,
 				D2AAC046055464E500DB518D /* libexsdk.a */,
-				B258D598136BC17F0026F4D4 /* libz.1.2.3.dylib */,
 				B258D59C136BC2140026F4D4 /* IOKit.framework */,
 				B245484712B9207800EF7261 /* OpenGL.framework */,
 				B245484B12B9209000EF7261 /* GLUT.framework */,
@@ -1467,8 +1518,6 @@
 			children = (
 				B2A23178130221E000F3C100 /* app.c */,
 				B2A23179130221E000F3C100 /* app.h */,
-				B2A2317A130221E000F3C100 /* editor.c */,
-				B2A2317B130221E000F3C100 /* editor.h */,
 			);
 			path = app;
 			sourceTree = "<group>";
@@ -1818,6 +1867,7 @@
 				B26C7FB413580CB500BDADA1 /* scripted world.app */,
 				B26C7FC813580E8B00BDADA1 /* gl render test.app */,
 				B2582AEB136AB7E70009CEFF /* rtti test copy */,
+				B22BBEA713712BC300AB2471 /* Editor.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1825,9 +1875,12 @@
 		B2E3D9B11356982900FDAE41 /* xcconfig */ = {
 			isa = PBXGroup;
 			children = (
-				B2E3D9B21356986200FDAE41 /* general.xcconfig */,
-				B2E3D9B31356A0B200FDAE41 /* general_debug.xcconfig */,
-				B2E3D9B41356A0CB00FDAE41 /* general_release.xcconfig */,
+				B23B686413714B790038852A /* general_editor.xcconfig */,
+				B23B686013713F660038852A /* general_editor_debug.xcconfig */,
+				B23B686113713F660038852A /* general_editor_release.xcconfig */,
+				B23B686513714B790038852A /* general_exsdk.xcconfig */,
+				B23B686213713F660038852A /* general_exsdk_debug.xcconfig */,
+				B23B686313713F660038852A /* general_exsdk_release.xcconfig */,
 			);
 			name = xcconfig;
 			sourceTree = "<group>";
@@ -1844,7 +1897,6 @@
 				B2A2316A130221C700F3C100 /* lua_inc.h in Headers */,
 				B2A2316C130221C700F3C100 /* lua_wrap_helper.h in Headers */,
 				B2A2317D130221E000F3C100 /* app.h in Headers */,
-				B2A2317F130221E000F3C100 /* editor.h in Headers */,
 				B2A2319A130221F600F3C100 /* behavior.h in Headers */,
 				B2A2319C130221F600F3C100 /* camera.h in Headers */,
 				B2A2319E130221F600F3C100 /* component.h in Headers */,
@@ -1990,6 +2042,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B22BBE9313712BC300AB2471 /* Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildPhases = (
+				B22BBE9613712BC300AB2471 /* Resources */,
+				B22BBE9713712BC300AB2471 /* ShellScript */,
+				B22BBE9813712BC300AB2471 /* Sources */,
+				B22BBE9C13712BC300AB2471 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B22BBE9413712BC300AB2471 /* PBXTargetDependency */,
+			);
+			name = Editor;
+			productName = test_gl;
+			productReference = B22BBEA713712BC300AB2471 /* Editor.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B245482712B91E9900EF7261 /* simple world */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B245482D12B91E9900EF7261 /* Build configuration list for PBXNativeTarget "simple world" */;
@@ -2373,6 +2444,7 @@
 			projectRoot = "";
 			targets = (
 				D2AAC045055464E500DB518D /* exsdk */,
+				B22BBE9313712BC300AB2471 /* Editor */,
 				B245482712B91E9900EF7261 /* simple world */,
 				B26C7FA213580CB500BDADA1 /* scripted world */,
 				B26C7FB713580E8B00BDADA1 /* gl render test */,
@@ -2398,6 +2470,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B22BBE9613712BC300AB2471 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B245482412B91E9900EF7261 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2422,6 +2501,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B22BBE9713712BC300AB2471 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\nrm -rf \"$TARGET_BUILD_DIR/res\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/res\" \"$TARGET_BUILD_DIR/res\"";
+		};
 		B2780E75136EFBA500A7A91D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2438,6 +2530,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B22BBE9813712BC300AB2471 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22BBEAC13712BFC00AB2471 /* editor.c in Sources */,
+				B22BBEAD13712BFC00AB2471 /* main.c in Sources */,
+				B2F1793E137269D500C5F4A2 /* clutter_main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B245482512B91E9900EF7261 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2631,7 +2733,6 @@
 				B2A2316E130221C700F3C100 /* wrap_vec2f.c in Sources */,
 				B2A2316F130221C700F3C100 /* wrap_world.c in Sources */,
 				B2A2317C130221E000F3C100 /* app.c in Sources */,
-				B2A2317E130221E000F3C100 /* editor.c in Sources */,
 				B2A23199130221F600F3C100 /* behavior.c in Sources */,
 				B2A2319B130221F600F3C100 /* camera.c in Sources */,
 				B2A2319D130221F600F3C100 /* component.c in Sources */,
@@ -2794,6 +2895,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B22BBE9413712BC300AB2471 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* exsdk */;
+			targetProxy = B22BBE9513712BC300AB2471 /* PBXContainerItemProxy */;
+		};
 		B245484612B9205C00EF7261 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D2AAC045055464E500DB518D /* exsdk */;
@@ -2942,7 +3048,7 @@
 		};
 		1DEB91F008733DB70010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B2E3D9B31356A0B200FDAE41 /* general_debug.xcconfig */;
+			baseConfigurationReference = B23B686213713F660038852A /* general_exsdk_debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2958,7 +3064,7 @@
 		};
 		1DEB91F108733DB70010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B2E3D9B41356A0CB00FDAE41 /* general_release.xcconfig */;
+			baseConfigurationReference = B23B686313713F660038852A /* general_exsdk_release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2968,6 +3074,72 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		B22BBEA513712BC300AB2471 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B23B686013713F660038852A /* general_editor_debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "editor-info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext_build/libs/macosx\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Editor;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		B22BBEA613712BC300AB2471 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B23B686113713F660038852A /* general_editor_release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "editor-info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../ext_build/libs/macosx\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Editor;
+				USER_HEADER_SEARCH_PATHS = "";
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -3825,6 +3997,15 @@
 			buildConfigurations = (
 				1DEB91F008733DB70010E9CD /* Debug */,
 				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B22BBEA513712BC300AB2471 /* Debug */,
+				B22BBEA613712BC300AB2471 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

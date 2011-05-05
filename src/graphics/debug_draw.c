@@ -137,6 +137,10 @@ void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... ) {
 void ex_draw_point ( float _x, float _y ) {
     float *p = (float[2]){ _x, _y };
 
+    //
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -161,6 +165,10 @@ void ex_draw_line ( const ex_vec2f_t *_start,
     ex_vec2f_t *p = (ex_vec2f_t[2]){ *_start, *_end };
     ex_color4f_t *c = (ex_color4f_t[2]){ *_color, *_color };
 
+    //
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -184,6 +192,10 @@ void ex_draw_poly ( const ex_vec2f_t *_verts, int _num, const ex_color4f_t *_col
         c[i] = *_color;
         ++i;
     }
+
+    //
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -244,6 +256,9 @@ void ex_draw_circle ( const ex_vec2f_t *_center,
 	verts[(_segs+1)].y = _center->y;
 
     //
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 

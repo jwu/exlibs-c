@@ -87,7 +87,7 @@ int __win_height = 480;
     ex_assert ( mainCam, "can't find main camera" );
     ex_camera_set_ortho( mainCam, true );
     ex_camera_set_aspect( mainCam, (float)__win_width/(float)__win_height );
-    ex_camera_set_ortho_size( mainCam, (float)__win_width/2.0f );
+    ex_camera_set_ortho_size( mainCam, (float)__win_height/2.0f );
     ex_log("viewport width = %i", __win_width );
     ex_log("viewport height = %i", __win_height );
 
@@ -135,7 +135,7 @@ int __win_height = 480;
 - (void) tick {
 
     ex_world_update(g_world); // tick world
-    ex_world_render(g_world); // render the world
+    ex_world_render(g_world,true); // render the world
 
     [view swapBuffers];
 }

@@ -75,7 +75,8 @@ extern float ex_camera_aspect ( ex_ref_t *_self );
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_camera_apply ( ex_ref_t *_self );
+extern void ex_camera_clear ( ex_ref_t *_self );
+extern void ex_camera_apply_transform ( ex_ref_t *_self );
 
 // ######################### 
 #ifdef __cplusplus

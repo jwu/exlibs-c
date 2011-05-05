@@ -17,12 +17,26 @@ extern "C" {
 // ######################### 
 
 // ------------------------------------------------------------------ 
-// Desc: 
+// Desc: core
 // ------------------------------------------------------------------ 
 
 extern int ex_core_init ( int *_argc_p, char ***_argv_p );
 extern void ex_core_deinit ();
 extern bool ex_core_initialized ();
+
+// ------------------------------------------------------------------ 
+// Desc: edit mode 
+// ------------------------------------------------------------------ 
+
+extern bool ex_is_editor ();
+extern void ex_set_editor ( bool _enable );
+
+extern bool ex_is_edit_mode ();
+extern void ex_set_edit_mode ( bool _enable );
+
+// ------------------------------------------------------------------ 
+// Desc: dev mode 
+// ------------------------------------------------------------------ 
 
 extern void ex_init_dev_mode ( const char *_media_path );
 extern bool ex_is_dev_mode ();

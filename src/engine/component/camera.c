@@ -153,14 +153,12 @@ float ex_camera_aspect ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_camera_apply ( ex_ref_t *_self ) {
-    ex_camera_t *self = EX_REF_CAST(ex_camera_t,_self);
-
+void ex_camera_clear ( ex_ref_t *_self ) {
+    ex_camera_t *self;
     GLbitfield clearFlags = 0;
-    double rx = self->orthoSize * self->aspect; // half viewport width
-    double ry = self->orthoSize; // half viewport height
 
     // clear the screen
+    self = EX_REF_CAST(ex_camera_t,_self);
     glClearColor( self->bgColor.r,
                   self->bgColor.g,
                   self->bgColor.b,
@@ -175,6 +173,20 @@ void ex_camera_apply ( ex_ref_t *_self ) {
         ex_glClearDepth(1.0f);
     }
     glClear(clearFlags);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_camera_apply_transform ( ex_ref_t *_self ) {
+    ex_camera_t *self;
+    double rx, ry;
+
+    //
+    self = EX_REF_CAST(ex_camera_t,_self);
+    rx = self->orthoSize * self->aspect; // half viewport width
+    ry = self->orthoSize; // half viewport height
 
     // setup view matrix
     if ( self->isOrtho ) {
@@ -186,4 +198,7 @@ void ex_camera_apply ( ex_ref_t *_self ) {
     else {
         // TODO:
     }
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }

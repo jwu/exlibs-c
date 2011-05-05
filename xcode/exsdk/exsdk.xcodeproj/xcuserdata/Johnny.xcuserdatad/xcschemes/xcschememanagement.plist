@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Editor.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>array test.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -62,7 +67,7 @@
 		<key>rapid test.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>rtti test.xcscheme</key>
 		<dict>
@@ -72,27 +77,27 @@
 		<key>scripted world - test coroutine.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>7</integer>
 		</dict>
 		<key>scripted world - test invoke.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>6</integer>
 		</dict>
 		<key>scripted world.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>5</integer>
 		</dict>
 		<key>simple world - debug.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>simple world - release.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 		<key>stream test.xcscheme</key>
 		<dict>
@@ -127,6 +132,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>B22BBE9313712BC300AB2471</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B245482712B91E9900EF7261</key>
 		<dict>
 			<key>primary</key>

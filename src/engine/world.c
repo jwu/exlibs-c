@@ -612,13 +612,15 @@ void ex_world_update ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_world_render ( ex_ref_t *_self ) {
+void ex_world_render ( ex_ref_t *_self, bool _do_clear ) {
     ex_world_t *self;
     
     self = EX_REF_CAST(ex_world_t,_self);
 
     ex_array_each ( self->cameras, ex_ref_t *, cam ) {
-        ex_camera_apply (cam);
+        if ( _do_clear )
+            ex_camera_clear (cam);
+        ex_camera_apply_transform (cam);
 
         // invoke all on_render event in behavior
         __on_render_behaviors (self);

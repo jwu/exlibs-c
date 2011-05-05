@@ -57,8 +57,6 @@ end
 -- ------------------------------------------------------------------ 
 
 function on_render ( _self )
-    super.on_render(_self)
-
     local trans2d = _self.trans2d
     local world_pos = trans2d.position
     -- local world_ang = trans2d.angle
@@ -66,4 +64,6 @@ function on_render ( _self )
     local center = _self.center + world_pos
 
     ex.draw_circle ( center, r, r, 32, ex.color4f.white, true );
+
+    super.on_render(_self)
 end
