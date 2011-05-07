@@ -85,7 +85,7 @@ extern void ex_world_find_entities_byname ( ex_ref_t *_self, strid_t _name, ex_a
 // ------------------------------------------------------------------ 
 
 extern void ex_world_update ( ex_ref_t *_self );
-extern void ex_world_render ( ex_ref_t *_self, bool _do_clear );
+extern void ex_world_render ( ex_ref_t *_self );
 
 // ------------------------------------------------------------------ 
 // Desc: 

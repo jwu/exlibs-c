@@ -10,19 +10,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "editor.h"
 #include "engine/engine_inc.h"
-
-#include "clutter/clutter.h"
-#include "cogl/cogl.h"
+#include "editor_inc.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
 // system
-float win_width = 0.0;
-float win_height = 0.0;
+float win_width = 0.0f;
+float win_height = 0.0f;
+float view_width = 640.0f;
+float view_height = 480.0f;
 ClutterActor *stage = NULL;
 
 // game
@@ -54,8 +53,8 @@ static void __init_game () {
     mainCam = ex_world_main_camera (g_world);
     ex_assert ( mainCam, "can't find main camera" );
     ex_camera_set_ortho( mainCam, true );
-    ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
-    ex_camera_set_ortho_size( mainCam, (float)win_height/2.0f );
+    ex_camera_set_aspect( mainCam, view_width/view_height );
+    ex_camera_set_ortho_size( mainCam, view_height/2.0f );
 
     // create test world
     ex_assert_return ( g_world_path, /*void*/, "can't find a world! please specific it by --world=" );
@@ -134,51 +133,14 @@ static void __parse_world ( int *_argc_p, char ***_argv_p ) {
 // ------------------------------------------------------------------ 
 
 static void on_paint ( ClutterActor *_actor, gpointer _user_data ) {
-    ex_world_update(g_world);
-
-    //
-    glViewport(0, 0, win_width, win_height);
-
-    // anti-aliasing { 
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_BLEND);
-
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    glHint(GL_POINT_SMOOTH_HINT, GL_DONT_CARE);
-    // } anti-aliasing end 
-
-    // enable depath { 
-    glEnable(GL_DEPTH_TEST);
-    glClearDepth(1.0f);
-    glDepthFunc(GL_LEQUAL);
-    glDepthMask(true);
-    // } enable depath end 
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-
-    //
-    ex_world_render(g_world,false);
-
-    // //
-    // glMatrixMode(GL_MODELVIEW);
-    // glLoadIdentity();
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();
-    // glOrtho(0, win_width, win_height, 0, -1.0, 1.0);
-    // clutter_actor_queue_redraw (_actor); 
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static gboolean queue_redraw ( gpointer _stage ) {
-    clutter_actor_queue_redraw (CLUTTER_ACTOR (_stage));
-
+static gboolean queue_redraw ( gpointer _actor ) {
+    clutter_actor_queue_redraw (CLUTTER_ACTOR (_actor));
     return TRUE;
 }
 
@@ -228,7 +190,10 @@ int main( int argc, char *argv[] ) {
         // init clutter
         clutter_init(&argc, &argv);
 
+        // ======================================================== 
         // create stage
+        // ======================================================== 
+
         win_width = 800;
         win_height = 600;
         ClutterColor stage_color = { 0xaf, 0xaf, 0xaf, 0xff };
@@ -238,31 +203,29 @@ int main( int argc, char *argv[] ) {
         clutter_stage_set_color(CLUTTER_STAGE(stage), &stage_color);
         clutter_stage_set_user_resizable (CLUTTER_STAGE(stage), TRUE);
 
-        //
-        ClutterColor rect_color = { 0x44, 0xdd, 0x44, 0x9f };
-        ClutterActor *rect = clutter_rectangle_new_with_color (&rect_color);
-        clutter_container_add_actor (CLUTTER_CONTAINER (stage), rect);
-        clutter_actor_set_size (rect, 50, 50);
+        // ======================================================== 
+        // create view-2D
+        // ======================================================== 
+
+        ClutterColor bg_color = { 0x7f, 0x7f, 0x7f, 0xff };
+        ClutterActor *view2d = clutter_view2d_new ();
+        clutter_view2d_set_color ( CLUTTER_VIEW2D(view2d), &bg_color );
+        clutter_actor_set_size ( view2d, view_width, view_height );
+        clutter_actor_set_position ( view2d, (win_width-view_width)/2, (win_height-view_height)/2 );
+        clutter_container_add_actor ( CLUTTER_CONTAINER (stage), view2d );
+        clutter_actor_show ( view2d );
+
+        // TEMP { 
+        ClutterColor rect_color = { 0x00, 0x2f, 0xff, 0xaf };
+        ClutterColor border_color = { 0x00, 0x00, 0x00, 0xff };
+        ClutterActor *rect = clutter_rectangle_new_with_color ( &rect_color );
+        clutter_rectangle_set_border_color ( CLUTTER_RECTANGLE(rect), &border_color );
+        clutter_rectangle_set_border_width ( CLUTTER_RECTANGLE(rect), 1 );
+        clutter_actor_set_size (rect, win_width, 30);
         clutter_actor_set_position (rect, 0.0, 0.0);
+        clutter_container_add_actor (CLUTTER_CONTAINER (stage), rect);
         clutter_actor_show (rect);
-
-        // TODO: implement your own actor with your own paint { 
-        // //
-        // ClutterColor bg_color = { 0x3f, 0x3f, 0x3f, 0xff };
-        // ClutterColor bd_color = { 0x00, 0x00, 0x00, 0xff };
-        // ClutterActor *game_view = clutter_rectangle_new_with_color (&bg_color);
-        // clutter_rectangle_set_border_color ( CLUTTER_RECTANGLE(game_view), &bd_color );
-        // clutter_rectangle_set_border_width ( CLUTTER_RECTANGLE(game_view), 1 );
-
-        // clutter_container_add_actor (CLUTTER_CONTAINER (stage), game_view);
-        // clutter_actor_set_size (game_view, 400, 300);
-        // clutter_actor_set_position (game_view, win_width/2-200, win_height/2-150);
-        // clutter_actor_show (game_view);
-
-        // //
-        // // guint idle_source = g_idle_add( queue_redraw, game_view );
-        // g_signal_connect_after (game_view, "paint", G_CALLBACK (on_paint), NULL);
-        // } TODO end 
+        // } TEMP end 
 
         //
         ex_editor_init();
@@ -270,12 +233,16 @@ int main( int argc, char *argv[] ) {
         ex_lua_load_modules( ex_lua_main_state(), "scripts" );
         __init_game ();
 
+        //
+        guint idle_source = g_idle_add( queue_redraw, stage );
+        // g_signal_connect_after (stage, "paint", G_CALLBACK (on_paint), NULL);
+
         // show the stage and enter the main loop
         clutter_actor_show(stage);
         clutter_main();
+        g_source_remove (idle_source);
 
-        // g_source_remove (idle_source);
-
+        //
         return EXIT_SUCCESS;
     }
 

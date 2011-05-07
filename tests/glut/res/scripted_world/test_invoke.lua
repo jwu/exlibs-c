@@ -54,7 +54,7 @@ end
 
 -- create_ent ( "ent", ex.vec2f( 0.0, 0.0 ) )
 ex.ents = {}
-for i=1,50 do
+for i=1,1 do
     ent = create_ent ( "ent_"..i, ex.vec2f( 0.0, 0.0 ) )
     ent.trans2d.local_position = ex.vec2f( ex.range_rand( -100.0, 100.0 ), ex.range_rand( -100.0, 100.0 ) )
     ex.ents[#ex.ents+1] = ent

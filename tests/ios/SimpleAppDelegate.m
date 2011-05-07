@@ -135,7 +135,7 @@ int __win_height = 480;
 - (void) tick {
 
     ex_world_update(g_world); // tick world
-    ex_world_render(g_world,true); // render the world
+    ex_world_render(g_world); // render the world
 
     [view swapBuffers];
 }

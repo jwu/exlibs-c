@@ -153,7 +153,7 @@ static void __display(void) {
     // } DISABLE end 
 
     // render 2D/3D objects
-    ex_world_render(g_world,true);
+    ex_world_render(g_world);
 
     // draw 2D objects in screen space
     glMatrixMode( GL_MODELVIEW );
@@ -265,7 +265,7 @@ static void __reshape ( int _width, int _height ) {
     ex_assert ( mainCam, "can't find main camera" );
     ex_camera_set_ortho( mainCam, true );
     ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
-    ex_camera_set_ortho_size( mainCam, (float)win_width/2.0f );
+    ex_camera_set_ortho_size( mainCam, (float)win_height/2.0f );
 }
 
 // ------------------------------------------------------------------ 

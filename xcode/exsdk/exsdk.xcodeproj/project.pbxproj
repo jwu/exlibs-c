@@ -26,6 +26,8 @@
 		B243C0BC130D86170056158F /* wrap_object.c in Sources */ = {isa = PBXBuildFile; fileRef = B243C0BB130D86170056158F /* wrap_object.c */; };
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
+		B25132551373C24600D4A241 /* view2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B25132531373C24600D4A241 /* view2d.c */; };
+		B25132571373FCC700D4A241 /* clutter_world_render.c in Sources */ = {isa = PBXBuildFile; fileRef = B25132561373FCC700D4A241 /* clutter_world_render.c */; };
 		B258D4F7136BB4330026F4D4 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D4BF136BB4330026F4D4 /* lapi.c */; };
 		B258D4F8136BB4330026F4D4 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D4C0136BB4330026F4D4 /* lapi.h */; };
 		B258D4F9136BB4330026F4D4 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D4C1136BB4330026F4D4 /* lauxlib.c */; };
@@ -607,6 +609,9 @@
 		B245482A12B91E9900EF7261 /* simple_world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "simple_world-Info.plist"; sourceTree = "<group>"; };
 		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		B25132531373C24600D4A241 /* view2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = view2d.c; path = ../../src/editor/view2d.c; sourceTree = "<group>"; };
+		B25132541373C24600D4A241 /* view2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = view2d.h; path = ../../src/editor/view2d.h; sourceTree = "<group>"; };
+		B25132561373FCC700D4A241 /* clutter_world_render.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = clutter_world_render.c; path = ../../src/editor/clutter_world_render.c; sourceTree = "<group>"; };
 		B2582AEB136AB7E70009CEFF /* rtti test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rtti test copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B258D4BF136BB4330026F4D4 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../ext/lua-5.1.4/lapi.c"; sourceTree = "<group>"; };
 		B258D4C0136BB4330026F4D4 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../ext/lua-5.1.4/lapi.h"; sourceTree = "<group>"; };
@@ -1207,6 +1212,9 @@
 		B22BBE9213712B9F00AB2471 /* editor */ = {
 			isa = PBXGroup;
 			children = (
+				B25132561373FCC700D4A241 /* clutter_world_render.c */,
+				B25132531373C24600D4A241 /* view2d.c */,
+				B25132541373C24600D4A241 /* view2d.h */,
 				B2F1793D137269D500C5F4A2 /* clutter_main.c */,
 				B22BBEA913712BFC00AB2471 /* editor.c */,
 				B22BBEAA13712BFC00AB2471 /* editor.h */,
@@ -2537,6 +2545,8 @@
 				B22BBEAC13712BFC00AB2471 /* editor.c in Sources */,
 				B22BBEAD13712BFC00AB2471 /* main.c in Sources */,
 				B2F1793E137269D500C5F4A2 /* clutter_main.c in Sources */,
+				B25132551373C24600D4A241 /* view2d.c in Sources */,
+				B25132571373FCC700D4A241 /* clutter_world_render.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
