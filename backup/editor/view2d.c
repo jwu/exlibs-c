@@ -9,11 +9,11 @@
 // includes
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "view2d.h"
-#include <cogl/cogl.h>
-
 #include "exsdk.h"
 #include "engine/engine_inc.h"
+
+#include "view2d.h"
+#include <cogl/cogl.h>
 
 extern float win_width;
 extern float win_height;
@@ -56,8 +56,19 @@ static void clutter_view2d_paint (ClutterActor *_self) {
     ClutterView2DPrivate *priv = CLUTTER_VIEW2D(_self)->priv;
     CoglHandle material;
     
+    // TODO: a way to update world { 
+    // ClutterTimeline *timeline;
+    // timeline = clutter_timeline_new (6000);
+    // clutter_timeline_set_loop (timeline, TRUE);
+    // g_signal_connect (timeline, "new-frame", G_CALLBACK (tick), view2d);
+    // } TODO end 
     // update the world
     ex_world_update(g_world);
+
+    //
+    if ( priv->offscreen_id == COGL_INVALID_HANDLE ||
+         priv->texture_id == COGL_INVALID_HANDLE )
+        return;
 
     // render the frame-buffer
     clutter_actor_get_geometry (_self, &geom);
@@ -209,21 +220,45 @@ static void clutter_view2d_init ( ClutterView2D *_self ) {
     priv->color.blue = 0xff;
     priv->color.alpha = 0xff;
 
-    // creating texture with size
-    priv->texture_id = cogl_texture_new_with_size (640, 480,
-                                                   COGL_TEXTURE_NONE,
-                                                   COGL_PIXEL_FORMAT_RGB_888);
+    priv->texture_id = COGL_INVALID_HANDLE;
+    priv->offscreen_id = COGL_INVALID_HANDLE;
+}
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void on_actor_size_change ( GObject *_object, GParamSpec *_param_spec ) {
+
+    gfloat width, height;
+    ClutterView2DPrivate *priv;
+    ClutterView2D *view2d;
+    
+    view2d = CLUTTER_VIEW2D(_object);
+    priv = view2d->priv;
+
+    // unref the old texture_id and offscreen_id if they are valid.
+    if ( priv->texture_id != COGL_INVALID_HANDLE )
+        cogl_handle_unref (priv->texture_id);
+    if ( priv->offscreen_id != COGL_INVALID_HANDLE )
+        cogl_handle_unref (priv->offscreen_id);
+
+    //
+    clutter_actor_get_size ( CLUTTER_ACTOR(view2d), &width, &height );
+
+    // creating texture with size
+    priv->texture_id = cogl_texture_new_with_size ( width, height,
+                                                    COGL_TEXTURE_NONE,
+                                                    COGL_PIXEL_FORMAT_RGB_888 );
     if ( priv->texture_id == COGL_INVALID_HANDLE )
         ex_error ("Failed creating texture with size!");
 
-    // Creating offscreen
-    priv->offscreen_id = cogl_offscreen_new_to_texture (priv->texture_id);
+    // creating offscreen
+    priv->offscreen_id = cogl_offscreen_new_to_texture ( priv->texture_id );
+    if ( priv->offscreen_id == COGL_INVALID_HANDLE )
+        ex_error ("Failed creating offscreen to texture!");
 
     // DISABLE { 
-    ClutterGeometry geom;
-    clutter_actor_get_geometry (_self, &geom);
-
     // cogl_push_framebuffer (priv->offscreen_id);
     // cogl_set_viewport (0, 0, 800, 600);
     // setup_viewport (stage_width, stage_height,
@@ -233,17 +268,27 @@ static void clutter_view2d_init ( ClutterView2D *_self ) {
     //                 perspective.z_far);
     // cogl_pop_framebuffer ();
     // } DISABLE end 
-
-    if ( priv->offscreen_id == COGL_INVALID_HANDLE )
-        ex_error ("Failed creating offscreen to texture!");
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// defines
+///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 ClutterActor *clutter_view2d_new (void) {
-    return g_object_new (CLUTTER_TYPE_VIEW2D, NULL);
+    ClutterActor *actor = g_object_new (CLUTTER_TYPE_VIEW2D, NULL);
+    g_signal_connect ( actor,
+                       "notify::width",
+                       G_CALLBACK(on_actor_size_change),
+                       NULL );
+    g_signal_connect ( actor,
+                       "notify::height",
+                       G_CALLBACK(on_actor_size_change),
+                       NULL );
+    return actor;
 }
 
 // ------------------------------------------------------------------ 
@@ -251,9 +296,18 @@ ClutterActor *clutter_view2d_new (void) {
 // ------------------------------------------------------------------ 
 
 ClutterActor *clutter_view2d_new_with_color ( const ClutterColor *_color ) {
-    return g_object_new ( CLUTTER_TYPE_VIEW2D,
-                          "color", _color,
-                          NULL );
+    ClutterActor *actor = g_object_new ( CLUTTER_TYPE_VIEW2D,
+                                         "color", _color,
+                                         NULL );
+    g_signal_connect ( actor,
+                       "notify::width",
+                       G_CALLBACK(on_actor_size_change),
+                       NULL );
+    g_signal_connect ( actor,
+                       "notify::height",
+                       G_CALLBACK(on_actor_size_change),
+                       NULL );
+    return actor;
 }
 
 // ------------------------------------------------------------------ 

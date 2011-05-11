@@ -1,7 +1,7 @@
 // ======================================================================================
-// File         : clutter_main.c
+// File         : main.c
 // Author       : Wu Jie 
-// Last Change  : 05/05/2011 | 13:12:49 PM | Thursday,May
+// Last Change  : 05/08/2011 | 12:09:52 PM | Sunday,May
 // Description  : 
 // ======================================================================================
 
@@ -61,7 +61,7 @@ static void __init_game () {
     ex_lua_dofile( l, g_world_path, NULL );
 
     // run the world
-    ex_world_run(g_world);
+    // ex_world_run(g_world);
 }
 
 // ------------------------------------------------------------------ 
@@ -133,6 +133,7 @@ static void __parse_world ( int *_argc_p, char ***_argv_p ) {
 // ------------------------------------------------------------------ 
 
 static void on_paint ( ClutterActor *_actor, gpointer _user_data ) {
+    clutter_actor_queue_redraw (CLUTTER_ACTOR (_actor));
 }
 
 // ------------------------------------------------------------------ 
@@ -147,6 +148,27 @@ static gboolean queue_redraw ( gpointer _actor ) {
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
+
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static gboolean on_enter ( ClutterActor *_actor, ClutterEvent *_event, gpointer _user_data ) {
+    ClutterState *state = CLUTTER_STATE (_user_data);
+    clutter_state_set_state (state, "hover");
+    return TRUE;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static gboolean on_leave ( ClutterActor *_actor, ClutterEvent *_event, gpointer _user_data ) {
+    ClutterState *state = CLUTTER_STATE (_user_data);
+    clutter_state_set_state (state, "normal");
+    return TRUE;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -202,29 +224,26 @@ int main( int argc, char *argv[] ) {
 
         clutter_stage_set_color(CLUTTER_STAGE(stage), &stage_color);
         clutter_stage_set_user_resizable (CLUTTER_STAGE(stage), TRUE);
+        clutter_stage_set_accept_focus (CLUTTER_STAGE(stage), TRUE);
+        clutter_stage_set_title (CLUTTER_STAGE(stage), "exsdk Editor v1.0.0");
 
         // ======================================================== 
         // create view-2D
         // ======================================================== 
 
-        ClutterColor bg_color = { 0x7f, 0x7f, 0x7f, 0xff };
-        ClutterActor *view2d = clutter_view2d_new ();
-        clutter_view2d_set_color ( CLUTTER_VIEW2D(view2d), &bg_color );
-        clutter_actor_set_size ( view2d, view_width, view_height );
-        clutter_actor_set_position ( view2d, (win_width-view_width)/2, (win_height-view_height)/2 );
-        clutter_container_add_actor ( CLUTTER_CONTAINER (stage), view2d );
-        clutter_actor_show ( view2d );
-
         // TEMP { 
-        ClutterColor rect_color = { 0x00, 0x2f, 0xff, 0xaf };
-        ClutterColor border_color = { 0x00, 0x00, 0x00, 0xff };
-        ClutterActor *rect = clutter_rectangle_new_with_color ( &rect_color );
-        clutter_rectangle_set_border_color ( CLUTTER_RECTANGLE(rect), &border_color );
-        clutter_rectangle_set_border_width ( CLUTTER_RECTANGLE(rect), 1 );
-        clutter_actor_set_size (rect, win_width, 30);
-        clutter_actor_set_position (rect, 0.0, 0.0);
-        clutter_container_add_actor (CLUTTER_CONTAINER (stage), rect);
-        clutter_actor_show (rect);
+        ClutterActor *w1 = clutter_widget_new ();
+        clutter_actor_set_size ( w1, 400, 300 );
+        clutter_actor_set_position ( w1, 50, 50 );
+        clutter_container_add_actor (CLUTTER_CONTAINER (stage), w1);
+        clutter_actor_show (w1);
+
+        ClutterActor *b1 = clutter_button_new ();
+        clutter_actor_set_size ( b1, 20, 10 );
+        clutter_actor_set_position ( b1, 50, 50 );
+        clutter_container_add_actor (CLUTTER_CONTAINER (w1), b1);
+        clutter_actor_show (b1);
+
         // } TEMP end 
 
         //
@@ -233,13 +252,15 @@ int main( int argc, char *argv[] ) {
         ex_lua_load_modules( ex_lua_main_state(), "scripts" );
         __init_game ();
 
-        //
+        // FIXME: if we don't keep repaint the scene, we will recieve warning when move the window from one monitor to another.
         guint idle_source = g_idle_add( queue_redraw, stage );
         // g_signal_connect_after (stage, "paint", G_CALLBACK (on_paint), NULL);
 
         // show the stage and enter the main loop
         clutter_actor_show(stage);
         clutter_main();
+
+        //
         g_source_remove (idle_source);
 
         //
@@ -248,4 +269,5 @@ int main( int argc, char *argv[] ) {
 
     return 0;
 }
+
 

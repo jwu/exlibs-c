@@ -57,6 +57,7 @@ static void __render_entities ( ex_ref_t *_world ) {
         ex_ref_t *trans2d;
         ex_vec2f_t wpos;
 
+        // render the camera
         if ( ex_entity_get_comp(entref, EX_TYPEID(ex_camera_t)) ) {
             ex_ref_t *camref = ex_entity_get_comp(entref, EX_TYPEID(ex_camera_t));
             ex_camera_t *cam = EX_REF_CAST(ex_camera_t,camref);
@@ -74,14 +75,15 @@ static void __render_entities ( ex_ref_t *_world ) {
             ex_array_continue;
         }
 
+        // render other
         trans2d = ex_entity_get_comp( entref, EX_TYPEID(ex_trans2d_t) );
         ex_trans2d_world_position ( trans2d, &wpos );
 
         cogl_set_source_color4ub ( 0xff, 0, 0, 0x9f );
-        // cogl_path_round_rectangle ( wpos.x - 10, wpos.y - 10, 
-        //                             wpos.x + 10, wpos.y + 10, 5, 15 );
-        // cogl_path_stroke ();
-        cogl_rectangle ( wpos.x - 10, wpos.y - 10, wpos.x + 10, wpos.y + 10 );
+        cogl_path_round_rectangle ( wpos.x - 5, wpos.y - 5, 
+                                    wpos.x + 5, wpos.y + 5, 1, 15 );
+        cogl_path_stroke ();
+        // cogl_rectangle ( wpos.x - 10, wpos.y - 10, wpos.x + 10, wpos.y + 10 );
     } ex_array_each_end;
 }
 
@@ -90,14 +92,6 @@ static void __render_entities ( ex_ref_t *_world ) {
 // ------------------------------------------------------------------ 
 
 void clutter_render_world ( ex_ref_t *_world ) {
-    //
     __setup_camera ( ex_world_main_camera (_world) );
     __render_entities (_world);
-
-    // //
-    // cogl_set_source_color4ub (0xff, 0, 0, 0x9f);
-    // cogl_rectangle (0, 0, 100, 100);
-
-    // cogl_set_source_color4ub (0, 0xff, 0, 0x9f);
-    // cogl_rectangle ( -20, -20, -20 + 40, -20 + 40 );
 }

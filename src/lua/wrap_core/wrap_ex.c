@@ -853,10 +853,10 @@ static const luaL_Reg __ex_funcs[] = {
     { "dump_stack", __dump_stack },     // for DEBUG:
     { "screen_print", __screen_print }, // for DEBUG:
     { "draw_text", __draw_text },       // for DEBUG:
-    { "draw_point", __draw_point },       // for DEBUG:
+    { "draw_point", __draw_point },     // for DEBUG:
     { "draw_line", __draw_line },       // for DEBUG:
     { "draw_poly", __draw_poly },       // for DEBUG:
-    { "draw_circle", __draw_circle },       // for DEBUG:
+    { "draw_circle", __draw_circle },   // for DEBUG:
     { "log", __log },
     // randome
     { "range_rand", __range_rand }, // TODO: move to ex.random.range

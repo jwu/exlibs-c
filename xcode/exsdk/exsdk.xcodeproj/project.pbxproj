@@ -21,13 +21,9 @@
 		B22BBE9E13712BC300AB2471 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B22BBE9F13712BC300AB2471 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B22BBEA013712BC300AB2471 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
-		B22BBEAC13712BFC00AB2471 /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBEA913712BFC00AB2471 /* editor.c */; };
-		B22BBEAD13712BFC00AB2471 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBEAB13712BFC00AB2471 /* main.c */; };
 		B243C0BC130D86170056158F /* wrap_object.c in Sources */ = {isa = PBXBuildFile; fileRef = B243C0BB130D86170056158F /* wrap_object.c */; };
 		B245484812B9207800EF7261 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B245484C12B9209000EF7261 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
-		B25132551373C24600D4A241 /* view2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B25132531373C24600D4A241 /* view2d.c */; };
-		B25132571373FCC700D4A241 /* clutter_world_render.c in Sources */ = {isa = PBXBuildFile; fileRef = B25132561373FCC700D4A241 /* clutter_world_render.c */; };
 		B258D4F7136BB4330026F4D4 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D4BF136BB4330026F4D4 /* lapi.c */; };
 		B258D4F8136BB4330026F4D4 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = B258D4C0136BB4330026F4D4 /* lapi.h */; };
 		B258D4F9136BB4330026F4D4 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = B258D4C1136BB4330026F4D4 /* lauxlib.c */; };
@@ -428,7 +424,6 @@
 		B2F1790C1371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */; };
 		B2F1790D1371559B00C5F4A2 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */; };
 		B2F1790E1371559B00C5F4A2 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */; };
-		B2F1793E137269D500C5F4A2 /* clutter_main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F1793D137269D500C5F4A2 /* clutter_main.c */; };
 		B2F4088E1302C04F00FCF2B5 /* probability.c in Sources */ = {isa = PBXBuildFile; fileRef = B2F4088C1302C04F00FCF2B5 /* probability.c */; };
 		B2F4088F1302C04F00FCF2B5 /* probability.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F4088D1302C04F00FCF2B5 /* probability.h */; };
 /* End PBXBuildFile section */
@@ -594,10 +589,7 @@
 		B226FEE013181A160011A8A7 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
 		B22BBC441370437000AB2471 /* wrap_color3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color3f.c; sourceTree = "<group>"; };
 		B22BBC451370437000AB2471 /* wrap_color4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color4f.c; sourceTree = "<group>"; };
-		B22BBEA713712BC300AB2471 /* Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Editor.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B22BBEA913712BFC00AB2471 /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = editor.c; path = ../../src/editor/editor.c; sourceTree = "<group>"; };
-		B22BBEAA13712BFC00AB2471 /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = editor.h; path = ../../src/editor/editor.h; sourceTree = "<group>"; };
-		B22BBEAB13712BFC00AB2471 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../src/editor/main.c; sourceTree = "<group>"; };
+		B22BBEA713712BC300AB2471 /* Editor - clutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Editor - clutter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23B686013713F660038852A /* general_editor_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_editor_debug.xcconfig; path = ../xcconfig/general_editor_debug.xcconfig; sourceTree = "<group>"; };
 		B23B686113713F660038852A /* general_editor_release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_editor_release.xcconfig; path = ../xcconfig/general_editor_release.xcconfig; sourceTree = "<group>"; };
 		B23B686213713F660038852A /* general_exsdk_debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = general_exsdk_debug.xcconfig; path = ../xcconfig/general_exsdk_debug.xcconfig; sourceTree = "<group>"; };
@@ -609,9 +601,6 @@
 		B245482A12B91E9900EF7261 /* simple_world-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "simple_world-Info.plist"; sourceTree = "<group>"; };
 		B245484712B9207800EF7261 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B245484B12B9209000EF7261 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
-		B25132531373C24600D4A241 /* view2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = view2d.c; path = ../../src/editor/view2d.c; sourceTree = "<group>"; };
-		B25132541373C24600D4A241 /* view2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = view2d.h; path = ../../src/editor/view2d.h; sourceTree = "<group>"; };
-		B25132561373FCC700D4A241 /* clutter_world_render.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = clutter_world_render.c; path = ../../src/editor/clutter_world_render.c; sourceTree = "<group>"; };
 		B2582AEB136AB7E70009CEFF /* rtti test copy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "rtti test copy"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B258D4BF136BB4330026F4D4 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../ext/lua-5.1.4/lapi.c"; sourceTree = "<group>"; };
 		B258D4C0136BB4330026F4D4 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../ext/lua-5.1.4/lapi.h"; sourceTree = "<group>"; };
@@ -959,7 +948,6 @@
 		B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libclutter-osx-1.0.0.dylib"; path = "../../ext_build/libs/macosx/libclutter-osx-1.0.0.dylib"; sourceTree = "<group>"; };
 		B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "../../ext_build/libs/macosx/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
 		B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "../../ext_build/libs/macosx/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
-		B2F1793D137269D500C5F4A2 /* clutter_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = clutter_main.c; path = ../../src/editor/clutter_main.c; sourceTree = "<group>"; };
 		B2F4088C1302C04F00FCF2B5 /* probability.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = probability.c; sourceTree = "<group>"; };
 		B2F4088D1302C04F00FCF2B5 /* probability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = probability.h; sourceTree = "<group>"; };
 		D2AAC046055464E500DB518D /* libexsdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexsdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1212,13 +1200,6 @@
 		B22BBE9213712B9F00AB2471 /* editor */ = {
 			isa = PBXGroup;
 			children = (
-				B25132561373FCC700D4A241 /* clutter_world_render.c */,
-				B25132531373C24600D4A241 /* view2d.c */,
-				B25132541373C24600D4A241 /* view2d.h */,
-				B2F1793D137269D500C5F4A2 /* clutter_main.c */,
-				B22BBEA913712BFC00AB2471 /* editor.c */,
-				B22BBEAA13712BFC00AB2471 /* editor.h */,
-				B22BBEAB13712BFC00AB2471 /* main.c */,
 			);
 			name = editor;
 			sourceTree = "<group>";
@@ -1875,7 +1856,7 @@
 				B26C7FB413580CB500BDADA1 /* scripted world.app */,
 				B26C7FC813580E8B00BDADA1 /* gl render test.app */,
 				B2582AEB136AB7E70009CEFF /* rtti test copy */,
-				B22BBEA713712BC300AB2471 /* Editor.app */,
+				B22BBEA713712BC300AB2471 /* Editor - clutter.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2050,9 +2031,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B22BBE9313712BC300AB2471 /* Editor */ = {
+		B22BBE9313712BC300AB2471 /* Editor - clutter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildConfigurationList = B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor - clutter" */;
 			buildPhases = (
 				B22BBE9613712BC300AB2471 /* Resources */,
 				B22BBE9713712BC300AB2471 /* ShellScript */,
@@ -2064,9 +2045,9 @@
 			dependencies = (
 				B22BBE9413712BC300AB2471 /* PBXTargetDependency */,
 			);
-			name = Editor;
+			name = "Editor - clutter";
 			productName = test_gl;
-			productReference = B22BBEA713712BC300AB2471 /* Editor.app */;
+			productReference = B22BBEA713712BC300AB2471 /* Editor - clutter.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B245482712B91E9900EF7261 /* simple world */ = {
@@ -2452,7 +2433,7 @@
 			projectRoot = "";
 			targets = (
 				D2AAC045055464E500DB518D /* exsdk */,
-				B22BBE9313712BC300AB2471 /* Editor */,
+				B22BBE9313712BC300AB2471 /* Editor - clutter */,
 				B245482712B91E9900EF7261 /* simple world */,
 				B26C7FA213580CB500BDADA1 /* scripted world */,
 				B26C7FB713580E8B00BDADA1 /* gl render test */,
@@ -2542,11 +2523,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B22BBEAC13712BFC00AB2471 /* editor.c in Sources */,
-				B22BBEAD13712BFC00AB2471 /* main.c in Sources */,
-				B2F1793E137269D500C5F4A2 /* clutter_main.c in Sources */,
-				B25132551373C24600D4A241 /* view2d.c in Sources */,
-				B25132571373FCC700D4A241 /* clutter_world_render.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3115,7 +3091,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Editor;
+				PRODUCT_NAME = "Editor - clutter";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -3147,7 +3123,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Editor;
+				PRODUCT_NAME = "Editor - clutter";
 				USER_HEADER_SEARCH_PATHS = "";
 				ZERO_LINK = NO;
 			};
@@ -4011,7 +3987,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor" */ = {
+		B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor - clutter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B22BBEA513712BC300AB2471 /* Debug */,

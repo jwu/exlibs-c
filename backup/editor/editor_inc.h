@@ -17,6 +17,8 @@ extern "C" {
 // ######################### 
 
 #include "editor.h"
+#include "widget.h"
+#include "button.h"
 #include "view2d.h"
 
 #include "clutter/clutter.h"
