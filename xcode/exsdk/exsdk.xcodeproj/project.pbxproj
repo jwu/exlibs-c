@@ -15,6 +15,13 @@
 		B21711D11367ED3D00716123 /* coroutine_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B21711CF1367ED3D00716123 /* coroutine_mng.h */; };
 		B226FED51317D9780011A8A7 /* wrap_component.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FED41317D9780011A8A7 /* wrap_component.c */; };
 		B226FEE113181A160011A8A7 /* wrap_trans2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FEE013181A160011A8A7 /* wrap_trans2d.c */; };
+		B22789F2137A47A300B7B11E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B22789F3137A47A300B7B11E /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
+		B22789F4137A47A300B7B11E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
+		B22789F5137A47A300B7B11E /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
+		B22789FF137A490800B7B11E /* libcairo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22789FE137A490800B7B11E /* libcairo.a */; };
+		B2278A11137A50FB00B7B11E /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B2278A0E137A50FB00B7B11E /* editor.c */; };
+		B2278A12137A50FB00B7B11E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2278A10137A50FB00B7B11E /* main.c */; };
 		B22BBC461370437000AB2471 /* wrap_color3f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC441370437000AB2471 /* wrap_color3f.c */; };
 		B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC451370437000AB2471 /* wrap_color4f.c */; };
 		B22BBE9D13712BC300AB2471 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
@@ -429,6 +436,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B22789ED137A47A300B7B11E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = exsdk;
+		};
 		B22BBE9513712BC300AB2471 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
@@ -587,6 +601,12 @@
 		B21711CF1367ED3D00716123 /* coroutine_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutine_mng.h; sourceTree = "<group>"; };
 		B226FED41317D9780011A8A7 /* wrap_component.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_component.c; sourceTree = "<group>"; };
 		B226FEE013181A160011A8A7 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
+		B22789FC137A47A300B7B11E /* Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Editor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22789FE137A490800B7B11E /* libcairo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcairo.a; path = "../../ext_build/cairo-1.10.2/lib/macosx/libcairo.a"; sourceTree = "<group>"; };
+		B2278A0D137A50FB00B7B11E /* editor_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = editor_inc.h; path = ../../src/editor/editor_inc.h; sourceTree = "<group>"; };
+		B2278A0E137A50FB00B7B11E /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = editor.c; path = ../../src/editor/editor.c; sourceTree = "<group>"; };
+		B2278A0F137A50FB00B7B11E /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = editor.h; path = ../../src/editor/editor.h; sourceTree = "<group>"; };
+		B2278A10137A50FB00B7B11E /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../src/editor/main.c; sourceTree = "<group>"; };
 		B22BBC441370437000AB2471 /* wrap_color3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color3f.c; sourceTree = "<group>"; };
 		B22BBC451370437000AB2471 /* wrap_color4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color4f.c; sourceTree = "<group>"; };
 		B22BBEA713712BC300AB2471 /* Editor - clutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Editor - clutter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -954,6 +974,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B22789F1137A47A300B7B11E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B22789F2137A47A300B7B11E /* IOKit.framework in Frameworks */,
+				B22789F3137A47A300B7B11E /* libexsdk.a in Frameworks */,
+				B22789F4137A47A300B7B11E /* OpenGL.framework in Frameworks */,
+				B22789F5137A47A300B7B11E /* GLUT.framework in Frameworks */,
+				B22789FF137A490800B7B11E /* libcairo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B22BBE9C13712BC300AB2471 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1200,6 +1232,10 @@
 		B22BBE9213712B9F00AB2471 /* editor */ = {
 			isa = PBXGroup;
 			children = (
+				B2278A0D137A50FB00B7B11E /* editor_inc.h */,
+				B2278A0E137A50FB00B7B11E /* editor.c */,
+				B2278A0F137A50FB00B7B11E /* editor.h */,
+				B2278A10137A50FB00B7B11E /* main.c */,
 			);
 			name = editor;
 			sourceTree = "<group>";
@@ -1224,6 +1260,7 @@
 		B2582AED136AB8240009CEFF /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				B22789FE137A490800B7B11E /* libcairo.a */,
 				B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */,
 				B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */,
 				B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */,
@@ -1857,6 +1894,7 @@
 				B26C7FC813580E8B00BDADA1 /* gl render test.app */,
 				B2582AEB136AB7E70009CEFF /* rtti test copy */,
 				B22BBEA713712BC300AB2471 /* Editor - clutter.app */,
+				B22789FC137A47A300B7B11E /* Editor.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2031,6 +2069,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B22789EB137A47A300B7B11E /* Editor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B22789F9137A47A300B7B11E /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildPhases = (
+				B22789EE137A47A300B7B11E /* Resources */,
+				B22789EF137A47A300B7B11E /* ShellScript */,
+				B22789F0137A47A300B7B11E /* Sources */,
+				B22789F1137A47A300B7B11E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B22789EC137A47A300B7B11E /* PBXTargetDependency */,
+			);
+			name = Editor;
+			productName = test_gl;
+			productReference = B22789FC137A47A300B7B11E /* Editor.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B22BBE9313712BC300AB2471 /* Editor - clutter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B22BBEA413712BC300AB2471 /* Build configuration list for PBXNativeTarget "Editor - clutter" */;
@@ -2433,6 +2490,7 @@
 			projectRoot = "";
 			targets = (
 				D2AAC045055464E500DB518D /* exsdk */,
+				B22789EB137A47A300B7B11E /* Editor */,
 				B22BBE9313712BC300AB2471 /* Editor - clutter */,
 				B245482712B91E9900EF7261 /* simple world */,
 				B26C7FA213580CB500BDADA1 /* scripted world */,
@@ -2459,6 +2517,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B22789EE137A47A300B7B11E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B22BBE9613712BC300AB2471 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2490,6 +2555,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B22789EF137A47A300B7B11E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\nrm -rf \"$TARGET_BUILD_DIR/res\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/res\" \"$TARGET_BUILD_DIR/res\"";
+		};
 		B22BBE9713712BC300AB2471 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2519,6 +2597,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B22789F0137A47A300B7B11E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2278A11137A50FB00B7B11E /* editor.c in Sources */,
+				B2278A12137A50FB00B7B11E /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B22BBE9813712BC300AB2471 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2881,6 +2968,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B22789EC137A47A300B7B11E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* exsdk */;
+			targetProxy = B22789ED137A47A300B7B11E /* PBXContainerItemProxy */;
+		};
 		B22BBE9413712BC300AB2471 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D2AAC045055464E500DB518D /* exsdk */;
@@ -3060,6 +3152,74 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		B22789FA137A47A300B7B11E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B23B686013713F660038852A /* general_editor_debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "editor-info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)/../../ext_build/libs/macosx\\\"",
+					"\"$(SRCROOT)/../../ext_build/cairo-1.10.2/lib/macosx\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Editor;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		B22789FB137A47A300B7B11E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B23B686113713F660038852A /* general_editor_release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "editor-info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)/../../ext_build/libs/macosx\\\"",
+					"\"$(SRCROOT)/../../ext_build/cairo-1.10.2/lib/macosx\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Editor;
+				USER_HEADER_SEARCH_PATHS = "";
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -3983,6 +4143,15 @@
 			buildConfigurations = (
 				1DEB91F008733DB70010E9CD /* Debug */,
 				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B22789F9137A47A300B7B11E /* Build configuration list for PBXNativeTarget "Editor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B22789FA137A47A300B7B11E /* Debug */,
+				B22789FB137A47A300B7B11E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

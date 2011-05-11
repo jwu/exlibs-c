@@ -457,6 +457,7 @@ int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
     char dir[MAX_PATH];
     char path[MAX_PATH];
     int dir_len;
+    const char *realpath;
 
     // NOTE: this will ensure that our dir always end with "/" { 
     dir_len = strlen(_dir);
@@ -478,12 +479,16 @@ int ex_lua_load_modules ( lua_State *_l, const char *_dir ) {
     // } NOTE end 
 
     // add the fullpath dir as search path in lua.
-    strcpy( path, ex_fsys_realpath(dir) );
+    realpath = ex_fsys_realpath(dir);
+    if ( realpath == NULL ) {
+        ex_error ( "directory not found! %s", dir );
+        return -1;
+    }
+
+    strcpy( path, realpath );
     strcat( path, dir );
     ex_lua_add_path( _l, path );
     ex_lua_add_cpath( _l, path );
-
-    //
     return __load_modules ( _l, dir, dir );
 }
 
