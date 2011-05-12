@@ -20,7 +20,7 @@ extern "C" {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef int spin_lock_t;
+typedef int ex_spin_lock_t;
 typedef struct { int value; } ex_atomic_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -31,19 +31,19 @@ typedef struct { int value; } ex_atomic_t;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern int ex_atomic_try_lock ( spin_lock_t *_lock );
+extern int ex_atomic_try_lock ( ex_spin_lock_t *_lock );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_atomic_lock ( spin_lock_t *_lock );
+extern void ex_atomic_lock ( ex_spin_lock_t *_lock );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-extern void ex_atomic_unlock ( spin_lock_t *_lock );
+extern void ex_atomic_unlock ( ex_spin_lock_t *_lock );
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -56,7 +56,7 @@ extern void ex_atomic_unlock ( spin_lock_t *_lock );
 #elif (EX_COMPILER == EX_GCC)
     #define ex_compiler_barrier()  __asm__ __volatile__ ("" : : : "memory")
 #else
-    #define ex_compiler_barrier()  ({ spin_lock_t _tmp = 0; ex_atomic_lock(&_tmp); ex_atomic_unlock(&_tmp); })
+    #define ex_compiler_barrier()  ({ ex_spin_lock_t _tmp = 0; ex_atomic_lock(&_tmp); ex_atomic_unlock(&_tmp); })
 #endif
 
 // ------------------------------------------------------------------ 

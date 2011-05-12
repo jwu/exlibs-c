@@ -15,47 +15,18 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static UINT __timerID = 0;
 static LARGE_INTEGER __start_ticks;
 static LARGE_INTEGER __freq;
-
-// ------------------------------------------------------------------ 
-// Desc: 
-extern void __threaded_timer_tick ();
-// ------------------------------------------------------------------ 
-
-static void CALLBACK HandleAlarm ( UINT uID, 
-                                   UINT uMsg, 
-                                   DWORD_PTR dwUser, 
-                                   DWORD_PTR dw1, 
-                                   DWORD_PTR dw2 )
-{
-    __threaded_timer_tick();
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
 int ex_sys_timer_init () {
-    MMRESULT result;
-
     // init start ticks and cpu frequency
     QueryPerformanceFrequency(&__freq);
     QueryPerformanceCounter(&__start_ticks);
 
-    // Set timer resolution
-    result = timeBeginPeriod(EX_TIMER_RESOLUTION);
-    if ( result != TIMERR_NOERROR ) {
-        ex_error("Warning: Can't set %d ms timer resolution", EX_TIMER_RESOLUTION);
-    }
-
-    // Allow 10 ms of drift so we don't chew on CPU
-    __timerID = timeSetEvent(EX_TIMER_RESOLUTION, 1, HandleAlarm, 0, TIME_PERIODIC);
-    if ( !__timerID ) {
-        ex_error("timeSetEvent() failed");
-        return -1;
-    }
     return 0;
 }
 
@@ -64,10 +35,6 @@ int ex_sys_timer_init () {
 // ------------------------------------------------------------------ 
 
 void ex_sys_timer_deinit () {
-    if ( __timerID ) {
-        timeKillEvent(__timerID);
-    }
-    timeEndPeriod(EX_TIMER_RESOLUTION);
 }
 
 // ------------------------------------------------------------------ 

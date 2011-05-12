@@ -35,7 +35,7 @@ extern void __behavior_deinit ( ex_ref_t * );
 
 void __debug2d_deinit ( ex_ref_t *_self ) {
     ex_debug2d_t *self = EX_REF_CAST(ex_debug2d_t,_self);
-    ex_stop_timer(self->trail_timer);
+    ex_remove_timer(self->trail_timer);
 
     __behavior_deinit(_self); // parent deinint
 }
@@ -262,13 +262,11 @@ void __debug2d_start ( ex_ref_t *_self ) {
     for ( i = 0; i < EX_MAX_TRAIL_VERTS; ++i )
         self->trails[i] = worldPos;
 
-    self->trail_timer = ex_add_timer( __add_trail, 
-                                      NULL,
+    self->trail_timer = ex_add_timer( ex_timespan_from(0,50),
+                                      __add_trail, 
                                       &_self, 
-                                      sizeof(ex_ref_t *), 
-                                      (timespan_t)0, 
-                                      ex_timespan_from(0,50), 
-                                      EX_TIMESPAN_INFINITY );
+                                      sizeof(ex_ref_t *) );
+
     ex_start_timer(self->trail_timer);
 }
 

@@ -213,7 +213,6 @@
 		B26C7F621357F1F100BDADA1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B26C7E461357E06A00BDADA1 /* main.c */; };
 		B26C7F641357F1F100BDADA1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B26C7F651357F1F100BDADA1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
-		B26C7F671357F1F100BDADA1 /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B26C7F6F1357F21600BDADA1 /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = B26C7E4F1357E06A00BDADA1 /* timer.c */; };
 		B26C7F751357F21F00BDADA1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B26C7E461357E06A00BDADA1 /* main.c */; };
 		B26C7F771357F21F00BDADA1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
@@ -398,7 +397,6 @@
 		B2A232C71302221D00F3C100 /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A232451302221D00F3C100 /* timer.c */; };
 		B2A232C81302221D00F3C100 /* timer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A232461302221D00F3C100 /* timer.h */; };
 		B2A232C91302221D00F3C100 /* timer_inc.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A232471302221D00F3C100 /* timer_inc.h */; };
-		B2A232CA1302221D00F3C100 /* timer_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A232481302221D00F3C100 /* timer_mac.c */; };
 		B2A232CC1302221D00F3C100 /* timespan.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A2324A1302221D00F3C100 /* timespan.c */; };
 		B2A232CD1302221D00F3C100 /* timespan.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A2324B1302221D00F3C100 /* timespan.h */; };
 		B2A232D21302226000F3C100 /* debug_draw.c in Sources */ = {isa = PBXBuildFile; fileRef = B2A232CF1302226000F3C100 /* debug_draw.c */; };
@@ -418,6 +416,25 @@
 		B2B1D5B0136D1037008F6F57 /* trees.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B1D5A4136D1037008F6F57 /* trees.c */; };
 		B2B1D5B1136D1037008F6F57 /* uncompr.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B1D5A5136D1037008F6F57 /* uncompr.c */; };
 		B2B1D5B2136D1037008F6F57 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B1D5A6136D1037008F6F57 /* zutil.c */; };
+		B2B63154137BD8BE008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63155137BD9E7008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63156137BD9F5008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63157137BD9FC008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63158137BD9FF008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63159137BDA03008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B6315A137BDA07008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B6315B137BDA0B008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B6315C137BDA0E008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B6315D137BDA11008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B6315E137BDA15008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B6315F137BDA19008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63160137BDA1C008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63161137BDA1E008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63162137BDA22008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63163137BDA28008C2C1F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
+		B2B63164137BDC98008C2C1F /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
+		B2B63167137BDD4C008C2C1F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B63165137BDD28008C2C1F /* Carbon.framework */; };
+		B2B63169137BEB6B008C2C1F /* timer_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B63168137BEB6A008C2C1F /* timer_mac.c */; };
 		B2B8B1AB131D210D00D11A44 /* wrap_behavior.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B8B1AA131D210D00D11A44 /* wrap_behavior.c */; };
 		B2B8B1AD131D211500D11A44 /* wrap_lua_behavior.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B8B1AC131D211500D11A44 /* wrap_lua_behavior.c */; };
 		B2B8B1B6131D217600D11A44 /* lua_behavior.c in Sources */ = {isa = PBXBuildFile; fileRef = B2B8B1B4131D217600D11A44 /* lua_behavior.c */; };
@@ -936,7 +953,6 @@
 		B2A232451302221D00F3C100 /* timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer.c; sourceTree = "<group>"; };
 		B2A232461302221D00F3C100 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		B2A232471302221D00F3C100 /* timer_inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timer_inc.h; sourceTree = "<group>"; };
-		B2A232481302221D00F3C100 /* timer_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer_mac.c; sourceTree = "<group>"; };
 		B2A2324A1302221D00F3C100 /* timespan.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timespan.c; sourceTree = "<group>"; };
 		B2A2324B1302221D00F3C100 /* timespan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timespan.h; sourceTree = "<group>"; };
 		B2A232CF1302226000F3C100 /* debug_draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug_draw.c; sourceTree = "<group>"; };
@@ -956,6 +972,8 @@
 		B2B1D5A4136D1037008F6F57 /* trees.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = trees.c; path = "../../ext/physfs-2.0.2/zlib123/trees.c"; sourceTree = "<group>"; };
 		B2B1D5A5136D1037008F6F57 /* uncompr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = uncompr.c; path = "../../ext/physfs-2.0.2/zlib123/uncompr.c"; sourceTree = "<group>"; };
 		B2B1D5A6136D1037008F6F57 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zutil.c; path = "../../ext/physfs-2.0.2/zlib123/zutil.c"; sourceTree = "<group>"; };
+		B2B63165137BDD28008C2C1F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		B2B63168137BEB6A008C2C1F /* timer_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = timer_mac.c; sourceTree = "<group>"; };
 		B2B8B1AA131D210D00D11A44 /* wrap_behavior.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_behavior.c; sourceTree = "<group>"; };
 		B2B8B1AC131D211500D11A44 /* wrap_lua_behavior.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_lua_behavior.c; sourceTree = "<group>"; };
 		B2B8B1B4131D217600D11A44 /* lua_behavior.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_behavior.c; sourceTree = "<group>"; };
@@ -1013,6 +1031,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63156137BD9F5008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7E5A1357EC0D00BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7E5B1357EC0D00BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7E5D1357EC0D00BDADA1 /* libexsdk.a in Frameworks */,
@@ -1023,6 +1042,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63157137BD9FC008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7E6D1357ED0200BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7E6E1357ED0200BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7E701357ED0200BDADA1 /* libexsdk.a in Frameworks */,
@@ -1033,6 +1053,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63158137BD9FF008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7E801357EDBE00BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7E811357EDBE00BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7E831357EDBE00BDADA1 /* libexsdk.a in Frameworks */,
@@ -1043,6 +1064,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63159137BDA03008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7E921357EDC000BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7E931357EDC000BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7E951357EDC000BDADA1 /* libexsdk.a in Frameworks */,
@@ -1053,6 +1075,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B6315A137BDA07008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7EA61357EED000BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7EA71357EED000BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7EA91357EED000BDADA1 /* libexsdk.a in Frameworks */,
@@ -1063,6 +1086,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B6315E137BDA15008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7EB91357EF3300BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7EBA1357EF3300BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7EBC1357EF3300BDADA1 /* libexsdk.a in Frameworks */,
@@ -1083,6 +1107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B6315B137BDA0B008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7EDF1357EFD800BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7EE01357EFD800BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7EE21357EFD800BDADA1 /* libexsdk.a in Frameworks */,
@@ -1093,6 +1118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B6315C137BDA0E008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F051357F0F100BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F061357F0F100BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F081357F0F100BDADA1 /* libexsdk.a in Frameworks */,
@@ -1103,6 +1129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B6315F137BDA19008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F181357F12B00BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F191357F12B00BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F1B1357F12B00BDADA1 /* libexsdk.a in Frameworks */,
@@ -1113,6 +1140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63160137BDA1C008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F2B1357F16000BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F2C1357F16000BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F2E1357F16000BDADA1 /* libexsdk.a in Frameworks */,
@@ -1123,6 +1151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63161137BDA1E008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F3E1357F19200BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F3F1357F19200BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F411357F19200BDADA1 /* libexsdk.a in Frameworks */,
@@ -1133,6 +1162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63162137BDA22008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F511357F1BD00BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F521357F1BD00BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F541357F1BD00BDADA1 /* libexsdk.a in Frameworks */,
@@ -1143,9 +1173,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63167137BDD4C008C2C1F /* Carbon.framework in Frameworks */,
+				B2B63154137BD8BE008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F641357F1F100BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F651357F1F100BDADA1 /* GLUT.framework in Frameworks */,
-				B26C7F671357F1F100BDADA1 /* libexsdk.a in Frameworks */,
+				B2B63164137BDC98008C2C1F /* libexsdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +1185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63163137BDA28008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F771357F21F00BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F781357F21F00BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F7A1357F21F00BDADA1 /* libexsdk.a in Frameworks */,
@@ -1163,6 +1196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B6315D137BDA11008C2C1F /* IOKit.framework in Frameworks */,
 				B26C7F9613580C6F00BDADA1 /* OpenGL.framework in Frameworks */,
 				B26C7F9713580C6F00BDADA1 /* GLUT.framework in Frameworks */,
 				B26C7F9913580C6F00BDADA1 /* libexsdk.a in Frameworks */,
@@ -1195,6 +1229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B63155137BD9E7008C2C1F /* IOKit.framework in Frameworks */,
 				B2A22DC012FEEC3000F3C100 /* OpenGL.framework in Frameworks */,
 				B2C344DA13503A0800D9E793 /* GLUT.framework in Frameworks */,
 				B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */,
@@ -1263,6 +1298,7 @@
 				B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */,
 				B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */,
 				D2AAC046055464E500DB518D /* libexsdk.a */,
+				B2B63165137BDD28008C2C1F /* Carbon.framework */,
 				B258D59C136BC2140026F4D4 /* IOKit.framework */,
 				B245484712B9207800EF7261 /* OpenGL.framework */,
 				B245484B12B9209000EF7261 /* GLUT.framework */,
@@ -1834,6 +1870,7 @@
 		B2A232401302221D00F3C100 /* timer */ = {
 			isa = PBXGroup;
 			children = (
+				B2B63168137BEB6A008C2C1F /* timer_mac.c */,
 				B2A232411302221D00F3C100 /* date.c */,
 				B2A232421302221D00F3C100 /* date.h */,
 				B2A232431302221D00F3C100 /* dtime.c */,
@@ -1841,7 +1878,6 @@
 				B2A232451302221D00F3C100 /* timer.c */,
 				B2A232461302221D00F3C100 /* timer.h */,
 				B2A232471302221D00F3C100 /* timer_inc.h */,
-				B2A232481302221D00F3C100 /* timer_mac.c */,
 				B2A2324A1302221D00F3C100 /* timespan.c */,
 				B2A2324B1302221D00F3C100 /* timespan.h */,
 			);
@@ -2852,7 +2888,6 @@
 				B2A232C31302221D00F3C100 /* date.c in Sources */,
 				B2A232C51302221D00F3C100 /* dtime.c in Sources */,
 				B2A232C71302221D00F3C100 /* timer.c in Sources */,
-				B2A232CA1302221D00F3C100 /* timer_mac.c in Sources */,
 				B2A232CC1302221D00F3C100 /* timespan.c in Sources */,
 				B2A232D21302226000F3C100 /* debug_draw.c in Sources */,
 				B2A232D81302227200F3C100 /* builtin_type_registry.c in Sources */,
@@ -2958,6 +2993,7 @@
 				B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */,
 				B2278A46137B7E3400B7B11E /* atomic.c in Sources */,
 				B2278A48137B7E3400B7B11E /* spinlock.c in Sources */,
+				B2B63169137BEB6B008C2C1F /* timer_mac.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3350,7 +3386,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3369,7 +3405,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3389,7 +3425,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3408,7 +3444,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3428,7 +3464,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3447,7 +3483,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3467,7 +3503,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3486,7 +3522,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3506,7 +3542,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3525,7 +3561,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3545,7 +3581,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3564,7 +3600,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3584,7 +3620,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3603,7 +3639,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3623,7 +3659,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3642,7 +3678,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3662,7 +3698,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3681,7 +3717,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3701,7 +3737,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3720,7 +3756,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3740,7 +3776,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3759,7 +3795,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3779,7 +3815,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3798,7 +3834,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3818,7 +3854,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3837,7 +3873,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3857,7 +3893,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3876,7 +3912,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3896,7 +3932,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3915,7 +3951,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3935,7 +3971,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -3954,7 +3990,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -4090,7 +4126,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_DEBUG__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;
@@ -4109,7 +4145,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = __EX_RELEASE__;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INSTALL_PATH = /usr/local/bin;

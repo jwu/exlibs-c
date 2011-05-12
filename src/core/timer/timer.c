@@ -12,151 +12,201 @@
 #include "exsdk.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// private defines
+// defines
 ///////////////////////////////////////////////////////////////////////////////
 
-#define __ROUND_RESOLUTION(_x) \
-	(uint32)(((_x+EX_TIMER_RESOLUTION-1)/EX_TIMER_RESOLUTION)*EX_TIMER_RESOLUTION)
-
 // ------------------------------------------------------------------ 
-// Desc: timer_t 
+// Desc: structures
 // ------------------------------------------------------------------ 
 
 typedef struct timer_t {
-    int state;
-    bool affect_by_timescale;
-
-    // start delay for msecs
-    uint32 delay;    // msecs
-    uint32 interval; // msecs
-    // if reach lifetime, the timer will stopped but not removed
-    uint32 lifetime;    // msecs
-
-    uint32 start;       // msecs
-    uint32 last_alarm;  // msecs
-
-    // NOTE: it is possible the counter be minus
-    int32 start_counter; // msecs
-    int32 interval_counter; // msecs
-    int32 lifetime_counter; // msecs
-
-    ex_timer_pfn cb;
-    ex_timer_stop_pfn on_stop;
+    int timer_id;
+    int status;
+    ex_timer_pfn callback;
     void *params;
+    uint32 interval;
+    uint32 scheduled;
+    volatile int canceled;
+    struct timer_t *next;
 } timer_t;
 
-// when finish ex_timer_init, this will set to 1. in ex_timer_deinit, it will set to 0
-int __timer_running = 0;
+typedef struct timer_map_t {
+    int timer_id;
+    timer_t *timer;
+    struct timer_map_t *next;
+} timer_map_t;
 
-static ex_pool_t __timers; // NOTE: we don't use pointer pool, because we known we only use it in this file.
-static ex_array_t __unused_timers; // NOTE: we don't use pointer array, because we known we only use it in this file.
+/* The timers are kept in a sorted list */
+typedef struct timer_data_t {
+    /* Data used by the main thread */
+    ex_thread_t *thread;
+    ex_atomic_t next_id;
+    timer_map_t *timer_map;
+    ex_mutex_t *timer_map_lock;
+
+    /* Padding to separate cache lines between threads */
+    char cache_pad[128];
+
+    /* Data used to communicate with the timer thread */
+    ex_spin_lock_t lock;
+    ex_semaphore_t *sem;
+    timer_t * volatile pending;
+    timer_t * volatile freelist;
+    volatile int active;
+
+    /* List of timers - this is only touched by the timer thread */
+    timer_t *timers;
+} timer_data_t;
+
+static timer_data_t __timer_data;
 static bool __initialized = false;
-static ex_mutex_t *__timer_mutex = NULL;
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// The idea here is that any thread might add a timer, but a single
+// thread manages the active timer queue, sorted by scheduling time.
+// Timers are removed by simply setting a canceled flag
+// ------------------------------------------------------------------ 
+
+static void __add_timer_internal ( timer_data_t *_data, timer_t *_timer ) {
+    timer_t *prev, *curr;
+
+    prev = NULL;
+    for ( curr = _data->timers; curr; prev = curr, curr = curr->next ) {
+        if ( (int32)(_timer->scheduled-curr->scheduled) < 0 ) {
+            break;
+        }
+    }
+
+    /* Insert the _timer here! */
+    if ( prev ) {
+        prev->next = _timer;
+    } else {
+        _data->timers = _timer;
+    }
+    _timer->next = curr;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void __threaded_timer_tick () {
-    uint32 now;
-    int32 ms;
+static int __timer_thread ( void *_data ) {
+    timer_data_t *data = (timer_data_t *)_data;
+    timer_t *pending;
+    timer_t *current;
+    timer_t *freelist_head = NULL;
+    timer_t *freelist_tail = NULL;
+    uint32 tick, now, interval, delay;
 
-    ex_mutex_lock(__timer_mutex);
-    now = ex_timer_get_ticks();
-    ex_pool_raw_each ( &__timers, timer_t *, t ) {
-        int32 time_since_start;
-        int32 time_since_lastAlarm;
+    /* Threaded timer loop:
+     *  1. Queue timers added by other threads
+     *  2. Handle any timers that should dispatch this cycle
+     *  3. Wait until next dispatch time or new timer arrives
+     */
+    for ( ; ; ) {
+        /* Pending and freelist maintenance */
+        ex_atomic_lock (&data->lock);
+        {
+            /* Get any timers ready to be queued */
+            pending = data->pending;
+            data->pending = NULL;
 
-        if ( t->state != EX_TIMER_STATE_RUNNING )
-            ex_pool_continue;
+            /* Make any unused timer structures available */
+            if (freelist_head) {
+                freelist_tail->next = data->freelist;
+                data->freelist = freelist_head;
+            }
+        }
+        ex_atomic_unlock (&data->lock);
 
-        // process start
-        if ( t->start_counter != 0 ) {
-            ms = t->start_counter - EX_TIMER_SLICE;
-            time_since_start = (int32)(now - t->start); 
-            // if we still wait for start
-            if ( time_since_start <= ms ) {
-                ex_pool_continue;
-            } 
-            // when timer start, it will invoke first
-            else {
-                t->start_counter = 0;
+        /* Sort the pending timers into our list */
+        while (pending) {
+            current = pending;
+            pending = pending->next;
+            __add_timer_internal(data, current);
+        }
+        freelist_head = NULL;
+        freelist_tail = NULL;
 
-                // execute the timer callback
-                ex_mutex_unlock(__timer_mutex); // NOTE: this help us do ex_add_timer in another timer thread.
-                ms = t->cb(t->interval, t->params);
-                ex_mutex_lock(__timer_mutex);
+        /* Check to see if we're still running, after maintenance */
+        if (!data->active) {
+            break;
+        }
+
+        /* Initial delay if there are no timers */
+        delay = EX_MUTEX_MAXWAIT;
+
+        tick = ex_timer_get_ticks();
+
+        /* Process all the pending timers for this tick */
+        while ( data->timers ) {
+            current = data->timers;
+
+            if ((int32)(tick-current->scheduled) < 0) {
+                /* Scheduled for the future, wait a bit */
+                delay = (current->scheduled - tick);
+                break;
+            }
+
+            /* We're going to do something with this timer */
+            data->timers = current->next;
+
+            // re-scheduled it
+            if ( current->status == EX_TIMER_STATE_PAUSED ) {
+                continue;
+            }
+
+            //
+            if ( current->canceled ) {
+                interval = 0;
+            } else {
+                interval = current->callback(current->interval, current->params);
+            }
+
+            if (interval > 0) {
+                /* Reschedule this timer */
+                current->scheduled = tick + interval;
+                __add_timer_internal(data, current);
+            } else {
+
+                // free params before sending to freelist
+                if ( current->params ) {
+                    ex_free_nomng (current->params);
+                    current->params = NULL;
+                }
+                current->status = EX_TIMER_STATE_STOPPED;
+
+                if (!freelist_head) {
+                    freelist_head = current;
+                }
+                if (freelist_tail) {
+                    freelist_tail->next = current;
+                }
+                freelist_tail = current;
+
+                current->canceled = 1;
             }
         }
 
-        // process internval
-        ms = t->interval_counter - EX_TIMER_SLICE;
-        time_since_lastAlarm = (int32)(now - t->last_alarm); 
-
-        // if we exceed the interval
-        if ( time_since_lastAlarm > ms ) {
-            if ( time_since_lastAlarm < t->interval_counter )
-                t->last_alarm += t->interval;
-            else
-                t->last_alarm = now;
-
-            // execute the timer callback
-            ex_mutex_unlock(__timer_mutex);
-            ms = t->cb(t->interval, t->params);
-            ex_mutex_lock(__timer_mutex);
-
-            // process return interval
-            if (ms != t->interval) {
-                // if ms not zero round it and set as the next interval.
-                if ( ms > 0 )
-                    t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
-                else
-                    ex_array_append_int32(&__unused_timers, __id__);
-            }
-            else {
-                t->interval_counter = t->interval;
-            }
+        /* Adjust the delay based on processing time */
+        now = ex_timer_get_ticks();
+        interval = (now - tick);
+        if (interval > delay) {
+            delay = 0;
+        } else {
+            delay -= interval;
         }
 
-        // process lifetime
-        if ( t->lifetime != -1 ) {
-            int32 time_since_start;
-
-            ms = t->lifetime_counter - EX_TIMER_SLICE;
-            time_since_start = (int32)(now - t->start); 
-
-            // if we exceed the lifetime, remove the timer
-            if ( time_since_start > ms ) {
-                ex_array_append_int32(&__unused_timers, __id__);
-                ex_pool_continue;
-            }
-        }
-
-    } ex_pool_each_end
-
-    // remove all timer here
-    ex_array_each ( &__unused_timers, int, id ) {
-        timer_t *t = (timer_t *)ex_pool_get ( &__timers, id );
-        if (t) {
-            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop ) {
-                ex_mutex_unlock(__timer_mutex);
-                t->on_stop(t->params);
-                ex_mutex_lock(__timer_mutex);
-            }
-            if ( t->params ) {
-                ex_free_nomng (t->params);
-                t->params = NULL;
-            }
-        }
-        ex_pool_remove_at_safe ( &__timers, id ); // this can work around if we got several same id to remove.
-    } ex_array_each_end
-    ex_array_remove_all(&__unused_timers);
-    ex_mutex_unlock(__timer_mutex);
+        /* Note that each time a timer is added, this will return
+           immediately, but we process the timers added all at once.
+           That's okay, it just means we run through the loop a few
+           extra times.
+           */
+        ex_semaphore_wait_timeout(data->sem, delay);
+    }
+    return 0;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// defines
-///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -164,7 +214,8 @@ extern bool ex_sys_timer_init ();
 // ------------------------------------------------------------------ 
 
 int ex_timer_init () {
-    int ret = false;
+
+    timer_data_t *data = &__timer_data;
 
     // if the core already inited, don't init it second times.
     if ( __initialized ) {
@@ -172,31 +223,31 @@ int ex_timer_init () {
         return 1;
     }
 
-    // init timer
-    ret = ex_sys_timer_init();
-    __timer_mutex = ex_create_mutex();
-    if ( ret == -1 )
-        return -1;
+    // init sys timer
+    ex_sys_timer_init();
 
     //
-    ex_pool_init ( &__timers, 
-                   EX_STRID_NULL, 
-                   sizeof(timer_t),
-                   8,
-                   __ex_pool_alloc_nomng,
-                   __ex_pool_realloc_nomng,
-                   __ex_pool_dealloc_nomng );
-    //
-    ex_array_init ( &__unused_timers, 
-                    EX_STRID_NULL, 
-                    sizeof(int), 
-                    32,
-                    __ex_array_alloc_nomng,
-                    __ex_array_realloc_nomng,
-                    __ex_array_dealloc_nomng );
+    if ( !data->active ) {
+        data->timer_map_lock = ex_create_mutex ();
+        if ( !data->timer_map_lock ) {
+            return -1;
+        }
 
-    // now start the timer
-    __timer_running = 1;
+        data->sem = ex_create_semaphore (0);
+        if (!data->sem) {
+            ex_destroy_mutex (data->timer_map_lock);
+            return -1;
+        }
+
+        data->active = 1;
+        data->thread = ex_create_thread (__timer_thread, data);
+        if (!data->thread) {
+            ex_timer_deinit ();
+            return -1;
+        }
+
+        ex_atomic_set(&data->next_id, 1);
+    }
 
     //
     __initialized = true;
@@ -209,27 +260,57 @@ extern void ex_sys_timer_deinit ();
 // ------------------------------------------------------------------ 
 
 void ex_timer_deinit () {
+    timer_data_t *data = &__timer_data;
+    timer_t *timer;
+    timer_map_t *entry;
 
     if ( __initialized ) {
-        // we must stop all timers before we remove them.
-        __timer_running = 0;
 
-        // free params in timer
-        ex_pool_raw_each ( &__timers, timer_t *, t ) {
-            if ( t->params ) {
-                ex_free_nomng (t->params);
-                t->params = NULL;
+        if (data->active) {
+            data->active = 0;
+
+            /* Shutdown the timer thread */
+            if ( data->thread ) {
+                ex_semaphore_post (data->sem);
+                ex_wait_thread (data->thread, NULL);
+                data->thread = NULL;
             }
-        } ex_pool_each_end
 
-        // clear all timers
-        ex_pool_deinit(&__timers);
-        ex_array_deinit(&__unused_timers);
+            ex_destroy_semaphore (data->sem);
+            data->sem = NULL;
 
-        //
+            /* Clean up the timer entries */
+            while (data->timers) {
+                timer = data->timers;
+                data->timers = timer->next;
+                // free params before sending to freelist
+                if ( timer->params ) {
+                    ex_free_nomng (timer->params);
+                    timer->params = NULL;
+                }
+                ex_free_nomng(timer);
+            }
+            while (data->freelist) {
+                timer = data->freelist;
+                data->freelist = timer->next;
+                // free params before sending to freelist
+                if ( timer->params ) {
+                    ex_free_nomng (timer->params);
+                    timer->params = NULL;
+                }
+                ex_free_nomng(timer);
+            }
+            while (data->timer_map) {
+                entry = data->timer_map;
+                data->timer_map = entry->next;
+                ex_free_nomng(entry);
+            }
+
+            ex_destroy_mutex(data->timer_map_lock);
+            data->timer_map_lock = NULL;
+        }
+
         ex_sys_timer_deinit();
-        ex_destroy_mutex (__timer_mutex);
-        __timer_mutex = NULL;
 
         //
         __initialized = false;
@@ -248,62 +329,116 @@ bool ex_timer_initialized () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int ex_add_timer ( ex_timer_pfn _cb, 
-                   ex_timer_stop_pfn _on_stop,
+int ex_add_timer ( timespan_t _interval,
+                   ex_timer_pfn _callback, 
                    void *_params, 
-                   size_t _size, /*parameter byte-size*/ 
-                   timespan_t _delay,
-                   timespan_t _interval,
-                   timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ ) {
+                   size_t _size )
+{
+    timer_data_t *data = &__timer_data;
+    timer_t *timer;
+    timer_map_t *entry;
 
-    int id;
-    timer_t newTimer;
+    if (!data->active) {
+        int status = 0;
 
-    // check the inputs
-    ex_assert_return ( _cb != NULL, -1, "callback function can't not be NULL" );
-    ex_assert_return ( _delay != EX_TIMESPAN_INFINITY, -1, "delay can't be EX_TIMESPAN_INFINITY, if you don't need delay, put it to 0" );
-    ex_assert_return ( _interval != 0, -1, "interval can't be 0, the minimum value is 1" );
-    ex_assert_return ( _interval != EX_TIMESPAN_INFINITY, -1, "interval can't be infinity, the minimum value is 1" );
-    ex_assert_return ( _lifetime != 0, -1, "lifetime can't be 0, the minimum value is 1, if you don't need lifetime, put it to EX_TIMESPAN_INFINITY" );
+        ex_atomic_lock(&data->lock);
+        if (!data->active) {
+            status = ex_timer_init();
+        }
+        ex_atomic_unlock(&data->lock);
 
-    // init new timer
-    newTimer.state = EX_TIMER_STATE_STOPPED;
-    newTimer.start_counter = newTimer.delay = __ROUND_RESOLUTION(ex_timespan_to_msecs(_delay));
-    newTimer.interval_counter = newTimer.interval = __ROUND_RESOLUTION(ex_timespan_to_msecs(_interval));
-    newTimer.lifetime_counter = newTimer.lifetime = (_lifetime == EX_TIMESPAN_INFINITY) ? -1 : __ROUND_RESOLUTION(ex_timespan_to_msecs(_lifetime));
-    newTimer.start = newTimer.last_alarm = -1; // start and counter should assign in ex_start_timer
-    newTimer.cb = _cb;
-    newTimer.on_stop = _on_stop;
-    if ( _params ) {
-        newTimer.params = ex_malloc_nomng(_size);
-        memcpy( newTimer.params, _params, _size );
-    } else {
-        newTimer.params = NULL;
+        if ( status < 0 ) {
+            return EX_INVALID_TIMER_ID;
+        }
     }
 
-    //
-    ex_mutex_lock(__timer_mutex);
-        id = ex_pool_insert ( &__timers, &newTimer );
-    ex_mutex_unlock(__timer_mutex);
-    return id;
+    ex_atomic_lock(&data->lock);
+    timer = data->freelist;
+    if (timer) {
+        data->freelist = timer->next;
+    }
+    ex_atomic_unlock(&data->lock);
+
+    if (timer) {
+        ex_assert ( timer->params == NULL, "the timer is removed without free params" );
+        ex_assert ( timer->status == EX_TIMER_STATE_STOPPED, "the timer is not stopped" );
+        ex_remove_timer (timer->timer_id);
+    } else {
+        timer = (timer_t *)ex_malloc_nomng(sizeof(*timer));
+        if (!timer) {
+            return EX_INVALID_TIMER_ID;
+        }
+    }
+    timer->status = EX_TIMER_STATE_STOPPED;
+    timer->timer_id = ex_atomic_incref(&data->next_id);
+    timer->callback = _callback;
+    timer->params = NULL;
+    if ( _params ) {
+        timer->params = ex_malloc_nomng(_size);
+        memcpy( timer->params, _params, _size );
+    }
+    timer->interval = ex_timespan_to_msecs(_interval);
+    timer->scheduled = ex_timer_get_ticks() + timer->interval;
+    timer->canceled = 0;
+
+    entry = (timer_map_t *)ex_malloc_nomng(sizeof(*entry));
+    if (!entry) {
+        ex_free_nomng (timer);
+        return EX_INVALID_TIMER_ID;
+    }
+    entry->timer = timer;
+    entry->timer_id = timer->timer_id;
+
+    ex_mutex_lock(data->timer_map_lock);
+    entry->next = data->timer_map;
+    data->timer_map = entry;
+    ex_mutex_unlock(data->timer_map_lock);
+
+    /* Add the timer to the pending list for the timer thread */
+    ex_atomic_lock(&data->lock);
+    timer->next = data->pending;
+    data->pending = timer;
+    ex_atomic_unlock(&data->lock);
+
+    /* Wake up the timer thread if necessary */
+    ex_semaphore_post(data->sem);
+
+    return entry->timer_id;
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-bool ex_remove_timer ( int _id ) {
-    bool validTimer = ex_pool_isvalid ( &__timers, _id );
+int ex_remove_timer ( int _id ) {
 
-    // the timer already removed
-    if ( !validTimer )
-        return false;
+    timer_data_t *data = &__timer_data;
+    timer_map_t *prev, *entry;
+    int canceled = 0;
 
-    ex_mutex_lock(__timer_mutex);
-        ex_stop_timer(_id); // mark timer as stopped
-        ex_array_append_int32(&__unused_timers, _id);
-    ex_mutex_unlock(__timer_mutex);
-    return true;
+    /* Find the timer */
+    ex_mutex_lock(data->timer_map_lock);
+    prev = NULL;
+    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+        if (entry->timer_id == _id) {
+            if (prev) {
+                prev->next = entry->next;
+            } else {
+                data->timer_map = entry->next;
+            }
+            break;
+        }
+    }
+    ex_mutex_unlock(data->timer_map_lock);
+
+    if (entry) {
+        if (!entry->timer->canceled) {
+            entry->timer->canceled = 1;
+            canceled = 1;
+        }
+        ex_free_nomng(entry);
+    }
+    return canceled;
 }
 
 // ------------------------------------------------------------------ 
@@ -311,82 +446,20 @@ bool ex_remove_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_start_timer ( int _id ) {
-    timer_t *t;
 
-    if ( _id == EX_INVALID_TIMER_ID )
-        return;
+    timer_data_t *data = &__timer_data;
+    timer_map_t *prev, *entry;
 
-    ex_mutex_lock(__timer_mutex);
-        t = (timer_t *)ex_pool_get ( &__timers, _id );
-        if (t) {
-            t->start = t->last_alarm = ex_timer_get_ticks();
-            t->start_counter = t->delay;
-            t->interval_counter = t->interval; 
-            t->lifetime_counter = t->lifetime;
-            t->state = EX_TIMER_STATE_RUNNING;
-
-            // ======================================================== 
-            // execute timer when start time is zero
-            // ======================================================== 
-
-            // if the start counter is zero
-            if ( t->start_counter == 0 ) {
-                int32 ms;
-
-                // execute the timer callback
-                ex_mutex_unlock(__timer_mutex);
-                ms = t->cb(t->interval, t->params);
-                ex_mutex_lock(__timer_mutex);
-
-                // process return interval
-                if (ms != t->interval) {
-                    // if ms not zero round it and set as the next interval.
-                    if ( ms > 0 ) {
-                        t->interval_counter = t->interval = __ROUND_RESOLUTION(ms);
-                    }
-                    else {
-                        if ( t->on_stop ) {
-                            ex_mutex_unlock(__timer_mutex);
-                            t->on_stop(t->params);
-                            ex_mutex_lock(__timer_mutex);
-                        }
-                        t->start = t->last_alarm = -1;
-                        t->state = EX_TIMER_STATE_STOPPED;
-                        // it still possible we remove the timer ....
-                        if ( t->params ) {
-                            ex_free_nomng (t->params);
-                            t->params = NULL;
-                        }
-                        ex_pool_remove_at_safe ( &__timers, _id ); // this can work around if we got several same id to remove.
-                    }
-                }
-            }
+    /* Find the timer */
+    ex_mutex_lock(data->timer_map_lock);
+    prev = NULL;
+    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+        if (entry->timer_id == _id) {
+            entry->timer->status = EX_TIMER_STATE_RUNNING;
+            break;
         }
-    ex_mutex_unlock(__timer_mutex);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void ex_stop_timer ( int _id ) {
-    timer_t *t;
-
-    if ( _id == EX_INVALID_TIMER_ID )
-        return;
-
-    ex_mutex_lock(__timer_mutex);
-        t = (timer_t *)ex_pool_get ( &__timers, _id );
-        if (t) {
-            if ( t->state != EX_TIMER_STATE_STOPPED && t->on_stop ) {
-                ex_mutex_unlock(__timer_mutex);
-                t->on_stop(t->params);
-                ex_mutex_lock(__timer_mutex);
-            }
-            t->start = t->last_alarm = -1;
-            t->state = EX_TIMER_STATE_STOPPED;
-        }
-    ex_mutex_unlock(__timer_mutex);
+    }
+    ex_mutex_unlock(data->timer_map_lock);
 }
 
 // ------------------------------------------------------------------ 
@@ -394,26 +467,21 @@ void ex_stop_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_pause_timer ( int _id ) {
-    timer_t *t;
 
-    if ( _id == EX_INVALID_TIMER_ID )
-        return;
-    
-    ex_mutex_lock(__timer_mutex);
-        t = (timer_t *)ex_pool_get ( &__timers, _id );
-        if (t) {
-            uint32 now;
-            int32 time_since_lastAlarm,time_since_start;
+    timer_data_t *data = &__timer_data;
+    timer_map_t *prev, *entry;
 
-            now = ex_timer_get_ticks();
-            time_since_lastAlarm = (int32)(now - t->last_alarm);
-            time_since_start = (int32)(now - t->start);
-            t->start_counter = t->start_counter - time_since_start;
-            t->interval_counter = t->interval_counter - time_since_lastAlarm;
-            t->lifetime_counter = t->lifetime_counter - time_since_start;
-            t->state = EX_TIMER_STATE_PAUSED;
+    /* Find the timer */
+    ex_mutex_lock(data->timer_map_lock);
+    prev = NULL;
+    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+        if (entry->timer_id == _id) {
+            entry->timer->status = EX_TIMER_STATE_PAUSED;
+            entry->timer->scheduled = entry->timer->scheduled - ex_timer_get_ticks();
+            break;
         }
-    ex_mutex_unlock(__timer_mutex);
+    }
+    ex_mutex_unlock(data->timer_map_lock);
 }
 
 // ------------------------------------------------------------------ 
@@ -421,59 +489,28 @@ void ex_pause_timer ( int _id ) {
 // ------------------------------------------------------------------ 
 
 void ex_resume_timer ( int _id ) {
-    timer_t *t;
 
-    if ( _id == EX_INVALID_TIMER_ID )
-        return;
+    timer_data_t *data = &__timer_data;
+    timer_map_t *prev, *entry;
 
-    ex_mutex_lock(__timer_mutex);
-        t = (timer_t *)ex_pool_get ( &__timers, _id );
-        if (t) {
-            uint32 now;
-
-            now = ex_timer_get_ticks();
-            t->start = t->last_alarm = now;
-            t->state = EX_TIMER_STATE_RUNNING;
+    /* Find the timer */
+    ex_mutex_lock(data->timer_map_lock);
+    prev = NULL;
+    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+        if (entry->timer_id == _id) {
+            entry->timer->status = EX_TIMER_STATE_RUNNING;
+            entry->timer->scheduled = ex_timer_get_ticks() + entry->timer->scheduled;
+            break;
         }
-    ex_mutex_unlock(__timer_mutex);
-}
+    }
+    ex_mutex_unlock(data->timer_map_lock);
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+    /* Add the timer to the pending list for the timer thread */
+    ex_atomic_lock(&data->lock);
+    entry->timer->next = data->pending;
+    data->pending = entry->timer;
+    ex_atomic_unlock(&data->lock);
 
-void ex_reset_timer ( int _id ) {
-    timer_t *t;
-
-    if ( _id == EX_INVALID_TIMER_ID )
-        return;
-
-    ex_mutex_lock(__timer_mutex);
-        t = (timer_t *)ex_pool_get ( &__timers, _id );
-        if (t) {
-            t->start = t->last_alarm = ex_timer_get_ticks();
-            t->start_counter = t->delay; 
-            t->interval_counter = t->interval; 
-            t->lifetime_counter = t->lifetime;
-            t->state = EX_TIMER_STATE_RUNNING;
-        }
-    ex_mutex_unlock(__timer_mutex);
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-void *ex_get_timer_params ( int _id ) {
-    timer_t *t;
-
-    if ( _id == EX_INVALID_TIMER_ID )
-        return NULL;
-
-    ex_mutex_lock(__timer_mutex);
-        t = (timer_t *)ex_pool_get ( &__timers, _id );
-        if (t)
-            return t->params;
-    ex_mutex_unlock(__timer_mutex);
-    return NULL;
+    /* Wake up the timer thread if necessary */
+    ex_semaphore_post(data->sem);
 }

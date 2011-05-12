@@ -15,7 +15,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-int ex_atomic_try_lock ( spin_lock_t *_lock ) {
+int ex_atomic_try_lock ( ex_spin_lock_t *_lock ) {
 
 #if (EX_PLATFORM == EX_WIN32)
 
@@ -58,7 +58,7 @@ int ex_atomic_try_lock ( spin_lock_t *_lock ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_atomic_lock ( spin_lock_t *_lock ) {
+void ex_atomic_lock ( ex_spin_lock_t *_lock ) {
     /* FIXME: Should we have an eventual timeout? */
     while (!ex_atomic_try_lock (_lock)) {
         ex_sleep(0);
@@ -69,7 +69,7 @@ void ex_atomic_lock ( spin_lock_t *_lock ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_atomic_unlock ( spin_lock_t *_lock ) {
+void ex_atomic_unlock ( ex_spin_lock_t *_lock ) {
 
 #if (EX_PLATFORM == EX_WIN32)
 

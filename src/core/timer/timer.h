@@ -20,9 +20,6 @@ extern "C" {
 #define EX_TIMER_STATE_PAUSED    2
 #define EX_TIMER_STATE_STOPPED   3
 
-#define EX_TIMER_SLICE      10
-#define EX_TIMER_RESOLUTION 10
-
 #define EX_INVALID_TIMER_ID -1
 
 // ------------------------------------------------------------------ 
@@ -124,7 +121,7 @@ extern uint32 ex_timer_get_ticks ();
  * int cb ( uint32 _interval, void *_param ) {
  *     return _param->interval
  * }
- * ex_add_timer ( cb, param, sizeof(param), delay ); 
+ * ex_add_timer ( delay, cb, param, sizeof(param) ); 
  *
  * 2. how to create a timer with lifetime
  * param.lifetime = _lifetime
@@ -134,24 +131,19 @@ extern uint32 ex_timer_get_ticks ();
  *         return 0;
  *     return _interval;
  * }
- * ex_add_timer ( cb, param, sizeof(param), interval ); 
+ * ex_add_timer ( interval, cb, param, sizeof(param) ); 
  */
 
-extern int ex_add_timer ( ex_timer_pfn _cb, 
-                          ex_timer_stop_pfn _on_stop,
+extern int ex_add_timer ( timespan_t _interval,
+                          ex_timer_pfn _cb, 
                           void *_params, 
-                          size_t _size, /*parameter byte-size*/ 
-                          timespan_t _delay,
-                          timespan_t _interval,
-                          timespan_t _lifetime /*EX_TIMESPAN_INFINITY*/ );
+                          size_t _size /*parameter byte-size*/ 
+                        );
 extern bool ex_remove_timer ( int _id );
 
 extern void ex_start_timer ( int _id );
-extern void ex_stop_timer ( int _id );
 extern void ex_pause_timer ( int _id );
 extern void ex_resume_timer ( int _id );
-extern void ex_reset_timer ( int _id );
-extern void *ex_get_timer_params ( int _id );
 
 // ######################### 
 #ifdef __cplusplus

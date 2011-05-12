@@ -55,13 +55,10 @@ void __start_engine_time () {
     __timer_frame_start = now;
     __time = (float)now/1000.0f;
 
-    id = ex_add_timer ( __calc_fps, 
+    id = ex_add_timer ( ex_timespan_from(1,0),
+                        __calc_fps, 
                         NULL, 
-                        NULL, 
-                        0, 
-                        (timespan_t)0, 
-                        ex_timespan_from(1,0), 
-                        EX_TIMESPAN_INFINITY );
+                        0 );
     ex_start_timer(id);
 }
 

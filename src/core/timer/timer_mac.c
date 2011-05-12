@@ -15,26 +15,7 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-static int __timer_alive = 0;
-static ex_thread_t *__timer_thread = NULL;
 static struct timeval __start_ticks;
-
-
-// ------------------------------------------------------------------ 
-// Desc: 
-extern int __timer_running;
-extern void __threaded_timer_tick ();
-// ------------------------------------------------------------------ 
-
-static int __run_timer ( void *_unused ) {
-    while ( __timer_alive ) {
-        if ( __timer_running ) {
-            __threaded_timer_tick ();
-        }
-        ex_sleep(1);
-    }
-    return 0;
-}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -43,12 +24,6 @@ static int __run_timer ( void *_unused ) {
 int ex_sys_timer_init () {
     // init start ticks
     gettimeofday(&__start_ticks, NULL);
-
-    //
-    __timer_alive = 1;
-    __timer_thread = ex_create_thread ( __run_timer, NULL ); 
-    if ( __timer_thread == NULL )
-        return -1;
     return 0;
 }
 
@@ -57,11 +32,6 @@ int ex_sys_timer_init () {
 // ------------------------------------------------------------------ 
 
 void ex_sys_timer_deinit () {
-    __timer_alive = 0;
-    if ( __timer_thread ) {
-        ex_wait_thread ( __timer_thread, NULL );
-        __timer_thread = NULL;
-    }
 }
 
 // ------------------------------------------------------------------ 

@@ -92,7 +92,7 @@ void ex_sys_setup_thread () {
 
 // jwu DISABLE: don't know why we need this { 
 // #ifdef PTHREAD_CANCEL_ASYNCHRONOUS
-//     // Allow ourselves to be asynchronously cancelled
+//     // Allow ourselves to be asynchronously canceled
 //     {
 //         int oldstate;
 //         pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &oldstate);
