@@ -14,6 +14,7 @@
 #include "mutex.h"
 #include "semaphore.h"
 #include "cond.h"
+#include "atomic.h"
 
 // #################################################################################
 #endif // END THREAD_INC_H_1277879626

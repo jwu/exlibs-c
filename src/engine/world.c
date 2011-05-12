@@ -13,14 +13,13 @@
 #include "world.h"
 #include "entity.h"
 
-#include "invoke_mng.h"
-#include "coroutine_mng.h"
-
 #include "component/trans2d.h"
 #include "component/camera.h"
 // TEMP { 
 #include "component/debug2d.h"
 // } TEMP end 
+
+#include "component/lua_behavior.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // static defines
@@ -184,7 +183,6 @@ static void __update_behaviors ( ex_world_t *_world ) {
         // NOTE: it is possible that we remove behaviors in other behaivor script.
         if ( be == NULL ) {
             ex_array_remove_at_fast( _world->be_list, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -192,7 +190,6 @@ static void __update_behaviors ( ex_world_t *_world ) {
         entref = ((ex_component_t *)be)->entity;
         if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( _world->entities, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -224,7 +221,6 @@ static void __post_update_behaviors ( ex_world_t *_world ) {
         // NOTE: it is possible that we remove behaviors in other behaivor script.
         if ( be == NULL ) {
             ex_array_remove_at_fast( _world->be_list, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -232,7 +228,6 @@ static void __post_update_behaviors ( ex_world_t *_world ) {
         entref = ((ex_component_t *)be)->entity;
         if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( _world->entities, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -261,7 +256,6 @@ static void __on_render_behaviors ( ex_world_t *_world ) {
         // NOTE: it is possible that we remove behaviors in other behaivor script.
         if ( be == NULL ) {
             ex_array_remove_at_fast( _world->be_list, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -269,7 +263,6 @@ static void __on_render_behaviors ( ex_world_t *_world ) {
         entref = ((ex_component_t *)be)->entity;
         if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( _world->entities, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -295,7 +288,6 @@ static void __invoke_behaviors ( ex_world_t *_world ) {
         // NOTE: it is possible that we remove behaviors in other behaivor script.
         if ( be == NULL ) {
             ex_array_remove_at_fast( _world->be_list, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -303,12 +295,11 @@ static void __invoke_behaviors ( ex_world_t *_world ) {
         entref = ((ex_component_t *)be)->entity;
         if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( _world->entities, __idx__ );
-            --__idx__;
             continue;
         }
 
         // call,stop invokes
-        ex_invoke_mng_process(&be->invoke_mng);
+        ex_lua_behavior_process_invokes(beref);
     } ex_array_each_end
 }
 
@@ -327,7 +318,6 @@ static void __resume_co_behaviors ( ex_world_t *_world ) {
         // NOTE: it is possible that we remove behaviors in other behaivor script.
         if ( be == NULL ) {
             ex_array_remove_at_fast( _world->be_list, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -335,12 +325,11 @@ static void __resume_co_behaviors ( ex_world_t *_world ) {
         entref = ((ex_component_t *)be)->entity;
         if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( _world->entities, __idx__ );
-            --__idx__;
             continue;
         }
 
         // resume coroutine 
-        ex_coroutine_mng_resume(&be->coroutine_mng);
+        ex_lua_behavior_process_coroutines(beref);
     } ex_array_each_end
 }
 
@@ -359,7 +348,6 @@ static void __resume_co_eof_behaviors ( ex_world_t *_world ) {
         // NOTE: it is possible that we remove behaviors in other behaivor script.
         if ( be == NULL ) {
             ex_array_remove_at_fast( _world->be_list, __idx__ );
-            --__idx__;
             continue;
         }
 
@@ -367,12 +355,11 @@ static void __resume_co_eof_behaviors ( ex_world_t *_world ) {
         entref = ((ex_component_t *)be)->entity;
         if ( entref->ptr == NULL || ex_object_is_dead(entref) ) {
             ex_array_remove_at_fast( _world->entities, __idx__ );
-            --__idx__;
             continue;
         }
 
         // resume coroutine end_of_frame
-        ex_coroutine_mng_resume_eof(&be->coroutine_mng);
+        ex_lua_behavior_process_coroutines_eof(beref);
     } ex_array_each_end
 }
 

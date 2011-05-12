@@ -27,6 +27,7 @@
     #include <windows.h>
     #include <malloc.h> 
     #include <time.h>
+    #include <intrin.h>
 
     // // to use the sse intrins in gcc, please add -msse compile flag in makefile of this project
     // #include <xmmintrin.h>  // for type __m128
@@ -56,6 +57,7 @@
 	#include <OpenGL/gl.h>
 	#include <OpenGL/glu.h>
 	#include <GLUT/glut.h>
+    #include <libkern/OSAtomic.h>
 
 #elif (EX_PLATFORM == EX_IOS)
 

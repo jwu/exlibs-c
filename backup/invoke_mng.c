@@ -32,7 +32,7 @@ static void __invoke_to_call ( ex_invoke_params_t *_params ) {
     //
     thread_state = (lua_State *)_params->thread_state;
     lua_rawgeti( thread_state, LUA_REGISTRYINDEX, _params->lua_funcID );
-    ex_lua_pushobject( thread_state, _params->self );
+    // ex_lua_pushobject( thread_state, _params->self );
     status = lua_pcall( thread_state, 1, 0, 0 );
     if ( status ) {
         ex_lua_alert(thread_state);

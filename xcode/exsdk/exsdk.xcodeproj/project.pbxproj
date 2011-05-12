@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B20A1BE4135D5ADD008F3EF7 /* invoke_mng.c in Sources */ = {isa = PBXBuildFile; fileRef = B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */; };
-		B20A1BE5135D5ADD008F3EF7 /* invoke_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */; };
 		B215FE0D131B688500DAAFDD /* wrap_angf.c in Sources */ = {isa = PBXBuildFile; fileRef = B215FE0B131B688500DAAFDD /* wrap_angf.c */; };
 		B215FE0E131B688500DAAFDD /* wrap_class.c in Sources */ = {isa = PBXBuildFile; fileRef = B215FE0C131B688500DAAFDD /* wrap_class.c */; };
-		B21711D01367ED3D00716123 /* coroutine_mng.c in Sources */ = {isa = PBXBuildFile; fileRef = B21711CE1367ED3D00716123 /* coroutine_mng.c */; };
-		B21711D11367ED3D00716123 /* coroutine_mng.h in Headers */ = {isa = PBXBuildFile; fileRef = B21711CF1367ED3D00716123 /* coroutine_mng.h */; };
 		B226FED51317D9780011A8A7 /* wrap_component.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FED41317D9780011A8A7 /* wrap_component.c */; };
 		B226FEE113181A160011A8A7 /* wrap_trans2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B226FEE013181A160011A8A7 /* wrap_trans2d.c */; };
 		B22789F2137A47A300B7B11E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
@@ -22,6 +18,9 @@
 		B22789FF137A490800B7B11E /* libcairo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22789FE137A490800B7B11E /* libcairo.a */; };
 		B2278A11137A50FB00B7B11E /* editor.c in Sources */ = {isa = PBXBuildFile; fileRef = B2278A0E137A50FB00B7B11E /* editor.c */; };
 		B2278A12137A50FB00B7B11E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2278A10137A50FB00B7B11E /* main.c */; };
+		B2278A46137B7E3400B7B11E /* atomic.c in Sources */ = {isa = PBXBuildFile; fileRef = B2278A43137B7E3400B7B11E /* atomic.c */; };
+		B2278A47137B7E3400B7B11E /* atomic.h in Headers */ = {isa = PBXBuildFile; fileRef = B2278A44137B7E3400B7B11E /* atomic.h */; };
+		B2278A48137B7E3400B7B11E /* spinlock.c in Sources */ = {isa = PBXBuildFile; fileRef = B2278A45137B7E3400B7B11E /* spinlock.c */; };
 		B22BBC461370437000AB2471 /* wrap_color3f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC441370437000AB2471 /* wrap_color3f.c */; };
 		B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */ = {isa = PBXBuildFile; fileRef = B22BBC451370437000AB2471 /* wrap_color4f.c */; };
 		B22BBE9D13712BC300AB2471 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B258D59C136BC2140026F4D4 /* IOKit.framework */; };
@@ -593,12 +592,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = invoke_mng.c; sourceTree = "<group>"; };
-		B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = invoke_mng.h; sourceTree = "<group>"; };
 		B215FE0B131B688500DAAFDD /* wrap_angf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_angf.c; sourceTree = "<group>"; };
 		B215FE0C131B688500DAAFDD /* wrap_class.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_class.c; sourceTree = "<group>"; };
-		B21711CE1367ED3D00716123 /* coroutine_mng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = coroutine_mng.c; sourceTree = "<group>"; };
-		B21711CF1367ED3D00716123 /* coroutine_mng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutine_mng.h; sourceTree = "<group>"; };
 		B226FED41317D9780011A8A7 /* wrap_component.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_component.c; sourceTree = "<group>"; };
 		B226FEE013181A160011A8A7 /* wrap_trans2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_trans2d.c; sourceTree = "<group>"; };
 		B22789FC137A47A300B7B11E /* Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Editor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -607,6 +602,9 @@
 		B2278A0E137A50FB00B7B11E /* editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = editor.c; path = ../../src/editor/editor.c; sourceTree = "<group>"; };
 		B2278A0F137A50FB00B7B11E /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = editor.h; path = ../../src/editor/editor.h; sourceTree = "<group>"; };
 		B2278A10137A50FB00B7B11E /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = main.c; path = ../../src/editor/main.c; sourceTree = "<group>"; };
+		B2278A43137B7E3400B7B11E /* atomic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = atomic.c; sourceTree = "<group>"; };
+		B2278A44137B7E3400B7B11E /* atomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atomic.h; sourceTree = "<group>"; };
+		B2278A45137B7E3400B7B11E /* spinlock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = spinlock.c; sourceTree = "<group>"; };
 		B22BBC441370437000AB2471 /* wrap_color3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color3f.c; sourceTree = "<group>"; };
 		B22BBC451370437000AB2471 /* wrap_color4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_color4f.c; sourceTree = "<group>"; };
 		B22BBEA713712BC300AB2471 /* Editor - clutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Editor - clutter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1551,10 +1549,6 @@
 		B2A23180130221F600F3C100 /* engine */ = {
 			isa = PBXGroup;
 			children = (
-				B21711CE1367ED3D00716123 /* coroutine_mng.c */,
-				B21711CF1367ED3D00716123 /* coroutine_mng.h */,
-				B20A1BE2135D5ADD008F3EF7 /* invoke_mng.c */,
-				B20A1BE3135D5ADD008F3EF7 /* invoke_mng.h */,
 				B2A23181130221F600F3C100 /* component */,
 				B2A2318E130221F600F3C100 /* engine_inc.h */,
 				B2A2318F130221F600F3C100 /* entity.c */,
@@ -1820,6 +1814,9 @@
 		B2A232311302221D00F3C100 /* thread */ = {
 			isa = PBXGroup;
 			children = (
+				B2278A43137B7E3400B7B11E /* atomic.c */,
+				B2278A44137B7E3400B7B11E /* atomic.h */,
+				B2278A45137B7E3400B7B11E /* spinlock.c */,
 				B2A232321302221D00F3C100 /* cond.h */,
 				B2A232331302221D00F3C100 /* cond_mac.c */,
 				B2A232341302221D00F3C100 /* mutex.h */,
@@ -2025,8 +2022,6 @@
 				B2F4088F1302C04F00FCF2B5 /* probability.h in Headers */,
 				B2B8B1B7131D217600D11A44 /* lua_behavior.h in Headers */,
 				B2A051CB1349DFDF00BCBC45 /* os.h in Headers */,
-				B20A1BE5135D5ADD008F3EF7 /* invoke_mng.h in Headers */,
-				B21711D11367ED3D00716123 /* coroutine_mng.h in Headers */,
 				B258D4F8136BB4330026F4D4 /* lapi.h in Headers */,
 				B258D4FA136BB4330026F4D4 /* lauxlib.h in Headers */,
 				B258D4FD136BB4330026F4D4 /* lcode.h in Headers */,
@@ -2063,6 +2058,7 @@
 				B258D5B1136BD06A0026F4D4 /* luagl.h in Headers */,
 				B258D5B3136BD06A0026F4D4 /* luaglu.h in Headers */,
 				B258D5B5136BD22B0026F4D4 /* yajl_version.h in Headers */,
+				B2278A47137B7E3400B7B11E /* atomic.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2875,9 +2871,7 @@
 				B281F9C613330D620051E7E7 /* wrap_enums.c in Sources */,
 				B28703871335B389000C44FD /* wrap_mat33f.c in Sources */,
 				B2A051CA1349DFDF00BCBC45 /* os.c in Sources */,
-				B20A1BE4135D5ADD008F3EF7 /* invoke_mng.c in Sources */,
 				B2A14DB0135FEAA600B96113 /* wrap_yield.c in Sources */,
-				B21711D01367ED3D00716123 /* coroutine_mng.c in Sources */,
 				B258D4F7136BB4330026F4D4 /* lapi.c in Sources */,
 				B258D4F9136BB4330026F4D4 /* lauxlib.c in Sources */,
 				B258D4FB136BB4330026F4D4 /* lbaselib.c in Sources */,
@@ -2962,6 +2956,8 @@
 				B2B1D5B2136D1037008F6F57 /* zutil.c in Sources */,
 				B22BBC461370437000AB2471 /* wrap_color3f.c in Sources */,
 				B22BBC471370437000AB2471 /* wrap_color4f.c in Sources */,
+				B2278A46137B7E3400B7B11E /* atomic.c in Sources */,
+				B2278A48137B7E3400B7B11E /* spinlock.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3174,7 +3170,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/../../ext_build/libs/macosx\\\"",
 					"\"$(SRCROOT)/../../ext_build/cairo-1.10.2/lib/macosx\"",
 				);
 				OTHER_LDFLAGS = (
@@ -3207,7 +3202,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/../../ext_build/libs/macosx\\\"",
 					"\"$(SRCROOT)/../../ext_build/cairo-1.10.2/lib/macosx\"",
 				);
 				OTHER_LDFLAGS = (

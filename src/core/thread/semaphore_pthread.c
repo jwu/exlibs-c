@@ -98,7 +98,8 @@ int ex_semaphore_wait ( ex_semaphore_t *_sem ) {
 
 int ex_semaphore_wait_timeout ( ex_semaphore_t *_sem, uint32 _timeout ) {
     int retval;
-    uint64 curTime;
+    struct timeval now;
+    struct timespec ts_timeout;
 
     if (!_sem) {
         ex_error( "Passed a NULL semaphore" );
@@ -113,16 +114,34 @@ int ex_semaphore_wait_timeout ( ex_semaphore_t *_sem, uint32 _timeout ) {
         return ex_semaphore_wait (_sem);
     }
 
-    // Ack!  We have to busy wait...
-    // FIXME: Use sem_timedwait()?
-    curTime = ex_timer_get_ticks();
+    /* Setup the timeout. sem_timedwait doesn't wait for
+    * a lapse of time, but until we reach a certain time.
+    * This time is now plus the timeout.
+    */
+    gettimeofday(&now, NULL);
+
+    /* Add our timeout to current time */
+    now.tv_usec += (timeout % 1000) * 1000;
+    now.tv_sec += timeout / 1000;
+
+    /* Wrap the second if needed */
+    if ( now.tv_usec >= 1000000 ) {
+        now.tv_usec -= 1000000;
+        now.tv_sec ++;
+    }
+
+    /* Convert to timespec */
+    ts_timeout.tv_sec = now.tv_sec;
+    ts_timeout.tv_nsec = now.tv_usec * 1000;
+
+    /* Wait. */
     do {
-        retval = ex_semaphore_try_wait(_sem);
-        if (retval == 0) {
-            break;
-        }
-        ex_sleep(1);
-    } while ( (uint32)(ex_timer_get_ticks() - curTime) < _timeout );
+        retval = sem_timedwait(&sem->sem, &ts_timeout);
+    } while (retval < 0 && errno == EINTR);
+
+    if (retval < 0) {
+        SDL_SetError("sem_timedwait() failed");
+    }
 
     return retval;
 }

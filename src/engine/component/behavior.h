@@ -21,8 +21,6 @@ extern "C" {
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "component.h"
-#include "../invoke_mng.h"
-#include "../coroutine_mng.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // macros
@@ -41,8 +39,6 @@ extern "C" {
 EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
     int state;
     bool enabled;
-    ex_invoke_mng_t invoke_mng;
-    ex_coroutine_mng_t coroutine_mng;
 
     // ======================================================== 
     // invokes 

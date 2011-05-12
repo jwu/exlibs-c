@@ -118,6 +118,25 @@ extern uint32 ex_timer_get_ticks ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
+/**
+ * 1. how to create a timer with delay
+ * param.interval = _interval
+ * int cb ( uint32 _interval, void *_param ) {
+ *     return _param->interval
+ * }
+ * ex_add_timer ( cb, param, sizeof(param), delay ); 
+ *
+ * 2. how to create a timer with lifetime
+ * param.lifetime = _lifetime
+ * int cb ( uint32 _interval, void *_param ) {
+ *     _param->lifetime -= _interval;
+ *     if ( _param->lifetime <= 0  )
+ *         return 0;
+ *     return _interval;
+ * }
+ * ex_add_timer ( cb, param, sizeof(param), interval ); 
+ */
+
 extern int ex_add_timer ( ex_timer_pfn _cb, 
                           ex_timer_stop_pfn _on_stop,
                           void *_params, 

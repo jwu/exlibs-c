@@ -22,13 +22,7 @@ extern void __component_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 void __behavior_init ( ex_ref_t *_self ) {
-    ex_behavior_t *self;
-
     __component_init(_self);
-
-    self = EX_REF_CAST(ex_behavior_t,_self);
-    ex_invoke_mng_init( &self->invoke_mng );
-    ex_coroutine_mng_init( &self->coroutine_mng );
 }
 
 // ------------------------------------------------------------------ 
@@ -40,10 +34,6 @@ void __behavior_deinit ( ex_ref_t *_self ) {
     ex_behavior_t *self;
 
     self = EX_REF_CAST(ex_behavior_t,_self);
-
-    // deinit invoke_mng and coroutine_mng
-    ex_invoke_mng_deinit( &self->invoke_mng );
-    ex_coroutine_mng_deinit( &self->coroutine_mng );
 
     __component_deinit(_self);
 }

@@ -22,11 +22,13 @@ extern "C" {
 
 // ex_invoke_params_t
 typedef struct ex_invoke_params_t {
-    ex_ref_t *self;
+    bool is_dead;
+    float invoke_at;
+    float repeat;
+    strid_t nameID;
     void *thread_state;
     int lua_threadID;
     int lua_funcID;
-    strid_t nameID;
 } ex_invoke_params_t;
 
 // ex_invoke_queue_t

@@ -64,8 +64,8 @@ function on_render ( _self )
     local world_scale = trans2d.scale
 
     local center = _self.center + world_pos
-    local half_width = _self.width/2
-    local half_height = _self.height/2
+    local half_width = _self.width * world_scale.x / 2
+    local half_height = _self.height * world_scale.y / 2
     local verts = {
         center - trans2d.right * half_width + trans2d.up * half_height, 
         center + trans2d.right * half_width + trans2d.up * half_height, 

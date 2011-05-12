@@ -14,6 +14,7 @@
 
 #include "../entity.h"
 #include "../world.h"
+#include "../time.h"
 
 #include <lua.h>
 #include <lauxlib.h>
@@ -29,7 +30,6 @@
 // ------------------------------------------------------------------ 
 
 static void __lua_behavior_init ( ex_ref_t *_self ) {
-    ex_behavior_t *be;
     ex_object_t *obj;
     lua_State *l;
     ref_proxy_t *u;
@@ -42,11 +42,6 @@ static void __lua_behavior_init ( ex_ref_t *_self ) {
     ex_incref(u->val);
     obj->l = l;
     obj->luaRefID = luaL_ref(l, LUA_REGISTRYINDEX);
-
-    // init invoke_mng and coroutine_mng
-    be = EX_REF_CAST(ex_behavior_t,_self);
-    ex_invoke_mng_init( &be->invoke_mng );
-    ex_coroutine_mng_init( &be->coroutine_mng );
 }
 
 // ------------------------------------------------------------------ 
@@ -59,29 +54,18 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
     
     self = EX_REF_CAST(ex_lua_behavior_t,_self);
 
-    // TODO: this should be done in on_destroy { 
-    // stop all invokes.
-    ex_mutex_lock(self->timer_mutex);
-        ex_hashmap_each ( self->name_to_timer, int, el ) {
-            ex_stop_timer(el);
-        } ex_hashmap_each_end;
-        ex_hashmap_free(self->name_to_timer);
-    ex_mutex_unlock(self->timer_mutex);
-    // } TODO end 
+    //
+    ex_array_raw_each ( self->invoke_list, ex_invoke_info_t *, invokeInfo ) {
+        luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
+        luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_threadID );
+    } ex_array_each_end;
+    ex_array_free ( self->invoke_list );
 
-    // TODO: this should be done in on_destroy { 
-    // stop all coroutines 
-    ex_hashmap_each ( self->state_to_co_params, ex_coroutine_params_t, el ) {
-        if ( el.timerID != EX_INVALID_TIMER_ID ) {
-            ex_stop_timer(el.timerID);
-        }
-    } ex_hashmap_each_end;
-    ex_hashmap_free(self->name_to_co_params);
-    ex_hashmap_free(self->state_to_co_params);
-    // } TODO end 
-
-    // destroy all mutex
-    ex_destroy_mutex(self->timer_mutex);
+    //
+    ex_array_raw_each ( self->coroutine_list, ex_coroutine_info_t *, coInfo ) {
+        luaL_unref( coInfo->thread_state, LUA_REGISTRYINDEX, coInfo->lua_threadID );
+    } ex_array_each_end;
+    ex_array_free ( self->coroutine_list );
 
     // parent deinint
     __behavior_deinit(_self);
@@ -107,8 +91,8 @@ static void __lua_behavior_awake ( ex_ref_t *_self ) {
         lua_pushvalue(obj->l,-2);
         status = lua_pcall( obj->l, 1, 0, 0 );
         if ( status ) {
-            ex_lua_alert(obj->l);
             self->compile_failed = true;
+            ex_lua_alert(obj->l);
         }
     }
     lua_settop(obj->l, 0);
@@ -157,8 +141,8 @@ static void __lua_behavior_update ( ex_ref_t *_self ) {
         lua_pushvalue(obj->l,-2);
         status = lua_pcall( obj->l, 1, 0, 0 );
         if ( status ) {
-            ex_lua_alert(obj->l);
             self->compile_failed = true;
+            ex_lua_alert(obj->l);
         }
     }
     lua_settop(obj->l, 0);
@@ -184,8 +168,8 @@ static void __lua_behavior_post_update ( ex_ref_t *_self ) {
         lua_pushvalue(obj->l,-2);
         status = lua_pcall( obj->l, 1, 0, 0 );
         if ( status ) {
-            ex_lua_alert(obj->l);
             self->compile_failed = true;
+            ex_lua_alert(obj->l);
         }
     }
     lua_settop(obj->l, 0);
@@ -211,8 +195,8 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
         lua_pushvalue(obj->l,-2);
         status = lua_pcall( obj->l, 1, 0, 0 );
         if ( status ) {
-            ex_lua_alert(obj->l);
             self->compile_failed = true;
+            ex_lua_alert(obj->l);
         }
     }
     lua_settop(obj->l, 0);
@@ -222,35 +206,56 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static int32 __lua_behavior_invoke ( uint32 _interval, void *_params ) {
-    ex_invoke_params_t *params;
-    ex_behavior_t *be;
+static void __lua_behavior_invoke ( ex_ref_t *_self, void *_info ) {
+    ex_invoke_info_t *invokeInfo;
+    int status;
+    lua_State *thread_state;
     
-    params = (ex_invoke_params_t *)_params;
-    be = EX_REF_CAST(ex_behavior_t,params->self);
-    ex_invoke_mng_add_to_call( &be->invoke_mng, _params );
-
-    return _interval;
+    invokeInfo = (ex_invoke_info_t *)_info;
+    thread_state = (lua_State *)invokeInfo->thread_state;
+    lua_rawgeti( thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
+    ex_lua_pushobject( thread_state, _self );
+    status = lua_pcall( thread_state, 1, 0, 0 );
+    if ( status ) {
+        ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+        self->compile_failed = true;
+        ex_lua_alert(thread_state);
+    }
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void ex_lua_process_yield ( void *_params );
 // ------------------------------------------------------------------ 
 
-static void __lua_behavior_on_invoke_stop ( void *_params ) {
-    ex_invoke_params_t *params;
-    ex_lua_behavior_t *self;
-    ex_behavior_t *be;
+static void __lua_behavior_resume ( ex_ref_t *_self, void *_info ) {
+    int status;
+    ex_coroutine_info_t *parentInfo, *coInfo;
 
-    params = (ex_invoke_params_t *)_params;
-    be = EX_REF_CAST(ex_behavior_t,params->self);
-    ex_invoke_mng_add_to_stop( &be->invoke_mng, _params );
+    coInfo = (ex_coroutine_info_t *)_info;
+    status = lua_resume(coInfo->thread_state,0); // resume lua script
+    if ( status == LUA_YIELD ) {
+        ex_lua_process_yield ( coInfo );
+    }
+    else if ( status != 0 ) {
+        ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+        self->compile_failed = true;
+        ex_lua_alert(coInfo->thread_state);
+    }
+    else {
+        coInfo->is_dead = true;
 
-    // remove invoke name from name_to_timer table
-    self = EX_REF_CAST(ex_lua_behavior_t,params->self);
-    ex_mutex_lock(self->timer_mutex);
-        ex_hashmap_remove_at ( self->name_to_timer, &(params->nameID) );
-    ex_mutex_unlock(self->timer_mutex);
+        // get parent coInfo before hash remove it
+        parentInfo = ex_lua_behavior_get_coroutine_info( _self, coInfo->parent_state );
+
+        // recursivly process it
+        // to prevent it parent state resume by other yield_status, we only allow resume from wait for finish 
+        if ( parentInfo && parentInfo->yield_status == EX_YIELD_WAIT_FOR_FINISH ) {
+            if ( lua_status(parentInfo->thread_state) == LUA_YIELD ) {
+                __lua_behavior_resume ( _self, parentInfo );
+            }
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -276,10 +281,8 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
 
     // 
     EX_MEMBER( ex_lua_behavior_t, compile_failed, false )
-    EX_MEMBER( ex_lua_behavior_t, name_to_timer, ex_hashmap(strid, int, 8) )
-    EX_MEMBER( ex_lua_behavior_t, name_to_co_params, ex_hashmap_notype(sizeof(strid_t), sizeof(ex_coroutine_params_t), 8, ex_hashkey_strid, ex_keycmp_strid ) )
-    EX_MEMBER( ex_lua_behavior_t, state_to_co_params, ex_hashmap_notype(sizeof(void *), sizeof(ex_coroutine_params_t), 8, ex_hashkey_ptr, ex_keycmp_ptr ) )
-    EX_MEMBER( ex_lua_behavior_t, timer_mutex, ex_create_mutex() )
+    EX_MEMBER( ex_lua_behavior_t, invoke_list, ex_array_notype(sizeof(ex_invoke_info_t),16) )
+    EX_MEMBER( ex_lua_behavior_t, coroutine_list, ex_array_notype(sizeof(ex_coroutine_info_t),16) )
 
 EX_DEF_OBJECT_END
 
@@ -298,24 +301,17 @@ EX_DEF_TOSTRING_END
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void ex_lua_process_yield ( void *_params );
 // ------------------------------------------------------------------ 
 
 int ex_lua_behavior_start_coroutine ( ex_ref_t *_self, 
                                       lua_State *_cur_state,
                                       const char *_name,
                                       int _nargs ) {
-    size_t idx = -1;
     lua_State *l1;
     int status;
-    strid_t nameID = ex_strid(_name);
-    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-
-    //
-    ex_hashmap_get_hashidx ( self->name_to_co_params, &nameID, &idx ); 
-    if ( idx != -1 ) {
-        return luaL_error( ex_lua_main_state(), "The %s is already used for other coroutine! please stop it first", _name );
-    }
+    strid_t nameID;
+    
+    nameID = ex_strid(_name);
 
     // create new thread first
     l1 = lua_newthread(_cur_state);
@@ -330,29 +326,35 @@ int ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
     status = lua_resume(l1,_nargs); // status 0 means normal finished.  
     if ( status == LUA_YIELD ) {
         int lua_threadID;
-        ex_coroutine_params_t params;
+        ex_coroutine_info_t coInfo;
+        ex_lua_behavior_t *self;
 
         //
         lua_pushthread(l1);
         lua_threadID = luaL_ref( l1, LUA_REGISTRYINDEX );
 
         // keep thread_state reference by itself to prevent gc.
-        params.beref = _self;
-        params.parent_state = _cur_state;
-        params.thread_state = l1;
-        params.lua_threadID = lua_threadID;
-        params.nameID = nameID;
-        ex_lua_process_yield ( &params );
+        coInfo.is_dead = false;
+        coInfo.parent_state = _cur_state;
+        coInfo.thread_state = l1;
+        coInfo.lua_threadID = lua_threadID;
+        coInfo.nameID = nameID;
+        ex_lua_process_yield ( &coInfo );
+
+        //
+        self = EX_REF_CAST(ex_lua_behavior_t,_self);
+        ex_array_append ( self->coroutine_list, &coInfo );
 
         //
         lua_xmove ( l1, _cur_state, 1 );
         return 1;
     } 
     else if ( status != 0 ) {
-        ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-
-        ex_lua_alert(l1);
+        ex_lua_behavior_t *self;
+        
+        self = EX_REF_CAST(ex_lua_behavior_t,_self);
         self->compile_failed = true;
+        ex_lua_alert(l1);
     }
 
     //
@@ -364,49 +366,98 @@ int ex_lua_behavior_start_coroutine ( ex_ref_t *_self,
 // Desc: 
 // NOTE: stop coroutine only stop the specific coroutine function, and 
 //       will not stop coroutine invoked by this coroutine function. 
-extern void ex_lua_process_resume ( void *_params );
 // ------------------------------------------------------------------ 
 
 int ex_lua_behavior_stop_coroutine ( ex_ref_t *_self, const char *_name ) {
 
-    strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-    ex_coroutine_params_t *params = NULL;
+    strid_t nameID = ex_strid(_name);
+    ex_coroutine_info_t *parentInfo;
 
-    params = ex_hashmap_get ( self->name_to_co_params, &nameID, NULL ); 
-    if ( params ) {
-        ex_coroutine_params_t *parent_params = NULL;
+    ex_array_raw_each ( self->coroutine_list, ex_coroutine_info_t *, coInfo ) {
+        if ( coInfo->nameID == nameID ) {
+            coInfo->is_dead = true;
 
-        // get the params by threadID
-        if ( ex_hashmap_get( self->state_to_co_params, &params->thread_state, NULL ) == NULL )
-            return luaL_error( ex_lua_main_state(), "failed in stop coroutine %s. can't find the params by threadID.", _name );
+            // get parent coInfo before hash remove it
+            parentInfo = ex_lua_behavior_get_coroutine_info( _self, coInfo->parent_state );
 
-        luaL_unref( params->thread_state, LUA_REGISTRYINDEX, params->lua_threadID );
-
-        //
-        // FIXME: it is possible the timer stop, and add timeup process { 
-        if ( params->timerID != EX_INVALID_TIMER_ID ) {
-            ex_stop_timer(params->timerID);
-        }
-        // } FIXME end 
-
-        // recursivly resume the parent when stop
-        parent_params = ex_hashmap_get( self->state_to_co_params, &(params->parent_state), NULL ); 
-        if ( parent_params ) {
-            if ( lua_status(parent_params->thread_state) == LUA_YIELD ) {
-                ex_behavior_t *be = (ex_behavior_t *)self;
-                ex_coroutine_mng_add_to_resume( &be->coroutine_mng, parent_params );
+            // recursivly process it
+            // to prevent it parent state resume by other yield_status, we only allow resume from wait for finish 
+            if ( parentInfo && parentInfo->yield_status == EX_YIELD_WAIT_FOR_FINISH ) {
+                if ( lua_status(parentInfo->thread_state) == LUA_YIELD ) {
+                    __lua_behavior_resume ( _self, parentInfo );
+                }
             }
         }
+    } ex_array_each_end;
 
-        // remove from hashmap 
-        ex_hashmap_remove_at ( self->name_to_co_params, &nameID );
-        ex_hashmap_remove_at ( self->state_to_co_params, &params->thread_state );
-    }
-    else {
-        return luaL_error( ex_lua_main_state(), "can't find %s in invoke list", _name );
-    }
     return 0;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_lua_behavior_process_coroutines ( ex_ref_t *_self ) {
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+
+    ex_array_raw_each ( self->coroutine_list, ex_coroutine_info_t *, coInfo ) {
+        //
+        if ( coInfo->is_dead ) {
+            luaL_unref( coInfo->thread_state, LUA_REGISTRYINDEX, coInfo->lua_threadID );
+
+            ex_array_remove_at_fast( self->coroutine_list, __idx__ );
+            continue;
+        }
+
+        //
+        if ( coInfo->yield_status == EX_YIELD_WAIT_FOR_SECONDS ) {
+            coInfo->wait_for_secs -= ex_dt ();
+            if ( coInfo->wait_for_secs <= 0.0f ) {
+                __lua_behavior_resume ( _self, coInfo );
+            }
+        }
+        else if ( coInfo->yield_status == EX_YIELD_WAIT_FOR_ONE_FRAME ) {
+            coInfo->cur_frame != ex_frames ();
+            __lua_behavior_resume ( _self, coInfo );
+        }
+    } ex_array_each_end;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_lua_behavior_process_coroutines_eof ( ex_ref_t *_self ) {
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+
+    ex_array_raw_each ( self->coroutine_list, ex_coroutine_info_t *, coInfo ) {
+        //
+        if ( coInfo->is_dead ) {
+            luaL_unref( coInfo->thread_state, LUA_REGISTRYINDEX, coInfo->lua_threadID );
+
+            ex_array_remove_at_fast( self->coroutine_list, __idx__ );
+            continue;
+        }
+
+        //
+        if ( coInfo->yield_status == EX_YIELD_WAIT_FOR_END_OF_FRAME ) {
+            __lua_behavior_resume ( _self, coInfo );
+        }
+    } ex_array_each_end;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_coroutine_info_t *ex_lua_behavior_get_coroutine_info ( ex_ref_t *_self, lua_State *_state ) {
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
+    ex_array_raw_each ( self->coroutine_list, ex_coroutine_info_t *, coInfo ) {
+        if ( coInfo->thread_state == _state )
+            return coInfo;
+    } ex_array_each_end;
+    return NULL;
 }
 
 // ------------------------------------------------------------------ 
@@ -419,25 +470,12 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
                               float _secs_repeat,
                               const char *_name ) 
 {
-    size_t idx = -1;
-    size_t hash_idx = -1;
-    int timerID = EX_INVALID_TIMER_ID;
     strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-    timespan_t lifetime = EX_TIMESPAN_INFINITY;
 
     lua_State *l1;
     int lua_threadID,lua_funcID; 
-    ex_invoke_params_t params;
-
-    //
-    ex_mutex_lock(self->timer_mutex);
-        hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
-    ex_mutex_unlock(self->timer_mutex);
-    if ( idx != -1 ) {
-        luaL_error( ex_lua_main_state(), "The %s is already invoked! please cancle_invoke it first", _name );
-        return;
-    }
+    ex_invoke_info_t invokeInfo;
 
     // create new thread first
     l1 = lua_newthread(_cur_state);
@@ -449,33 +487,15 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
     lua_funcID = luaL_ref( l1, LUA_REGISTRYINDEX );
 
     //
-    params.self = _self;
-    params.thread_state = l1;
-    params.lua_threadID = lua_threadID;
-    params.lua_funcID = lua_funcID;
-    params.nameID = nameID;
+    invokeInfo.is_dead = false;
+    invokeInfo.remain = _secs_delay;
+    invokeInfo.repeat = _secs_repeat;
+    invokeInfo.nameID = nameID;
+    invokeInfo.thread_state = l1;
+    invokeInfo.lua_threadID = lua_threadID;
+    invokeInfo.lua_funcID = lua_funcID;
 
-    //
-    if ( _secs_repeat <= 0.0 ) {
-        _secs_repeat = _secs_delay;
-        lifetime = ex_timespan_from_secs_f32(_secs_delay);
-    }
-
-    // create timer
-    timerID = ex_add_timer( __lua_behavior_invoke, 
-                            __lua_behavior_on_invoke_stop,
-                            &params, 
-                            sizeof(params), 
-                            ex_timespan_from_secs_f32(_secs_delay), 
-                            ex_timespan_from_secs_f32(_secs_repeat), 
-                            lifetime );
-    // add timer to hashmap 
-    ex_mutex_lock(self->timer_mutex);
-        ex_hashmap_insert_new ( self->name_to_timer, &nameID, &timerID, hash_idx, &idx );
-    ex_mutex_unlock(self->timer_mutex);
-
-    // now start it
-    ex_start_timer(timerID);
+    ex_array_append ( self->invoke_list, &invokeInfo );
 }
 
 // ------------------------------------------------------------------ 
@@ -483,20 +503,14 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
 // ------------------------------------------------------------------ 
 
 void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
-    strid_t nameID = ex_strid(_name);
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-    int *timerID = NULL;
+    strid_t nameID = ex_strid(_name);
 
-    ex_mutex_lock(self->timer_mutex);
-        timerID = ex_hashmap_get ( self->name_to_timer, &nameID, NULL ); 
-    ex_mutex_unlock(self->timer_mutex);
-    if ( timerID ) {
-        ex_stop_timer(*timerID);
-    }
-    else {
-        luaL_error( ex_lua_main_state(), "can't find %s in invoke list", _name );
-        return;
-    }
+    ex_array_raw_each ( self->invoke_list, ex_invoke_info_t *, invokeInfo ) {
+        if ( invokeInfo->nameID == nameID ) {
+            invokeInfo->is_dead = true;
+        }
+    } ex_array_each_end;
 }
 
 // ------------------------------------------------------------------ 
@@ -504,17 +518,43 @@ void ex_lua_behavior_cancle_invoke ( ex_ref_t *_self, const char *_name ) {
 // ------------------------------------------------------------------ 
 
 bool ex_lua_behavior_is_invoking ( ex_ref_t *_self, const char *_name ) {
-    size_t idx = -1;
-    size_t hash_idx = -1;
+    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
     strid_t nameID = ex_strid(_name);
+
+    ex_array_raw_each ( self->invoke_list, ex_invoke_info_t *, invokeInfo ) {
+        if ( invokeInfo->nameID == nameID )
+            return true;
+    } ex_array_each_end;
+
+    return false;
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_lua_behavior_process_invokes ( ex_ref_t *_self ) {
     ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
 
-    //
-    ex_mutex_lock(self->timer_mutex);
-        hash_idx = ex_hashmap_get_hashidx ( self->name_to_timer, &nameID, &idx ); 
-    ex_mutex_unlock(self->timer_mutex);
-    if ( idx != -1 ) {
-        return true;
-    }
-    return false;
+    ex_array_raw_each ( self->invoke_list, ex_invoke_info_t *, invokeInfo ) {
+        if ( invokeInfo->is_dead ) {
+            luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
+            luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_threadID );
+
+            ex_array_remove_at_fast( self->invoke_list, __idx__ );
+            continue;
+        }
+
+        //
+        invokeInfo->remain -= ex_dt();
+        if ( invokeInfo->remain <= 0.0f ) {
+            __lua_behavior_invoke ( _self, invokeInfo );
+            if ( invokeInfo->repeat <= 0.0 ) {
+                invokeInfo->is_dead = true;
+            }
+            else {
+                invokeInfo->remain = invokeInfo->repeat + invokeInfo->remain;
+            }
+        }
+    } ex_array_each_end;
 }
