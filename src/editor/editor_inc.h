@@ -16,8 +16,12 @@ extern "C" {
 #endif
 // ######################### 
 
+// editor
 #include "editor.h"
+
+// external
 #include "cairo.h"
+#include "SDL.h"
 
 // ######################### 
 #ifdef __cplusplus

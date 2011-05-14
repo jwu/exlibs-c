@@ -107,7 +107,6 @@ static int __timer_thread ( void *_data ) {
     for ( ; ; ) {
         /* Pending and freelist maintenance */
         ex_atomic_lock (&data->lock);
-        {
             /* Get any timers ready to be queued */
             pending = data->pending;
             data->pending = NULL;
@@ -117,7 +116,6 @@ static int __timer_thread ( void *_data ) {
                 freelist_tail->next = data->freelist;
                 data->freelist = freelist_head;
             }
-        }
         ex_atomic_unlock (&data->lock);
 
         /* Sort the pending timers into our list */
@@ -342,9 +340,9 @@ int ex_add_timer ( timespan_t _interval,
         int status = 0;
 
         ex_atomic_lock(&data->lock);
-        if (!data->active) {
-            status = ex_timer_init();
-        }
+            if (!data->active) {
+                status = ex_timer_init();
+            }
         ex_atomic_unlock(&data->lock);
 
         if ( status < 0 ) {
@@ -353,10 +351,10 @@ int ex_add_timer ( timespan_t _interval,
     }
 
     ex_atomic_lock(&data->lock);
-    timer = data->freelist;
-    if (timer) {
-        data->freelist = timer->next;
-    }
+        timer = data->freelist;
+        if (timer) {
+            data->freelist = timer->next;
+        }
     ex_atomic_unlock(&data->lock);
 
     if (timer) {
@@ -378,7 +376,7 @@ int ex_add_timer ( timespan_t _interval,
         memcpy( timer->params, _params, _size );
     }
     timer->interval = ex_timespan_to_msecs(_interval);
-    timer->scheduled = ex_timer_get_ticks() + timer->interval;
+    timer->scheduled = -1;
     timer->canceled = 0;
 
     entry = (timer_map_t *)ex_malloc_nomng(sizeof(*entry));
@@ -390,18 +388,20 @@ int ex_add_timer ( timespan_t _interval,
     entry->timer_id = timer->timer_id;
 
     ex_mutex_lock(data->timer_map_lock);
-    entry->next = data->timer_map;
-    data->timer_map = entry;
+        entry->next = data->timer_map;
+        data->timer_map = entry;
     ex_mutex_unlock(data->timer_map_lock);
 
-    /* Add the timer to the pending list for the timer thread */
-    ex_atomic_lock(&data->lock);
-    timer->next = data->pending;
-    data->pending = timer;
-    ex_atomic_unlock(&data->lock);
+    // DELME { 
+    // /* Add the timer to the pending list for the timer thread */
+    // ex_atomic_lock(&data->lock);
+    //     timer->next = data->pending;
+    //     data->pending = timer;
+    // ex_atomic_unlock(&data->lock);
 
-    /* Wake up the timer thread if necessary */
-    ex_semaphore_post(data->sem);
+    // /* Wake up the timer thread if necessary */
+    // ex_semaphore_post(data->sem);
+    // } DELME end 
 
     return entry->timer_id;
 }
@@ -418,17 +418,17 @@ int ex_remove_timer ( int _id ) {
 
     /* Find the timer */
     ex_mutex_lock(data->timer_map_lock);
-    prev = NULL;
-    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
-        if (entry->timer_id == _id) {
-            if (prev) {
-                prev->next = entry->next;
-            } else {
-                data->timer_map = entry->next;
+        prev = NULL;
+        for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+            if (entry->timer_id == _id) {
+                if (prev) {
+                    prev->next = entry->next;
+                } else {
+                    data->timer_map = entry->next;
+                }
+                break;
             }
-            break;
         }
-    }
     ex_mutex_unlock(data->timer_map_lock);
 
     if (entry) {
@@ -452,14 +452,29 @@ void ex_start_timer ( int _id ) {
 
     /* Find the timer */
     ex_mutex_lock(data->timer_map_lock);
-    prev = NULL;
-    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
-        if (entry->timer_id == _id) {
-            entry->timer->status = EX_TIMER_STATE_RUNNING;
-            break;
+        prev = NULL;
+        for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+            if ( entry->timer_id == _id ) 
+            {
+                break;
+            }
         }
-    }
     ex_mutex_unlock(data->timer_map_lock);
+
+    /* Add the timer to the pending list for the timer thread */
+    // NOTE: we not start timer twice.
+    // NOTE: pause timer will be reset and start.
+    if ( entry->timer->status != EX_TIMER_STATE_RUNNING ) {
+        ex_atomic_lock(&data->lock);
+            entry->timer->next = data->pending;
+            data->pending = entry->timer;
+            entry->timer->scheduled = ex_timer_get_ticks() + entry->timer->interval;
+            entry->timer->status = EX_TIMER_STATE_RUNNING;
+        ex_atomic_unlock(&data->lock);
+    }
+
+    /* Wake up the timer thread if necessary */
+    ex_semaphore_post(data->sem);
 }
 
 // ------------------------------------------------------------------ 
@@ -473,14 +488,17 @@ void ex_pause_timer ( int _id ) {
 
     /* Find the timer */
     ex_mutex_lock(data->timer_map_lock);
-    prev = NULL;
-    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
-        if (entry->timer_id == _id) {
-            entry->timer->status = EX_TIMER_STATE_PAUSED;
-            entry->timer->scheduled = entry->timer->scheduled - ex_timer_get_ticks();
-            break;
+        prev = NULL;
+        for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+            // NOTE: only running timer can paused
+            if ( entry->timer_id == _id &&
+                 entry->timer->status == EX_TIMER_STATE_RUNNING ) 
+            {
+                entry->timer->scheduled = entry->timer->scheduled - ex_timer_get_ticks();
+                entry->timer->status = EX_TIMER_STATE_PAUSED;
+                break;
+            }
         }
-    }
     ex_mutex_unlock(data->timer_map_lock);
 }
 
@@ -495,21 +513,24 @@ void ex_resume_timer ( int _id ) {
 
     /* Find the timer */
     ex_mutex_lock(data->timer_map_lock);
-    prev = NULL;
-    for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
-        if (entry->timer_id == _id) {
-            entry->timer->status = EX_TIMER_STATE_RUNNING;
-            entry->timer->scheduled = ex_timer_get_ticks() + entry->timer->scheduled;
-            break;
+        prev = NULL;
+        for ( entry = data->timer_map; entry; prev = entry, entry = entry->next ) {
+            if (entry->timer_id == _id) {
+                break;
+            }
         }
-    }
     ex_mutex_unlock(data->timer_map_lock);
 
     /* Add the timer to the pending list for the timer thread */
-    ex_atomic_lock(&data->lock);
-    entry->timer->next = data->pending;
-    data->pending = entry->timer;
-    ex_atomic_unlock(&data->lock);
+    // NOTE: only paused timer can resume
+    if ( entry->timer->status == EX_TIMER_STATE_PAUSED ) {
+        ex_atomic_lock(&data->lock);
+            entry->timer->next = data->pending;
+            data->pending = entry->timer;
+            entry->timer->scheduled = ex_timer_get_ticks() + entry->timer->scheduled;
+            entry->timer->status = EX_TIMER_STATE_RUNNING;
+        ex_atomic_unlock(&data->lock);
+    }
 
     /* Wake up the timer thread if necessary */
     ex_semaphore_post(data->sem);

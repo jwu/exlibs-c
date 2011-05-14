@@ -556,11 +556,11 @@ void ex_world_update ( ex_ref_t *_self ) {
     if ( self->state == EX_WORLD_STATE_STOPPED )
         return;
 
-    __tick_engine_time ();
-
     // the self is paused, only timer ticks 
     if ( self->state == EX_WORLD_STATE_PAUSED )
         return;
+
+    __tick_engine_time ();
 
     // prepare update list
     __prepare_update_list ( self );

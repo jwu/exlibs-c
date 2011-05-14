@@ -362,7 +362,6 @@ static void __create_window ( int argc, char *argv[] ) {
 
 static void __init_gl () {
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-	glEnableClientState(GL_VERTEX_ARRAY);
 
     // anti-aliasing { 
     glEnable(GL_LINE_SMOOTH);

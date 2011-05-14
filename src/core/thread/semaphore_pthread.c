@@ -121,8 +121,8 @@ int ex_semaphore_wait_timeout ( ex_semaphore_t *_sem, uint32 _timeout ) {
     gettimeofday(&now, NULL);
 
     /* Add our timeout to current time */
-    now.tv_usec += (timeout % 1000) * 1000;
-    now.tv_sec += timeout / 1000;
+    now.tv_usec += (_timeout % 1000) * 1000;
+    now.tv_sec += _timeout / 1000;
 
     /* Wrap the second if needed */
     if ( now.tv_usec >= 1000000 ) {
@@ -136,11 +136,11 @@ int ex_semaphore_wait_timeout ( ex_semaphore_t *_sem, uint32 _timeout ) {
 
     /* Wait. */
     do {
-        retval = sem_timedwait(&sem->sem, &ts_timeout);
+        retval = sem_timedwait(&_sem->sem, &ts_timeout);
     } while (retval < 0 && errno == EINTR);
 
     if (retval < 0) {
-        SDL_SetError("sem_timedwait() failed");
+        ex_error( "sem_timedwait() failed" );
     }
 
     return retval;
