@@ -46,12 +46,6 @@ static void __init_window () {
 
     ex_log( "init sdl opengl" );
 
-    // init sdl video and audio
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-        ex_error( "Couldn't initialize SDL: %s", SDL_GetError() );
-        exit(1);
-    }
-
     /* Request an opengl 3.2 context.
      * SDL doesn't have the ability to choose which profile at this time of writing,
      * but it should default to the core profile */
@@ -86,8 +80,8 @@ static void __init_window () {
     SDL_GL_SetAttribute ( SDL_GL_RED_SIZE,      rgb_size[0] );
     SDL_GL_SetAttribute ( SDL_GL_GREEN_SIZE,    rgb_size[1] );
     SDL_GL_SetAttribute ( SDL_GL_BLUE_SIZE,     rgb_size[2] );
-    SDL_GL_SetAttribute ( SDL_GL_DEPTH_SIZE,    24  );
-    SDL_GL_SetAttribute ( SDL_GL_DOUBLEBUFFER,  1   );
+    SDL_GL_SetAttribute ( SDL_GL_DEPTH_SIZE,    24 );
+    SDL_GL_SetAttribute ( SDL_GL_DOUBLEBUFFER,  1 );
 
     // setup the opengl device
     if ( fsaa ) {
@@ -203,6 +197,75 @@ static void __init_gl () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+SDL_Surface *screen = NULL;
+SDL_Surface *ip_surf = NULL;
+SDL_Window *ip_win = NULL;
+cairo_surface_t *cairo_surf = NULL;
+cairo_t *cr = NULL;
+// ------------------------------------------------------------------ 
+
+static void __init_inspector () {
+    int x, y, w, h;
+
+    // create sdl window
+    SDL_GetWindowPosition ( glWindow, &x, &y );
+    SDL_GetWindowSize ( glWindow, &w, &h );
+    ip_win = SDL_CreateWindow( "Inspector", 
+                               x + win_width + 10, 
+                               y,
+                               200, h, 
+                               SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN );
+
+    // create cairo surface
+    ip_surf = SDL_GetWindowSurface(ip_win);
+    SDL_FillRect( ip_surf, NULL, 0 );
+
+    SDL_GetWindowSize ( ip_win, &w, &h );
+    // ip_surf = SDL_CreateRGBSurface ( 0, w, h, 32,
+    //                                  0x00ff0000, /* Rmask */
+    //                                  0x0000ff00, /* Gmask */
+    //                                  0x000000ff, /* Bmask */
+    //                                  0 ); /* Amask */
+    cairo_surf = cairo_image_surface_create_for_data ( ip_surf->pixels,
+                                                       CAIRO_FORMAT_RGB24,
+                                                       ip_surf->w,
+                                                       ip_surf->h,
+                                                       ip_surf->pitch );
+    cr = cairo_create (cairo_surf);
+    cairo_surface_destroy (cairo_surf);
+
+#if 0
+    cairo_set_line_width (cr, 2.0);
+    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+    cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
+    cairo_stroke (cr);
+#else
+    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+    cairo_move_to (cr, 0, 0);
+    cairo_line_to (cr, 1 * w, 1 * h);
+    cairo_move_to (cr, 1 * w, 0);
+    cairo_line_to (cr, 0, 1 * h);
+    cairo_set_line_width (cr, 2.0);
+    cairo_stroke (cr);
+
+    cairo_rectangle (cr, 0, 0, 0.5 * w, 0.5 * h);
+    cairo_set_source_rgba (cr, 1, 0, 0, 0.80);
+    cairo_fill (cr);
+
+    cairo_rectangle (cr, 0, 0.5 * h, 0.5 * w, 0.5 * h);
+    cairo_set_source_rgba (cr, 0, 1, 0, 0.60);
+    cairo_fill (cr);
+
+    cairo_rectangle (cr, 0.5 * w, 0, 0.5 * w, 0.5 * h);
+    cairo_set_source_rgba (cr, 0, 0, 1, 0.40);
+    cairo_fill (cr);
+#endif
+
+    SDL_UpdateWindowSurface(ip_win);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // ------------------------------------------------------------------ 
 
 static void __init_game () {
@@ -294,7 +357,7 @@ static void __parse_world ( int *_argc_p, char ***_argv_p ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-int __handle_event ( SDL_Event *_event ) {
+static int __gl_window_handle_event ( SDL_Event *_event ) {
     int done;
 
     done = 0;
@@ -367,6 +430,21 @@ int __handle_event ( SDL_Event *_event ) {
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern int __sdl_window_handle_event ( SDL_Event *_event );
+// ------------------------------------------------------------------ 
+
+static int __handle_event ( SDL_Event *_event ) {
+    SDL_Window *sdlWindow = SDL_GetWindowFromID (_event->window.windowID);
+    if ( sdlWindow == glWindow ) {
+        return __gl_window_handle_event (_event);
+    }
+    else {
+        return __sdl_window_handle_event (_event);
+    }
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
 // ------------------------------------------------------------------ 
 
 static void __main_loop () {
@@ -378,19 +456,53 @@ static void __main_loop () {
     // looping the game
     while ( !done ) {
         SDL_Event event;
+        int status;
 
         // handle event
         while ( SDL_PollEvent(&event) ) {
             done |= __handle_event(&event);
         }
 
+        //
+        int w, h;
+        SDL_GetWindowSize ( ip_win, &w, &h );
+        // ip_surf = SDL_GetWindowSurface(ip_win);
+        // SDL_FillRect( ip_surf, NULL, 0xffff0000 );
+        status = SDL_GL_MakeCurrent( ip_win, glContext );
+        glViewport( 0, 0, w, h );
+        glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+        glClear( GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT );
+        // SDL_FillRect( ip_surf, NULL, 0 );
+            // cairo_set_line_width (cr, 2.0);
+            // cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+            // cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
+            // cairo_stroke (cr);
+        // SDL_UpdateWindowSurface(ip_win);
+        SDL_GL_SwapWindow(ip_win);
+
+
         // update and render the world
+        status = SDL_GL_MakeCurrent( glWindow, glContext );
+        if ( status ) {
+            ex_error( "Can't make current gl context: %s", SDL_GetError() );
+            break;
+        }
         if ( g_world ) {
             ex_world_update(g_world);
+
+            //
+            glViewport( 0, 0, win_width, win_height );
+            glEnableClientState(GL_VERTEX_ARRAY);
+            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+            glEnableClientState(GL_COLOR_ARRAY);
             ex_world_render(g_world);
         }
         SDL_GL_SwapWindow(glWindow);
     }
+
+    // destroy cairo
+    if ( cr )
+        cairo_destroy (cr);
 
     // Destroy our GL context, etc.
     SDL_GL_DeleteContext(glContext);
@@ -445,14 +557,20 @@ int main( int argc, char *argv[] ) {
         // create window
         // ======================================================== 
 
+        // init sdl video and audio
+        if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
+            ex_error( "Couldn't initialize SDL: %s", SDL_GetError() );
+            exit(1);
+        }
+
         __init_window ();
+        __init_inspector ();
         __init_gl ();
 
         // ======================================================== 
         // init the editor
         // ======================================================== 
 
-        //
         ex_editor_init();
         ex_lua_load_modules( ex_lua_main_state(), "builtin" );
         ex_lua_load_modules( ex_lua_main_state(), "scripts" );
@@ -464,10 +582,8 @@ int main( int argc, char *argv[] ) {
 
         __main_loop ();
 
-        //
         return 0;
     }
 
     return -1;
 }
-
