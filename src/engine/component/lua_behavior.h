@@ -41,8 +41,7 @@ typedef struct ex_invoke_info_t {
     float remain;
     float repeat;
     strid_t nameID;
-    void *thread_state;
-    int lua_threadID;
+    void *lua_state;
     int lua_funcID;
 } ex_invoke_info_t;
 

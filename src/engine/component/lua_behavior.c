@@ -56,8 +56,7 @@ static void __lua_behavior_deinit ( ex_ref_t *_self ) {
 
     //
     ex_array_raw_each ( self->invoke_list, ex_invoke_info_t *, invokeInfo ) {
-        luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
-        luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_threadID );
+        luaL_unref( invokeInfo->lua_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
     } ex_array_each_end;
     ex_array_free ( self->invoke_list );
 
@@ -209,17 +208,17 @@ static void __lua_behavior_on_render ( ex_ref_t *_self ) {
 static void __lua_behavior_invoke ( ex_ref_t *_self, void *_info ) {
     ex_invoke_info_t *invokeInfo;
     int status;
-    lua_State *thread_state;
+    lua_State *lua_state;
     
     invokeInfo = (ex_invoke_info_t *)_info;
-    thread_state = (lua_State *)invokeInfo->thread_state;
-    lua_rawgeti( thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
-    ex_lua_pushobject( thread_state, _self );
-    status = lua_pcall( thread_state, 1, 0, 0 );
+    lua_state = (lua_State *)invokeInfo->lua_state;
+    lua_rawgeti( lua_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
+    ex_lua_pushobject( lua_state, _self );
+    status = lua_pcall( lua_state, 1, 0, 0 );
     if ( status ) {
         ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
         self->compile_failed = true;
-        ex_lua_alert(thread_state);
+        ex_lua_alert(lua_state);
     }
 }
 
@@ -470,29 +469,27 @@ void ex_lua_behavior_invoke ( ex_ref_t *_self,
                               float _secs_repeat,
                               const char *_name ) 
 {
-    strid_t nameID = ex_strid(_name);
-    ex_lua_behavior_t *self = EX_REF_CAST(ex_lua_behavior_t,_self);
-
-    lua_State *l1;
-    int lua_threadID,lua_funcID; 
+    strid_t nameID;
+    ex_lua_behavior_t *self;
+    ex_object_t *obj;
+    int lua_funcID; 
     ex_invoke_info_t invokeInfo;
 
-    // create new thread first
-    l1 = lua_newthread(_cur_state);
-    ex_assert ( lua_isthread(_cur_state,-1), "it is not a thread" );
-    lua_xmove( _cur_state, l1, 1 ); // move the thread_state from _cur_state to l1.
-    lua_threadID = luaL_ref(l1, LUA_REGISTRYINDEX); // keep thread_state reference by itself to prevent gc.
+    nameID = ex_strid(_name);
+    obj = EX_REF_CAST(ex_object_t,_self);
+    self = EX_REF_CAST(ex_lua_behavior_t,_self);
+
     ex_assert ( lua_isfunction(_cur_state,-1), "it is not a function" );
-    lua_xmove( _cur_state, l1, 1 ); // move the pushed func from _cur_state to l1.
-    lua_funcID = luaL_ref( l1, LUA_REGISTRYINDEX );
+    if ( obj->l != _cur_state )
+        lua_xmove( _cur_state, obj->l, 1 ); // move the pushed func from _cur_state to obj->l.
+    lua_funcID = luaL_ref( obj->l, LUA_REGISTRYINDEX );
 
     //
     invokeInfo.is_dead = false;
     invokeInfo.remain = _secs_delay;
     invokeInfo.repeat = _secs_repeat;
     invokeInfo.nameID = nameID;
-    invokeInfo.thread_state = l1;
-    invokeInfo.lua_threadID = lua_threadID;
+    invokeInfo.lua_state = obj->l;
     invokeInfo.lua_funcID = lua_funcID;
 
     ex_array_append ( self->invoke_list, &invokeInfo );
@@ -538,8 +535,7 @@ void ex_lua_behavior_process_invokes ( ex_ref_t *_self ) {
 
     ex_array_raw_each ( self->invoke_list, ex_invoke_info_t *, invokeInfo ) {
         if ( invokeInfo->is_dead ) {
-            luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
-            luaL_unref( invokeInfo->thread_state, LUA_REGISTRYINDEX, invokeInfo->lua_threadID );
+            luaL_unref( invokeInfo->lua_state, LUA_REGISTRYINDEX, invokeInfo->lua_funcID );
 
             ex_array_remove_at_fast( self->invoke_list, __idx__ );
             continue;
