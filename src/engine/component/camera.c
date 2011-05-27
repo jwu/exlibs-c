@@ -54,12 +54,13 @@ void __camera_deinit ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_DEF_OBJECT_BEGIN( ex_camera_t,
-                     "Camera",
-                     __camera_init,
-                     __camera_deinit )
+EX_DEF_CLASS_BEGIN(ex_camera_t)
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_COMPONENT_DEFAULT_MEMBER
+
+    EX_MEMBER( ex_object_t, name, ex_strid("Camera") )
+    EX_MEMBER( ex_object_t, init, __camera_init )
+    EX_MEMBER( ex_object_t, deinit, __camera_deinit )
 
     EX_MEMBER( ex_camera_t, isOrtho, false )
     EX_MEMBER( ex_camera_t, orthoSize, 600/2 )
@@ -69,7 +70,7 @@ EX_DEF_OBJECT_BEGIN( ex_camera_t,
     EX_MEMBER( ex_camera_t, matWorldToView, ex_mat44f_identity )
     EX_MEMBER( ex_camera_t, matProjection, ex_mat44f_identity )
 
-EX_DEF_OBJECT_END
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_camera_t)
     EX_PROP( ex_camera_t, bool, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE )
@@ -79,7 +80,7 @@ EX_DEF_PROPS_BEGIN(ex_camera_t)
     EX_PROP( ex_camera_t, color3f, bgColor, "background color",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_camera_t,ex_component_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_camera_t,ex_component_t)
     EX_MEMBER_SERIALIZE( bool, isOrtho )
     EX_MEMBER_SERIALIZE( float, orthoSize )
     EX_MEMBER_SERIALIZE( float, aspect )

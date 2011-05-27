@@ -140,13 +140,7 @@ void __object_deinit( ex_ref_t *_self ) {
 ///////////////////////////////////////////////////////////////////////////////
 
 EX_DEF_CLASS_BEGIN(ex_object_t)
-    EX_MEMBER(ex_object_t, uid, EX_UID_INVALID)
-    EX_MEMBER(ex_object_t, name, EX_STRID_NULL)
-    EX_MEMBER(ex_object_t, flags, EX_OBJECT_NONE)
-    EX_MEMBER(ex_object_t, l, NULL )
-    EX_MEMBER(ex_object_t, luaRefID, LUA_REFNIL )
-    EX_MEMBER(ex_object_t, init, __object_init)
-    EX_MEMBER(ex_object_t, deinit, __object_deinit)
+    EX_OBJECT_DEFAULT_MEMBER
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_object_t)

@@ -47,20 +47,17 @@ extern void __debug2d_update ( ex_ref_t * );
 extern void __debug2d_post_update ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
-EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
-                     "Debug 2D",
-                     __debug2d_init,
-                     __debug2d_deinit )
+EX_DEF_CLASS_BEGIN(ex_debug2d_t)
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_BEHAVIOR_DEFAULT_MEMBER
 
-    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
-    EX_MEMBER( ex_behavior_t, enabled, true )
-    EX_MEMBER( ex_behavior_t, awake, NULL )
+    EX_MEMBER( ex_object_t, name, ex_strid("Debug 2D") )
+    EX_MEMBER( ex_object_t, init, __debug2d_init )
+    EX_MEMBER( ex_object_t, deinit, __debug2d_deinit )
+
     EX_MEMBER( ex_behavior_t, start, __debug2d_start )
     EX_MEMBER( ex_behavior_t, update, __debug2d_update )
     EX_MEMBER( ex_behavior_t, post_update, __debug2d_post_update )
-    EX_MEMBER( ex_behavior_t, on_render, NULL )
 
     EX_MEMBER( ex_debug2d_t, shapeType, EX_DEBUG_SHAPE_RECT )
     ex_rectf_set( &(((ex_debug2d_t *)__obj__)->rect), ex_vec2f_zero, 1.0f, 1.0f );
@@ -68,13 +65,13 @@ EX_DEF_OBJECT_BEGIN( ex_debug2d_t,
     EX_MEMBER( ex_debug2d_t, trail_idx, 0 )
     EX_MEMBER( ex_debug2d_t, trail_timer, -1 )
 
-EX_DEF_OBJECT_END
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_debug2d_t)
     EX_PROP( ex_debug2d_t, int, shapeType, "shape type",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_debug2d_t,ex_component_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
     EX_MEMBER_SERIALIZE( int, shapeType )
     EX_SERIALIZE( _stream, vec2f, "rect_center", &(self->rect.center) )
     EX_SERIALIZE( _stream, float, "rect_width", &(self->rect.width) )

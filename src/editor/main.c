@@ -197,13 +197,14 @@ static void __init_gl () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-SDL_Surface *screen = NULL;
-SDL_Surface *ip_surf = NULL;
 SDL_Window *ip_win = NULL;
+uint texture_id = -1;
 cairo_surface_t *cairo_surf = NULL;
+uint8 *cairo_buffer = NULL;
 cairo_t *cr = NULL;
 // ------------------------------------------------------------------ 
 
+//
 static void __init_inspector () {
     int x, y, w, h;
 
@@ -214,32 +215,70 @@ static void __init_inspector () {
                                x + win_width + 10, 
                                y,
                                200, h, 
-                               SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN );
+                               SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN|SDL_WINDOW_BORDERLESS );
 
     // create cairo surface
-    ip_surf = SDL_GetWindowSurface(ip_win);
-    SDL_FillRect( ip_surf, NULL, 0 );
-
     SDL_GetWindowSize ( ip_win, &w, &h );
-    // ip_surf = SDL_CreateRGBSurface ( 0, w, h, 32,
-    //                                  0x00ff0000, /* Rmask */
-    //                                  0x0000ff00, /* Gmask */
-    //                                  0x000000ff, /* Bmask */
-    //                                  0 ); /* Amask */
-    cairo_surf = cairo_image_surface_create_for_data ( ip_surf->pixels,
-                                                       CAIRO_FORMAT_RGB24,
-                                                       ip_surf->w,
-                                                       ip_surf->h,
-                                                       ip_surf->pitch );
-    cr = cairo_create (cairo_surf);
-    cairo_surface_destroy (cairo_surf);
+	cairo_buffer = ex_malloc ( 4 * w * h * sizeof (uint8) );
+    ex_memzero( cairo_buffer,  4 * w * h * sizeof (uint8) );
+    cairo_surf = cairo_image_surface_create_for_data ( cairo_buffer,
+                                                       CAIRO_FORMAT_ARGB32,
+                                                       w,
+                                                       h,
+                                                       4 * w );
+    if ( cairo_surface_status (cairo_surf) != CAIRO_STATUS_SUCCESS ) {
+        ex_free (cairo_buffer);
+        cairo_buffer = NULL;
+        ex_error ("can't create cairo surface.");
+    }
 
+    // create cairo context
+    cr = cairo_create (cairo_surf);
+    if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
+        ex_free (cairo_buffer);
+        cairo_buffer = NULL;
+        ex_error ("can't create cairo context");
+    }
+
+    // create texture
+	glDeleteTextures ( 1, &texture_id );
+    glGenTextures ( 1, &texture_id );
+    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, texture_id );
+    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+                   0,
+                   GL_RGBA,
+                   w,
+                   h,
+                   0,
+                   GL_BGRA,
+                   GL_UNSIGNED_BYTE,
+                   NULL );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+}
+
+//
+static void __draw_inspector () {
+    int w, h;
+    SDL_GetWindowSize ( ip_win, &w, &h );
+
+    if ( cr == NULL )
+        return;
+
+    // clear background
+    cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+    cairo_rectangle (cr, 0, 0, w, h);
+    cairo_set_source_rgba (cr, 0.0f, 0.0f, 0.0f, 1.0f);
+    cairo_fill (cr);
+    cairo_stroke (cr);
+
+    cairo_save (cr);
 #if 0
     cairo_set_line_width (cr, 2.0);
     cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
     cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
     cairo_stroke (cr);
 #else
+    //
     cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
     cairo_move_to (cr, 0, 0);
     cairo_line_to (cr, 1 * w, 1 * h);
@@ -259,9 +298,29 @@ static void __init_inspector () {
     cairo_rectangle (cr, 0.5 * w, 0, 0.5 * w, 0.5 * h);
     cairo_set_source_rgba (cr, 0, 0, 1, 0.40);
     cairo_fill (cr);
+    cairo_stroke (cr);
 #endif
+    cairo_restore (cr);
+}
 
-    SDL_UpdateWindowSurface(ip_win);
+//
+static void __destroy_inspector () {
+    glDeleteTextures (1, &texture_id);
+    
+    // remove surface
+    // NOTE: we still need cairo_surf when resizing.
+    if ( cairo_surf )
+        cairo_surface_destroy (cairo_surf);
+
+    // destroy cairo
+    if ( cr )
+        cairo_destroy (cr);
+
+    //
+    if ( cairo_buffer ) {
+        ex_free (cairo_buffer);
+        cairo_buffer = NULL;
+    }
 }
 
 // ------------------------------------------------------------------ 
@@ -449,6 +508,7 @@ static int __handle_event ( SDL_Event *_event ) {
 
 static void __main_loop () {
     int done = 0;
+    int w, h;
 
     // run the world
     ex_world_run(g_world);
@@ -463,25 +523,65 @@ static void __main_loop () {
             done |= __handle_event(&event);
         }
 
-        //
-        int w, h;
+        // ======================================================== 
+        // draw inspector 
+        // ======================================================== 
+
+        __draw_inspector();
         SDL_GetWindowSize ( ip_win, &w, &h );
-        // ip_surf = SDL_GetWindowSurface(ip_win);
-        // SDL_FillRect( ip_surf, NULL, 0xffff0000 );
         status = SDL_GL_MakeCurrent( ip_win, glContext );
+        if ( status ) {
+            ex_error( "Can't make current gl context: %s", SDL_GetError() );
+            break;
+        }
+
         glViewport( 0, 0, w, h );
-        glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-        glClear( GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT );
-        // SDL_FillRect( ip_surf, NULL, 0 );
-            // cairo_set_line_width (cr, 2.0);
-            // cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-            // cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
-            // cairo_stroke (cr);
-        // SDL_UpdateWindowSurface(ip_win);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho (0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
+        // ex_glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
+        // ex_glTranslate(0.5, 0.5, 0.0);
+        glMatrixMode (GL_MODELVIEW);
+        glLoadIdentity ();
+
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear( GL_COLOR_BUFFER_BIT );
+        glBindTexture (GL_TEXTURE_RECTANGLE_ARB, texture_id);
+        glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+                       0,
+                       GL_RGBA,
+                       w,
+                       h,
+                       0,
+                       GL_BGRA,
+                       GL_UNSIGNED_BYTE,
+                       cairo_buffer );
+
+        glEnable (GL_BLEND);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable (GL_TEXTURE_RECTANGLE_ARB);
+        glColor3f ( 1.0f, 1.0f, 1.0f );
+        glBegin (GL_QUADS);
+            glTexCoord2f ( 0.0f, 0.0f );
+            glVertex2f ( 0.0f, 0.0f );
+
+            glTexCoord2f ( (GLfloat)w, 0.0f );
+            glVertex2f ( 1.0f, 0.0f );
+
+            glTexCoord2f ( (GLfloat)w, (GLfloat)h );
+            glVertex2f ( 1.0f, 1.0f );
+
+            glTexCoord2f ( 0.0f, (GLfloat)h );
+            glVertex2f ( 0.0f, 1.0f );
+        glEnd ();
+        glDisable (GL_TEXTURE_RECTANGLE_ARB);
         SDL_GL_SwapWindow(ip_win);
 
 
+        // ======================================================== 
         // update and render the world
+        // ======================================================== 
+
         status = SDL_GL_MakeCurrent( glWindow, glContext );
         if ( status ) {
             ex_error( "Can't make current gl context: %s", SDL_GetError() );
@@ -500,9 +600,8 @@ static void __main_loop () {
         SDL_GL_SwapWindow(glWindow);
     }
 
-    // destroy cairo
-    if ( cr )
-        cairo_destroy (cr);
+    // Destroy inspector
+    __destroy_inspector ();
 
     // Destroy our GL context, etc.
     SDL_GL_DeleteContext(glContext);
@@ -563,9 +662,12 @@ int main( int argc, char *argv[] ) {
             exit(1);
         }
 
+        // init main gl window
         __init_window ();
-        __init_inspector ();
         __init_gl ();
+
+        // init other window
+        __init_inspector ();
 
         // ======================================================== 
         // init the editor

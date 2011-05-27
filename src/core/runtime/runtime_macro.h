@@ -260,7 +260,7 @@ extern "C" {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-#define EX_SERIALIZE_BEGIN_SUPER(_class,_super) \
+#define EX_SERIALIZE_SUPER_BEGIN(_class,_super) \
     void __ex_serialize_##_class( ex_stream_t *_stream, strid_t _name, void *_val ) { \
         void (*tmp_pop) ( ex_stream_t *_stream ); \
         _class *self = (_class *)_val; \

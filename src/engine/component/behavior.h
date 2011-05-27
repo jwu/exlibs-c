@@ -65,6 +65,16 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_behavior_t,ex_component_t)
 
 EX_DECL_CLASS_SUPER_END(ex_behavior_t,ex_component_t)
 
+#define EX_BEHAVIOR_DEFAULT_MEMBER \
+    EX_COMPONENT_DEFAULT_MEMBER \
+    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW ) \
+    EX_MEMBER( ex_behavior_t, enabled, true ) \
+    EX_MEMBER( ex_behavior_t, awake, NULL ) \
+    EX_MEMBER( ex_behavior_t, start, NULL ) \
+    EX_MEMBER( ex_behavior_t, update, NULL ) \
+    EX_MEMBER( ex_behavior_t, post_update, NULL ) \
+    EX_MEMBER( ex_behavior_t, on_render, NULL )
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

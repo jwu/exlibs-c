@@ -44,20 +44,21 @@ void __sprite_deinit ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_DEF_OBJECT_BEGIN( ex_sprite_t,
-                     "Sprite",
-                     __sprite_init,
-                     __sprite_deinit )
+EX_DEF_CLASS_BEGIN(ex_sprite_t)
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_COMPONENT_DEFAULT_MEMBER
 
-EX_DEF_OBJECT_END
+    EX_MEMBER( ex_object_t, name, ex_strid("Sprite") )
+    EX_MEMBER( ex_object_t, init, __sprite_init )
+    EX_MEMBER( ex_object_t, deinit, __sprite_deinit )
+
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_sprite_t)
     // EX_PROP( ex_sprite_t, pos, "position",  EX_PROP_ATTR_NONE, ex_prop_set_raw_vec2f, ex_prop_get_raw_vec2f )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_sprite_t,ex_component_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_sprite_t,ex_component_t)
     // EX_MEMBER_SERIALIZE( vec2f, pos )
 EX_SERIALIZE_END
 

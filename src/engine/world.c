@@ -95,22 +95,26 @@ void __world_deinit ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_DEF_OBJECT_BEGIN( ex_world_t, 
-                     "World", 
-                     __world_init, 
-                     __world_deinit )
+EX_DEF_CLASS_BEGIN(ex_world_t)
+
+    EX_OBJECT_DEFAULT_MEMBER
+
+    EX_MEMBER( ex_object_t, name, ex_strid("World") )
+    EX_MEMBER( ex_object_t, init, __world_init )
+    EX_MEMBER( ex_object_t, deinit, __world_deinit )
 
     EX_MEMBER( ex_world_t, state, EX_WORLD_STATE_STOPPED )
     EX_MEMBER( ex_world_t, entities, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
     EX_MEMBER( ex_world_t, cameras, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
     EX_MEMBER( ex_world_t, main_camera, NULL )
     EX_MEMBER( ex_world_t, be_list, ex_array_notype( sizeof(ex_ref_t *), 1024 ) )
-EX_DEF_OBJECT_END
+
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_world_t)
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_world_t,ex_object_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_world_t,ex_object_t)
     EX_SERIALIZE_ARRAY( _stream, ref, "entities", self->entities );
 EX_SERIALIZE_END
 

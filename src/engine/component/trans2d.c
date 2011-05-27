@@ -47,12 +47,13 @@ void __trans2d_deinit ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
-                     "Transform 2D",
-                     __trans2d_init,
-                     __trans2d_deinit )
+EX_DEF_CLASS_BEGIN(ex_trans2d_t)
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_COMPONENT_DEFAULT_MEMBER
+
+    EX_MEMBER( ex_object_t, name, ex_strid("Transform 2D") )
+    EX_MEMBER( ex_object_t, init, __trans2d_init )
+    EX_MEMBER( ex_object_t, deinit, __trans2d_deinit )
 
     EX_MEMBER( ex_trans2d_t, local_pos, ex_vec2f_zero )
     EX_MEMBER( ex_trans2d_t, local_ang, ex_angf_zero )
@@ -63,7 +64,7 @@ EX_DEF_OBJECT_BEGIN( ex_trans2d_t,
     EX_MEMBER( ex_trans2d_t, local_to_world, ex_mat33f_identity )
     // EX_MEMBER( ex_trans2d_t, dirty_mutex, ex_create_mutex() ) // DISABLE: since we use coroutine, not thread
 
-EX_DEF_OBJECT_END
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_trans2d_t)
     EX_PROP( ex_trans2d_t, vec2f, local_pos, "local position",  EX_PROP_ATTR_NONE )
@@ -71,7 +72,7 @@ EX_DEF_PROPS_BEGIN(ex_trans2d_t)
     EX_PROP( ex_trans2d_t, vec2f, local_scale, "local scale",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_trans2d_t,ex_component_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     EX_MEMBER_SERIALIZE( vec2f, local_pos )
     EX_MEMBER_SERIALIZE( angf, local_ang )
     EX_MEMBER_SERIALIZE( vec2f, local_scale )

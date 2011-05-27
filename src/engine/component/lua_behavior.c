@@ -261,16 +261,15 @@ static void __lua_behavior_resume ( ex_ref_t *_self, void *_info ) {
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
-                     "Lua Behavior",
-                     __lua_behavior_init,
-                     __lua_behavior_deinit )
+EX_DEF_CLASS_BEGIN(ex_lua_behavior_t)
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_BEHAVIOR_DEFAULT_MEMBER
+
+    EX_MEMBER( ex_object_t, name, ex_strid("Lua Behavior") )
+    EX_MEMBER( ex_object_t, init, __lua_behavior_init )
+    EX_MEMBER( ex_object_t, deinit, __lua_behavior_deinit )
 
     // invokes
-    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
-    EX_MEMBER( ex_behavior_t, enabled, true )
     EX_MEMBER( ex_behavior_t, awake, __lua_behavior_awake )
     EX_MEMBER( ex_behavior_t, start, __lua_behavior_start )
     EX_MEMBER( ex_behavior_t, update, __lua_behavior_update )
@@ -283,12 +282,12 @@ EX_DEF_OBJECT_BEGIN( ex_lua_behavior_t,
     EX_MEMBER( ex_lua_behavior_t, invoke_list, ex_array_notype(sizeof(ex_invoke_info_t),16) )
     EX_MEMBER( ex_lua_behavior_t, coroutine_list, ex_array_notype(sizeof(ex_coroutine_info_t),16) )
 
-EX_DEF_OBJECT_END
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_lua_behavior_t)
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_lua_behavior_t,ex_behavior_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)

@@ -49,19 +49,20 @@ void __component_deinit ( ex_ref_t *_self ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-EX_DEF_OBJECT_BEGIN( ex_component_t,
-                     "Component",
-                     __component_init,
-                     __component_deinit )
+EX_DEF_CLASS_BEGIN(ex_component_t)
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_COMPONENT_DEFAULT_MEMBER
 
-EX_DEF_OBJECT_END
+    EX_MEMBER( ex_object_t, name, ex_strid("Component") )
+    EX_MEMBER( ex_object_t, init, __component_init )
+    EX_MEMBER( ex_object_t, deinit, __component_deinit )
+
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_component_t)
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_BEGIN_SUPER(ex_component_t,ex_object_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_component_t,ex_object_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_component_t,ex_object_t)

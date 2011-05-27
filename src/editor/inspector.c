@@ -15,7 +15,6 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern SDL_Surface *ip_surf;
 extern SDL_Window *ip_win;
 // ------------------------------------------------------------------ 
 
@@ -28,7 +27,6 @@ int __sdl_window_handle_event ( SDL_Event *_event ) {
         switch (_event->window.event) {
         case SDL_WINDOWEVENT_RESIZED:
             SDL_SetWindowSize ( window, _event->window.data1, _event->window.data2 );
-            ip_surf = SDL_GetWindowSurface(ip_win);
             ex_log("window resized to %d, %d", _event->window.data1, _event->window.data2);
             break;
 

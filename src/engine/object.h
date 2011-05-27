@@ -48,27 +48,17 @@ EX_DECL_CLASS_BEGIN(ex_object_t)
     void (*deinit) ( ex_ref_t *_self ); // invoked when ex_destroy_object called.
 EX_DECL_CLASS_END(ex_object_t)
 
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
+#define EX_OBJECT_DEFAULT_MEMBER \
+    EX_MEMBER(ex_object_t, uid, EX_UID_INVALID) \
+    EX_MEMBER(ex_object_t, name, EX_STRID_NULL) \
+    EX_MEMBER(ex_object_t, flags, EX_OBJECT_NONE) \
+    EX_MEMBER(ex_object_t, l, NULL ) \
+    EX_MEMBER(ex_object_t, luaRefID, -1 ) \
+    EX_MEMBER(ex_object_t, init, __object_init) \
+    EX_MEMBER(ex_object_t, deinit, __object_deinit)
 
-#define EX_DEF_OBJECT_BEGIN(_ctype,_default_name,_init,_deinit) \
-    strid_t __TYPEID_##_ctype##__ = EX_STRID_NULL; \
-    ex_rtti_t *__RTTI_##_ctype##__ = NULL; \
-    void *__ex_create_##_ctype( const ex_rtti_t *_rtti ) { \
-        void *__obj__ = ex_malloc(sizeof(_ctype)); \
-        ((ex_class_t *)__obj__)->rtti = _rtti; \
-        ((ex_object_t *)__obj__)->uid = EX_UID_INVALID; \
-        ((ex_object_t *)__obj__)->name = ex_strid(_default_name); \
-        ((ex_object_t *)__obj__)->flags = EX_OBJECT_NONE; \
-        ((ex_object_t *)__obj__)->l = NULL; \
-        ((ex_object_t *)__obj__)->luaRefID = -1; \
-        ((ex_object_t *)__obj__)->init = _init; \
-        ((ex_object_t *)__obj__)->deinit = _deinit;
-
-#define EX_DEF_OBJECT_END \
-        return __obj__; \
-    }
+extern void __object_init( ex_ref_t * );
+extern void __object_deinit( ex_ref_t * );
 
 ///////////////////////////////////////////////////////////////////////////////
 // function defines
