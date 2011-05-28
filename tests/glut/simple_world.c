@@ -81,6 +81,12 @@ void update () {
 // ------------------------------------------------------------------ 
 
 void render () {
+    ex_ref_t *mainCam;
+
+    mainCam = ex_world_main_camera (g_world);
+    ex_camera_clear (mainCam);
+    ex_camera_apply_transform (mainCam);
+
     ex_world_render(g_world);
 }
 

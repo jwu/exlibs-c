@@ -18,6 +18,8 @@ extern "C" {
 
 // editor
 #include "editor.h"
+#include "stage.h"
+#include "sys_window.h"
 
 // external
 #include "cairo.h"

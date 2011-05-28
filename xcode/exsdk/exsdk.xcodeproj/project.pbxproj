@@ -447,6 +447,8 @@
 		B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */; };
 		B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B77012A6B144009FE3E8 /* exsdk.h */; };
+		B2ED96421391009D0017C7B6 /* stage.c in Sources */ = {isa = PBXBuildFile; fileRef = B2ED963E1391009D0017C7B6 /* stage.c */; };
+		B2ED96431391009D0017C7B6 /* sys_window.c in Sources */ = {isa = PBXBuildFile; fileRef = B2ED96401391009D0017C7B6 /* sys_window.c */; };
 		B2F1790C1371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */; };
 		B2F1790D1371559B00C5F4A2 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */; };
 		B2F1790E1371559B00C5F4A2 /* libgobject-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */; };
@@ -986,6 +988,10 @@
 		B2DD23EA12A7C7CE0053CA3F /* array test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "array test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0B76F12A6B144009FE3E8 /* exsdk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = exsdk.c; path = ../../src/exsdk.c; sourceTree = SOURCE_ROOT; };
 		B2E0B77012A6B144009FE3E8 /* exsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = exsdk.h; path = ../../src/exsdk.h; sourceTree = SOURCE_ROOT; };
+		B2ED963E1391009D0017C7B6 /* stage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stage.c; path = ../../src/editor/stage.c; sourceTree = "<group>"; };
+		B2ED963F1391009D0017C7B6 /* stage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stage.h; path = ../../src/editor/stage.h; sourceTree = "<group>"; };
+		B2ED96401391009D0017C7B6 /* sys_window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys_window.c; path = ../../src/editor/sys_window.c; sourceTree = "<group>"; };
+		B2ED96411391009D0017C7B6 /* sys_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sys_window.h; path = ../../src/editor/sys_window.h; sourceTree = "<group>"; };
 		B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libclutter-osx-1.0.0.dylib"; path = "../../ext_build/libs/macosx/libclutter-osx-1.0.0.dylib"; sourceTree = "<group>"; };
 		B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libglib-2.0.0.dylib"; path = "../../ext_build/libs/macosx/libglib-2.0.0.dylib"; sourceTree = "<group>"; };
 		B2F1790B1371559B00C5F4A2 /* libgobject-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libgobject-2.0.0.dylib"; path = "../../ext_build/libs/macosx/libgobject-2.0.0.dylib"; sourceTree = "<group>"; };
@@ -1272,6 +1278,10 @@
 		B22BBE9213712B9F00AB2471 /* editor */ = {
 			isa = PBXGroup;
 			children = (
+				B2ED963E1391009D0017C7B6 /* stage.c */,
+				B2ED963F1391009D0017C7B6 /* stage.h */,
+				B2ED96401391009D0017C7B6 /* sys_window.c */,
+				B2ED96411391009D0017C7B6 /* sys_window.h */,
 				B2D67AEB1380BA2A0012F20D /* inspector.c */,
 				B2278A0D137A50FB00B7B11E /* editor_inc.h */,
 				B2278A0E137A50FB00B7B11E /* editor.c */,
@@ -2645,6 +2655,8 @@
 				B2278A11137A50FB00B7B11E /* editor.c in Sources */,
 				B2278A12137A50FB00B7B11E /* main.c in Sources */,
 				B2D67AEC1380BA2A0012F20D /* inspector.c in Sources */,
+				B2ED96421391009D0017C7B6 /* stage.c in Sources */,
+				B2ED96431391009D0017C7B6 /* sys_window.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

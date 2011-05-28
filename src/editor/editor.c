@@ -11,7 +11,7 @@
 
 #include "exsdk.h"
 #include "engine/engine_inc.h"
-#include "editor.h"
+#include "editor_inc.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // defines
@@ -21,6 +21,7 @@ static bool __initialized = false;
 
 // ------------------------------------------------------------------ 
 // Desc: 
+extern void __init_window_table();
 extern void __start_engine_time ();
 extern void __init_ref_table ();
 // ------------------------------------------------------------------ 
@@ -38,6 +39,9 @@ int ex_editor_init () {
         return 1;
     }
 
+    // init windows array
+    __init_window_table();
+
     // start editor timer
     __init_ref_table ();
     __start_engine_time ();
@@ -51,12 +55,15 @@ int ex_editor_init () {
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void __deinit_ref_table ();
+extern void __deinit_window_table ();
 // ------------------------------------------------------------------ 
 
 void ex_editor_deinit () {
     if ( __initialized ) {
         __deinit_ref_table();
+        __deinit_window_table();
 
+        //
         ex_log ( "ex_editor deinitied" );
         __initialized = false;
     }

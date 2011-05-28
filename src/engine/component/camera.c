@@ -195,6 +195,8 @@ void ex_camera_apply_transform ( ex_ref_t *_self ) {
         glLoadIdentity();
         ex_glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
         ex_glTranslate(0.5, 0.5, 0.0);
+
+        // TODO: transform from trans2d
     }
     else {
         // TODO:

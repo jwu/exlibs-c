@@ -17,13 +17,9 @@
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-// sdl
-int win_width = 800;
-int win_height = 600;
-int bpp = 32;
-uint32 window_flags = 0;
-SDL_Window *glWindow = NULL; 
-SDL_GLContext *glContext = NULL; 
+// window
+sys_window_t *main_view = NULL;
+sys_window_t *inspector = NULL;
 
 // game
 ex_ref_t *g_world = NULL;
@@ -37,136 +33,7 @@ char *g_world_path = NULL;
 // Desc: 
 // ------------------------------------------------------------------ 
 
-static void __init_window () {
-    int rgb_size[3];
-    int value = -1;
-    int fsaa = 4;       // 4x fsaa
-    int accel = -1;     // no accel
-    int vsync = 0;       // no vsync
-
-    ex_log( "init sdl opengl" );
-
-    /* Request an opengl 3.2 context.
-     * SDL doesn't have the ability to choose which profile at this time of writing,
-     * but it should default to the core profile */
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-
-    // setup bits per-pixel
-    if (bpp == 0) {
-        if ( SDL_GetVideoInfo()->vfmt->BitsPerPixel <= 8 )
-            bpp = 8;
-        else
-            bpp = 16;
-    }
-    switch (bpp) {
-    case 8:
-        rgb_size[0] = 3;
-        rgb_size[1] = 3;
-        rgb_size[2] = 2;
-        break;
-    case 15:
-    case 16:
-        rgb_size[0] = 5;
-        rgb_size[1] = 5;
-        rgb_size[2] = 5;
-        break;
-    default:
-        rgb_size[0] = 8;
-        rgb_size[1] = 8;
-        rgb_size[2] = 8;
-        break;
-    }
-    SDL_GL_SetAttribute ( SDL_GL_RED_SIZE,      rgb_size[0] );
-    SDL_GL_SetAttribute ( SDL_GL_GREEN_SIZE,    rgb_size[1] );
-    SDL_GL_SetAttribute ( SDL_GL_BLUE_SIZE,     rgb_size[2] );
-    SDL_GL_SetAttribute ( SDL_GL_DEPTH_SIZE,    24 );
-    SDL_GL_SetAttribute ( SDL_GL_DOUBLEBUFFER,  1 );
-
-    // setup the opengl device
-    if ( fsaa ) {
-        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, fsaa);
-    }
-    if ( accel >= 0 ) {
-        SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, accel);
-    }
-    if ( vsync ) {
-        SDL_GL_SetSwapInterval(1);
-    } else {
-        SDL_GL_SetSwapInterval(0);
-    }
-    // TODO { 
-    // if (gamma != 0.0) {
-    //     SDL_SetGamma(gamma, gamma, gamma);
-    // }
-    // } TODO end 
-
-
-
-    // Create our window centered at win_width x win_height resolution
-    window_flags = SDL_WINDOW_OPENGL;
-    // window_flags |= SDL_WINDOW_FULLSCREEN; // TODO: full-screen
-    window_flags |= SDL_WINDOW_RESIZABLE;
-    window_flags |= SDL_WINDOW_SHOWN;
-    // window_flags |= SDL_WINDOW_INPUT_GRABBED;
-    // window_flags |= SDL_WINDOW_INPUT_FOCUS;
-    // window_flags |= SDL_WINDOW_MOUSE_FOCUS;
-    glWindow = SDL_CreateWindow( "exsdk Editor", 
-                                 SDL_WINDOWPOS_CENTERED, 
-                                 SDL_WINDOWPOS_CENTERED,
-                                 win_width, win_height, 
-                                 window_flags );
-    if ( glWindow == NULL ) {
-        ex_error ( "unable to create window" );
-    }
-    glContext = SDL_GL_CreateContext(glWindow);
-
-    // log the graphic-driver status
-    ex_log( "Screen BPP\t\t\t\t: %d", SDL_GetWindowSurface(glWindow)->format->BitsPerPixel );
-    ex_log( "Vendor\t\t\t\t\t: %s", glGetString(GL_VENDOR) );
-    ex_log( "Renderer:\t\t\t\t: %s", glGetString(GL_RENDERER) );
-    ex_log( "Version\t\t\t\t\t: %s", glGetString(GL_VERSION) );
-    // ex_log( "Extensions:\t\t%s", glGetString(GL_EXTENSIONS) );
-
-    SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &value);
-    ex_log( "red size\t\t\t\t: requested %d, got %d", rgb_size[0], value );
-
-    SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &value);
-    ex_log( "green size\t\t\t\t: requested %d, got %d", rgb_size[1], value );
-
-    SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &value);
-    ex_log( "blue size\t\t\t\t: requested %d, got %d", rgb_size[2], value );
-
-    SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &value);
-    ex_log( "depth size\t\t\t\t: requested %d, got %d", 16, value );
-
-    SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &value);
-    ex_log( "double buffer\t\t\t: requested 1, got %d", value );
-
-    if (fsaa) {
-        SDL_GL_GetAttribute(SDL_GL_MULTISAMPLEBUFFERS, &value);
-        ex_log( "multi-buffers\t\t\t: requested 1, got %d", value );
-        SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &value);
-        ex_log( "multi-samples\t\t\t: requested %d, got %d", fsaa, value );
-    }
-    if (accel >= 0) {
-        SDL_GL_GetAttribute(SDL_GL_ACCELERATED_VISUAL, &value);
-        ex_log( "accelerated visual\t\t: requested %d, got %d", accel, value );
-    }
-    if (vsync) {
-        ex_log( "buffer swap interval\t: requested 1, got %d", SDL_GL_GetSwapInterval() );
-    }
-}
-
-// ------------------------------------------------------------------ 
-// Desc: 
-// ------------------------------------------------------------------ 
-
-static void __init_gl () {
-    glViewport( 0, 0, win_width, win_height );
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-
+static void __reset_gl () {
     // anti-aliasing { 
     // glEnable(GL_LINE_SMOOTH);
     // glEnable(GL_POINT_SMOOTH);
@@ -197,131 +64,282 @@ static void __init_gl () {
 
 // ------------------------------------------------------------------ 
 // Desc: 
-SDL_Window *ip_win = NULL;
-uint texture_id = -1;
-cairo_surface_t *cairo_surf = NULL;
-uint8 *cairo_buffer = NULL;
-cairo_t *cr = NULL;
 // ------------------------------------------------------------------ 
 
-//
-static void __init_inspector () {
-    int x, y, w, h;
-
-    // create sdl window
-    SDL_GetWindowPosition ( glWindow, &x, &y );
-    SDL_GetWindowSize ( glWindow, &w, &h );
-    ip_win = SDL_CreateWindow( "Inspector", 
-                               x + win_width + 10, 
-                               y,
-                               200, h, 
-                               SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN|SDL_WINDOW_BORDERLESS );
-
-    // create cairo surface
-    SDL_GetWindowSize ( ip_win, &w, &h );
-	cairo_buffer = ex_malloc ( 4 * w * h * sizeof (uint8) );
-    ex_memzero( cairo_buffer,  4 * w * h * sizeof (uint8) );
-    cairo_surf = cairo_image_surface_create_for_data ( cairo_buffer,
-                                                       CAIRO_FORMAT_ARGB32,
-                                                       w,
-                                                       h,
-                                                       4 * w );
-    if ( cairo_surface_status (cairo_surf) != CAIRO_STATUS_SUCCESS ) {
-        ex_free (cairo_buffer);
-        cairo_buffer = NULL;
-        ex_error ("can't create cairo surface.");
+static void __update_world () {
+    if ( g_world ) {
+        ex_world_update(g_world);
     }
-
-    // create cairo context
-    cr = cairo_create (cairo_surf);
-    if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
-        ex_free (cairo_buffer);
-        cairo_buffer = NULL;
-        ex_error ("can't create cairo context");
-    }
-
-    // create texture
-	glDeleteTextures ( 1, &texture_id );
-    glGenTextures ( 1, &texture_id );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, texture_id );
-    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                   0,
-                   GL_RGBA,
-                   w,
-                   h,
-                   0,
-                   GL_BGRA,
-                   GL_UNSIGNED_BYTE,
-                   NULL );
-    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
 }
 
-//
-static void __draw_inspector () {
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __draw_world () {
+    if ( g_world ) {
+        int w,h;
+        double rx, ry;
+
+        SDL_GetWindowSize( main_view->sdl_win, &w, &h );
+        rx = (double)w/2.0;
+        ry = (double)h/2.0;
+
+        __reset_gl();
+
+        // clear backbuffer
+        // glClearColor( 0.0f, 0.5f, 1.0f, 1.0f );
+        glClearColor( 0.4f, 0.4f, 0.4f, 1.0f );
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+        // set modelview, projection matrix
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
+        glTranslatef(0.5f, 0.5f, 0.0f);
+
+        //
+        ex_world_render(g_world);
+    }
+
+    // TEMP { 
     int w, h;
-    SDL_GetWindowSize ( ip_win, &w, &h );
+    cairo_t *cr;
+    cr = main_view->stage->cr;
+    SDL_GetWindowSize ( main_view->sdl_win, &w, &h );
 
     if ( cr == NULL )
         return;
 
     // clear background
+    cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint (cr);
     cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+
+    // background color
+    cairo_set_source_rgba (cr, 1.0f, 0.0f, 0.0f, 0.2f);
     cairo_rectangle (cr, 0, 0, w, h);
-    cairo_set_source_rgba (cr, 0.0f, 0.0f, 0.0f, 1.0f);
     cairo_fill (cr);
-    cairo_stroke (cr);
 
     cairo_save (cr);
-#if 0
-    cairo_set_line_width (cr, 2.0);
-    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-    cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
-    cairo_stroke (cr);
-#else
-    //
-    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-    cairo_move_to (cr, 0, 0);
-    cairo_line_to (cr, 1 * w, 1 * h);
-    cairo_move_to (cr, 1 * w, 0);
-    cairo_line_to (cr, 0, 1 * h);
-    cairo_set_line_width (cr, 2.0);
-    cairo_stroke (cr);
+        cairo_set_source_rgba (cr, 0.0, 0.0, 1.0, 0.5);
+        cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
+        cairo_fill (cr);
 
-    cairo_rectangle (cr, 0, 0, 0.5 * w, 0.5 * h);
-    cairo_set_source_rgba (cr, 1, 0, 0, 0.80);
-    cairo_fill (cr);
-
-    cairo_rectangle (cr, 0, 0.5 * h, 0.5 * w, 0.5 * h);
-    cairo_set_source_rgba (cr, 0, 1, 0, 0.60);
-    cairo_fill (cr);
-
-    cairo_rectangle (cr, 0.5 * w, 0, 0.5 * w, 0.5 * h);
-    cairo_set_source_rgba (cr, 0, 0, 1, 0.40);
-    cairo_fill (cr);
-    cairo_stroke (cr);
-#endif
+        cairo_set_line_width (cr, 2.0);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
+        cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
+        cairo_stroke (cr);
     cairo_restore (cr);
+    // } TEMP end 
 }
 
-//
-static void __destroy_inspector () {
-    glDeleteTextures (1, &texture_id);
-    
-    // remove surface
-    // NOTE: we still need cairo_surf when resizing.
-    if ( cairo_surf )
-        cairo_surface_destroy (cairo_surf);
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
 
-    // destroy cairo
-    if ( cr )
-        cairo_destroy (cr);
+static void __draw_inspector () {
+    int w, h;
+    cairo_t *cr;
+
+    cr = inspector->stage->cr;
+    SDL_GetWindowSize ( inspector->sdl_win, &w, &h );
+
+    if ( cr == NULL )
+        return;
+
+    // clear background
+    cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+    cairo_paint (cr);
+    cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+
+    // background color
+    cairo_set_source_rgba (cr, 0.5f, 0.5f, 0.5f, 1.0f);
+    cairo_rectangle (cr, 0, 0, w, h);
+    cairo_fill (cr);
 
     //
-    if ( cairo_buffer ) {
-        ex_free (cairo_buffer);
-        cairo_buffer = NULL;
-    }
+    cairo_save (cr); {
+        cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+        cairo_move_to (cr, 0, 0);
+        cairo_line_to (cr, 1 * w, 1 * h);
+        cairo_move_to (cr, 1 * w, 0);
+        cairo_line_to (cr, 0, 1 * h);
+        cairo_set_line_width (cr, 2.0);
+        cairo_stroke (cr);
+
+        cairo_rectangle (cr, 0, 0, 0.5 * w, 0.5 * h);
+        cairo_set_source_rgba (cr, 1, 0, 0, 0.80);
+        cairo_fill (cr);
+
+        cairo_rectangle (cr, 0, 0.5 * h, 0.5 * w, 0.5 * h);
+        cairo_set_source_rgba (cr, 0, 1, 0, 0.60);
+        cairo_fill (cr);
+
+        cairo_rectangle (cr, 0.5 * w, 0, 0.5 * w, 0.5 * h);
+        cairo_set_source_rgba (cr, 0, 0, 1, 0.40);
+        cairo_fill (cr);
+        cairo_stroke (cr);
+    } cairo_restore (cr);
 }
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static void __init_window () {
+    int x, y, w, h;
+
+    // main view
+    main_view = ex_create_sys_window ( "exsdk Editor",
+                                       SDL_WINDOWPOS_CENTERED, 
+                                       SDL_WINDOWPOS_CENTERED,
+                                       800, 600 );
+    main_view->on_update = __update_world; 
+    main_view->on_draw = __draw_world;
+
+    // inspector
+    SDL_GetWindowPosition ( main_view->sdl_win, &x, &y );
+    SDL_GetWindowSize ( main_view->sdl_win, &w, &h );
+    inspector = ex_create_sys_window ( "Inspector",
+                                       x + w + 10, 
+                                       y,
+                                       200, 
+                                       h );
+    inspector->on_draw = __draw_inspector;
+}
+
+// DELME { 
+// // ------------------------------------------------------------------ 
+// // Desc: 
+// SDL_Window *ip_win = NULL;
+// uint texture_id = -1;
+// cairo_surface_t *cairo_surf = NULL;
+// uint8 *cairo_buffer = NULL;
+// cairo_t *cr = NULL;
+// // ------------------------------------------------------------------ 
+
+// //
+// static void __init_inspector () {
+//     int x, y, w, h;
+
+//     // create sdl window
+//     SDL_GetWindowPosition ( glWindow, &x, &y );
+//     SDL_GetWindowSize ( glWindow, &w, &h );
+//     ip_win = SDL_CreateWindow( "Inspector", 
+//                                x + win_width + 10, 
+//                                y,
+//                                200, h, 
+//                                SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN|SDL_WINDOW_BORDERLESS );
+
+//     // create cairo surface
+//     SDL_GetWindowSize ( ip_win, &w, &h );
+//     cairo_buffer = ex_malloc ( 4 * w * h * sizeof (uint8) );
+//     ex_memzero( cairo_buffer,  4 * w * h * sizeof (uint8) );
+//     cairo_surf = cairo_image_surface_create_for_data ( cairo_buffer,
+//                                                        CAIRO_FORMAT_ARGB32,
+//                                                        w,
+//                                                        h,
+//                                                        4 * w );
+//     if ( cairo_surface_status (cairo_surf) != CAIRO_STATUS_SUCCESS ) {
+//         ex_free (cairo_buffer);
+//         cairo_buffer = NULL;
+//         ex_error ("can't create cairo surface.");
+//     }
+
+//     // create cairo context
+//     cr = cairo_create (cairo_surf);
+//     if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
+//         ex_free (cairo_buffer);
+//         cairo_buffer = NULL;
+//         ex_error ("can't create cairo context");
+//     }
+
+//     // create texture
+//     glDeleteTextures ( 1, &texture_id );
+//     glGenTextures ( 1, &texture_id );
+//     glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, texture_id );
+//     glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+//                    0,
+//                    GL_RGBA,
+//                    w,
+//                    h,
+//                    0,
+//                    GL_BGRA,
+//                    GL_UNSIGNED_BYTE,
+//                    NULL );
+//     // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+// }
+
+// //
+// static void __draw_inspector () {
+//     int w, h;
+//     SDL_GetWindowSize ( ip_win, &w, &h );
+
+//     if ( cr == NULL )
+//         return;
+
+//     // clear background
+//     cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+//     cairo_rectangle (cr, 0, 0, w, h);
+//     cairo_set_source_rgba (cr, 0.0f, 0.0f, 0.0f, 1.0f);
+//     cairo_fill (cr);
+//     cairo_stroke (cr);
+
+//     cairo_save (cr);
+// #if 0
+//     cairo_set_line_width (cr, 2.0);
+//     cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+//     cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
+//     cairo_stroke (cr);
+// #else
+//     //
+//     cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+//     cairo_move_to (cr, 0, 0);
+//     cairo_line_to (cr, 1 * w, 1 * h);
+//     cairo_move_to (cr, 1 * w, 0);
+//     cairo_line_to (cr, 0, 1 * h);
+//     cairo_set_line_width (cr, 2.0);
+//     cairo_stroke (cr);
+
+//     cairo_rectangle (cr, 0, 0, 0.5 * w, 0.5 * h);
+//     cairo_set_source_rgba (cr, 1, 0, 0, 0.80);
+//     cairo_fill (cr);
+
+//     cairo_rectangle (cr, 0, 0.5 * h, 0.5 * w, 0.5 * h);
+//     cairo_set_source_rgba (cr, 0, 1, 0, 0.60);
+//     cairo_fill (cr);
+
+//     cairo_rectangle (cr, 0.5 * w, 0, 0.5 * w, 0.5 * h);
+//     cairo_set_source_rgba (cr, 0, 0, 1, 0.40);
+//     cairo_fill (cr);
+//     cairo_stroke (cr);
+// #endif
+//     cairo_restore (cr);
+// }
+
+// //
+// static void __destroy_inspector () {
+//     glDeleteTextures (1, &texture_id);
+//     
+//     // remove surface
+//     // NOTE: we still need cairo_surf when resizing.
+//     if ( cairo_surf )
+//         cairo_surface_destroy (cairo_surf);
+
+//     // destroy cairo
+//     if ( cr )
+//         cairo_destroy (cr);
+
+//     //
+//     if ( cairo_buffer ) {
+//         ex_free (cairo_buffer);
+//         cairo_buffer = NULL;
+//     }
+// }
+// } DELME end 
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -342,8 +360,8 @@ static void __init_game () {
     mainCam = ex_world_main_camera (g_world);
     ex_assert ( mainCam, "can't find main camera" );
     ex_camera_set_ortho( mainCam, true );
-    ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
-    ex_camera_set_ortho_size( mainCam, (float)win_height/2.0f );
+    ex_camera_set_aspect( mainCam, 800.0f/600.0f );
+    ex_camera_set_ortho_size( mainCam, 600.0f/2.0f );
 
     // create test world
     g_world_path = "scripted_world/test_invoke.lua";
@@ -425,26 +443,28 @@ static int __gl_window_handle_event ( SDL_Event *_event ) {
     case SDL_WINDOWEVENT:
         switch (_event->window.event) {
         case SDL_WINDOWEVENT_RESIZED:
-            if (_event->window.windowID == SDL_GetWindowID(glWindow)) {
-                int status;
+            // DELME { 
+            // if (_event->window.windowID == SDL_GetWindowID(glWindow)) {
+            // int status;
 
-                win_width = _event->window.data1;
-                win_height = _event->window.data2;
-                status = SDL_GL_MakeCurrent(glWindow,glContext);
-                if ( status ) {
-                    ex_error( "Can't make current gl context: %s", SDL_GetError() );
-                    break;
-                }
-                if ( g_world ) {
-                    ex_ref_t *mainCam;
-                    mainCam = ex_world_main_camera (g_world);
-                    ex_camera_set_ortho( mainCam, true );
-                    ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
-                    ex_camera_set_ortho_size( mainCam, (float)win_height/2.0f );
-                }
-                __init_gl();
-                ex_log( "glWindow resize to %d x %d", win_width, win_height );
-            }
+            // win_width = _event->window.data1;
+            // win_height = _event->window.data2;
+            // status = SDL_GL_MakeCurrent(glWindow,glContext);
+            // if ( status ) {
+            //     ex_error( "Can't make current gl context: %s", SDL_GetError() );
+            //     break;
+            // }
+            // if ( g_world ) {
+            //     ex_ref_t *mainCam;
+            //     mainCam = ex_world_main_camera (g_world);
+            //     ex_camera_set_ortho( mainCam, true );
+            //     ex_camera_set_aspect( mainCam, (float)win_width/(float)win_height );
+            //     ex_camera_set_ortho_size( mainCam, (float)win_height/2.0f );
+            // }
+            // __reset_gl();
+            // ex_log( "glWindow resize to %d x %d", win_width, win_height );
+            // }
+            // } DELME end 
             break;
 
         // case SDL_WINDOWEVENT_CLOSE:
@@ -493,13 +513,19 @@ extern int __sdl_window_handle_event ( SDL_Event *_event );
 // ------------------------------------------------------------------ 
 
 static int __handle_event ( SDL_Event *_event ) {
-    SDL_Window *sdlWindow = SDL_GetWindowFromID (_event->window.windowID);
-    if ( sdlWindow == glWindow ) {
-        return __gl_window_handle_event (_event);
-    }
-    else {
-        return __sdl_window_handle_event (_event);
-    }
+    // SDL_Window *sdlWindow = SDL_GetWindowFromID (_event->window.windowID);
+
+    // TODO:
+    return 0;
+
+    // DELME { 
+    // if ( sdlWindow == glWindow ) {
+    //     return __gl_window_handle_event (_event);
+    // }
+    // else {
+    //     return __sdl_window_handle_event (_event);
+    // }
+    // } DELME end 
 }
 
 // ------------------------------------------------------------------ 
@@ -508,7 +534,7 @@ static int __handle_event ( SDL_Event *_event ) {
 
 static void __main_loop () {
     int done = 0;
-    int w, h;
+    ex_array_t *windows;
 
     // run the world
     ex_world_run(g_world);
@@ -516,96 +542,115 @@ static void __main_loop () {
     // looping the game
     while ( !done ) {
         SDL_Event event;
-        int status;
 
         // handle event
         while ( SDL_PollEvent(&event) ) {
             done |= __handle_event(&event);
         }
 
-        // ======================================================== 
-        // draw inspector 
-        // ======================================================== 
+        windows = ex_sys_windows();
+        ex_array_each ( windows, sys_window_t *, w ) {
+            if ( w->on_update )
+                w->on_update();
 
-        __draw_inspector();
-        SDL_GetWindowSize ( ip_win, &w, &h );
-        status = SDL_GL_MakeCurrent( ip_win, glContext );
-        if ( status ) {
-            ex_error( "Can't make current gl context: %s", SDL_GetError() );
-            break;
-        }
+            ex_sys_window_begin (w);
+            if ( w->on_draw )
+                w->on_draw();
+            ex_sys_window_end (w);
+        } ex_array_each_end
 
-        glViewport( 0, 0, w, h );
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho (0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
-        // ex_glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
-        // ex_glTranslate(0.5, 0.5, 0.0);
-        glMatrixMode (GL_MODELVIEW);
-        glLoadIdentity ();
+        // DELME { 
+        // // ======================================================== 
+        // // draw inspector 
+        // // ======================================================== 
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear( GL_COLOR_BUFFER_BIT );
-        glBindTexture (GL_TEXTURE_RECTANGLE_ARB, texture_id);
-        glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                       0,
-                       GL_RGBA,
-                       w,
-                       h,
-                       0,
-                       GL_BGRA,
-                       GL_UNSIGNED_BYTE,
-                       cairo_buffer );
+        // __draw_inspector();
+        // SDL_GetWindowSize ( ip_win, &w, &h );
+        // status = SDL_GL_MakeCurrent( ip_win, glContext );
+        // if ( status ) {
+        //     ex_error( "Can't make current gl context: %s", SDL_GetError() );
+        //     break;
+        // }
 
-        glEnable (GL_BLEND);
-        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable (GL_TEXTURE_RECTANGLE_ARB);
-        glColor3f ( 1.0f, 1.0f, 1.0f );
-        glBegin (GL_QUADS);
-            glTexCoord2f ( 0.0f, 0.0f );
-            glVertex2f ( 0.0f, 0.0f );
+        // glViewport( 0, 0, w, h );
+        // glMatrixMode(GL_PROJECTION);
+        // glLoadIdentity();
+        // glOrtho (0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
+        // // ex_glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
+        // // ex_glTranslate(0.5, 0.5, 0.0);
+        // glMatrixMode (GL_MODELVIEW);
+        // glLoadIdentity ();
 
-            glTexCoord2f ( (GLfloat)w, 0.0f );
-            glVertex2f ( 1.0f, 0.0f );
+        // glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        // glClear( GL_COLOR_BUFFER_BIT );
+        // glBindTexture (GL_TEXTURE_RECTANGLE_ARB, texture_id);
+        // glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+        //                0,
+        //                GL_RGBA,
+        //                w,
+        //                h,
+        //                0,
+        //                GL_BGRA,
+        //                GL_UNSIGNED_BYTE,
+        //                cairo_buffer );
 
-            glTexCoord2f ( (GLfloat)w, (GLfloat)h );
-            glVertex2f ( 1.0f, 1.0f );
+        // glEnable (GL_BLEND);
+        // glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        // glEnable (GL_TEXTURE_RECTANGLE_ARB);
+        // glColor3f ( 1.0f, 1.0f, 1.0f );
+        // glBegin (GL_QUADS);
+        //     glTexCoord2f ( 0.0f, 0.0f );
+        //     glVertex2f ( 0.0f, 0.0f );
 
-            glTexCoord2f ( 0.0f, (GLfloat)h );
-            glVertex2f ( 0.0f, 1.0f );
-        glEnd ();
-        glDisable (GL_TEXTURE_RECTANGLE_ARB);
-        SDL_GL_SwapWindow(ip_win);
+        //     glTexCoord2f ( (GLfloat)w, 0.0f );
+        //     glVertex2f ( 1.0f, 0.0f );
+
+        //     glTexCoord2f ( (GLfloat)w, (GLfloat)h );
+        //     glVertex2f ( 1.0f, 1.0f );
+
+        //     glTexCoord2f ( 0.0f, (GLfloat)h );
+        //     glVertex2f ( 0.0f, 1.0f );
+        // glEnd ();
+        // glDisable (GL_TEXTURE_RECTANGLE_ARB);
+        // SDL_GL_SwapWindow(ip_win);
 
 
-        // ======================================================== 
-        // update and render the world
-        // ======================================================== 
+        // // ======================================================== 
+        // // update and render the world
+        // // ======================================================== 
 
-        status = SDL_GL_MakeCurrent( glWindow, glContext );
-        if ( status ) {
-            ex_error( "Can't make current gl context: %s", SDL_GetError() );
-            break;
-        }
-        if ( g_world ) {
-            ex_world_update(g_world);
+        // status = SDL_GL_MakeCurrent( glWindow, glContext );
+        // if ( status ) {
+        //     ex_error( "Can't make current gl context: %s", SDL_GetError() );
+        //     break;
+        // }
+        // if ( g_world ) {
+        //     ex_world_update(g_world);
 
-            //
-            glViewport( 0, 0, win_width, win_height );
-            glEnableClientState(GL_VERTEX_ARRAY);
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glEnableClientState(GL_COLOR_ARRAY);
-            ex_world_render(g_world);
-        }
-        SDL_GL_SwapWindow(glWindow);
+        //     //
+        //     glViewport( 0, 0, win_width, win_height );
+        //     glEnableClientState(GL_VERTEX_ARRAY);
+        //     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        //     glEnableClientState(GL_COLOR_ARRAY);
+        //     ex_world_render(g_world);
+        // }
+        // SDL_GL_SwapWindow(glWindow);
+        // } DELME end 
     }
 
-    // Destroy inspector
-    __destroy_inspector ();
+    // DELME { 
+    // // Destroy inspector
+    // __destroy_inspector ();
+    // // Destroy our GL context, etc.
+    // SDL_GL_DeleteContext(glContext);
+    // SDL_DestroyWindow(glWindow);
+    // } DELME end 
 
-    // Destroy our GL context, etc.
-    SDL_GL_DeleteContext(glContext);
-    SDL_DestroyWindow(glWindow);
+    ex_array_each ( windows, sys_window_t *, w ) {
+        ex_destroy_sys_window (w);
+        --__idx__;
+    } ex_array_each_end
+
     SDL_Quit();
 }
 
@@ -662,20 +707,32 @@ int main( int argc, char *argv[] ) {
             exit(1);
         }
 
-        // init main gl window
-        __init_window ();
-        __init_gl ();
-
-        // init other window
-        __init_inspector ();
-
         // ======================================================== 
-        // init the editor
+        // init editor 
         // ======================================================== 
 
         ex_editor_init();
+        __init_window ();
+
+        // DELME { 
+        // // init main gl window
+        // __reset_gl ();
+
+        // // init other window
+        // __init_inspector ();
+        // } DELME end 
+
+        // ======================================================== 
+        // init engine
+        // ======================================================== 
+
         ex_lua_load_modules( ex_lua_main_state(), "builtin" );
         ex_lua_load_modules( ex_lua_main_state(), "scripts" );
+
+        // ======================================================== 
+        // init game 
+        // ======================================================== 
+
         __init_game ();
 
         // ======================================================== 
