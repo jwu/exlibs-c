@@ -220,16 +220,18 @@ sys_window_t *ex_create_sys_window ( const char *_title,
 
     // create texture
     glGenTextures ( 1, &win->texture_id );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
-    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                   0,
-                   GL_RGBA,
-                   _width,
-                   _height,
-                   0,
-                   GL_BGRA,
-                   GL_UNSIGNED_BYTE,
-                   NULL );
+    glEnable ( GL_TEXTURE_RECTANGLE_ARB );
+        glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
+        glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+                       0,
+                       GL_RGBA8,
+                       _width,
+                       _height,
+                       0,
+                       GL_BGRA,
+                       GL_UNSIGNED_INT_8_8_8_8_REV,
+                       NULL );
+    glDisable ( GL_TEXTURE_RECTANGLE_ARB );
 
     // 
     win->on_resize = NULL;
@@ -262,6 +264,28 @@ void ex_destroy_sys_window ( sys_window_t *_win ) {
         }
     } ex_array_each_end
     ex_free(_win);
+
+    // NOTE: looks like the resource are shared
+    ex_array_each ( &__windows, sys_window_t *, win ) {
+        int w, h;
+
+        //
+        SDL_GetWindowSize ( win->sdl_win, &w, &h );
+        SDL_GL_MakeCurrent( win->sdl_win, win->gl_context );
+
+        glDeleteTextures (1, &win->texture_id);
+        glGenTextures ( 1, &win->texture_id );
+        glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
+        glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+                       0,
+                       GL_RGBA8,
+                       w,
+                       h,
+                       0,
+                       GL_BGRA,
+                       GL_UNSIGNED_INT_8_8_8_8_REV,
+                       NULL );
+    } ex_array_each_end
 }
 
 // ------------------------------------------------------------------ 
@@ -284,12 +308,12 @@ void ex_sys_window_resize ( sys_window_t *_win, int _width, int _height ) {
     glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, _win->texture_id );
     glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
                    0,
-                   GL_RGBA,
+                   GL_RGBA8,
                    _width,
                    _height,
                    0,
                    GL_BGRA,
-                   GL_UNSIGNED_BYTE,
+                   GL_UNSIGNED_INT_8_8_8_8_REV,
                    NULL );
 
     // resize stage
@@ -336,7 +360,7 @@ void ex_sys_window_begin ( sys_window_t *_win ) {
     // setup view,projection matix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho (0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
+    glOrtho (0.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f);
     glMatrixMode (GL_MODELVIEW);
     glLoadIdentity ();
 
@@ -358,44 +382,120 @@ void ex_sys_window_end ( sys_window_t *_win ) {
     // setup view,projection matix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho (0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
+    glOrtho (0.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f);
     glMatrixMode (GL_MODELVIEW);
     glLoadIdentity ();
 
     //
     glBindTexture (GL_TEXTURE_RECTANGLE_ARB, _win->texture_id);
-    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                   0,
-                   GL_RGBA,
-                   w,
-                   h,
-                   0,
-                   GL_BGRA,
-                   GL_UNSIGNED_BYTE,
-                   _win->stage->buffer );
+    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_SHARED_APPLE);
+    // glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+    //                0,
+    //                GL_RGBA8,
+    //                w,
+    //                h,
+    //                0,
+    //                GL_BGRA,
+    //                GL_UNSIGNED_INT_8_8_8_8_REV,
+    //                _win->stage->buffer );
+    glTexSubImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+                      0,
+                      0, // x
+                      0, // y
+                      w, // width
+                      h, // height
+                      GL_BGRA,
+                      GL_UNSIGNED_INT_8_8_8_8_REV,
+                      _win->stage->buffer );
 
     glEnable (GL_BLEND);
     glEnable (GL_TEXTURE_RECTANGLE_ARB);
 
-        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glColor3f ( 1.0f, 1.0f, 1.0f );
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE);
+    glColor3f ( 1.0f, 1.0f, 1.0f );
 
-        glBegin (GL_QUADS);
-            glTexCoord2f ( 0.0f, 0.0f );
-            glVertex2f ( 0.0f, 0.0f );
+    glBegin (GL_QUADS);
+    glTexCoord2f ( 0.0f, 0.0f );
+    glVertex2f ( 0.0f, 0.0f );
 
-            glTexCoord2f ( (GLfloat)w, 0.0f );
-            glVertex2f ( 1.0f, 0.0f );
+    glTexCoord2f ( (GLfloat)w, 0.0f );
+    glVertex2f ( 1.0f, 0.0f );
 
-            glTexCoord2f ( (GLfloat)w, (GLfloat)h );
-            glVertex2f ( 1.0f, 1.0f );
+    glTexCoord2f ( (GLfloat)w, (GLfloat)h );
+    glVertex2f ( 1.0f, 1.0f );
 
-            glTexCoord2f ( 0.0f, (GLfloat)h );
-            glVertex2f ( 0.0f, 1.0f );
-        glEnd ();
+    glTexCoord2f ( 0.0f, (GLfloat)h );
+    glVertex2f ( 0.0f, 1.0f );
+    glEnd ();
 
     glDisable (GL_TEXTURE_RECTANGLE_ARB);
+    glBindTexture (GL_TEXTURE_RECTANGLE_ARB, 0);
 
     // swap buffer
     SDL_GL_SwapWindow(_win->sdl_win);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_sys_window_handle_event ( sys_window_t *_win, SDL_Event *_event ) {
+    int done;
+
+    done = 0;
+    switch ( _event->type ) {
+        //
+    case SDL_WINDOWEVENT:
+        switch (_event->window.event) {
+        case SDL_WINDOWEVENT_RESIZED:
+            ex_sys_window_resize ( _win, _event->window.data1, _event->window.data2 );
+            break;
+
+        // case SDL_WINDOWEVENT_CLOSE:
+        //     if ( _event->window.windowID != SDL_GetWindowID(glWindow) ) {
+        //         SDL_Window *window = SDL_GetWindowFromID(_event->window.windowID);
+        //         if ( window ) {
+        //             SDL_DestroyWindow(window);
+        //         }
+        //     }
+        //     break;
+
+        // case SDL_WINDOWEVENT_FOCUS_GAINED:
+        //     if ( g_world ) {
+        //         ex_world_resume(g_world);
+        //     }
+        //     break;
+
+        // case SDL_WINDOWEVENT_FOCUS_LOST:
+        //     if ( g_world ) {
+        //         ex_world_pause(g_world);
+        //     }
+        //     break;
+        }
+        break;
+
+        //
+    case SDL_KEYDOWN:
+        switch ( _event->key.keysym.sym ) {
+        case SDLK_ESCAPE:
+            if ( __main_window == _win ) {
+                done = 1;
+            }
+            else {
+                ex_destroy_sys_window(_win);
+            }
+            break;
+        }
+        break;
+
+        //
+    case SDL_QUIT:
+        done = 1;
+        break;
+    }
+    return (done);
 }

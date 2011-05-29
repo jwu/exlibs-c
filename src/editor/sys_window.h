@@ -35,7 +35,7 @@ typedef struct sys_window_t {
 
     void (*on_resize) ( int _width, int _height );
     void (*on_update) ();
-    void (*on_draw) ();
+    void (*on_draw) ( struct sys_window_t *_win );
 } sys_window_t;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,6 +87,12 @@ void ex_sys_window_begin ( sys_window_t *_win );
 // ------------------------------------------------------------------ 
 
 void ex_sys_window_end ( sys_window_t *_win );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+int ex_sys_window_handle_event ( sys_window_t *_win, SDL_Event *_event );
 
 
 // ######################### 

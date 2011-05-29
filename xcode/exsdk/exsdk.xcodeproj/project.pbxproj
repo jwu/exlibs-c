@@ -443,7 +443,6 @@
 		B2D67A6E137CDB7D0012F20D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B63165137BDD28008C2C1F /* Carbon.framework */; };
 		B2D67A70137CDC7A0012F20D /* semaphore_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = B2D67A6F137CDC7A0012F20D /* semaphore_mac.c */; };
 		B2D67A72137D162B0012F20D /* libSDL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D67A71137D162B0012F20D /* libSDL.a */; };
-		B2D67AEC1380BA2A0012F20D /* inspector.c in Sources */ = {isa = PBXBuildFile; fileRef = B2D67AEB1380BA2A0012F20D /* inspector.c */; };
 		B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */; };
 		B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B77012A6B144009FE3E8 /* exsdk.h */; };
@@ -984,7 +983,6 @@
 		B2B8B1B5131D217600D11A44 /* lua_behavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_behavior.h; sourceTree = "<group>"; };
 		B2D67A6F137CDC7A0012F20D /* semaphore_mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = semaphore_mac.c; sourceTree = "<group>"; };
 		B2D67A71137D162B0012F20D /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = "../../ext_build/SDL-1.3/lib/macosx/libSDL.a"; sourceTree = "<group>"; };
-		B2D67AEB1380BA2A0012F20D /* inspector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inspector.c; path = ../../src/editor/inspector.c; sourceTree = "<group>"; };
 		B2DD23EA12A7C7CE0053CA3F /* array test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "array test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0B76F12A6B144009FE3E8 /* exsdk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = exsdk.c; path = ../../src/exsdk.c; sourceTree = SOURCE_ROOT; };
 		B2E0B77012A6B144009FE3E8 /* exsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = exsdk.h; path = ../../src/exsdk.h; sourceTree = SOURCE_ROOT; };
@@ -1282,7 +1280,6 @@
 				B2ED963F1391009D0017C7B6 /* stage.h */,
 				B2ED96401391009D0017C7B6 /* sys_window.c */,
 				B2ED96411391009D0017C7B6 /* sys_window.h */,
-				B2D67AEB1380BA2A0012F20D /* inspector.c */,
 				B2278A0D137A50FB00B7B11E /* editor_inc.h */,
 				B2278A0E137A50FB00B7B11E /* editor.c */,
 				B2278A0F137A50FB00B7B11E /* editor.h */,
@@ -2654,7 +2651,6 @@
 			files = (
 				B2278A11137A50FB00B7B11E /* editor.c in Sources */,
 				B2278A12137A50FB00B7B11E /* main.c in Sources */,
-				B2D67AEC1380BA2A0012F20D /* inspector.c in Sources */,
 				B2ED96421391009D0017C7B6 /* stage.c in Sources */,
 				B2ED96431391009D0017C7B6 /* sys_window.c in Sources */,
 			);
