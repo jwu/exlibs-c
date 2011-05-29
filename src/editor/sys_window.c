@@ -66,6 +66,13 @@ sys_window_t *ex_create_sys_window ( const char *_title,
     int flags;
 
     win = ex_malloc ( sizeof(sys_window_t) );
+    win->sdl_win = NULL;
+    win->gl_context = NULL;
+    win->texture_id = -1;
+    win->stage = NULL;
+    win->on_resize = NULL;
+    win->on_update = NULL;
+    win->on_draw = NULL;
 
     // if this is the first window, init gl and create sdl
     if ( __main_window == NULL ) {
@@ -198,7 +205,8 @@ sys_window_t *ex_create_sys_window ( const char *_title,
     }
     else {
         // create sdl window
-        flags = SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_BORDERLESS;
+        // flags = SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE|SDL_WINDOW_BORDERLESS;
+        flags = SDL_WINDOW_RESIZABLE|SDL_WINDOW_BORDERLESS;
         win->sdl_win = SDL_CreateWindow( _title,
                                          _x,
                                          _y,
@@ -215,26 +223,25 @@ sys_window_t *ex_create_sys_window ( const char *_title,
     // create gl context
     win->gl_context = SDL_GL_CreateContext(win->sdl_win);
 
-    // create stage
-    win->stage = ex_create_stage( _width, _height );
-
     // create texture
     glGenTextures ( 1, &win->texture_id );
     glEnable ( GL_TEXTURE_RECTANGLE_ARB );
-        glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
-        glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                       0,
-                       GL_RGBA8,
-                       _width,
-                       _height,
-                       0,
-                       GL_BGRA,
-                       GL_UNSIGNED_INT_8_8_8_8_REV,
-                       NULL );
+    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
+    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
+                   0,
+                   GL_RGBA8,
+                   _width,
+                   _height,
+                   0,
+                   GL_BGRA,
+                   GL_UNSIGNED_INT_8_8_8_8_REV,
+                   NULL );
     glDisable ( GL_TEXTURE_RECTANGLE_ARB );
 
+    // create stage
+    win->stage = ex_create_stage( _width, _height );
+
     // 
-    win->on_resize = NULL;
     ex_array_append( &__windows, &win );
     return win;
 }
@@ -244,17 +251,28 @@ sys_window_t *ex_create_sys_window ( const char *_title,
 // ------------------------------------------------------------------ 
 
 void ex_destroy_sys_window ( sys_window_t *_win ) {
-    // destroy texture
-    glDeleteTextures( 1, &_win->texture_id );
-
     // destory stage
-    ex_destroy_stage(_win->stage);
-    _win->stage = NULL;
+    if ( _win->stage ) {
+        ex_destroy_stage(_win->stage);
+        _win->stage = NULL;
+    }
+
+    // destroy texture
+    if ( _win->texture_id != -1 ) {
+        glDeleteTextures( 1, &_win->texture_id );
+        _win->texture_id = -1;
+    }
 
     // destroy sdl window
-    SDL_GL_DeleteContext(_win->gl_context);
-    SDL_DestroyWindow(_win->sdl_win);
-    _win->sdl_win = NULL;
+    if ( _win->gl_context ) {
+        SDL_GL_DeleteContext(_win->gl_context);
+        _win->gl_context = NULL;
+    }
+
+    if ( _win->sdl_win ) {
+        SDL_DestroyWindow(_win->sdl_win);
+        _win->sdl_win = NULL;
+    }
 
     //
     ex_array_each ( &__windows, sys_window_t *, w ) {
@@ -388,11 +406,11 @@ void ex_sys_window_end ( sys_window_t *_win ) {
 
     //
     glBindTexture (GL_TEXTURE_RECTANGLE_ARB, _win->texture_id);
-    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    // glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_SHARED_APPLE);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_SHARED_APPLE);
     // glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
     //                0,
     //                GL_RGBA8,

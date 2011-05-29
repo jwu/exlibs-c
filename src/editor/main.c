@@ -215,7 +215,7 @@ static void __draw_inspector ( sys_window_t *_win ) {
         cairo_stroke (cr);
 
         cairo_rectangle (cr, 0, 0, 0.5 * w, 0.5 * h);
-        cairo_set_source_rgba (cr, 1, 0, 0, 0.80);
+        cairo_set_source_rgba (cr, 1, 0, 0, 0.80 * fabsf(sinf( ex_time() )) );
         cairo_fill (cr);
 
         cairo_rectangle (cr, 0, 0.5 * h, 0.5 * w, 0.5 * h);
@@ -379,8 +379,8 @@ static void __main_loop () {
         // update windows
         ex_array_each ( windows, sys_window_t *, w ) {
 
-            // if ( w != main_view && (frames % 30 != 0) )
-            //     ex_array_continue;
+            if ( w != main_view && (frames % 5 != 0) )
+                ex_array_continue;
 
             if ( w->on_update )
                 w->on_update();
