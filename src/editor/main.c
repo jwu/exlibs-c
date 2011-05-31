@@ -34,6 +34,10 @@ char *g_world_path = NULL;
 // ------------------------------------------------------------------ 
 
 static void __reset_gl () {
+    // glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_FLAT);                      // shading mathod: GL_SMOOTH or GL_FLAT
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);      // 4-byte pixel alignment
+
     // anti-aliasing { 
     // glEnable(GL_LINE_SMOOTH);
     // glEnable(GL_POINT_SMOOTH);
@@ -53,8 +57,6 @@ static void __reset_gl () {
     glDepthFunc(GL_LEQUAL);
     glDepthMask(true);
     // } enable depath end 
-
-    glShadeModel(GL_SMOOTH);
 
     //
     glEnableClientState(GL_VERTEX_ARRAY);

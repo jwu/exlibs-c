@@ -43,40 +43,44 @@ EX_DEF_TOSTRING_END
 
 ex_stage_t *ex_create_stage ( int _width, int _height ) {
     ex_stage_t *stage;
-    cairo_t *cr;
-    cairo_surface_t *surf;
-    uint8 *buffer;
+    // DISABLE { 
+    // cairo_t *cr;
+    // cairo_surface_t *surf;
+    // uint8 *buffer;
+    // } DISABLE end 
 
     stage = ex_malloc( sizeof(ex_stage_t) );
 
+    // DISABLE { 
     //
-	buffer = ex_malloc ( 4 * _width * _height * sizeof (uint8) );
-    ex_memzero( buffer, 4 * _width * _height * sizeof (uint8) );
-    surf = cairo_image_surface_create_for_data ( buffer,
-                                                 CAIRO_FORMAT_ARGB32,
-                                                 _width,
-                                                 _height,
-                                                 4 * _width );
-    if ( cairo_surface_status (surf) != CAIRO_STATUS_SUCCESS ) {
-        ex_free (buffer);
-        buffer = NULL;
-        ex_error ("can't create cairo surface.");
-        return NULL;
-    }
+    // buffer = ex_malloc ( 4 * _width * _height * sizeof (uint8) );
+    // ex_memzero( buffer, 4 * _width * _height * sizeof (uint8) );
+    // surf = cairo_image_surface_create_for_data ( buffer,
+    //                                              CAIRO_FORMAT_ARGB32,
+    //                                              _width,
+    //                                              _height,
+    //                                              4 * _width );
+    // if ( cairo_surface_status (surf) != CAIRO_STATUS_SUCCESS ) {
+    //     ex_free (buffer);
+    //     buffer = NULL;
+    //     ex_error ("can't create cairo surface.");
+    //     return NULL;
+    // }
 
-    // create cairo context
-    cr = cairo_create (surf);
-    cairo_surface_destroy (surf);
-    if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
-        ex_free (buffer);
-        buffer = NULL;
-        ex_error ("can't create cairo context");
-        return NULL;
-    }
+    // // create cairo context
+    // cr = cairo_create (surf);
+    // cairo_surface_destroy (surf);
+    // if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
+    //     ex_free (buffer);
+    //     buffer = NULL;
+    //     ex_error ("can't create cairo context");
+    //     return NULL;
+    // }
 
-    //
-    stage->buffer = buffer;
-    stage->cr = cr;
+    // //
+    // stage->buffer = buffer;
+    // stage->cr = cr;
+    // } DISABLE end 
 
     return stage;
 }
@@ -107,46 +111,48 @@ void ex_destroy_stage ( ex_stage_t *_stage ) {
 // ------------------------------------------------------------------ 
 
 void ex_stage_resize ( ex_stage_t *_stage, int _width, int _height ) {
-    cairo_t *cr;
-    cairo_surface_t *surf;
-    uint8 *buffer;
+    // DISABLE { 
+    // cairo_t *cr;
+    // cairo_surface_t *surf;
+    // uint8 *buffer;
 
-    //
-    if ( _stage->buffer ) {
-        ex_free (_stage->buffer);
-        _stage->buffer = NULL;
-    }
-    if ( _stage->cr ) {
-        cairo_destroy (_stage->cr);
-        _stage->cr = NULL;
-    }
+    // //
+    // if ( _stage->buffer ) {
+    //     ex_free (_stage->buffer);
+    //     _stage->buffer = NULL;
+    // }
+    // if ( _stage->cr ) {
+    //     cairo_destroy (_stage->cr);
+    //     _stage->cr = NULL;
+    // }
 
-    //
-	buffer = ex_malloc ( 4 * _width * _height * sizeof (uint8) );
-    ex_memzero( buffer, 4 * _width * _height * sizeof (uint8) );
-    surf = cairo_image_surface_create_for_data ( buffer,
-                                                 CAIRO_FORMAT_ARGB32,
-                                                 _width,
-                                                 _height,
-                                                 4 * _width );
-    if ( cairo_surface_status (surf) != CAIRO_STATUS_SUCCESS ) {
-        ex_free (buffer);
-        buffer = NULL;
-        ex_error ("can't create cairo surface.");
-        return;
-    }
+    // //
+    // buffer = ex_malloc ( 4 * _width * _height * sizeof (uint8) );
+    // ex_memzero( buffer, 4 * _width * _height * sizeof (uint8) );
+    // surf = cairo_image_surface_create_for_data ( buffer,
+    //                                              CAIRO_FORMAT_ARGB32,
+    //                                              _width,
+    //                                              _height,
+    //                                              4 * _width );
+    // if ( cairo_surface_status (surf) != CAIRO_STATUS_SUCCESS ) {
+    //     ex_free (buffer);
+    //     buffer = NULL;
+    //     ex_error ("can't create cairo surface.");
+    //     return;
+    // }
 
-    // create cairo context
-    cr = cairo_create (surf);
-    cairo_surface_destroy (surf);
-    if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
-        ex_free (buffer);
-        buffer = NULL;
-        ex_error ("can't create cairo context");
-        return;
-    }
+    // // create cairo context
+    // cr = cairo_create (surf);
+    // cairo_surface_destroy (surf);
+    // if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
+    //     ex_free (buffer);
+    //     buffer = NULL;
+    //     ex_error ("can't create cairo context");
+    //     return;
+    // }
 
-    //
-    _stage->buffer = buffer;
-    _stage->cr = cr;
+    // //
+    // _stage->buffer = buffer;
+    // _stage->cr = cr;
+    // } DISABLE end 
 }
