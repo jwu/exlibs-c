@@ -50,6 +50,8 @@ ex_stage_t *ex_create_stage ( int _width, int _height ) {
     // } DISABLE end 
 
     stage = ex_malloc( sizeof(ex_stage_t) );
+    stage->cr = NULL;
+    stage->buffer = NULL;
 
     // DISABLE { 
     //

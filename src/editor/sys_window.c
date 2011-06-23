@@ -224,9 +224,14 @@ sys_window_t *ex_create_sys_window ( const char *_title,
             return NULL;
         }
     }
+    SDL_SetWindowData( win->sdl_win, "sys_window", win );
 
     // create gl context
     win->gl_context = SDL_GL_CreateContext(win->sdl_win);
+    if ( SDL_GL_MakeCurrent( win->sdl_win, win->gl_context ) < 0 ) {
+        ex_error( "Can't make current gl context: %s", SDL_GetError() );
+        return NULL;
+    }
 
     // create texture
     glGenTextures ( 1, &win->texture_id );
@@ -348,13 +353,10 @@ void ex_destroy_sys_window ( sys_window_t *_win ) {
 // ------------------------------------------------------------------ 
 
 void ex_sys_window_resize ( sys_window_t *_win, int _width, int _height ) {
-    int status;
-
     // switch context
-    status = SDL_GL_MakeCurrent( _win->sdl_win, _win->gl_context );
-    if ( status ) {
+    if ( SDL_GL_MakeCurrent( _win->sdl_win, _win->gl_context ) < 0 ) {
         ex_error( "Can't make current gl context: %s", SDL_GetError() );
-        return;
+        return ;
     }
 
     // resize texture
@@ -412,15 +414,14 @@ void ex_sys_window_show ( sys_window_t *_win, bool _show ) {
 // ------------------------------------------------------------------ 
 
 void ex_sys_window_begin ( sys_window_t *_win ) {
-    int status;
     int w, h;
 
     // make current gl context
     SDL_GetWindowSize ( _win->sdl_win, &w, &h );
-    status = SDL_GL_MakeCurrent( _win->sdl_win, _win->gl_context );
-    if ( status ) {
+
+    if ( SDL_GL_MakeCurrent( _win->sdl_win, _win->gl_context ) < 0 ) {
         ex_error( "Can't make current gl context: %s", SDL_GetError() );
-        return;
+        return ;
     }
 
     // setup view port
@@ -449,6 +450,9 @@ void ex_sys_window_begin ( sys_window_t *_win ) {
     // bind the texture and PBO
     glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, _win->texture_id );
     glBindBufferARB ( GL_PIXEL_UNPACK_BUFFER_ARB, _win->pbo_ids[_win->pbo_cur] );
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, w);
 
     // copy pixels from PBO to texture object
     // Use offset instead of ponter.
@@ -487,7 +491,6 @@ void ex_sys_window_begin ( sys_window_t *_win ) {
         //
         _win->stage->cr = cr;
         _win->stage->buffer = ptr;
-
     }
 #endif
 }
@@ -578,18 +581,32 @@ void ex_sys_window_end ( sys_window_t *_win ) {
     glBlendFunc (GL_SRC_ALPHA, GL_ONE);
     glColor3f ( 1.0f, 1.0f, 1.0f );
 
-    glBegin (GL_QUADS);
+    // glBegin (GL_QUADS);
+    // glTexCoord2f ( 0.0f, 0.0f );
+    // glVertex2f ( 0.0f, 0.0f );
+
+    // glTexCoord2f ( (GLfloat)w, 0.0f );
+    // glVertex2f ( 1.0f, 0.0f );
+
+    // glTexCoord2f ( (GLfloat)w, (GLfloat)h );
+    // glVertex2f ( 1.0f, 1.0f );
+
+    // glTexCoord2f ( 0.0f, (GLfloat)h );
+    // glVertex2f ( 0.0f, 1.0f );
+    // glEnd ();
+
+    glBegin (GL_TRIANGLE_STRIP);
     glTexCoord2f ( 0.0f, 0.0f );
     glVertex2f ( 0.0f, 0.0f );
 
     glTexCoord2f ( (GLfloat)w, 0.0f );
     glVertex2f ( 1.0f, 0.0f );
 
-    glTexCoord2f ( (GLfloat)w, (GLfloat)h );
-    glVertex2f ( 1.0f, 1.0f );
-
     glTexCoord2f ( 0.0f, (GLfloat)h );
     glVertex2f ( 0.0f, 1.0f );
+
+    glTexCoord2f ( (GLfloat)w, (GLfloat)h );
+    glVertex2f ( 1.0f, 1.0f );
     glEnd ();
 
     glDisable (GL_TEXTURE_RECTANGLE_ARB);

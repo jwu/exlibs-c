@@ -29,7 +29,7 @@ extern "C" {
 
 typedef struct sys_window_t {
     SDL_Window *sdl_win;
-    SDL_GLContext *gl_context;
+    SDL_GLContext gl_context;
     uint texture_id;
     uint pbo_ids[2];
     ex_stage_t *stage;

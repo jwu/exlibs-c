@@ -119,7 +119,7 @@ static void __draw_world ( sys_window_t *_win ) {
         glOrtho(-rx, rx, -ry, ry, -100.0, 100.0); // this will make camera look along -z
         glTranslatef(0.5f, 0.5f, 0.0f);
 
-        //
+        
         ex_world_render(g_world);
     }
 
