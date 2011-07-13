@@ -16,9 +16,13 @@ extern "C" {
 #endif
 // ######################### 
 
+#include "macro.h"
 #include "time.h"
 #include "ref.h"
 #include "object.h"
+    #include "object/texture.h"
+        #include "object/texture2d.h"
+
 #include "world.h"
     #include "entity.h"
     #include "component/component.h"

@@ -235,6 +235,13 @@
 		B26C7FC013580E8B00BDADA1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484712B9207800EF7261 /* OpenGL.framework */; };
 		B26C7FC113580E8B00BDADA1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B245484B12B9209000EF7261 /* GLUT.framework */; };
 		B26C7FCB13580F2C00BDADA1 /* render_test.c in Sources */ = {isa = PBXBuildFile; fileRef = B26C7FCA13580F2C00BDADA1 /* render_test.c */; };
+		B270A9F813CDE08F0000DB61 /* asset_db.h in Headers */ = {isa = PBXBuildFile; fileRef = B270A9F613CDE08F0000DB61 /* asset_db.h */; };
+		B270A9F913CDE1280000DB61 /* asset_db.c in Sources */ = {isa = PBXBuildFile; fileRef = B270A9F513CDE08F0000DB61 /* asset_db.c */; };
+		B270A9FF13CDFDBB0000DB61 /* texture.c in Sources */ = {isa = PBXBuildFile; fileRef = B270A9FB13CDFDBB0000DB61 /* texture.c */; };
+		B270AA0013CDFDBB0000DB61 /* texture.h in Headers */ = {isa = PBXBuildFile; fileRef = B270A9FC13CDFDBB0000DB61 /* texture.h */; };
+		B270AA0113CDFDBB0000DB61 /* texture2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B270A9FD13CDFDBB0000DB61 /* texture2d.c */; };
+		B270AA0213CDFDBB0000DB61 /* texture2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B270A9FE13CDFDBB0000DB61 /* texture2d.h */; };
+		B270AA0413CDFDCD0000DB61 /* macro.h in Headers */ = {isa = PBXBuildFile; fileRef = B270AA0313CDFDCD0000DB61 /* macro.h */; };
 		B281F9851332FD380051E7E7 /* wrap_time.c in Sources */ = {isa = PBXBuildFile; fileRef = B281F9841332FD380051E7E7 /* wrap_time.c */; };
 		B281F9C613330D620051E7E7 /* wrap_enums.c in Sources */ = {isa = PBXBuildFile; fileRef = B281F9C513330D620051E7E7 /* wrap_enums.c */; };
 		B28703871335B389000C44FD /* wrap_mat33f.c in Sources */ = {isa = PBXBuildFile; fileRef = B28703861335B389000C44FD /* wrap_mat33f.c */; };
@@ -446,7 +453,6 @@
 		B2DD245D12A7FC350053CA3F /* libexsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC046055464E500DB518D /* libexsdk.a */; };
 		B2E0B7D812A6B144009FE3E8 /* exsdk.c in Sources */ = {isa = PBXBuildFile; fileRef = B2E0B76F12A6B144009FE3E8 /* exsdk.c */; };
 		B2E0B7D912A6B144009FE3E8 /* exsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E0B77012A6B144009FE3E8 /* exsdk.h */; };
-		B2ED96421391009D0017C7B6 /* stage.c in Sources */ = {isa = PBXBuildFile; fileRef = B2ED963E1391009D0017C7B6 /* stage.c */; };
 		B2ED96431391009D0017C7B6 /* sys_window.c in Sources */ = {isa = PBXBuildFile; fileRef = B2ED96401391009D0017C7B6 /* sys_window.c */; };
 		B2F1790C1371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */; };
 		B2F1790D1371559B00C5F4A2 /* libglib-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F1790A1371559B00C5F4A2 /* libglib-2.0.0.dylib */; };
@@ -791,6 +797,13 @@
 		B26C7FB413580CB500BDADA1 /* scripted world.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "scripted world.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26C7FC813580E8B00BDADA1 /* gl render test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "gl render test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26C7FCA13580F2C00BDADA1 /* render_test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = render_test.c; path = ../../tests/glut/render_test.c; sourceTree = "<group>"; };
+		B270A9F513CDE08F0000DB61 /* asset_db.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = asset_db.c; path = ../../src/editor/asset_db.c; sourceTree = "<group>"; };
+		B270A9F613CDE08F0000DB61 /* asset_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_db.h; path = ../../src/editor/asset_db.h; sourceTree = "<group>"; };
+		B270A9FB13CDFDBB0000DB61 /* texture.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = texture.c; sourceTree = "<group>"; };
+		B270A9FC13CDFDBB0000DB61 /* texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture.h; sourceTree = "<group>"; };
+		B270A9FD13CDFDBB0000DB61 /* texture2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = texture2d.c; sourceTree = "<group>"; };
+		B270A9FE13CDFDBB0000DB61 /* texture2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2d.h; sourceTree = "<group>"; };
+		B270AA0313CDFDCD0000DB61 /* macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macro.h; sourceTree = "<group>"; };
 		B281F9841332FD380051E7E7 /* wrap_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_time.c; sourceTree = "<group>"; };
 		B281F9C513330D620051E7E7 /* wrap_enums.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_enums.c; sourceTree = "<group>"; };
 		B28703861335B389000C44FD /* wrap_mat33f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_mat33f.c; sourceTree = "<group>"; };
@@ -986,8 +999,6 @@
 		B2DD23EA12A7C7CE0053CA3F /* array test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "array test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0B76F12A6B144009FE3E8 /* exsdk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = exsdk.c; path = ../../src/exsdk.c; sourceTree = SOURCE_ROOT; };
 		B2E0B77012A6B144009FE3E8 /* exsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = exsdk.h; path = ../../src/exsdk.h; sourceTree = SOURCE_ROOT; };
-		B2ED963E1391009D0017C7B6 /* stage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stage.c; path = ../../src/editor/stage.c; sourceTree = "<group>"; };
-		B2ED963F1391009D0017C7B6 /* stage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stage.h; path = ../../src/editor/stage.h; sourceTree = "<group>"; };
 		B2ED96401391009D0017C7B6 /* sys_window.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sys_window.c; path = ../../src/editor/sys_window.c; sourceTree = "<group>"; };
 		B2ED96411391009D0017C7B6 /* sys_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sys_window.h; path = ../../src/editor/sys_window.h; sourceTree = "<group>"; };
 		B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libclutter-osx-1.0.0.dylib"; path = "../../ext_build/libs/macosx/libclutter-osx-1.0.0.dylib"; sourceTree = "<group>"; };
@@ -1276,8 +1287,8 @@
 		B22BBE9213712B9F00AB2471 /* editor */ = {
 			isa = PBXGroup;
 			children = (
-				B2ED963E1391009D0017C7B6 /* stage.c */,
-				B2ED963F1391009D0017C7B6 /* stage.h */,
+				B270A9F513CDE08F0000DB61 /* asset_db.c */,
+				B270A9F613CDE08F0000DB61 /* asset_db.h */,
 				B2ED96401391009D0017C7B6 /* sys_window.c */,
 				B2ED96411391009D0017C7B6 /* sys_window.h */,
 				B2278A0D137A50FB00B7B11E /* editor_inc.h */,
@@ -1544,6 +1555,17 @@
 			name = glut;
 			sourceTree = "<group>";
 		};
+		B270A9FA13CDFDBB0000DB61 /* object */ = {
+			isa = PBXGroup;
+			children = (
+				B270A9FB13CDFDBB0000DB61 /* texture.c */,
+				B270A9FC13CDFDBB0000DB61 /* texture.h */,
+				B270A9FD13CDFDBB0000DB61 /* texture2d.c */,
+				B270A9FE13CDFDBB0000DB61 /* texture2d.h */,
+			);
+			path = object;
+			sourceTree = "<group>";
+		};
 		B2A23155130221C700F3C100 /* lua */ = {
 			isa = PBXGroup;
 			children = (
@@ -1601,6 +1623,7 @@
 		B2A23180130221F600F3C100 /* engine */ = {
 			isa = PBXGroup;
 			children = (
+				B270A9FA13CDFDBB0000DB61 /* object */,
 				B2A23181130221F600F3C100 /* component */,
 				B2A2318E130221F600F3C100 /* engine_inc.h */,
 				B2A2318F130221F600F3C100 /* entity.c */,
@@ -1608,6 +1631,7 @@
 				B2A23191130221F600F3C100 /* object.c */,
 				B2A23192130221F600F3C100 /* object.h */,
 				B2A23193130221F600F3C100 /* ref.c */,
+				B270AA0313CDFDCD0000DB61 /* macro.h */,
 				B2A23194130221F600F3C100 /* ref.h */,
 				B2A23195130221F600F3C100 /* time.c */,
 				B2A23196130221F600F3C100 /* time.h */,
@@ -2111,6 +2135,10 @@
 				B258D5B3136BD06A0026F4D4 /* luaglu.h in Headers */,
 				B258D5B5136BD22B0026F4D4 /* yajl_version.h in Headers */,
 				B2278A47137B7E3400B7B11E /* atomic.h in Headers */,
+				B270A9F813CDE08F0000DB61 /* asset_db.h in Headers */,
+				B270AA0013CDFDBB0000DB61 /* texture.h in Headers */,
+				B270AA0213CDFDBB0000DB61 /* texture2d.h in Headers */,
+				B270AA0413CDFDCD0000DB61 /* macro.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2614,7 +2642,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\nrm -rf \"$TARGET_BUILD_DIR/res\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/res\" \"$TARGET_BUILD_DIR/res\"";
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\nrm -rf \"$TARGET_BUILD_DIR/res\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/assets\" \"$TARGET_BUILD_DIR/data/\"";
 		};
 		B22BBE9713712BC300AB2471 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2651,8 +2679,8 @@
 			files = (
 				B2278A11137A50FB00B7B11E /* editor.c in Sources */,
 				B2278A12137A50FB00B7B11E /* main.c in Sources */,
-				B2ED96421391009D0017C7B6 /* stage.c in Sources */,
 				B2ED96431391009D0017C7B6 /* sys_window.c in Sources */,
+				B270A9F913CDE1280000DB61 /* asset_db.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3012,6 +3040,8 @@
 				B2278A48137B7E3400B7B11E /* spinlock.c in Sources */,
 				B2B63169137BEB6B008C2C1F /* timer_mac.c in Sources */,
 				B2D67A70137CDC7A0012F20D /* semaphore_mac.c in Sources */,
+				B270A9FF13CDFDBB0000DB61 /* texture.c in Sources */,
+				B270AA0113CDFDBB0000DB61 /* texture2d.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

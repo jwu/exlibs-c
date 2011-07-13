@@ -39,6 +39,13 @@ int ex_editor_init () {
         return 1;
     }
 
+    // init asset database
+    ex_log ("init asset database...");
+    if ( ex_asset_db_init() != 0 ) {
+        ex_log ("fatal error: failed to init asset database");
+        return -1;
+    }
+
     // init windows array
     __init_window_table();
 
@@ -62,6 +69,9 @@ void ex_editor_deinit () {
     if ( __initialized ) {
         __deinit_ref_table();
         __deinit_window_table();
+
+        //
+        ex_asset_db_deinit ();
 
         //
         ex_log ( "ex_editor deinitied" );

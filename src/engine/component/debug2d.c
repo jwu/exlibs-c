@@ -71,7 +71,7 @@ EX_DEF_PROPS_BEGIN(ex_debug2d_t)
     EX_PROP( ex_debug2d_t, int, shapeType, "shape type",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
-EX_SERIALIZE_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
+EX_SERIALIZE_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
     EX_MEMBER_SERIALIZE( int, shapeType )
     EX_SERIALIZE( _stream, vec2f, "rect_center", &(self->rect.center) )
     EX_SERIALIZE( _stream, float, "rect_width", &(self->rect.width) )
@@ -79,7 +79,7 @@ EX_SERIALIZE_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
     // TODO: you can serialize "ex_vec2f_t trails[EX_MAX_TRAIL_VERTS]"
 EX_SERIALIZE_END
 
-EX_DEF_TOSTRING_SUPER_BEGIN(ex_debug2d_t,ex_component_t)
+EX_DEF_TOSTRING_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
     EX_MEMBER_TOSTRING( int, "shape type", self->shapeType )
 EX_DEF_TOSTRING_END
 

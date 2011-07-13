@@ -1,13 +1,13 @@
 // ======================================================================================
-// File         : stage.h
+// File         : asset_db.h
 // Author       : Wu Jie 
-// Last Change  : 05/28/2011 | 11:59:33 AM | Saturday,May
+// Last Change  : 07/13/2011 | 19:41:03 PM | Wednesday,July
 // Description  : 
 // ======================================================================================
 
 // #################################################################################
-#ifndef STAGE_H_1306555174
-#define STAGE_H_1306555174
+#ifndef ASSET_DB_H_1310557266
+#define ASSET_DB_H_1310557266
 // #################################################################################
 
 // ######################### 
@@ -17,47 +17,33 @@ extern "C" {
 // ######################### 
 
 ///////////////////////////////////////////////////////////////////////////////
-// includes
-///////////////////////////////////////////////////////////////////////////////
-
-#include "cairo.h"
-
-///////////////////////////////////////////////////////////////////////////////
-// defines
-///////////////////////////////////////////////////////////////////////////////
-
-EX_DECL_CLASS_BEGIN(ex_stage_t)
-    cairo_t *cr;
-    uint8 *buffer;
-
-    // TODO: elements
-EX_DECL_CLASS_END(ex_stage_t)
-
-#define EX_STAGE_DEFAULT_MEMBER \
-    EX_MEMBER(ex_stage_t, cr, NULL) \
-    EX_MEMBER(ex_stage_t, buffer, NULL)
-
-///////////////////////////////////////////////////////////////////////////////
-// functions
+// function
 ///////////////////////////////////////////////////////////////////////////////
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-ex_stage_t *ex_create_stage ( int _width, int _height );
+// success: 0
+// already initied: 1
+// faild: -1
+extern int ex_asset_db_init ();
+extern void ex_asset_db_deinit ();
+extern bool ex_asset_db_initialized ();
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_destroy_stage ( ex_stage_t *_stage );
+extern strid_t ex_asset_db_uid_to_asset_path ( ex_uid_t _uid );
+extern ex_uid_t ex_asset_db_asset_path_to_uid ( const char *_path );
 
 // ------------------------------------------------------------------ 
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_stage_resize ( ex_stage_t *_stage, int _width, int _height );
+extern void ex_asset_db_import ( const char *_path, bool _recursively );
+extern void ex_asset_db_import_async ( const char *_path, bool _recursively );
 
 // ######################### 
 #ifdef __cplusplus
@@ -67,7 +53,7 @@ void ex_stage_resize ( ex_stage_t *_stage, int _width, int _height );
 
 
 // #################################################################################
-#endif // END STAGE_H_1306555174
+#endif // END ASSET_DB_H_1310557266
 // #################################################################################
 
 

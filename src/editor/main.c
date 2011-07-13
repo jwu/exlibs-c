@@ -122,64 +122,6 @@ static void __draw_world ( sys_window_t *_win ) {
         
         ex_world_render(g_world);
     }
-
-    // TEMP { 
-    int w, h;
-    cairo_t *cr;
-    cr = _win->stage->cr;
-    SDL_GetWindowSize ( _win->sdl_win, &w, &h );
-
-    if ( cr == NULL )
-        return;
-
-    // clear background
-    cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-    cairo_paint (cr);
-    cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-
-    // background color
-    cairo_set_source_rgba (cr, 1.0f, 0.0f, 0.0f, 0.2f);
-    cairo_rectangle (cr, 0, 0, w, h);
-    cairo_fill (cr);
-
-    cairo_save (cr); {
-
-        fps[fps_idx] = ex_fps();
-        fps_idx = (fps_idx + 1)%1024;
-
-        // cairo_set_source_rgba (cr, 0.0, 0.0, 1.0, 0.5);
-        // cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
-        // cairo_fill (cr);
-
-        // cairo_set_line_width (cr, 2.0);
-        // cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
-        // cairo_rectangle (cr, 0.25 * w, 0.25 * h, 0.5 * w, 0.5 * h);
-        // cairo_stroke (cr);
-
-        double x = 10.0;
-        double y = h * 0.5;
-        cairo_move_to (cr, x, y );
-        cairo_new_path (cr);
-        cairo_set_line_width (cr, 1.0);
-        cairo_set_source_rgba (cr, 1.0, 1.0, 0.0, 1.0);
-
-        int i = 0;
-        while ( i < 1024 ) {
-            int idx = (fps_idx + i)%1024;
-            cairo_line_to (cr, x + i * 0.5, y - fps[idx] * 0.5 );
-            ++i;
-        }
-        cairo_stroke (cr);
-
-        char buf[80];
-        cairo_text_extents_t extents;
-        snprintf ( buf, sizeof (buf), "fps: %f", ex_fps() );
-        cairo_text_extents ( cr, buf, &extents );
-        cairo_move_to (cr, 10.0, 10.0);
-        cairo_show_text (cr, buf);
-
-    } cairo_restore (cr);
-    // } TEMP end 
 }
 
 // ------------------------------------------------------------------ 
@@ -187,48 +129,6 @@ static void __draw_world ( sys_window_t *_win ) {
 // ------------------------------------------------------------------ 
 
 static void __draw_inspector ( sys_window_t *_win ) {
-    int w, h;
-    cairo_t *cr;
-
-    cr = _win->stage->cr;
-    SDL_GetWindowSize ( _win->sdl_win, &w, &h );
-
-    if ( cr == NULL )
-        return;
-
-    // clear background
-    cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-    cairo_paint (cr);
-    cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-
-    // background color
-    cairo_set_source_rgba (cr, 0.5f, 0.5f, 0.5f, 1.0f);
-    cairo_rectangle (cr, 0, 0, w, h);
-    cairo_fill (cr);
-
-    //
-    cairo_save (cr); {
-        cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-        cairo_move_to (cr, 0, 0);
-        cairo_line_to (cr, 1 * w, 1 * h);
-        cairo_move_to (cr, 1 * w, 0);
-        cairo_line_to (cr, 0, 1 * h);
-        cairo_set_line_width (cr, 2.0);
-        cairo_stroke (cr);
-
-        cairo_rectangle (cr, 0, 0, 0.5 * w, 0.5 * h);
-        cairo_set_source_rgba (cr, 1, 0, 0, 0.80 * fabsf(sinf( ex_time() )) );
-        cairo_fill (cr);
-
-        cairo_rectangle (cr, 0, 0.5 * h, 0.5 * w, 0.5 * h);
-        cairo_set_source_rgba (cr, 0, 1, 0, 0.60);
-        cairo_fill (cr);
-
-        cairo_rectangle (cr, 0.5 * w, 0, 0.5 * w, 0.5 * h);
-        cairo_set_source_rgba (cr, 0, 0, 1, 0.40);
-        cairo_fill (cr);
-        cairo_stroke (cr);
-    } cairo_restore (cr);
 }
 
 // ------------------------------------------------------------------ 
@@ -255,9 +155,12 @@ static void __init_window () {
                                        y,
                                        200, 
                                        h );
+    inspector->bgColor = ex_color3f_blue;
     inspector->on_draw = __draw_inspector;
+    // TODO { 
     // inspector->on_draw = __draw_world;
     // inspector->on_resize = __resize_world;
+    // } TODO end 
 }
 
 // ------------------------------------------------------------------ 
@@ -283,8 +186,10 @@ static void __init_game () {
     ex_camera_set_ortho_size( mainCam, 600.0f/2.0f );
 
     // create test world
-    g_world_path = "scripted_world/test_invoke.lua";
-    // g_world_path = "scripted_world/test_coroutine.lua";
+    if ( g_world_path == NULL ) {
+        g_world_path = "assets/scripted_world/test_invoke.lua";
+        // g_world_path = "assets/scripted_world/test_coroutine.lua";
+    }
     ex_assert_return ( g_world_path, /*void*/, "can't find a world! please specific it by --world=" );
     ex_lua_dofile( l, g_world_path, NULL );
 }
@@ -471,7 +376,7 @@ int main( int argc, char *argv[] ) {
         // ======================================================== 
 
         ex_lua_load_modules( ex_lua_main_state(), "builtin" );
-        ex_lua_load_modules( ex_lua_main_state(), "scripts" );
+        ex_lua_load_modules( ex_lua_main_state(), "assets/scripts" );
 
         // ======================================================== 
         // init game 

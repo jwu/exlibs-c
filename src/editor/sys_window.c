@@ -68,12 +68,8 @@ sys_window_t *ex_create_sys_window ( const char *_title,
     win = ex_malloc ( sizeof(sys_window_t) );
     win->sdl_win = NULL;
     win->gl_context = NULL;
-    win->texture_id = -1;
-    win->pbo_ids[0] = -1;
-    win->pbo_ids[1] = -1;
-    win->stage = NULL;
-    win->pbo_cur = 0;
-    win->pbo_next = 0;
+    win->bgColor = ex_color3f_black;
+
     win->on_resize = NULL;
     win->on_update = NULL;
     win->on_draw = NULL;
@@ -233,37 +229,6 @@ sys_window_t *ex_create_sys_window ( const char *_title,
         return NULL;
     }
 
-    // create texture
-    glGenTextures ( 1, &win->texture_id );
-    glEnable ( GL_TEXTURE_RECTANGLE_ARB );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                   0,
-                   GL_RGBA8,
-                   _width,
-                   _height,
-                   0,
-                   GL_BGRA,
-                   GL_UNSIGNED_INT_8_8_8_8_REV,
-                   NULL );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, 0 );
-    glDisable ( GL_TEXTURE_RECTANGLE_ARB );
-
-    // create 2 pbo  
-    glGenBuffersARB(2, win->pbo_ids);
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, win->pbo_ids[0]);
-    glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, _width * _height * 4, 0, GL_STREAM_DRAW_ARB);
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, win->pbo_ids[1]);
-    glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, _width * _height * 4, 0, GL_STREAM_DRAW_ARB);
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
-
-    // create stage
-    win->stage = ex_create_stage( _width, _height );
-
     // 
     ex_array_append( &__windows, &win );
     return win;
@@ -274,21 +239,6 @@ sys_window_t *ex_create_sys_window ( const char *_title,
 // ------------------------------------------------------------------ 
 
 void ex_destroy_sys_window ( sys_window_t *_win ) {
-    // destory stage
-    if ( _win->stage ) {
-        ex_destroy_stage(_win->stage);
-        _win->stage = NULL;
-    }
-
-    // destroy texture
-    glDeleteTextures( 1, &_win->texture_id );
-    _win->texture_id = -1;
-
-    // destroy PBOs
-    glDeleteBuffersARB( 2, _win->pbo_ids );
-    _win->pbo_ids[0] = -1;
-    _win->pbo_ids[1] = -1;
-
     // destroy sdl gl context
     if ( _win->gl_context ) {
         SDL_GL_DeleteContext(_win->gl_context);
@@ -317,34 +267,6 @@ void ex_destroy_sys_window ( sys_window_t *_win ) {
         //
         SDL_GetWindowSize ( win->sdl_win, &w, &h );
         SDL_GL_MakeCurrent( win->sdl_win, win->gl_context );
-
-        //
-        glDeleteTextures (1, &win->texture_id);
-        glGenTextures ( 1, &win->texture_id );
-        glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, win->texture_id );
-        glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-        glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-        glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP );
-        glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP );
-        glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                       0,
-                       GL_RGBA8,
-                       w,
-                       h,
-                       0,
-                       GL_BGRA,
-                       GL_UNSIGNED_INT_8_8_8_8_REV,
-                       NULL );
-        glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, 0 );
-
-        //
-        glDeleteBuffersARB(2, win->pbo_ids);
-        glGenBuffersARB(2, win->pbo_ids);
-        glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, win->pbo_ids[0]);
-        glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, w * h * 4, 0, GL_STREAM_DRAW_ARB);
-        glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, win->pbo_ids[1]);
-        glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, w * h * 4, 0, GL_STREAM_DRAW_ARB);
-        glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
     } ex_array_each_end
 }
 
@@ -358,37 +280,6 @@ void ex_sys_window_resize ( sys_window_t *_win, int _width, int _height ) {
         ex_error( "Can't make current gl context: %s", SDL_GetError() );
         return ;
     }
-
-    // resize texture
-    glDeleteTextures (1, &_win->texture_id);
-    glGenTextures ( 1, &_win->texture_id );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, _win->texture_id );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                   0,
-                   GL_RGBA8,
-                   _width,
-                   _height,
-                   0,
-                   GL_BGRA,
-                   GL_UNSIGNED_INT_8_8_8_8_REV,
-                   NULL );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, 0 );
-
-    // resize PBOs
-    glDeleteBuffersARB(2, _win->pbo_ids);
-    glGenBuffersARB(2, _win->pbo_ids);
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, _win->pbo_ids[0]);
-    glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, _width * _height * 4, 0, GL_STREAM_DRAW_ARB);
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, _win->pbo_ids[1]);
-    glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, _width * _height * 4, 0, GL_STREAM_DRAW_ARB);
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
-
-    // resize stage
-    ex_stage_resize ( _win->stage, _width, _height );
 
     // resize window
     SDL_SetWindowSize ( _win->sdl_win, _width, _height );
@@ -436,63 +327,11 @@ void ex_sys_window_begin ( sys_window_t *_win ) {
     glLoadIdentity ();
 
     // clear buffer
-    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+    glClearColor( _win->bgColor.r, 
+                  _win->bgColor.g, 
+                  _win->bgColor.b, 
+                  1.0f );
     glClear( GL_COLOR_BUFFER_BIT );
-
-#if 1
-    _win->pbo_cur = (_win->pbo_cur + 1) % 2;
-    _win->pbo_next = (_win->pbo_cur + 1) % 2;
-
-    // ======================================================== 
-    // buffer 1 
-    // ======================================================== 
-
-    // bind the texture and PBO
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, _win->texture_id );
-    glBindBufferARB ( GL_PIXEL_UNPACK_BUFFER_ARB, _win->pbo_ids[_win->pbo_cur] );
-
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, w);
-
-    // copy pixels from PBO to texture object
-    // Use offset instead of ponter.
-    glTexSubImage2D( GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, w, h, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, 0 );
-
-    // ======================================================== 
-    // buffer 2 
-    // ======================================================== 
-
-    // bind PBO to update pixel values
-    glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, _win->pbo_ids[_win->pbo_next]);
-    glBufferDataARB(GL_PIXEL_UNPACK_BUFFER_ARB, w * h * 4, 0, GL_STREAM_DRAW_ARB);
-    uint8 *ptr = glMapBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY_ARB);
-    if ( ptr ) {
-        cairo_t *cr;
-        cairo_surface_t *surf;
-        surf = cairo_image_surface_create_for_data ( ptr,
-                                                     CAIRO_FORMAT_ARGB32,
-                                                     w,
-                                                     h,
-                                                     4 * w );
-        if ( cairo_surface_status (surf) != CAIRO_STATUS_SUCCESS ) {
-            ex_error ("can't create cairo surface.");
-            return;
-        }
-
-        // create cairo context
-        cairo_destroy (_win->stage->cr);
-        cr = cairo_create (surf);
-        cairo_surface_destroy (surf);
-        if ( cairo_status (cr) != CAIRO_STATUS_SUCCESS ) {
-            ex_error ("can't create cairo context");
-            return;
-        }
-
-        //
-        _win->stage->cr = cr;
-        _win->stage->buffer = ptr;
-    }
-#endif
 }
 
 // ------------------------------------------------------------------ 
@@ -504,114 +343,6 @@ void ex_sys_window_end ( sys_window_t *_win ) {
 
     //
     SDL_GetWindowSize ( _win->sdl_win, &w, &h );
-
-    // setup view,projection matix
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho (0.0f, 1.0f, 1.0f, 0.0f, -1.0f, 1.0f);
-
-    glMatrixMode (GL_MODELVIEW);
-    glLoadIdentity ();
-
-#if 0
-    //
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, _win->texture_id );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_SHARED_APPLE );
-    // glTexImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-    //                0,
-    //                GL_RGBA8,
-    //                w,
-    //                h,
-    //                0,
-    //                GL_BGRA,
-    //                GL_UNSIGNED_INT_8_8_8_8_REV,
-    //                _win->stage->buffer );
-    glTexSubImage2D ( GL_TEXTURE_RECTANGLE_ARB,
-                      0,
-                      0, // x
-                      0, // y
-                      w, // width
-                      h, // height
-                      GL_BGRA,
-                      GL_UNSIGNED_INT_8_8_8_8_REV,
-                      _win->stage->buffer );
-
-    glEnable (GL_BLEND);
-    glEnable (GL_TEXTURE_RECTANGLE_ARB);
-
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE);
-    glColor3f ( 1.0f, 1.0f, 1.0f );
-
-    glBegin (GL_QUADS);
-    glTexCoord2f ( 0.0f, 0.0f );
-    glVertex2f ( 0.0f, 0.0f );
-
-    glTexCoord2f ( (GLfloat)w, 0.0f );
-    glVertex2f ( 1.0f, 0.0f );
-
-    glTexCoord2f ( (GLfloat)w, (GLfloat)h );
-    glVertex2f ( 1.0f, 1.0f );
-
-    glTexCoord2f ( 0.0f, (GLfloat)h );
-    glVertex2f ( 0.0f, 1.0f );
-    glEnd ();
-
-    glDisable (GL_TEXTURE_RECTANGLE_ARB);
-    glBindTexture (GL_TEXTURE_RECTANGLE_ARB, 0);
-#else
-    if ( _win->stage->buffer ) {
-        glUnmapBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB); // release pointer to mapping buffer
-        glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
-        _win->stage->buffer = NULL;
-    }
-
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    glBindTexture ( GL_TEXTURE_RECTANGLE_ARB, _win->texture_id );
-
-    glEnable (GL_BLEND);
-    glEnable (GL_TEXTURE_RECTANGLE_ARB);
-
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE);
-    glColor3f ( 1.0f, 1.0f, 1.0f );
-
-    // glBegin (GL_QUADS);
-    // glTexCoord2f ( 0.0f, 0.0f );
-    // glVertex2f ( 0.0f, 0.0f );
-
-    // glTexCoord2f ( (GLfloat)w, 0.0f );
-    // glVertex2f ( 1.0f, 0.0f );
-
-    // glTexCoord2f ( (GLfloat)w, (GLfloat)h );
-    // glVertex2f ( 1.0f, 1.0f );
-
-    // glTexCoord2f ( 0.0f, (GLfloat)h );
-    // glVertex2f ( 0.0f, 1.0f );
-    // glEnd ();
-
-    glBegin (GL_TRIANGLE_STRIP);
-    glTexCoord2f ( 0.0f, 0.0f );
-    glVertex2f ( 0.0f, 0.0f );
-
-    glTexCoord2f ( (GLfloat)w, 0.0f );
-    glVertex2f ( 1.0f, 0.0f );
-
-    glTexCoord2f ( 0.0f, (GLfloat)h );
-    glVertex2f ( 0.0f, 1.0f );
-
-    glTexCoord2f ( (GLfloat)w, (GLfloat)h );
-    glVertex2f ( 1.0f, 1.0f );
-    glEnd ();
-
-    glDisable (GL_TEXTURE_RECTANGLE_ARB);
-    glBindTexture (GL_TEXTURE_RECTANGLE_ARB, 0);
-#endif
 
     // swap buffer
     SDL_GL_SwapWindow(_win->sdl_win);
