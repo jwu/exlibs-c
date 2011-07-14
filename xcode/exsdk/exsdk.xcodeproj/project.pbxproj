@@ -242,6 +242,11 @@
 		B270AA0113CDFDBB0000DB61 /* texture2d.c in Sources */ = {isa = PBXBuildFile; fileRef = B270A9FD13CDFDBB0000DB61 /* texture2d.c */; };
 		B270AA0213CDFDBB0000DB61 /* texture2d.h in Headers */ = {isa = PBXBuildFile; fileRef = B270A9FE13CDFDBB0000DB61 /* texture2d.h */; };
 		B270AA0413CDFDCD0000DB61 /* macro.h in Headers */ = {isa = PBXBuildFile; fileRef = B270AA0313CDFDCD0000DB61 /* macro.h */; };
+		B270AA0913CE7F9D0000DB61 /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = B270AA0713CE7F9D0000DB61 /* misc.c */; };
+		B270AA0A13CE7F9D0000DB61 /* misc.h in Headers */ = {isa = PBXBuildFile; fileRef = B270AA0813CE7F9D0000DB61 /* misc.h */; };
+		B270AA0C13CE898E0000DB61 /* libIL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B270AA0B13CE898E0000DB61 /* libIL.a */; };
+		B270AA0F13CED1890000DB61 /* path_op.c in Sources */ = {isa = PBXBuildFile; fileRef = B270AA0D13CED1890000DB61 /* path_op.c */; };
+		B270AA1013CED1890000DB61 /* path_op.h in Headers */ = {isa = PBXBuildFile; fileRef = B270AA0E13CED1890000DB61 /* path_op.h */; };
 		B281F9851332FD380051E7E7 /* wrap_time.c in Sources */ = {isa = PBXBuildFile; fileRef = B281F9841332FD380051E7E7 /* wrap_time.c */; };
 		B281F9C613330D620051E7E7 /* wrap_enums.c in Sources */ = {isa = PBXBuildFile; fileRef = B281F9C513330D620051E7E7 /* wrap_enums.c */; };
 		B28703871335B389000C44FD /* wrap_mat33f.c in Sources */ = {isa = PBXBuildFile; fileRef = B28703861335B389000C44FD /* wrap_mat33f.c */; };
@@ -804,6 +809,11 @@
 		B270A9FD13CDFDBB0000DB61 /* texture2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = texture2d.c; sourceTree = "<group>"; };
 		B270A9FE13CDFDBB0000DB61 /* texture2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture2d.h; sourceTree = "<group>"; };
 		B270AA0313CDFDCD0000DB61 /* macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macro.h; sourceTree = "<group>"; };
+		B270AA0713CE7F9D0000DB61 /* misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = misc.c; sourceTree = "<group>"; };
+		B270AA0813CE7F9D0000DB61 /* misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
+		B270AA0B13CE898E0000DB61 /* libIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIL.a; path = "../../ext_build/devil-1.7.8/lib/libIL.a"; sourceTree = "<group>"; };
+		B270AA0D13CED1890000DB61 /* path_op.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = path_op.c; sourceTree = "<group>"; };
+		B270AA0E13CED1890000DB61 /* path_op.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = path_op.h; sourceTree = "<group>"; };
 		B281F9841332FD380051E7E7 /* wrap_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_time.c; sourceTree = "<group>"; };
 		B281F9C513330D620051E7E7 /* wrap_enums.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_enums.c; sourceTree = "<group>"; };
 		B28703861335B389000C44FD /* wrap_mat33f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap_mat33f.c; sourceTree = "<group>"; };
@@ -1020,6 +1030,7 @@
 				B22789F5137A47A300B7B11E /* GLUT.framework in Frameworks */,
 				B22789FF137A490800B7B11E /* libcairo.a in Frameworks */,
 				B2D67A72137D162B0012F20D /* libSDL.a in Frameworks */,
+				B270AA0C13CE898E0000DB61 /* libIL.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1319,6 +1330,7 @@
 		B2582AED136AB8240009CEFF /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				B270AA0B13CE898E0000DB61 /* libIL.a */,
 				B2D67A71137D162B0012F20D /* libSDL.a */,
 				B22789FE137A490800B7B11E /* libcairo.a */,
 				B2F179091371559B00C5F4A2 /* libclutter-osx-1.0.0.dylib */,
@@ -1637,6 +1649,8 @@
 				B2A23196130221F600F3C100 /* time.h */,
 				B2A23197130221F600F3C100 /* world.c */,
 				B2A23198130221F600F3C100 /* world.h */,
+				B270AA0713CE7F9D0000DB61 /* misc.c */,
+				B270AA0813CE7F9D0000DB61 /* misc.h */,
 			);
 			path = engine;
 			sourceTree = "<group>";
@@ -1874,6 +1888,8 @@
 		B2A232271302221D00F3C100 /* string */ = {
 			isa = PBXGroup;
 			children = (
+				B270AA0D13CED1890000DB61 /* path_op.c */,
+				B270AA0E13CED1890000DB61 /* path_op.h */,
 				B2A232281302221D00F3C100 /* encoding.c */,
 				B2A232291302221D00F3C100 /* encoding.h */,
 				B2A2322A1302221D00F3C100 /* str_op.c */,
@@ -2139,6 +2155,8 @@
 				B270AA0013CDFDBB0000DB61 /* texture.h in Headers */,
 				B270AA0213CDFDBB0000DB61 /* texture2d.h in Headers */,
 				B270AA0413CDFDCD0000DB61 /* macro.h in Headers */,
+				B270AA0A13CE7F9D0000DB61 /* misc.h in Headers */,
+				B270AA1013CED1890000DB61 /* path_op.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3042,6 +3060,8 @@
 				B2D67A70137CDC7A0012F20D /* semaphore_mac.c in Sources */,
 				B270A9FF13CDFDBB0000DB61 /* texture.c in Sources */,
 				B270AA0113CDFDBB0000DB61 /* texture2d.c in Sources */,
+				B270AA0913CE7F9D0000DB61 /* misc.c in Sources */,
+				B270AA0F13CED1890000DB61 /* path_op.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3256,6 +3276,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../ext_build/cairo-1.10.2/lib/macosx\"",
 					"\"$(SRCROOT)/../../ext_build/SDL-1.3/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext_build/devil-1.7.8/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -3289,6 +3310,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../ext_build/cairo-1.10.2/lib/macosx\"",
 					"\"$(SRCROOT)/../../ext_build/SDL-1.3/lib/macosx\"",
+					"\"$(SRCROOT)/../../ext_build/devil-1.7.8/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-framework",

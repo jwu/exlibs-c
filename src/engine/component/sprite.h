@@ -40,6 +40,9 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_sprite_t,ex_component_t)
     ex_vec2f_t uv[4];
 EX_DECL_CLASS_SUPER_END(ex_sprite_t,ex_component_t)
 
+#define EX_SPRITE_DEFAULT_MEMBER \
+    EX_COMPONENT_DEFAULT_MEMBER
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

@@ -173,6 +173,9 @@ extern "C" {
 #define EX_MEMBER(_class_type,_member_type,_expr) \
     ((_class_type *)__obj__)->_member_type = _expr;
 
+#define EX_MEMBER_PTR_FUNC(_class_type,_member_type,_func,...) \
+    _func ( &((_class_type *)__obj__)->_member_type, ##__VA_ARGS__ );
+
 ///////////////////////////////////////////////////////////////////////////////
 // property help macros
 ///////////////////////////////////////////////////////////////////////////////

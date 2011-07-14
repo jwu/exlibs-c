@@ -49,27 +49,18 @@ void __trans2d_deinit ( ex_ref_t *_self ) {
 
 EX_DEF_CLASS_BEGIN(ex_trans2d_t)
 
-    EX_COMPONENT_DEFAULT_MEMBER
+    EX_TRANS2D_DEFAULT_MEMBER
 
     EX_MEMBER( ex_object_t, name, ex_strid("Transform 2D") )
     EX_MEMBER( ex_object_t, init, __trans2d_init )
     EX_MEMBER( ex_object_t, deinit, __trans2d_deinit )
 
-    EX_MEMBER( ex_trans2d_t, local_pos, ex_vec2f_zero )
-    EX_MEMBER( ex_trans2d_t, local_ang, ex_angf_zero )
-    EX_MEMBER( ex_trans2d_t, local_scale, ex_vec2f_one )
-    EX_MEMBER( ex_trans2d_t, parent, NULL )
-    EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) )
-    EX_MEMBER( ex_trans2d_t, dirty, true )
-    EX_MEMBER( ex_trans2d_t, local_to_world, ex_mat33f_identity )
-    // EX_MEMBER( ex_trans2d_t, dirty_mutex, ex_create_mutex() ) // DISABLE: since we use coroutine, not thread
-
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_trans2d_t)
-    EX_PROP( ex_trans2d_t, vec2f, local_pos, "local position",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_trans2d_t, angf, local_ang, "local angle",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_trans2d_t, vec2f, local_scale, "local scale",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, vec2f, local_pos, "Local Position",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, angf, local_ang, "Local Angle",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_trans2d_t, vec2f, local_scale, "Local Scale",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
@@ -81,11 +72,11 @@ EX_SERIALIZE_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
-    EX_MEMBER_TOSTRING ( vec2f, "local position", self->local_pos )
-    EX_MEMBER_TOSTRING ( angf, "local angle", self->local_ang )
-    EX_MEMBER_TOSTRING ( vec2f, "local scale", self->local_scale )
+    EX_MEMBER_TOSTRING ( vec2f, "local_pos", self->local_pos )
+    EX_MEMBER_TOSTRING ( angf, "local_ang", self->local_ang )
+    EX_MEMBER_TOSTRING ( vec2f, "local_scale", self->local_scale )
     EX_MEMBER_TOSTRING ( ref, "parent", self->parent )
-    EX_MEMBER_TOSTRING ( array, "childrent", self->children )
+    EX_MEMBER_TOSTRING ( array, "children", self->children )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

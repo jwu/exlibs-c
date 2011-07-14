@@ -46,7 +46,7 @@ void __sprite_deinit ( ex_ref_t *_self ) {
 
 EX_DEF_CLASS_BEGIN(ex_sprite_t)
 
-    EX_COMPONENT_DEFAULT_MEMBER
+    EX_SPRITE_DEFAULT_MEMBER
 
     EX_MEMBER( ex_object_t, name, ex_strid("Sprite") )
     EX_MEMBER( ex_object_t, init, __sprite_init )

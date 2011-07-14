@@ -46,6 +46,14 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
     ex_vec2f_t trails[EX_MAX_TRAIL_VERTS];
 EX_DECL_CLASS_SUPER_END(ex_debug2d_t,ex_behavior_t)
 
+#define EX_DEBUG2D_DEFAULT_MEMBER \
+    EX_BEHAVIOR_DEFAULT_MEMBER \
+    EX_MEMBER( ex_debug2d_t, shapeType, EX_DEBUG_SHAPE_RECT ) \
+    EX_MEMBER_PTR_FUNC( ex_debug2d_t, rect, ex_rectf_set, ex_vec2f_zero, 1.0f, 1.0f ); \
+    EX_MEMBER_PTR_FUNC( ex_debug2d_t, circle, ex_circlef_set, ex_vec2f_zero, 1.0f ); \
+    EX_MEMBER( ex_debug2d_t, trail_idx, 0 ) \
+    EX_MEMBER( ex_debug2d_t, trail_timer, -1 )
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

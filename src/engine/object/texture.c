@@ -35,6 +35,13 @@ void __texture_deinit ( ex_ref_t *_self ) {
     ex_texture_t *self = EX_REF_CAST(ex_texture_t,_self);
 
     // TODO: unload opengl textureID
+    if ( self->textureID != -1 ) {
+        glBindTexture ( GL_TEXTURE_2D, 0 );
+        glDeleteTextures ( 1, &self->textureID );
+    }
+
+    self->width = -1;
+    self->height = -1;
 
     __object_deinit(_self);
 }

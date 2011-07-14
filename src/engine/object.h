@@ -80,7 +80,12 @@ extern void ex_object_gc ();
 // Desc: 
 // ------------------------------------------------------------------ 
 
+extern ex_ref_t *ex_load_object ( struct ex_stream_t *_stream );
+extern void ex_save_object ( struct ex_stream_t *_stream, ex_ref_t *_ref );
+
+// DEBUG { 
 extern void ex_serialize_objects ( struct ex_stream_t *_stream );
+// } DEBUG end 
 
 // ------------------------------------------------------------------ 
 // Desc: 

@@ -45,6 +45,12 @@ extern ex_uid_t ex_asset_db_asset_path_to_uid ( const char *_path );
 extern void ex_asset_db_import ( const char *_path, bool _recursively );
 extern void ex_asset_db_import_async ( const char *_path, bool _recursively );
 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+extern ex_ref_t *ex_asset_db_load ( const char *_path );
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

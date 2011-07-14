@@ -67,11 +67,13 @@ extern void __deinit_window_table ();
 
 void ex_editor_deinit () {
     if ( __initialized ) {
-        __deinit_ref_table();
-        __deinit_window_table();
-
         //
         ex_asset_db_deinit ();
+        ex_object_gc();
+
+        //
+        __deinit_ref_table();
+        __deinit_window_table();
 
         //
         ex_log ( "ex_editor deinitied" );

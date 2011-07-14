@@ -371,6 +371,9 @@ int main( int argc, char *argv[] ) {
         ex_editor_init();
         __init_window ();
 
+        // asset must load after opengl inited
+        ex_asset_db_import ("assets/", true);
+
         // ======================================================== 
         // init engine
         // ======================================================== 

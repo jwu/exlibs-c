@@ -13,6 +13,8 @@
 #include "engine/engine_inc.h"
 #include "editor_inc.h"
 
+#include <IL/il.h>
+
 ///////////////////////////////////////////////////////////////////////////////
 // defines
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,10 +22,120 @@
 static bool __initialized = false;
 static ex_hashmap_t __uid_to_path;
 static ex_hashmap_t __path_to_uid;
+static ex_hashmap_t __path_to_refptr;
 
 ///////////////////////////////////////////////////////////////////////////////
-//
+// static defines
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+static ex_ref_t *__import_texture ( const char *_path, int _il_img_fmt ) {
+
+    void *result;
+    ex_uid_t uid;
+
+    ILuint imageID, fileSize;
+    void *buffer;
+    ex_file_t *file;
+    ex_ref_t *tex2d_ref = NULL;
+    int width, height, bytes;
+    int tex2d_fmt, il_fmt;
+    strid_t pathID;
+    char filename[MAX_PATH];
+
+    // ======================================================== 
+    // load image by DevIL 
+    // ======================================================== 
+
+    // bind the image
+    ilGenImages ( 1, &imageID );
+    ilBindImage ( imageID );
+
+    // load the image from raw data
+    file = ex_fopen_r ( _path );
+    fileSize = ex_fsize (file);
+    buffer = ex_malloc ( fileSize );
+    ex_fread ( file, buffer, fileSize );
+    ilLoadL ( _il_img_fmt, buffer, (ILuint)fileSize );
+    ex_free (buffer);
+    ex_fclose(file);
+
+    // extract image data
+    width = ilGetInteger(IL_IMAGE_WIDTH);
+    height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+    // copy the raw data
+    bytes = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
+    il_fmt = IL_RGBA;
+    if ( bytes == 4 ) {
+        il_fmt = IL_RGBA;
+        tex2d_fmt = EX_TEXTURE_FORMAT_ARGB32;
+    }
+    else if ( bytes == 3 ) {
+        il_fmt = IL_RGB;
+        tex2d_fmt = EX_TEXTURE_FORMAT_RGB24;
+    }
+    else if ( bytes == 1 ) {
+        il_fmt = IL_ALPHA;
+        tex2d_fmt = EX_TEXTURE_FORMAT_ALPHA8;
+    }
+    else if ( bytes == 2 ) {
+        il_fmt = IL_LUMINANCE_ALPHA;
+        tex2d_fmt = EX_TEXTURE_FORMAT_RGB565;
+    }
+    else {
+        ex_error ("bytes number is %d, which not support", bytes );
+        il_fmt = -1;
+        tex2d_fmt = -1;
+        goto FAILED;
+    }
+
+    // ======================================================== 
+    // Set pixel to texture2d resource 
+    // ======================================================== 
+
+    // get uid frome path
+    pathID = ex_strid(_path);
+    result = ex_hashmap_get( &__path_to_uid, &pathID, NULL );
+    if ( result == NULL ) {
+        uid = ex_generate_uid();
+        ex_hashmap_insert( &__path_to_uid, &pathID, &uid, NULL );
+        ex_hashmap_insert( &__uid_to_path, &uid, &pathID, NULL );
+    }
+    else {
+        uid = *((ex_uid_t *)result);
+    }
+
+    //
+    tex2d_ref = ex_create_texture2d_by_uid( width, height, tex2d_fmt, uid );
+    ex_path_get_filename( filename, _path );
+    EX_REF_CAST(ex_object_t,tex2d_ref)->name = ex_strid(filename);
+    ilCopyPixels( 0, 
+                  0, 
+                  0, 
+                  width, 
+                  height, 
+                  1, 
+                  il_fmt, 
+                  IL_UNSIGNED_BYTE, 
+                  EX_REF_CAST(ex_texture2d_t,tex2d_ref)->data );
+
+    // ======================================================== 
+    // finally, apply the changes 
+    // ======================================================== 
+
+    ex_texture2d_apply (tex2d_ref);
+    ex_texture2d_set_readable (tex2d_ref, false);
+
+FAILED:
+    // unbind il image
+    ilBindImage (0);
+    ilDeleteImages ( 1, &imageID );
+    return tex2d_ref;
+}
 
 // ------------------------------------------------------------------ 
 // Desc: 
@@ -31,30 +143,46 @@ static ex_hashmap_t __path_to_uid;
 
 static void __do_import ( const char *_path ) {
     int path_len;
-    void *result;
-    ex_uid_t uid;
+    ex_ref_t *ref = NULL;
 
     //
     path_len = strlen(_path);
-    result = ex_hashmap_get( &__path_to_uid, &_path, NULL );
-    if ( result == NULL ) {
-        uid = ex_generate_uid();
-        ex_hashmap_insert( &__path_to_uid, &_path, &uid, NULL );
-        ex_hashmap_insert( &__uid_to_path, &uid, &_path, NULL );
+
+    // ======================================================== 
+    // load texture 
+    // ======================================================== 
+
+    if ( strncmp (_path+path_len-4, ".png", 4 ) == 0 ) {
+        ref = __import_texture ( _path, IL_PNG );
     }
-    else {
-        uid = *((ex_uid_t *)result);
+    else if ( strncmp (_path+path_len-4, ".bmp", 4 ) == 0 ) {
+        ref = __import_texture ( _path, IL_BMP );
+    }
+    else if ( strncmp (_path+path_len-4, ".jpg", 4 ) == 0 ) {
+        ref = __import_texture ( _path, IL_JPG );
+    }
+    else if ( strncmp (_path+path_len-4, ".dds", 4 ) == 0 ) {
+        ref = __import_texture ( _path, IL_DDS );
+    }
+    else if ( strncmp (_path+path_len-4, ".raw", 4 ) == 0 ) {
+        ref = __import_texture ( _path, IL_RAW );
     }
 
-    //
-    if ( strncmp (_path+path_len-4, ".png", 4 ) == 0 ) {
-        // TODO: import texture
-    }
+    // ======================================================== 
+    // load font  
+    // ======================================================== 
+
     else if ( strncmp (_path+path_len-4, ".ttf", 4 ) == 0 ) {
         // TODO: import true type font
     }
-} 
 
+    //
+    if ( ref && ref->ptr != NULL ) {
+        strid_t pathID = ex_strid(_path);
+        ex_hashmap_insert( &__path_to_refptr, &pathID, &ref, NULL );
+        ex_log ( "Improt asset %s", _path );
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // functions
@@ -96,6 +224,17 @@ int ex_asset_db_init () {
                       __ex_hashmap_dealloc
                     );
 
+    //
+    ex_hashmap_init ( &__path_to_refptr,
+                      EX_STRID_NULL, sizeof(strid_t),
+                      EX_STRID_NULL, sizeof(ex_ref_t *), 
+                      1024,
+                      ex_hashkey_strid, ex_keycmp_strid,
+                      __ex_hashmap_alloc,
+                      __ex_hashmap_realloc,
+                      __ex_hashmap_dealloc
+                    );
+
     // if not found .exsdk, create one 
     if ( ex_fsys_dir_exists ( ".exsdk" ) == false ) {
         ex_fsys_mkdir ( ".exsdk" );
@@ -103,13 +242,14 @@ int ex_asset_db_init () {
     }
 
     // load asset_db path_to_uid and uid_to_path
-    if ( ex_fsys_file_exists( ".exsdk/assets_map.json" ) == false ) {
+    if ( ex_fsys_file_exists( ".exsdk/assets_map.json" ) ) {
         stream_read = ex_create_json_read_stream( ".exsdk/assets_map.json" );
         __ex_serialize_map (stream_read, ex_strid("uid_to_path"), &__uid_to_path );
         __ex_serialize_map (stream_read, ex_strid("path_to_uid"), &__path_to_uid );
         ex_destroy_json_stream((ex_stream_json_t *)stream_read);
     }
 
+    __initialized = true;
     return 0;
 }
 
@@ -119,6 +259,15 @@ int ex_asset_db_init () {
 
 void ex_asset_db_deinit () {
     if ( __initialized ) {
+
+        //
+        ex_hashmap_each ( &__path_to_refptr, ex_ref_t *, ref ) {
+            ex_decref(ref);
+        } ex_hashmap_each_end
+        ex_hashmap_deinit (&__path_to_refptr);
+
+        ex_hashmap_deinit (&__path_to_uid);
+        ex_hashmap_deinit (&__uid_to_path);
 
         //
         ex_log ( "ex_asset_db deinitied" );
@@ -218,6 +367,16 @@ void ex_asset_db_import ( const char *_path, bool _recursively ) {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_asset_db_import_async ( const char *_path, bool _recursively ) {
-    // TODO:
+ex_ref_t *ex_asset_db_load ( const char *_path ) {
+
+    strid_t pathID;
+    void *result;
+
+    pathID = ex_strid(_path);
+    result = ex_hashmap_get( &__path_to_refptr, &pathID, NULL );
+    if ( result != NULL ) {
+        return result; 
+    }
+
+    return ex_newref(NULL); // it will be delete in ex_object_gc
 }

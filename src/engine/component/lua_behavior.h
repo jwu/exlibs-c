@@ -76,6 +76,12 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_lua_behavior_t,ex_behavior_t)
     ex_array_t *coroutine_list;
 EX_DECL_CLASS_SUPER_END(ex_lua_behavior_t,ex_behavior_t)
 
+#define EX_LUA_BEHAVIOR_DEFAULT_MEMBER \
+    EX_BEHAVIOR_DEFAULT_MEMBER \
+    EX_MEMBER( ex_lua_behavior_t, compile_failed, false ) \
+    EX_MEMBER( ex_lua_behavior_t, invoke_list, ex_array_notype(sizeof(ex_invoke_info_t),16) ) \
+    EX_MEMBER( ex_lua_behavior_t, coroutine_list, ex_array_notype(sizeof(ex_coroutine_info_t),16) )
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

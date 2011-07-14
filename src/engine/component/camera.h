@@ -46,6 +46,16 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_camera_t,ex_component_t)
     ex_mat44f_t matProjection;
 EX_DECL_CLASS_SUPER_END(ex_camera_t,ex_component_t)
 
+#define EX_CAMERA_DEFAULT_MEMBER \
+    EX_COMPONENT_DEFAULT_MEMBER \
+    EX_MEMBER( ex_camera_t, isOrtho, false ) \
+    EX_MEMBER( ex_camera_t, orthoSize, 600/2 ) \
+    EX_MEMBER( ex_camera_t, aspect, 4.0f/3.0f ) \
+    EX_MEMBER( ex_camera_t, clearFlags, EX_CLEAR_COLOR|EX_CLEAR_DEPTH ) \
+    EX_MEMBER_PTR_FUNC ( ex_camera_t, bgColor, ex_color3f_set, 0.0f, 0.5f, 1.0f ); \
+    EX_MEMBER( ex_camera_t, matWorldToView, ex_mat44f_identity ) \
+    EX_MEMBER( ex_camera_t, matProjection, ex_mat44f_identity )
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

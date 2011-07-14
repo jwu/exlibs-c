@@ -35,16 +35,36 @@ extern "C" {
 EX_DECL_CLASS_SUPER_BEGIN(ex_texture2d_t,ex_texture_t)
     int mipmapCount;
     int format;
+
+    // private
+    bool isReadable;
+    void *data;
 EX_DECL_CLASS_SUPER_END(ex_texture2d_t,ex_texture_t)
 
 #define EX_TEXTURE2D_DEFAULT_MEMBER \
     EX_TEXTURE_DEFAULT_MEMBER \
-    EX_MEMBER( ex_texture2d_t, mipmapCount, 9 ) \
-    EX_MEMBER( ex_texture2d_t, format, EX_TEXTURE_FORMAT_ARGB32 )
+    EX_MEMBER( ex_texture2d_t, mipmapCount, 8 ) \
+    EX_MEMBER( ex_texture2d_t, format, EX_TEXTURE_FORMAT_ARGB32 ) \
+    EX_MEMBER( ex_texture2d_t, isReadable, true ) \
+    EX_MEMBER( ex_texture2d_t, data, NULL )
 
 ///////////////////////////////////////////////////////////////////////////////
-// functions
+// function defines
 ///////////////////////////////////////////////////////////////////////////////
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+ex_ref_t *ex_create_texture2d ( int _width, int _height, int _fmt );
+ex_ref_t *ex_create_texture2d_by_uid ( int _width, int _height, int _fmt, ex_uid_t _uid );
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_texture2d_apply ( ex_ref_t *_self );
+void ex_texture2d_set_readable ( ex_ref_t *_self, bool _isReadable );
 
 // ######################### 
 #ifdef __cplusplus

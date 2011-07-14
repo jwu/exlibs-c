@@ -97,17 +97,11 @@ void __world_deinit ( ex_ref_t *_self ) {
 
 EX_DEF_CLASS_BEGIN(ex_world_t)
 
-    EX_OBJECT_DEFAULT_MEMBER
+    EX_WORLD_DEFAULT_MEMBER
 
     EX_MEMBER( ex_object_t, name, ex_strid("World") )
     EX_MEMBER( ex_object_t, init, __world_init )
     EX_MEMBER( ex_object_t, deinit, __world_deinit )
-
-    EX_MEMBER( ex_world_t, state, EX_WORLD_STATE_STOPPED )
-    EX_MEMBER( ex_world_t, entities, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
-    EX_MEMBER( ex_world_t, cameras, ex_array_notype( sizeof(ex_ref_t *), 8 ) )
-    EX_MEMBER( ex_world_t, main_camera, NULL )
-    EX_MEMBER( ex_world_t, be_list, ex_array_notype( sizeof(ex_ref_t *), 1024 ) )
 
 EX_DEF_CLASS_END
 
@@ -115,7 +109,7 @@ EX_DEF_PROPS_BEGIN(ex_world_t)
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_SUPER_BEGIN(ex_world_t,ex_object_t)
-    EX_SERIALIZE_ARRAY( _stream, ref, "entities", self->entities );
+    // EX_SERIALIZE_ARRAY( _stream, ref, "entities", self->entities );
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_world_t,ex_object_t)
@@ -623,11 +617,22 @@ void ex_world_render ( ex_ref_t *_self ) {
 // ------------------------------------------------------------------ 
 
 void ex_world_save ( ex_ref_t *_self, ex_stream_t *_stream ) {
-    ex_uid_t uid; 
+    ex_world_t *self;
+    size_t num_entities;
 
-    ex_serialize_objects(_stream);
-    uid = ex_object_uid(_self);
-    EX_SERIALIZE( _stream, uid, "uid", &uid );
+    // first save the world
+    ex_save_object (_stream, _self);
+
+    self = EX_REF_CAST(ex_world_t,_self);
+
+    //
+    num_entities = ex_array_count(self->entities);
+    EX_SERIALIZE( _stream, size_t, "num_entities", &num_entities );
+
+    // save each entity in the world
+    ex_array_each ( self->entities, ex_ref_t *, ent ) {
+        ex_save_object (_stream, ent);
+    } ex_array_each_end
 }
 
 // ------------------------------------------------------------------ 
@@ -635,11 +640,24 @@ void ex_world_save ( ex_ref_t *_self, ex_stream_t *_stream ) {
 // ------------------------------------------------------------------ 
 
 ex_ref_t *ex_world_load ( ex_stream_t *_stream ) {
-    ex_uid_t uid;
+    ex_ref_t *world_ref;
+    ex_world_t *self;
+    int i;
+    size_t num_entities;
+    
+    // load the world and entities refs
+    world_ref = ex_load_object (_stream);
 
-    ex_serialize_objects(_stream);
-    EX_SERIALIZE( _stream, uid, "uid", &uid );
-    return ex_getref(uid);
+    self = EX_REF_CAST(ex_world_t,world_ref);
+
+    //
+    EX_SERIALIZE( _stream, size_t, "num_entities", &num_entities );
+
+    // load entities from the world
+    for ( i = 0; i < num_entities; ++i ) {
+        ex_array_append( self->entities, ex_load_object (_stream) );
+    }
+    return world_ref;
 }
 
 // ------------------------------------------------------------------ 

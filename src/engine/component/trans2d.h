@@ -48,6 +48,17 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_trans2d_t,ex_component_t)
     ex_mat33f_t world_to_local;
 EX_DECL_CLASS_SUPER_END(ex_trans2d_t,ex_component_t)
 
+#define EX_TRANS2D_DEFAULT_MEMBER \
+    EX_COMPONENT_DEFAULT_MEMBER \
+    EX_MEMBER( ex_trans2d_t, local_pos, ex_vec2f_zero ) \
+    EX_MEMBER( ex_trans2d_t, local_ang, ex_angf_zero ) \
+    EX_MEMBER( ex_trans2d_t, local_scale, ex_vec2f_one ) \
+    EX_MEMBER( ex_trans2d_t, parent, NULL ) \
+    EX_MEMBER( ex_trans2d_t, children, ex_array( ref, 8 ) ) \
+    EX_MEMBER( ex_trans2d_t, dirty, true ) \
+    EX_MEMBER( ex_trans2d_t, local_to_world, ex_mat33f_identity ) 
+    // EX_MEMBER( ex_trans2d_t, dirty_mutex, ex_create_mutex() ) // DISABLE: since we use coroutine, not thread
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

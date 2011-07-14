@@ -170,16 +170,11 @@ void __entity_deinit ( ex_ref_t *_self ) {
 
 EX_DEF_CLASS_BEGIN(ex_entity_t)
 
-    EX_OBJECT_DEFAULT_MEMBER
+    EX_ENTITY_DEFAULT_MEMBER
 
     EX_MEMBER( ex_object_t, name, ex_strid("Entity") )
     EX_MEMBER( ex_object_t, init, __entity_init )
     EX_MEMBER( ex_object_t, deinit, __entity_deinit )
-
-    EX_MEMBER( ex_entity_t, comps, ex_array_notype(sizeof(ex_ref_t *),8) )
-    EX_MEMBER( ex_entity_t, world, NULL )
-    EX_MEMBER( ex_entity_t, trans2d, NULL )
-    EX_MEMBER( ex_entity_t, camera, NULL )
 
 EX_DEF_CLASS_END
 

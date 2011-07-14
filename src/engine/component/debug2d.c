@@ -49,7 +49,7 @@ extern void __debug2d_post_update ( ex_ref_t * );
 
 EX_DEF_CLASS_BEGIN(ex_debug2d_t)
 
-    EX_BEHAVIOR_DEFAULT_MEMBER
+    EX_DEBUG2D_DEFAULT_MEMBER
 
     EX_MEMBER( ex_object_t, name, ex_strid("Debug 2D") )
     EX_MEMBER( ex_object_t, init, __debug2d_init )
@@ -59,16 +59,10 @@ EX_DEF_CLASS_BEGIN(ex_debug2d_t)
     EX_MEMBER( ex_behavior_t, update, __debug2d_update )
     EX_MEMBER( ex_behavior_t, post_update, __debug2d_post_update )
 
-    EX_MEMBER( ex_debug2d_t, shapeType, EX_DEBUG_SHAPE_RECT )
-    ex_rectf_set( &(((ex_debug2d_t *)__obj__)->rect), ex_vec2f_zero, 1.0f, 1.0f );
-    ex_circlef_set( &(((ex_debug2d_t *)__obj__)->circle), ex_vec2f_zero, 1.0f );
-    EX_MEMBER( ex_debug2d_t, trail_idx, 0 )
-    EX_MEMBER( ex_debug2d_t, trail_timer, -1 )
-
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_debug2d_t)
-    EX_PROP( ex_debug2d_t, int, shapeType, "shape type",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_debug2d_t, int, shapeType, "Shape Type",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
@@ -80,7 +74,7 @@ EX_SERIALIZE_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_debug2d_t,ex_behavior_t)
-    EX_MEMBER_TOSTRING( int, "shape type", self->shapeType )
+    EX_MEMBER_TOSTRING( int, "shapeType", self->shapeType )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

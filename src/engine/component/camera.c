@@ -56,28 +56,20 @@ void __camera_deinit ( ex_ref_t *_self ) {
 
 EX_DEF_CLASS_BEGIN(ex_camera_t)
 
-    EX_COMPONENT_DEFAULT_MEMBER
+    EX_CAMERA_DEFAULT_MEMBER
 
     EX_MEMBER( ex_object_t, name, ex_strid("Camera") )
     EX_MEMBER( ex_object_t, init, __camera_init )
     EX_MEMBER( ex_object_t, deinit, __camera_deinit )
 
-    EX_MEMBER( ex_camera_t, isOrtho, false )
-    EX_MEMBER( ex_camera_t, orthoSize, 600/2 )
-    EX_MEMBER( ex_camera_t, aspect, 4.0f/3.0f )
-    EX_MEMBER( ex_camera_t, clearFlags, EX_CLEAR_COLOR|EX_CLEAR_DEPTH )
-    ex_color3f_set( &(((ex_camera_t *)__obj__)->bgColor), 0.0f, 0.5f, 1.0f );
-    EX_MEMBER( ex_camera_t, matWorldToView, ex_mat44f_identity )
-    EX_MEMBER( ex_camera_t, matProjection, ex_mat44f_identity )
-
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_camera_t)
-    EX_PROP( ex_camera_t, bool, isOrtho, "is ortho-graphic",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_camera_t, float, orthoSize, "ortho-graphic size",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_camera_t, float, aspect, "aspect",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_camera_t, uint32, clearFlags, "clear flags",  EX_PROP_ATTR_NONE )
-    EX_PROP( ex_camera_t, color3f, bgColor, "background color",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, bool, isOrtho, "Is Ortho-Graphic",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, float, orthoSize, "Ortho-Graphic Size",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, float, aspect, "Aspect",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, uint32, clearFlags, "Clear Flags",  EX_PROP_ATTR_NONE )
+    EX_PROP( ex_camera_t, color3f, bgColor, "Background Color",  EX_PROP_ATTR_NONE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_SUPER_BEGIN(ex_camera_t,ex_component_t)
@@ -89,13 +81,13 @@ EX_SERIALIZE_SUPER_BEGIN(ex_camera_t,ex_component_t)
 EX_SERIALIZE_END
 
 EX_DEF_TOSTRING_SUPER_BEGIN(ex_camera_t,ex_component_t)
-    EX_MEMBER_TOSTRING ( bool, "is ortho-graphic", self->isOrtho )
-    EX_MEMBER_TOSTRING ( float, "ortho-graphic size", self->orthoSize )
+    EX_MEMBER_TOSTRING ( bool, "isOrtho", self->isOrtho )
+    EX_MEMBER_TOSTRING ( float, "orthoSize", self->orthoSize )
     EX_MEMBER_TOSTRING ( float, "aspect", self->aspect )
-    EX_MEMBER_TOSTRING ( uint32, "clear flags", self->clearFlags )
-    EX_MEMBER_TOSTRING ( color3f, "background color", self->bgColor )
-    EX_MEMBER_TOSTRING ( mat44f, "world to view matrix", self->matWorldToView )
-    EX_MEMBER_TOSTRING ( mat44f, "projection matrix", self->matProjection )
+    EX_MEMBER_TOSTRING ( uint32, "clearFlags", self->clearFlags )
+    EX_MEMBER_TOSTRING ( color3f, "bgColor", self->bgColor )
+    EX_MEMBER_TOSTRING ( mat44f, "matWorldToView", self->matWorldToView )
+    EX_MEMBER_TOSTRING ( mat44f, "matProjection", self->matProjection )
 EX_DEF_TOSTRING_END
 
 ///////////////////////////////////////////////////////////////////////////////

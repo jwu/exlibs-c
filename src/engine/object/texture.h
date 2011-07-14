@@ -40,21 +40,16 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_texture_t,ex_object_t)
     int wrapMode;
 
     // private
-    int textureID; // opengl texture-id
+    uint textureID; // opengl texture-id
 EX_DECL_CLASS_SUPER_END(ex_texture_t,ex_object_t)
 
 #define EX_TEXTURE_DEFAULT_MEMBER \
     EX_OBJECT_DEFAULT_MEMBER \
-    EX_MEMBER( ex_texture_t, width, 1 ) \
-    EX_MEMBER( ex_texture_t, height, 1 ) \
+    EX_MEMBER( ex_texture_t, width, -1 ) \
+    EX_MEMBER( ex_texture_t, height, -1 ) \
     EX_MEMBER( ex_texture_t, filterMode, EX_FILTER_MODE_POINT ) \
     EX_MEMBER( ex_texture_t, wrapMode, EX_TEXTURE_WRAP_MODE_REPEAT ) \
     EX_MEMBER( ex_texture_t, textureID, -1 )
-
-///////////////////////////////////////////////////////////////////////////////
-// function defines
-///////////////////////////////////////////////////////////////////////////////
-
 
 // ######################### 
 #ifdef __cplusplus

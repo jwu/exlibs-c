@@ -41,6 +41,14 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_world_t,ex_object_t)
     // ex_array_t *phys_list; // array<physics>
 EX_DECL_CLASS_SUPER_END(ex_world_t,ex_object_t)
 
+#define EX_WORLD_DEFAULT_MEMBER \
+    EX_OBJECT_DEFAULT_MEMBER \
+    EX_MEMBER( ex_world_t, state, EX_WORLD_STATE_STOPPED ) \
+    EX_MEMBER( ex_world_t, entities, ex_array_notype( sizeof(ex_ref_t *), 8 ) ) \
+    EX_MEMBER( ex_world_t, cameras, ex_array_notype( sizeof(ex_ref_t *), 8 ) ) \
+    EX_MEMBER( ex_world_t, main_camera, NULL ) \
+    EX_MEMBER( ex_world_t, be_list, ex_array_notype( sizeof(ex_ref_t *), 1024 ) )
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

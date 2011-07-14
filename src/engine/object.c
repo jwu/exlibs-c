@@ -286,10 +286,45 @@ void ex_object_gc () {
 // Desc: 
 // ------------------------------------------------------------------ 
 
-void ex_serialize_objects ( ex_stream_t *_stream ) {
-    int num_objects;
+ex_ref_t *ex_load_object ( ex_stream_t *_stream ) {
     strid_t typeID;
     ex_object_t *obj;
+
+    EX_SERIALIZE( _stream, strid, "type", &typeID );
+    obj = ex_create(typeID);
+    ex_rtti_info(obj)->serialize( _stream, ex_strid("object"), obj );
+    return __reftable_add (obj);
+}
+
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_save_object ( struct ex_stream_t *_stream, ex_ref_t *_ref ) {
+    strid_t typeID;
+    ex_object_t *obj;
+    const ex_rtti_t *rtti;
+
+    obj = EX_REF_CAST(ex_object_t,_ref);
+
+    // do NOT save NULL objects
+    if ( obj == NULL || ex_flags_has(obj->flags,EX_OBJECT_DEAD) ) {
+        return;
+    }
+
+    rtti = ex_rtti_info(obj);
+    typeID = rtti->typeID;
+    EX_SERIALIZE( _stream, strid, "type", &typeID );
+    rtti->serialize( _stream, ex_strid("object"), obj );
+}
+
+// DEBUG { 
+// ------------------------------------------------------------------ 
+// Desc: 
+// ------------------------------------------------------------------ 
+
+void ex_serialize_objects ( ex_stream_t *_stream ) {
+    int num_objects;
     int i;
     
     num_objects = ex_hashmap_count(&__uid_to_refptr);
@@ -297,27 +332,14 @@ void ex_serialize_objects ( ex_stream_t *_stream ) {
 
     if ( _stream->type == EX_STREAM_READ ) {
         for ( i = 0; i < num_objects; ++i ) {
-            EX_SERIALIZE( _stream, strid, "type", &typeID );
-            obj = ex_create(typeID);
-            ex_rtti_info(obj)->serialize( _stream, ex_strid("object"), obj );
-            __reftable_add (obj);
+            ex_load_object (_stream);
         }
     }
     else if ( _stream->type == EX_STREAM_WRITE ) {
         ex_hashmap_each ( &__uid_to_refptr, ex_ref_t *, ref ) {
-            const ex_rtti_t *rtti = NULL;
-            obj = EX_REF_CAST(ex_object_t,ref);
-
-            // do NOT save NULL objects
-            if ( obj == NULL || ex_flags_has(obj->flags,EX_OBJECT_DEAD) ) {
-                ex_hashmap_continue;
-            }
-
-            rtti = ex_rtti_info(obj);
-            typeID = rtti->typeID;
-            EX_SERIALIZE( _stream, strid, "type", &typeID );
-            rtti->serialize( _stream, ex_strid("object"), obj );
+            ex_save_object (_stream,ref);
         } ex_hashmap_each_end
     }
 }
 
+// } DEBUG end 

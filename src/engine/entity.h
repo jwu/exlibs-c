@@ -42,6 +42,13 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_entity_t,ex_object_t)
     ex_ref_t *camera;
 EX_DECL_CLASS_SUPER_END(ex_entity_t,ex_object_t)
 
+#define EX_ENTITY_DEFAULT_MEMBER \
+    EX_OBJECT_DEFAULT_MEMBER \
+    EX_MEMBER( ex_entity_t, comps, ex_array_notype(sizeof(ex_ref_t *),8) ) \
+    EX_MEMBER( ex_entity_t, world, NULL ) \
+    EX_MEMBER( ex_entity_t, trans2d, NULL ) \
+    EX_MEMBER( ex_entity_t, camera, NULL )
+
 ///////////////////////////////////////////////////////////////////////////////
 // functions
 ///////////////////////////////////////////////////////////////////////////////

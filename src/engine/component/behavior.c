@@ -53,7 +53,7 @@ EX_DEF_CLASS_BEGIN(ex_behavior_t)
 EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_behavior_t)
-    EX_PROP( ex_behavior_t, bool, enabled, "enabled",  EX_PROP_ATTR_HIDE )
+    EX_PROP( ex_behavior_t, bool, enabled, "Enabled",  EX_PROP_ATTR_HIDE )
 EX_DEF_PROPS_END
 
 EX_SERIALIZE_SUPER_BEGIN(ex_behavior_t,ex_component_t)
