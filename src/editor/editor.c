@@ -70,6 +70,7 @@ void ex_editor_deinit () {
         //
         ex_asset_db_deinit ();
         ex_object_gc();
+        ex_lua_deinit();
 
         //
         __deinit_ref_table();

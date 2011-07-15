@@ -70,6 +70,8 @@ EX_DECL_LUA_BUILTIN_TYPE_2(color4f,ex_color4f_t)
 
 EX_DECL_LUA_BUILTIN_REF_2(object,ex_object_t)
     EX_DECL_LUA_BUILTIN_REF_2(world,ex_world_t)
+    EX_DECL_LUA_BUILTIN_REF_2(texture,ex_texture_t)
+        EX_DECL_LUA_BUILTIN_REF_2(texture2d,ex_texture2d_t)
     EX_DECL_LUA_BUILTIN_REF_2(entity,ex_entity_t)
     EX_DECL_LUA_BUILTIN_REF_2(component,ex_component_t)
         EX_DECL_LUA_BUILTIN_REF_2(trans2d,ex_trans2d_t)

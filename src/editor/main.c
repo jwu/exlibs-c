@@ -323,8 +323,7 @@ static void exit_fn (void) {
 
     __quit_game();
 
-    // deinit
-    ex_lua_deinit();
+    // deinit 
     ex_editor_deinit();
     ex_core_deinit();
 

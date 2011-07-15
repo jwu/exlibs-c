@@ -179,6 +179,7 @@ static void __do_import ( const char *_path ) {
     //
     if ( ref && ref->ptr != NULL ) {
         strid_t pathID = ex_strid(_path);
+        ex_incref(ref);
         ex_hashmap_insert( &__path_to_refptr, &pathID, &ref, NULL );
         ex_log ( "Improt asset %s", _path );
     }

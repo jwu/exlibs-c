@@ -25,6 +25,7 @@ function create_ent ( _name, _pos )
         show_parentlink = true,
         width = 10,
         height = 10,
+        texture = ex.asset_db.load("assets/textures/ball.png"),
     })
     -- ent:add_comp("ex.debug2d.circle", {
     --     show_coord = false,

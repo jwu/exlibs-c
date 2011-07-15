@@ -10,8 +10,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../engine/entity.h"
-#include "../../engine/component/lua_behavior.h"
+#include "engine/entity.h"
+#include "engine/component/lua_behavior.h"
 
 #include <lua.h>
 #include <lauxlib.h>

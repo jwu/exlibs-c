@@ -10,8 +10,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../engine/component/lua_behavior.h"
-#include "../../graphics/graphics_inc.h"
+#include "engine/component/lua_behavior.h"
+#include "graphics/graphics_inc.h"
 
 #include <lua.h>
 #include <lauxlib.h>

@@ -121,8 +121,6 @@ int __lua_index ( lua_State *_l, int _idx ) {
 // ------------------------------------------------------------------ 
 // Desc: 
 extern int luaopen_ex ( lua_State * );
-extern int luaopen_yield ( lua_State * );
-extern int luaopen_time ( lua_State * );
 extern int luaopen_angf ( lua_State * );
 extern int luaopen_vec2f ( lua_State * );
 extern int luaopen_mat33f ( lua_State * );
@@ -134,7 +132,12 @@ extern int luaopen_luagl ( lua_State * );
 extern int luaopen_luaglu ( lua_State * );
 #endif
 
+extern int luaopen_yield ( lua_State * );
+extern int luaopen_time ( lua_State * );
+
 extern int luaopen_object ( lua_State * );
+extern int luaopen_texture ( lua_State * );
+extern int luaopen_texture2d ( lua_State * );
 extern int luaopen_world ( lua_State * );
 extern int luaopen_entity ( lua_State * );
 extern int luaopen_component ( lua_State * );
@@ -185,18 +188,33 @@ int ex_lua_init () {
     // we create global ex table if it not exists.
     ex_lua_global_module ( __L, "ex" );
 
-    // init core wraps
+    // init ex lua
     luaopen_ex (__L);
-        luaopen_yield (__L);
-        luaopen_time (__L);
+
+        // ======================================================== 
+        // init core wraps
+        // ======================================================== 
+
         luaopen_angf (__L);
         luaopen_vec2f (__L);
         luaopen_mat33f (__L);
         luaopen_color3f (__L);
         luaopen_color4f (__L);
 
+        // ======================================================== 
         // init engine wraps
+        // ======================================================== 
+
+        luaopen_yield (__L);
+        luaopen_time (__L);
+
+        // ======================================================== 
+        // init engine objects 
+        // ======================================================== 
+
         luaopen_object (__L);
+            luaopen_texture (__L);
+                luaopen_texture2d (__L);
             luaopen_world (__L);
             luaopen_entity (__L);
             luaopen_component (__L);
@@ -213,15 +231,18 @@ int ex_lua_init () {
 // ------------------------------------------------------------------ 
 // Desc: 
 extern void luaclose_ex ();
-extern void luaclose_yield ();
-extern void luaclose_time ();
 extern void luaclose_angf ();
 extern void luaclose_vec2f ();
 extern void luaclose_mat33f ();
 extern void luaclose_color3f ();
 extern void luaclose_color4f ();
 
+extern void luaclose_yield ();
+extern void luaclose_time ();
+
 extern void luaclose_object ();
+extern void luaclose_texture ();
+extern void luaclose_texture2d ();
 extern void luaclose_world ();
 extern void luaclose_entity ();
 extern void luaclose_component ();
@@ -236,15 +257,18 @@ void ex_lua_deinit () {
         lua_gc(__L, LUA_GCCOLLECT, 0);
 
         luaclose_ex ();
-            luaclose_yield ();
-            luaclose_time ();
             luaclose_angf ();
             luaclose_vec2f ();
             luaclose_mat33f ();
             luaclose_color3f ();
             luaclose_color4f ();
 
+            luaclose_yield ();
+            luaclose_time ();
+
             luaclose_object ();
+                luaclose_texture();
+                    luaclose_texture2d();
                 luaclose_world ();
                 luaclose_entity ();
                 luaclose_component ();

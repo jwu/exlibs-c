@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../engine/object.h"
+#include "engine/object.h"
 
 #include <lua.h>
 #include <lauxlib.h>

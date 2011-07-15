@@ -10,8 +10,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "exsdk.h"
-#include "../../engine/entity.h"
-#include "../../engine/component/trans2d.h"
+#include "engine/entity.h"
+#include "engine/component/trans2d.h"
 
 #include <lua.h>
 #include <lauxlib.h>
