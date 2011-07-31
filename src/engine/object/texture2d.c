@@ -138,10 +138,12 @@ void ex_texture2d_apply ( ex_ref_t *_self ) {
         gl_type = GL_UNSIGNED_BYTE;
         break;
 
+#if (EX_PLATFORM != EX_WIN32)
     case EX_TEXTURE_FORMAT_ARGB4444:
         gl_fmt = GL_RGBA;
         gl_type = GL_UNSIGNED_SHORT_4_4_4_4;
         break;
+#endif
 
     case EX_TEXTURE_FORMAT_RGB24:
         gl_fmt = GL_RGB;
@@ -153,10 +155,12 @@ void ex_texture2d_apply ( ex_ref_t *_self ) {
         gl_type = GL_UNSIGNED_BYTE;
         break;
 
+#if (EX_PLATFORM != EX_WIN32)
     case EX_TEXTURE_FORMAT_RGB565:
         gl_fmt = GL_RGB;
         gl_type = GL_UNSIGNED_SHORT_5_6_5;
         break;
+#endif
 
     // case EX_TEXTURE_FORMAT_DXT1:
     // case EX_TEXTURE_FORMAT_DXT5:

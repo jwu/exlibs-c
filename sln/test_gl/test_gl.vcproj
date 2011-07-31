@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext_build\glut\include\;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
 				PreprocessorDefinitions="__EX_DEBUG__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,7 +60,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glut32.lib"
-				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32"
+				AdditionalLibraryDirectories="..\..\ext_build\glut\lib\win32"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -113,7 +113,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext_build\glut\include\;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
 				PreprocessorDefinitions="__EX_RELEASE__"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -132,7 +132,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glut32.lib"
-				AdditionalLibraryDirectories="..\..\ext\glut\lib\win32"
+				AdditionalLibraryDirectories="..\..\ext_build\glut\lib\win32"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"

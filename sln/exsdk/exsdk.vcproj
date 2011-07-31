@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\&quot;;&quot;..\..\ext\physfs-2.0.2\&quot;;&quot;..\..\ext\physfs-2.0.2\zlib123\&quot;;&quot;..\..\ext\lua-5.1.4\&quot;;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext_build\glut\include\;&quot;..\..\ext\yajl-1.0.11\&quot;;&quot;..\..\ext\physfs-2.0.2\&quot;;&quot;..\..\ext\physfs-2.0.2\zlib123\&quot;;&quot;..\..\ext\lua-5.1.4\&quot;;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
 				PreprocessorDefinitions="WIN32;__EX_WIN32;__EX_DEBUG__;DEBUG;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS=1;_REENTRANT;_THREAD_SAFE;HAVE_ASSERT_H=1;HAVE_VSNPRINTF=1;PHYSFS_SUPPORTS_ZIP=1;PHYSFS_SUPPORTS_7Z=1;PHYSFS_SUPPORTS_GRP=1;PHYSFS_SUPPORTS_WAD=1;PHYSFS_SUPPORTS_HOG=1;PHYSFS_SUPPORTS_MVL=1;PHYSFS_SUPPORTS_QPAK=1;Z_PREFIX=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -106,7 +106,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext\glut\include\;&quot;..\..\ext\yajl-1.0.11\&quot;;&quot;..\..\ext\physfs-2.0.2\&quot;;&quot;..\..\ext\physfs-2.0.2\zlib123\&quot;;&quot;..\..\ext\lua-5.1.4\&quot;;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
+				AdditionalIncludeDirectories="..\..\ext\;..\..\src\;..\..\ext_build\glut\include\;&quot;..\..\ext\yajl-1.0.11\&quot;;&quot;..\..\ext\physfs-2.0.2\&quot;;&quot;..\..\ext\physfs-2.0.2\zlib123\&quot;;&quot;..\..\ext\lua-5.1.4\&quot;;&quot;..\..\ext\dlmalloc-2.8.4\&quot;"
 				PreprocessorDefinitions="WIN32;__EX_WIN32;__EX_RELEASE__;RELEASE;_RELEASE;_CRT_SECURE_NO_WARNINGS=1;_REENTRANT;_THREAD_SAFE;HAVE_ASSERT_H=1;HAVE_VSNPRINTF=1;PHYSFS_SUPPORTS_ZIP=1;PHYSFS_SUPPORTS_7Z=1;PHYSFS_SUPPORTS_GRP=1;PHYSFS_SUPPORTS_WAD=1;PHYSFS_SUPPORTS_HOG=1;PHYSFS_SUPPORTS_MVL=1;PHYSFS_SUPPORTS_QPAK=1;Z_PREFIX=1"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -371,6 +371,14 @@
 				Name="thread"
 				>
 				<File
+					RelativePath="..\..\src\core\thread\atomic.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\thread\atomic.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\core\thread\cond.h"
 					>
 				</File>
@@ -379,7 +387,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\core\thread\mutex_win32.c"
+					RelativePath="..\..\src\core\thread\mutex_win.c"
 					>
 				</File>
 				<File
@@ -387,7 +395,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\core\thread\semaphore_win32.c"
+					RelativePath="..\..\src\core\thread\semaphore_win.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\thread\spinlock.c"
 					>
 				</File>
 				<File
@@ -403,7 +415,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\core\thread\thread_win32.c"
+					RelativePath="..\..\src\core\thread\thread_win.c"
 					>
 				</File>
 			</Filter>
@@ -655,7 +667,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\core\timer\timer_win32.c"
+					RelativePath="..\..\src\core\timer\timer_win.c"
 					>
 				</File>
 				<File
@@ -695,18 +707,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="wrap_core"
+				>
+				<File
+					RelativePath="..\..\src\core\wrap_core\wrap_angf.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\wrap_core\wrap_color3f.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\wrap_core\wrap_color4f.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\wrap_core\wrap_mat33f.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\core\wrap_core\wrap_vec2f.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="engine"
 			>
-			<File
-				RelativePath="..\..\src\engine\coroutine_mng.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\engine\coroutine_mng.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\engine\engine_inc.h"
 				>
@@ -720,11 +748,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\engine\invoke_mng.c"
+				RelativePath="..\..\src\engine\misc.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\engine\invoke_mng.h"
+				RelativePath="..\..\src\engine\misc.h"
 				>
 			</File>
 			<File
@@ -819,6 +847,82 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="wrap_engine"
+				>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_behavior.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_component.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_entity.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_enums.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_ex.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_lua_behavior.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_object.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_texture.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_texture2d.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_time.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_trans2d.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_world.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\wrap_engine\wrap_yield.c"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="object"
+				>
+				<File
+					RelativePath="..\..\src\engine\object\texture.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\object\texture.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\object\texture2d.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\engine\object\texture2d.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="graphics"
@@ -863,74 +967,6 @@
 				RelativePath="..\..\src\lua\lua_wrap_helper.h"
 				>
 			</File>
-			<Filter
-				Name="wrap_engine"
-				>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_behavior.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_component.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_entity.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_lua_behavior.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_object.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_trans2d.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_engine\wrap_world.c"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="wrap_core"
-				>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_angf.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_class.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_enums.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_ex.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_mat33f.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_time.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_vec2f.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\lua\wrap_core\wrap_yield.c"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="autogen"
@@ -997,14 +1033,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\app\app.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\app\editor.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\app\editor.h"
 				>
 			</File>
 		</Filter>

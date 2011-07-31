@@ -116,7 +116,7 @@ extern const ex_getset_t *ex_texture_meta_getsets;
 
 int luaopen_texture2d ( lua_State *_l ) {
 
-    const ex_getset_t *meta_getsets_including_parents[3];
+    const ex_getset_t *meta_getsets_including_parents[4];
     const ex_getset_t **getsets;
     const ex_getset_t *getset;
 

@@ -135,7 +135,7 @@ void ex_draw_text ( float _x, float _y, float _z, const char *_fmt, ... ) {
 // ------------------------------------------------------------------ 
 
 void ex_draw_point ( float _x, float _y ) {
-    float *p = (float[2]){ _x, _y };
+    float p[2] = { _x, _y };
 
     //
     glMatrixMode(GL_MODELVIEW);
@@ -162,8 +162,11 @@ void ex_draw_line ( const ex_vec2f_t *_start,
                     const ex_vec2f_t *_end, 
                     const ex_color4f_t *_color ) 
 {
-    ex_vec2f_t *p = (ex_vec2f_t[2]){ *_start, *_end };
-    ex_color4f_t *c = (ex_color4f_t[2]){ *_color, *_color };
+	float p[4] = { _start->x, _start->y, _end->x, _end->y };
+	float c[8] = {
+		_color->r, _color->g, _color->b, _color->a,
+		_color->r, _color->g, _color->b, _color->a
+	};
 
     //
     glMatrixMode(GL_MODELVIEW);
