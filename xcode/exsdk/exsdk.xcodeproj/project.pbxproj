@@ -2678,7 +2678,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/assets\" \"$TARGET_BUILD_DIR/data/\"";
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/assets\" \"$TARGET_BUILD_DIR/data/assets\"";
 		};
 		B22BBE9713712BC300AB2471 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2704,7 +2704,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/assets\" \"$TARGET_BUILD_DIR/data\"";
+			shellScript = "rm -rf \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../builtin\" \"$TARGET_BUILD_DIR/builtin\"\ncp -rf \"$PROJECT_DIR/../../tests/glut/assets\" \"$TARGET_BUILD_DIR/data/assets\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
