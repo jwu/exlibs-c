@@ -459,7 +459,7 @@ int main( int argc, char *argv[] ) {
         // init game
         ex_app_init();
         ex_lua_load_modules( ex_lua_main_state(), "builtin" );
-        ex_lua_load_modules( ex_lua_main_state(), "scripts" );
+        ex_lua_load_modules( ex_lua_main_state(), "assets/scripts" );
         __init_game();
 
         //

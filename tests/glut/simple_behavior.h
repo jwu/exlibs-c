@@ -37,6 +37,13 @@ EX_DECL_CLASS_SUPER_BEGIN(ex_simple_t,ex_behavior_t)
     int rot_around;
 EX_DECL_CLASS_SUPER_END(ex_simple_t,ex_behavior_t)
 
+#define EX_SIMPLE_BEHAVIOR_DEFAULT_MEMBER \
+    EX_BEHAVIOR_DEFAULT_MEMBER \
+    EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_one ) \
+    EX_MEMBER( ex_simple_t, move_speed, 10.0f ) \
+    EX_MEMBER( ex_simple_t, rot_speed, 10.0f ) \
+    EX_MEMBER( ex_simple_t, rot_around, ROT_AROUND_PARENT )
+
 // ######################### 
 #ifdef __cplusplus
 } // end extern C 

@@ -14,20 +14,20 @@
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_init ( ex_ref_t * );
+extern void __behavior_init ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 static void init ( ex_ref_t *_self ) {
-    __component_init(_self); // parent init
+    __behavior_init(_self); // parent init
 }
 
 // ------------------------------------------------------------------ 
 // Desc: 
-extern void __component_deinit ( ex_ref_t * );
+extern void __behavior_deinit ( ex_ref_t * );
 // ------------------------------------------------------------------ 
 
 static void deinit ( ex_ref_t *_self ) {
-    __component_deinit(_self); // parent deinint
+    __behavior_deinit(_self); // parent deinint
 }
 
 // ------------------------------------------------------------------ 
@@ -106,27 +106,20 @@ static void awake ( ex_ref_t *_self ) {
 // defines
 ///////////////////////////////////////////////////////////////////////////////
 
-EX_DEF_OBJECT_BEGIN( ex_simple_t,
-                     "Simple Behavior",
-                     init,
-                     deinit )
+EX_DEF_CLASS_BEGIN( ex_simple_t )
 
-    EX_MEMBER( ex_component_t, entity, NULL )
+    EX_SIMPLE_BEHAVIOR_DEFAULT_MEMBER
 
-    EX_MEMBER( ex_behavior_t, state, EX_BEHAVIOR_STATE_NEW )
-    EX_MEMBER( ex_behavior_t, enabled, true )
+    EX_MEMBER( ex_object_t, name, ex_strid("Simple Behavior") )
+    EX_MEMBER( ex_object_t, init, init )
+    EX_MEMBER( ex_object_t, deinit, deinit )
+
     EX_MEMBER( ex_behavior_t, awake, awake )
     EX_MEMBER( ex_behavior_t, start, start )
     EX_MEMBER( ex_behavior_t, update, update )
     EX_MEMBER( ex_behavior_t, post_update, post_update )
-    EX_MEMBER( ex_behavior_t, on_render, NULL )
 
-    EX_MEMBER( ex_simple_t, move_dir, ex_vec2f_one )
-    EX_MEMBER( ex_simple_t, move_speed, 10.0f )
-    EX_MEMBER( ex_simple_t, rot_speed, 10.0f )
-    EX_MEMBER( ex_simple_t, rot_around, ROT_AROUND_PARENT )
-
-EX_DEF_OBJECT_END
+EX_DEF_CLASS_END
 
 EX_DEF_PROPS_BEGIN(ex_simple_t)
     EX_PROP ( ex_simple_t, vec2f, move_dir, "move direction", EX_PROP_ATTR_NONE )
